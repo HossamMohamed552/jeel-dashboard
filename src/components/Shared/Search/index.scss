@@ -1,0 +1,49 @@
+.search-container {
+  background: #ECF0F1;
+  padding: 48px 0;
+
+  .app-main-title {
+    margin-bottom: 32px;
+  }
+
+  .search-body {
+    background: white;
+    border-radius: 16px;
+    padding: 12px 20px;
+
+
+    ::v-deep {
+
+      .vs__dropdown-toggle,
+      .form-control {
+        border: none !important;
+        color: $color-primary;
+      }
+
+    }
+
+    .form-border {
+      position: relative;
+
+      &:lang(ar) {
+        &::before {
+
+          right: unset;
+          left: 0;
+        }
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 1px;
+        height: 24px;
+        background: $color-gray;
+        right: 0;
+        top: 14px;
+      }
+
+    }
+  }
+}

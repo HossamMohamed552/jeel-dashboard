@@ -1,0 +1,20 @@
+.custom-select {
+  min-height: 44px;
+  text-transform: capitalize;
+
+  &:lang(ar) {
+    background-position-x: 8px;
+    padding-right: 12px;
+    padding-left: 20px;
+  }
+
+  &:focus {
+    box-shadow: none;
+    border-color: $color-primary;
+  }
+
+}
+
+.custom-select.is-invalid {
+  background: url(../../../assets/images/arrow.svg) no-repeat right .75rem center/8px 10px;
+}

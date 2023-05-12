@@ -1,0 +1,65 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+.list{
+  @include styleViewList;
+  .header,.search-sort{
+    @include flexCenter(space-between);
+    .list-of-item{
+      @include flexCenter(space-between);
+      .name-of-item{
+        color: $color-paragraph;
+        font-size: 1.625rem;
+        margin: 0 0 0 2.5rem;
+      }
+      .no-of-item{
+        background: $color-notify;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: 600;
+        @include flexCenter(center)
+      }
+    }
+    .controls{
+      @include flexCenter(space-between)
+    }
+  }
+  .header{
+    margin-bottom: 3.125rem;
+  }
+  .search-sort{
+    @include flexCenter(space-between);
+    .search{
+      position: relative;
+      .search-input{
+        @extend %search-sort;
+      }
+      img{
+        position: absolute;
+        top: 50%;
+        left: 2rem;
+        transform: translateY(-50%);
+      }
+    }
+    .sort{
+      @extend %search-sort;
+      width: 19rem;
+      @include flexCenter(space-between);
+      background: #fff;
+      select{
+        width: 100%;
+        cursor: pointer;
+        padding: .5rem 1rem;
+        border: none;
+        background: transparent;
+        color: $color-primary;
+        outline: none;
+        option{
+          padding: .3rem;
+        }
+      }
+    }
+  }
+}

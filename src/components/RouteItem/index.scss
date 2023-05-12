@@ -1,0 +1,23 @@
+@import "src/assets/style/scss/_mixin";
+.route-item{
+  height: 350px;
+  border: 1px solid #DADADA;
+  border-radius: 2.1875rem;
+  overflow: hidden;
+  background: url("../../assets/images/bg/bg-route-item.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  @include flexCenter(center);
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  .hold-content{
+    text-align: center;
+  }
+  .icon{
+    margin-bottom: 1.75rem;
+  }
+  .name{
+    font-size: 1.6rem;
+  }
+}

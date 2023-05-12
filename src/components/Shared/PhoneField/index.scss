@@ -1,0 +1,27 @@
+::v-deep {
+
+  .vue-tel-input {
+    border-radius: 6px;
+    min-height: 50px;
+    // overflow: hidden;
+
+    &.is-invalid {
+      border-color: #dc3545;
+    }
+
+    .vti__dropdown {
+      &:hover , &:focus{
+        background: transparent;
+      }
+    }
+
+    .vti__dropdown-list.below {
+      top: 50px;
+      z-index: 4;
+    }
+
+    .vti__input {
+      border-radius: 6px;
+    }
+  }
+}

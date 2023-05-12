@@ -1,0 +1,28 @@
+.empty-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 150px;
+  padding: 22px;
+  text-align: center;
+  border: 1px solid $color-gray;
+  border-radius: 8px;
+  margin-bottom: 20px;
+
+  img {
+    margin-bottom: 26px;
+  }
+
+  h4 {
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 0;
+  }
+
+  h5 {
+    font-weight: 400;
+    font-size: 16px;
+    margin-top: 18px;
+  }
+}

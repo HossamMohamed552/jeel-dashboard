@@ -1,0 +1,33 @@
+@import "_variables";
+.custom-table {
+  table {
+    border-collapse: separate;
+    border-spacing: 0 6px;
+    vertical-align: middle;
+  }
+
+  th {
+    color: $color-dark;
+    opacity: 0.5;
+    border: none !important;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  tbody {
+
+    tr {
+      background: $color-ligth-dark;
+      border: none;
+      font-weight: normal;
+      font-size: 14px;
+      color: $color-dark;
+
+      td {
+        border: none;
+        vertical-align: middle;
+
+      }
+    }
+  }
+}

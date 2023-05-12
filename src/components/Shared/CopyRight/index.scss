@@ -1,0 +1,20 @@
+@import "src/assets/style/scss/_variables";
+.copyright{
+  color: $color-primary;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-top: 1.5rem;
+  @media (max-width: 1024px) and (min-width: 768px){
+    font-size: .8rem;
+    margin-top: 1.2rem;
+  }
+  @media (max-width: 768px) {
+    font-size: .6rem;
+    margin-top: 1rem;
+  }
+}
+.copyrightLayout{
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.80), $color-primary);
+  color: #fff;
+  padding: 1.6rem 0;
+}

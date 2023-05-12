@@ -1,0 +1,80 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+header{
+  background-image: url("../../../assets/images/bg/header-bg.png");
+  min-height: 20vh;
+  .top{
+    padding: 2.125rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .logo{
+      width: 120px;
+      height: 139px;
+      img{
+        @include image;
+      }
+    }
+    .notification-info-admin{
+      display: flex;
+      align-items: center;
+      .notification{
+        position: relative;
+        margin: 0 0 0 2rem;
+        padding-left: 2rem;
+        .bill{
+          width: 35px;
+          height: 40px;
+          img{
+            @include image;
+          }
+        }
+        .no-of-notification{
+          background: $color-notify;
+          color: $color-primary;
+          padding: .25rem .625rem;
+          border-radius: 50%;
+          position: absolute;
+          top: 0;
+          right: 0;
+          transform: translate(50%,-50%);
+        }
+        &:after{
+          content: "";
+          display: block;
+          width: 1px;
+          height: 25px;
+          background: $color-border;
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translate(-50%,-50%);
+        }
+      }
+      .info-admin{
+        display: flex;
+        align-items: center;
+        margin: 0 1rem 0 0;
+        .name-role{
+          text-align: left;
+          margin-left: 1rem;
+          font-size: 1.2rem;
+          .name{
+            margin-bottom: .5rem;
+            color: #fff;
+          }
+          .role{
+            color: $color-admin-role;
+          }
+        }
+        .user-image{
+          width: 50px;
+          height: 50px;
+          background: #FFFFFF;
+          border-radius: 50%;
+          @include flexCenter(center);
+        }
+      }
+    }
+  }
+}

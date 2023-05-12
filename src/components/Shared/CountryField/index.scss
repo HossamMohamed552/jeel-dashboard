@@ -1,0 +1,57 @@
+::v-deep {
+  .vue-country-select {
+    border-radius: 6px;
+    min-height: 50px;
+    display: block;
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:focus-within {
+      border-color: $color-primary;
+      outline: none;
+    }
+
+    &.is-invalid {
+      border-color: #dc3545;
+    }
+
+    .dropdown {
+      min-height: 50px;
+      align-items: baseline;
+      background: transparent !important
+    }
+
+    .dropdown-list {
+      z-index: 5;
+      width: 100%;
+    }
+
+    .dropdown-item {
+      span {
+        display: none;
+      }
+    }
+
+    .vti__dropdown-list.below {
+      top: 50px;
+      z-index: 4;
+
+    }
+
+  }
+}
+
+.country-title {
+  position: absolute;
+  bottom: 12px;
+  left: 65px;
+  font-size: 16px;
+  z-index: -1;
+
+  &:lang(ar) {
+    right: 65px;
+    left: unset;
+  }
+}

@@ -1,0 +1,15 @@
+@import "./scss/_variables";
+@import "./scss/__componants";
+@import "./scss/__global";
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.thead-gradient{
+  background: linear-gradient(to left, $color-primary,$color-primary-two) !important;
+}

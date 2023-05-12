@@ -1,0 +1,51 @@
+.mx-datepicker {
+  width: 100%;
+
+  &.is-invalid {
+    ::v-deep {
+      .mx-input {
+        border-color: #dc3545;
+
+        &:hover,
+        &:focus {
+          border-color: #dc3545;
+        }
+      }
+
+      .mx-icon-calendar {
+        svg {
+          fill: #dc3545;
+        }
+      }
+    }
+  }
+
+  ::v-deep {
+
+    .mx-input {
+      min-height: 50px;
+      border-radius: 6px;
+
+      &:lang(ar) {
+        padding-left: unset;
+        padding-right: 10px;
+      }
+
+      &:hover {
+        border-color: #ced4da;
+      }
+
+      &:focus {
+        border-color: $color-primary;
+      }
+    }
+
+    .mx-icon-clear,
+    .mx-icon-calendar {
+      &:lang(ar) {
+        right: unset;
+        left: 8px;
+      }
+    }
+  }
+}

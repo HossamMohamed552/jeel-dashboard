@@ -1,0 +1,38 @@
+@import "src/assets/style/scss/_variables";
+.base-btn{
+  background: linear-gradient(to left, $color-primary,$color-primary-two);
+  outline: none;
+  border: none;
+}
+.rounded-btn{
+  border-radius: 3.125rem;
+}
+.big-padding{
+  padding: 1rem 2.5rem;
+}
+.submit-btn{
+  padding: 1rem;
+  border-radius: 3.125rem;
+  margin: 1rem 0 1.5rem 0;
+  border: none;
+  font-size: 1.4rem;
+  @media (max-width: 1024px) and (min-width: 768px){
+    padding: .7rem;
+    border-radius: 2.125rem;
+    margin: .7rem 0 1.2rem 0;
+    font-size: 1.1rem;
+  }
+  @media (max-width: 768px) {
+    padding: .4rem;
+    border-radius: 1.125rem;
+    margin: .3rem 0 .9rem 0;
+    border: none;
+    font-size: 1rem;
+  }
+}
+.add-btn{
+  img{
+    display: inline-block;
+    margin-left: 1rem;
+  }
+}

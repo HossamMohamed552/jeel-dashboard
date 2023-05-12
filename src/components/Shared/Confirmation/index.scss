@@ -1,0 +1,10 @@
+.message {
+  font-size: 22px;
+  color: #58595b;
+  text-align: center;
+}
+.btn-confirm {
+  &:hover {
+    color: white;
+  }
+}

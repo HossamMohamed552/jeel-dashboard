@@ -1,0 +1,38 @@
+::v-deep {
+  .modal-header {
+    flex-direction: row-reverse;
+    border: 0;
+  }
+
+  .min-w-118 {
+    min-width: 118px;
+  }
+}
+
+.message {
+  font-weight: 400;
+  font-size: 20px;
+  color: $color-dark;
+  margin-bottom: 33px;
+}
+
+.btn-confirm {
+  &:hover {
+    color: white;
+  }
+}
+
+.title {
+  font-weight: 700;
+  font-size: 25px;
+  color: $color-dark;
+  text-transform: uppercase;
+}
+
+.reomve-img {
+  margin-bottom: 35px;
+}
+
+.actions {
+  margin-bottom: 33px;
+}

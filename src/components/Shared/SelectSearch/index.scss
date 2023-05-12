@@ -1,0 +1,16 @@
+::v-deep {
+  .is-invalid {
+    .vs__dropdown-toggle {
+      border-color: #dc3545;
+    }
+
+    .vs__open-indicator {
+      fill: #dc3545;
+    }
+  }
+
+  .vs__dropdown-toggle {
+    min-height: 50px;
+    border-radius: 6px;
+  }
+}
