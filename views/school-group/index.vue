@@ -1,30 +1,30 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة المستخدمين'" :number-of-item="totalNumber" :table-items="usersList" :v-search-model="userSearchWord" @searchBy="searchBy">
+    <ListItems :header-name="'قائمة المجموعات'" :number-of-item="totalNumber"
+               :table-items="schoolGroupList" :v-search-model="groupSearchWord"
+               @searchBy="searchBy">
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'">
           <img src="@/assets/images/icons/plus.svg">
-          <span>إضافة مستخدم جديد</span>
+          <span>إضافة مجموعه</span>
         </Button>
       </template>
     </ListItems>
   </section>
 </template>
+
 <script>
-import ListItems from "@/components/ListItems/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import {getAllUsersRequest} from "@/api/user";
+import ListItems from "@/components/ListItems/index.vue";
+import {getCountryRequest} from "@/api/country";
+import {getSchoolGroupRequest} from "@/api/schoolGroup";
 
 export default {
-  name: "index",
-  components: {
-    ListItems,
-    Button
-  },
+  components: {ListItems, Button},
   data() {
     return {
-      userSearchWord: "",
-      usersList: [],
+      groupSearchWord: "",
+      schoolGroupList: [],
       totalNumber: null
     }
   },
@@ -34,15 +34,15 @@ export default {
     }
   },
   mounted() {
-    this.ApiService(getAllUsersRequest()).then((response) => {
-      this.usersList = response.data.data
+    this.ApiService(getSchoolGroupRequest()).then((response) => {
+      this.schoolGroupList = response.data.data
       this.totalNumber = response.data.meta.total
       console.log('response', response)
     })
   }
+
 }
 </script>
-
 
 <style scoped lang="scss">
 @import "./index";

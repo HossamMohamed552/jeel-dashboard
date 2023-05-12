@@ -1,6 +1,6 @@
 export const postLoginRequest = (data) => ({
   method: "post",
-  url: "http://172.16.100.223:9000/api/login",
+  url: `${process.env.VUE_APP_AUTH_URL}login`,
   config: {
     data,
   },

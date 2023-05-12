@@ -22,11 +22,11 @@
             </div>
           </div>
           <div class="col-12 px-0" v-if="activeTap === 2">
-            <dsiv class="row">
+            <div class="row">
               <div class="col-lg-3 col-sm-6 col-12" v-for="(item,index) in routesSchool" :key="index">
                 <RouteItem :item="item"/>
               </div>
-            </dsiv>
+            </div>
           </div>
           <div class="col-12 px-0" v-if="activeTap === 3">
             <div class="row">

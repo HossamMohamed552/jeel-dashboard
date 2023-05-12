@@ -4,9 +4,9 @@
       <div class="row">
         <div class="col-12">
           <div class="top">
-            <div class="logo">
+            <router-link to="/dashboard/home" tag="div" class="logo">
               <img src="@/assets/images/logo-white.png" alt="logo" title="geel logo">
-            </div>
+            </router-link>
             <div class="notification-info-admin">
               <div class="notification">
                 <div class="bill">

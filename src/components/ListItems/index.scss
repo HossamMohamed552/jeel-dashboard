@@ -2,6 +2,7 @@
 @import "src/assets/style/scss/_mixin";
 .list{
   @include styleViewList;
+  margin-top: 1.5rem;
   .header,.search-sort{
     @include flexCenter(space-between);
     .list-of-item{
@@ -61,5 +62,19 @@
         }
       }
     }
+  }
+}
+.hold-table{
+  margin-top: 2rem;
+  .hold-image{
+    @include flexCenter(center)
+  }
+  .image-in-table{
+    width: 60px;
+    height: 60px;
+    border-radius:50%;
+    overflow: hidden;
+    object-position: center;
+    object-fit: cover;
   }
 }

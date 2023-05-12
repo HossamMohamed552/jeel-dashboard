@@ -10,6 +10,7 @@ export default {
     const htmlDoc = document.documentElement
     htmlDoc.setAttribute("lang", this.$i18n.locale === "ar" ? "ar" : "en")
     htmlDoc.setAttribute("dir", this.$i18n.locale === "ar" ? "rtl" : "ltr")
+    this.$router.push('/dashboard/home')
   },
 };
 </script>

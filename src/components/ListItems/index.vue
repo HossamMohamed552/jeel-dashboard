@@ -18,13 +18,82 @@
         <img src="@/assets/images/icons/sort.svg">
         <select>
           <option value="" selected disabled>ترتيب حسب</option>
-          <option v-for="sort in  sortArray" :id="sort.id" @change="sortBy(sort)" :value="sort.value">{{ sort.name }}
+          <option v-for="sort in  sortArray" :id="sort.id" @change="sortBy(sort)"
+                  :value="sort.value">{{ sort.name }}
           </option>
         </select>
       </div>
     </div>
     <div class="hold-table">
-      <b-table :head-variant="'gradient'" responsive striped :items="items" :fields="fields"></b-table>
+      <b-table :head-variant="'gradient'" responsive striped :items="items" :fields="fields">
+        <template #head(id)="data">
+          <span>{{ data.field.key === 'id' ? 'التسلسل' : data.field.label }}</span>
+        </template>
+        <template #head(first_name)="data">
+          <span>{{ data.field.key === 'first_name' ? 'الاسم الاول' : data.field.label }}</span>
+        </template>
+        <template #head(last_name)="data">
+          <span>{{ data.field.key === 'last_name' ? 'الاسم الثانى' : data.field.label }}</span>
+        </template>
+        <template #head(name)="data">
+          <span>{{ data.field.key === 'name' ? 'الإسم' : data.field.label }}</span>
+        </template>
+        <template #head(email)="data">
+          <span>{{ data.field.key === 'email' ? 'البريد الإلكترونى' : data.field.label }}</span>
+        </template>
+        <template #head(mobile)="data">
+          <span>{{ data.field.key === 'mobile' ? 'الهاتف' : data.field.label }}</span>
+        </template>
+        <template #head(avatar)="data">
+          <span>{{ data.field.key === 'avatar' ? 'الصورة' : data.field.label }}</span>
+        </template>
+        <template #head(updated_at)="data">
+          <span class="d-none"></span>
+        </template>
+        <template #head(updated_at)="data">
+          <span class="d-none"></span>
+        </template>
+        <template #head(created_at)="data">
+          <span class="d-none"></span>
+        </template>
+        <template #head(is_super_admin)="data">
+          <span class="d-none"></span>
+        </template>
+        <template #head(social_media)="data">
+          <span class="d-none"></span>
+        </template>
+        <template #head(verification_sent_at)="data">
+          <span class="d-none"></span>
+        </template>
+        <template #head(last_attempt)="data">
+          <span class="d-none"></span>
+        </template>
+
+
+        <template #cell(updated_at)="data">
+          <span class="d-none"></span>
+        </template>
+        <template #cell(avatar)="data">
+          <div class="hold-image">
+            <img class="image-in-table" :src="data.value">
+          </div>
+        </template>
+        <template #cell(created_at)="data">
+          <span class="d-none"></span>
+        </template>
+        <template #cell(is_super_admin)="data">
+          <span class="d-none"></span>
+        </template>
+        <template #cell(social_media)="data">
+          <span class="d-none"></span>
+        </template>
+        <template #cell(verification_sent_at)="data">
+          <span class="d-none"></span>
+        </template>
+        <template #cell(last_attempt)="data">
+          <span class="d-none"></span>
+        </template>
+      </b-table>
     </div>
   </section>
 </template>
@@ -38,11 +107,11 @@ export default {
       inputValue: "",
       fields: [],
       items: [
-        { age: 40, first_name: 'Dickerson', last_name: 'Macdonald'},
-        { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-        { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-        { age: 38, first_name: 'Jami', last_name: 'Carney' }
-      ]
+        {age: 40, first_name: 'Dickerson', last_name: 'Macdonald'},
+        {age: 21, first_name: 'Larsen', last_name: 'Shaw'},
+        {age: 89, first_name: 'Geneva', last_name: 'Wilson'},
+        {age: 38, first_name: 'Jami', last_name: 'Carney'}
+      ],
     }
   },
   props: {
@@ -63,7 +132,7 @@ export default {
         return [
           {
             id: 1,
-            value:'aec',
+            value: 'aec',
             name: 'تصاعديا',
           },
           {
@@ -73,6 +142,12 @@ export default {
           }
         ]
       }
+    },
+    tableItems: {
+      type: Array,
+      default: function () {
+        return []
+      }
     }
   },
   watch: {
@@ -81,6 +156,9 @@ export default {
     },
     inputValue(newVal) {
       this.$emit('searchBy', newVal)
+    },
+    tableItems(newVal) {
+      this.items = newVal
     }
   },
   methods: {
@@ -88,12 +166,6 @@ export default {
       this.$emit('sortBy', sort)
     }
   },
-  mounted() {
-    console.log('process.env.VUE_APP_BASE_URL', process.env.VUE_APP_BASE_URL)
-    this.ApiService(getAllUsersRequest()).then((response)=>{
-      console.log('response', response)
-    })
-  }
 }
 </script>
 <style scoped lang="scss">

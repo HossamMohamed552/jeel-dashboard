@@ -2,10 +2,11 @@ import axios from "axios";
 import qs from "qs";
 import store from "@/store";
 import VueCookies from "vue-cookies"
-axios.defaults.baseURL = process.env.VUE_APP_ADMIN_API;
-console.log('process.env.VUE_APP_ADMIN_API', process.env.VUE_APP_ADMIN_API)
+
+axios.defaults.baseURL = process.env.VUE_APP_ADMIN_URL;
+console.log('process.env.VUE_APP_ADMIN_URL', process.env.VUE_APP_ADMIN_URL)
 // console.log('axios.defaults.baseURL', axios.defaults.baseURL)
-export default function ApiService({ method, url, config = {} }) {
+export default function ApiService({method, url, config = {}}) {
   return axios({
     method,
     url,
@@ -17,9 +18,10 @@ export default function ApiService({ method, url, config = {} }) {
     },
     headers: {
       Authorization: `Bearer ${VueCookies.get("token")}`,
+      locale: 'ar'
     },
     ramsSerializer(params) {
-      return qs.stringify(params, { arrayFormat: "comma" });
+      return qs.stringify(params, {arrayFormat: "comma"});
     },
   });
 }
