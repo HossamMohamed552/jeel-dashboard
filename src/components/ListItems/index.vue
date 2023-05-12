@@ -47,8 +47,17 @@
         <template #head(avatar)="data">
           <span>{{ data.field.key === 'avatar' ? 'الصورة' : data.field.label }}</span>
         </template>
-        <template #head(updated_at)="data">
-          <span class="d-none"></span>
+        <template #head(status)="data">
+          <span>{{ data.field.key === 'status' ? 'الحاله' : data.field.label }}</span>
+        </template>
+        <template #head(country)="data">
+          <span>{{ data.field.key === 'country' ? 'الدولة' : data.field.label }}</span>
+        </template>
+        <template #head(music_status)="data">
+          <span>{{ data.field.key === 'music_status' ? 'الصوت' : data.field.label }}</span>
+        </template>
+        <template #head(owner)="data">
+          <span>{{ data.field.key === 'owner' ? 'البريد الإلكترونى' : data.field.label }}</span>
         </template>
         <template #head(updated_at)="data">
           <span class="d-none"></span>
@@ -68,7 +77,12 @@
         <template #head(last_attempt)="data">
           <span class="d-none"></span>
         </template>
-
+        <template #head(username)="data">
+          <span class="d-none"></span>
+        </template>
+        <template #head(useremail)="data">
+          <span class="d-none"></span>
+        </template>
 
         <template #cell(updated_at)="data">
           <span class="d-none"></span>
@@ -77,6 +91,18 @@
           <div class="hold-image">
             <img class="image-in-table" :src="data.value">
           </div>
+        </template>
+        <template #cell(status)="data">
+          <span>{{ data.value === 1 ? "مفتوح" :"مغلق" }}</span>
+        </template>
+        <template #cell(music_status)="data">
+          <span>{{ data.value === 1 ? "متاح" :"غير متاح" }}</span>
+        </template>
+        <template #cell(country)="data">
+          <span>{{ data.value.name }}</span>
+        </template>
+        <template #cell(owner)="data">
+          <span>{{ data.value.email }}</span>
         </template>
         <template #cell(created_at)="data">
           <span class="d-none"></span>
