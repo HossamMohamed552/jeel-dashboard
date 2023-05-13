@@ -1,7 +1,7 @@
 {
   "REGISTER_HAS_SUCCESSFULLY": "Register has successfully",
-  "USER_UPDATED":"User has been updated successfully",
-  "PASSWORD_CHANGED":"Password has been changed successfully",
+  "USER_UPDATED": "User has been updated successfully",
+  "PASSWORD_CHANGED": "Password has been changed successfully",
   "AUTH": {
     "email": "user name / email",
     "password": "password",
@@ -9,6 +9,10 @@
     "help": "help",
     "rememberMe": "rememberMe",
     "forgetPassword": "forgetPassword ?"
+  },
+  "USERS": {
+    "ADD_NEW": "Add new user",
+    "USER_NAME": "User name"
   },
   "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}"
 }

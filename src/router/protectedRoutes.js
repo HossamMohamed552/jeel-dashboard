@@ -15,6 +15,11 @@ const protectedRoutes = [
         component: ()=> import('../../views/users/index.vue')
       },
       {
+        path:"/dashboard/users/add",
+        name:"add-user",
+        component: ()=> import('../../views/users/add-user/index.vue')
+      },
+      {
         path:"/dashboard/country",
         name:"country",
         component: ()=> import('../../views/country/index.vue')

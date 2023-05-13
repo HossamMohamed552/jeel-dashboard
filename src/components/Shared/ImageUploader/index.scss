@@ -1,7 +1,8 @@
+@import "src/assets/style/scss/_variables";
 .image-uploader {
   height: 162px;
   width: 100%;
-  border: 2px dashed $color-gray;
+  border: 2px dashed $color-primary;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -13,7 +14,7 @@
   .file-title {
     font-weight: 400;
     font-size: 18px;
-    color: $color-gray-dark;
+    color: $color-primary;
     margin-bottom: 16px;
   }
 
