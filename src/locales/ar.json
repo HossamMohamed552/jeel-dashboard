@@ -10,5 +10,19 @@
     "rememberMe": "تذكرنى",
     "forgetPassword": "نسيت كلمة المرور ؟"
   },
-  "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}"
+  "USERS": {
+    "ADD_NEW": "إضافة مستخدم جديد",
+    "USER_NAME": "إسم المستخدم",
+    "FIRST_NAME": "الإسم الأول",
+    "LAST_NAME": "إسم العائلة",
+    "EMAIL": "البريد الإلكترونى",
+    "PASSWORD": "كلمة المرور",
+    "PHONE_NUMBER": "رقم الهاتف",
+    "SOCIAL_MEDIA": "رابط وسائل التواصل الإجتماعى",
+    "ROLES": "الصلاحيات",
+    "UPLOAD_IMAGE": "صورة المستخدم"
+  },
+  "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}",
+  "GLOBAL_SAVE": "حفظ",
+  "GLOBAL_CANCEL": "إلغاء"
 }
