@@ -22,6 +22,14 @@
     "ROLES": "الصلاحيات",
     "UPLOAD_IMAGE": "صورة المستخدم"
   },
+  "MENU": {
+    "main": "الرئيسية",
+    "permissionsSystemUsers": "صلاحيات النظام والمستخدمين",
+    "schools": "المدارس",
+    "content": "المحتوى",
+    "infoDashBoard": "لوحة المعلومات",
+    "reports": "التقارير"
+  },
   "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}",
   "GLOBAL_SAVE": "حفظ",
   "GLOBAL_CANCEL": "إلغاء"

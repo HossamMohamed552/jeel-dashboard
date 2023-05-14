@@ -14,5 +14,13 @@
     "ADD_NEW": "Add new user",
     "USER_NAME": "User name"
   },
+  "MENU": {
+    "main": "home",
+    "permissionsSystemUsers": "permissionsSystemUsers",
+    "schools": "schools",
+    "content": "content",
+    "infoDashBoard": "infoDashBoard",
+    "reports": "reports"
+  },
   "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}"
 }

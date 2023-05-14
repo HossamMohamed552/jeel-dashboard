@@ -4,8 +4,6 @@ import store from "@/store";
 import VueCookies from "vue-cookies"
 
 axios.defaults.baseURL = process.env.VUE_APP_ADMIN_URL;
-console.log('process.env.VUE_APP_ADMIN_URL', process.env.VUE_APP_ADMIN_URL)
-// console.log('axios.defaults.baseURL', axios.defaults.baseURL)
 export default function ApiService({method, url, config = {}}) {
   return axios({
     method,
