@@ -46,7 +46,6 @@ export default {
     this.ApiService(getAllUsersRequest()).then((response) => {
       this.usersList = response.data.data;
       this.totalNumber = response.data.meta.total;
-      console.log("response", response);
     });
   },
 };
