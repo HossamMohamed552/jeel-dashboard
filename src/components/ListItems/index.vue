@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="hold-table">
-      <b-table :head-variant="'gradient'" responsive striped :items="items" :fields="fields">
+      <b-table :head-variant="'gradient'" responsive striped :items="items" :fields="fieldsList">
         <template #head(id)="data">
           <span>{{ data.field.key === 'id' ? 'التسلسل' : data.field.label }}</span>
         </template>
@@ -59,6 +59,21 @@
         <template #head(owner)="data">
           <span>{{ data.field.key === 'owner' ? 'البريد الإلكترونى' : data.field.label }}</span>
         </template>
+        <template #head(school_group)="data">
+          <span>{{ data.field.key === 'school_group' ? 'اسم المجموعة' : data.field.label }}</span>
+        </template>
+        <template #head(level_school_group)="data">
+          <span>{{ data.field.key === 'level_school_group' ? 'اسم المجموعة' : data.field.label }}</span>
+        </template>
+        <template #head(subscription_start_date)="data">
+          <span>{{ data.field.key === 'subscription_start_date' ? 'بداية التعاقد' : data.field.label }}</span>
+        </template>
+        <template #head(subscription_end_date)="data">
+          <span>{{ data.field.key === 'subscription_end_date' ? 'نهاية التعاقد' : data.field.label }}</span>
+        </template>
+        <template #head(logo)="data">
+          <span>{{ data.field.key === 'logo' ? 'الشعار' : data.field.label }}</span>
+        </template>
         <template #head(updated_at)="data">
           <span class="d-none"></span>
         </template>
@@ -78,7 +93,7 @@
           <span class="d-none"></span>
         </template>
         <template #head(username)="data">
-          <span class="d-none"></span>
+          <span>{{ data.field.key === 'username' ? 'اسم المستخدم' : data.field.label }}</span>
         </template>
         <template #head(useremail)="data">
           <span class="d-none"></span>
@@ -93,13 +108,16 @@
           </div>
         </template>
         <template #cell(status)="data">
-          <span>{{ data.value === 1 ? "مفتوح" :"مغلق" }}</span>
+          <span>{{ data.value.status === 1 ? "مفتوح" :"مغلق" }}</span>
         </template>
         <template #cell(music_status)="data">
-          <span>{{ data.value === 1 ? "متاح" :"غير متاح" }}</span>
+          <span>{{ data.value.music_status === 1 ? "متاح" :"غير متاح" }}</span>
         </template>
         <template #cell(country)="data">
           <span>{{ data.value.name }}</span>
+        </template>
+        <template v-slot:cell(logo)="data">
+          <img class="img-fluid img-thumbnail" :src="data.logo" />
         </template>
         <template #cell(owner)="data">
           <span>{{ data.value.email }}</span>
@@ -119,6 +137,22 @@
         <template #cell(last_attempt)="data">
           <span class="d-none"></span>
         </template>
+        <template #cell(actions)="row">
+            <b-button
+              variant="light"
+              size="sm"
+              class="mr-1"
+            >
+              <b-img :src="editIcon"></b-img>
+            </b-button>
+            <b-button
+              variant="light"
+              size="sm"
+              @click="handleDeleteCategory(row.item)"
+            >
+              <b-img :src="deleteIcon"></b-img>
+            </b-button>
+          </template>
       </b-table>
     </div>
   </section>
@@ -130,13 +164,11 @@ export default {
   name: "index",
   data() {
     return {
+      editIcon: require("@/assets/edit.svg"),
+      deleteIcon: require("@/assets/delete.svg"),
       inputValue: "",
       fields: [],
       items: [
-        {age: 40, first_name: 'Dickerson', last_name: 'Macdonald'},
-        {age: 21, first_name: 'Larsen', last_name: 'Shaw'},
-        {age: 89, first_name: 'Geneva', last_name: 'Wilson'},
-        {age: 38, first_name: 'Jami', last_name: 'Carney'}
       ],
     }
   },
@@ -174,6 +206,12 @@ export default {
       default: function () {
         return []
       }
+    },
+    fieldsList: {
+      type: Array,
+      default: function () {
+        return []
+      }
     }
   },
   watch: {
@@ -185,6 +223,9 @@ export default {
     },
     tableItems(newVal) {
       this.items = newVal
+    },
+    fieldsList(newVal) {
+      this.fields = newVal
     }
   },
   methods: {

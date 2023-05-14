@@ -68,22 +68,17 @@ export default {
         },
         {
           name: 'قائمة المدارس',
-          path: '/dashboard/school-list',
-          icon: require('@/assets/images/icons/school-list.svg')
-        },
-        {
-          name: 'قائمة المدارس',
-          path: '/dashboard/school-list',
+          path: '/dashboard/schools',
           icon: require('@/assets/images/icons/school-list.svg')
         },
         {
           name: 'قائمة المراحل الدراسية',
-          path: '/dashboard/list-steps',
+          path: '/dashboard/levels',
           icon: require('@/assets/images/icons/list-steps.svg')
         },
         {
-          name: 'الصفوف الدراسية',
-          path: '/dashboard/school-section',
+          name: 'الفصول الدراسية',
+          path: '/dashboard/terms',
           icon: require('@/assets/images/icons/school-section.svg')
         },
 
