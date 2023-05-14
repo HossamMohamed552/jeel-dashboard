@@ -28,6 +28,21 @@ const protectedRoutes = [
         path:"/dashboard/school-group",
         name:"school-group",
         component: ()=> import('../../views/school-group/index.vue')
+      },
+      {
+        path:"/dashboard/schools",
+        name:"schools",
+        component: ()=> import('../../views/schools/index.vue')
+      },
+      {
+        path:"/dashboard/levels",
+        name:"levels",
+        component: ()=> import('../../views/levels/index.vue')
+      },
+      {
+        path:"/dashboard/terms",
+        name:"terms",
+        component: ()=> import('../../views/terms/index.vue')
       }
     ]
   }
