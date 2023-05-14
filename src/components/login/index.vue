@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import FormValidation from "@/components/Shared/FormValidation/index.vue";
 import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import CheckboxField from "@/components/Shared//CheckboxField"
@@ -49,7 +48,6 @@ import CopyRight from "@/components/Shared/CopyRight/index.vue";
 export default {
   components: {
     CopyRight,
-    FormValidation,
     TextField,
     Button,
     CheckboxField
