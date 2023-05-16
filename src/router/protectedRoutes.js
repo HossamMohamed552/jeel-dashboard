@@ -10,6 +10,16 @@ const protectedRoutes = [
         component: () => import('../../views/home/index.vue')
       },
       {
+        path:"/dashboard/role",
+        name:"role",
+        component: ()=> import('../../views/role/index.vue')
+      },
+      {
+        path:"/dashboard/role/add",
+        name:"add-role",
+        component: ()=> import('../../views/role/add-role/index.vue')
+      },
+      {
         path:"/dashboard/users",
         name:"users",
         component: ()=> import('../../views/users/index.vue')

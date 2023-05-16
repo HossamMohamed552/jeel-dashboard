@@ -30,7 +30,25 @@
     "infoDashBoard": "لوحة المعلومات",
     "reports": "التقارير"
   },
+  "TABLE_FIELDS": {
+    "id": "التسلسل",
+    "name": "الإسم",
+    "description": "الوصف",
+    "actions": "الإجراء"
+  },
+  "CONTROLS": {
+    "detailBtn": "تفاصيل",
+    "editBtn": "تعديل",
+    "deleteBtn": "حذف"
+  },
+  "ROLES": {
+    "ADD_NEW": "إضافة صلاحية",
+    "description": "الوصف"
+  },
   "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}",
   "GLOBAL_SAVE": "حفظ",
-  "GLOBAL_CANCEL": "إلغاء"
+  "GLOBAL_CANCEL": "إلغاء",
+  "GLOBAL_CONFIRM": "نعم, متأكد",
+  "GLOBALAddAll": "إضافه الكل",
+  "GLOBALRemoveAll": "إزاله الكل"
 }

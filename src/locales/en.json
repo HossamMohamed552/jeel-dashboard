@@ -22,5 +22,20 @@
     "infoDashBoard": "infoDashBoard",
     "reports": "reports"
   },
+  "TABLE_FIELDS": {
+    "id": "id",
+    "name": "name",
+    "description": "description",
+    "actions": "actions"
+  },
+  "CONTROLS": {
+    "detailBtn": "detailBtn",
+    "editBtn": "editBtn",
+    "deleteBtn": "deleteBtn"
+  },
+  "ROLES": {
+    "ADD_NEW": "ADD_NEW",
+    "description": "description"
+  },
   "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}"
 }
