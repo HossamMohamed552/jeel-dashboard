@@ -7,7 +7,7 @@ export const getSingleRoleRequest = (params) => ({
   method: 'get',
   url: `roles/${params}`,
 })
-export const PutRoleRequest = (params,data) => ({
+export const putRoleRequest = (params,data) => ({
   method: 'put',
   url: `roles/${params}`,
   config: {

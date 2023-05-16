@@ -14,6 +14,7 @@
            :content-message-question="'هل انت متأكد من حذف الصلاحية'"
            :showModal="showModal"
            @cancel="cancel($event)"
+           :is-warning="true"
            @cancelWithConfirm="cancelWithConfirm($event)"/>
   </section>
 </template>
@@ -68,14 +69,11 @@ export default {
     },
     detailItem($event) {
       this.$router.push(`/dashboard/role/show/${$event}`)
-      console.log('detailItem', $event)
     },
     editItem($event) {
       this.$router.push(`/dashboard/role/edit/${$event}`)
-      console.log('editItem', $event)
     },
     deleteItem($event) {
-      console.log('deleteItem', $event)
       this.itemId = $event
       this.showModal = true
     },

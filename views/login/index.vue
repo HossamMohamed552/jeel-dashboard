@@ -24,7 +24,6 @@ export default {
   methods:{
     ...mapActions(['setUser']),
     handleLogin($event){
-      console.log('$event',$event)
       this.loading = true
       this.ApiService(postLoginRequest($event)).then((response)=>{
         response.data.code === 200 ? this.loading = false : this.loading = true

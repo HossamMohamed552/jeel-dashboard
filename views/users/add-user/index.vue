@@ -31,9 +31,7 @@ export default {
       });
     },
     handleAddEditUser(userFormData) {
-      console.log("USER: ", userFormData);
       this.ApiService(postAddUserRequest(userFormData)).then((response) => {
-        console.log(response, "USER REsponse++>");
         //***when success remove the comment below*****
         //this.$router.push("/dashboard/users")
       });

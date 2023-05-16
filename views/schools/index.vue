@@ -45,7 +45,6 @@ export default {
     this.ApiService(getSchoolsRequest()).then((response) => {
       this.schoolsList = response.data.data
       this.totalNumber = response.data.meta.total
-      console.log('response', response)
     })
   }
 

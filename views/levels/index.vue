@@ -43,7 +43,6 @@ export default {
     this.ApiService(getLevelsRequest()).then((response) => {
       this.levelsList = response.data.data
       this.totalNumber = response.data.meta.total
-      console.log('response', response)
     })
   }
 

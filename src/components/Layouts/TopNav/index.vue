@@ -90,7 +90,6 @@ export default {
   },
   methods: {
     checkRoutes() {
-      console.log()
       if (this.$route.name !== 'main') {
         this.showNavigationBar = true
       } else {

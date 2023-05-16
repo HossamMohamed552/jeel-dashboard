@@ -45,6 +45,21 @@ const protectedRoutes = [
         component: ()=> import('../../views/country/index.vue')
       },
       {
+        path:"/dashboard/country/add",
+        name:"country",
+        component: ()=> import('../../views/country/add-country/index.vue')
+      },
+      {
+        path:"/dashboard/country/edit/:id",
+        name:"country",
+        component: ()=> import('../../views/country/edit-country/index.vue')
+      },
+      {
+        path:"/dashboard/country/show/:id",
+        name:"country",
+        component: ()=> import('../../views/country/view-country/index.vue')
+      },
+      {
         path:"/dashboard/school-group",
         name:"school-group",
         component: ()=> import('../../views/school-group/index.vue')

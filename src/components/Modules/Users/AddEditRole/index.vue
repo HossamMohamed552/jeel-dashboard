@@ -2,7 +2,7 @@
   <div class="add-edit-role">
     <div class="container-fluid custom-container">
       <div class="add-edit-role-form">
-          <h3>{{ $route.params.id ? $t("ROLES.EDIT") : $t("ROLES.ADD_NEW") }}</h3>
+        <h3>{{ $route.params.id ? $t("ROLES.EDIT") : $t("ROLES.ADD_NEW") }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditRoleForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -43,20 +43,24 @@
                   </b-col>
                   <b-col lg="2">
                     <div class="buttons">
-                     <div>
-                       <Button custom-class="transparent-btn rounded-btn all-add" @click="addAllPermission">
-                         {{$t('GLOBALAddAll')}}
-                       </Button>
-                       <Button custom-class="transparent-btn rounded-btn all-add" @click="removeAllPermission">
-                         {{$t('GLOBALRemoveAll')}}
-                       </Button>
-                     </div>
+                      <div>
+                        <Button custom-class="transparent-btn rounded-btn all-add"
+                                @click="addAllPermission">
+                          {{ $t('GLOBALAddAll') }}
+                        </Button>
+                        <Button custom-class="transparent-btn rounded-btn all-add"
+                                @click="removeAllPermission">
+                          {{ $t('GLOBALRemoveAll') }}
+                        </Button>
+                      </div>
                     </div>
                   </b-col>
                   <b-col lg="5">
-                    <div class="hold-permissions" v-if="finalSelected && Array.from(finalSelected).length > 0">
+                    <div class="hold-permissions"
+                         v-if="finalSelected && Array.from(finalSelected).length > 0">
                       <label v-for="permissionItem in finalSelected" class="permission-item">
-                        <b-form-checkbox v-model="permissionSelected" :value="permissionItem.id" @change="showPermissionItemsSelected()">
+                        <b-form-checkbox v-model="permissionSelected" :value="permissionItem.id"
+                                         @change="showPermissionItemsSelected()">
                           {{ permissionItem.name }}
                         </b-form-checkbox>
                       </label>
@@ -92,8 +96,11 @@ import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import CheckboxField from "@/components/Shared/CheckboxField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import {getSingleRoleRequest} from "@/api/role";
+import Modal from "@/components/Shared/Modal/index.vue";
+
 export default {
   components: {
+    Modal,
     TextField,
     TextAreaField,
     CheckboxField,
@@ -118,11 +125,11 @@ export default {
         permissions: [],
         code: ""
       },
-      finalSelected:[]
+      finalSelected: []
     };
   },
-  watch:{
-    'createRole.name'(newVal){
+  watch: {
+    'createRole.name'(newVal) {
       this.createRole.code = newVal
     }
   },
@@ -132,17 +139,17 @@ export default {
       this.finalSelected = this.permission.filter((item) => {
         return this.permissionSelected.includes(item.id)
       })
-       this.finalSelected.forEach((item)=>{
-         this.createRole.permissions.push(item.id)
+      this.finalSelected.forEach((item) => {
+        this.createRole.permissions.push(item.id)
       })
     },
-    addAllPermission(){
-      this.permission.forEach((item)=>{
+    addAllPermission() {
+      this.permission.forEach((item) => {
         this.permissionSelected.push(item.id)
       })
       this.showPermissionItemsSelected()
     },
-    removeAllPermission(){
+    removeAllPermission() {
       this.permissionSelected = []
       this.showPermissionItemsSelected()
     },
@@ -150,22 +157,21 @@ export default {
       this.$refs.addEditRoleForm.validate().then((success) => {
         if (!success) return;
       });
-      if(this.$route.params.id){
-        this.$emit('handleEditRole',this.createRole)
+      if (this.$route.params.id) {
+        this.$emit('handleEditRole', this.createRole)
       } else {
-        this.$emit('handleAddRole',this.createRole)
+        this.$emit('handleAddRole', this.createRole)
       }
     },
     handleCancel() {
       this.$emit("handleCancel");
     },
-    getRoleToEdit(){
-      if (this.$route.params.id){
-        this.ApiService(getSingleRoleRequest(this.$route.params.id)).then((response)=>{
+    getRoleToEdit() {
+      if (this.$route.params.id) {
+        this.ApiService(getSingleRoleRequest(this.$route.params.id)).then((response) => {
           this.createRole = response.data.data
           this.permissionSelected = this.createRole.permissions.map((item) => item.id)
-          console.log('this.createRole.permissions', this.permissionSelected)
-        }).then(()=>{
+        }).then(() => {
           this.showPermissionItemsSelected()
         })
       }

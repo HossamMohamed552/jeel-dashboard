@@ -144,7 +144,6 @@
           <span class="d-none"></span>
         </template>
         <template #cell(actions)="data">
-
           <b-button
             variant="light"
             size="sm"
