@@ -1,7 +1,7 @@
 let routesUsers = [
   {
     name: 'صلاحيات النظام',
-    path: '/dashboard/permission',
+    path: '/dashboard/role',
     icon: require('@/assets/images/icons/permissions.png')
   },
   {
@@ -75,7 +75,7 @@ let routesContent = [
   },
   {
     name: 'المراحل',
-    path: '/dashboard/steps',
+    path: '/dashboard/levels',
     icon: require('@/assets/images/icons/steps.svg')
   }
 ]

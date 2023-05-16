@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="94" height="94" viewBox="0 0 94 94">
+  <g id="Group_113" data-name="Group 113" transform="translate(-908 -355)">
+    <circle id="Ellipse_3" data-name="Ellipse 3" cx="47" cy="47" r="47" transform="translate(908 355)" fill="rgba(255,0,0,0.1)"/>
+    <g id="Layer_2" data-name="Layer 2" transform="translate(933.155 380.154)">
+      <g id="invisible_box" data-name="invisible box" transform="translate(-0.3 -0.3)">
+        <rect id="Rectangle_3810" data-name="Rectangle 3810" width="42" height="42" transform="translate(0.145 0.145)" fill="none"/>
+      </g>
+      <g id="icons_Q2" data-name="icons Q2" transform="translate(3.74 1.939)">
+        <path id="Path_1736" data-name="Path 1736" d="M39.209,8.221a2.071,2.071,0,0,1-.54,1.44,1.53,1.53,0,0,1-1.26.54h-10.8a1.8,1.8,0,0,1-1.8-1.8V6.6H19.4V8.4a1.8,1.8,0,0,1-1.8,1.8H6.89A1.891,1.891,0,0,1,5,8.581a2.071,2.071,0,0,1,.54-1.44A1.53,1.53,0,0,1,6.8,6.6h9V4.8A1.8,1.8,0,0,1,17.6,3h9a1.8,1.8,0,0,1,1.8,1.8V6.6h8.912A1.891,1.891,0,0,1,39.209,8.221Z" transform="translate(-4.999 -3)" fill="red"/>
+        <path id="Path_1737" data-name="Path 1737" d="M32.245,16.62,30.085,38.406H14.961L12.8,16.62A1.8,1.8,0,0,0,11,15h0a1.8,1.8,0,0,0-1.8,1.981L11.54,40.387a1.8,1.8,0,0,0,1.8,1.62H31.705a1.8,1.8,0,0,0,1.8-1.62l2.341-23.406A1.8,1.8,0,0,0,34.046,15h0A1.8,1.8,0,0,0,32.245,16.62Z" transform="translate(-5.417 -4.197)" fill="red"/>
+      </g>
+    </g>
+  </g>
+</svg>

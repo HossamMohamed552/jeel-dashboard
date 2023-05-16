@@ -1,6 +1,7 @@
 @import "./scss/_variables";
 @import "./scss/__componants";
 @import "./scss/__global";
+@import "./scss/_mixin";
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
@@ -22,4 +23,27 @@
     border-bottom: none;
     color: #fff;
   }
+}
+.flex-center{
+  @include flexCenter(center)
+}
+
+// style scroll bar general
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $color-notify;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $color-primary;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(118, 35, 108, 0.75);
 }

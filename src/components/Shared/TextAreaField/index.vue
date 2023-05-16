@@ -5,6 +5,7 @@
       v-model="innerValue"
       v-bind="$attrs"
       v-on="$listeners"
+      class="custom-text-area"
       :class="{
         'input-disabled': $attrs.disabled,
         'is-invalid': invalid & errors.length,
