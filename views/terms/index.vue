@@ -42,7 +42,6 @@ export default {
     this.ApiService(getTermsRequest()).then((response) => {
       this.termsList = response.data.data
       this.totalNumber = response.data.meta.total
-      console.log('response', response)
     })
   }
 

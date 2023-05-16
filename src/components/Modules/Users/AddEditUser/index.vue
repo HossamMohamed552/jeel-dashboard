@@ -153,7 +153,6 @@ export default {
         if (!success) return;
         this.handleUploadImage();
         const formData = new FormData();
-        console.log(this.formValues.first_name)
         formData.append("first_name",JSON.stringify(this.formValues.first_name));
         formData.append("last_name",JSON.stringify(this.formValues.last_name));
         formData.append("email",JSON.stringify(this.formValues.email));

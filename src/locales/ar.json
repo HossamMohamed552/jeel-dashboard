@@ -34,6 +34,7 @@
     "id": "التسلسل",
     "name": "الإسم",
     "description": "الوصف",
+    "code": "كود",
     "actions": "الإجراء"
   },
   "CONTROLS": {
@@ -46,6 +47,14 @@
     "EDIT": "تعديل الصلاحية",
     "name": "إسم الصلاحية",
     "description": "الوصف"
+  },
+  "COUNTRY": {
+    "ADD_NEW": "إضافة دولة جديدة",
+    "EDIT": "تعديل الدولة",
+    "name": "إسم الدولة",
+    "countryName": "إسم الدولة",
+    "countryCode": "كود الدولة",
+    "showDetails": "عرض تفاصيل الدولة"
   },
   "permissions": "الصلاحيات",
   "showDetails": "عرض تفاصيل المستخدم",

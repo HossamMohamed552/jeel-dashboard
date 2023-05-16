@@ -6,17 +6,17 @@
         <div class="flexContent">
           <div>
             <div class="text-center hold-icon">
-              <img src="@/assets/images/icons/delete.svg">
+              <img src="@/assets/images/icons/delete.svg" v-show="isWarning">
+              <img src="@/assets/images/icons/success.svg" v-show="isSuccess">
             </div>
             <div class="text-center">
-              <p class="confirm-message">{{ contentMessage }}</p>
-              <p class="confirm-message-question">{{ contentMessageQuestion }}</p>
+              <p class="confirm-message" v-if="contentMessage">{{ contentMessage }}</p>
+              <p class="confirm-message-question" v-if="contentMessageQuestion">{{ contentMessageQuestion }}</p>
             </div>
           </div>
-
         </div>
         <template>
-         <div class="controls">
+         <div class="controls" v-if="isWarning">
            <Button :custom-class="'rounded-btn'" @click="cancelWithConfirm()">
              {{$t('GLOBAL_CONFIRM')}}
            </Button>
@@ -47,6 +47,14 @@ export default {
     }
   },
   props: {
+    isSuccess:{
+      type:Boolean,
+      default: false
+    },
+    isWarning:{
+      type:Boolean,
+      default: false
+    },
     showModal: {
       type: Boolean,
       default: false

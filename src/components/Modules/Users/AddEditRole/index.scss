@@ -61,8 +61,3 @@
   height: 100%;
   @include flexCenter(center)
 }
-.hold-btns-form{
-  width: 100%;
-  margin-top: 3rem;
-  @include flexCenter(flex-end)
-}

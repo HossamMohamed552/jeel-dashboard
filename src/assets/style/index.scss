@@ -2,6 +2,9 @@
 @import "./scss/__componants";
 @import "./scss/__global";
 @import "./scss/_mixin";
+.content{
+  min-height: 100vh;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;

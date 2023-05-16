@@ -10,7 +10,7 @@
 </template>
 <script>
 import AddEditRole from "@/components/Modules/Users/AddEditRole/index.vue";
-import {PutRoleRequest} from "@/api/role";
+import {putRoleRequest} from "@/api/role";
 import {getPermissionRequest} from "@/api/permission";
 
 export default {
@@ -32,8 +32,7 @@ export default {
       });
     },
     handleEditRole($event) {
-      this.ApiService(PutRoleRequest(this.$route.params.id, $event)).then((response) => {
-        console.log('response', response)
+      this.ApiService(putRoleRequest(this.$route.params.id, $event)).then((response) => {
         this.$router.push("/dashboard/role");
       })
     },

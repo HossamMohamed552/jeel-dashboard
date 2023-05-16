@@ -44,7 +44,6 @@ export default {
     }
   },
   mounted() {
-    console.log('this.$route.params.id', this.$route.params.id)
     this.ApiService(getSingleRoleRequest(this.$route.params.id)).then((response)=>{
       this.role = response.data.data
     })
