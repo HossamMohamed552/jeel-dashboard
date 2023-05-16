@@ -67,9 +67,11 @@ export default {
       console.log('$event', $event)
     },
     detailItem($event) {
+      this.$router.push(`/dashboard/role/show/${$event}`)
       console.log('detailItem', $event)
     },
     editItem($event) {
+      this.$router.push(`/dashboard/role/edit/${$event}`)
       console.log('editItem', $event)
     },
     deleteItem($event) {
