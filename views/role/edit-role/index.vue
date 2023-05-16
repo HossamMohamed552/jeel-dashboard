@@ -1,22 +1,21 @@
 <template>
-  <div class="add-role">
+  <section class="edit-role">
     <AddEditRole
       :loading="loading"
       :permission="permission"
-      @handleAddRole="handleAddRole($event)"
+      @handleEditRole="handleEditRole($event)"
       @handleCancel="handleCancel"
     />
-  </div>
+  </section>
 </template>
 <script>
 import AddEditRole from "@/components/Modules/Users/AddEditRole/index.vue";
+import {PutRoleRequest} from "@/api/role";
 import {getPermissionRequest} from "@/api/permission";
-import {postRolesRequest} from "@/api/role"
 
 export default {
-  components: {
-    AddEditRole,
-  },
+  name: "index",
+  components: {AddEditRole},
   data() {
     return {
       permission: [],
@@ -32,9 +31,8 @@ export default {
         this.permission = response.data.data;
       });
     },
-
-    handleAddRole($event) {
-      this.ApiService(postRolesRequest($event)).then((response) => {
+    handleEditRole($event) {
+      this.ApiService(PutRoleRequest(this.$route.params.id, $event)).then((response) => {
         console.log('response', response)
         this.$router.push("/dashboard/role");
       })
@@ -43,7 +41,8 @@ export default {
       this.$router.push("/dashboard/role");
     },
   },
-};
+}
 </script>
 <style scoped lang="scss">
+
 </style>

@@ -2,7 +2,7 @@
   <div class="add-edit-role">
     <div class="container-fluid custom-container">
       <div class="add-edit-role-form">
-        <h3>{{ $t("ROLES.ADD_NEW") }}</h3>
+          <h3>{{ $route.params.id ? $t("ROLES.EDIT") : $t("ROLES.ADD_NEW") }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditRoleForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -74,7 +74,7 @@
                       :disabled="invalid || Array.from(permissionSelected).length <= 0"
                       custom-class="submit-btn"
                     >
-                      {{ $t("GLOBAL_SAVE") }}
+                      {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
                     </Button>
                   </div>
                 </b-row>
@@ -91,6 +91,7 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import CheckboxField from "@/components/Shared/CheckboxField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
+import {getSingleRoleRequest} from "@/api/role";
 export default {
   components: {
     TextField,
@@ -111,7 +112,6 @@ export default {
   data() {
     return {
       permissionSelected: [],
-      searchInPermission: '',
       createRole: {
         name: "",
         description: "three",
@@ -150,12 +150,30 @@ export default {
       this.$refs.addEditRoleForm.validate().then((success) => {
         if (!success) return;
       });
-      this.$emit('handleAddEditRole',this.createRole)
+      if(this.$route.params.id){
+        this.$emit('handleEditRole',this.createRole)
+      } else {
+        this.$emit('handleAddRole',this.createRole)
+      }
     },
     handleCancel() {
       this.$emit("handleCancel");
     },
+    getRoleToEdit(){
+      if (this.$route.params.id){
+        this.ApiService(getSingleRoleRequest(this.$route.params.id)).then((response)=>{
+          this.createRole = response.data.data
+          this.permissionSelected = this.createRole.permissions.map((item) => item.id)
+          console.log('this.createRole.permissions', this.permissionSelected)
+        }).then(()=>{
+          this.showPermissionItemsSelected()
+        })
+      }
+    }
   },
+  mounted() {
+    this.getRoleToEdit()
+  }
 };
 </script>
 <style scoped lang="scss">

@@ -35,7 +35,10 @@
   },
   "ROLES": {
     "ADD_NEW": "ADD_NEW",
+    "name": "name",
     "description": "description"
   },
+  "permissions": "permissions",
+  "showDetails": "showDetails",
   "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}"
 }

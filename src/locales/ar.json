@@ -43,10 +43,15 @@
   },
   "ROLES": {
     "ADD_NEW": "إضافة صلاحية",
+    "EDIT": "تعديل الصلاحية",
+    "name": "إسم الصلاحية",
     "description": "الوصف"
   },
+  "permissions": "الصلاحيات",
+  "showDetails": "عرض تفاصيل المستخدم",
   "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}",
   "GLOBAL_SAVE": "حفظ",
+  "GLOBAL_EDIT": "تعديل",
   "GLOBAL_CANCEL": "إلغاء",
   "GLOBAL_CONFIRM": "نعم, متأكد",
   "GLOBALAddAll": "إضافه الكل",
