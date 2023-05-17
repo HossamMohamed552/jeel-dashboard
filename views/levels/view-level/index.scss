@@ -1,0 +1,12 @@
+@import "src/assets/style/scss/_mixin";
+@import "src/assets/style/scss/_variables";
+.show-level{
+  @include styleViewList;
+  min-height: 50vh;
+  .heading{
+    margin-bottom: 3.125rem;
+  }
+  .hold-fields{
+    margin-bottom: 4rem;
+  }
+}

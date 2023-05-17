@@ -81,9 +81,10 @@ export default {
       this.showModal = $event
     },
     cancelWithConfirm() {
-      this.ApiService(deleteRoleRequest(this.itemId))
+      this.ApiService(deleteRoleRequest(this.itemId)).then(()=>{
+        this.getRoles()
+      })
       this.cancel()
-      this.getRoles()
     }
   },
   mounted() {

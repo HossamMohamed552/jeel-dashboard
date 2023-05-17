@@ -99,8 +99,9 @@ export default {
       this.showModal = $event
     },
     cancelWithConfirm() {
-      this.ApiService(deleteSchoolGroupRequest(this.itemId))
-      this.getSchoolGroups()
+      this.ApiService(deleteSchoolGroupRequest(this.itemId)).then(()=>{
+        this.getSchoolGroups()
+      })
       this.cancel()
     }
   },

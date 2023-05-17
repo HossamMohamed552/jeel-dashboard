@@ -20,6 +20,7 @@
     border-collapse: collapse;
     border-radius: 1.2rem;
     overflow: hidden;
+    min-height: 200px;
   }
   .thead-gradient{
     background: linear-gradient(to left, $color-primary,$color-notify);
