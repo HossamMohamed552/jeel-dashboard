@@ -33,9 +33,12 @@
   "TABLE_FIELDS": {
     "id": "التسلسل",
     "name": "الإسم",
+    "email": "البريد الإلكترونى",
     "description": "الوصف",
     "code": "كود",
-    "actions": "الإجراء"
+    "country": "الدولة",
+    "actions": "الإجراء",
+    "type": "النوع"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -55,6 +58,20 @@
     "countryName": "إسم الدولة",
     "countryCode": "كود الدولة",
     "showDetails": "عرض تفاصيل الدولة"
+  },
+  "GROUP": {
+    "ADD_NEW": "إضافة مجموعة جديدة",
+    "EDIT": "تعديل المجموعة المدرسية",
+    "name": "اسم المجموعة",
+    "type": "نوع المجموعة",
+    "music": "الصوت",
+    "email": "البريد الإلكترونى",
+    "status": "الحالة",
+    "owner": "إسم المالك",
+    "country": "إسم الدولة",
+    "selectUser": "إختر إسم المالك",
+    "selectCountry": "إختر إسم الدولة",
+    "showDetails": "عرض تفاصيل المجموعة"
   },
   "permissions": "الصلاحيات",
   "showDetails": "عرض تفاصيل المستخدم",

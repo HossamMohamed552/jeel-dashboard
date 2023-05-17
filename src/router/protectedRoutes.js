@@ -36,7 +36,7 @@ const protectedRoutes = [
       },
       {
         path:"/dashboard/users/add",
-        name:"add-user",
+        name:"add-users",
         component: ()=> import('../../views/users/add-user/index.vue')
       },
       {
@@ -46,23 +46,38 @@ const protectedRoutes = [
       },
       {
         path:"/dashboard/country/add",
-        name:"country",
+        name:"add-country",
         component: ()=> import('../../views/country/add-country/index.vue')
       },
       {
         path:"/dashboard/country/edit/:id",
-        name:"country",
+        name:"edit-country",
         component: ()=> import('../../views/country/edit-country/index.vue')
       },
       {
         path:"/dashboard/country/show/:id",
-        name:"country",
+        name:"show-country",
         component: ()=> import('../../views/country/view-country/index.vue')
       },
       {
         path:"/dashboard/school-group",
         name:"school-group",
         component: ()=> import('../../views/school-group/index.vue')
+      },
+      {
+        path:"/dashboard/school-group/add",
+        name:"add-school-group",
+        component: ()=> import('../../views/school-group/add-school-group/index.vue')
+      },
+      {
+        path:"/dashboard/school-group/edit/:id",
+        name:"edit-school-group",
+        component: ()=> import('../../views/school-group/edit-school-group/index.vue')
+      },
+      {
+        path:"/dashboard/school-group/show/:id",
+        name:"show-school-group",
+        component: ()=> import('../../views/school-group/view-school-group/index.vue')
       },
       {
         path:"/dashboard/schools",
