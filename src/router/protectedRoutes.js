@@ -90,6 +90,21 @@ const protectedRoutes = [
         component: ()=> import('../../views/levels/index.vue')
       },
       {
+        path:"/dashboard/levels/add",
+        name:"add-levels",
+        component: ()=> import('../../views/levels/add-level/index.vue')
+      },
+      {
+        path:"/dashboard/levels/edit/:id",
+        name:"edit-levels",
+        component: ()=> import('../../views/levels/edit-level/index.vue')
+      },
+      {
+        path:"/dashboard/levels/show/:id",
+        name:"show-levels",
+        component: ()=> import('../../views/levels/view-level/index.vue')
+      },
+      {
         path:"/dashboard/terms",
         name:"terms",
         component: ()=> import('../../views/terms/index.vue')

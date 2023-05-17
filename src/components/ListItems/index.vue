@@ -80,12 +80,6 @@
         <template #head(logo)="data">
           <span>{{ data.field.key === 'logo' ? 'الشعار' : data.field.label }}</span>
         </template>
-        <template #head(updated_at)="data">
-          <span class="d-none"></span>
-        </template>
-        <template #head(created_at)="data">
-          <span class="d-none"></span>
-        </template>
         <template #head(is_super_admin)="data">
           <span class="d-none"></span>
         </template>
@@ -105,9 +99,6 @@
           <span class="d-none"></span>
         </template>
 
-        <template #cell(updated_at)="data">
-          <span class="d-none"></span>
-        </template>
         <template #cell(avatar)="data">
           <div class="hold-image">
             <img class="image-in-table" :src="data.value">

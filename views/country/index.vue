@@ -83,9 +83,10 @@ export default {
       this.showModal = $event
     },
     cancelWithConfirm() {
-      this.ApiService(deleteCountryRequest(this.itemId))
+      this.ApiService(deleteCountryRequest(this.itemId)).then(()=>{
+        this.getCountries()
+      })
       this.cancel()
-      this.getCountries()
     }
   },
   mounted() {
