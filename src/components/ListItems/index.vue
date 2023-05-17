@@ -113,11 +113,14 @@
             <img class="image-in-table" :src="data.value">
           </div>
         </template>
+        <template #cell(type)="data">
+          <span>{{ data.item.type === 'international' ? 'دولى' : 'محلى'}}</span>
+        </template>
         <template #cell(status)="data">
-          <span>{{ data.value.status === 1 ? "مفتوح" : "مغلق" }}</span>
+          <span>{{ data.item.status === 1 ? "مفعل" : "غير مفعل" }}</span>
         </template>
         <template #cell(music_status)="data">
-          <span>{{ data.value.music_status === 1 ? "متاح" : "غير متاح" }}</span>
+          <span>{{ data.item.music_status === 1 ? "متاح" : "غير متاح"}}</span>
         </template>
         <template #cell(country)="data">
           <span>{{ data.value.name }}</span>
@@ -125,11 +128,8 @@
         <template v-slot:cell(logo)="data">
           <img class="img-fluid img-thumbnail" :src="data.logo"/>
         </template>
-        <template #cell(owner)="data">
-          <span>{{ data.value.email }}</span>
-        </template>
-        <template #cell(created_at)="data">
-          <span class="d-none"></span>
+        <template #cell(email.owner)="data">
+          <span>{{ data.item.owner.email}}</span>
         </template>
         <template #cell(is_super_admin)="data">
           <span class="d-none"></span>
@@ -142,22 +142,6 @@
         </template>
         <template #cell(last_attempt)="data">
           <span class="d-none"></span>
-        </template>
-        <template #cell(actions)="data">
-          <b-button
-            variant="light"
-            size="sm"
-            class="mr-1"
-          >
-            <b-img :src="editIcon"></b-img>
-          </b-button>
-          <b-button
-            variant="light"
-            size="sm"
-            @click="handleDeleteCategory(row.item)"
-          >
-            <b-img :src="deleteIcon"></b-img>
-          </b-button>
         </template>
         <template #cell(actions)="data">
           <!--b -dropdown -->
@@ -188,8 +172,6 @@
   </section>
 </template>
 <script>
-import {getAllUsersRequest} from "@/api/user";
-
 export default {
   name: "index",
   data() {
