@@ -22,6 +22,7 @@ export const FieldMixin = {
   },
   data: () => ({
     innerValue: "",
+    customFormat:"DD-MM-YYYY"
   }),
   watch: {
     // Handles internal model changes.

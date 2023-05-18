@@ -1,0 +1,20 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+
+.add-edit-term-form {
+  @include styleViewList;
+  min-height: 70vh;
+}
+::v-deep{
+  .hold-field{
+    label{
+      color: $color-primary;
+    }
+  }
+  .vs__dropdown-toggle{
+    padding: 0 1.3rem;
+  }
+  .vs__selected-options{
+    height: 44px;
+  }
+}

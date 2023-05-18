@@ -116,11 +116,20 @@
         <template #cell(country)="data">
           <span>{{ data.value.name }}</span>
         </template>
-        <template v-slot:cell(logo)="data">
-          <img class="img-fluid img-thumbnail" :src="data.logo"/>
-        </template>
         <template #cell(email.owner)="data">
           <span>{{ data.item.owner.email}}</span>
+        </template>
+        <template #cell(logo)="data">
+          <img :src="data.item.logo">
+        </template>
+        <template #cell(school_type)="data">
+          <span>{{ data.item.school_type.name}}</span>
+        </template>
+        <template #cell(school_group)="data">
+          <span>{{ data.item.school_group.name}}</span>
+        </template>
+        <template #cell(package)="data">
+          <span>{{ data.item.package.name}}</span>
         </template>
         <template #cell(is_super_admin)="data">
           <span class="d-none"></span>
@@ -135,8 +144,6 @@
           <span class="d-none"></span>
         </template>
         <template #cell(actions)="data">
-          <!--b -dropdown -->
-          <!--          data.item.id-->
           <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
             <template #button-content>
               <img src="@/assets/images/icons/actions.svg">

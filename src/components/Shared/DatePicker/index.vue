@@ -10,6 +10,7 @@
       v-model="innerValue"
       v-bind="$attrs"
       v-on="$listeners"
+      :format="customFormat"
       :class="{
         'input-disabled': $attrs.disabled,
         'is-invalid': invalid & errors.length,
@@ -31,6 +32,8 @@ export default {
   components: {
     DatePicker,
   },
+  methods:{
+  }
 };
 </script>
 

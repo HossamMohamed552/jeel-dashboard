@@ -18,7 +18,7 @@ let routesSchool = [
   },
   {
     name: 'قائمة المدارس',
-    path: '/dashboard/school-list',
+    path: '/dashboard/schools',
     icon: require('@/assets/images/icons/school-list.svg')
   },
   {
