@@ -1,0 +1,337 @@
+<template>
+  <div class="add-edit-school">
+    <div class="container-fluid custom-container">
+      <div class="add-edit-school-form">
+        <h3>{{ $route.params.id ? $t("SCHOOL.EDIT") : $t("SCHOOL.ADD_NEW") }}</h3>
+        <validation-observer v-slot="{ invalid }" ref="addEditSchoolForm">
+          <form @submit.prevent="onSubmit" class="mt-5">
+            <b-row>
+              <b-col lg="9" class="px-0 mb-3">
+                <div class="hold-field">
+                  <TextField
+                    v-model="createSchool.name"
+                    :label="$t('SCHOOL.name')"
+                    :name="$t('SCHOOL.name')"
+                    :rules="'required|min:3'"
+                  ></TextField>
+                </div>
+              </b-col>
+              <b-col lg="3" class="mb-3">
+                <div class="hold-field">
+                  <ValidationProvider v-slot="{errors, invalid}" rules="required">
+                    <label>{{ $t('SCHOOL.school_group') }}</label>
+                    <select v-model="createSchool.school_group_id"
+                            class="custom-selectBox form-control">
+                      <option value="''" selected disabled>{{ $t('SCHOOL.school_group') }}</option>
+                      <option v-for="schoolGroup in schoolGroups" :key="schoolGroup.id"
+                              :value="schoolGroup.id">
+                        {{ schoolGroup.name }}
+                      </option>
+                    </select>
+                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                      {{ error }}
+                    </b-form-invalid-feedback>
+                  </ValidationProvider>
+                </div>
+              </b-col>
+              <b-col lg="12">
+                <b-row>
+                  <b-col lg="9" class="px-0">
+                    <b-row>
+                      <b-col lg="6" class="mb-3">
+                        <div class="hold-field">
+                          <ValidationProvider v-slot="{errors, invalid}" rules="required">
+                            <label>{{ $t('SCHOOL.school_type') }}</label>
+                            <select v-model="createSchool.school_type_id"
+                                    class="custom-selectBox form-control">
+                              <option value="''" selected disabled>{{
+                                  $t('SCHOOL.school_type')
+                                }}
+                              </option>
+                              <option v-for="schoolType in schoolTypes" :key="schoolType.id"
+                                      :value="schoolType.id">
+                                {{ schoolType.name }}
+                              </option>
+                            </select>
+                            <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                              {{ error }}
+                            </b-form-invalid-feedback>
+                          </ValidationProvider>
+                        </div>
+                      </b-col>
+                      <b-col lg="6" class="mb-3">
+                        <div class="hold-field">
+                          <TextField
+                            v-model="createSchool.email"
+                            :label="$t('SCHOOL.email')"
+                            :name="$t('SCHOOL.email')"
+                            :rules="'email'"
+                          ></TextField>
+                        </div>
+                      </b-col>
+                      <b-col lg="6" class="mb-3">
+                        <div class="hold-field">
+                          <ValidationProvider v-slot="{errors, invalid}" rules="required">
+                            <label>{{ $t('SCHOOL.userName') }}</label>
+                            <select v-model="createSchool.admin_id"
+                                    class="custom-selectBox form-control">
+                              <option value="''" selected disabled>{{
+                                  $t('SCHOOL.userName')
+                                }}
+                              </option>
+                              <option v-for="user in users" :key="user.id"
+                                      :value="user.id">
+                                {{ user.name }}
+                              </option>
+                            </select>
+                            <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                              {{ error }}
+                            </b-form-invalid-feedback>
+                          </ValidationProvider>
+                        </div>
+                      </b-col>
+                      <b-col lg="6" class="mb-3">
+                        <div class="hold-field">
+                          <ValidationProvider v-slot="{errors, invalid}" rules="required">
+                            <label>{{ $t('SCHOOL.package') }}</label>
+                            <select v-model="createSchool.package_id"
+                                    class="custom-selectBox form-control">
+                              <option value="''" selected disabled>{{
+                                  $t('SCHOOL.package')
+                                }}
+                              </option>
+                              <option v-for="itemPackage in packages" :key="itemPackage.id"
+                                      :value="itemPackage.id">
+                                {{ itemPackage.name }}
+                              </option>
+                            </select>
+                            <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                              {{ error }}
+                            </b-form-invalid-feedback>
+                          </ValidationProvider>
+                        </div>
+                      </b-col>
+                      <b-col lg="6" class="mb-3">
+                        <div class="hold-field">
+                          <ValidationProvider v-slot="{errors, invalid}" rules="required">
+                            <b-form-group :label="$t('SCHOOL.status')" v-slot="{ ariaDescribedby }"
+                                          class="group-type">
+                              <b-form-radio v-model="createSchool.status" value="0"
+                                            name="group-status">غير
+                                مفعل
+                              </b-form-radio>
+                              <b-form-radio v-model="createSchool.status" value="1"
+                                            name="group-status">مفعل
+                              </b-form-radio>
+                            </b-form-group>
+                          </ValidationProvider>
+                        </div>
+                      </b-col>
+                      <b-col lg="6" class="mb-3">
+                        <div class="hold-field">
+                          <ValidationProvider v-slot="{errors, invalid}" rules="required">
+                            <b-form-group :label="$t('SCHOOL.music')" v-slot="{ ariaDescribedby }"
+                                          class="group-type">
+                              <b-form-radio v-model="createSchool.music_status" value="0"
+                                            name="group-music_type">غير متاح
+                              </b-form-radio>
+                              <b-form-radio v-model="createSchool.music_status" value="1"
+                                            name="group-music_type">
+                                متاح
+                              </b-form-radio>
+                            </b-form-group>
+                          </ValidationProvider>
+                        </div>
+                      </b-col>
+                      <b-col lg="6" class="mb-3">
+                        <div class="hold-field">
+                          <ValidationProvider v-slot="{errors, invalid}" rules="required">
+                            <label>
+                              {{ $t('SCHOOL.start_subscription') }}
+                            </label>
+                            <date-picker v-model="createSchool.startDate"
+                                         valueType="format"></date-picker>
+                          </ValidationProvider>
+                        </div>
+                      </b-col>
+                      <b-col lg="6" class="mb-3">
+                        <div class="hold-field">
+                          <ValidationProvider v-slot="{errors, invalid}" rules="required">
+                            <label>
+                              {{ $t('SCHOOL.end_subscription') }}
+                            </label>
+                            <date-picker v-model="createSchool.endDate"
+                                         valueType="format"></date-picker>
+                          </ValidationProvider>
+                        </div>
+                      </b-col>
+                    </b-row>
+                  </b-col>
+                  <b-col lg="3">
+                    <div class="hold-field mt-4">
+                      <ImageUploader
+                        :text="$t('SCHOOL.UPLOAD_IMAGE')"
+                        @imageUpload="handleUploadImage"
+                      />
+                    </div>
+                  </b-col>
+                </b-row>
+              </b-col>
+            </b-row>
+            <b-row>
+              <div class="hold-btns-form">
+                <Button @click="handleCancel" custom-class="cancel-btn margin">
+                  {{ $t("GLOBAL_CANCEL") }}
+                </Button>
+                <Button
+                  type="submit"
+                  :loading="loading"
+                  :disabled="invalid"
+                  custom-class="submit-btn"
+                >
+                  {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
+                </Button>
+              </div>
+            </b-row>
+          </form>
+        </validation-observer>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import TextField from "@/components/Shared/TextField/index.vue";
+import Button from "@/components/Shared/Button/index.vue";
+import {getSingleSchoolsRequest, postSchoolsRequest} from "@/api/school";
+import Modal from "@/components/Shared/Modal/index.vue";
+import {getPackagesRequest} from "@/api/packages";
+import {getSchoolGroupRequest} from "@/api/schoolGroup";
+import {getSchoolTypesRequest} from "@/api/schoolType"
+import DatePicker from "vue2-datepicker";
+import "vue2-datepicker/index.css";
+import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
+import {getAllUsersRequest} from "@/api/user";
+import axios from "axios";
+import VueCookies from "vue-cookies";
+
+export default {
+  components: {
+    ImageUploader,
+    Modal,
+    TextField,
+    Button,
+    DatePicker
+  },
+  props: {
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      schoolGroups: [],
+      packages: [],
+      schoolTypes: [],
+      users: [],
+      createSchool: {
+        name: "",
+        startDate: "",
+        endDate: "",
+        email: "",
+        school_group_id: "",
+        school_type_id: "",
+        admin_id: "",
+        package_id: "",
+        music_status: "",
+        status: "",
+        logo: null
+      },
+    };
+  },
+  methods: {
+    handleUploadImage(e) {
+      console.log(e.target.files[0])
+      if (e) this.createSchool.logo = e.target.files[0];
+      else return;
+    },
+    getAllPackages() {
+      this.ApiService(getPackagesRequest()).then((response) => {
+        this.packages = response.data.data
+      })
+    },
+    getAlSchoolGroups() {
+      this.ApiService(getSchoolGroupRequest()).then((response) => {
+        this.schoolGroups = response.data.data
+      })
+    },
+    getAllSchoolType() {
+      this.ApiService(getSchoolTypesRequest()).then((response) => {
+        this.schoolTypes = response.data.data
+      })
+    },
+    getAllUsers() {
+      this.ApiService(getAllUsersRequest()).then((response) => {
+        this.users = response.data.data
+      })
+    },
+    sendDataNewSchool(){
+      const formData = new FormData()
+      formData.append('name', this.createSchool.name)
+      formData.append('school_group_id', this.createSchool.school_group_id)
+      formData.append('status', this.createSchool.status)
+      formData.append('music_status', this.createSchool.music_status)
+      formData.append('admin_id', this.createSchool.admin_id)
+      formData.append('school_type_id', this.createSchool.school_type_id)
+      formData.append('subscription_start_date', this.createSchool.startDate)
+      formData.append('subscription_end_date', this.createSchool.endDate)
+      formData.append('package_id', this.createSchool.package_id)
+      formData.append('logo', this.createSchool.logo)
+      this.ApiService(postSchoolsRequest(formData)).then((res)=>{
+        console.log(res)
+      })
+      axios.post('/schools', formData, {
+        headers: {
+          Authorization: `Bearer ${VueCookies.get("token")}`,
+          locale: 'ar',
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then((response) => {
+        console.log(response)
+      }).then(()=>{
+        this.$router.push('/dashboard/schools')
+      })
+    },
+    onSubmit() {
+      this.$refs.addEditSchoolForm.validate().then((success) => {
+        if (!success) return;
+      });
+      if (this.$route.params.id) {
+        // this.$emit('handleEditSchool', this.createSchool)
+      } else {
+        this.sendDataNewSchool()
+      }
+    },
+    handleCancel() {
+      this.$emit("handleCancel");
+    },
+    getSchoolToEdit() {
+      if (this.$route.params.id) {
+        this.ApiService(getSingleSchoolsRequest(this.$route.params.id)).then((response) => {
+          this.createSchool = response.data.data
+        })
+      }
+    }
+  },
+  mounted() {
+    this.getSchoolToEdit()
+    this.getAllPackages()
+    this.getAlSchoolGroups()
+    this.getAllSchoolType()
+    this.getAllUsers()
+  }
+};
+</script>
+<style scoped lang="scss">
+@import "./index";
+</style>

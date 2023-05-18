@@ -33,12 +33,18 @@
   "TABLE_FIELDS": {
     "id": "التسلسل",
     "name": "الإسم",
+    "school_group": "اسم المجموعة",
     "email": "البريد الإلكترونى",
     "description": "الوصف",
     "code": "كود",
     "country": "الدولة",
     "actions": "الإجراء",
-    "type": "النوع"
+    "type": "النوع",
+    "logo": "الشعار",
+    "school_type": "نوع المدرسة",
+    "package": "الباقة",
+    "start_subscription": "بداية التعاقد",
+    "end_subscription": "نهاية التعاقد"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -73,12 +79,41 @@
     "selectCountry": "إختر إسم الدولة",
     "showDetails": "عرض تفاصيل المجموعة"
   },
+  "SCHOOL": {
+    "ADD_NEW": "إضافة مدرسة جديدة",
+    "EDIT": "تعديل مدرسة جديدة",
+    "name": "اسم المجموعة",
+    "type": "نوع المجموعة",
+    "music": "الصوت",
+    "email": "البريد الإلكترونى",
+    "status": "الحالة",
+    "owner": "إسم المالك",
+    "country": "إسم الدولة",
+    "selectUser": "إختر إسم المالك",
+    "selectCountry": "إختر إسم الدولة",
+    "showDetails": "عرض تفاصيل المجموعة",
+    "start_subscription": "بداية التعاقد",
+    "end_subscription": "نهاية التعاقد",
+    "school_type": "نوع المدرسة",
+    "school_group": "اسم المجموعة",
+    "package": "الباقة",
+    "UPLOAD_IMAGE": "صورة شعار المدرسة",
+    "userName": "إسم المستخدم"
+  },
   "LEVEL": {
     "ADD_NEW": "إضافة مرحلة دراسية جديدة",
     "EDIT": "تعديل مرحلة دراسية جديدة",
     "min_levels": "الحد الأدنى من المراحل في السنة",
     "showDetails": "عرض تفاصيل المرحلة الدراسية",
     "name": "اسم المرحلة"
+  },
+  "TERM":{
+    "ADD_NEW": "إضافة فصل دراسى جديد",
+    "EDIT": "تعديل فصل دراسى جديد",
+    "name": "اسم الفصل الدراسى",
+    "level": "اسم الصف",
+    "phases": "المراحل الدراسية",
+    "showDetails": "عرض تفاصيل فصل دراسى"
   },
   "permissions": "الصلاحيات",
   "showDetails": "عرض تفاصيل المستخدم",

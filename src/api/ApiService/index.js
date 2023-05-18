@@ -4,7 +4,8 @@ import store from "@/store";
 import VueCookies from "vue-cookies"
 
 axios.defaults.baseURL = process.env.VUE_APP_ADMIN_URL;
-export default function ApiService({method, url, config = {}}) {
+export default function ApiService({method, url, config = {},headers={}}) {
+  console.log('headers', headers)
   return axios({
     method,
     url,
@@ -16,7 +17,8 @@ export default function ApiService({method, url, config = {}}) {
     },
     headers: {
       Authorization: `Bearer ${VueCookies.get("token")}`,
-      locale: 'ar'
+      locale: 'ar',
+      ...headers.headers
     },
     ramsSerializer(params) {
       return qs.stringify(params, {arrayFormat: "comma"});

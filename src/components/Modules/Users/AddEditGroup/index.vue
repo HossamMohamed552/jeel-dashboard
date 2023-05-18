@@ -78,6 +78,9 @@
                         {{ user.name }}
                       </option>
                     </select>
+                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                      {{ error }}
+                    </b-form-invalid-feedback>
                   </ValidationProvider>
                 </div>
               </b-col>
@@ -91,6 +94,9 @@
                         {{ country.name }}
                       </option>
                     </select>
+                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                      {{ error }}
+                    </b-form-invalid-feedback>
                   </ValidationProvider>
                 </div>
               </b-col>

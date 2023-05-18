@@ -3,21 +3,21 @@
     <Modal :content-message="'تمت الإضافة بنجاح'"
            :showModal="showModal"
            :is-success="true"/>
-    <AddEditCountry
+    <AddEditTerms
       :loading="loading"
-      @handleEditCountry="handleEditCountry($event)"
+      @handleAddTerm="handleAddTerm($event)"
       @handleCancel="handleCancel"
     />
   </div>
 </template>
 <script>
 
-import AddEditCountry from "@/components/Modules/Users/AddEditCountry/index.vue";
+import AddEditTerms from "@/components/Modules/Users/AddEditTerms/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import {putCountryRequest} from "@/api/country";
+import {postTermsRequest} from "@/api/term";
 export default {
   name: "index",
-  components:{Modal, AddEditCountry},
+  components:{Modal, AddEditTerms},
   data(){
     return{
       loading: false,
@@ -25,19 +25,24 @@ export default {
     }
   },
   methods:{
-    handleEditCountry($event) {
+    handleAddTerm($event) {
       this.loading = true
-      this.ApiService(putCountryRequest(this.$route.params.id,$event)).then(() => {
+      this.showModal = true
+      this.ApiService(postTermsRequest($event)).then((response) => {
         this.loading = false
+        setTimeout(() => {
+          this.showModal = false
+        }, 3000)
       }).then(() => {
-        this.$router.push("/dashboard/country");
+        this.$router.push("/dashboard/terms");
       })
     },
     handleCancel() {
-      this.$router.push("/dashboard/country");
+      this.$router.push("/dashboard/terms");
     },
   }
 }
 </script>
 <style scoped lang="scss">
+@import "./index";
 </style>

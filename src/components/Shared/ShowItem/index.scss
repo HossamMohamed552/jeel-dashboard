@@ -5,8 +5,11 @@
   font-weight: 400;
   margin-bottom: 1.2rem;
 }
-.subtitle{
+.subtitle,.item{
   font-size: 1.3rem;
   color: $color-primary;
   font-weight: 700;
+}
+.item{
+  margin-left: 1rem;
 }

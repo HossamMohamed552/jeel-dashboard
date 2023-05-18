@@ -1,23 +1,23 @@
 <template>
-  <div class="add-country">
+  <div class="add-schools">
     <Modal :content-message="'تمت الإضافة بنجاح'"
            :showModal="showModal"
            :is-success="true"/>
-    <AddEditCountry
+    <AddEditSchool
       :loading="loading"
-      @handleEditCountry="handleEditCountry($event)"
+      @handleAddSchool="handleAddSchool($event)"
       @handleCancel="handleCancel"
     />
   </div>
 </template>
 <script>
 
-import AddEditCountry from "@/components/Modules/Users/AddEditCountry/index.vue";
+import AddEditSchool from "@/components/Modules/Users/AddEditSchool/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import {putCountryRequest} from "@/api/country";
+import {postSchoolsRequest} from "@/api/school";
 export default {
   name: "index",
-  components:{Modal, AddEditCountry},
+  components:{Modal, AddEditSchool},
   data(){
     return{
       loading: false,
@@ -25,19 +25,24 @@ export default {
     }
   },
   methods:{
-    handleEditCountry($event) {
+    handleAddSchool($event) {
       this.loading = true
-      this.ApiService(putCountryRequest(this.$route.params.id,$event)).then(() => {
+      this.showModal = true
+      this.ApiService(postSchoolsRequest($event)).then((response) => {
         this.loading = false
+        setTimeout(() => {
+          this.showModal = false
+        }, 3000)
       }).then(() => {
-        this.$router.push("/dashboard/country");
+        this.$router.push("/dashboard/schools");
       })
     },
     handleCancel() {
-      this.$router.push("/dashboard/country");
+      this.$router.push("/dashboard/schools");
     },
   }
 }
 </script>
 <style scoped lang="scss">
+@import "./index";
 </style>

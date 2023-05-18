@@ -86,7 +86,8 @@
               <b-col lg="6" class="mb-3">
                 <div class="hold-field mt-4">
                   <ImageUploader
-                    :text="$t('USERS.UPLOAD_IMAGE')"
+                    :name="'logoSchool'"
+                    :text="$t('SCHOOL.UPLOAD_IMAGE')"
                     @imageUpload="handleUploadImage"
                   />
                 </div>

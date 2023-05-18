@@ -1,24 +1,31 @@
 <template>
   <div>
     <div class="title">
-      {{title}}
+      {{ title }}
     </div>
-    <div class="subtitle">
-      {{subtitle}}
+    <div class="subtitle" v-if="subtitle">
+      {{ subtitle }}
     </div>
+    <slot class="subtitle" v-if="listItems">
+      <span class="item" v-for="item in listItems">{{item.name}}</span>
+    </slot>
   </div>
 </template>
 <script>
 export default {
   name: "index",
-  props:{
-    title:{
-      type:String,
-      default:''
+  props: {
+    title: {
+      type: String,
+      default: ''
     },
-    subtitle:{
-      type:String,
-      default:''
+    subtitle: {
+      type: String,
+      default: ''
+    },
+    listItems: {
+      type: Array,
+      default: []
     }
   },
 }
