@@ -38,7 +38,15 @@
     "name": "name",
     "description": "description"
   },
+  "QUESTIONS": {
+    "ADD_NEW": "Add new qustion",
+    "CHOOSE_Question_PATTERN": "Choose question pattern",
+    "QUESTION_PATTERN": "Question pattern",
+    "QUESTION_SUB_PATTERN": "Question sub pattern"
+  },
   "permissions": "permissions",
   "showDetails": "showDetails",
-  "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}"
+  "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}",
+  "GLOBAL_NEXT": "Next",
+  "GLOBAL_BACK": "Back"
 }

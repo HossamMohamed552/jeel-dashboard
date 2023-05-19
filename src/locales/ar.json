@@ -115,6 +115,27 @@
     "phases": "المراحل الدراسية",
     "showDetails": "عرض تفاصيل فصل دراسى"
   },
+  "QUESTIONS": {
+    "ADD_NEW": "إضافة سؤال جديد",
+    "CHOOSE_Question_PATTERN": "إختيار نمط السؤال",
+    "QUESTION_PATTERN": "نمط السؤال",
+    "QUESTION_SUB_PATTERN": "نمط السؤال الفرعي",
+    "STEP_ONE": "تعريف السؤال",
+    "STEP_TWO": "حقول السؤال",
+    "STEP_THREE": "مراجعة السؤال",
+    "ANSWER_TYPE": "نوع الإجابة",
+    "ANSWER": "الإجابة",
+    "HINT": "التلميح",
+    "QUESTION": "السؤال",
+    "LEVELS": "المرحلة الدراسية",
+    "TYPE": "نوع السؤال",
+    "LEARNING_METHOD": "أسلوب التعلم",
+    "BLOOM_CATEGORIES": "بلوم",
+    "QUESTIONDIFFICULTIES": "مستوى الصعوبة",
+    "LANGUAGE_SKILLS": "نوع المهارة اللغوية",
+    "LEARNING_PATH": "المسار",
+    "RIGHT_ANSWER": "الإجابة الصحيحة"
+  },
   "permissions": "الصلاحيات",
   "showDetails": "عرض تفاصيل المستخدم",
   "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}",
@@ -123,5 +144,7 @@
   "GLOBAL_CANCEL": "إلغاء",
   "GLOBAL_CONFIRM": "نعم, متأكد",
   "GLOBALAddAll": "إضافه الكل",
-  "GLOBALRemoveAll": "إزاله الكل"
+  "GLOBALRemoveAll": "إزاله الكل",
+  "GLOBAL_NEXT": "التالى",
+  "GLOBAL_BACK": "السابق"
 }

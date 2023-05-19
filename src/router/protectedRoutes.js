@@ -129,6 +129,16 @@ const protectedRoutes = [
         name:"show-terms",
         component: ()=> import('../../views/terms/view-terms/index.vue')
       },
+      {
+        path:"/dashboard/questions",
+        name:"questions",
+        component: ()=> import('../../views/questions/index.vue')
+      },
+      {
+        path:"/dashboard/questions/add",
+        name:"add-questions",
+        component: ()=> import('../../views/questions/add-questions/index.vue')
+      },
     ]
   }
 ];

@@ -22,10 +22,10 @@ export default {
     };
   },
   mounted() {
-    this.getSysteRoles();
+    this.getSystemRoles();
   },
   methods: {
-    getSysteRoles() {
+    getSystemRoles() {
       this.ApiService(getRolesRequest()).then((response) => {
         this.systemRoles = response.data.data;
       });
