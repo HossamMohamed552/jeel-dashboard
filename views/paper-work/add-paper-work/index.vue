@@ -29,7 +29,6 @@ export default{
   },
   methods: {
     handleAddPaperWork($event) {
-      console.log($event);
       const formData = new FormData()
       formData.append('name',$event.name);
       formData.append('type',$event.type);

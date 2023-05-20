@@ -32,7 +32,6 @@ export default{
     handleAddPath($event) {
       this.loading = true;
       this.showModal = true;
-      console.log($event);
       this.ApiService(postLearningPathRequest($event)).then((response) => {
         this.loading = false
         setTimeout(() => {
