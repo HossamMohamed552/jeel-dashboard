@@ -34,11 +34,16 @@ axios.interceptors.response.use(
       message: error.response.data.errors,
     });
     if (error.response.status === 401) {
+      localStorage.removeItem('user');
+      VueCookies.remove('token');
       store.dispatch("showToast", {
         type: "danger",
         message: error.response.data.errors,
       });
+      console.log('Ahmed');
       store.dispatch("removeUser");
+    
+
     }
 
     return Promise.reject(error);

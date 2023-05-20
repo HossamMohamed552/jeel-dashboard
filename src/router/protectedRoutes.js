@@ -130,6 +130,66 @@ const protectedRoutes = [
         component: ()=> import('../../views/terms/view-terms/index.vue')
       },
       {
+        path:"/dashboard/video",
+        name:"videos",
+        component: ()=> import('../../views/videos/index.vue')
+      },
+      {
+        path:"/dashboard/videos/add",
+        name:"add-videos",
+        component: ()=> import('../../views/videos/add-video/index.vue')
+      },
+      {
+        path:"/dashboard/videos/edit/:id",
+        name:"edit-videos",
+        component: ()=> import('../../views/videos/edit-video/index.vue')
+      },
+      {
+        path:"/dashboard/videos/show/:id",
+        name:"show-video",
+        component: ()=> import('../../views/videos/view-video/index.vue')
+      },
+      {
+        path:"/dashboard/path",
+        name:"paths",
+        component: ()=> import('../../views/paths/index.vue')
+      },
+      {
+        path:"/dashboard/path/add",
+        name:"add-path",
+        component: ()=> import('../../views/paths/add-path/index.vue')
+      },
+      {
+        path:"/dashboard/path/edit/:id",
+        name:"edit-path",
+        component: ()=> import('../../views/paths/edit-path/index.vue')
+      },
+      {
+        path:"/dashboard/path/show/:id",
+        name:"show-path",
+        component: ()=> import('../../views/paths/view-path/index.vue')
+      },
+      {
+        path:"/dashboard/paper-work",
+        name:"paper-work",
+        component: ()=> import('../../views/paper-work/index.vue')
+      },
+      {
+        path:"/dashboard/paper-work/add",
+        name:"add-paper-work",
+        component: ()=> import('../../views/paper-work/add-paper-work/index.vue')
+      },
+      {
+        path:"/dashboard/paper-work/edit/:id",
+        name:"edit-paper-work",
+        component: ()=> import('../../views/paper-work/edit-paper-work/index.vue')
+      },
+      {
+        path:"/dashboard/paper-work/show/:id",
+        name:"show-paper-work",
+        component: ()=> import('../../views/paper-work/view-paper-work/index.vue')
+      },
+      {
         path:"/dashboard/questions",
         name:"questions",
         component: ()=> import('../../views/questions/index.vue')

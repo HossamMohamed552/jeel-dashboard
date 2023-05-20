@@ -1,0 +1,67 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+
+.add-edit-group-form {
+  @include styleViewList;
+}
+
+.hold-field{
+  label{
+    color: $color-primary;
+    display: block;
+    margin: 0 0.7rem 0.7rem 0;
+  }
+  .custom-selectBox{
+    display: block;
+    padding: 0 1.3rem;
+    border-radius: 3.125rem;
+    border: 1px solid #BEBEBE;
+    color: $color-primary;
+  }
+}
+
+::v-deep {
+  .text-field input {
+    height: 50px;
+    border-radius: 10px;
+  }
+  textarea.form-control {
+    border-radius: 10px !important;
+    color: purple;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .col-form-label {
+    color: purple;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  label {
+    color: purple;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .custom-file-label {
+    border-radius: 15px;
+    font-size: 14px;
+    height: 50px;
+  }
+  .custom-file-label::after {
+    content: "اضافه" !important;
+    background-color: purple;
+    color: #fff;
+    height: 80%;
+    width: 7%;
+    border-radius: 50% 50% 50% 50% / 100% 100% 100% 100%;
+    margin-top: 5px;
+    margin-left: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+  .custom-select {
+    height: 50px;
+    border-radius: 15px;
+  }
+}

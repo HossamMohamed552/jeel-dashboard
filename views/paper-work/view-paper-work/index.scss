@@ -1,0 +1,18 @@
+@import "src/assets/style/scss/_mixin";
+@import "src/assets/style/scss/_variables";
+.show-group{
+  @include styleViewList;
+  .heading{
+    margin-bottom: 3.125rem;
+  }
+  .hold-fields{
+    margin-bottom: 4rem;
+  }
+}
+.divider{
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid #D1D1D1;
+}
+.bottom{
+  margin-top: 3.125rem;
+}
