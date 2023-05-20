@@ -162,6 +162,11 @@
                 $t('CONTROLS.deleteBtn')
               }}
             </b-dropdown-item>
+
+            <b-dropdown-item v-if="videoList" @click="addVideoQuestion(data.item.id)">{{
+                $t('CONTROLS.addVideoQuestion')
+              }}
+            </b-dropdown-item>
           </b-dropdown>
 
         </template>
@@ -218,6 +223,10 @@ export default {
     fieldsList: {
       type: Array,
       default: () => []
+    },
+    videoList:{
+      type:Boolean,
+      default:false
     }
   },
   watch: {
@@ -243,6 +252,9 @@ export default {
     },
     deleteItem(id) {
       this.$emit('deleteItem', id)
+    },
+    addVideoQuestion(id){
+      this.$emit('addVideoQuestion', id)
     }
   },
 }

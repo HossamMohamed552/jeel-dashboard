@@ -25,7 +25,7 @@ export default {
     },
     listItems: {
       type: Array,
-      default: []
+      default: null
     }
   },
 }

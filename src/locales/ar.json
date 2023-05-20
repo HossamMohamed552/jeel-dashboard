@@ -44,12 +44,17 @@
     "school_type": "نوع المدرسة",
     "package": "الباقة",
     "start_subscription": "بداية التعاقد",
-    "end_subscription": "نهاية التعاقد"
+    "end_subscription": "نهاية التعاقد",
+    "year": "السنه",
+    "questions_num": "عدد الاسئله",
+    "learning_path":"المسار التعليمي",
+    "level":"المرحله"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
     "editBtn": "تعديل",
-    "deleteBtn": "حذف"
+    "deleteBtn": "حذف",
+    "addVideoQuestion":"اضافة اسئله الفيديو"
   },
   "ROLES": {
     "ADD_NEW": "إضافة صلاحية",
@@ -114,6 +119,34 @@
     "level": "اسم الصف",
     "phases": "المراحل الدراسية",
     "showDetails": "عرض تفاصيل فصل دراسى"
+  },
+  "VIDEO":{
+    "NAME":"اسم الفيديو",
+    "EDIT":"تعديل فيديو",
+    "ADD_NEW":"إضافة فيديو جديد",
+    "Description":"وصف الفيديو",
+    "attach":"ارفاق فيديو",
+    "learning_path":"مسار تعليمي",
+    "level":"المرحله",
+    "ShowDetails":"تفاصيل الفيديو"
+  },
+  "PAPER_WORK":{
+    "NAME":"اسم ورقة العمل",
+    "EDIT":"تعديل ورقة العمل",
+    "ADD_NEW":"اضافة ورقة العمل",
+    "Description":"وصف ورقة العمل" ,
+    "attach":"ورقة العمل",
+    "learning_path":"مسار تعليمي",
+    "level":"المرحله",
+    "ShowDetails":"تفاصيل ورقة العمل",
+    "type":"نوع ورقة العمل"
+  },
+  "PATH":{
+    "Name":"اسم المسار",
+    "Description":"وصف المسار",
+    "ADD_NEW":"إضافة مسار جديدة",
+    "EDIT":"تعديل المسار",
+    "ShowDetails":"عرض تفاصيل المسار"
   },
   "permissions": "الصلاحيات",
   "showDetails": "عرض تفاصيل المستخدم",

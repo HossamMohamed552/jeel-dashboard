@@ -26,7 +26,12 @@
     "id": "id",
     "name": "name",
     "description": "description",
-    "actions": "actions"
+    "actions": "actions",
+    "year":"year",
+    "questions_num": "Number of questions",
+    "learning_path":"Learning Path",
+    "level":"Level",
+    "type": "Type"
   },
   "CONTROLS": {
     "detailBtn": "detailBtn",
@@ -37,6 +42,34 @@
     "ADD_NEW": "ADD_NEW",
     "name": "name",
     "description": "description"
+  },
+  "PATH":{
+    "Name":"Path Name",
+    "Description":"description",
+    "ADD_NEW":"Add New Path",
+    "EDIT":"Edit Path",
+    "ShowDetails":"Show Path Details"
+  },
+  "VIDEO":{
+    "NAME":"Video Name",
+    "EDIT":"Edit Video",
+    "ADD_NEW":"Add View New Video",
+    "Description":"Video Description",
+    "attach":"Attached File",
+    "learning_path":"Learning Path",
+    "level":"Level",
+    "ShowDetails":"Video Details"
+  },
+  "PAPER_WORK":{
+    "NAME":"Paperwork Name",
+    "EDIT":"Edit Paperwork",
+    "ADD_NEW":"Add  New Paperwork",
+    "Description":"Paperwork Description",
+    "attach":"Attached File",
+    "learning_path":"Learning Path",
+    "level":"Level",
+    "ShowDetails":"Paperwork Details",
+    "type":"Paperwork Type"
   },
   "permissions": "permissions",
   "showDetails": "showDetails",

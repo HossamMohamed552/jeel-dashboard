@@ -60,7 +60,7 @@ let routesContent = [
   },
   {
     name: 'أوراق العمل',
-    path: '/dashboard/work',
+    path: '/dashboard/paper-work',
     icon: require('@/assets/images/icons/paper-work.svg')
   },
   {
