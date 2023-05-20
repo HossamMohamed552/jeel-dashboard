@@ -188,7 +188,17 @@ const protectedRoutes = [
         path:"/dashboard/paper-work/show/:id",
         name:"show-paper-work",
         component: ()=> import('../../views/paper-work/view-paper-work/index.vue')
-      }
+      },
+      {
+        path:"/dashboard/questions",
+        name:"questions",
+        component: ()=> import('../../views/questions/index.vue')
+      },
+      {
+        path:"/dashboard/questions/add",
+        name:"add-questions",
+        component: ()=> import('../../views/questions/add-questions/index.vue')
+      },
     ]
   }
 ];

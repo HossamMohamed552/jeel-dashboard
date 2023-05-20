@@ -50,7 +50,7 @@ let routesContent = [
   },
   {
     name: 'بنك الاسئلة',
-    path: '/dashboard/question',
+    path: '/dashboard/questions',
     icon: require('@/assets/images/icons/question.svg')
   },
   {

@@ -1,0 +1,101 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+.stepper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 35%;
+    margin: 0 auto;
+  
+    @media screen and (max-width: 992px) {
+      width: 80%;
+    }
+  
+    &-progress {
+      background-color: #d6d5d5;
+      height: 0.1875rem;
+      position: absolute;
+      top: 2.25rem;
+      left: 0;
+      right: 0;
+      z-index: 1;
+  
+      .progress-bar {
+        background-color: $color-primary;
+        height: 0.1875rem;
+        transition: width 0.3s ease-in-out;
+      }
+    }
+  
+    &-steps {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+  
+    &-step {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $color-primary;
+      border-radius: 50%;
+      font-weight: bold;
+      height: 4.5rem;
+      width: 4.5rem;
+      position: relative;
+      z-index: 1;
+
+      span {
+        font-size: 1.2rem;
+        color: $color-paragraph-alt
+      }
+  
+      &.active {
+        background-color: $color-primary;
+  
+        span {
+            color: #FFFFFF
+          }
+      }
+  
+      &.completed {
+        background-color: $color-primary;
+  
+        span {
+          color: #FFFFFF
+        }
+      }
+  
+      &:not(.active):not(.completed) {
+        background-color: #d6d5d5;
+      }
+  
+      &-title {
+        font-weight: 500;
+        color: $color-primary;
+        width: min-content;
+  
+        &.active {
+          color: $color-primary;
+        }
+  
+        &.completed {
+          color: $color-primary;
+        }
+  
+        &:not(.active):not(.completed) {
+          color: #000;
+        }
+      }
+    }
+  }
+  
+  .step-item {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    height: 125px;
+  }
+  
