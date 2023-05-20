@@ -121,7 +121,7 @@ export default {
       permissionSelected: [],
       createRole: {
         name: "",
-        description: "three",
+        description: "",
         permissions: [],
         code: ""
       },

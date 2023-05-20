@@ -87,7 +87,7 @@
                 <div class="hold-field mt-4">
                   <ImageUploader
                     :name="'logoSchool'"
-                    :text="$t('SCHOOL.UPLOAD_IMAGE')"
+                    :text="$t('USERS.UPLOAD_IMAGE')"
                     @imageUpload="handleUploadImage"
                   />
                 </div>
@@ -118,6 +118,8 @@
 import TextField from "@/components/Shared/TextField/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
+import axios from "axios";
+import VueCookies from "vue-cookies";
 export default {
   components: {
     TextField,
@@ -152,25 +154,28 @@ export default {
     onSubmit() {
       this.$refs.addEditUserForm.validate().then((success) => {
         if (!success) return;
-        this.handleUploadImage();
         const formData = new FormData();
-        formData.append("first_name",JSON.stringify(this.formValues.first_name));
-        formData.append("last_name",JSON.stringify(this.formValues.last_name));
-        formData.append("email",JSON.stringify(this.formValues.email));
-        formData.append("password",JSON.stringify(this.formValues.password));
-        formData.append("mobile",JSON.stringify(this.formValues.mobile));
-        formData.append("social_media",JSON.stringify(this.formValues.social_media));
+        formData.append("first_name",this.formValues.first_name);
+        formData.append("last_name",this.formValues.last_name);
+        formData.append("email",this.formValues.email);
+        formData.append("password",this.formValues.password);
+        formData.append("mobile",this.formValues.mobile);
+        formData.append("social_media",this.formValues.social_media);
         formData.append("roles",JSON.stringify(this.formValues.roles));
-        // for (const key in this.formValues) {
-        //   // formData.append(key,JSON.stringify(this.formValues[key]);
-        //   console.log(this.formValues[key])
-        //   formData.append(key,JSON.stringify(this.formValues[key]))
-        // }
-        // console.log(...formData.entries());
-        // console.log("formvalues",JSON.stringify(this.formValues);
-        // console.log("formdata", formData);
-        // if (this.image) formData.append("image",JSON.stringify(this.image);
-        this.$emit("handleAddEditUser", formData);
+        if (this.image) formData.append("image",this.image);
+        axios.post('/users', formData, {
+        headers: {
+          Authorization: `Bearer ${VueCookies.get("token")}`,
+          locale: 'ar',
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then((response) => {
+        console.log(response)
+      }).then(()=>{
+        this.$router.push('/dashboard/users')
+      })
+
+        // this.$emit("handleAddEditUser", formData);
       });
     },
     handleCancel() {

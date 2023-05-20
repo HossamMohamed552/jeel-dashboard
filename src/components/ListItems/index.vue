@@ -101,7 +101,7 @@
 
         <template #cell(avatar)="data">
           <div class="hold-image">
-            <img class="image-in-table" :src="data.value">
+            <img class="image-in-table" :src="data.item.avatar">
           </div>
         </template>
         <template #cell(type)="data">
