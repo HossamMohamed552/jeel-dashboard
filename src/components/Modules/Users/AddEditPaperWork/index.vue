@@ -29,7 +29,7 @@
               <b-col lg="5" class="mb-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors}" :rules="$route.params.id ? '' : 'required'" name="file">
-                    <b-form-file accept="file" placeholder="اختر ملف" v-model="createPaperWork.file" name="file">
+                    <b-form-file accept="application/pdf" placeholder="اختر ملف" v-model="createPaperWork.file" name="file">
                     </b-form-file>
                     <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                       {{ error }}
@@ -153,7 +153,7 @@ export default {
           this.createPaperWork.name =response.data.data.name
           this.createPaperWork.type =response.data.data.type
           this.createPaperWork.description =response.data.data.description
-          this.createPaperWork.file =response.data.data.video
+          this.createPaperWork.file =response.data.data.file
           this.createPaperWork.learning_path_id = response.data.data.learningPath.id
           this.createPaperWork.level_id=response.data.data.level.id
         })

@@ -26,7 +26,7 @@ export default {
       formData.append('name',$event.name);
       formData.append('type',$event.type);
       formData.append('learning_path_id',$event.learning_path_id);
-      formData.append('attachment',$event.file);
+      formData.append('file',$event.file);
       formData.append('level_id',$event.level_id);
       formData.append('description',$event.description);
       this.loading = true;
