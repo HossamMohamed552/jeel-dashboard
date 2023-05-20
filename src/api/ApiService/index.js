@@ -39,6 +39,9 @@ axios.interceptors.response.use(
         message: error.response.data.errors,
       });
       store.dispatch("removeUser");
+      localStorage.removeItem('user');
+      VueCookies.VueCookies.remove('token');
+
     }
 
     return Promise.reject(error);
