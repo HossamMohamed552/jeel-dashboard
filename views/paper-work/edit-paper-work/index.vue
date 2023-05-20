@@ -11,6 +11,9 @@
 
 import AddEditPaperWork from "@/components/Modules/Users/AddEditPaperWork/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
+import axios from "axios";
+import VueCookies from "vue-cookies";
+
 export default {
   name: "index",
   components:{Modal, AddEditPaperWork},
