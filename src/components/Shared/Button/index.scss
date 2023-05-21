@@ -59,6 +59,12 @@
     color: $color-primary;
   }
 }
+.back-btn{
+  background: $color-notify;
+  &:hover{
+    background: #469AC0FF;
+  }
+}
 .rounded-btn{
   border-radius: 3.125rem;
 }

@@ -7,7 +7,7 @@
 
 .action-holder {
   width: 100%;
-  @include flexCenter(flex-end);
+  @include flexCenter(space-between);
 }
 
 .qustion-review {

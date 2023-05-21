@@ -2,7 +2,7 @@
   <div class="add-question">
     <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
     <AddEditQuestionPatternForm
-      v-show="currentStep == -1"
+      v-show="currentStep === -1"
       :loading="loading"
       :question-types="questionTypes"
       :question-sub-types="questionSubTypes"
@@ -11,13 +11,13 @@
       @onSubmit="getQuestionPatternData"
     />
     <Stepper
-      v-show="currentStep == 0 || currentStep == 1 || currentStep == 2"
+      v-show="currentStep === 0 || currentStep === 1 || currentStep === 2"
       class="mt-5 mb-3"
       :steps="steps"
       :current-step="currentStep"
     />
     <AddEditQuestionFieldsForm
-      v-show="currentStep == 0"
+      v-show="currentStep === 0"
       :question-types="questionTypes"
       :question-sub-types="questionSubTypes"
       :question-types-values="questionTypesValues"
@@ -33,13 +33,13 @@
     />
 
     <AddEditQuestionAnswersForm
-      v-show="currentStep == 1"
+      v-show="currentStep === 1"
       @handleBack="goToQuestionFieldsForm"
       @handleCancel="handleCancel"
       @onSubmit="getSecondStepData"
     />
 
-    <div v-show="currentStep == 2" class="qustion-review">
+    <div v-show="currentStep === 2" class="qustion-review">
       <b-container>
         <b-row>
           <b-col lg="3">
@@ -100,14 +100,16 @@
         </b-row>
         <b-row>
           <div class="action-holder">
+            <div>
+              <Button :loading="loading" custom-class="submit-btn" @click="saveQuestion">
+                {{ $t("GLOBAL_SAVE") }}
+              </Button>
+              <Button class="mx-3" @click="goToAnswersForm" custom-class="submit-btn back-btn">
+                {{ $t("GLOBAL_BACK") }}
+              </Button>
+            </div>
             <Button @click="handleCancel" custom-class="cancel-btn margin">
               {{ $t("GLOBAL_CANCEL") }}
-            </Button>
-            <Button :loading="loading" custom-class="submit-btn" @click="saveQuestion">
-              {{ $t("GLOBAL_SAVE") }}
-            </Button>
-            <Button class="mx-3" @click="goToAnswersForm" custom-class="submit-btn">
-              {{ $t("GLOBAL_BACK") }}
             </Button>
           </div>
         </b-row>
@@ -119,6 +121,7 @@
 import AddEditQuestionPatternForm from "@/components/Modules/Questions/AddEditQuestionPatternForm/index.vue";
 import AddEditQuestionFieldsForm from "@/components/Modules/Questions/AddEditQuestionFieldsForm/index.vue";
 import AddEditQuestionAnswersForm from "@/components/Modules/Questions/AddEditQuestionAnswersForm/index.vue";
+import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {
   getQuestionTypsRequest,
@@ -137,6 +140,7 @@ import VueCookies from "vue-cookies";
 export default {
   components: {
     Modal,
+    Button,
     AddEditQuestionPatternForm,
     AddEditQuestionFieldsForm,
     Stepper,
@@ -315,8 +319,10 @@ export default {
       }
     },
     getCorrectAnswer(list, id) {
+      console.log('list',list)
+      let correctAnswer;
       if (list) {
-        const correctAnswer = list.find((item) => item.correct == id).answer;
+        correctAnswer = list.find((item) => item.correct === id).answer;
         return correctAnswer;
       }
     },

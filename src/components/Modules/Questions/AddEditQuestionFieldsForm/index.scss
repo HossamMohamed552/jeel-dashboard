@@ -29,6 +29,12 @@
   }
 }
 
+.action-holder{
+  @include flexCenter(space-between)
+}
+
+
+
 ::v-deep {
   .group-type{
     .col-form-label{

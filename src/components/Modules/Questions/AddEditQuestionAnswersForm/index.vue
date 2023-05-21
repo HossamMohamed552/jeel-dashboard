@@ -1,9 +1,7 @@
 <template>
   <div class="add-edit-user">
-    <b-container>
+    <div class="container-fluid custom-container">
       <div class="add-edit-question-form">
-        <!-- <h3>{{ $t("QUESTIONS.CHOOSE_Question_PATTERN") }}</h3> -->
-
         <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -36,7 +34,7 @@
                     v-model="answer.answer"
                     :label="$t('QUESTIONS.ANSWER')"
                     :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
-                    :id="idx"
+                    :id="`ANSWER ${idx}`"
                   ></TextField>
                 </div>
               </b-col>
@@ -55,49 +53,52 @@
               </b-col>
               <b-col lg="2" class=" btn-holder">
                 <div class="hold-field">
-                  <span class="success" v-if="answersList.length - 1 === idx" @click="addAnswer"
-                    >إضافة</span
-                  >
+                  <span class="success" v-if="answersList.length - 1 === idx" @click="addAnswer">إضافة</span>
                   <span
                     class="mx-3 danger"
                     v-if="answersList.length > 1"
-                    @click="answersList.splice(idx, 1)"
-                    >حذف</span
-                  >
+                    @click="answersList.splice(idx, 1)">حذف</span>
                 </div>
               </b-col>
             </b-row>
             <b-row>
               <div class="action-holder">
-                <Button @click="handleCancel" custom-class="cancel-btn margin">
+                <div>
+                  ---- {{ answersList.length }}
+                  ---- {{ answersList }}
+                  <Button
+                    type="submit"
+                    :loading="loading"
+                    :disabled="invalid || answersList.length <= 0 || answersList[0].answer.length<=0"
+                    :custom-class="'submit-btn'"
+                  >
+                    {{ $t("GLOBAL_NEXT") }}
+                  </Button>
+                  <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
+                    {{ $t("GLOBAL_BACK") }}
+                  </Button>
+                </div>
+                <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
                   {{ $t("GLOBAL_CANCEL") }}
-                </Button>
-                <Button
-                  type="submit"
-                  :loading="loading"
-                  :disabled="invalid"
-                  custom-class="submit-btn"
-                >
-                  {{ $t("GLOBAL_NEXT") }}
-                </Button>
-                <Button class="mx-3" @click="handleBack" custom-class="submit-btn">
-                  {{ $t("GLOBAL_BACK") }}
                 </Button>
               </div>
             </b-row>
           </form>
         </validation-observer>
       </div>
-    </b-container>
+    </div>
   </div>
 </template>
 <script>
 import TextField from "@/components/Shared/TextField/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
+import Button from "@/components/Shared/Button/index.vue";
+
 export default {
   components: {
     TextField,
     SelectSearch,
+    Button,
   },
   props: {
     loading: {

@@ -1,9 +1,7 @@
 <template>
   <div class="add-edit-user">
-    <b-container>
+    <div class="container-fluid custom-container">
       <div class="add-edit-question-form">
-        <!-- <h3>{{ $t("QUESTIONS.CHOOSE_Question_PATTERN") }}</h3> -->
-
         <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -106,13 +104,13 @@
                         v-model="formValues.question_pattern"
                         value="text"
                         name="group-type"
-                        >نص
+                      >نص
                       </b-form-radio>
                       <b-form-radio
                         v-model="formValues.question_pattern"
                         value="image"
                         name="group-type"
-                        >صورة
+                      >صورة
                       </b-form-radio>
                     </b-form-group>
                   </ValidationProvider>
@@ -134,39 +132,41 @@
             </b-row>
             <b-row>
               <div class="action-holder">
-                <Button @click="handleCancel" custom-class="cancel-btn margin">
+                <div>
+                  <Button
+                    type="submit"
+                    :loading="loading"
+                    :disabled="invalid"
+                    custom-class="submit-btn"
+                  >
+                    {{ $t("GLOBAL_NEXT") }}
+                  </Button>
+                  <Button
+                    class="mx-3"
+                    @click="handleBack"
+                    custom-class="submit-btn back-btn"
+                  >
+                    {{ $t("GLOBAL_BACK") }}
+                  </Button>
+                </div>
+                <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
                   {{ $t("GLOBAL_CANCEL") }}
-                </Button>
-                <Button
-                  type="submit"
-                  :loading="loading"
-                  :disabled="invalid"
-                  custom-class="submit-btn"
-                >
-                  {{ $t("GLOBAL_NEXT") }}
-                </Button>
-                <Button
-                class="mx-3"
-                @click="handleBack"
-                  custom-class="submit-btn"
-                >
-                  {{ $t("GLOBAL_BACK") }}
                 </Button>
               </div>
             </b-row>
           </form>
         </validation-observer>
       </div>
-    </b-container>
+    </div>
   </div>
 </template>
 <script>
-// import TextField from "@/components/Shared/TextField/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
+import Button from "@/components/Shared/Button/index.vue";
 export default {
   components: {
-    // TextField,
     SelectSearch,
+    Button,
   },
   props: {
     questionTypes: {
