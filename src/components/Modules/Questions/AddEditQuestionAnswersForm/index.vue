@@ -69,9 +69,10 @@
                   <Button
                     type="submit"
                     :loading="loading"
-                    :disabled="invalid || answersList.length <= 0 || answersList[0].answer.length<=0"
+                    :disabled="invalid || answersList.length <= 0 || answersList[0].answer.length<=0 || !isCorrectAnswer"
                     :custom-class="'submit-btn'"
                   >
+                    ------ {{isCorrectAnswer}}
                     {{ $t("GLOBAL_NEXT") }}
                   </Button>
                   <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
@@ -93,6 +94,7 @@
 import TextField from "@/components/Shared/TextField/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
+import tr from "vue2-datepicker/locale/es/tr";
 
 export default {
   components: {
@@ -130,6 +132,17 @@ export default {
         },
       ],
     };
+  },
+  computed:{
+    isCorrectAnswer(){
+      const correctAnswer = this.answersList.find((item) => item.correct === 1);
+      if( correctAnswer === undefined){
+        return false
+      } else {
+        return true
+
+      }
+    }
   },
   methods: {
     onSubmit() {
