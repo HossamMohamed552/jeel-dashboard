@@ -150,6 +150,7 @@
                               {{ $t('SCHOOL.start_subscription') }}
                             </label>
                             <date-picker v-model="createSchool.startDate"
+                                         :value="createSchool.startDate"
                                          valueType="format"></date-picker>
                           </ValidationProvider>
                         </div>
@@ -161,6 +162,7 @@
                               {{ $t('SCHOOL.end_subscription') }}
                             </label>
                             <date-picker v-model="createSchool.endDate"
+                                         :value="createSchool.endDate"
                                          valueType="format"></date-picker>
                           </ValidationProvider>
                         </div>
@@ -172,6 +174,7 @@
                       <ImageUploader
                         :text="$t('SCHOOL.UPLOAD_IMAGE')"
                         @imageUpload="handleUploadImage"
+                        :schoolImage="schoolImage"
                       />
                     </div>
                   </b-col>
@@ -234,6 +237,7 @@ export default {
       packages: [],
       schoolTypes: [],
       users: [],
+      schoolImage:null,
       createSchool: {
         name: "",
         startDate: "",
@@ -251,7 +255,7 @@ export default {
   },
   methods: {
     handleUploadImage(e) {
-      console.log(e.target.files[0])
+      this.schoolImage = URL.createObjectURL(e.target.files[0])
       if (e) this.createSchool.logo = e.target.files[0];
       else return;
     },
@@ -287,17 +291,27 @@ export default {
       formData.append('subscription_end_date', this.createSchool.endDate)
       formData.append('package_id', this.createSchool.package_id)
       formData.append('logo', this.createSchool.logo)
-      this.ApiService(postSchoolsRequest(formData)).then((res)=>{
-        console.log(res)
-      })
+      if (this.$route.params.id){
+        formData.append('_method', 'PUT')
+        // this.ApiService(postSchoolsRequest(formData)).then((res)=>{})
+        axios.post(`/schools/${this.$route.params.id}`, formData, {
+          headers: {
+            Authorization: `Bearer ${VueCookies.get("token")}`,
+            locale: 'ar',
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then((response) => {
+        }).then(()=>{
+          this.$router.push('/dashboard/schools')
+        })
+      }
+      // this.ApiService(postSchoolsRequest(formData)).then((res)=>{})
       axios.post('/schools', formData, {
         headers: {
           Authorization: `Bearer ${VueCookies.get("token")}`,
           locale: 'ar',
           'Content-Type': 'multipart/form-data'
         }
-      }).then((response) => {
-        console.log(response)
       }).then(()=>{
         this.$router.push('/dashboard/schools')
       })
@@ -306,11 +320,7 @@ export default {
       this.$refs.addEditSchoolForm.validate().then((success) => {
         if (!success) return;
       });
-      if (this.$route.params.id) {
-        // this.$emit('handleEditSchool', this.createSchool)
-      } else {
-        this.sendDataNewSchool()
-      }
+      this.sendDataNewSchool()
     },
     handleCancel() {
       this.$emit("handleCancel");
@@ -319,6 +329,11 @@ export default {
       if (this.$route.params.id) {
         this.ApiService(getSingleSchoolsRequest(this.$route.params.id)).then((response) => {
           this.createSchool = response.data.data
+          this.createSchool.startDate = response.data.data.subscription_start_date
+          this.createSchool.school_group_id = response.data.data.school_group.id
+          this.createSchool.school_type_id = response.data.data.school_type.id
+          this.createSchool.package_id = response.data.data.package.id
+          this.schoolImage = response.data.data.logo
         })
       }
     }

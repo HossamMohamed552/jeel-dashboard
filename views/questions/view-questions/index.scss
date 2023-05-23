@@ -1,0 +1,12 @@
+@import "src/assets/style/scss/_mixin";
+@import "src/assets/style/scss/_variables";
+.show-question{
+  @include styleViewList;
+  min-height: 70vh;
+}
+.divider{
+  padding-top: 2.5rem;
+}
+.divider-bottom{
+  padding: 2.5rem 0;
+}

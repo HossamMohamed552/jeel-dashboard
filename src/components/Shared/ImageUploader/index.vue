@@ -25,6 +25,9 @@
         </Button>
       </div>
       <div class="img-wrapper">
+        <div class="hold-img" v-if="schoolImage">
+          <img :src="schoolImage">
+        </div>
         <div v-if="hasError" class="error-wrapper">
           <span class="error-msg">{{ errors[0] }}</span>
         </div>
@@ -34,10 +37,13 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import {mapActions} from "vuex";
 
 export default {
   props: {
+    schoolImage: {
+      type: String,
+    },
     maxSize: {
       type: Number,
       default: 5000 * 5, // in kilobytes

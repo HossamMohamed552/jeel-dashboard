@@ -1,7 +1,8 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems :header-name="'قائمة المدارس'" :number-of-item="totalNumber"
-               :tableItems="schoolsList" :fields-list="fieldsList" :v-search-model="groupSearchWord"
+               :tableItems="schoolsList" :fields-list="fieldsList" :v-search-model="groupSearchWord"  @detailItem="detailItem($event)"
+               @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @searchBy="searchBy">
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSchools">

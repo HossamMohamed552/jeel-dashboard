@@ -64,15 +64,12 @@
             <b-row>
               <div class="action-holder">
                 <div>
-                  ---- {{ answersList.length }}
-                  ---- {{ answersList }}
                   <Button
                     type="submit"
                     :loading="loading"
                     :disabled="invalid || answersList.length <= 0 || answersList[0].answer.length<=0 || !isCorrectAnswer"
                     :custom-class="'submit-btn'"
                   >
-                    ------ {{isCorrectAnswer}}
                     {{ $t("GLOBAL_NEXT") }}
                   </Button>
                   <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
@@ -94,9 +91,10 @@
 import TextField from "@/components/Shared/TextField/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import tr from "vue2-datepicker/locale/es/tr";
+import getData from "@/mixins/getData/getData";
 
 export default {
+  mixins: [getData('question')],
   components: {
     TextField,
     SelectSearch,
@@ -165,6 +163,14 @@ export default {
       this.formValues.answers = this.answersList.filter((answer) => answer.answer);
     },
   },
+  watch:{
+    question(questionEdit){
+      this.formValues.question = questionEdit.question
+      this.formValues.hint = questionEdit.hint
+      this.formValues.answers = questionEdit.answers
+      this.answersList = this.formValues.answers
+    }
+  }
 };
 </script>
 <style scoped lang="scss">

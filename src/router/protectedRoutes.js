@@ -90,6 +90,11 @@ const protectedRoutes = [
         component: ()=> import('../../views/schools/add-schools/index.vue')
       },
       {
+        path:"/dashboard/schools/edit/:id",
+        name:"edit-schools",
+        component: ()=> import('../../views/schools/edit-schools/index.vue')
+      },
+      {
         path:"/dashboard/levels",
         name:"levels",
         component: ()=> import('../../views/levels/index.vue')
@@ -199,6 +204,16 @@ const protectedRoutes = [
         name:"add-questions",
         component: ()=> import('../../views/questions/add-questions/index.vue')
       },
+      {
+        path:"/dashboard/questions/show/:id",
+        name:"show-questions",
+        component: ()=> import('../../views/questions/view-questions/index.vue')
+      },
+      {
+        path:"/dashboard/questions/edit/:id",
+        name:"edit-questions",
+        component: ()=> import('../../views/questions/edit-questions/index.vue')
+      }
     ]
   }
 ];

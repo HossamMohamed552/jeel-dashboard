@@ -2,7 +2,7 @@
   <div class="add-edit-user">
     <div class="container-fluid custom-container">
       <div class="add-edit-question-form">
-        <h3>{{ $t("QUESTIONS.CHOOSE_Question_PATTERN") }}</h3>
+        <h3>{{ $route.params.id ? $t("QUESTIONS.EDIT_Question_PATTERN") : $t("QUESTIONS.CHOOSE_Question_PATTERN") }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -61,8 +61,11 @@
 
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import { debounce } from "lodash";
+import {debounce} from "lodash";
+import getData from "@/mixins/getData/getData";
+
 export default {
+  mixins: [getData('question')],
   components: {
     SelectSearch,
     Button,
@@ -88,6 +91,12 @@ export default {
         question_type_sub_id: null,
       },
     };
+  },
+  watch:{
+    question(question){
+      this.formValues.question_type_id = question.question_type.id
+      this.formValues.question_type_sub_id = question.sub_question_type.id
+    }
   },
   methods: {
     onSubmit() {

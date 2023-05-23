@@ -5,7 +5,6 @@ import VueCookies from "vue-cookies"
 
 axios.defaults.baseURL = process.env.VUE_APP_ADMIN_URL;
 export default function ApiService({method, url, config = {},headers={}}) {
-  console.log('headers', headers)
   return axios({
     method,
     url,
@@ -42,7 +41,7 @@ axios.interceptors.response.use(
       });
       console.log('Ahmed');
       store.dispatch("removeUser");
-    
+
 
     }
 

@@ -151,6 +151,7 @@
   "QUESTIONS": {
     "ADD_NEW": "إضافة سؤال جديد",
     "CHOOSE_Question_PATTERN": "إختيار نمط السؤال",
+    "EDIT_Question_PATTERN": "تعديل نمط السؤال",
     "QUESTION_PATTERN": "نمط السؤال",
     "QUESTION_SUB_PATTERN": "نمط السؤال الفرعي",
     "STEP_ONE": "تعريف السؤال",
@@ -167,7 +168,8 @@
     "QUESTIONDIFFICULTIES": "مستوى الصعوبة",
     "LANGUAGE_SKILLS": "نوع المهارة اللغوية",
     "LEARNING_PATH": "المسار",
-    "RIGHT_ANSWER": "الإجابة الصحيحة"
+    "RIGHT_ANSWER": "الإجابة الصحيحة",
+    "ShowDetails": "عرض تفاصيل السؤال"
   },
   "permissions": "الصلاحيات",
   "showDetails": "عرض تفاصيل المستخدم",

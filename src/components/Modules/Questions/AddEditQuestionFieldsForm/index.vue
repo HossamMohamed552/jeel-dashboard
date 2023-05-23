@@ -163,7 +163,9 @@
 <script>
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
+import getData from "@/mixins/getData/getData";
 export default {
+  mixins: [getData('question')],
   components: {
     SelectSearch,
     Button,
@@ -220,51 +222,19 @@ export default {
         language_method_id: null,
         level_id: null,
         question_pattern: "text",
-        // choices_number: null,
       },
-      // choicesNumber: [
-      //   {
-      //     id: 1,
-      //     number: 1
-      //   },
-      //   {
-      //     id: 2,
-      //     number: 2
-      //   },
-      //   {
-      //     id: 3,
-      //     number: 3
-      //   },
-      //   {
-      //     id: 4,
-      //     number: 4
-      //   },
-      //   {
-      //     id: 5,
-      //     number: 5
-      //   },
-      //   {
-      //     id: 6,
-      //     number: 6
-      //   },
-      //   {
-      //     id: 7,
-      //     number: 7
-      //   },
-      //   {
-      //     id: 8,
-      //     number: 8
-      //   },
-      //   {
-      //     id: 9,
-      //     number: 9
-      //   },
-      //   {
-      //     id: 10,
-      //     number: 10
-      //   },
-      // ],
     };
+  },
+  watch:{
+    question(question){
+      this.formValues.learning_path_id = question.learningPath.id
+      this.formValues.language_skill_id = question.language_skill.id
+      this.formValues.question_difficulty_id = question.question_difficulty.id
+      this.formValues.bloom_category_id = question.bloom_category.id
+      this.formValues.language_method_id = question.language_method.id
+      this.formValues.level_id = question.level.id
+      this.formValues.question_pattern = question.question_pattern
+    }
   },
   methods: {
     onSubmit() {

@@ -131,6 +131,12 @@
         <template #cell(package)="data">
           <span>{{ data.item.package.name}}</span>
         </template>
+        <template #cell(question_type)="data">
+          <span>{{ data.item.question_type.name}}</span>
+        </template>
+        <template #cell(question_difficulty)="data">
+          <span>{{ data.item.question_difficulty.name}}</span>
+        </template>
         <template #cell(is_super_admin)="data">
           <span class="d-none"></span>
         </template>
