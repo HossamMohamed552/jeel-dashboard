@@ -16,11 +16,12 @@
       background-color: #d6d5d5;
       height: 0.1875rem;
       position: absolute;
-      top: 2.25rem;
+      top: 1.25rem;
       left: 0;
-      right: 0;
+      right: -1rem;
       z-index: 1;
-  
+      width: 75%;
+      margin: 0 auto;
       .progress-bar {
         background-color: $color-primary;
         height: 0.1875rem;
@@ -41,8 +42,8 @@
       background-color: $color-primary;
       border-radius: 50%;
       font-weight: bold;
-      height: 4.5rem;
-      width: 4.5rem;
+      height: 2.5rem;
+      width: 2.5rem;
       position: relative;
       z-index: 1;
 
@@ -74,7 +75,7 @@
       &-title {
         font-weight: 500;
         color: $color-primary;
-        width: min-content;
+        //width: min-content;
   
         &.active {
           color: $color-primary;

@@ -3,6 +3,11 @@ export const getPaperWorksRequest = () => ({
     url: 'peper_works',
     config: {}
 });
+export const getPaperWorkPerLevelPathRequest = (params) => ({
+  method: 'get',
+  url: `peper_works?level_id=${params.levelId}&learning_path_id=${params.learnPathId}`,
+  config: {}
+});
 export const getSinglePaperworkRequest = (params) => ({
     method: 'get',
     url: `peper_works/${params}`,
@@ -30,4 +35,3 @@ export const deletePaperWorkRequest = (params) =>({
     method: 'delete',
     url: `peper_works/${params}`,
 })
-  

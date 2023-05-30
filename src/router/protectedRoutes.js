@@ -195,6 +195,21 @@ const protectedRoutes = [
         component: ()=> import('../../views/paper-work/view-paper-work/index.vue')
       },
       {
+        path:"/dashboard/missions",
+        name:"missions",
+        component: ()=> import('../../views/missions/index.vue')
+      },
+      {
+        path:"/dashboard/missions/add",
+        name:"add-missions",
+        component: ()=> import('../../views/missions/add-missions/index.vue')
+      },
+      {
+        path:"/dashboard/missions/edit/:id",
+        name:"edit-missions",
+        component: ()=> import('../../views/missions/edit-missions/index.vue')
+      },
+      {
         path:"/dashboard/questions",
         name:"questions",
         component: ()=> import('../../views/questions/index.vue')
@@ -213,7 +228,12 @@ const protectedRoutes = [
         path:"/dashboard/questions/edit/:id",
         name:"edit-questions",
         component: ()=> import('../../views/questions/edit-questions/index.vue')
-      }
+      },
+      {
+        path:"/dashboard/practices",
+        name:"practices",
+        component: ()=> import('../../views/practices/index.vue')
+      },
     ]
   }
 ];

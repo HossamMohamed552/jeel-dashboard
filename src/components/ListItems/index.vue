@@ -137,6 +137,12 @@
         <template #cell(question_difficulty)="data">
           <span>{{ data.item.question_difficulty.name}}</span>
         </template>
+        <template #cell(level)="data">
+          <span>{{ data.item.level.name}}</span>
+        </template>
+        <template #cell(learningpaths)="data">
+          <span v-for="path in data.item.learningpaths" class="path">{{ path.name}}</span>
+        </template>
         <template #cell(is_super_admin)="data">
           <span class="d-none"></span>
         </template>

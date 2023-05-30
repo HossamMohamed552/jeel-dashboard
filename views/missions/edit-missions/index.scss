@@ -1,0 +1,26 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+
+.add-edit-question-form {
+  @include styleViewList;
+  min-height: 70vh;
+}
+
+.action-holder {
+  width: 100%;
+  @include flexCenter(space-between);
+}
+
+.qustion-review {
+     margin-top: 3rem;
+  h6 {
+    color: $color-light-gray;
+    font-weight: 400;
+  }
+
+  p {
+    color: $color-primary;
+    font-weight: 500;
+    margin-bottom: 3rem;
+  }
+}

@@ -1,6 +1,6 @@
 export const postLoginRequest = (data) => ({
   method: "post",
-  url: `${process.env.VUE_APP_AUTH_URL}login`,
+  url: `${process.env.VUE_APP_AUTH_URL}/login`,
   config: {
     data,
   },

@@ -1,6 +1,6 @@
 export const getCountryRequest = () => ({
   method: 'get',
-  url: 'countries',
+  url: 'countries?per_page=200',
   config: {}
 })
 export const getSingleCountryRequest = (params) => ({

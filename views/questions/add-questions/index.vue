@@ -130,19 +130,18 @@ import Modal from "@/components/Shared/Modal/index.vue";
 import {
   getQuestionTypsRequest,
   getQuestionSubTypsRequest,
-  getLearningPathsRequest,
   getLaguageSkillsRequest,
   getQuestionDifficultiesRequest,
   getBloomCategoriesRequest,
   getLearningMethodsRequest,
-  getLevelsRequest,
-  postAddQuestionRequest,
 } from "@/api/question";
 import Stepper from "@/components/Shared/Stepper/index.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
+import globalAssetData from "@/mixins/getData/globalAssetData";
 
 export default {
+  mixins:[globalAssetData],
   components: {
     Modal,
     Button,
@@ -158,12 +157,10 @@ export default {
       showModal: false,
       questionTypes: [],
       questionSubTypes: [],
-      learningPaths: [],
       languageSkills: [],
       questionDifficulties: [],
       bloomCategories: [],
       learningMethods: [],
-      levels: [],
       collectData: {},
       questionTypesValues: {},
       correct_id: 1,
@@ -187,12 +184,10 @@ export default {
   },
   mounted() {
     this.getQuestionTypes();
-    this.getLearningPaths();
     this.getLanguageSkills();
     this.getQuestionDifficulties();
     this.getBloomCategories();
     this.getLearningMethods();
-    this.getLevels();
   },
   methods: {
     getQuestionTypes() {
@@ -212,15 +207,6 @@ export default {
 
       this.ApiService(getQuestionSubTypsRequest(params)).then((response) => {
         this.questionSubTypes = response.data.data;
-      });
-    },
-    getLearningPaths() {
-      const params = {
-        page: 1,
-      };
-
-      this.ApiService(getLearningPathsRequest(params)).then((response) => {
-        this.learningPaths = response.data.data;
       });
     },
     getLanguageSkills() {
@@ -257,15 +243,6 @@ export default {
 
       this.ApiService(getLearningMethodsRequest(params)).then((response) => {
         this.learningMethods = response.data.data;
-      });
-    },
-    getLevels() {
-      const params = {
-        page: 1,
-      };
-
-      this.ApiService(getLevelsRequest(params)).then((response) => {
-        this.levels = response.data.data;
       });
     },
 
@@ -324,8 +301,6 @@ export default {
       }
     },
     getCorrectAnswer(list, id) {
-      console.log('id', id)
-      console.log('list', list)
       let correctAnswer;
       if (list && list.length) {
         correctAnswer = list.find((item) => item.correct == id).answer;
@@ -351,9 +326,6 @@ export default {
         formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer].answer);
         formData.append(`answers[${answer}][correct]`, this.collectData.answers[answer].correct);
       }
-      // for (const [index,answer] of this.collectData.answers){
-      //   formData.append(`answers[${answer[index]}][correct]`, answer.answer);
-      // }
       axios
         .post("/questions", formData, {
           headers: {

@@ -55,7 +55,7 @@ let routesContent = [
   },
   {
     name: 'التمارين',
-    path: '/dashboard/exercises',
+    path: '/dashboard/practices',
     icon: require('@/assets/images/icons/exercises.svg')
   },
   {
@@ -65,12 +65,12 @@ let routesContent = [
   },
   {
     name: 'المهام',
-    path: '/dashboard/mission',
+    path: '/dashboard/tasks',
     icon: require('@/assets/images/icons/mission.svg')
   },
   {
     name: 'المراحل',
-    path: '/dashboard/levels',
+    path: '/dashboard/missions',
     icon: require('@/assets/images/icons/steps.svg')
   }
 ]
