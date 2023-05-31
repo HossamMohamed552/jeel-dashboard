@@ -239,6 +239,11 @@ const protectedRoutes = [
         name:"practices",
         component: ()=> import('../../views/practices/index.vue')
       },
+      {
+        path:"/dashboard/practice/add",
+        name:"add-practices",
+        component: ()=> import('../../views/practices/add-practices/index.vue')
+      },
     ]
   }
 ];
