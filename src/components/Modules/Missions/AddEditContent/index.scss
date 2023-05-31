@@ -1,0 +1,11 @@
+@import "src/assets/style/scss/_mixin";
+.add-edit-mission-form{
+  @include styleViewList;
+}
+.hold-path{
+  margin-bottom: 2.5rem;
+}
+.action-holder {
+  width: 100%;
+  @include flexCenter(space-between);
+}

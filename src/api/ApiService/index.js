@@ -4,9 +4,7 @@ import store from "@/store";
 import VueCookies from "vue-cookies"
 
 axios.defaults.baseURL = process.env.VUE_APP_ADMIN_URL;
-console.log('process.env.VUE_APP_ADMIN_URL', process.env.VUE_APP_ADMIN_URL)
-// console.log('axios.defaults.baseURL', axios.defaults.baseURL)
-export default function ApiService({method, url, config = {}}) {
+export default function ApiService({method, url, config = {},headers={}}) {
   return axios({
     method,
     url,
@@ -18,7 +16,8 @@ export default function ApiService({method, url, config = {}}) {
     },
     headers: {
       Authorization: `Bearer ${VueCookies.get("token")}`,
-      locale: 'ar'
+      locale: 'ar',
+      ...headers.headers
     },
     ramsSerializer(params) {
       return qs.stringify(params, {arrayFormat: "comma"});
@@ -34,11 +33,16 @@ axios.interceptors.response.use(
       message: error.response.data.errors,
     });
     if (error.response.status === 401) {
+      localStorage.removeItem('user');
+      VueCookies.remove('token');
       store.dispatch("showToast", {
         type: "danger",
         message: error.response.data.errors,
       });
+      console.log('Ahmed');
       store.dispatch("removeUser");
+
+
     }
 
     return Promise.reject(error);

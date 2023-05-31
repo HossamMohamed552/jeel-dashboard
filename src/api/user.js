@@ -16,8 +16,8 @@ export const postAddUserRequest = (data) => ({
   url: "users",
   config: {
     data,
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
   },
+  headers:{
+    'Content-Type': 'multipart/form-data'
+  }
 });

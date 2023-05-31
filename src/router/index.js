@@ -10,7 +10,7 @@ Vue.use(Router);
 const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
-  routes: [...publicRoutes, ...protectedRoutes],
+  routes: [...publicRoutes, ...protectedRoutes,{path:'/',redirect:{name:'main'}}],
 });
 router.beforeEach((to, from, next) => {
   let tokenFound = !!store.getters.token

@@ -22,18 +22,16 @@ export default {
     };
   },
   mounted() {
-    this.getSysteRoles();
+    this.getSystemRoles();
   },
   methods: {
-    getSysteRoles() {
+    getSystemRoles() {
       this.ApiService(getRolesRequest()).then((response) => {
         this.systemRoles = response.data.data;
       });
     },
     handleAddEditUser(userFormData) {
-      console.log("USER: ", userFormData);
       this.ApiService(postAddUserRequest(userFormData)).then((response) => {
-        console.log(response, "USER REsponse++>");
         //***when success remove the comment below*****
         //this.$router.push("/dashboard/users")
       });

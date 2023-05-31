@@ -14,5 +14,83 @@
     "ADD_NEW": "Add new user",
     "USER_NAME": "User name"
   },
-  "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}"
+  "MENU": {
+    "main": "home",
+    "permissionsSystemUsers": "permissionsSystemUsers",
+    "schools": "schools",
+    "content": "content",
+    "infoDashBoard": "infoDashBoard",
+    "reports": "reports"
+  },
+  "TABLE_FIELDS": {
+    "id": "id",
+    "name": "name",
+    "description": "description",
+    "actions": "actions",
+    "year":"year",
+    "questions_num": "Number of questions",
+    "learning_path":"Learning Path",
+    "level":"Level",
+    "type": "Type",
+    "price": "price",
+    "classes_count": "classes count"
+  },
+  "CONTROLS": {
+    "detailBtn": "detailBtn",
+    "editBtn": "editBtn",
+    "deleteBtn": "deleteBtn"
+  },
+  "ROLES": {
+    "ADD_NEW": "ADD_NEW",
+    "name": "name",
+    "description": "description"
+  },
+  "PATH":{
+    "Name":"Path Name",
+    "Description":"description",
+    "ADD_NEW":"Add New Path",
+    "EDIT":"Edit Path",
+    "ShowDetails":"Show Path Details"
+  },
+  "VIDEO":{
+    "NAME":"Video Name",
+    "EDIT":"Edit Video",
+    "ADD_NEW":"Add View New Video",
+    "Description":"Video Description",
+    "attach":"Attached File",
+    "learning_path":"Learning Path",
+    "level":"Level",
+    "ShowDetails":"Video Details"
+  },
+  "PAPER_WORK":{
+    "NAME":"Paperwork Name",
+    "EDIT":"Edit Paperwork",
+    "ADD_NEW":"Add  New Paperwork",
+    "Description":"Paperwork Description",
+    "attach":"Attached File",
+    "learning_path":"Learning Path",
+    "level":"Level",
+    "ShowDetails":"Paperwork Details",
+    "type":"Paperwork Type"
+  },
+  "QUESTIONS": {
+    "ADD_NEW": "Add new qustion",
+    "CHOOSE_Question_PATTERN": "Choose question pattern",
+    "QUESTION_PATTERN": "Question pattern",
+    "QUESTION_SUB_PATTERN": "Question sub pattern"
+  },
+  "PACKAGE": {
+    "showDetails": "show package details",
+    "name": "Package name",
+    "price": "Price",
+    "classes_count": "Classes count",
+    "description": "Description",
+    "ADD_NEW": "Add new package",
+    "EDIT": "Edit package"
+  },
+  "permissions": "permissions",
+  "showDetails": "showDetails",
+  "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}",
+  "GLOBAL_NEXT": "Next",
+  "GLOBAL_BACK": "Back"
 }

@@ -1,0 +1,21 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+.action-holder {
+  width: 100%;
+  @include flexCenter(space-between);
+}
+
+.mission-review {
+  @include styleViewList;
+  min-height: 70vh;
+  h6 {
+    color: $color-light-gray;
+    font-weight: 400;
+  }
+  p,span {
+    color: $color-primary;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+}

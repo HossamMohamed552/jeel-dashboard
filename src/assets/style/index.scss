@@ -1,6 +1,10 @@
 @import "./scss/_variables";
 @import "./scss/__componants";
 @import "./scss/__global";
+@import "./scss/_mixin";
+.content{
+  min-height: 100vh;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
@@ -16,10 +20,35 @@
     border-collapse: collapse;
     border-radius: 1.2rem;
     overflow: hidden;
+    min-height: 200px;
   }
   .thead-gradient{
     background: linear-gradient(to left, $color-primary,$color-notify);
     border-bottom: none;
     color: #fff;
   }
+
+}
+.flex-center{
+  @include flexCenter(center)
+}
+
+// style scroll bar general
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $color-notify;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $color-primary;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(118, 35, 108, 0.75);
 }

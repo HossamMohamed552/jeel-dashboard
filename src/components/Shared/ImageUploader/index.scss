@@ -1,4 +1,5 @@
 @import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
 .image-uploader {
   height: 162px;
   width: 100%;
@@ -30,5 +31,17 @@
 
   .btn-file {
     z-index: -2;
+    display: none !important;
+  }
+}
+.img-wrapper{
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  @include flexCenter(center)
+}
+.hold-img{
+  img{
+    @include image
   }
 }

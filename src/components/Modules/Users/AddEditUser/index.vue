@@ -86,6 +86,7 @@
               <b-col lg="6" class="mb-3">
                 <div class="hold-field mt-4">
                   <ImageUploader
+                    :name="'logoSchool'"
                     :text="$t('USERS.UPLOAD_IMAGE')"
                     @imageUpload="handleUploadImage"
                   />
@@ -117,6 +118,8 @@
 import TextField from "@/components/Shared/TextField/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
+import axios from "axios";
+import VueCookies from "vue-cookies";
 export default {
   components: {
     TextField,
@@ -151,23 +154,28 @@ export default {
     onSubmit() {
       this.$refs.addEditUserForm.validate().then((success) => {
         if (!success) return;
-        this.handleUploadImage();
         const formData = new FormData();
-        // formData.append("first_name", this.formValues.first_name);
-        // formData.append("last_name", this.formValues.last_name);
-        // formData.append("email", this.formValues.email);
-        // formData.append("password", this.formValues.password);
-        // formData.append("mobile", this.formValues.mobile);
-        // formData.append("social_media", this.formValues.social_media);
-        // formData.append("roles", this.formValues.roles);
-        for (const key in this.formValues) {
-          formData.append(key, this.formValues[key]);
+        formData.append("first_name",this.formValues.first_name);
+        formData.append("last_name",this.formValues.last_name);
+        formData.append("email",this.formValues.email);
+        formData.append("password",this.formValues.password);
+        formData.append("mobile",this.formValues.mobile);
+        formData.append("social_media",this.formValues.social_media);
+        formData.append("roles",JSON.stringify(this.formValues.roles));
+        if (this.image) formData.append("image",this.image);
+        axios.post('/users', formData, {
+        headers: {
+          Authorization: `Bearer ${VueCookies.get("token")}`,
+          locale: 'ar',
+          'Content-Type': 'multipart/form-data'
         }
-        // console.log(...formData.entries());
-        // console.log("formvalues", this.formValues);
-        // console.log("formdata", formData);
-        if (this.image) formData.append("image", this.image);
-        this.$emit("handleAddEditUser", formData);
+      }).then((response) => {
+        console.log(response)
+      }).then(()=>{
+        this.$router.push('/dashboard/users')
+      })
+
+        // this.$emit("handleAddEditUser", formData);
       });
     },
     handleCancel() {

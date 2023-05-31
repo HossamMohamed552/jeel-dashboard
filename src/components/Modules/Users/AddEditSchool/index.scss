@@ -1,0 +1,27 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+
+.add-edit-school-form {
+  @include styleViewList;
+  min-height: 70vh;
+}
+
+::v-deep {
+  .group-type{
+    .col-form-label{
+      color: $color-primary !important;
+    }
+  }
+  .custom-radio{
+    display: inline-block;
+    margin-top: 1.5rem;
+  }
+  .mx-datepicker{
+    width: 100%;
+    border-radius: 3.125rem;
+  }
+  .mx-input{
+    padding: 1.3rem 2rem;
+    border-radius: 3.125rem;
+  }
+}

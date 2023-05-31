@@ -2,8 +2,8 @@
   <section class="list">
     <div class="header">
       <div class="list-of-item">
-        <p class="name-of-item">{{ headerName }}</p>
-        <span class="no-of-item">{{ numberOfItem }}</span>
+        <p class="name-of-item" v-if="headerName">{{ headerName }}</p>
+        <span class="no-of-item" v-if="numberOfItem">{{ numberOfItem }}</span>
       </div>
       <div class="controls">
         <slot name="buttons"></slot>
@@ -63,22 +63,22 @@
           <span>{{ data.field.key === 'school_group' ? 'اسم المجموعة' : data.field.label }}</span>
         </template>
         <template #head(level_school_group)="data">
-          <span>{{ data.field.key === 'level_school_group' ? 'اسم المجموعة' : data.field.label }}</span>
+          <span>{{
+              data.field.key === 'level_school_group' ? 'اسم المجموعة' : data.field.label
+            }}</span>
         </template>
         <template #head(subscription_start_date)="data">
-          <span>{{ data.field.key === 'subscription_start_date' ? 'بداية التعاقد' : data.field.label }}</span>
+          <span>{{
+              data.field.key === 'subscription_start_date' ? 'بداية التعاقد' : data.field.label
+            }}</span>
         </template>
         <template #head(subscription_end_date)="data">
-          <span>{{ data.field.key === 'subscription_end_date' ? 'نهاية التعاقد' : data.field.label }}</span>
+          <span>{{
+              data.field.key === 'subscription_end_date' ? 'نهاية التعاقد' : data.field.label
+            }}</span>
         </template>
         <template #head(logo)="data">
           <span>{{ data.field.key === 'logo' ? 'الشعار' : data.field.label }}</span>
-        </template>
-        <template #head(updated_at)="data">
-          <span class="d-none"></span>
-        </template>
-        <template #head(created_at)="data">
-          <span class="d-none"></span>
         </template>
         <template #head(is_super_admin)="data">
           <span class="d-none"></span>
@@ -99,31 +99,49 @@
           <span class="d-none"></span>
         </template>
 
-        <template #cell(updated_at)="data">
-          <span class="d-none"></span>
-        </template>
         <template #cell(avatar)="data">
           <div class="hold-image">
-            <img class="image-in-table" :src="data.value">
+            <img class="image-in-table" :src="data.item.avatar">
           </div>
         </template>
+        <template #cell(type)="data">
+          <span>{{ data.item.type === 'international' ? 'دولى' : 'محلى'}}</span>
+        </template>
         <template #cell(status)="data">
-          <span>{{ data.value.status === 1 ? "مفتوح" :"مغلق" }}</span>
+          <span>{{ data.item.status === 1 ? "مفعل" : "غير مفعل" }}</span>
         </template>
         <template #cell(music_status)="data">
-          <span>{{ data.value.music_status === 1 ? "متاح" :"غير متاح" }}</span>
+          <span>{{ data.item.music_status === 1 ? "متاح" : "غير متاح"}}</span>
         </template>
         <template #cell(country)="data">
           <span>{{ data.value.name }}</span>
         </template>
-        <template v-slot:cell(logo)="data">
-          <img class="img-fluid img-thumbnail" :src="data.logo" />
+        <template #cell(email.owner)="data">
+          <span>{{ data.item.owner.email}}</span>
         </template>
-        <template #cell(owner)="data">
-          <span>{{ data.value.email }}</span>
+        <template #cell(logo)="data">
+          <img :src="data.item.logo">
         </template>
-        <template #cell(created_at)="data">
-          <span class="d-none"></span>
+        <template #cell(school_type)="data">
+          <span>{{ data.item.school_type.name}}</span>
+        </template>
+        <template #cell(school_group)="data">
+          <span>{{ data.item.school_group.name}}</span>
+        </template>
+        <template #cell(package)="data">
+          <span>{{ data.item.package.name}}</span>
+        </template>
+        <template #cell(question_type)="data">
+          <span>{{ data.item.question_type.name}}</span>
+        </template>
+        <template #cell(question_difficulty)="data">
+          <span>{{ data.item.question_difficulty.name}}</span>
+        </template>
+        <template #cell(level)="data">
+          <span>{{ data.item.level.name}}</span>
+        </template>
+        <template #cell(learningpaths)="data">
+          <span v-for="path in data.item.learningpaths" class="path">{{ path.name}}</span>
         </template>
         <template #cell(is_super_admin)="data">
           <span class="d-none"></span>
@@ -137,29 +155,38 @@
         <template #cell(last_attempt)="data">
           <span class="d-none"></span>
         </template>
-        <template #cell(actions)="row">
-            <b-button
-              variant="light"
-              size="sm"
-              class="mr-1"
-            >
-              <b-img :src="editIcon"></b-img>
-            </b-button>
-            <b-button
-              variant="light"
-              size="sm"
-              @click="handleDeleteCategory(row.item)"
-            >
-              <b-img :src="deleteIcon"></b-img>
-            </b-button>
-          </template>
+        <template #cell(actions)="data">
+          <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
+            <template #button-content>
+              <img src="@/assets/images/icons/actions.svg">
+            </template>
+            <b-dropdown-item @click="detailItem(data.item.id)">{{
+                $t('CONTROLS.detailBtn')
+              }}
+            </b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-item @click="editItem(data.item.id)">{{
+                $t('CONTROLS.editBtn')
+              }}
+            </b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-item @click="deleteItem(data.item.id)">{{
+                $t('CONTROLS.deleteBtn')
+              }}
+            </b-dropdown-item>
+
+            <b-dropdown-item v-if="videoList" @click="addVideoQuestion(data.item.id)">{{
+                $t('CONTROLS.addVideoQuestion')
+              }}
+            </b-dropdown-item>
+          </b-dropdown>
+
+        </template>
       </b-table>
     </div>
   </section>
 </template>
 <script>
-import {getAllUsersRequest} from "@/api/user";
-
 export default {
   name: "index",
   data() {
@@ -167,19 +194,17 @@ export default {
       editIcon: require("@/assets/edit.svg"),
       deleteIcon: require("@/assets/delete.svg"),
       inputValue: "",
-      fields: [],
-      items: [
-      ],
+      items: [],
     }
   },
   props: {
     headerName: {
       type: String,
-      default: "header name"
+      default: ""
     },
     numberOfItem: {
       type: Number,
-      default: 5
+      default: 0
     },
     vSearchModel: {
       type: String,
@@ -209,9 +234,11 @@ export default {
     },
     fieldsList: {
       type: Array,
-      default: function () {
-        return []
-      }
+      default: () => []
+    },
+    videoList:{
+      type:Boolean,
+      default:false
     }
   },
   watch: {
@@ -224,13 +251,22 @@ export default {
     tableItems(newVal) {
       this.items = newVal
     },
-    fieldsList(newVal) {
-      this.fields = newVal
-    }
   },
   methods: {
     sortBy(sort) {
       this.$emit('sortBy', sort)
+    },
+    detailItem(id) {
+      this.$emit('detailItem', id)
+    },
+    editItem(id) {
+      this.$emit('editItem', id)
+    },
+    deleteItem(id) {
+      this.$emit('deleteItem', id)
+    },
+    addVideoQuestion(id){
+      this.$emit('addVideoQuestion', id)
     }
   },
 }

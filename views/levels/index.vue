@@ -1,50 +1,81 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems :header-name="'قائمة المراحل الدراسية'" :number-of-item="totalNumber"
-               :tableItems="levelsList" :fields="fields" :v-search-model="groupSearchWord"
-               @searchBy="searchBy" >
+               :tableItems="levelsList" :fieldsList="fieldsList" :v-search-model="groupSearchWord"
+               @searchBy="searchBy" @detailItem="detailItem($event)"
+               @editItem="editItem($event)" @deleteItem="deleteItem($event)">
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddLevel">
           <img src="@/assets/images/icons/plus.svg">
-          <span>إضافة مجموعه</span>
+          <span>إضافة مرحلة دراسية</span>
         </Button>
       </template>
     </ListItems>
+    <Modal :content-message="'حذف المرحلة الدراسية'"
+           :content-message-question="'هل انت متأكد من حذف المرحلة الدراسية'"
+           :showModal="showModal"
+           @cancel="cancel($event)"
+           :is-warning="true"
+           @cancelWithConfirm="cancelWithConfirm($event)"/>
   </section>
 </template>
 
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import {getCountryRequest} from "@/api/country";
-import {getLevelsRequest} from "@/api/level";
+import {getLevelsRequest,deleteLevelRequest} from "@/api/level";
+import Modal from "@/components/Shared/Modal/index.vue";
 
 export default {
-  components: {ListItems, Button},
+  components: {Modal, ListItems, Button},
   data() {
     return {
+      showModal: false,
       groupSearchWord: "",
       levelsList: [],
       totalNumber: null,
-      fields: [
-        { key: "id", label: "التسلسل" },
-        { key: "name", label: "اسم المرحلة" },
-        // { key: "level_school_group", label: "اسم المجموعة" },
-        { key: "actions",label:"الإجراء" },
+      fieldsList: [
+        {key: "id", label: "التسلسل"},
+        {key: "name", label: "اسم المرحلة"},
+        {key: "actions", label: "الإجراء"},
       ],
     }
   },
   methods: {
+    goToAddLevel(){
+      this.$router.push('/dashboard/levels/add')
+    },
+    getLevels(){
+      this.ApiService(getLevelsRequest()).then((response) => {
+        this.levelsList = response.data.data
+        this.totalNumber = response.data.meta.total
+      })
+    },
     searchBy($event) {
       console.log('$event', $event)
+    },
+    detailItem($event) {
+      this.$router.push(`/dashboard/levels/show/${$event}`)
+    },
+    editItem($event) {
+      this.$router.push(`/dashboard/levels/edit/${$event}`)
+    },
+    deleteItem($event) {
+      this.itemId = $event
+      this.showModal = true
+    },
+    cancel($event) {
+      this.showModal = $event
+    },
+    cancelWithConfirm() {
+      this.ApiService(deleteLevelRequest(this.itemId)).then(()=>{
+        this.getLevels()
+      })
+      this.cancel()
     }
   },
   mounted() {
-    this.ApiService(getLevelsRequest()).then((response) => {
-      this.levelsList = response.data.data
-      this.totalNumber = response.data.meta.total
-      console.log('response', response)
-    })
+    this.getLevels()
   }
 
 }

@@ -39,7 +39,6 @@
   padding: 1rem;
   border-radius: 3.125rem;
   margin: 1rem 1rem 1.5rem 1rem;
-  border: none;
   font-size: 1.4rem;
   @media (max-width: 1024px) and (min-width: 768px){
     padding: .7rem;
@@ -57,6 +56,30 @@
 
   &:hover {
     background:transparent !important;
-    color: #76236C;
+    color: $color-primary;
   }
+}
+.back-btn{
+  background: $color-notify;
+  &:hover{
+    background: #469AC0FF;
+  }
+}
+.rounded-btn{
+  border-radius: 3.125rem;
+}
+.transparent-btn{
+  background:transparent;
+  color: $color-primary;
+  border: 1px solid $color-primary;
+  &:hover {
+    background: linear-gradient(to left, $color-primary,$color-primary-two);
+    border: 1px solid transparent;
+    color: #fff;
+  }
+}
+.all-add{
+  min-width: 170px;
+  padding: 1rem 3rem !important;
+  margin: 1rem 0;
 }

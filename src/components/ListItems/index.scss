@@ -14,8 +14,8 @@
       }
       .no-of-item{
         background: $color-notify;
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         color: #fff;
         font-size: 1.5rem;
@@ -76,5 +76,12 @@
     overflow: hidden;
     object-position: center;
     object-fit: cover;
+  }
+  .path{
+    background: $color-primary;
+    color: #fff;
+    border-radius: 1rem;
+    padding: .2rem .7rem;
+    margin-left: .2rem;
   }
 }
