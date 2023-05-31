@@ -12,7 +12,7 @@ let routesUsers = [
   {
     name: 'الباقات',
     path: '/dashboard/package',
-    icon: require('@/assets/images/icons/list.svg')
+    icon: require('@/assets/images/icons/packages.svg')
   }
 ]
 let routesSchool = [
