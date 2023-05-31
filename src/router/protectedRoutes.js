@@ -239,6 +239,26 @@ const protectedRoutes = [
         name:"practices",
         component: ()=> import('../../views/practices/index.vue')
       },
+      {
+        path:"/dashboard/package",
+        name:"package",
+        component: ()=> import('../../views/package/index.vue')
+      },
+      {
+        path:"/dashboard/package/add",
+        name:"add-package",
+        component: ()=> import('../../views/package/add-package/index.vue')
+      },
+      {
+        path:"/dashboard/package/edit/:id",
+        name:"edit-package",
+        component: ()=> import('../../views/package/edit-package/index.vue')
+      },
+      {
+        path:"/dashboard/package/show/:id",
+        name:"show-package",
+        component: ()=> import('../../views/package/view-package/index.vue')
+      },
     ]
   }
 ];

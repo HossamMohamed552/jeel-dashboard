@@ -8,6 +8,11 @@ let routesUsers = [
     name: 'قائمة المستخدمين',
     path: '/dashboard/users',
     icon: require('@/assets/images/icons/list.svg')
+  },
+  {
+    name: 'الباقات',
+    path: '/dashboard/package',
+    icon: require('@/assets/images/icons/list.svg')
   }
 ]
 let routesSchool = [
