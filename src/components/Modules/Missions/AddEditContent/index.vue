@@ -127,7 +127,7 @@ export default {
       this.ApiService(getSingleMissionsRequest(this.$route.params.id)).then((response) => {
         this.learnPathsVideoPaperWokQuiz = response.data.data.learningpaths
         this.levelMission = response.data.data.level
-      }).finally(()=>{
+      }).finally(() => {
         let learnPathsVideoPaperWokQuizWithFilter = this.learnPathsVideoPaperWokQuiz.filter(item => this.watchLearningPathSelected.map(itemMap => itemMap.id).includes(item.id))
         learnPathsVideoPaperWokQuizWithFilter.forEach((item) => {
           this.ApiService(getVideoPerLevelPathRequest({
@@ -170,7 +170,10 @@ export default {
             levelId: this.level,
             learnPathId: item.id
           })).then((response) => {
-            Object.assign(item, {paperWorks: response.data.data, paperWorkIds: []})
+            Object.assign(item, {
+              paperWorks: response.data.data,
+              paperWorkIds: []
+            })
           })
           this.ApiService(getQuizLevelPathRequest({
             levelId: this.level,
@@ -179,7 +182,7 @@ export default {
             Object.assign(item, {quizzes: response.data.data, quizzesIds: []})
           })
         })
-        this.learnPathsVideoPaperWokQuiz = [...learnPathsVideoPaperWokQuizWithFilter,...learnPathsVideoPaperWokQuizWithOutFilter]
+        this.learnPathsVideoPaperWokQuiz = [...learnPathsVideoPaperWokQuizWithFilter, ...learnPathsVideoPaperWokQuizWithOutFilter]
       })
     } else {
       this.watchLearningPathSelected = this.learningPathSelected

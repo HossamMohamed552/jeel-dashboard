@@ -20,7 +20,6 @@ export default {
       default: ''
     },
     subtitle: {
-      type: String,
       default: ''
     },
     listItems: {

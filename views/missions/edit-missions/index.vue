@@ -1,6 +1,6 @@
 <template>
   <div class="add-mission">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="'تمت التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
     <Stepper
       v-show="currentStep === 0 || currentStep === 1 || currentStep === 2"
       class="mt-5 mb-3"
@@ -23,6 +23,82 @@
       @handleCancel="handleCancel"
       @handleBack="goToMissionDataForm"
       @goToFinalStep="goToFinalStep"/>
+    <div class="container-fluid custom-container" v-if="currentStep === 2">
+      <div class="mission-review ">
+        <b-row>
+          <b-col lg="4">
+            <h6>السنة الدراسية</h6>
+            <p>{{ levels.find((item) => item.id === collectData.level_id).name }}</p>
+          </b-col>
+          <b-col lg="4">
+            <h6>إسم المرحلة</h6>
+            <p>{{ collectData.name }}</p>
+          </b-col>
+          <b-col lg="4">
+            <h6>الدولة</h6>
+            <p>{{ countries.find((item) => item.id === collectData.country_id).name }}</p>
+          </b-col>
+          <b-col lg="4">
+            <h6>الصف الدراسى</h6>
+            <p>{{ terms.find((item) => item.id === collectData.term_id).name }}</p>
+          </b-col>
+          <b-col lg="4">
+            <h6>الوصف</h6>
+            <p>{{ collectData.description }}</p>
+          </b-col>
+          <b-col lg="4">
+            <h6>المدة الزمنية</h6>
+            <p>{{ collectData.duration }}</p>
+          </b-col>
+          <b-col lg="12">
+            <div>
+              <p>المحتوى</p>
+              <div v-for="path in collectData.paths" :key="path.id">
+                <b-row>
+                  <b-col lg="12">
+                    <h6>المسار</h6>
+                    <p>{{ path.name }}</p>
+                  </b-col>
+                  <b-col lg="4">
+                    <div>
+                      <h6>الفيديوهات</h6>
+                      <span v-for="(video,index) in Array.from(path.videos).filter((item)=> path.videoIds.includes(item.id))" :key="`${video.id} ${index}`">{{video.title}}</span>
+                    </div>
+                  </b-col>
+                  <b-col lg="4">
+                    <div>
+                      <h6>اوراق العمل</h6>
+                      <span v-for="(paperWork,index) in Array.from(path.paperWorks).filter((item)=> path.paperWorkIds.includes(item.id))" :key="`${paperWork.id} ${index}`">{{paperWork.name}}</span>
+                    </div>
+                  </b-col>
+                  <b-col lg="4">
+                    <div>
+                      <h6>التمارين</h6>
+                      <span v-for="(quiz,index) in Array.from(path.quizzes).filter((item)=> path.quizzesIds.includes(item.id))" :key="`${quiz.id} ${index}`">{{quiz.name}}</span>
+                    </div>
+                  </b-col>
+                </b-row>
+              </div>
+            </div>
+          </b-col>
+        </b-row>
+        <b-row>
+          <div class="action-holder">
+            <div>
+              <Button :loading="loading" custom-class="submit-btn" @click="createMission">
+                {{ $t("GLOBAL_SAVE") }}
+              </Button>
+              <Button class="mx-3" @click="backToFillContent" custom-class="submit-btn back-btn">
+                {{ $t("GLOBAL_BACK") }}
+              </Button>
+            </div>
+            <Button @click="handleCancel" custom-class="cancel-btn margin">
+              {{ $t("GLOBAL_CANCEL") }}
+            </Button>
+          </div>
+        </b-row>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -86,16 +162,22 @@ export default {
     goToMissionDataForm() {
       this.handleNavigation(0)
     },
+    backToFillContent() {
+      this.handleNavigation(1)
+    },
     goToFinalStep(data) {
       Object.assign(this.collectData, {paths: [...data]})
       this.handleSaveCollectedData(data)
+      this.handleNavigation(2)
+    },
+    createMission() {
       const formData = new FormData()
       formData.append('name', this.collectData.name);
-      formData.append('term_id', this.collectData.term_id);
-      formData.append('description', this.collectData.description);
       formData.append('country_id', this.collectData.country_id);
       formData.append('level_id', this.collectData.level_id);
       formData.append('data_range', this.collectData.duration);
+      formData.append('description', this.collectData.description);
+      formData.append('term_id', this.collectData.term_id);
       formData.append('_method', 'PUT');
       // for to get learnPaths
       for (let learnPath = 0; learnPath < this.collectData.paths.length;) {
@@ -121,6 +203,7 @@ export default {
         learnPath++
       }
       this.loading = true
+      this.showModal = true
       axios
         .post(`/missions/${this.$route.params.id}`, formData, {
           headers: {
@@ -130,8 +213,10 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
           this.loading = false
+          setTimeout(() => {
+            this.showModal = false
+          }, 3000)
           this.$router.push("/dashboard/missions");
         });
     },

@@ -186,7 +186,9 @@
     "videos": "الفديوهات",
     "paperWork": "اوراق العمل",
     "quizzes": "التمارين",
-    "description": "الوصف"
+    "description": "الوصف",
+    "content": "المحتوى",
+    "ShowDetails": "عرض تفاصيل المرحلة"
   },
   "permissions": "الصلاحيات",
   "showDetails": "عرض تفاصيل المستخدم",

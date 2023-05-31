@@ -180,6 +180,7 @@ export default {
         this.mission.duration = response.data.data.data_range
         this.mission.description = response.data.data.description
         this.mission.country_id = response.data.data.country.id
+        this.mission.term_id = response.data.data.term.id
         this.mission.learning_path_ids = response.data.data.learningpaths.map((item)=> item.id)
       })
     }

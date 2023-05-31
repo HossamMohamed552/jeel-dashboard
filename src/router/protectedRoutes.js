@@ -210,6 +210,11 @@ const protectedRoutes = [
         component: ()=> import('../../views/missions/edit-missions/index.vue')
       },
       {
+        path:"/dashboard/missions/show/:id",
+        name:"show-missions",
+        component: ()=> import('../../views/missions/view-missions/index.vue')
+      },
+      {
         path:"/dashboard/questions",
         name:"questions",
         component: ()=> import('../../views/questions/index.vue')

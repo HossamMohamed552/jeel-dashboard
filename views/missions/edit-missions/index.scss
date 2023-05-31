@@ -11,16 +11,17 @@
   @include flexCenter(space-between);
 }
 
-.qustion-review {
-     margin-top: 3rem;
+.mission-review {
+  @include styleViewList;
+  min-height: 70vh;
   h6 {
     color: $color-light-gray;
     font-weight: 400;
   }
-
-  p {
+  p,span {
     color: $color-primary;
     font-weight: 500;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
+    display: block;
   }
 }
