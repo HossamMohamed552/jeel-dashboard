@@ -3,21 +3,21 @@
     <Modal :content-message="'تمت الإضافة بنجاح'"
            :showModal="showModal"
            :is-success="true"/>
-    <AddEditPackage
+    <AddEditSchoolType
       :loading="loading"
-      @handleAddPackage="handleAddPackage($event)"
+      @handleAddSchoolType="handleAddSchoolType($event)"
       @handleCancel="handleCancel"
     />
   </div>
 </template>
 <script>
 
-import AddEditPackage from "@/components/Modules/Packages/AddEditPackage/index.vue";
+import AddEditSchoolType from "@/components/Modules/SchoolTypes/AddEditSchoolType/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import {postPackagesRequest} from "@/api/packages.js";
+import {postSchoolTypesRequest} from "@/api/schoolType";
 export default {
   name: "index",
-  components:{Modal, AddEditPackage},
+  components:{Modal, AddEditSchoolType},
   data(){
     return{
       loading: false,
@@ -25,20 +25,20 @@ export default {
     }
   },
   methods:{
-    handleAddPackage($event) {
+    handleAddSchoolType($event) {
       this.loading = true
       this.showModal = true
-      this.ApiService(postPackagesRequest($event)).then((response) => {
+      this.ApiService(postSchoolTypesRequest($event)).then((response) => {
         this.loading = false
         setTimeout(() => {
           this.showModal = false
         }, 3000)
       }).then(() => {
-        this.$router.push("/dashboard/package");
+        this.$router.push("/dashboard/school-type");
       })
     },
     handleCancel() {
-      this.$router.push("/dashboard/package");
+      this.$router.push("/dashboard/school-type");
     },
   }
 }

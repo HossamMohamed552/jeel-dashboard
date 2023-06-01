@@ -27,6 +27,11 @@ let routesSchool = [
     icon: require('@/assets/images/icons/school-list.svg')
   },
   {
+    name: 'قائمة أنواع المدارس',
+    path: '/dashboard/school-type',
+    icon: require('@/assets/images/icons/school-list.svg')
+  },
+  {
     name: 'قائمة المراحل الدراسية',
     path: '/dashboard/levels',
     icon: require('@/assets/images/icons/list-steps.svg')

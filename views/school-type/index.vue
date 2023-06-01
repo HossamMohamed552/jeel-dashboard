@@ -1,10 +1,10 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة الباقات'"
+      :header-name="'قائمة أنواع المدارس'"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
-      :table-items="packagesList"
+      :table-items="schoolTypessList"
       :v-search-model="packageSearchWord"
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
@@ -14,16 +14,16 @@
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
-          @click="goToAddPackage"
+          @click="goToAddSchoolType"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة باقة</span>
+          <span>إضافة نوع مدرسة</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف الباقة'"
-      :content-message-question="'هل انت متأكد من حذف الباقة'"
+      :content-message="'حذف نوع المدرسة'"
+      :content-message-question="'هل انت متأكد من حذف نوع المدرسة'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -35,7 +35,7 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { deletePackagesRequest, getPackagesRequest } from "@/api/packages.js";
+import { deleteSchoolTypesRequest, getSchoolTypesRequest } from "@/api/schoolType.js";
 import Modal from "@/components/Shared/Modal/index.vue";
 export default {
   components: { Modal, ListItems, Button },
@@ -43,7 +43,7 @@ export default {
     return {
       showModal: false,
       packageSearchWord: "",
-      packagesList: [],
+      schoolTypessList: [],
       totalNumber: null,
       fieldsList: [
         {
@@ -51,20 +51,8 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
-          key: "name",
+          key: this.$i18n.locale == "ar" ? "name.ar": "name.en",
           label: this.$i18n.t("TABLE_FIELDS.name"),
-        },
-        {
-          key: "price",
-          label: this.$i18n.t("TABLE_FIELDS.price"),
-        },
-        {
-          key: "classes_count",
-          label: this.$i18n.t("TABLE_FIELDS.classes_count"),
-        },
-        {
-          key: "description",
-          label: this.$i18n.t("TABLE_FIELDS.description"),
         },
         {
           key: "actions",
@@ -75,12 +63,12 @@ export default {
     };
   },
   methods: {
-    goToAddPackage() {
-      this.$router.push("/dashboard/package/add");
+    goToAddSchoolType() {
+      this.$router.push("/dashboard/school-type/add");
     },
-    getPackages() {
-      this.ApiService(getPackagesRequest()).then((response) => {
-        this.packagesList = response.data.data;
+    getSchoolTypes() {
+      this.ApiService(getSchoolTypesRequest()).then((response) => {
+        this.schoolTypessList = response.data.data;
         this.totalNumber = response.data.meta.total;
       });
     },
@@ -88,12 +76,10 @@ export default {
       console.log("$event", $event);
     },
     detailItem($event) {
-      this.$router.push(`/dashboard/package/show/${$event}`);
-      console.log("detailItem", $event);
+      this.$router.push(`/dashboard/school-type/show/${$event}`);
     },
     editItem($event) {
-      this.$router.push(`/dashboard/package/edit/${$event}`);
-      console.log("editItem", $event);
+      this.$router.push(`/dashboard/school-type/edit/${$event}`);
     },
     deleteItem($event) {
       this.itemId = $event;
@@ -103,14 +89,14 @@ export default {
       this.showModal = $event;
     },
     cancelWithConfirm() {
-      this.ApiService(deletePackagesRequest(this.itemId)).then(() => {
-        this.getPackages();
+      this.ApiService(deleteSchoolTypesRequest(this.itemId)).then(() => {
+        this.getSchoolTypes();
       });
       this.cancel();
     },
   },
   mounted() {
-    this.getPackages();
+    this.getSchoolTypes();
   },
 };
 </script>
