@@ -259,6 +259,26 @@ const protectedRoutes = [
         name:"show-package",
         component: ()=> import('../../views/package/view-package/index.vue')
       },
+      {
+        path:"/dashboard/school-type",
+        name:"school-type",
+        component: ()=> import('../../views/school-type/index.vue')
+      },
+      {
+        path:"/dashboard/school-type/add",
+        name:"add-school-type",
+        component: ()=> import('../../views/school-type/add-school-type/index.vue')
+      },
+      {
+        path:"/dashboard/school-type/edit/:id",
+        name:"edit-school-type",
+        component: ()=> import('../../views/school-type/edit-school-type/index.vue')
+      },
+      {
+        path:"/dashboard/school-type/show/:id",
+        name:"show-school-type",
+        component: ()=> import('../../views/school-type/view-school-type/index.vue')
+      },
     ]
   }
 ];

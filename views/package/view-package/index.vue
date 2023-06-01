@@ -33,7 +33,7 @@
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import { getSinglePackagesRequest } from "@/api/packages";
+import { getSinglePackagesRequest } from "@/api/packages.js";
 export default {
   name: "index",
   components: {
