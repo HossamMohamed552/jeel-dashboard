@@ -18,6 +18,19 @@
                   ></TextField>
                 </div>
               </b-col>
+              <b-col v-if="!classId" lg="6" class="mb-3">
+                <div class="hold-field">
+                  <SelectSearch
+                  v-model="classData.level_term_id"
+                  :label="$t('CLASS.levelTerms')"
+                  :name="$t('CLASS.levelTerms')"
+                  :options="levelTerms"
+                  :reduce="(option) => option.id"
+                  :get-option-label="(option) => option.level_term"
+                  :rules="'required'"
+                ></SelectSearch>
+                </div>
+              </b-col>
             </b-row>
             <b-row>
               <div class="hold-btns-form">
@@ -45,22 +58,34 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import { getSingleClassRequest } from "@/api/class.js";
 import Modal from "@/components/Shared/Modal/index.vue";
+import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 export default {
   components: {
     Modal,
     TextField,
     Button,
+    SelectSearch,
   },
   props: {
     loading: {
       type: Boolean,
       default: false,
     },
+    levelTerms: {
+      type: Array,
+      default: () => [],
+    },
+    schoolId: {
+      type: Number,
+      default: null,
+    },
   },
   data() {
     return {
       classData: {
-        name: ""
+        name: "",
+        level_term_id: null,
+        school_id: this.schoolId
       },
       classId: this.$route.params.id,
     };
@@ -71,6 +96,8 @@ export default {
         if (!success) return;
       });
       if (this.classId) {
+        delete this.classData.level_term_id;
+        delete this.classData.school_id;
         this.$emit("handleEditClass", this.classData);
       } else {
         this.$emit("handleAddClass", this.classData);

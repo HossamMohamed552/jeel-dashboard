@@ -5,6 +5,8 @@
            :is-success="true"/>
     <AddEditClasses
       :loading="loading"
+      :levelTerms="levelTerms"
+      :schoolId="schoolId"
       @handleAddClass="handleAddClass($event)"
       @handleCancel="handleCancel"
     />
@@ -14,7 +16,7 @@
 
 import AddEditClasses from "@/components/Modules/Classes/AddEditClasses/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import {postClassRequest} from "@/api/class.js";
+import {postClassRequest, getLevelTermRequest} from "@/api/class.js";
 export default {
   name: "index",
   components:{Modal, AddEditClasses},
@@ -22,8 +24,12 @@ export default {
     return{
       loading: false,
       showModal: false,
-      schoolId: this.$route.params.schoolId
+      schoolId: this.$route.params.schoolId,
+      levelTerms: []
     }
+  },
+  mounted() {
+    this.getLevelTerm();
   },
   methods:{
     handleAddClass($event) {
@@ -40,6 +46,12 @@ export default {
     },
     handleCancel() {
       this.$router.push(`/dashboard/schools/show/${this.schoolId}`);
+    },
+    getLevelTerm() {
+      this.ApiService(getLevelTermRequest(this.schoolId)).then((response) => {
+        this.levelTerms = response.data.data;
+        this.totalNumber = response.data.meta.total;
+      });
     },
   }
 }

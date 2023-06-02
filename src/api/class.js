@@ -1,27 +1,34 @@
 export const getClassRequest = () => ({
   method: 'get',
-  url: 'school-types',
+  url: 'classes',
   config: {}
 })
 export const getSingleClassRequest = (params) => ({
   method: 'get',
-  url: `school-types/${params}`,
+  url: `classes/${params}`,
 })
 export const putClassRequest = (params,data) => ({
   method: 'put',
-  url: `school-types/${params}`,
+  url: `classes/${params}`,
   config: {
     data
   }
 })
 export const postClassRequest = (data) => ({
   method: 'post',
-  url: 'school-types',
+  url: 'classes',
   config: {
     data
   }
 })
 export const deleteClassRequest = (params) =>({
   method: 'delete',
-  url: `school-types/${params}`,
+  url: `classes/${params}`,
+})
+
+
+export const getLevelTermRequest = (params) => ({
+  method: 'get',
+  url: `school/${params}/levels-terms`,
+  config: {}
 })

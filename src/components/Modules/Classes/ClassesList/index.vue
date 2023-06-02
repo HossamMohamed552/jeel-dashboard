@@ -61,6 +61,14 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.name"),
         },
         {
+          key: "term.name",
+          label: this.$i18n.t("TABLE_FIELDS.term"),
+        },
+        {
+          key: "level.name",
+          label: this.$i18n.t("TABLE_FIELDS.level"),
+        },
+        {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
