@@ -2,22 +2,12 @@
   <section class="container-fluid custom-container">
     <div class="show-role">
       <div class="hold-fields">
-        <!-- <b-row>
-          <b-col lg="12">
-            <h2 class="heading">{{ $t("SCHOOL.showDetails") }}</h2>
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col lg="6">
-            <ShowItem :title="$t('SCHOOL_TYPE.name')" :subtitle="singleSchool.name" />
-          </b-col>
-        </b-row> -->
         <b-row>
           <b-col lg="12">
             <h2 class="heading">{{ $t("SCHOOL.showDetails") }}</h2>
           </b-col>
         </b-row>
-        <b-row>
+        <b-row class="mb-5">
           <b-col lg="9" class="school-data">
             <b-row class="row-data">
               <b-col lg="6">
@@ -96,10 +86,28 @@
               </b-col>
             </b-row>
           </b-col>
-          <b-col lg="3" class="d-flex justify-content-center align-items-center">
+          <b-col
+            lg="3"
+            class="d-flex justify-content-center align-items-center"
+          >
             <div class="img-container">
               <img class="w-100" :src="singleSchool.logo" />
             </div>
+          </b-col>
+        </b-row>
+        <b-row class="mt-5">
+          <b-col lg="12">
+            <SchoolTabs>
+              <template v-slot:classes>
+                <ClassesList :schoolId="currentSchoolId" />
+              </template>
+              <template v-slot:staff-enroll>
+                <StaffEnrollList :schoolId="currentSchoolId" />
+              </template>
+              <template v-slot:student-enroll>
+                <StudentEnrollList :schoolId="currentSchoolId" />
+              </template>
+            </SchoolTabs>
           </b-col>
         </b-row>
       </div>
@@ -108,22 +116,31 @@
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
+import SchoolTabs from "@/components/Modules/SchoolDetails/SchoolTabs/index.vue";
+import ClassesList from "@/components/Modules/Classes/ClassesList/index.vue";
+import StaffEnrollList from "@/components/Modules/StaffEnroll/StaffEnrollList/index.vue";
+import StudentEnrollList from "@/components/Modules/StudentEnroll/StudentEnrollList/index.vue";
 import { getSingleSchoolsRequest } from "@/api/school.js";
 export default {
   name: "index",
   components: {
     ShowItem,
+    SchoolTabs,
+    ClassesList,
+    StaffEnrollList,
+    StudentEnrollList
   },
   data() {
     return {
       singleSchool: {},
-      currentSchoolId: this?.singleSchool?.id,
+      currentSchoolId: null,
     };
   },
   mounted() {
     this.ApiService(getSingleSchoolsRequest(this.$route.params.id)).then(
       (response) => {
         this.singleSchool = response.data.data;
+        this.currentSchoolId = response.data.data.id
       }
     );
   },
