@@ -7,6 +7,9 @@
 <script>
 import Modal from "@/components/Shared/Modal/index.vue";
 import AddEditQuiz from "@/components/Modules/Quizzes/AddEditQuiz/index.vue";
+import {postQuizRequest} from "@/api/quiz";
+import axios from "axios";
+import VueCookies from "vue-cookies";
 
 export default {
   name: "index",
@@ -17,8 +20,28 @@ export default {
     }
   },
   methods: {
-    handleAddQuiz(data) {
-      console.log(data)
+    handleAddQuiz(quiz) {
+      console.log('quiz',quiz)
+      const formData = new FormData()
+      formData.append('name',quiz.name);
+      formData.append('description',quiz.description);
+      formData.append('total_question',quiz.total_question);
+      formData.append('type',quiz.type);
+      formData.append('learning_path_id',quiz.learning_path_id);
+      formData.append('level_id',quiz.level_id);
+      for (let questions = 0; questions < quiz.questions.length;) {
+        formData.append(`questions[${questions}]`, quiz.questions[questions].id);
+        questions++
+      }
+      axios.post('/quizzes', formData, {
+        headers: {
+          Authorization: `Bearer ${VueCookies.get("token")}`,
+          locale: 'ar',
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(()=>{
+        this.$router.push('/dashboard/practices')
+      })
     },
     handleCancel() {
       this.$router.push('/dashboard/practices')

@@ -98,7 +98,7 @@
                             <select
                               v-model="question.numberSelected"
                               class="custom-selectBox form-control"
-                              @change="getNumberQuestionDifficulty">
+                              @change="changeQuizTypeGetQuestions">
                               <option v-for="questionNumber in question.questions_count"
                                       :key="questionNumber"
                                       :value="questionNumber">
@@ -107,41 +107,8 @@
                             </select>
                           </div>
                         </b-col>
-                        <!--                        <b-col lg="4">-->
-                        <!--                          <p :class="isEditable ? 'question-type':'question-type-alt'">-->
-                        <!--                            {{ $t('QUIZZES.mediumQuestion') }}</p>-->
-                        <!--                          <span class="numberOfQuestions"-->
-                        <!--                                v-if="!isEditable">{{ createQuiz.mediumQuestionCount }}</span>-->
-                        <!--                          <div class="hold-field" v-if="isEditable">-->
-                        <!--                            <select v-model="createQuiz.mediumQuestionCount"-->
-                        <!--                                    class="custom-selectBox form-control">-->
-                        <!--                              <option v-for="question in mediumQuestion" :key="question"-->
-                        <!--                                      :value="question">-->
-                        <!--                                {{ question }}-->
-                        <!--                              </option>-->
-                        <!--                            </select>-->
-                        <!--                          </div>-->
-                        <!--                        </b-col>-->
-                        <!--                        <b-col lg="4">-->
-                        <!--                          <p :class="isEditable ? 'question-type':'question-type-alt'">-->
-                        <!--                            {{ $t('QUIZZES.hardQuestion') }}</p>-->
-                        <!--                          <span class="numberOfQuestions"-->
-                        <!--                                v-if="!isEditable">{{ createQuiz.hardQuestionCount }}</span>-->
-                        <!--                          <div class="hold-field" v-if="isEditable">-->
-                        <!--                            <select v-model="createQuiz.hardQuestionCount"-->
-                        <!--                                    class="custom-selectBox form-control">-->
-                        <!--                              <option v-for="question in hardQuestion" :key="question"-->
-                        <!--                                      :value="question">-->
-                        <!--                                {{ question }}-->
-                        <!--                              </option>-->
-                        <!--                            </select>-->
-                        <!--                          </div>-->
-                        <!--                        </b-col>-->
                       </b-row>
                     </b-col>
-                    <div>
-                      <p v-for="question in questions" :key="question.id">{{question.name}}</p>
-                    </div>
                     <b-col lg="7">
                       <div class="hold-btn">
                         <Button v-if="!isEditable" custom-class="transparent-btn rounded-btn"
@@ -158,31 +125,47 @@
                         </Button>
                       </div>
                     </b-col>
+                    <b-col v-if="questions.length > 0" lg="6">
+                      questionBank
+                      <draggable :list="questions" :options="{animation: 500, group: 'question'}">
+                        <transition-group name="no" class="list-group" tag="ul">
+                          <li class="list-group-item" v-for="question in questionBank" :key="question.id">{{ question.name }}</li>
+                        </transition-group>
+                      </draggable>
+                    </b-col>
+                    <b-col v-if="questions.length > 0" lg="6">
+                      questionsSelected
+                      <draggable :list="questionsToSend" :options="{animation: 500, group: 'question'}">
+                        <transition-group name="no" class="list-group" tag="ul">
+                          <li class="list-group-item" v-for="question in questionsToSend" :key="question.id">{{ question.name }}</li>
+                        </transition-group>
+                      </draggable>
+                    </b-col>
                   </b-row>
                 </div>
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
-                  <TextAreaField :label="$t('QUIZZES.description')"
+                  <TextAreaField :label="$t('QUIZZES.description')" :rules="'required|min:3'"
                                  v-model="createQuiz.description"/>
                 </div>
               </b-col>
             </b-row>
-            <!--            <b-row>-->
-            <!--              <div class="hold-btns-form">-->
-            <!--                <Button @click="handleCancel" custom-class="cancel-btn margin">-->
-            <!--                  {{ $t("GLOBAL_CANCEL") }}-->
-            <!--                </Button>-->
-            <!--                <Button-->
-            <!--                  type="submit"-->
-            <!--                  :loading="loading"-->
-            <!--                  :disabled="invalid"-->
-            <!--                  custom-class="submit-btn"-->
-            <!--                >-->
-            <!--                  {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}-->
-            <!--                </Button>-->
-            <!--              </div>-->
-            <!--            </b-row>-->
+            <b-row>
+              <div class="hold-btns-form">
+                <Button @click="handleCancel" custom-class="cancel-btn margin">
+                  {{ $t("GLOBAL_CANCEL") }}
+                </Button>
+                <Button
+                  type="submit"
+                  :loading="loading"
+                  :disabled="invalid || !enableToSendData"
+                  custom-class="submit-btn"
+                >
+                  {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
+                </Button>
+              </div>
+            </b-row>
           </form>
         </validation-observer>
       </div>
@@ -197,8 +180,9 @@ import Modal from "@/components/Shared/Modal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue"
 import SelectField from "@/components/Shared/SelectField/index.vue";
 import {getLevelsRequest} from "@/api/level";
-import {getLearningPathsRequest} from "@/api/question";
+import {getLearningPathsRequest, getQuestionRequest} from "@/api/question";
 import {getQuestionDifficultyLevelLearnRequest, postRandomQuizRequest} from "@/api/quiz";
+import draggable from 'vuedraggable'
 
 export default {
   components: {
@@ -207,7 +191,8 @@ export default {
     TextAreaField,
     Button,
     SelectSearch,
-    SelectField
+    SelectField,
+    draggable
   },
   props: {
     loading: {
@@ -228,7 +213,7 @@ export default {
         {
           id: 2,
           name: "اوتوماك",
-          value: "auto",
+          value: "automatic",
         },
         {
           id: 3,
@@ -242,19 +227,34 @@ export default {
         learning_path_id: null,
         total_question: null,
         description: "",
-        type: "",
+        type: "default",
         sort: "",
+        questions: []
         // easyQuestionCount: 0,
         // mediumQuestionCount: 0,
         // hardQuestionCount: 0
       },
       question_difficulty: [],
+      questionBank: [],
       questions: [],
+      questionsToSend: [],
       // easyQuestion: [],
       // mediumQuestion: [],
       // hardQuestion: [],
       isEditable: false,
+      isDragging: true,
+      delayedDragging: false,
+      editableDrag: true,
+      enableToSendData: false
     };
+  },
+  computed: {
+    // dragOptions() {
+    //   return {
+    //     animation: 500,
+    //     group: "question",
+    //   };
+    // }
   },
   watch: {
     "createQuiz.level_id"() {
@@ -263,8 +263,29 @@ export default {
     "createQuiz.learning_path_id"() {
       this.showSystem()
     },
+    isDragging(newValue) {
+      if (newValue) {
+        this.delayedDragging = true;
+        return;
+      }
+      this.$nextTick(() => {
+        this.delayedDragging = false;
+      });
+    }
   },
   methods: {
+    onMove({relatedContext, draggedContext}) {
+      const relatedElement = relatedContext.element;
+      const draggedElement = draggedContext.element;
+      return (
+        (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
+      );
+    },
+    changeQuizTypeGetQuestions() {
+      this.createQuiz.type = "automatic"
+      this.getNumberQuestionDifficulty()
+      this.showQuestions()
+    },
     getNumberQuestionDifficulty() {
       this.createQuiz.total_question = this.question_difficulty.reduce((accumulator, currentValue) => accumulator + currentValue.numberSelected, 0)
     },
@@ -282,13 +303,6 @@ export default {
         let allQuestionsLevel = response.data.data
         this.question_difficulty = allQuestionsLevel.map(item => Object.assign(item, {numberSelected: item.questions_count}))
         this.getNumberQuestionDifficulty()
-        // this.easyQuestion = allQuestionsLevel.filter((item) => item.name === "Easy")[0].questions_count
-        // this.mediumQuestion = allQuestionsLevel.filter((item) => item.name === "Medium")[0].questions_count
-        // this.hardQuestion = allQuestionsLevel.filter((item) => item.name === "Hard")[0].questions_count
-        // this.createQuiz.easyQuestionCount = allQuestionsLevel.filter((item) => item.name === "Easy")[0].questions_count
-        // this.createQuiz.mediumQuestionCount = allQuestionsLevel.filter((item) => item.name === "Medium")[0].questions_count
-        // this.createQuiz.hardQuestionCount = allQuestionsLevel.filter((item) => item.name === "Hard")[0].questions_count
-        // this.createQuiz.total_question = this.createQuiz.easyQuestionCount + this.createQuiz.mediumQuestionCount + this.createQuiz.hardQuestionCount
       })
     },
     editOnQuestions() {
@@ -318,12 +332,7 @@ export default {
         this.learningPaths = response.data.data;
       });
     },
-    showQuestions() {
-      let questionDifficultyMapped = []
-      questionDifficultyMapped = this.question_difficulty.map((item) => {
-        return {question_difficulty_id: item.id, questions_count: item.numberSelected}
-      })
-      this.createQuiz.question_difficulty = [...questionDifficultyMapped]
+    getQuestions() {
       let defaultQuiz = {
         level_id: this.createQuiz.level_id,
         learning_path_id: this.createQuiz.learning_path_id,
@@ -331,12 +340,34 @@ export default {
       }
       this.ApiService(postRandomQuizRequest(defaultQuiz)).then((response) => {
         this.questions = response.data.data
+      }).then(() => {
+        this.questions = this.questions.map((item) => {
+          return {...item, fixed: false}
+        })
+        this.questionBank = this.questionBank.map((item) => {
+          return {id: item.id, name: item.question, fixed: false}
+        })
+        console.log(this.questionBank.filter((item) => this.questions.map(item => item.id).includes(item.id)))
+        this.questionsToSend = this.questionBank.filter((item) => this.questions.map(item => item.id).includes(item.id))
+        this.createQuiz.questions = this.questionsToSend
+        this.enableToSendData = true
       })
-    }
+    },
+    showQuestions() {
+      let questionDifficultyMapped = []
+      questionDifficultyMapped = this.question_difficulty.map((item) => {
+        return {question_difficulty_id: item.id, questions_count: item.numberSelected}
+      })
+      this.createQuiz.question_difficulty = [...questionDifficultyMapped]
+      this.getQuestions()
+    },
   },
   mounted() {
     this.getAllLevels()
     this.getLearningPaths()
+    this.ApiService(getQuestionRequest()).then((response) => {
+      this.questionBank = response.data.data
+    })
   }
 };
 </script>

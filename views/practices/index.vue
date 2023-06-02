@@ -7,7 +7,7 @@
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddQuiz">
           <img src="@/assets/images/icons/plus.svg">
-          <span>إضافة فصل دراسى </span>
+          <span>إضافة تمرين جديد </span>
         </Button>
       </template>
     </ListItems>

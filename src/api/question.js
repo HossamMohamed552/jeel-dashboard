@@ -1,6 +1,6 @@
 export const getQuestionRequest = (params = {page: 1}) => ({
   method: 'get',
-  url: `questions?page=${params.page}`,
+  url: `questions?per_page=200`,
 })
 export const getSingleQuestionRequest = (params) => ({
   method: 'get',
