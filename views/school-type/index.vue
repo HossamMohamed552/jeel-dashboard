@@ -51,7 +51,7 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
-          key: this.$i18n.locale == "ar" ? "name.ar": "name.en",
+          key: "name",
           label: this.$i18n.t("TABLE_FIELDS.name"),
         },
         {

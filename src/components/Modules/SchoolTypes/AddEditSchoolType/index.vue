@@ -14,7 +14,7 @@
                     v-model="schoolType.name"
                     :label="$t('SCHOOL_TYPE.name')"
                     :name="$t('SCHOOL_TYPE.name')"
-                    :rules="'required'"
+                    :rules="'required|min:3'"
                   ></TextField>
                 </div>
               </b-col>

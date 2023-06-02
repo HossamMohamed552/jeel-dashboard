@@ -95,6 +95,11 @@ const protectedRoutes = [
         component: ()=> import('../../views/schools/edit-schools/index.vue')
       },
       {
+        path:"/dashboard/schools/show/:id",
+        name:"edit-schools",
+        component: ()=> import('../../views/schools/view-schools/index.vue')
+      },
+      {
         path:"/dashboard/levels",
         name:"levels",
         component: ()=> import('../../views/levels/index.vue')
