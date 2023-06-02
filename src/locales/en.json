@@ -31,7 +31,9 @@
     "questions_num": "Number of questions",
     "learning_path":"Learning Path",
     "level":"Level",
-    "type": "Type"
+    "type": "Type",
+    "price": "price",
+    "classes_count": "classes count"
   },
   "CONTROLS": {
     "detailBtn": "detailBtn",
@@ -76,6 +78,15 @@
     "CHOOSE_Question_PATTERN": "Choose question pattern",
     "QUESTION_PATTERN": "Question pattern",
     "QUESTION_SUB_PATTERN": "Question sub pattern"
+  },
+  "PACKAGE": {
+    "showDetails": "show package details",
+    "name": "Package name",
+    "price": "Price",
+    "classes_count": "Classes count",
+    "description": "Description",
+    "ADD_NEW": "Add new package",
+    "EDIT": "Edit package"
   },
   "permissions": "permissions",
   "showDetails": "showDetails",

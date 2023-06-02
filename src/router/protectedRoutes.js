@@ -244,6 +244,46 @@ const protectedRoutes = [
         name:"add-practices",
         component: ()=> import('../../views/practices/add-practices/index.vue')
       },
+      {
+        path:"/dashboard/package",
+        name:"package",
+        component: ()=> import('../../views/package/index.vue')
+      },
+      {
+        path:"/dashboard/package/add",
+        name:"add-package",
+        component: ()=> import('../../views/package/add-package/index.vue')
+      },
+      {
+        path:"/dashboard/package/edit/:id",
+        name:"edit-package",
+        component: ()=> import('../../views/package/edit-package/index.vue')
+      },
+      {
+        path:"/dashboard/package/show/:id",
+        name:"show-package",
+        component: ()=> import('../../views/package/view-package/index.vue')
+      },
+      {
+        path:"/dashboard/school-type",
+        name:"school-type",
+        component: ()=> import('../../views/school-type/index.vue')
+      },
+      {
+        path:"/dashboard/school-type/add",
+        name:"add-school-type",
+        component: ()=> import('../../views/school-type/add-school-type/index.vue')
+      },
+      {
+        path:"/dashboard/school-type/edit/:id",
+        name:"edit-school-type",
+        component: ()=> import('../../views/school-type/edit-school-type/index.vue')
+      },
+      {
+        path:"/dashboard/school-type/show/:id",
+        name:"show-school-type",
+        component: ()=> import('../../views/school-type/view-school-type/index.vue')
+      },
     ]
   }
 ];
