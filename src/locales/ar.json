@@ -215,6 +215,12 @@
     "name": "الاسم",
     "showDetails": "تفاصيل نوع المدرسة"
   },
+  "BLOOM": {
+    "BLOOM": "بلوم",
+    "DETAILS": "تفاصيل بلوم",
+    "ADD": "اضافة بلوم",
+    "EDIT": "تعديل بلوم"
+  },
   "CLASS": {
     "ADD_NEW": "إضافة صف دراسي جديد",
     "name": "الاسم",
@@ -239,5 +245,6 @@
   "GLOBALAddAll": "إضافه الكل",
   "GLOBALRemoveAll": "إزاله الكل",
   "GLOBAL_NEXT": "التالى",
-  "GLOBAL_BACK": "السابق"
+  "GLOBAL_BACK": "السابق",
+  "GLOBAL_NAME": "الاسم"
 }
