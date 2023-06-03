@@ -3,17 +3,17 @@
     <div class="container-fluid custom-container">
       <div class="add-edit-country-form">
         <h3>
-          {{ schoolTypeId ? $t("SCHOOL_TYPE.EDIT") : $t("SCHOOL_TYPE.ADD_NEW") }}
+          {{ studentEnrollId ? $t("STUDENT_ENROLL.EDIT") : $t("STUDENT_ENROLL.ADD_NEW") }}
         </h3>
-        <validation-observer v-slot="{ invalid }" ref="addEditSchoolTyeForm">
+        <validation-observer v-slot="{ invalid }" ref="addEditStudentEnrollForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <TextField
-                    v-model="schoolType.name"
-                    :label="$t('SCHOOL_TYPE.name')"
-                    :name="$t('SCHOOL_TYPE.name')"
+                    v-model="studentEnroll.name"
+                    :label="$t('STUDENT_ENROLL.name')"
+                    :name="$t('STUDENT_ENROLL.name')"
                     :rules="'required|min:3'"
                   ></TextField>
                 </div>
@@ -30,7 +30,7 @@
                   :disabled="invalid"
                   custom-class="submit-btn"
                 >
-                  {{ schoolTypeId ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
+                  {{ studentEnrollId ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
                 </Button>
               </div>
             </b-row>
@@ -43,7 +43,7 @@
 <script>
 import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import { getSingleSchoolTypesRequest } from "@/api/schoolType.js";
+import { getSingleStudentEnrollRequest } from "@/api/studentEnroll.js";
 import Modal from "@/components/Shared/Modal/index.vue";
 export default {
   components: {
@@ -59,38 +59,38 @@ export default {
   },
   data() {
     return {
-      schoolType: {
+      studentEnroll: {
         name: ""
       },
-      schoolTypeId: this.$route.params.id,
+      studentEnrollId: this.$route.params.id,
     };
   },
   methods: {
     onSubmit() {
-      this.$refs.addEditSchoolTyeForm.validate().then((success) => {
+      this.$refs.addEditStudentEnrollForm.validate().then((success) => {
         if (!success) return;
       });
-      if (this.schoolTypeId) {
-        this.$emit("handleEditSchoolType", this.schoolType);
+      if (this.studentEnrollId) {
+        this.$emit("handleEditStudentEnroll", this.studentEnroll);
       } else {
-        this.$emit("handleAddSchoolType", this.schoolType);
+        this.$emit("handleAddStudentEnroll", this.studentEnroll);
       }
     },
     handleCancel() {
       this.$emit("handleCancel");
     },
-    getSchoolTypeToEdit() {
-      if (this.schoolTypeId) {
-        this.ApiService(getSingleSchoolTypesRequest(this.schoolTypeId)).then(
+    getStudentEnrollToEdit() {
+      if (this.studentEnrollId) {
+        this.ApiService(getSingleStudentEnrollRequest(this.studentEnrollId)).then(
           (response) => {
-            this.schoolType = response.data.data;
+            this.studentEnroll = response.data.data;
           }
         );
       }
     },
   },
   mounted() {
-    this.getSchoolTypeToEdit();
+    this.getStudentEnrollToEdit();
   },
 };
 </script>

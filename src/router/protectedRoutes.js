@@ -95,6 +95,11 @@ const protectedRoutes = [
         component: ()=> import('../../views/schools/edit-schools/index.vue')
       },
       {
+        path:"/dashboard/schools/show/:id",
+        name:"edit-schools",
+        component: ()=> import('../../views/schools/view-schools/index.vue')
+      },
+      {
         path:"/dashboard/levels",
         name:"levels",
         component: ()=> import('../../views/levels/index.vue')
@@ -293,6 +298,51 @@ const protectedRoutes = [
         path:"/dashboard/school-type/show/:id",
         name:"show-school-type",
         component: ()=> import('../../views/school-type/view-school-type/index.vue')
+      },
+      {
+        path:"/dashboard/class/add",
+        name:"add-class",
+        component: ()=> import('../../views/class/add-class/index.vue')
+      },
+      {
+        path:"/dashboard/class/edit/:id",
+        name:"edit-class",
+        component: ()=> import('../../views/class/edit-class/index.vue')
+      },
+      {
+        path:"/dashboard/class/show/:id",
+        name:"show-class",
+        component: ()=> import('../../views/class/view-class/index.vue')
+      },
+      {
+        path:"/dashboard/staff-enroll/add",
+        name:"add-staff-enroll",
+        component: ()=> import('../../views/staff-enroll/add-staff-enroll/index.vue')
+      },
+      {
+        path:"/dashboard/staff-enroll/edit/:id",
+        name:"edit-staff-enroll",
+        component: ()=> import('../../views/staff-enroll/edit-staff-enroll/index.vue')
+      },
+      {
+        path:"/dashboard/staff-enroll/show/:id",
+        name:"show-staff-enroll",
+        component: ()=> import('../../views/staff-enroll/view-staff-enroll/index.vue')
+      },
+      {
+        path:"/dashboard/student-enroll/add",
+        name:"add-student-enroll",
+        component: ()=> import('../../views/student-enroll/add-student-enroll/index.vue')
+      },
+      {
+        path:"/dashboard/student-enroll/edit/:id",
+        name:"edit-student-enroll",
+        component: ()=> import('../../views/student-enroll/edit-student-enroll/index.vue')
+      },
+      {
+        path:"/dashboard/student-enroll/show/:id",
+        name:"show-student-enroll",
+        component: ()=> import('../../views/student-enroll/view-student-enroll/index.vue')
       },
     ]
   }
