@@ -1,7 +1,9 @@
-export const getAllUsersRequest = () => ({
+export const getAllUsersRequest = (params) => ({
   method: 'get',
   url: 'users',
-  config: {}
+  config: {
+    params
+  }
 })
 
 

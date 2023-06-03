@@ -9,7 +9,8 @@
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
-      @searchBy="searchBy"
+      @refetch="getPackages"
+      :loading="loading"
     >
       <template #buttons>
         <Button
@@ -41,6 +42,7 @@ export default {
   components: { Modal, ListItems, Button },
   data() {
     return {
+      loading: false,
       showModal: false,
       packageSearchWord: "",
       packagesList: [],
@@ -78,15 +80,17 @@ export default {
     goToAddPackage() {
       this.$router.push("/dashboard/package/add");
     },
-    getPackages() {
-      this.ApiService(getPackagesRequest()).then((response) => {
+    getPackages(event) {
+      this.loading = true
+      const params = event
+      this.ApiService(getPackagesRequest(params)).then((response) => {
         this.packagesList = response.data.data;
         this.totalNumber = response.data.meta.total;
-      });
+      }) .finally(() => {
+          this.loading = false;
+        });;
     },
-    searchBy($event) {
-      console.log("$event", $event);
-    },
+
     detailItem($event) {
       this.$router.push(`/dashboard/package/show/${$event}`);
       console.log("detailItem", $event);
