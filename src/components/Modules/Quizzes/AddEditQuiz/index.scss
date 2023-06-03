@@ -1,0 +1,78 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+
+.add-edit-quiz-form {
+  @include styleViewList;
+  min-height: 70vh;
+
+  .hold-system-question {
+    padding: 2rem;
+    background: $color-question-system;
+
+    .question-type, .numberOfQuestions {
+      color: $color-primary;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    .question-type-alt {
+      color: $color-paragraph-alt;
+      font-size: 1.2rem;
+      font-weight: 300;
+    }
+  }
+
+  .hold-btn {
+    @include flexCenter(flex-end)
+  }
+}
+
+.list-group {
+  min-height: 100px;
+  max-height: 300px;
+  padding: .5rem 1rem;
+  background: #fff;
+  overflow: auto;
+  margin-top: 1.5rem;
+  .list-group-item {
+    border: none;
+    padding: .5rem 0;
+  }
+}
+
+::v-deep {
+  .hold-field {
+    label {
+      color: $color-primary;
+    }
+  }
+
+  .vs__dropdown-toggle {
+    padding: 0 1.3rem;
+  }
+
+  .vs__selected-options {
+    height: 44px;
+  }
+
+  .group-type {
+    .col-form-label {
+      color: $color-primary !important;
+    }
+  }
+
+  .custom-radio {
+    display: inline-block;
+    margin-top: 1.5rem;
+  }
+
+  .mx-datepicker {
+    width: 100%;
+    border-radius: 3.125rem;
+  }
+
+  .mx-input {
+    padding: 1.3rem 2rem;
+    border-radius: 3.125rem;
+  }
+}

@@ -116,9 +116,7 @@
             <img class="image-in-table" :src="data.item.avatar" />
           </div>
         </template>
-        <template #cell(type)="data">
-          <span>{{ data.item.type === "international" ? "دولى" : "محلى" }}</span>
-        </template>
+        
         <template #cell(status)="data">
           <span>{{ data.item.status === 1 ? "مفعل" : "غير مفعل" }}</span>
         </template>
