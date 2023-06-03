@@ -200,6 +200,27 @@
     "content": "المحتوى",
     "ShowDetails": "عرض تفاصيل المرحلة"
   },
+  "QUIZZES": {
+    "EDIT": "تعديل التمرين",
+    "ADD_NEW": "إضافة تمرين جديد",
+    "name": "إسم التمرين",
+    "level": "السنة الدراسية",
+    "LEARNING_PATH": "المسار",
+    "terms": "الصف الدراسى",
+    "country": "الدولة",
+    "description": "الوصف",
+    "ShowDetails": "عرض تفاصيل التمرين",
+    "type": "إسم النوع",
+    "sort": "الترتيب",
+    "systemQuestion": "النظام الافتراضى للاسئلة",
+    "totalNumberOfQuestions": "إجمالى {number} سؤال",
+    "easyQuestion": "الأسئلة السهلة",
+    "mediumQuestion": "الأسئلة المتوسطة",
+    "hardQuestion": "الأسئلة الصعبة",
+    "editQuestion": "تعديل الاسئلة",
+    "reset": "إعادة الظبط",
+    "showQuestions": "عرض الاسئلة"
+  },
   "PACKAGE": {
     "showDetails": "عرض تفاصيل الباقة",
     "name": "اسم الباقة",

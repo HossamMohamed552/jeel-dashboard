@@ -4,7 +4,6 @@
     rounded
     opacity="0.6"
     spinner-small
-    spinner-variant="primary"
     :class="dBlock ? 'd-block' : 'd-inline-block'"
   >
     <b-button
@@ -68,4 +67,5 @@ export default {
 
 <style lang="scss" scoped>
 @import "./index.scss";
+
 </style>
