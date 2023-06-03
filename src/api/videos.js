@@ -1,7 +1,7 @@
-export const getVideosRequest = () => ({
+export const getVideosRequest = (params) => ({
   method: 'get',
   url: 'videos',
-  config: {}
+  config: {params}
 })
 export const getVideoPerLevelPathRequest = (params) => ({
   method: 'get',

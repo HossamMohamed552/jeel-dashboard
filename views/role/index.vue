@@ -2,7 +2,11 @@
   <section class="container-fluid custom-container">
     <ListItems :header-name="''" :fieldsList="fieldsList" :table-items="rolesList"
                :v-search-model="roleSearchWord" @detailItem="detailItem($event)"
-               @editItem="editItem($event)" @deleteItem="deleteItem($event)">
+                :number-of-item="totalNumber"
+               @editItem="editItem($event)" @deleteItem="deleteItem($event)"
+               :loading="loading"
+               @refetch="getRoles"
+               >
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddRole">
           <img src="@/assets/images/icons/plus.svg">
@@ -31,8 +35,10 @@ export default {
   components: {ListItems, Button, Modal},
   data() {
     return {
+      loading: false,
       showModal: false,
       roleSearchWord: '',
+      totalNumber: 0,
       rolesList: [],
       fieldsList: [
         {
@@ -59,14 +65,17 @@ export default {
     goToAddRole(){
       this.$router.push('/dashboard/role/add')
     },
-    getRoles(){
-      this.ApiService(getRolesRequest()).then((response) => {
+    getRoles(event) {
+      this.loading = true
+      const params = event
+      this.ApiService(getRolesRequest(params)).then((response) => {
         this.rolesList = response.data.data
-      })
+        this.totalNumber = response.data.meta.total
+      }) .finally(() => {
+          this.loading = false;
+        });
     },
-    searchBy($event) {
-      console.log('$event', $event)
-    },
+
     detailItem($event) {
       this.$router.push(`/dashboard/role/show/${$event}`)
     },

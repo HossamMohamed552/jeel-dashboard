@@ -4,7 +4,9 @@
                :table-items="schoolGroupList" :v-search-model="groupSearchWord"
                :fieldsList="fieldsList" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-               @searchBy="searchBy">
+               @refetch="getSchoolGroups"
+               :loading="loading"
+               >
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToSchoolGroup">
           <img src="@/assets/images/icons/plus.svg">
@@ -31,10 +33,11 @@ export default {
   components: {Modal, ListItems, Button},
   data() {
     return {
+      loading: false,
       showModal: false,
       groupSearchWord: "",
       schoolGroupList: [],
-      totalNumber: null,
+      totalNumber: 0,
       fieldsList: [
         {
           key: "id",
@@ -76,14 +79,15 @@ export default {
     goToSchoolGroup(){
       this.$router.push('/dashboard/school-group/add')
     },
-    getSchoolGroups(){
-      this.ApiService(getSchoolGroupRequest()).then((response) => {
+    getSchoolGroups(event) {
+      this.loading = true
+      const params = event
+      this.ApiService(getSchoolGroupRequest(params)).then((response) => {
         this.schoolGroupList = response.data.data
         this.totalNumber = response.data.meta.total
-      })
-    },
-    searchBy($event) {
-      console.log('$event', $event)
+      }) .finally(() => {
+          this.loading = false;
+        });
     },
     detailItem($event) {
       this.$router.push(`/dashboard/school-group/show/${$event}`)

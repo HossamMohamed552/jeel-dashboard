@@ -1,7 +1,7 @@
-export const getSchoolTypesRequest = () => ({
+export const getSchoolTypesRequest = (params) => ({
   method: 'get',
   url: 'school-types',
-  config: {}
+  config: {params}
 })
 export const getSingleSchoolTypesRequest = (params) => ({
   method: 'get',

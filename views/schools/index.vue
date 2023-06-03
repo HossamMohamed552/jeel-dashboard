@@ -3,7 +3,9 @@
     <ListItems :header-name="'قائمة المدارس'" :number-of-item="totalNumber"
                :tableItems="schoolsList" :fields-list="fieldsList" :v-search-model="groupSearchWord"  @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-               @searchBy="searchBy">
+              @refetch="getSchools"
+              :loading="loading"               
+               >
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSchools">
           <img src="@/assets/images/icons/plus.svg">
@@ -30,6 +32,7 @@ export default {
   components: {Modal, ListItems, Button},
   data() {
     return {
+      loading: false,
       showModal: false,
       groupSearchWord: "",
       schoolsList: [],
@@ -52,14 +55,15 @@ export default {
     goToAddSchools() {
       this.$router.push('/dashboard/schools/add')
     },
-    getSchools() {
-      this.ApiService(getSchoolsRequest()).then((response) => {
+    getSchools(event) {
+      this.loading = true
+      const params = event
+      this.ApiService(getSchoolsRequest(params)).then((response) => {
         this.schoolsList = response.data.data
         this.totalNumber = response.data.meta.total
-      })
-    },
-    searchBy($event) {
-      console.log('$event', $event)
+      }).finally(() => {
+          this.loading = false;
+        });
     },
     detailItem($event) {
       this.$router.push(`/dashboard/schools/show/${$event}`)

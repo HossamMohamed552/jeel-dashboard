@@ -5,7 +5,8 @@
       :number-of-item="totalNumber"
       :table-items="usersList"
       :v-search-model="userSearchWord"
-      @searchBy="searchBy"
+      :loading="loading"
+      @refetch="getAllUsers"
     >
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="handleAddUser">
@@ -29,24 +30,31 @@ export default {
   },
   data() {
     return {
+      loading: false,
       userSearchWord: "",
       usersList: [],
-      totalNumber: null,
+      totalNumber: 0,
     };
   },
   methods: {
-    searchBy($event) {
-      console.log("$event", $event);
-    },
     handleAddUser() {
       this.$router.push("/dashboard/users/add");
     },
+    getAllUsers(event) {
+      this.loading = true;
+      const params = event;
+      this.ApiService(getAllUsersRequest(params))
+        .then((response) => {
+          this.usersList = response.data.data;
+          this.totalNumber = response.data.meta.total;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
   },
   mounted() {
-    this.ApiService(getAllUsersRequest()).then((response) => {
-      this.usersList = response.data.data;
-      this.totalNumber = response.data.meta.total;
-    });
+    this.getAllUsers();
   },
 };
 </script>

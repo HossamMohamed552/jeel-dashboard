@@ -3,7 +3,9 @@
     <ListItems :header-name="'قائمة المسارات'" :number-of-item="totalNumber"
                :tableItems="pathsList" :fields-list="fieldsList" :v-search-model="groupSearchWord" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-               @searchBy="searchBy">
+               @refetch="getPaths"
+               :loading="loading"
+               >
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddPath()">
           <img src="@/assets/images/icons/plus.svg">
@@ -30,6 +32,7 @@ export default {
   components: {Modal, ListItems, Button},
   data() {
     return {
+      loading: false,
       showModal: false,
       groupSearchWord: "",
       pathsList: [],
@@ -46,14 +49,15 @@ export default {
     goToAddPath() {
       this.$router.push('/dashboard/path/add')
     },
-    getPaths() {
-      this.ApiService(getLearningPathsRequest()).then((response) => {
+    getPaths(event) {
+      this.loading = true
+      const params = !event ? { per_page: 10 } : event;
+      this.ApiService(getLearningPathsRequest(params)).then((response) => {
         this.pathsList = response.data.data
         this.totalNumber = response.data.meta.total
-      })
-    },
-    searchBy($event) {
-      console.log('$event', $event)
+      }) .finally(() => {
+          this.loading = false;
+        });
     },
     detailItem($event) {
       this.$router.push(`/dashboard/path/show/${$event}`)

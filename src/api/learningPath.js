@@ -1,7 +1,7 @@
-export const getLearningPathsRequest = () => ({
+export const getLearningPathsRequest = (params) => ({
     method: 'get',
     url: 'learningpaths',
-    config: {}
+    config: {params}
   })
   export const getSingleLearningPathRequest = (params) => ({
     method: 'get',

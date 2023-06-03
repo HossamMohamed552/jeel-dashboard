@@ -1,7 +1,7 @@
-export const getPackagesRequest = () => ({
+export const getPackagesRequest = (params) => ({
   method: 'get',
   url: 'packages',
-  config: {}
+  config: {params}
 })
 export const getSinglePackagesRequest = (params) => ({
   method: 'get',
