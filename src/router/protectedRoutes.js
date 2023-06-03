@@ -260,9 +260,10 @@ const protectedRoutes = [
         component: ()=> import('../../views/practices/view-practices/index.vue')
       },
       {
-        path:"/dashboard/package",
-        name:"package",
-        component: ()=> import('../../views/package/index.vue')
+        path: "/dashboard/package",
+        name: "package",
+        component: () => import('../../views/package/index.vue')
+      },
       {
         path: "/dashboard/package/add",
         name: "add-package",
