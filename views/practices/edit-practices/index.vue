@@ -1,7 +1,7 @@
 <template>
   <div class="add-practice">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true"/>
-    <AddEditQuiz @handleAddQuiz="handleAddQuiz" @handleCancel="handleCancel"/>
+    <Modal :content-message="'تمت التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
+    <AddEditQuiz @handleEditQuiz="handleEditQuiz" @handleCancel="handleCancel"/>
   </div>
 </template>
 <script>
@@ -20,7 +20,7 @@ export default {
     }
   },
   methods: {
-    handleAddQuiz(quiz) {
+    handleEditQuiz(quiz) {
       const formData = new FormData()
       formData.append('name',quiz.name);
       formData.append('description',quiz.description);
@@ -28,12 +28,13 @@ export default {
       formData.append('type',quiz.type);
       formData.append('learning_path_id',quiz.learning_path_id);
       formData.append('level_id',quiz.level_id);
+      formData.append('_method','PUT');
       for (let questions = 0; questions < quiz.questions.length;) {
         formData.append(`questions[${questions}]`, quiz.questions[questions].id);
         questions++
       }
       this.showModal = true
-      axios.post('/quizzes', formData, {
+      axios.post(`/quizzes/${this.$route.params.id}`, formData, {
         headers: {
           Authorization: `Bearer ${VueCookies.get("token")}`,
           locale: 'ar',

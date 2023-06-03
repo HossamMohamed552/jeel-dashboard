@@ -45,6 +45,7 @@
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
+                    @input="changeQuestionType"
                     v-model="createQuiz.type"
                     :label="$t('QUIZZES.type')"
                     :name="$t('QUIZZES.type')"
@@ -111,35 +112,39 @@
                     </b-col>
                     <b-col lg="7">
                       <div class="hold-btn">
-                        <Button v-if="!isEditable" custom-class="transparent-btn rounded-btn"
+                        <Button v-if="!isEditable" :disabled="createQuiz.total_question === 0" custom-class="transparent-btn rounded-btn"
                                 @click="editOnQuestions">
                           {{ $t("QUIZZES.editQuestion") }}
                         </Button>
-                        <Button v-if="isEditable" custom-class="transparent-btn rounded-btn"
+                        <Button v-if="isEditable" :disabled="createQuiz.total_question === 0" custom-class="transparent-btn rounded-btn"
                                 @click="isEditable= false">
                           {{ $t("QUIZZES.reset") }}
                         </Button>
-                        <Button custom-class="transparent-btn rounded-btn" class="ml-2"
+                        <Button custom-class="transparent-btn rounded-btn" class="ml-2" :disabled="createQuiz.total_question === 0"
                                 @click="showQuestions">
                           {{ $t("QUIZZES.showQuestions") }}
                         </Button>
                       </div>
                     </b-col>
-                    <b-col v-if="questions.length > 0" lg="6">
-                      questionBank
-                      <draggable :list="questions" :options="{animation: 500, group: 'question'}">
-                        <transition-group name="no" class="list-group" tag="ul">
-                          <li class="list-group-item" v-for="question in questionBank" :key="question.id">{{ question.name }}</li>
-                        </transition-group>
-                      </draggable>
-                    </b-col>
-                    <b-col v-if="questions.length > 0" lg="6">
-                      questionsSelected
-                      <draggable :list="questionsToSend" :options="{animation: 500, group: 'question'}">
-                        <transition-group name="no" class="list-group" tag="ul">
-                          <li class="list-group-item" v-for="question in questionsToSend" :key="question.id">{{ question.name }}</li>
-                        </transition-group>
-                      </draggable>
+                    <b-col lg="12">
+                      <b-row>
+                        <b-col lg="6" class="mt-3" v-if="questions.length > 0">
+                          <h3>بنك الاسئلة</h3>
+                          <draggable v-model="questionBank" group="items" :animation="150" class="list-group">
+                            <div v-for="item in questionBank" :key="item.id" class="list-group-item">
+                              {{ item.name }}
+                            </div>
+                          </draggable>
+                        </b-col>
+                        <b-col lg="6" class="mt-3" v-if="questions.length > 0">
+                          <h3>الاسئلة المختاره</h3>
+                          <draggable v-model="questionsToSend" group="items" :animation="150" class="list-group" :sort="false" @change="log">
+                            <div v-for="item in questionsToSend" :key="item.id" class="list-group-item">
+                              {{ item.name }}
+                            </div>
+                          </draggable>
+                        </b-col>
+                      </b-row>
                     </b-col>
                   </b-row>
                 </div>
@@ -181,7 +186,11 @@ import SelectSearch from "@/components/Shared/SelectSearch/index.vue"
 import SelectField from "@/components/Shared/SelectField/index.vue";
 import {getLevelsRequest} from "@/api/level";
 import {getLearningPathsRequest, getQuestionRequest} from "@/api/question";
-import {getQuestionDifficultyLevelLearnRequest, postRandomQuizRequest} from "@/api/quiz";
+import {
+  getQuestionDifficultyLevelLearnRequest,
+  getSingleQuizRequest,
+  postRandomQuizRequest
+} from "@/api/quiz";
 import draggable from 'vuedraggable'
 
 export default {
@@ -230,31 +239,16 @@ export default {
         type: "default",
         sort: "",
         questions: []
-        // easyQuestionCount: 0,
-        // mediumQuestionCount: 0,
-        // hardQuestionCount: 0
       },
       question_difficulty: [],
       questionBank: [],
       questions: [],
       questionsToSend: [],
-      // easyQuestion: [],
-      // mediumQuestion: [],
-      // hardQuestion: [],
       isEditable: false,
-      isDragging: true,
       delayedDragging: false,
       editableDrag: true,
-      enableToSendData: false
+      enableToSendData: false,
     };
-  },
-  computed: {
-    // dragOptions() {
-    //   return {
-    //     animation: 500,
-    //     group: "question",
-    //   };
-    // }
   },
   watch: {
     "createQuiz.level_id"() {
@@ -263,23 +257,18 @@ export default {
     "createQuiz.learning_path_id"() {
       this.showSystem()
     },
-    isDragging(newValue) {
-      if (newValue) {
-        this.delayedDragging = true;
-        return;
-      }
-      this.$nextTick(() => {
-        this.delayedDragging = false;
-      });
-    }
   },
   methods: {
-    onMove({relatedContext, draggedContext}) {
-      const relatedElement = relatedContext.element;
-      const draggedElement = draggedContext.element;
-      return (
-        (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
-      );
+    changeQuestionType(){
+      if(this.createQuiz.type !== 'default'){
+        this.isEditable = true
+      }
+      else if (this.createQuiz.type === 'default'){
+        this.isEditable = false
+      }
+    },
+    log(){
+      this.createQuiz.type = "manual"
     },
     changeQuizTypeGetQuestions() {
       this.createQuiz.type = "automatic"
@@ -313,7 +302,7 @@ export default {
         if (!success) return;
       });
       if (this.$route.params.id) {
-        this.$emit('handleEditTerm', this.createQuiz)
+        this.$emit('handleEditQuiz', this.createQuiz)
       } else {
         this.$emit('handleAddQuiz', this.createQuiz)
       }
@@ -338,19 +327,22 @@ export default {
         learning_path_id: this.createQuiz.learning_path_id,
         question_difficuly: this.createQuiz.question_difficulty,
       }
-      this.ApiService(postRandomQuizRequest(defaultQuiz)).then((response) => {
-        this.questions = response.data.data
-      }).then(() => {
-        this.questions = this.questions.map((item) => {
-          return {...item, fixed: false}
+      this.ApiService(getQuestionRequest()).then((response) => {
+        this.questionBank = response.data.data
+      }).then(() => this.questionBank = this.questionBank.map((item) => {
+        return {id: item.id, name: item.question, fixed: false}
+      })).finally(()=>{
+        this.ApiService(postRandomQuizRequest(defaultQuiz)).then((response) => {
+          this.questions = response.data.data
+        }).then(() => {
+          this.questions = this.questions.map((item) => {
+            return {...item, fixed: false}
+          })
+          this.questionsToSend = this.questionBank.filter((item) => this.questions.map(item => item.id).includes(item.id))
+          this.questionBank = this.questionBank.filter((item) => !this.questions.map(item => item.id).includes(item.id))
+          this.createQuiz.questions = this.questionsToSend
+          this.enableToSendData = true
         })
-        this.questionBank = this.questionBank.map((item) => {
-          return {id: item.id, name: item.question, fixed: false}
-        })
-        console.log(this.questionBank.filter((item) => this.questions.map(item => item.id).includes(item.id)))
-        this.questionsToSend = this.questionBank.filter((item) => this.questions.map(item => item.id).includes(item.id))
-        this.createQuiz.questions = this.questionsToSend
-        this.enableToSendData = true
       })
     },
     showQuestions() {
@@ -368,6 +360,19 @@ export default {
     this.ApiService(getQuestionRequest()).then((response) => {
       this.questionBank = response.data.data
     })
+    if(this.$route.params.id){
+      this.ApiService(getSingleQuizRequest(this.$route.params.id)).then((response)=>{
+        console.log('edit',response.data.data)
+        this.createQuiz.name = response.data.data.name
+        this.createQuiz.description = response.data.data.description
+        this.createQuiz.level_id = response.data.data.level.id
+        this.createQuiz.learning_path_id = response.data.data.learning_path.id
+        this.createQuiz.type = response.data.data.type
+        this.question_difficulty =  response.data.data.questions_difficulties.map(item => Object.assign(item, {numberSelected: item.questions_count}))
+        this.createQuiz.total_question = this.question_difficulty.reduce((accumulator, currentValue) => accumulator + currentValue.numberSelected, 0)
+        this.questionsToSend = this.questionBank.filter((item) => response.data.data.questions.map(item => item.id).includes(item.id))
+      })
+    }
   }
 };
 </script>
