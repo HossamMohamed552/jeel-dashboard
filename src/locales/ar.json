@@ -236,11 +236,25 @@
     "name": "الاسم",
     "showDetails": "تفاصيل نوع المدرسة"
   },
+  "BLOOM": {
+    "BLOOM": "بلوم",
+    "DETAILS": "تفاصيل بلوم",
+    "ADD": "اضافة بلوم",
+    "EDIT": "تعديل بلوم"
+  },
   "CLASS": {
     "ADD_NEW": "إضافة صف دراسي جديد",
     "name": "الاسم",
     "levelTerms": "المرحله و الصف",
     "EDIT": "تعديل الصف الدراسي"
+  },
+  "STAFF_ENROLL": {
+    "ADD_NEW": "إضافة موظف جديد",
+    "EDIT": "تعديل الموظف",
+    "USER": "المستخدم",
+    "LEVEL": "المرحلة",
+    "ROLE": "الدور",
+    "CLASS": "الصف"
   },
   "permissions": "الصلاحيات",
   "showDetails": "عرض تفاصيل المستخدم",
@@ -252,5 +266,6 @@
   "GLOBALAddAll": "إضافه الكل",
   "GLOBALRemoveAll": "إزاله الكل",
   "GLOBAL_NEXT": "التالى",
-  "GLOBAL_BACK": "السابق"
+  "GLOBAL_BACK": "السابق",
+  "GLOBAL_NAME": "الاسم"
 }

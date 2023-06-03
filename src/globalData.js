@@ -64,6 +64,11 @@ let routesContent = [
     icon: require('@/assets/images/icons/question.svg')
   },
   {
+    name: 'بلوم',
+    path: '/dashboard/bloom',
+    icon: require('@/assets/images/icons/question.svg')
+  },
+  {
     name: 'التمارين',
     path: '/dashboard/practices',
     icon: require('@/assets/images/icons/exercises.svg')
