@@ -79,6 +79,7 @@
                     :rules="'required'"
                     multiple
                   ></SelectSearch>
+                  {{ typeof formValues.roles }}
                 </div>
               </b-col>
             </b-row>
@@ -120,6 +121,7 @@ import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
+
 export default {
   components: {
     TextField,
@@ -155,25 +157,27 @@ export default {
       this.$refs.addEditUserForm.validate().then((success) => {
         if (!success) return;
         const formData = new FormData();
-        formData.append("first_name",this.formValues.first_name);
-        formData.append("last_name",this.formValues.last_name);
-        formData.append("email",this.formValues.email);
-        formData.append("password",this.formValues.password);
-        formData.append("mobile",this.formValues.mobile);
-        formData.append("social_media",this.formValues.social_media);
-        formData.append("roles",JSON.stringify(this.formValues.roles));
-        if (this.image) formData.append("image",this.image);
-        axios.post('/users', formData, {
-        headers: {
-          Authorization: `Bearer ${VueCookies.get("token")}`,
-          locale: 'ar',
-          'Content-Type': 'multipart/form-data'
+        formData.append("first_name", this.formValues.first_name);
+        formData.append("last_name", this.formValues.last_name);
+        formData.append("email", this.formValues.email);
+        formData.append("password", this.formValues.password);
+        formData.append("mobile", this.formValues.mobile);
+        formData.append("social_media", this.formValues.social_media);
+        for (let user = 0; user < this.formValues.roles.length; user++) {
+          formData.append(`roles[${user}]`, this.formValues.roles[user]);
         }
-      }).then((response) => {
-        console.log(response)
-      }).then(()=>{
-        this.$router.push('/dashboard/users')
-      })
+        if (this.image) formData.append("image", this.image);
+        axios.post('/users', formData, {
+          headers: {
+            Authorization: `Bearer ${VueCookies.get("token")}`,
+            locale: 'ar',
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then((response) => {
+          console.log(response)
+        }).then(() => {
+          this.$router.push('/dashboard/users')
+        })
 
         // this.$emit("handleAddEditUser", formData);
       });

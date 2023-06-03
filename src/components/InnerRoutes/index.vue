@@ -60,7 +60,7 @@ export default {
     RouteItem
   },
   mounted() {
-  }
+  },
 }
 </script>
 <style scoped lang="scss">
