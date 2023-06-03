@@ -8,8 +8,14 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="6">
-            <ShowItem :title="$t('SCHOOL_TYPE.name')" :subtitle="singleStudentEnroll.name" />
+          <b-col lg="6" class="mb-5">
+            <ShowItem :title="$t('STUDENT_ENROLL.NAME')" :subtitle="singleStudentEnroll.user.name" />
+          </b-col>
+          <b-col lg="6" class="mb-5">
+            <ShowItem :title="$t('STUDENT_ENROLL.CLASS')" :subtitle="singleStudentEnroll.class.name" />
+          </b-col>
+          <b-col lg="6" class="mb-5">
+            <ShowItem :title="$t('STUDENT_ENROLL.SCHOOL')" :subtitle="singleStudentEnroll.school.name" />
           </b-col>
         </b-row>
       </div>

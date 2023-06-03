@@ -8,8 +8,20 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="6">
-            <ShowItem :title="$t('SCHOOL_TYPE.name')" :subtitle="singleClass.name" />
+          <b-col lg="6" class="mb-5">
+            <ShowItem :title="$t('CLASS.name')" :subtitle="singleClass.name" />
+          </b-col>
+          <b-col lg="6" class="mb-5">
+            <ShowItem
+              :title="$t('CLASS.term')"
+              :subtitle="singleClass.term.name"
+            />
+          </b-col>
+          <b-col lg="6" class="mb-5">
+            <ShowItem
+              :title="$t('CLASS.level')"
+              :subtitle="singleClass.level.name"
+            />
           </b-col>
         </b-row>
       </div>

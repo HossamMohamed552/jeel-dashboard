@@ -7,6 +7,10 @@
     />
     <AddEditStaffEnroll
       :schoolId="schoolId"
+      :staffRoles="staffRoles"
+      :staffUsers="staffUsers"
+      :staffLevels="staffLevels"
+      :staffClasses="staffClasses"
       :loading="loading"
       @handleEditStaffEnroll="handleEditStaffEnroll($event)"
       @handleCancel="handleCancel"
@@ -16,7 +20,13 @@
 <script>
 import AddEditStaffEnroll from "@/components/Modules/StaffEnroll/AddEditStaffEnroll/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { putStaffEnrollRequest } from "@/api/staffEnroll.js";
+import {
+  putStaffEnrollRequest,
+  getStaffEnrollUsersRequest,
+  getStaffEnrollRolesRequest,
+  getStaffEnrollClassesRequest,
+  getStaffEnrollLevelsRequest,
+} from "@/api/staffEnroll.js";
 export default {
   name: "index",
   components: { Modal, AddEditStaffEnroll },
@@ -26,7 +36,17 @@ export default {
       showModal: false,
       staffEnrollId: this.$route.params.id,
       schoolId: this.$route.params.schoolId,
+      staffUsers: [],
+      staffRoles: [],
+      staffLevels: [],
+      staffClasses: [],
     };
+  },
+  mounted() {
+    this.getStaffEnrollUsers();
+    this.getStaffEnrollRoles();
+    this.getStaffEnrollLevels();
+    this.getStaffEnrollClasses();
   },
   methods: {
     handleEditStaffEnroll($event) {
@@ -41,6 +61,34 @@ export default {
     },
     handleCancel() {
       this.$router.push(`/dashboard/schools/show/${this.schoolId}`);
+    },
+    getStaffEnrollUsers() {
+      this.ApiService(getStaffEnrollUsersRequest(this.schoolId)).then(
+        (response) => {
+          this.staffUsers = response.data.data;
+        }
+      );
+    },
+    getStaffEnrollRoles() {
+      this.ApiService(getStaffEnrollRolesRequest(this.schoolId)).then(
+        (response) => {
+          this.staffRoles = response.data.data;
+        }
+      );
+    },
+    getStaffEnrollLevels() {
+      this.ApiService(getStaffEnrollLevelsRequest(this.schoolId)).then(
+        (response) => {
+          this.staffLevels = response.data.data;
+        }
+      );
+    },
+    getStaffEnrollClasses() {
+      this.ApiService(getStaffEnrollClassesRequest(this.schoolId)).then(
+        (response) => {
+          this.staffClasses = response.data.data;
+        }
+      );
     },
   },
 };

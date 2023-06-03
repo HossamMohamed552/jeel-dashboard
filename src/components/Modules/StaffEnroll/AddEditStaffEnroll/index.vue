@@ -85,7 +85,6 @@
   </div>
 </template>
 <script>
-import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import { getSingleStaffEnrollRequest } from "@/api/staffEnroll.js";
 import Modal from "@/components/Shared/Modal/index.vue";
@@ -93,7 +92,6 @@ import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 export default {
   components: {
     Modal,
-    TextField,
     Button,
     SelectSearch,
   },
@@ -153,7 +151,11 @@ export default {
       if (this.staffEnrollId) {
         this.ApiService(getSingleStaffEnrollRequest(this.staffEnrollId)).then(
           (response) => {
-            this.staffEnroll = response.data.data;
+            const res = response.data.data;
+            this.staffEnroll.user_id = res.user.id;
+            this.staffEnroll.role_id = res.role.id;
+            this.staffEnroll.class_id = res.class.id;
+            this.staffEnroll.level_id = res.level.id;
           }
         );
       }

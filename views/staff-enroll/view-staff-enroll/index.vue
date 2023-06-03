@@ -8,8 +8,29 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="6">
-            <ShowItem :title="$t('SCHOOL_TYPE.name')" :subtitle="singleStaffEnroll.name" />
+          <b-col lg="6" class="mb-5">
+            <ShowItem
+              :title="$t('STAFF_ENROLL.USER')"
+              :subtitle="singleStaffEnroll.user.name"
+            />
+          </b-col>
+          <b-col lg="6" class="mb-5">
+            <ShowItem
+              :title="$t('STAFF_ENROLL.ROLE')"
+              :subtitle="singleStaffEnroll.role.name"
+            />
+          </b-col>
+          <b-col lg="6" class="mb-5">
+            <ShowItem
+              :title="$t('STAFF_ENROLL.CLASS')"
+              :subtitle="singleStaffEnroll.class.name"
+            />
+          </b-col>
+          <b-col lg="6" class="mb-5">
+            <ShowItem
+              :title="$t('STAFF_ENROLL.LEVEL')"
+              :subtitle="singleStaffEnroll.level.name"
+            />
           </b-col>
         </b-row>
       </div>

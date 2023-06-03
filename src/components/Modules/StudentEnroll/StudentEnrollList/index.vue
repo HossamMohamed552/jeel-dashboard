@@ -35,7 +35,10 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { deleteStudentEnrollRequest, getStudentEnrollRequest } from "@/api/studentEnroll.js";
+import {
+  deleteStudentEnrollRequest,
+  getStudentEnrollRequest,
+} from "@/api/studentEnroll.js";
 import Modal from "@/components/Shared/Modal/index.vue";
 export default {
   props: {
@@ -57,8 +60,16 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
-          key: "name",
+          key: "user.name",
           label: this.$i18n.t("TABLE_FIELDS.name"),
+        },
+        {
+          key: "class.name",
+          label: this.$i18n.t("TABLE_FIELDS.class"),
+        },
+        {
+          key: "school.name",
+          label: this.$i18n.t("TABLE_FIELDS.school"),
         },
         {
           key: "actions",
@@ -77,7 +88,7 @@ export default {
       });
     },
     getStudentEnrolls() {
-      this.ApiService(getStudentEnrollRequest()).then((response) => {
+      this.ApiService(getStudentEnrollRequest(this.schoolId)).then((response) => {
         this.studentEnrollList = response.data.data;
         this.totalNumber = response.data.meta.total;
       });
