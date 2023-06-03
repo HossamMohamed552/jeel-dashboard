@@ -1,7 +1,9 @@
 export const getStudentEnrollRequest = (params) => ({
   method: 'get',
-  url: `class_students?school_id=${params}`,
-  config: {}
+  url: `class_students`,
+  config: {
+    params
+  }
 })
 
 export const getStudentEnrollUsersRequest = (params) => ({

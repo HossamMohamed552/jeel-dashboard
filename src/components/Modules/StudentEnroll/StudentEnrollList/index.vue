@@ -5,11 +5,12 @@
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="studentEnrollList"
+      :loading="loading"
       :v-search-model="studentEnrollSearchWord"
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
-      @searchBy="searchBy"
+      @refetch="getStudentEnrolls"
     >
       <template #buttons>
         <Button
@@ -50,6 +51,7 @@ export default {
   components: { Modal, ListItems, Button },
   data() {
     return {
+      loading: false,
       showModal: false,
       studentEnrollSearchWord: "",
       studentEnrollList: [],
@@ -87,11 +89,15 @@ export default {
         params: { schoolId: this.schoolId },
       });
     },
-    getStudentEnrolls() {
-      this.ApiService(getStudentEnrollRequest(this.schoolId)).then((response) => {
+    getStudentEnrolls(event) {
+      this.loading = true;
+      const params = {...event, school_id: this.schoolId};
+      this.ApiService(getStudentEnrollRequest(params)).then((response) => {
         this.studentEnrollList = response.data.data;
         this.totalNumber = response.data.meta.total;
-      });
+      })        .finally(() => {
+          this.loading = false;
+        });
     },
     searchBy($event) {
       console.log("$event", $event);

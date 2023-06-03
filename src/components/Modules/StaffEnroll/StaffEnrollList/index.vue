@@ -5,11 +5,12 @@
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="staffEnrollList"
+      :loading="loading"
       :v-search-model="staffEnrollSearchWord"
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
-      @searchBy="searchBy"
+      @refetch="getStaffEnrolls"
     >
       <template #buttons>
         <Button
@@ -35,7 +36,10 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { deleteStaffEnrollRequest, getStaffEnrollRequest } from "@/api/staffEnroll.js";
+import {
+  deleteStaffEnrollRequest,
+  getStaffEnrollRequest,
+} from "@/api/staffEnroll.js";
 import Modal from "@/components/Shared/Modal/index.vue";
 export default {
   props: {
@@ -47,6 +51,7 @@ export default {
   components: { Modal, ListItems, Button },
   data() {
     return {
+      loading: false,
       showModal: false,
       staffEnrollSearchWord: "",
       staffEnrollList: [],
@@ -96,11 +101,17 @@ export default {
         params: { schoolId: this.schoolId },
       });
     },
-    getStaffEnrolls() {
-      this.ApiService(getStaffEnrollRequest(this.schoolId)).then((response) => {
-        this.staffEnrollList = response.data.data;
-        this.totalNumber = response.data.meta.total;
-      });
+    getStaffEnrolls(event) {
+      this.loading = true;
+      const params = { ...event, school_id: this.schoolId };
+      this.ApiService(getStaffEnrollRequest(params))
+        .then((response) => {
+          this.staffEnrollList = response.data.data;
+          this.totalNumber = response.data.meta.total;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     searchBy($event) {
       console.log("$event", $event);
