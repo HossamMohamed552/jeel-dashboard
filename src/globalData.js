@@ -1,3 +1,5 @@
+import store from '@/store'
+
 let routesUsers = [
   {
     name: "صلاحيات النظام",

@@ -1,7 +1,7 @@
-export const getClassRequest = () => ({
+export const getClassRequest = (params) => ({
   method: 'get',
   url: 'classes',
-  config: {}
+  config: {params}
 })
 export const getSingleClassRequest = (params) => ({
   method: 'get',
