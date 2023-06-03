@@ -4,15 +4,20 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">{{$t('LEVEL.showDetails')}}</h2>
+            <h2 class="heading">{{ $t("LEVEL.showDetails") }}</h2>
           </b-col>
         </b-row>
         <b-row>
           <b-col lg="6">
-            <ShowItem :title="$t('LEVEL.name')" :subtitle="level.name"/>
+            <ShowItem :title="$t('LEVEL.name')" :subtitle="level.name" />
           </b-col>
           <b-col lg="6">
-            <ShowItem :title="$t('LEVEL.min_levels')" :subtitle="level.min_levels"/>
+            <ShowItem :title="$t('LEVEL.min_levels')" :subtitle="level.min_levels" />
+          </b-col>
+        </b-row>
+        <b-row class="mt-5">
+          <b-col cols="12" sm="6" class="mb-4" v-for="(school_group, index) in level.school_groups" :key="index">
+            <ShowItem :title="$t('TABLE_FIELDS.school_group')" :subtitle="school_group.name" />
           </b-col>
         </b-row>
       </div>
@@ -21,23 +26,23 @@
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import {getSingleLevelRequest} from "@/api/level";
+import { getSingleLevelRequest } from "@/api/level";
 export default {
   name: "index",
-  components:{
-    ShowItem
+  components: {
+    ShowItem,
   },
-  data(){
-    return{
-      level: {}
-    }
+  data() {
+    return {
+      level: {},
+    };
   },
   mounted() {
-    this.ApiService(getSingleLevelRequest(this.$route.params.id)).then((response)=>{
-      this.level = response.data.data
-    })
-  }
-}
+    this.ApiService(getSingleLevelRequest(this.$route.params.id)).then((response) => {
+      this.level = response.data.data;
+    });
+  },
+};
 </script>
 <style scoped lang="scss">
 @import "./index";
