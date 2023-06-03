@@ -88,7 +88,7 @@ export default {
     },
     getClasses(event) {
       this.loading = true;
-      const params = event;
+      const params = {...event, school_id: this.schoolId};
       this.ApiService(getClassRequest(params))
         .then((response) => {
           this.classesList = response.data.data;
