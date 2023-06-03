@@ -1,7 +1,7 @@
-export const getTermsRequest = () => ({
+export const getTermsRequest = (params) => ({
   method: 'get',
   url: 'terms',
-  config: {}
+  config: {params}
 })
 export const getSingleTermsRequest = (params) => ({
   method: 'get',

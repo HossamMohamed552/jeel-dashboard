@@ -3,7 +3,9 @@
     <ListItems :header-name="'قائمة الفصول الدراسية'" :number-of-item="totalNumber"
                :tableItems="termsList" :fieldsList="fieldsList" :v-search-model="groupSearchWord" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-               @searchBy="searchBy" >
+               @refetch="getTerms"
+               :loading="loading"
+               >
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddTerms">
           <img src="@/assets/images/icons/plus.svg">
@@ -30,6 +32,7 @@ export default {
   components: {Modal, ListItems, Button},
   data() {
     return {
+      loading: false,
       showModal: false,
       groupSearchWord: "",
       termsList: [],
@@ -45,14 +48,15 @@ export default {
     goToAddTerms(){
       this.$router.push('/dashboard/practice/add')
     },
-    getTerms(){
-      this.ApiService(getTermsRequest()).then((response) => {
+    getTerms(event) {
+      this.loading = true
+      const params = event
+      this.ApiService(getTermsRequest(params)).then((response) => {
         this.termsList = response.data.data
         this.totalNumber = response.data.meta.total
-      })
-    },
-    searchBy($event) {
-      console.log('$event', $event)
+      }) .finally(() => {
+          this.loading = false;
+        });
     },
     detailItem($event) {
       this.$router.push(`/dashboard/terms/show/${$event}`)

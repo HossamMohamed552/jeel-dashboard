@@ -246,5 +246,6 @@
   "GLOBALRemoveAll": "إزاله الكل",
   "GLOBAL_NEXT": "التالى",
   "GLOBAL_BACK": "السابق",
-  "GLOBAL_NAME": "الاسم"
+  "GLOBAL_NAME": "الاسم",
+  "SLUG": "الرمز"
 }

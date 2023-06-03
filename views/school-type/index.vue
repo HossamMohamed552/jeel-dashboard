@@ -9,13 +9,11 @@
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
-      @searchBy="searchBy"
+      @refetch="getSchoolTypes"
+      :loading="loading"
     >
       <template #buttons>
-        <Button
-          :custom-class="'btn-add rounded-btn big-padding'"
-          @click="goToAddSchoolType"
-        >
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSchoolType">
           <img src="@/assets/images/icons/plus.svg" />
           <span>إضافة نوع مدرسة</span>
         </Button>
@@ -41,6 +39,7 @@ export default {
   components: { Modal, ListItems, Button },
   data() {
     return {
+      loading: false,
       showModal: false,
       packageSearchWord: "",
       schoolTypessList: [],
@@ -66,15 +65,17 @@ export default {
     goToAddSchoolType() {
       this.$router.push("/dashboard/school-type/add");
     },
-    getSchoolTypes() {
-      this.ApiService(getSchoolTypesRequest()).then((response) => {
+    getSchoolTypes(event) {
+      this.loading = true
+      const params = event;
+      this.ApiService(getSchoolTypesRequest(params)).then((response) => {
         this.schoolTypessList = response.data.data;
         this.totalNumber = response.data.meta.total;
-      });
+      }).finally(() => {
+          this.loading = false;
+        });
     },
-    searchBy($event) {
-      console.log("$event", $event);
-    },
+
     detailItem($event) {
       this.$router.push(`/dashboard/school-type/show/${$event}`);
     },

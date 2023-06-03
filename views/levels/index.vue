@@ -2,8 +2,11 @@
   <section class="container-fluid custom-container">
     <ListItems :header-name="'قائمة المراحل الدراسية'" :number-of-item="totalNumber"
                :tableItems="levelsList" :fieldsList="fieldsList" :v-search-model="groupSearchWord"
-               @searchBy="searchBy" @detailItem="detailItem($event)"
-               @editItem="editItem($event)" @deleteItem="deleteItem($event)">
+               @detailItem="detailItem($event)"
+               @editItem="editItem($event)" @deleteItem="deleteItem($event)"
+               @refetch="getLevels"
+               :loading="loading"
+               >
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddLevel">
           <img src="@/assets/images/icons/plus.svg">
@@ -30,6 +33,7 @@ export default {
   components: {Modal, ListItems, Button},
   data() {
     return {
+      loading:false,
       showModal: false,
       groupSearchWord: "",
       levelsList: [],
@@ -45,14 +49,15 @@ export default {
     goToAddLevel(){
       this.$router.push('/dashboard/levels/add')
     },
-    getLevels(){
-      this.ApiService(getLevelsRequest()).then((response) => {
+    getLevels(event) {
+      this.loading = true
+      const params = event
+      this.ApiService(getLevelsRequest(params)).then((response) => {
         this.levelsList = response.data.data
         this.totalNumber = response.data.meta.total
-      })
-    },
-    searchBy($event) {
-      console.log('$event', $event)
+      }) .finally(() => {
+          this.loading = false;
+        });
     },
     detailItem($event) {
       this.$router.push(`/dashboard/levels/show/${$event}`)

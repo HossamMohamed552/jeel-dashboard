@@ -3,7 +3,9 @@
     <ListItems :header-name="'قائمة الدول'" :fieldsList="fieldsList" :number-of-item="totalNumber"
                :table-items="countriesList" :v-search-model="countrySearchWord" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-               @searchBy="searchBy">
+               @refetch="getCountries"
+               :loading="loading"
+               >
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'"  @click="goToAddCountry">
           <img src="@/assets/images/icons/plus.svg">
@@ -29,6 +31,7 @@ export default {
   components: {Modal, ListItems, Button},
   data() {
     return {
+      loading: false,
       showModal: false,
       countrySearchWord: "",
       countriesList: [],
@@ -58,14 +61,15 @@ export default {
     goToAddCountry(){
       this.$router.push('/dashboard/country/add')
     },
-    getCountries(){
-      this.ApiService(getCountryRequest()).then((response) => {
+    getCountries(event) {
+      this.loading = true
+      const params = !event ? { per_page: 10 } : event;
+      this.ApiService(getCountryRequest(params)).then((response) => {
         this.countriesList = response.data.data
         this.totalNumber = response.data.meta.total
-      })
-    },
-    searchBy($event) {
-      console.log('$event', $event)
+      }) .finally(() => {
+          this.loading = false;
+        });
     },
     detailItem($event) {
       this.$router.push(`/dashboard/country/show/${$event}`)

@@ -5,7 +5,9 @@
                :v-search-model="groupSearchWord"
                @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-               @searchBy="searchBy">
+               @refetch="getQuestions"
+               :loading="loading"
+               >
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddQuestions">
           <img src="@/assets/images/icons/plus.svg">
@@ -32,6 +34,7 @@ export default {
   components: {Modal, ListItems, Button},
   data() {
     return {
+      loading:false,
       showModal: false,
       groupSearchWord: "",
       questionsList: [],
@@ -50,14 +53,15 @@ export default {
     goToAddQuestions() {
       this.$router.push('/dashboard/questions/add')
     },
-    getQuestions() {
-      this.ApiService(getQuestionRequest()).then((response) => {
+    getQuestions(event) {
+      this.loading = true
+      const params = event
+      this.ApiService(getQuestionRequest(params)).then((response) => {
         this.questionsList = response.data.data
         this.totalNumber = response.data.meta.total
-      })
-    },
-    searchBy($event) {
-      console.log('$event', $event)
+      }) .finally(() => {
+          this.loading = false;
+        });
     },
     detailItem($event) {
       this.$router.push(`/dashboard/questions/show/${$event}`)

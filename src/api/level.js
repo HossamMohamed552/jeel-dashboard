@@ -1,7 +1,7 @@
-export const getLevelsRequest = () => ({
+export const getLevelsRequest = (params) => ({
   method: 'get',
   url: 'levels',
-  config: {}
+  config: {params}
 })
 export const getSingleLevelRequest = (params) => ({
   method: 'get',

@@ -24,8 +24,8 @@
                 <div class="hold-field">
                   <TextField
                     v-model="formValues.slug"
-                    :label="$t('slug')"
-                    :name="$t('slug')"
+                    :label="$t('SLUG')"
+                    :name="$t('SLUG')"
                     :rules="'required'"
                   ></TextField>
                 </div>

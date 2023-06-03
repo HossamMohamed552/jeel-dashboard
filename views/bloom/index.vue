@@ -1,15 +1,16 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'تصنيف بلوم'"
+      :header-name="'بلوم'"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="bloomCategories"
       :v-search-model="packageSearchWord"
+      :loading="loading"
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
-      @searchBy="searchBy"
+      @refetch="getBloomCategories"
     >
       <template #buttons>
         <Button
@@ -17,13 +18,13 @@
           @click="goToAddBloomCategoryRequest"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة سؤال بلوم</span>
+          <span>إضافة بلوم</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف تصنيف بلوم'"
-      :content-message-question="'هل انت متأكد من حذف تصنيف بلوم ؟'"
+      :content-message="'حذف بلوم'"
+      :content-message-question="'هل انت متأكد من حذف بلوم ؟'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -41,17 +42,18 @@ export default {
   components: { Modal, ListItems, Button },
   data() {
     return {
+      loading: false,
       showModal: false,
       packageSearchWord: "",
       bloomCategories: [],
-      totalNumber: null,
+      totalNumber: 0,
       fieldsList: [
         {
           key: "id",
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
-          key: this.$i18n.locale == "ar" ? "name.ar" : "name.en",
+          key: "name",
           label: this.$i18n.t("TABLE_FIELDS.name"),
         },
         {
@@ -66,14 +68,17 @@ export default {
     goToAddBloomCategoryRequest() {
       this.$router.push("/dashboard/bloom/add");
     },
-    getBloomCategories() {
-      this.ApiService(getBloomCategoriesRequest()).then((response) => {
-        this.bloomCategories = response.data.data;
-        this.totalNumber = response.data.meta.total;
-      });
-    },
-    searchBy($event) {
-      console.log("$event", $event);
+    getBloomCategories(event) {
+      this.loading = true;
+      const params = event;
+      this.ApiService(getBloomCategoriesRequest(params))
+        .then((response) => {
+          this.bloomCategories = response.data.data;
+          this.totalNumber = response.data.meta.total;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     detailItem($event) {
       this.$router.push(`/dashboard/bloom/show/${$event}`);

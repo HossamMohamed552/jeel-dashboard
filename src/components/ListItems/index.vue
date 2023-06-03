@@ -11,74 +11,86 @@
     </div>
     <div class="search-sort">
       <div class="search">
-        <b-form-input v-model="inputValue" placeholder="بحث" class="search-input"/>
-        <img src="@/assets/images/icons/search.svg">
+        <b-form-input v-model="inputValue" placeholder="بحث" class="search-input" />
+        <img src="@/assets/images/icons/search.svg" />
       </div>
       <div class="sort">
-        <img src="@/assets/images/icons/sort.svg">
-        <select>
+        <img src="@/assets/images/icons/sort.svg" />
+        <select @change="order">
           <option value="" selected disabled>ترتيب حسب</option>
-          <option v-for="sort in  sortArray" :id="sort.id" @change="sortBy(sort)"
-                  :value="sort.value">{{ sort.name }}
+          <option v-for="(item, index) in sortArray" :id="item.id" :value="item.value" :key="index">
+            {{ item.name }}
           </option>
         </select>
       </div>
     </div>
     <div class="hold-table">
-      <b-table :head-variant="'gradient'" responsive striped :items="items" :fields="fieldsList">
+      <b-table
+        :head-variant="'gradient'"
+        responsive
+        striped
+        :items="items"
+        :fields="fieldsList"
+        :busy="loading"
+      >
+       <template #table-busy>
+        <div class="text-center text-danger my-2 mt-5">
+          <b-spinner class="align-middle"></b-spinner>
+        </div>
+      </template>
         <template #head(id)="data">
-          <span>{{ data.field.key === 'id' ? 'التسلسل' : data.field.label }}</span>
+          <span>{{ data.field.key === "id" ? "التسلسل" : data.field.label }}</span>
         </template>
         <template #head(first_name)="data">
-          <span>{{ data.field.key === 'first_name' ? 'الاسم الاول' : data.field.label }}</span>
+          <span>{{ data.field.key === "first_name" ? "الاسم الاول" : data.field.label }}</span>
         </template>
         <template #head(last_name)="data">
-          <span>{{ data.field.key === 'last_name' ? 'الاسم الثانى' : data.field.label }}</span>
+          <span>{{ data.field.key === "last_name" ? "الاسم الثانى" : data.field.label }}</span>
         </template>
         <template #head(name)="data">
-          <span>{{ data.field.key === 'name' ? 'الإسم' : data.field.label }}</span>
+          <span>{{ data.field.key === "name" ? "الإسم" : data.field.label }}</span>
         </template>
         <template #head(email)="data">
-          <span>{{ data.field.key === 'email' ? 'البريد الإلكترونى' : data.field.label }}</span>
+          <span>{{ data.field.key === "email" ? "البريد الإلكترونى" : data.field.label }}</span>
         </template>
         <template #head(mobile)="data">
-          <span>{{ data.field.key === 'mobile' ? 'الهاتف' : data.field.label }}</span>
+          <span>{{ data.field.key === "mobile" ? "الهاتف" : data.field.label }}</span>
         </template>
         <template #head(avatar)="data">
-          <span>{{ data.field.key === 'avatar' ? 'الصورة' : data.field.label }}</span>
+          <span>{{ data.field.key === "avatar" ? "الصورة" : data.field.label }}</span>
         </template>
         <template #head(status)="data">
-          <span>{{ data.field.key === 'status' ? 'الحاله' : data.field.label }}</span>
+          <span>{{ data.field.key === "status" ? "الحاله" : data.field.label }}</span>
         </template>
         <template #head(country)="data">
-          <span>{{ data.field.key === 'country' ? 'الدولة' : data.field.label }}</span>
+          <span>{{ data.field.key === "country" ? "الدولة" : data.field.label }}</span>
         </template>
         <template #head(music_status)="data">
-          <span>{{ data.field.key === 'music_status' ? 'الصوت' : data.field.label }}</span>
+          <span>{{ data.field.key === "music_status" ? "الصوت" : data.field.label }}</span>
         </template>
         <template #head(owner)="data">
-          <span>{{ data.field.key === 'owner' ? 'البريد الإلكترونى' : data.field.label }}</span>
+          <span>{{ data.field.key === "owner" ? "البريد الإلكترونى" : data.field.label }}</span>
         </template>
         <template #head(school_group)="data">
-          <span>{{ data.field.key === 'school_group' ? 'اسم المجموعة' : data.field.label }}</span>
+          <span>{{ data.field.key === "school_group" ? "اسم المجموعة" : data.field.label }}</span>
         </template>
         <template #head(level_school_group)="data">
           <span>{{
-              data.field.key === 'level_school_group' ? 'اسم المجموعة' : data.field.label
-            }}</span>
+            data.field.key === "level_school_group" ? "اسم المجموعة" : data.field.label
+          }}</span>
         </template>
         <template #head(subscription_start_date)="data">
           <span>{{
-              data.field.key === 'subscription_start_date' ? 'بداية التعاقد' : data.field.label
-            }}</span>
+            data.field.key === "subscription_start_date" ? "بداية التعاقد" : data.field.label
+          }}</span>
         </template>
         <template #head(subscription_end_date)="data">
           <span>{{
-              data.field.key === 'subscription_end_date' ? 'نهاية التعاقد' : data.field.label
-            }}</span>
+            data.field.key === "subscription_end_date" ? "نهاية التعاقد" : data.field.label
+          }}</span>
         </template>
         <template #head(logo)="data">
-          <span>{{ data.field.key === 'logo' ? 'الشعار' : data.field.label }}</span>
+          <span>{{ data.field.key === "logo" ? "الشعار" : data.field.label }}</span>
         </template>
         <template #head(is_super_admin)="data">
           <span class="d-none"></span>
@@ -93,7 +105,7 @@
           <span class="d-none"></span>
         </template>
         <template #head(username)="data">
-          <span>{{ data.field.key === 'username' ? 'اسم المستخدم' : data.field.label }}</span>
+          <span>{{ data.field.key === "username" ? "اسم المستخدم" : data.field.label }}</span>
         </template>
         <template #head(useremail)="data">
           <span class="d-none"></span>
@@ -101,47 +113,49 @@
 
         <template #cell(avatar)="data">
           <div class="hold-image">
-            <img class="image-in-table" :src="data.item.avatar">
+            <img class="image-in-table" :src="data.item.avatar" />
           </div>
         </template>
         <template #cell(type)="data">
-          <span>{{ data.item.type === 'international' ? 'دولى' : 'محلى'}}</span>
+          <span>{{ data.item.type === "international" ? "دولى" : "محلى" }}</span>
         </template>
         <template #cell(status)="data">
           <span>{{ data.item.status === 1 ? "مفعل" : "غير مفعل" }}</span>
         </template>
         <template #cell(music_status)="data">
-          <span>{{ data.item.music_status === 1 ? "متاح" : "غير متاح"}}</span>
+          <span>{{ data.item.music_status === 1 ? "متاح" : "غير متاح" }}</span>
         </template>
         <template #cell(country)="data">
           <span>{{ data.value.name }}</span>
         </template>
         <template #cell(email.owner)="data">
-          <span>{{ data.item.owner.email}}</span>
+          <span>{{ data.item.owner.email }}</span>
         </template>
         <template #cell(logo)="data">
-          <img :src="data.item.logo">
+          <img :src="data.item.logo" />
         </template>
         <template #cell(school_type)="data">
-          <span>{{ data.item.school_type.name}}</span>
+          <span>{{ data.item.school_type.name }}</span>
         </template>
         <template #cell(school_group)="data">
-          <span>{{ data.item.school_group.name}}</span>
+          <span>{{ data.item.school_group.name }}</span>
         </template>
         <template #cell(package)="data">
-          <span>{{ data.item.package.name}}</span>
+          <span>{{ data.item.package.name }}</span>
         </template>
         <template #cell(question_type)="data">
-          <span>{{ data.item.question_type.name}}</span>
+          <span>{{ data.item.question_type.name }}</span>
         </template>
         <template #cell(question_difficulty)="data">
-          <span>{{ data.item.question_difficulty.name}}</span>
+          <span>{{ data.item.question_difficulty.name }}</span>
         </template>
         <template #cell(level)="data">
-          <span>{{ data.item.level.name}}</span>
+          <span>{{ data.item.level.name }}</span>
         </template>
         <template #cell(learningpaths)="data">
-          <span v-for="path in data.item.learningpaths" class="path">{{ path.name}}</span>
+          <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{
+            path.name
+          }}</span>
         </template>
         <template #cell(is_super_admin)="data">
           <span class="d-none"></span>
@@ -158,35 +172,39 @@
         <template #cell(actions)="data">
           <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
             <template #button-content>
-              <img src="@/assets/images/icons/actions.svg">
+              <img src="@/assets/images/icons/actions.svg" />
             </template>
-            <b-dropdown-item @click="detailItem(data.item.id)">{{
-                $t('CONTROLS.detailBtn')
-              }}
+            <b-dropdown-item @click="detailItem(data.item.id)"
+              >{{ $t("CONTROLS.detailBtn") }}
             </b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item @click="editItem(data.item.id)">{{
-                $t('CONTROLS.editBtn')
-              }}
+            <b-dropdown-item @click="editItem(data.item.id)"
+              >{{ $t("CONTROLS.editBtn") }}
             </b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item @click="deleteItem(data.item.id)">{{
-                $t('CONTROLS.deleteBtn')
-              }}
+            <b-dropdown-item @click="deleteItem(data.item.id)"
+              >{{ $t("CONTROLS.deleteBtn") }}
             </b-dropdown-item>
 
-            <b-dropdown-item v-if="videoList" @click="addVideoQuestion(data.item.id)">{{
-                $t('CONTROLS.addVideoQuestion')
-              }}
+            <b-dropdown-item v-if="videoList" @click="addVideoQuestion(data.item.id)"
+              >{{ $t("CONTROLS.addVideoQuestion") }}
             </b-dropdown-item>
           </b-dropdown>
-
         </template>
       </b-table>
     </div>
+    <Pagination
+      :currentPage="formValues.page"
+      :perPage="formValues.per_page"
+      :totalItems="numberOfItem"
+      @changePage="handlePageChange"
+      @changePerPage="handleChangePerPage"
+    />
   </section>
 </template>
 <script>
+import { debounce } from "lodash";
+
 export default {
   name: "index",
   data() {
@@ -195,16 +213,26 @@ export default {
       deleteIcon: require("@/assets/delete.svg"),
       inputValue: "",
       items: [],
-    }
+      formValues: {
+        per_page: 10,
+        page: 1,
+        name: "",
+        order: "",
+      },
+    };
   },
   props: {
+    loading: {
+      type: Boolean,
+      default: false,
+    },
     headerName: {
       type: String,
-      default: ""
+      default: "",
     },
     numberOfItem: {
       type: Number,
-      default: 0
+      default: 0,
     },
     vSearchModel: {
       type: String,
@@ -215,61 +243,75 @@ export default {
         return [
           {
             id: 1,
-            value: 'aec',
-            name: 'تصاعديا',
+            value: "asc",
+            name: "تصاعديا",
           },
           {
             id: 2,
-            value: 'dec',
-            name: 'تنازليا',
-          }
-        ]
-      }
+            value: "desc",
+            name: "تنازليا",
+          },
+        ];
+      },
     },
     tableItems: {
       type: Array,
       default: function () {
-        return []
-      }
+        return [];
+      },
     },
     fieldsList: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
-    videoList:{
-      type:Boolean,
-      default:false
-    }
+    videoList: {
+      type: Boolean,
+      default: false,
+    },
   },
   watch: {
     vSearchModel(newVal) {
-      this.inputValue = newVal
+      this.inputValue = newVal;
     },
     inputValue(newVal) {
-      this.$emit('searchBy', newVal)
+      this.searchBy(newVal);
     },
     tableItems(newVal) {
-      this.items = newVal
+      this.items = newVal;
     },
   },
   methods: {
-    sortBy(sort) {
-      this.$emit('sortBy', sort)
+    handlePageChange(event) {
+      this.formValues.page = event;
+      this.$emit("refetch", this.formValues);
+    },
+    handleChangePerPage(event) {
+      this.formValues.per_page = event;
+      this.$emit("refetch", this.formValues);
+    },
+    searchBy: debounce(function (name) {
+      this.formValues.name = name;
+      this.$emit("refetch", this.formValues);
+    }, 500),
+
+    order(event) {
+      this.formValues.order = event.target.value;
+      this.$emit("refetch", this.formValues);
     },
     detailItem(id) {
-      this.$emit('detailItem', id)
+      this.$emit("detailItem", id);
     },
     editItem(id) {
-      this.$emit('editItem', id)
+      this.$emit("editItem", id);
     },
     deleteItem(id) {
-      this.$emit('deleteItem', id)
+      this.$emit("deleteItem", id);
     },
-    addVideoQuestion(id){
-      this.$emit('addVideoQuestion', id)
-    }
+    addVideoQuestion(id) {
+      this.$emit("addVideoQuestion", id);
+    },
   },
-}
+};
 </script>
 <style scoped lang="scss">
 @import "./index";
