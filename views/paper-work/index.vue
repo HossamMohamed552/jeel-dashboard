@@ -3,7 +3,9 @@
     <ListItems :header-name="'قائمة اوراق العمل'" :number-of-item="totalNumber"
                :tableItems="paperWorkList" :fields-list="fieldsList" :v-search-model="groupSearchWord" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-               @searchBy="searchBy">
+               @refetch="getPaperWorks"
+               :loading="loading"
+               >
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddPaperWorks">
           <img src="@/assets/images/icons/plus.svg">
@@ -30,6 +32,7 @@ export default {
   components: {Modal, ListItems, Button},
   data() {
     return {
+      loading: false,
       showModal: false,
       groupSearchWord: "",
       paperWorkList: [],
@@ -49,14 +52,15 @@ export default {
     goToAddPaperWorks() {
       this.$router.push('/dashboard/paper-work/add')
     },
-    getPaperWorks() {
-      this.ApiService(getPaperWorksRequest()).then((response) => {
+    getPaperWorks(event) {
+      this.loading = true
+      const params = event
+      this.ApiService(getPaperWorksRequest(params)).then((response) => {
         this.paperWorkList = response.data.data
         this.totalNumber = response.data.meta.total
-      })
-    },
-    searchBy($event) {
-      console.log('$event', $event)
+      }) .finally(() => {
+          this.loading = false;
+        });
     },
     detailItem($event) {
       this.$router.push(`/dashboard/paper-work/show/${$event}`)

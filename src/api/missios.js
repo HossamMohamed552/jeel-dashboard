@@ -1,7 +1,9 @@
-export const getMissionsRequest = (params) => ({
+export const getMissionsRequest = (params = {per_page:10, page: 1}) => ({
   method: 'get',
-  url: `missions?page=${params.page}`,
-  config: {}
+  url: `missions`,
+  config: {
+    params
+  }
 })
 export const getSingleMissionsRequest = (params) => ({
   method: 'get',

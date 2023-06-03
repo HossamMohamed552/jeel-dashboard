@@ -1,6 +1,9 @@
-export const getQuestionRequest = (params = {page: 1}) => ({
+export const getQuestionRequest = (params = {per_page: 10}) => ({
   method: 'get',
-  url: `questions?per_page=200`,
+  url: `questions`,
+  config: {
+    params
+  }
 })
 export const getSingleQuestionRequest = (params) => ({
   method: 'get',

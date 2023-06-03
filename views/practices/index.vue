@@ -3,7 +3,9 @@
     <ListItems :header-name="'قائمة التمارين'" :number-of-item="totalNumber"
                :tableItems="quizzesList" :fieldsList="fieldsList" :v-search-model="quizzesSearchWord" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-               @searchBy="searchBy">
+               @refetch="getTerms"
+               :loading="loading"
+               >
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddQuiz">
           <img src="@/assets/images/icons/plus.svg">
@@ -30,6 +32,7 @@ export default {
   components: {Modal, ListItems, Button},
   data() {
     return {
+      loading: false,
       showModal: false,
       quizzesSearchWord: "",
       quizzesList: [],
@@ -49,14 +52,15 @@ export default {
     goToAddQuiz(){
       this.$router.push('/dashboard/practice/add')
     },
-    getQuizzes(){
-      this.ApiService(getQuizzesRequest()).then((response) => {
-        this.quizzesList = response.data.data
+    getTerms(event) {
+      this.loading = true
+      const params = event
+      this.ApiService(getTermsRequest(params)).then((response) => {
+        this.termsList = response.data.data
         this.totalNumber = response.data.meta.total
-      })
-    },
-    searchBy($event) {
-      console.log('$event', $event)
+      }) .finally(() => {
+          this.loading = false;
+        });
     },
     detailItem($event) {
       this.$router.push(`/dashboard/practices/show/${$event}`)

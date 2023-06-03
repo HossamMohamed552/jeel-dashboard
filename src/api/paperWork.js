@@ -1,7 +1,7 @@
-export const getPaperWorksRequest = () => ({
+export const getPaperWorksRequest = (params) => ({
     method: 'get',
     url: 'peper_works',
-    config: {}
+    config: {params}
 });
 export const getPaperWorkPerLevelPathRequest = (params) => ({
   method: 'get',

@@ -5,7 +5,9 @@
                :v-search-model="missionSearchWord"
                @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-               @searchBy="searchBy">
+               @refetch="getMissions"
+               :loading="loading"
+               >
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddMissions">
           <img src="@/assets/images/icons/plus.svg">
@@ -32,7 +34,8 @@ export default{
   name: "index",
   components: {Modal, ListItems, Button},
   data(){
-    return{
+    return {
+      loading: false,
       showModal: false,
       missionSearchWord: "",
       missionsList: [],
@@ -51,11 +54,15 @@ export default{
     goToAddMissions(){
       this.$router.push('/dashboard/missions/add')
     },
-    getMissions(){
-      this.ApiService(getMissionsRequest({page:1})).then((response) => {
+    getMissions(event) {
+      this.loading = true
+      const params = event
+      this.ApiService(getMissionsRequest(params)).then((response) => {
         this.missionsList = response.data.data
         this.totalNumber = response.data.meta.total
-      })
+      }) .finally(() => {
+          this.loading = false;
+        });
     },
     searchBy($event) {
       console.log('$event', $event)

@@ -6,6 +6,7 @@ import SelectField from "@/components/Shared/SelectField";
 import CheckboxField from "@/components/Shared/CheckboxField";
 import Button from "@/components/Shared/Button";
 import Confirmation from "@/components/Shared/Confirmation";
+import Pagination from "@/components/Shared/Pagination";
 
 const components = {
   ValidationProvider,
@@ -16,6 +17,7 @@ const components = {
   CheckboxField,
   Button,
   Confirmation,
+  Pagination,
 };
 
 Object.entries(components).forEach(([name, component]) => {

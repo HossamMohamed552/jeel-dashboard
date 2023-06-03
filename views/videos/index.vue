@@ -3,7 +3,9 @@
     <ListItems :header-name="'قائمة الفيديوهات'" :number-of-item="totalNumber"
                :tableItems="videosList" :fields-list="fieldsList" :v-search-model="groupSearchWord" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-               @searchBy="searchBy">
+               @refetch="getVideos"
+               :loading="loading"
+               >
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSchools">
           <img src="@/assets/images/icons/plus.svg">
@@ -30,6 +32,7 @@ export default {
   components: {Modal, ListItems, Button},
   data() {
     return {
+      loading: false,
       showModal: false,
       groupSearchWord: "",
       videosList: [],
@@ -50,11 +53,15 @@ export default {
     goToAddSchools() {
       this.$router.push('/dashboard/videos/add')
     },
-    getVideos() {
-      this.ApiService(getVideosRequest()).then((response) => {
+    getVideos(event) {
+      this.loading = true
+      const params = !event ? { per_page: 10 } : event;
+      this.ApiService(getVideosRequest(params)).then((response) => {
         this.videosList = response.data.data
         this.totalNumber = response.data.meta.total
-      })
+      }) .finally(() => {
+          this.loading = false;
+        });
     },
     searchBy($event) {
       console.log('$event', $event)
