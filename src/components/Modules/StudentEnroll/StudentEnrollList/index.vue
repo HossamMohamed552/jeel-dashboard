@@ -1,11 +1,11 @@
 <template>
-  <section class="container-fluid custom-container">
+  <section class="container-fluid">
     <ListItems
-      :header-name="'قائمة أنواع المدارس'"
+      :header-name="'قوائم الطلاب'"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
-      :table-items="schoolTypessList"
-      :v-search-model="packageSearchWord"
+      :table-items="studentEnrollList"
+      :v-search-model="studentEnrollSearchWord"
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
@@ -14,16 +14,16 @@
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
-          @click="goToAddSchoolType"
+          @click="goToAddStudentEnroll"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة نوع مدرسة</span>
+          <span>إضافة طالب</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف نوع المدرسة'"
-      :content-message-question="'هل انت متأكد من حذف نوع المدرسة'"
+      :content-message="'حذف طالب مسجل'"
+      :content-message-question="'هل انت متأكد من حذف الطالب'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -35,15 +35,21 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { deleteSchoolTypesRequest, getSchoolTypesRequest } from "@/api/schoolType.js";
+import { deleteStudentEnrollRequest, getStudentEnrollRequest } from "@/api/studentEnroll.js";
 import Modal from "@/components/Shared/Modal/index.vue";
 export default {
+  props: {
+    schoolId: {
+      type: Number,
+      default: null,
+    },
+  },
   components: { Modal, ListItems, Button },
   data() {
     return {
       showModal: false,
-      packageSearchWord: "",
-      schoolTypessList: [],
+      studentEnrollSearchWord: "",
+      studentEnrollList: [],
       totalNumber: null,
       fieldsList: [
         {
@@ -63,12 +69,16 @@ export default {
     };
   },
   methods: {
-    goToAddSchoolType() {
-      this.$router.push("/dashboard/school-type/add");
+    goToAddStudentEnroll() {
+      // this.$router.push("/dashboard/class/add");
+      this.$router.push({
+        name: "add-student-enroll",
+        params: { schoolId: this.schoolId },
+      });
     },
-    getSchoolTypes() {
-      this.ApiService(getSchoolTypesRequest()).then((response) => {
-        this.schoolTypessList = response.data.data;
+    getStudentEnrolls() {
+      this.ApiService(getStudentEnrollRequest()).then((response) => {
+        this.studentEnrollList = response.data.data;
         this.totalNumber = response.data.meta.total;
       });
     },
@@ -76,10 +86,14 @@ export default {
       console.log("$event", $event);
     },
     detailItem($event) {
-      this.$router.push(`/dashboard/school-type/show/${$event}`);
+      this.$router.push(`/dashboard/student-enroll/show/${$event}`);
     },
     editItem($event) {
-      this.$router.push(`/dashboard/school-type/edit/${$event}`);
+      // this.$router.push(`/dashboard/class/edit/${$event}`);
+      this.$router.push({
+        name: "edit-student-enroll",
+        params: { id: $event, schoolId: this.schoolId },
+      });
     },
     deleteItem($event) {
       this.itemId = $event;
@@ -89,14 +103,14 @@ export default {
       this.showModal = $event;
     },
     cancelWithConfirm() {
-      this.ApiService(deleteSchoolTypesRequest(this.itemId)).then(() => {
-        this.getSchoolTypes();
+      this.ApiService(deleteStudentEnrollRequest(this.itemId)).then(() => {
+        this.getStudentEnrolls();
       });
       this.cancel();
     },
   },
   mounted() {
-    this.getSchoolTypes();
+    this.getStudentEnrolls();
   },
 };
 </script>

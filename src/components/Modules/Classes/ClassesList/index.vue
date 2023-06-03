@@ -1,11 +1,11 @@
 <template>
-  <section class="container-fluid custom-container">
+  <section class="container-fluid">
     <ListItems
-      :header-name="'قائمة أنواع المدارس'"
+      :header-name="'قائمة الصفوف الدراسية'"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
-      :table-items="schoolTypessList"
-      :v-search-model="packageSearchWord"
+      :table-items="classesList"
+      :v-search-model="classesSearchWord"
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
@@ -14,16 +14,16 @@
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
-          @click="goToAddSchoolType"
+          @click="goToAddClass"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة نوع مدرسة</span>
+          <span>إضافة صف دراسي</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف نوع المدرسة'"
-      :content-message-question="'هل انت متأكد من حذف نوع المدرسة'"
+      :content-message="'حذف الصف الدراسي'"
+      :content-message-question="'هل انت متأكد من حذف الصف الدراسي'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -35,15 +35,21 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { deleteSchoolTypesRequest, getSchoolTypesRequest } from "@/api/schoolType.js";
+import { deleteClassRequest, getClassRequest } from "@/api/class.js";
 import Modal from "@/components/Shared/Modal/index.vue";
 export default {
+  props: {
+    schoolId: {
+      type: Number,
+      default: null,
+    },
+  },
   components: { Modal, ListItems, Button },
   data() {
     return {
       showModal: false,
-      packageSearchWord: "",
-      schoolTypessList: [],
+      classesSearchWord: "",
+      classesList: [],
       totalNumber: null,
       fieldsList: [
         {
@@ -55,6 +61,14 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.name"),
         },
         {
+          key: "term.name",
+          label: this.$i18n.t("TABLE_FIELDS.term"),
+        },
+        {
+          key: "level.name",
+          label: this.$i18n.t("TABLE_FIELDS.level"),
+        },
+        {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
@@ -63,12 +77,16 @@ export default {
     };
   },
   methods: {
-    goToAddSchoolType() {
-      this.$router.push("/dashboard/school-type/add");
+    goToAddClass() {
+      // this.$router.push("/dashboard/class/add");
+      this.$router.push({
+        name: "add-class",
+        params: { schoolId: this.schoolId },
+      });
     },
-    getSchoolTypes() {
-      this.ApiService(getSchoolTypesRequest()).then((response) => {
-        this.schoolTypessList = response.data.data;
+    getClasses() {
+      this.ApiService(getClassRequest()).then((response) => {
+        this.classesList = response.data.data;
         this.totalNumber = response.data.meta.total;
       });
     },
@@ -76,10 +94,14 @@ export default {
       console.log("$event", $event);
     },
     detailItem($event) {
-      this.$router.push(`/dashboard/school-type/show/${$event}`);
+      this.$router.push(`/dashboard/class/show/${$event}`);
     },
     editItem($event) {
-      this.$router.push(`/dashboard/school-type/edit/${$event}`);
+      // this.$router.push(`/dashboard/class/edit/${$event}`);
+      this.$router.push({
+        name: "edit-class",
+        params: { id: $event, schoolId: this.schoolId },
+      });
     },
     deleteItem($event) {
       this.itemId = $event;
@@ -89,14 +111,14 @@ export default {
       this.showModal = $event;
     },
     cancelWithConfirm() {
-      this.ApiService(deleteSchoolTypesRequest(this.itemId)).then(() => {
-        this.getSchoolTypes();
+      this.ApiService(deleteClassRequest(this.itemId)).then(() => {
+        this.getClasses();
       });
       this.cancel();
     },
   },
   mounted() {
-    this.getSchoolTypes();
+    this.getClasses();
   },
 };
 </script>
