@@ -1,7 +1,9 @@
 export const getStaffEnrollRequest = (params) => ({
   method: 'get',
-  url: `enrollments?school_id=${params}`,
-  config: {}
+  url: `enrollments`,
+  config: {
+    params
+  }
 })
 
 export const getStaffEnrollUsersRequest = (params) => ({
@@ -12,7 +14,7 @@ export const getStaffEnrollUsersRequest = (params) => ({
 
 export const getStaffEnrollRolesRequest = (params) => ({
   method: 'get',
-  url: `roles?school_id=${params}`,
+  url: `roles?school_id=${params}&system_role=0`,
   config: {}
 })
 
@@ -31,11 +33,11 @@ export const getStaffEnrollClassesRequest = (params) => ({
 
 export const getSingleStaffEnrollRequest = (params) => ({
   method: 'get',
-  url: `school-types/${params}`,
+  url: `enrollments/${params}`,
 })
 export const putStaffEnrollRequest = (params,data) => ({
   method: 'put',
-  url: `school-types/${params}`,
+  url: `enrollments/${params}`,
   config: {
     data
   }
@@ -49,5 +51,5 @@ export const postStaffEnrollRequest = (data) => ({
 })
 export const deleteStaffEnrollRequest = (params) =>({
   method: 'delete',
-  url: `school-types/${params}`,
+  url: `enrollments/${params}`,
 })

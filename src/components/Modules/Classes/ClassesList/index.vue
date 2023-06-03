@@ -5,11 +5,12 @@
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="classesList"
+      :loading="loading"
       :v-search-model="classesSearchWord"
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
-      @searchBy="searchBy"
+      @refetch="getClasses"
     >
       <template #buttons>
         <Button
@@ -47,6 +48,7 @@ export default {
   components: { Modal, ListItems, Button },
   data() {
     return {
+      loading: false,
       showModal: false,
       classesSearchWord: "",
       classesList: [],
@@ -84,14 +86,17 @@ export default {
         params: { schoolId: this.schoolId },
       });
     },
-    getClasses() {
-      this.ApiService(getClassRequest()).then((response) => {
-        this.classesList = response.data.data;
-        this.totalNumber = response.data.meta.total;
-      });
-    },
-    searchBy($event) {
-      console.log("$event", $event);
+    getClasses(event) {
+      this.loading = true;
+      const params = event;
+      this.ApiService(getClassRequest(params))
+        .then((response) => {
+          this.classesList = response.data.data;
+          this.totalNumber = response.data.meta.total;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     detailItem($event) {
       this.$router.push(`/dashboard/class/show/${$event}`);

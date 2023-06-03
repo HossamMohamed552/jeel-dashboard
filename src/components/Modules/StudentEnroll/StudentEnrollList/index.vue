@@ -5,11 +5,12 @@
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="studentEnrollList"
+      :loading="loading"
       :v-search-model="studentEnrollSearchWord"
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
-      @searchBy="searchBy"
+      @refetch="getStudentEnrolls"
     >
       <template #buttons>
         <Button
@@ -35,7 +36,10 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { deleteStudentEnrollRequest, getStudentEnrollRequest } from "@/api/studentEnroll.js";
+import {
+  deleteStudentEnrollRequest,
+  getStudentEnrollRequest,
+} from "@/api/studentEnroll.js";
 import Modal from "@/components/Shared/Modal/index.vue";
 export default {
   props: {
@@ -47,6 +51,7 @@ export default {
   components: { Modal, ListItems, Button },
   data() {
     return {
+      loading: false,
       showModal: false,
       studentEnrollSearchWord: "",
       studentEnrollList: [],
@@ -57,8 +62,16 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
-          key: "name",
+          key: "user.name",
           label: this.$i18n.t("TABLE_FIELDS.name"),
+        },
+        {
+          key: "class.name",
+          label: this.$i18n.t("TABLE_FIELDS.class"),
+        },
+        {
+          key: "school.name",
+          label: this.$i18n.t("TABLE_FIELDS.school"),
         },
         {
           key: "actions",
@@ -76,11 +89,15 @@ export default {
         params: { schoolId: this.schoolId },
       });
     },
-    getStudentEnrolls() {
-      this.ApiService(getStudentEnrollRequest()).then((response) => {
+    getStudentEnrolls(event) {
+      this.loading = true;
+      const params = {...event, school_id: this.schoolId};
+      this.ApiService(getStudentEnrollRequest(params)).then((response) => {
         this.studentEnrollList = response.data.data;
         this.totalNumber = response.data.meta.total;
-      });
+      })        .finally(() => {
+          this.loading = false;
+        });
     },
     searchBy($event) {
       console.log("$event", $event);
