@@ -207,6 +207,12 @@
     "name": "الاسم",
     "showDetails": "تفاصيل نوع المدرسة"
   },
+  "BLOOM": {
+    "BLOOM": "بلوم",
+    "DETAILS": "تفاصيل بلوم",
+    "ADD": "اضافة بلوم",
+    "EDIT": "تعديل بلوم"
+  },
   "permissions": "الصلاحيات",
   "showDetails": "عرض تفاصيل المستخدم",
   "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}",
@@ -217,5 +223,6 @@
   "GLOBALAddAll": "إضافه الكل",
   "GLOBALRemoveAll": "إزاله الكل",
   "GLOBAL_NEXT": "التالى",
-  "GLOBAL_BACK": "السابق"
+  "GLOBAL_BACK": "السابق",
+  "GLOBAL_NAME": "الاسم"
 }

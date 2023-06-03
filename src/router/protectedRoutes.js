@@ -279,6 +279,26 @@ const protectedRoutes = [
         name:"show-school-type",
         component: ()=> import('../../views/school-type/view-school-type/index.vue')
       },
+      {
+        path:"/dashboard/bloom",
+        name:"bloom",
+        component: ()=> import('../../views/bloom/index.vue')
+      },
+      {
+        path:"/dashboard/bloom/add",
+        name:"add-bloom",
+        component: ()=> import('../../views/bloom/add-bloom/index.vue')
+      },
+      {
+        path:"/dashboard/bloom/edit/:id",
+        name:"edit-bloom",
+        component: ()=> import('../../views/bloom/edit-bloom/index.vue')
+      },
+      {
+        path:"/dashboard/bloom/show/:id",
+        name:"show-bloom",
+        component: ()=> import('../../views/bloom/view-bloom/index.vue')
+      },
     ]
   }
 ];
