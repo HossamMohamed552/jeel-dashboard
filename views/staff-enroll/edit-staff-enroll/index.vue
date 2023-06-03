@@ -6,6 +6,7 @@
       :is-success="true"
     />
     <AddEditStaffEnroll
+      :schoolId="schoolId"
       :loading="loading"
       @handleEditStaffEnroll="handleEditStaffEnroll($event)"
       @handleCancel="handleCancel"
@@ -24,8 +25,7 @@ export default {
       loading: false,
       showModal: false,
       staffEnrollId: this.$route.params.id,
-      schoolId: this.$route.params.schoolId
-
+      schoolId: this.$route.params.schoolId,
     };
   },
   methods: {

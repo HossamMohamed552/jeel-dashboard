@@ -3,19 +3,63 @@
     <div class="container-fluid custom-container">
       <div class="add-edit-country-form">
         <h3>
-          {{ staffEnrollId ? $t("STAFF_ENROLL.EDIT") : $t("STAFF_ENROLL.ADD_NEW") }}
+          {{
+            staffEnrollId ? $t("STAFF_ENROLL.EDIT") : $t("STAFF_ENROLL.ADD_NEW")
+          }}
         </h3>
         <validation-observer v-slot="{ invalid }" ref="addEditStaffEnrollForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
-                  <TextField
-                    v-model="staffEnroll.name"
-                    :label="$t('STAFF_ENROLL.name')"
-                    :name="$t('STAFF_ENROLL.name')"
-                    :rules="'required|min:3'"
-                  ></TextField>
+                  <SelectSearch
+                    v-model="staffEnroll.user_id"
+                    :label="$t('STAFF_ENROLL.USER')"
+                    :name="$t('STAFF_ENROLL.USER')"
+                    :options="staffUsers"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="6" class="mb-3">
+                <div class="hold-field">
+                  <SelectSearch
+                    v-model="staffEnroll.role_id"
+                    :label="$t('STAFF_ENROLL.ROLE')"
+                    :name="$t('STAFF_ENROLL.ROLE')"
+                    :options="staffRoles"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="6" class="mb-3">
+                <div class="hold-field">
+                  <SelectSearch
+                    v-model="staffEnroll.level_id"
+                    :label="$t('STAFF_ENROLL.LEVEL')"
+                    :name="$t('STAFF_ENROLL.LEVEL')"
+                    :options="staffLevels"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="6" class="mb-3">
+                <div class="hold-field">
+                  <SelectSearch
+                    v-model="staffEnroll.class_id"
+                    :label="$t('STAFF_ENROLL.CLASS')"
+                    :name="$t('STAFF_ENROLL.CLASS')"
+                    :options="staffClasses"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                  ></SelectSearch>
                 </div>
               </b-col>
             </b-row>
@@ -45,13 +89,35 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import { getSingleStaffEnrollRequest } from "@/api/staffEnroll.js";
 import Modal from "@/components/Shared/Modal/index.vue";
+import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 export default {
   components: {
     Modal,
     TextField,
     Button,
+    SelectSearch,
   },
   props: {
+    schoolId: {
+      type: Number,
+      default: null,
+    },
+    staffUsers: {
+      type: Array,
+      default: () => {},
+    },
+    staffRoles: {
+      type: Array,
+      default: () => {},
+    },
+    staffLevels: {
+      type: Array,
+      default: () => {},
+    },
+    staffClasses: {
+      type: Array,
+      default: () => {},
+    },
     loading: {
       type: Boolean,
       default: false,
@@ -60,7 +126,11 @@ export default {
   data() {
     return {
       staffEnroll: {
-        name: ""
+        school_id: this.schoolId,
+        user_id: null,
+        role_id: null,
+        class_id: null,
+        level_id: null,
       },
       staffEnrollId: this.$route.params.id,
     };

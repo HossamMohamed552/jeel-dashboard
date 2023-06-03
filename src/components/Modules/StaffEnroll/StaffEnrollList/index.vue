@@ -57,8 +57,28 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
-          key: "name",
-          label: this.$i18n.t("TABLE_FIELDS.name"),
+          key: "school.name",
+          label: this.$i18n.t("TABLE_FIELDS.school"),
+        },
+        {
+          key: "user.name",
+          label: this.$i18n.t("TABLE_FIELDS.user"),
+        },
+        {
+          key: "role.name",
+          label: this.$i18n.t("TABLE_FIELDS.role"),
+        },
+        {
+          key: "class.name",
+          label: this.$i18n.t("TABLE_FIELDS.class"),
+        },
+        {
+          key: "term.name",
+          label: this.$i18n.t("TABLE_FIELDS.term"),
+        },
+        {
+          key: "level.name",
+          label: this.$i18n.t("TABLE_FIELDS.level"),
         },
         {
           key: "actions",
@@ -77,7 +97,7 @@ export default {
       });
     },
     getStaffEnrolls() {
-      this.ApiService(getStaffEnrollRequest()).then((response) => {
+      this.ApiService(getStaffEnrollRequest(this.schoolId)).then((response) => {
         this.staffEnrollList = response.data.data;
         this.totalNumber = response.data.meta.total;
       });
