@@ -286,6 +286,17 @@
     "SECOND_EXPERIENCE": "خبرة المرة الثانية",
     "NEXT_EXPERIENCE": "خبرة المرات القادمة"
   },
+  "USER": {
+    "showDetails": "عرض تفاصيل المستخدم",
+    "first_name": "الاسم الأول",
+    "last_name": "الاسم الثانى",
+    "name": "الاسم",
+    "email": "البريد الإلكترونى",
+    "mobile": "الهاتف",
+    "social_media": "رابط التواصل الإجتماعى",
+    "role": "الدور",
+    "student_action_histories": "تاريخ عمل الطالب"
+  },
 
   "permissions": "الصلاحيات",
   "showDetails": "عرض تفاصيل المستخدم",

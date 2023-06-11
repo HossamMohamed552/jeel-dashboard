@@ -175,12 +175,12 @@
             <b-dropdown-item @click="detailItem(data.item.id)"
               >{{ $t("CONTROLS.detailBtn") }}
             </b-dropdown-item>
-            <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item @click="editItem(data.item.id)"
+            <b-dropdown-divider v-if="!isUserPage"></b-dropdown-divider>
+            <b-dropdown-item v-if="!isUserPage" @click="editItem(data.item.id)"
               >{{ $t("CONTROLS.editBtn") }}
             </b-dropdown-item>
-            <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item @click="deleteItem(data.item.id)"
+            <b-dropdown-divider v-if="!isUserPage"></b-dropdown-divider>
+            <b-dropdown-item v-if="!isUserPage" @click="deleteItem(data.item.id)"
               >{{ $t("CONTROLS.deleteBtn") }}
             </b-dropdown-item>
 
@@ -225,6 +225,10 @@ export default {
     };
   },
   props: {
+    isUserPage: {
+      type: Boolean,
+      default: false,
+    },
     loading: {
       type: Boolean,
       default: false,
