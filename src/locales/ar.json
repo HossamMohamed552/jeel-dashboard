@@ -28,7 +28,8 @@
     "schools": "المدارس",
     "content": "المحتوى",
     "infoDashBoard": "لوحة المعلومات",
-    "reports": "التقارير"
+    "reports": "التقارير",
+    "system_settings": "اعدادات النظام"
   },
   "TABLE_FIELDS": {
     "id": "التسلسل",
@@ -268,6 +269,22 @@
     "CLASS": "الصف",
     "showDetails": "تفاصيل الطالب",
     "SCHOOL": "المدرسة"
+  },
+  "SYSTEM_SETTINGS": {
+    "QUANTITY": "الكمية",
+    "COINS": "العملات",
+    "UPDATE": "تحديث",
+    "LEVEL": "المستوى",
+    "EXPERIENCE": "الخبرة",
+    "NAME": "الاسم",
+    "DESC": "الوصف",
+    "FIRST_COINS": "مكافأة أول مرة",
+    "FIRST_EXPERIENCE": "الخبرة المكتسبة لاول مرة",
+    "MAX_TRIAL": "اقصى عدد للمحاولات",
+    "SECOND_COINS": "مكافاة المرة الثانية",
+    "NEXT_COINS": "مكافأة المرات القادمة",
+    "SECOND_EXPERIENCE": "خبرة المرة الثانية",
+    "NEXT_EXPERIENCE": "خبرة المرات القادمة"
   },
 
   "permissions": "الصلاحيات",
