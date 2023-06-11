@@ -6,6 +6,10 @@ export const getAllUsersRequest = (params) => ({
   }
 })
 
+export const getSingleUserRequest = (params) => ({
+  method: 'get',
+  url: `users/${params}`,
+})
 
 export const getRolesRequest = () => ({
   method: 'get',
@@ -23,3 +27,5 @@ export const postAddUserRequest = (data) => ({
     'Content-Type': 'multipart/form-data'
   }
 });
+
+
