@@ -6,22 +6,45 @@
   min-height: 70vh;
 }
 
+.hold-field {
+  position: relative;
+
+  .show-date {
+    margin: 0;
+    position: absolute;
+    bottom: 1rem;
+    right: 2rem;
+    width: 20%;
+    background: transparent;
+    transform: translateY(20%);
+    font-size: 14px;
+    line-height: 1.4;
+    color: #555;
+  }
+}
+
 ::v-deep {
-  .group-type{
-    .col-form-label{
+  .group-type {
+    .col-form-label {
       color: $color-primary !important;
     }
   }
-  .custom-radio{
+
+  .custom-radio {
     display: inline-block;
     margin-top: 1.5rem;
   }
-  .mx-datepicker{
+
+  .mx-datepicker {
     width: 100%;
     border-radius: 3.125rem;
   }
-  .mx-input{
+
+  .mx-input {
     padding: 1.3rem 2rem;
     border-radius: 3.125rem;
+    background: transparent;
+    z-index: 2;
+    position: relative;
   }
 }

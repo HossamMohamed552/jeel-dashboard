@@ -52,6 +52,7 @@
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
+                    :disabled="staffEnroll.level_id === null"
                     v-model="staffEnroll.class_id"
                     :label="$t('STAFF_ENROLL.CLASS')"
                     :name="$t('STAFF_ENROLL.CLASS')"
@@ -59,6 +60,7 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
+                    multiple
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -79,6 +81,7 @@
               </div>
             </b-row>
           </form>
+          ----{{staffEnroll.school_id}}
         </validation-observer>
       </div>
     </div>
@@ -86,9 +89,10 @@
 </template>
 <script>
 import Button from "@/components/Shared/Button/index.vue";
-import { getSingleStaffEnrollRequest } from "@/api/staffEnroll.js";
+import {getSingleStaffEnrollRequest, getStaffEnrollClassesRequest} from "@/api/staffEnroll.js";
 import Modal from "@/components/Shared/Modal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
+
 export default {
   components: {
     Modal,
@@ -102,20 +106,23 @@ export default {
     },
     staffUsers: {
       type: Array,
-      default: () => {},
+      default: () => {
+      },
     },
     staffRoles: {
       type: Array,
-      default: () => {},
+      default: () => {
+      },
     },
     staffLevels: {
       type: Array,
-      default: () => {},
+      default: () => {
+      },
     },
-    staffClasses: {
-      type: Array,
-      default: () => {},
-    },
+    // staffClasses: {
+    //   type: Array,
+    //   default: () => {},
+    // },
     loading: {
       type: Boolean,
       default: false,
@@ -123,6 +130,7 @@ export default {
   },
   data() {
     return {
+      staffClasses: [],
       staffEnroll: {
         school_id: this.schoolId,
         user_id: null,
@@ -132,6 +140,12 @@ export default {
       },
       staffEnrollId: this.$route.params.id,
     };
+  },
+  watch: {
+    "staffEnroll.level_id"(val) {
+      console.log('val', val)
+      this.getStaffEnrollClasses()
+    }
   },
   methods: {
     onSubmit() {
@@ -160,8 +174,19 @@ export default {
         );
       }
     },
+    getStaffEnrollClasses() {
+      this.ApiService(getStaffEnrollClassesRequest({
+        schoolId: this.staffEnroll.school_id,
+        levelId: this.staffEnroll.level_id
+      })).then(
+        (response) => {
+          this.staffClasses = response.data.data;
+        }
+      );
+    },
   },
   mounted() {
+    // this.getStaffEnrollClasses();
     this.getStaffEnrollToEdit();
   },
 };

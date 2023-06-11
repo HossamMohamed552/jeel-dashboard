@@ -1,12 +1,10 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="''" :fieldsList="fieldsList" :table-items="rolesList"
+    <ListItems :header-name="'صلاحيات النظام'" :fieldsList="fieldsList" :table-items="rolesList"
                :v-search-model="roleSearchWord" @detailItem="detailItem($event)"
                 :number-of-item="totalNumber"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-               :loading="loading"
-               @refetch="getRoles"
-               >
+               :loading="loading" @refetch="getRoles">
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddRole">
           <img src="@/assets/images/icons/plus.svg">

@@ -14,7 +14,7 @@
                     v-model="createPackage.name"
                     :label="$t('PACKAGE.name')"
                     :name="$t('PACKAGE.name')"
-                    :rules="'required'"
+                    :rules="'required|min:3'"
                   ></TextField>
                 </div>
               </b-col>
@@ -24,7 +24,7 @@
                     v-model="createPackage.price"
                     :label="$t('PACKAGE.price')"
                     :name="$t('PACKAGE.price')"
-                    :rules="'required'"
+                    :rules="'required|numeric'"
                   ></TextField>
                 </div>
               </b-col>
@@ -34,7 +34,7 @@
                     v-model="createPackage.classes_count"
                     :label="$t('PACKAGE.classes_count')"
                     :name="$t('PACKAGE.classes_count')"
-                    :rules="'required'"
+                    :rules="'required|numeric'"
                   ></TextField>
                 </div>
               </b-col>
@@ -44,7 +44,7 @@
                     v-model="createPackage.description"
                     :label="$t('PACKAGE.description')"
                     :name="$t('PACKAGE.description')"
-                    :rules="'required'"
+                    :rules="'required|min:20'"
                   ></TextAreaField>
                 </div>
               </b-col>

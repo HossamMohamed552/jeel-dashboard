@@ -22,7 +22,7 @@
                     v-model="createCountry.code"
                     :label="$t('COUNTRY.countryCode')"
                     :name="$t('COUNTRY.countryCode')"
-                    :rules="'required|min:3'"
+                    :rules="'required|min:2'"
                   ></TextField>
                 </div>
               </b-col>

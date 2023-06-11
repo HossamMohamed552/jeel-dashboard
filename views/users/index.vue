@@ -4,27 +4,41 @@
       :header-name="'قائمة المستخدمين'"
       :number-of-item="totalNumber"
       :table-items="usersList"
+      :fieldsList="fieldsList"
       :v-search-model="userSearchWord"
       :loading="loading"
+      @detailItem="detailItem($event)"
+      @editItem="editItem($event)"
+      @deleteItem="deleteItem($event)"
       @refetch="getAllUsers"
     >
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="handleAddUser">
-          <img src="@/assets/images/icons/plus.svg" />
+          <img src="@/assets/images/icons/plus.svg"/>
           <span>إضافة مستخدم جديد</span>
         </Button>
       </template>
     </ListItems>
+    <Modal
+      :content-message="'حذف المستخدم'"
+      :content-message-question="'هل انت متأكد من حذف المستخدم ؟'"
+      :showModal="showModal"
+      @cancel="cancel($event)"
+      :is-warning="true"
+      @cancelWithConfirm="cancelWithConfirm($event)"
+    />
   </section>
 </template>
 <script>
 import ListItems from "@/components/ListItems/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import { getAllUsersRequest } from "@/api/user";
+import {deleteUserRequest, getAllUsersRequest} from "@/api/user";
+import Modal from "@/components/Shared/Modal/index.vue";
 
 export default {
   name: "index",
   components: {
+    Modal,
     ListItems,
     Button,
   },
@@ -33,6 +47,17 @@ export default {
       loading: false,
       userSearchWord: "",
       usersList: [],
+      showModal: false,
+      fieldsList: [
+        {key: "id", label: "التسلسل"},
+        {key: "avatar", label: "الصورة"},
+        {key: "name", label: "اسم المستخدم"},
+        {key: "first_name", label: "الاسم الاول"},
+        {key: "last_name", label: "الاسم الثانى"},
+        {key: "mobile", label: "الهاتف"},
+        {key: "email", label: "البريد الإلكترونى"},
+        {key: "actions", label: "الإجراء"},
+      ],
       totalNumber: 0,
     };
   },
@@ -52,10 +77,32 @@ export default {
           this.loading = false;
         });
     },
+    detailItem($event) {
+      this.$router.push(`/dashboard/users/show/${$event}`);
+    },
+    editItem($event) {
+      this.$router.push(`/dashboard/users/edit/${$event}`);
+    },
+    deleteItem($event) {
+      this.itemId = $event;
+      this.showModal = true;
+    },
+    cancel($event) {
+      this.showModal = $event;
+    },
+    cancelWithConfirm() {
+      this.ApiService(deleteUserRequest(this.itemId)).then(() => {
+        this.getAllUsers();
+      });
+      this.cancel();
+    },
   },
   mounted() {
     this.getAllUsers();
   },
+  created() {
+    console.log('matched', this.$route.matched)
+  }
 };
 </script>
 

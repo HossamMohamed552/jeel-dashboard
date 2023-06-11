@@ -12,6 +12,7 @@ export default {
   },
   actions: {
     showToast({ commit }, payload) {
+      console.log('fire toast')
       commit("SHOW_TOAST", payload);
     },
 

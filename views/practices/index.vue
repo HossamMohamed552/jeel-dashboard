@@ -3,7 +3,7 @@
     <ListItems :header-name="'قائمة التمارين'" :number-of-item="totalNumber"
                :tableItems="quizzesList" :fieldsList="fieldsList" :v-search-model="quizzesSearchWord" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-               @refetch="getTerms"
+               @refetch="getQuizzes"
                :loading="loading"
                >
       <template #buttons>
@@ -52,11 +52,11 @@ export default {
     goToAddQuiz(){
       this.$router.push('/dashboard/practice/add')
     },
-    getTerms(event) {
+    getQuizzes(event) {
       this.loading = true
       const params = event
-      this.ApiService(getTermsRequest(params)).then((response) => {
-        this.termsList = response.data.data
+      this.ApiService(getQuizzesRequest(params)).then((response) => {
+        this.quizzesList = response.data.data
         this.totalNumber = response.data.meta.total
       }) .finally(() => {
           this.loading = false;
