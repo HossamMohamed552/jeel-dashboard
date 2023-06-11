@@ -47,7 +47,6 @@ export default {
           }, 3000);
         })
         .then(() => {
-          this.showModal = false;
           this.$router.push("/dashboard/levels");
         });
     },

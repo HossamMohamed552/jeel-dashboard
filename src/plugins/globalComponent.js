@@ -7,7 +7,7 @@ import CheckboxField from "@/components/Shared/CheckboxField";
 import Button from "@/components/Shared/Button";
 import Confirmation from "@/components/Shared/Confirmation";
 import Pagination from "@/components/Shared/Pagination";
-
+import Toast from "@/components/Shared/Toast/index.vue";
 const components = {
   ValidationProvider,
   ValidationObserver,
@@ -18,6 +18,7 @@ const components = {
   Button,
   Confirmation,
   Pagination,
+  Toast
 };
 
 Object.entries(components).forEach(([name, component]) => {

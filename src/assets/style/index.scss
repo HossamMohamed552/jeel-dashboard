@@ -21,6 +21,9 @@
     border-radius: 1.2rem;
     overflow: hidden;
     min-height: 200px;
+    .dropdown-menu{
+      transform: translate3d(147px, 31px, 0px) !important;
+    }
   }
   .thead-gradient{
     background: linear-gradient(to left, $color-primary,$color-notify);

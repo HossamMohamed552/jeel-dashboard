@@ -43,7 +43,7 @@
                     v-model="formValues.password"
                     :label="$t('USERS.PASSWORD')"
                     :name="$t('USERS.PASSWORD')"
-                    :rules="'required'"
+                    :rules="'required|min:6'"
                   ></TextField>
                 </div>
               </b-col>
@@ -79,7 +79,6 @@
                     :rules="'required'"
                     multiple
                   ></SelectSearch>
-                  {{ typeof formValues.roles }}
                 </div>
               </b-col>
             </b-row>
@@ -90,6 +89,7 @@
                     :name="'logoSchool'"
                     :text="$t('USERS.UPLOAD_IMAGE')"
                     @imageUpload="handleUploadImage"
+                    :item-image="itemImage"
                   />
                 </div>
               </b-col>
@@ -103,7 +103,7 @@
                   type="submit"
                   :loading="loading"
                   :disabled="invalid"
-                  custom-class="submit-btn"
+                  :custom-class="'submit-btn'"
                 >
                   {{ $t("GLOBAL_SAVE") }}
                 </Button>
@@ -117,14 +117,17 @@
 </template>
 <script>
 import TextField from "@/components/Shared/TextField/index.vue";
+import Button from "@/components/Shared/Button/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
+import {getSingleUserRequest} from "@/api/user";
 
 export default {
   components: {
     TextField,
+    Button,
     SelectSearch,
     ImageUploader,
   },
@@ -149,47 +152,87 @@ export default {
         social_media: "",
         roles: [],
       },
+      itemImage: null,
       image: null,
     };
   },
   methods: {
     onSubmit() {
-      this.$refs.addEditUserForm.validate().then((success) => {
-        if (!success) return;
-        const formData = new FormData();
-        formData.append("first_name", this.formValues.first_name);
-        formData.append("last_name", this.formValues.last_name);
-        formData.append("email", this.formValues.email);
-        formData.append("password", this.formValues.password);
-        formData.append("mobile", this.formValues.mobile);
-        formData.append("social_media", this.formValues.social_media);
-        for (let user = 0; user < this.formValues.roles.length; user++) {
-          formData.append(`roles[${user}]`, this.formValues.roles[user]);
-        }
-        if (this.image) formData.append("image", this.image);
-        axios.post('/users', formData, {
-          headers: {
-            Authorization: `Bearer ${VueCookies.get("token")}`,
-            locale: 'ar',
-            'Content-Type': 'multipart/form-data'
+      if (this.$route.params.id) {
+        this.$refs.addEditUserForm.validate().then((success) => {
+          if (!success) return;
+          const formData = new FormData();
+          formData.append("first_name", this.formValues.first_name);
+          formData.append("last_name", this.formValues.last_name);
+          formData.append("email", this.formValues.email);
+          formData.append("password", this.formValues.password);
+          formData.append("mobile", this.formValues.mobile);
+          formData.append("social_media", this.formValues.social_media);
+          formData.append("_method", 'PUT');
+          for (let user = 0; user < this.formValues.roles.length; user++) {
+            formData.append(`roles[${user}]`, this.formValues.roles[user]);
           }
-        }).then((response) => {
-          console.log(response)
-        }).then(() => {
-          this.$router.push('/dashboard/users')
-        })
-
-        // this.$emit("handleAddEditUser", formData);
-      });
+          if (this.image) formData.append("image", this.image);
+          axios.post(`/users/${this.$route.params.id}`, formData, {
+            headers: {
+              Authorization: `Bearer ${VueCookies.get("token")}`,
+              locale: 'ar',
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then((response) => {
+          }).then(() => {
+            this.$router.push('/dashboard/users')
+          })
+        });
+      } else {
+        this.$refs.addEditUserForm.validate().then((success) => {
+          if (!success) return;
+          const formData = new FormData();
+          formData.append("first_name", this.formValues.first_name);
+          formData.append("last_name", this.formValues.last_name);
+          formData.append("email", this.formValues.email);
+          formData.append("password", this.formValues.password);
+          formData.append("mobile", this.formValues.mobile);
+          formData.append("social_media", this.formValues.social_media);
+          for (let user = 0; user < this.formValues.roles.length; user++) {
+            formData.append(`roles[${user}]`, this.formValues.roles[user]);
+          }
+          if (this.image) formData.append("image", this.image);
+          axios.post('/users', formData, {
+            headers: {
+              Authorization: `Bearer ${VueCookies.get("token")}`,
+              locale: 'ar',
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then((response) => {
+          }).then(() => {
+            this.$router.push('/dashboard/users')
+          })
+          // this.$emit("handleAddEditUser", formData);
+        });
+      }
     },
     handleCancel() {
       this.$emit("handleCancel");
     },
     handleUploadImage(e) {
+      this.itemImage = URL.createObjectURL(e.target.files[0])
       if (e) this.image = e.target.files[0];
       else return;
     },
   },
+  mounted() {
+    this.ApiService(getSingleUserRequest(this.$route.params.id)).then((response) => {
+      this.formValues.first_name = response.data.data.first_name
+      this.formValues.last_name = response.data.data.last_name
+      this.formValues.email = response.data.data.email
+      this.formValues.mobile = response.data.data.mobile
+      this.formValues.social_media = response.data.data.social_media
+      this.formValues.roles =  response.data.data.roles
+      this.itemImage = response.data.data.avatar
+      this.image = response.data.data.avatar
+    })
+  }
 };
 </script>
 <style scoped lang="scss">

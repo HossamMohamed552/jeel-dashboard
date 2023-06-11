@@ -38,27 +38,6 @@
           <b-spinner class="align-middle"></b-spinner>
         </div>
       </template>
-        <template #head(id)="data">
-          <span>{{ data.field.key === "id" ? "التسلسل" : data.field.label }}</span>
-        </template>
-        <template #head(first_name)="data">
-          <span>{{ data.field.key === "first_name" ? "الاسم الاول" : data.field.label }}</span>
-        </template>
-        <template #head(last_name)="data">
-          <span>{{ data.field.key === "last_name" ? "الاسم الثانى" : data.field.label }}</span>
-        </template>
-        <template #head(name)="data">
-          <span>{{ data.field.key === "name" ? "الإسم" : data.field.label }}</span>
-        </template>
-        <template #head(email)="data">
-          <span>{{ data.field.key === "email" ? "البريد الإلكترونى" : data.field.label }}</span>
-        </template>
-        <template #head(mobile)="data">
-          <span>{{ data.field.key === "mobile" ? "الهاتف" : data.field.label }}</span>
-        </template>
-        <template #head(avatar)="data">
-          <span>{{ data.field.key === "avatar" ? "الصورة" : data.field.label }}</span>
-        </template>
         <template #head(status)="data">
           <span>{{ data.field.key === "status" ? "الحاله" : data.field.label }}</span>
         </template>
@@ -92,31 +71,14 @@
         <template #head(logo)="data">
           <span>{{ data.field.key === "logo" ? "الشعار" : data.field.label }}</span>
         </template>
-        <template #head(is_super_admin)="data">
-          <span class="d-none"></span>
-        </template>
-        <template #head(social_media)="data">
-          <span class="d-none"></span>
-        </template>
-        <template #head(verification_sent_at)="data">
-          <span class="d-none"></span>
-        </template>
-        <template #head(last_attempt)="data">
-          <span class="d-none"></span>
-        </template>
         <template #head(username)="data">
           <span>{{ data.field.key === "username" ? "اسم المستخدم" : data.field.label }}</span>
         </template>
-        <template #head(useremail)="data">
-          <span class="d-none"></span>
-        </template>
-
         <template #cell(avatar)="data">
           <div class="hold-image">
             <img class="image-in-table" :src="data.item.avatar" />
           </div>
         </template>
-        
         <template #cell(status)="data">
           <span>{{ data.item.status === 1 ? "مفعل" : "غير مفعل" }}</span>
         </template>
@@ -130,7 +92,9 @@
           <span>{{ data.item.owner.email }}</span>
         </template>
         <template #cell(logo)="data">
-          <img :src="data.item.logo" />
+          <div class="hold-image-school">
+            <img class="image-school-in-table" :src="data.item.logo" />
+          </div>
         </template>
         <template #cell(school_type)="data">
           <span>{{ data.item.school_type.name }}</span>
@@ -151,21 +115,7 @@
           <span>{{ data.item.level.name }}</span>
         </template>
         <template #cell(learningpaths)="data">
-          <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{
-            path.name
-          }}</span>
-        </template>
-        <template #cell(is_super_admin)="data">
-          <span class="d-none"></span>
-        </template>
-        <template #cell(social_media)="data">
-          <span class="d-none"></span>
-        </template>
-        <template #cell(verification_sent_at)="data">
-          <span class="d-none"></span>
-        </template>
-        <template #cell(last_attempt)="data">
-          <span class="d-none"></span>
+          <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{path.name }}</span>
         </template>
         <template #cell(actions)="data">
           <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
@@ -179,10 +129,9 @@
             <b-dropdown-item @click="editItem(data.item.id)"
               >{{ $t("CONTROLS.editBtn") }}
             </b-dropdown-item>
-            <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item @click="deleteItem(data.item.id)"
-              >{{ $t("CONTROLS.deleteBtn") }}
-            </b-dropdown-item>
+            <b-dropdown-divider v-if="!data.item.is_default"></b-dropdown-divider>
+
+            <b-dropdown-item @click="deleteItem(data.item.id)" v-if="!data.item.is_default">{{ $t("CONTROLS.deleteBtn") }}</b-dropdown-item>
 
             <b-dropdown-item v-if="videoList" @click="addVideoQuestion(data.item.id)"
               >{{ $t("CONTROLS.addVideoQuestion") }}
@@ -241,12 +190,12 @@ export default {
         return [
           {
             id: 1,
-            value: "asc",
+            value: "ASC",
             name: "تصاعديا",
           },
           {
             id: 2,
-            value: "desc",
+            value: "DESC",
             name: "تنازليا",
           },
         ];

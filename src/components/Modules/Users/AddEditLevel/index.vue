@@ -11,7 +11,7 @@
                   <TextField
                     v-model="createLevel.name"
                     :label="$t('LEVEL.name')"
-                    :name="$t('LEVEL.countryName')"
+                    :name="$t('LEVEL.name')"
                     :rules="'required|min:3'"
                   ></TextField>
                 </div>
@@ -35,7 +35,7 @@
                   :options="schoolGroupOptions"
                   :reduce="(option) => option.id"
                   :get-option-label="(option) => option.name"
-                  :rules="'required'"
+                  rules="required"
                 ></SelectSearch>
               </b-col>
             </b-row>

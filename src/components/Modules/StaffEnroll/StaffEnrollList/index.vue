@@ -55,7 +55,7 @@ export default {
       showModal: false,
       staffEnrollSearchWord: "",
       staffEnrollList: [],
-      totalNumber: null,
+      totalNumber: 0,
       fieldsList: [
         {
           key: "id",

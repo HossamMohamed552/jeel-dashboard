@@ -37,7 +37,7 @@ export default {
       showModal: false,
       groupSearchWord: "",
       levelsList: [],
-      totalNumber: null,
+      totalNumber: 0,
       fieldsList: [
         {key: "id", label: "التسلسل"},
         {key: "name", label: "اسم المرحلة"},

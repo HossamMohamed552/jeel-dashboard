@@ -13,6 +13,9 @@ export default{
   components:{
     TopNav,
     CopyRight
+  },
+  created() {
+    this.$router.push({name:"main"})
   }
 }
 </script>

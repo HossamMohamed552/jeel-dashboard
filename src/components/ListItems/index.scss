@@ -69,12 +69,21 @@
   .hold-image{
     @include flexCenter(center)
   }
+
+  .hold-image-school{
+    width: 126px;
+    height: 58px;
+  }
   .image-in-table{
     width: 60px;
     height: 60px;
     border-radius:50%;
     overflow: hidden;
     object-position: center;
+    object-fit: cover;
+  }
+  .image-school-in-table{
+    @include image;
     object-fit: cover;
   }
   .path{

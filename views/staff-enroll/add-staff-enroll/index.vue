@@ -45,7 +45,6 @@ export default {
     this.getStaffEnrollUsers();
     this.getStaffEnrollRoles();
     this.getStaffEnrollLevels();
-    this.getStaffEnrollClasses();
   },
   methods: {
     handleAddStaffEnroll($event) {
@@ -83,13 +82,6 @@ export default {
       this.ApiService(getStaffEnrollLevelsRequest(this.schoolId)).then(
         (response) => {
           this.staffLevels = response.data.data;
-        }
-      );
-    },
-    getStaffEnrollClasses() {
-      this.ApiService(getStaffEnrollClassesRequest(this.schoolId)).then(
-        (response) => {
-          this.staffClasses = response.data.data;
         }
       );
     },
