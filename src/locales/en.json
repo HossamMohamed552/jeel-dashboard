@@ -20,17 +20,18 @@
     "schools": "schools",
     "content": "content",
     "infoDashBoard": "infoDashBoard",
-    "reports": "reports"
+    "reports": "reports",
+    "system_settings": "System settings"
   },
   "TABLE_FIELDS": {
     "id": "id",
     "name": "name",
     "description": "description",
     "actions": "actions",
-    "year":"year",
+    "year": "year",
     "questions_num": "Number of questions",
-    "learning_path":"Learning Path",
-    "level":"Level",
+    "learning_path": "Learning Path",
+    "level": "Level",
     "type": "Type",
     "price": "price",
     "classes_count": "classes count"
@@ -45,33 +46,33 @@
     "name": "name",
     "description": "description"
   },
-  "PATH":{
-    "Name":"Path Name",
-    "Description":"description",
-    "ADD_NEW":"Add New Path",
-    "EDIT":"Edit Path",
-    "ShowDetails":"Show Path Details"
+  "PATH": {
+    "Name": "Path Name",
+    "Description": "description",
+    "ADD_NEW": "Add New Path",
+    "EDIT": "Edit Path",
+    "ShowDetails": "Show Path Details"
   },
-  "VIDEO":{
-    "NAME":"Video Name",
-    "EDIT":"Edit Video",
-    "ADD_NEW":"Add View New Video",
-    "Description":"Video Description",
-    "attach":"Attached File",
-    "learning_path":"Learning Path",
-    "level":"Level",
-    "ShowDetails":"Video Details"
+  "VIDEO": {
+    "NAME": "Video Name",
+    "EDIT": "Edit Video",
+    "ADD_NEW": "Add View New Video",
+    "Description": "Video Description",
+    "attach": "Attached File",
+    "learning_path": "Learning Path",
+    "level": "Level",
+    "ShowDetails": "Video Details"
   },
-  "PAPER_WORK":{
-    "NAME":"Paperwork Name",
-    "EDIT":"Edit Paperwork",
-    "ADD_NEW":"Add  New Paperwork",
-    "Description":"Paperwork Description",
-    "attach":"Attached File",
-    "learning_path":"Learning Path",
-    "level":"Level",
-    "ShowDetails":"Paperwork Details",
-    "type":"Paperwork Type"
+  "PAPER_WORK": {
+    "NAME": "Paperwork Name",
+    "EDIT": "Edit Paperwork",
+    "ADD_NEW": "Add  New Paperwork",
+    "Description": "Paperwork Description",
+    "attach": "Attached File",
+    "learning_path": "Learning Path",
+    "level": "Level",
+    "ShowDetails": "Paperwork Details",
+    "type": "Paperwork Type"
   },
   "QUESTIONS": {
     "ADD_NEW": "Add new qustion",
@@ -87,6 +88,22 @@
     "description": "Description",
     "ADD_NEW": "Add new package",
     "EDIT": "Edit package"
+  },
+  "SYSTEM_SETTINGS": {
+    "QUANTITY": "quantity",
+    "COINS": "coins",
+    "UPDATE": "update",
+    "LEVEL": "level",
+    "EXPERIENCE": "experience",
+    "NAME": "name",
+    "DESC": "description",
+    "FIRST_COINS": "first coins",
+    "FIRST_EXPERIENCE": "first experience",
+    "MAX_TRIAL": "Maximum trial",
+    "SECOND_COINS": "second coins",
+    "NEXT_COINS": "next coins",
+    "SECOND_EXPERIENCE": "second experience",
+    "NEXT_EXPERIENCE": "next experience"
   },
   "permissions": "permissions",
   "showDetails": "showDetails",

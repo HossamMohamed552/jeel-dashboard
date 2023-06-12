@@ -33,11 +33,11 @@
         :fields="fieldsList"
         :busy="loading"
       >
-       <template #table-busy>
-        <div class="text-center text-danger my-2 mt-5">
-          <b-spinner class="align-middle"></b-spinner>
-        </div>
-      </template>
+        <template #table-busy>
+          <div class="text-center text-danger my-2 mt-5">
+            <b-spinner class="align-middle"></b-spinner>
+          </div>
+        </template>
         <template #head(id)="data">
           <span>{{ data.field.key === "id" ? "التسلسل" : data.field.label }}</span>
         </template>
@@ -116,7 +116,7 @@
             <img class="image-in-table" :src="data.item.avatar" />
           </div>
         </template>
-        
+
         <template #cell(status)="data">
           <span>{{ data.item.status === 1 ? "مفعل" : "غير مفعل" }}</span>
         </template>
@@ -188,6 +188,11 @@
               >{{ $t("CONTROLS.addVideoQuestion") }}
             </b-dropdown-item>
           </b-dropdown>
+        </template>
+        <template #cell(edit_action)="data">
+          <span class="pointer cursor-pointer" @click="editItem(data.item.id)"
+            >{{ $t("CONTROLS.editBtn") }}
+          </span>
         </template>
       </b-table>
     </div>

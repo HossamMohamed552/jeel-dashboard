@@ -250,24 +250,24 @@ const protectedRoutes = [
         component: () => import("../../views/practices/index.vue"),
       },
       {
-        path:"/dashboard/practice/add",
-        name:"add-practices",
-        component: ()=> import('../../views/practices/add-practices/index.vue')
+        path: "/dashboard/practice/add",
+        name: "add-practices",
+        component: () => import("../../views/practices/add-practices/index.vue"),
       },
       {
-        path:"/dashboard/practices/edit/:id",
-        name:"edit-practices",
-        component: ()=> import('../../views/practices/edit-practices/index.vue')
+        path: "/dashboard/practices/edit/:id",
+        name: "edit-practices",
+        component: () => import("../../views/practices/edit-practices/index.vue"),
       },
       {
-        path:"/dashboard/practices/show/:id",
-        name:"show-practices",
-        component: ()=> import('../../views/practices/view-practices/index.vue')
+        path: "/dashboard/practices/show/:id",
+        name: "show-practices",
+        component: () => import("../../views/practices/view-practices/index.vue"),
       },
       {
         path: "/dashboard/package",
         name: "package",
-        component: () => import('../../views/package/index.vue')
+        component: () => import("../../views/package/index.vue"),
       },
       {
         path: "/dashboard/package/add",
@@ -368,6 +368,26 @@ const protectedRoutes = [
         path: "/dashboard/student-enroll/show/:id",
         name: "show-student-enroll",
         component: () => import("../../views/student-enroll/view-student-enroll/index.vue"),
+      },
+      {
+        path: "/dashboard/jems",
+        name: "jems",
+        component: () => import("../../views/jems/index.vue"),
+      },
+      {
+        path: "/dashboard/student-levels",
+        name: "student-levels",
+        component: () => import("../../views/student-levels/index.vue"),
+      },
+      {
+        path: "/dashboard/rewarding-actions",
+        name: "rewarding-actions",
+        component: () => import("../../views/rewarding-actions/index.vue"),
+      },
+      {
+        path: "/dashboard/rewarding-actions/:id",
+        name: "rewarding-actions",
+        component: () => import("../../views/rewarding-actions/edit/index.vue"),
       },
     ],
   },
