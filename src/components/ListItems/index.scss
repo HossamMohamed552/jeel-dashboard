@@ -86,11 +86,15 @@
     @include image;
     object-fit: cover;
   }
-  .path{
+  .path,.role{
     background: $color-primary;
     color: #fff;
     border-radius: 1rem;
     padding: .2rem .7rem;
     margin-left: .2rem;
+  }
+  .role{
+    @include flexCenter(center);
+    text-align: center;
   }
 }

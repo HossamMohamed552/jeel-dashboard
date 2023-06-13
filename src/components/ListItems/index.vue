@@ -117,6 +117,11 @@
         <template #cell(learningpaths)="data">
           <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{path.name }}</span>
         </template>
+        <template #cell(roles)="data">
+          <div class="d-flex justify-content-center align-items-center">
+            <span v-for="(role, index) in data.item.roles" :key="index" class="role">{{role.name }}</span>
+          </div>
+        </template>
         <template #cell(actions)="data">
           <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
             <template #button-content>

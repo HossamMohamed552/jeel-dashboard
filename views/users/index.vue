@@ -54,6 +54,7 @@ export default {
         {key: "name", label: "اسم المستخدم"},
         {key: "first_name", label: "الاسم الاول"},
         {key: "last_name", label: "الاسم الثانى"},
+        {key: "roles", label: "الصلاحيات"},
         {key: "mobile", label: "الهاتف"},
         {key: "email", label: "البريد الإلكترونى"},
         {key: "actions", label: "الإجراء"},

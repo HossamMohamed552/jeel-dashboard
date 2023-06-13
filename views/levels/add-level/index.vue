@@ -1,6 +1,6 @@
 <template>
   <div class="add-role">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true"/>
     <AddEditLevel
       :loading="loading"
       @handleAddLevel="handleAddLevel($event)"
@@ -12,8 +12,8 @@
 <script>
 import AddEditLevel from "@/components/Modules/Users/AddEditLevel/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { postLevelRequest } from "@/api/level";
-import { getSchoolGroupRequest } from "@/api/schoolGroup";
+import {postLevelRequest} from "@/api/level";
+import {getSchoolGroupRequest} from "@/api/schoolGroup";
 
 export default {
   components: {
@@ -38,17 +38,20 @@ export default {
     },
     handleAddLevel($event) {
       this.loading = true;
-      this.showModal = true;
-      this.ApiService(postLevelRequest($event))
-        .then((response) => {
+      this.ApiService(postLevelRequest($event)).then((response) => {
+        if (response.code === 200) {
+          console.log('response', response)
           this.loading = false;
+          this.showModal = true;
           setTimeout(() => {
             this.showModal = false;
           }, 3000);
-        })
-        .then(() => {
-          this.$router.push("/dashboard/levels");
-        });
+        }
+      }).then(() => {
+        this.$router.push("/dashboard/levels");
+      }).catch(()=>{
+        this.loading = false;
+      })
     },
     handleCancel() {
       this.$router.push("/dashboard/levels");

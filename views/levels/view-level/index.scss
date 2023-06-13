@@ -10,3 +10,15 @@
     margin-bottom: 4rem;
   }
 }
+.list-group {
+  min-height: 100px;
+  max-height: 300px;
+  padding: .5rem 1rem;
+  background: #fff;
+  overflow: auto;
+  margin-top: 1.5rem;
+  .list-group-item {
+    border: none;
+    padding: .5rem 0;
+  }
+}
