@@ -1,4 +1,4 @@
-import store from '@/store'
+import store from "@/store";
 
 let routesUsers = [
   {
@@ -69,7 +69,6 @@ let routesContent = [
     name: "الفيديوهات",
     path: "/dashboard/video",
     icon: require("@/assets/images/icons/video.svg"),
-    //  not fount
     permission: "view-video",
   },
   {
@@ -109,4 +108,24 @@ let routesContent = [
     permission: "view-missions",
   },
 ];
-export {routesUsers, routesSchool, routesContent}
+let routeSettings = [
+  {
+    name: "جيمز",
+    path: "/dashboard/jems",
+    icon: require("@/assets/images/icons/country.svg"),
+    permission: "view-countries",
+  },
+  {
+    name: "نظام المكافآت",
+    path: "/dashboard/rewarding-actions",
+    icon: require("@/assets/images/icons/country.svg"),
+    permission: "view-countries",
+  },
+  {
+    name: "المستويات",
+    path: "/dashboard/student-levels",
+    icon: require("@/assets/images/icons/country.svg"),
+    permission: "view-countries",
+  },
+];
+export { routesUsers, routesSchool, routesContent, routeSettings };

@@ -81,7 +81,6 @@
               </div>
             </b-row>
           </form>
-          ----{{staffEnroll.school_id}}
         </validation-observer>
       </div>
     </div>

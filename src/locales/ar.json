@@ -35,7 +35,8 @@
     "schools": "المدارس",
     "content": "المحتوى",
     "infoDashBoard": "لوحة المعلومات",
-    "reports": "التقارير"
+    "reports": "التقارير",
+    "system_settings": "اعدادات النظام"
   },
   "TABLE_FIELDS": {
     "id": "التسلسل",
@@ -62,7 +63,8 @@
     "class": "الصف",
     "role": "الدور",
     "user": "المستخدم",
-    "school": "المدرسة"
+    "school": "المدرسة",
+    "mobile": "الهاتف"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -127,7 +129,9 @@
     "EDIT": "تعديل مرحلة دراسية جديدة",
     "min_levels": "الحد الأدنى من المراحل في السنة",
     "showDetails": "عرض تفاصيل المرحلة الدراسية",
-    "name": "اسم المرحلة"
+    "name": "اسم المرحلة",
+    "startMission": "بداية المرحلة",
+    "endMission": "نهاية المرحلة"
   },
   "TERM": {
     "ADD_NEW": "إضافة فصل دراسى جديد",
@@ -275,6 +279,33 @@
     "CLASS": "الصف",
     "showDetails": "تفاصيل الطالب",
     "SCHOOL": "المدرسة"
+  },
+  "SYSTEM_SETTINGS": {
+    "QUANTITY": "الكمية",
+    "COINS": "العملات",
+    "UPDATE": "تحديث",
+    "LEVEL": "المستوى",
+    "EXPERIENCE": "الخبرة",
+    "NAME": "الاسم",
+    "DESC": "الوصف",
+    "FIRST_COINS": "مكافأة أول مرة",
+    "FIRST_EXPERIENCE": "الخبرة المكتسبة لاول مرة",
+    "MAX_TRIAL": "اقصى عدد للمحاولات",
+    "SECOND_COINS": "مكافاة المرة الثانية",
+    "NEXT_COINS": "مكافأة المرات القادمة",
+    "SECOND_EXPERIENCE": "خبرة المرة الثانية",
+    "NEXT_EXPERIENCE": "خبرة المرات القادمة"
+  },
+  "USER": {
+    "showDetails": "عرض تفاصيل المستخدم",
+    "first_name": "الاسم الأول",
+    "last_name": "الاسم الثانى",
+    "name": "الاسم",
+    "email": "البريد الإلكترونى",
+    "mobile": "الهاتف",
+    "social_media": "رابط التواصل الإجتماعى",
+    "role": "الدور",
+    "student_action_histories": "تاريخ عمل الطالب"
   },
   "permissions": "الصلاحيات",
   "showDetails": "عرض تفاصيل المستخدم",

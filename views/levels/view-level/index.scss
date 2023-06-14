@@ -10,3 +10,27 @@
     margin-bottom: 4rem;
   }
 }
+.list-group {
+  min-height: 100px;
+  max-height: 300px;
+  padding: .5rem 1rem;
+  background: #fff;
+  overflow: auto;
+  margin-top: 1.5rem;
+  .list-group-item {
+    border: none;
+    padding: .5rem 0;
+  }
+}
+
+.mission-title{
+  font-size: 1.3rem;
+  color: $color-heading;
+  font-weight: 400;
+  margin-bottom: 1.2rem;
+}
+.mission-item{
+  font-size: 1.3rem;
+  color: $color-primary;
+  font-weight: 700;
+}

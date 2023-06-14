@@ -5,3 +5,15 @@
   @include styleViewList;
   min-height: 70vh;
 }
+.list-group{
+  margin-top: 2rem;
+  min-height: 200px;
+  background: #eee;
+  padding: 0;
+}
+.mission-name{
+  font-weight: 700;
+}
+.mission-date{
+  margin-left: 1rem;
+}

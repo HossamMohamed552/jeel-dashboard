@@ -11,11 +11,11 @@
     </div>
     <div class="search-sort">
       <div class="search">
-        <b-form-input v-model="inputValue" placeholder="بحث" class="search-input" />
-        <img src="@/assets/images/icons/search.svg" />
+        <b-form-input v-model="inputValue" placeholder="بحث" class="search-input"/>
+        <img src="@/assets/images/icons/search.svg"/>
       </div>
       <div class="sort">
-        <img src="@/assets/images/icons/sort.svg" />
+        <img src="@/assets/images/icons/sort.svg"/>
         <select @change="order">
           <option value="" selected disabled>ترتيب حسب</option>
           <option v-for="(item, index) in sortArray" :id="item.id" :value="item.value" :key="index">
@@ -33,50 +33,15 @@
         :fields="fieldsList"
         :busy="loading"
       >
-       <template #table-busy>
-        <div class="text-center text-danger my-2 mt-5">
-          <b-spinner class="align-middle"></b-spinner>
-        </div>
-      </template>
-        <template #head(status)="data">
-          <span>{{ data.field.key === "status" ? "الحاله" : data.field.label }}</span>
-        </template>
-        <template #head(country)="data">
-          <span>{{ data.field.key === "country" ? "الدولة" : data.field.label }}</span>
-        </template>
-        <template #head(music_status)="data">
-          <span>{{ data.field.key === "music_status" ? "الصوت" : data.field.label }}</span>
-        </template>
-        <template #head(owner)="data">
-          <span>{{ data.field.key === "owner" ? "البريد الإلكترونى" : data.field.label }}</span>
-        </template>
-        <template #head(school_group)="data">
-          <span>{{ data.field.key === "school_group" ? "اسم المجموعة" : data.field.label }}</span>
-        </template>
-        <template #head(level_school_group)="data">
-          <span>{{
-            data.field.key === "level_school_group" ? "اسم المجموعة" : data.field.label
-          }}</span>
-        </template>
-        <template #head(subscription_start_date)="data">
-          <span>{{
-            data.field.key === "subscription_start_date" ? "بداية التعاقد" : data.field.label
-          }}</span>
-        </template>
-        <template #head(subscription_end_date)="data">
-          <span>{{
-            data.field.key === "subscription_end_date" ? "نهاية التعاقد" : data.field.label
-          }}</span>
-        </template>
-        <template #head(logo)="data">
-          <span>{{ data.field.key === "logo" ? "الشعار" : data.field.label }}</span>
-        </template>
-        <template #head(username)="data">
-          <span>{{ data.field.key === "username" ? "اسم المستخدم" : data.field.label }}</span>
+
+        <template #table-busy>
+          <div class="text-center text-danger my-2 mt-5">
+            <b-spinner class="align-middle"></b-spinner>
+          </div>
         </template>
         <template #cell(avatar)="data">
           <div class="hold-image">
-            <img class="image-in-table" :src="data.item.avatar" />
+            <img class="image-in-table" :src="data.item.avatar"/>
           </div>
         </template>
         <template #cell(status)="data">
@@ -93,7 +58,7 @@
         </template>
         <template #cell(logo)="data">
           <div class="hold-image-school">
-            <img class="image-school-in-table" :src="data.item.logo" />
+            <img class="image-school-in-table" :src="data.item.logo"/>
           </div>
         </template>
         <template #cell(school_type)="data">
@@ -115,28 +80,43 @@
           <span>{{ data.item.level.name }}</span>
         </template>
         <template #cell(learningpaths)="data">
-          <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{path.name }}</span>
+          <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{
+              path.name
+            }}</span>
+        </template>
+        <template #cell(roles)="data">
+          <div class="d-flex justify-content-start align-items-center">
+            <span v-for="(role, index) in data.item.roles" :key="index" class="role">{{
+                role.name
+              }}</span>
+          </div>
         </template>
         <template #cell(actions)="data">
           <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
             <template #button-content>
-              <img src="@/assets/images/icons/actions.svg" />
+              <img src="@/assets/images/icons/actions.svg"/>
             </template>
             <b-dropdown-item @click="detailItem(data.item.id)"
-              >{{ $t("CONTROLS.detailBtn") }}
+            >{{ $t("CONTROLS.detailBtn") }}
             </b-dropdown-item>
-            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-divider ></b-dropdown-divider>
             <b-dropdown-item @click="editItem(data.item.id)"
-              >{{ $t("CONTROLS.editBtn") }}
+            >{{ $t("CONTROLS.editBtn") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="!data.item.is_default"></b-dropdown-divider>
-
-            <b-dropdown-item @click="deleteItem(data.item.id)" v-if="!data.item.is_default">{{ $t("CONTROLS.deleteBtn") }}</b-dropdown-item>
-
+            <b-dropdown-item v-if="!data.item.is_default"
+                             @click="deleteItem(data.item.id)"
+            >{{ $t("CONTROLS.deleteBtn") }}
+            </b-dropdown-item>
             <b-dropdown-item v-if="videoList" @click="addVideoQuestion(data.item.id)"
-              >{{ $t("CONTROLS.addVideoQuestion") }}
+            >{{ $t("CONTROLS.addVideoQuestion") }}
             </b-dropdown-item>
           </b-dropdown>
+        </template>
+        <template #cell(edit_action)="data">
+          <span class="pointer cursor-pointer" @click="editItem(data.item.id)"
+          >{{ $t("CONTROLS.editBtn") }}
+          </span>
         </template>
       </b-table>
     </div>
@@ -150,7 +130,7 @@
   </section>
 </template>
 <script>
-import { debounce } from "lodash";
+import {debounce} from "lodash";
 
 export default {
   name: "index",
@@ -169,6 +149,10 @@ export default {
     };
   },
   props: {
+    isUserPage: {
+      type: Boolean,
+      default: false,
+    },
     loading: {
       type: Boolean,
       default: false,

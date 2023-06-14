@@ -2,18 +2,26 @@
   <section class="container-fluid custom-container">
     <ListItems
       :header-name="'قائمة المستخدمين'"
+      :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="usersList"
-      :fieldsList="fieldsList"
       :v-search-model="userSearchWord"
       :loading="loading"
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
       @refetch="getAllUsers"
+      :is-user-page="true"
     >
+      <!--      <template #buttons>-->
+      <!--        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="handleAddUser">-->
+      <!--          <img src="@/assets/images/icons/plus.svg"/>-->
+
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="handleAddUser">
+        <Button
+          :custom-class="'btn-add rounded-btn big-padding'"
+          @click="handleAddUser"
+        >
           <img src="@/assets/images/icons/plus.svg"/>
           <span>إضافة مستخدم جديد</span>
         </Button>
@@ -48,17 +56,37 @@ export default {
       userSearchWord: "",
       usersList: [],
       showModal: false,
-      fieldsList: [
-        {key: "id", label: "التسلسل"},
-        {key: "avatar", label: "الصورة"},
-        {key: "name", label: "اسم المستخدم"},
-        {key: "first_name", label: "الاسم الاول"},
-        {key: "last_name", label: "الاسم الثانى"},
-        {key: "mobile", label: "الهاتف"},
-        {key: "email", label: "البريد الإلكترونى"},
-        {key: "actions", label: "الإجراء"},
-      ],
       totalNumber: 0,
+      fieldsList: [
+        {
+          key: "id",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "avatar",
+          label: this.$i18n.t("avatar"),
+        },
+        {
+          key: "name",
+          label: this.$i18n.t("TABLE_FIELDS.name"),
+        },
+        {
+          key: "roles",
+          label: this.$i18n.t("TABLE_FIELDS.role"),
+        },
+        {
+          key: "email",
+          label: this.$i18n.t("TABLE_FIELDS.email"),
+        },
+        {
+          key: "mobile",
+          label: this.$i18n.t("TABLE_FIELDS.mobile"),
+        },
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ],
     };
   },
   methods: {
