@@ -21,49 +21,12 @@
             <ShowItem :title="$t('TABLE_FIELDS.school_group')" :subtitle="school_group.name"/>
           </b-col>
         </b-row>
-        <validation-observer v-slot="{ invalid }" ref="addEditQuizForm" v-if="user.permissions.includes('rearrange-missions')">
-          <form @submit.prevent="onSubmit" class="mt-5">
-            <b-row>
-              <b-col lg="12">
-                <b-row>
-                  <b-col lg="6" class="mt-3">
-                    <h3>المراحل</h3>
-                    <draggable v-model="missionNotSelected" group="items" :animation="150"
-                               class="list-group" :sort="false">
-                      <div v-for="item in missionNotSelected" :key="item.id"
-                           class="list-group-item">
-                        {{ item.name }}
-                      </div>
-                    </draggable>
-                  </b-col>
-                  <b-col lg="6" class="mt-3">
-                    <h3>المراحل المختاره</h3>
-                    <draggable v-model="missionsSend" group="items" :animation="150" class="list-group" :sort="true">
-                      <div v-for="item in missionsSend" :key="item.id" class="list-group-item">
-                        {{ item.name }}
-                      </div>
-                    </draggable>
-                  </b-col>
-                </b-row>
-              </b-col>
-            </b-row>
-            <b-row>
-              <div class="hold-btns-form">
-                <Button custom-class="cancel-btn margin">
-                  {{ $t("GLOBAL_CANCEL") }}
-                </Button>
-                <Button
-                  type="submit"
-                  :loading="loading"
-                  :disabled="missionsSend.length === 0"
-                  custom-class="submit-btn"
-                >
-                  {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
-                </Button>
-              </div>
-            </b-row>
-          </form>
-        </validation-observer>
+        <b-row v-if="user.permissions.includes('rearrange-missions')">
+          <b-col lg="12">
+            <h3 class="mission-title">المراحل</h3>
+            <p class="mission-item" v-for="mission in level.missions">{{mission.name}}</p>
+          </b-col>
+        </b-row>
       </div>
     </div>
   </section>
@@ -77,10 +40,18 @@ import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import TextField from "@/components/Shared/TextField/index.vue";
 import draggable from 'vuedraggable'
+import axios from "axios";
+import VueCookies from "vue-cookies";
+import Modal from "@/components/Shared/Modal/index.vue";
+import user from "@/store/modules/user";
 
 export default {
   name: "index",
+  computed: {
+    ...mapGetters(['user'])
+  },
   components: {
+    Modal,
     TextField, SelectSearch, draggable, TextAreaField, Button,
     ShowItem,
   },
@@ -90,15 +61,39 @@ export default {
       missionNotSelected: [],
       missionsSend: [],
       loading: false,
+      showModal: false,
     };
   },
-  computed: {
-    ...mapGetters(['user'])
+  methods: {
+    onSubmit() {
+      //   let missions = this.missionsSend.map((item, index) => {
+      //     return {id: item.id, order: index + 1, is_selected: 1}
+      //   })
+      //   console.log('this.missionsSend', missions)
+      //   axios.post('/rearrange-mission', {
+      //     level_id: this.$route.params.id,
+      //     missions: missions
+      //   }, {
+      //     headers: {
+      //       Authorization: `Bearer ${VueCookies.get("token")}`,
+      //       locale: 'ar',
+      //     }
+      //   }).then((response) => {
+      //     this.showModal = true
+      //     setTimeout(() => {
+      //       this.showModal = false;
+      //     }, 3000);
+      //   }).then(()=>this.$router.push('/dashboard/levels')).catch((error) => {
+      //     console.log(error)
+      //   })
+      // }
+    }
   },
   mounted() {
     this.ApiService(getSingleLevelRequest(this.$route.params.id)).then((response) => {
       this.level = response.data.data;
-      this.missionNotSelected = response.data.data.missions.filter((item) => item.is_selected === 0)
+      // this.missionNotSelected = response.data.data.missions.filter((item) => item.is_selected === 0)
+      // this.missionsSend = response.data.data.missions.filter((item) => item.is_selected === 1)
     });
   },
 };
