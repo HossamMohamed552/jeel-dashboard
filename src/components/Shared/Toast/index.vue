@@ -1,9 +1,10 @@
 <template>
-  <div v-if="showToast" />
+  <div v-if="showToast"/>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
+import it from "vue2-datepicker/locale/es/it";
 
 export default {
   // type: // success,danger,light,medium,dark
@@ -19,30 +20,69 @@ export default {
     };
   },
   watch: {
-    toast() {
+    toast(newVal) {
       if (this.toast.isVisible) {
         this.showToast = true;
         if (typeof this.toast.message === "string") {
-          this.$root.$bvToast.toast(this.toast.message, {
-            title: this.toast.title,
-            solid: true,
-            variant: this.toast.type,
-            toaster:
-              this.$i18n.locale == "ar"
-                ? "b-toaster-top-left"
-                : "b-toaster-top-right",
-          });
-        } else {
-          this.$root.$bvToast.toast(this.$t("PLEASE_TRY_AGAIN"), {
-            title: this.toast.title,
-            solid: true,
-            variant: this.toast.type,
-            toaster:
-              this.$i18n.locale == "ar"
-                ? "b-toaster-top-left"
-                : "b-toaster-top-right",
-          });
+          newVal.message.forEach((item) => {
+            this.$root.$bvToast.toast(item, {
+              title: this.toast.title,
+              solid: true,
+              variant: this.toast.type,
+              toaster:
+                this.$i18n.locale === "ar"
+                  ? "b-toaster-top-left"
+                  : "b-toaster-top-right",
+            });
+          })
+        } else if (typeof this.toast.message === "object") {
+          console.log(typeof this.toast.message)
+          newVal.message.forEach((item) => {
+            for (const key in item){
+              this.$root.$bvToast.toast(key, {
+                title: this.toast.title,
+                solid: true,
+                variant: this.toast.type,
+                toaster:
+                  this.$i18n.locale === "ar"
+                    ? "b-toaster-top-left"
+                    : "b-toaster-top-right",
+              });
+            }
+            this.$root.$bvToast.toast(item, {
+              title: this.toast.title,
+              solid: true,
+              variant: this.toast.type,
+              toaster:
+                this.$i18n.locale === "ar"
+                  ? "b-toaster-top-left"
+                  : "b-toaster-top-right",
+            });
+          })
         }
+
+        this.$root.$bvToast.toast(this.toast.message, {
+          title: this.toast.title,
+          solid: true,
+          variant: this.toast.type,
+          toaster:
+            this.$i18n.locale === "ar"
+              ? "b-toaster-top-left"
+              : "b-toaster-top-right",
+        });
+        // if (typeof this.toast.message === "string") {
+        //
+        // } else {
+        //   this.$root.$bvToast.toast(this.$t("PLEASE_TRY_AGAIN"), {
+        //     title: this.toast.title,
+        //     solid: true,
+        //     variant: this.toast.type,
+        //     toaster:
+        //       this.$i18n.locale == "ar"
+        //         ? "b-toaster-top-left"
+        //         : "b-toaster-top-right",
+        //   });
+        // }
       } else {
         this.showToast = false;
       }

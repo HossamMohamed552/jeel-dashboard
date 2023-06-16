@@ -69,7 +69,6 @@ let routesContent = [
     name: "الفيديوهات",
     path: "/dashboard/video",
     icon: require("@/assets/images/icons/video.svg"),
-    //  not fount
     permission: "view-video",
   },
   {

@@ -28,6 +28,7 @@ export default function ApiService({method, url, config = {},headers={}}) {
 axios.interceptors.response.use(
   (response) => response,
   (error) => {
+    console.log('error', error.response.data)
     store.dispatch("showToast", {
       type: "danger",
       message: error.response.data.errors,
@@ -39,10 +40,7 @@ axios.interceptors.response.use(
         type: "danger",
         message: error.response.data.errors,
       });
-      console.log('Ahmed');
       store.dispatch("removeUser");
-
-
     }
 
     return Promise.reject(error);

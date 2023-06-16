@@ -24,10 +24,10 @@ export default {
   methods: {
     handleAddBloomCategory($event) {
       this.loading = true;
-      this.showModal = true;
       this.ApiService(postAddBloomCategoriesRequest($event))
         .then((response) => {
           this.loading = false;
+          this.showModal = true;
           setTimeout(() => {
             this.showModal = false;
           }, 3000);

@@ -8,7 +8,7 @@
                :loading="loading"
                >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddLevel">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddLevel" v-if="user.permissions.includes('add-levels')">
           <img src="@/assets/images/icons/plus.svg">
           <span>إضافة مرحلة دراسية</span>
         </Button>
@@ -28,6 +28,7 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import {getLevelsRequest,deleteLevelRequest} from "@/api/level";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
 
 export default {
   components: {Modal, ListItems, Button},
@@ -37,13 +38,16 @@ export default {
       showModal: false,
       groupSearchWord: "",
       levelsList: [],
-      totalNumber: null,
+      totalNumber: 0,
       fieldsList: [
         {key: "id", label: "التسلسل"},
         {key: "name", label: "اسم المرحلة"},
         {key: "actions", label: "الإجراء"},
       ],
     }
+  },
+  computed:{
+    ...mapGetters(['user'])
   },
   methods: {
     goToAddLevel(){

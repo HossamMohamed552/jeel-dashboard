@@ -135,8 +135,6 @@ export default {
     },
     permissions: {
       handler: function (val) {
-        console.log("val", val);
-        console.log("val", val, routesUsers, routesSchool, routesContent, routeSettings);
         this.routesUsers = this.getRoutes(routesUsers);
         this.routesSchool = this.getRoutes(routesSchool);
         this.routesContent = this.getRoutes(routesContent);

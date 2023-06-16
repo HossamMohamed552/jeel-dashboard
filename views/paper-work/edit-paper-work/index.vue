@@ -16,29 +16,30 @@ import VueCookies from "vue-cookies";
 
 export default {
   name: "index",
-  components:{Modal, AddEditPaperWork},
-  data(){
-    return{
+  components: {Modal, AddEditPaperWork},
+  data() {
+    return {
       loading: false,
       showModal: false,
     }
   },
-  methods:{
+  methods: {
     handleEditPaperWork($event) {
       const formData = new FormData()
-      formData.append('name',$event.name);
-      formData.append('type',$event.type);
-      formData.append('learning_path_id',$event.learning_path_id);
-      formData.append('file',$event.file);
-      formData.append('level_id',$event.level_id);
-      formData.append('description',$event.description);
+      formData.append('name', $event.name);
+      formData.append('type', $event.type);
+      formData.append('learning_path_id', $event.learning_path_id);
+      formData.append('file', $event.file);
+      formData.append('level_id', $event.level_id);
+      formData.append('description', $event.description);
+      formData.append('_method', 'PUT');
       this.loading = true;
-      axios.put('/peper_works', formData, {
+      axios.post(`/peper_works/${this.$route.params.id}`, formData, {
         headers: {
           Authorization: `Bearer ${VueCookies.get("token")}`,
           locale: 'ar',
           'Content-Type': 'multipart/form-data',
-          'Accept':'*/*'
+          'Accept': '*/*'
         }
       }).then((response) => {
         this.showModal = true
@@ -46,14 +47,14 @@ export default {
         setTimeout(() => {
           this.showModal = false
         }, 3000)
-      }).then(()=>{
+      }).then(() => {
         this.$router.push("/dashboard/paper-work");
-      }).catch(err=>{
+      }).catch(err => {
         this.loading = false;
       })
     },
     handleCancel() {
-      this.$router.push("/dashboard/paper-works");
+      this.$router.push("/dashboard/paper-work");
     },
   }
 }

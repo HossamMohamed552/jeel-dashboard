@@ -40,8 +40,13 @@ const protectedRoutes = [
         component: () => import("../../views/users/add-user/index.vue"),
       },
       {
+        path: "/dashboard/users/edit/:id",
+        name: "edit-users",
+        component: () => import("../../views/users/edit-user/index.vue"),
+      },
+      {
         path: "/dashboard/users/show/:id",
-        name: "show-country",
+        name: "show-users",
         component: () => import("../../views/users/view-user/index.vue"),
       },
       {
@@ -101,7 +106,7 @@ const protectedRoutes = [
       },
       {
         path: "/dashboard/schools/show/:id",
-        name: "edit-schools",
+        name: "view-schools",
         component: () => import("../../views/schools/view-schools/index.vue"),
       },
       {

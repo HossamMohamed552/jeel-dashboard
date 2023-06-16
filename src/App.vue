@@ -1,11 +1,16 @@
 <template>
   <div :class="$i18n.locale === 'en' ? '' : 'rtl'">
     <router-view />
+    <Toast/>
   </div>
 </template>
 
 <script>
+import Toast from "@/components/Shared/Toast/index.vue";
 export default {
+  components:{
+    Toast
+  },
   created() {
     const htmlDoc = document.documentElement
     htmlDoc.setAttribute("lang", this.$i18n.locale === "ar" ? "ar" : "en")

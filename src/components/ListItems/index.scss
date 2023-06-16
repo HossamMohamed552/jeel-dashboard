@@ -1,18 +1,23 @@
 @import "src/assets/style/scss/_variables";
 @import "src/assets/style/scss/_mixin";
-.list{
+
+.list {
   @include styleViewList;
   margin-top: 1.5rem;
-  .header,.search-sort{
+
+  .header, .search-sort {
     @include flexCenter(space-between);
-    .list-of-item{
+
+    .list-of-item {
       @include flexCenter(space-between);
-      .name-of-item{
+
+      .name-of-item {
         color: $color-paragraph;
         font-size: 1.625rem;
         margin: 0 0 0 2.5rem;
       }
-      .no-of-item{
+
+      .no-of-item {
         background: $color-notify;
         width: 50px;
         height: 50px;
@@ -23,33 +28,41 @@
         @include flexCenter(center)
       }
     }
-    .controls{
+
+    .controls {
       @include flexCenter(space-between)
     }
   }
-  .header{
+
+  .header {
     margin-bottom: 3.125rem;
   }
-  .search-sort{
+
+  .search-sort {
     @include flexCenter(space-between);
-    .search{
+
+    .search {
       position: relative;
-      .search-input{
+
+      .search-input {
         @extend %search-sort;
       }
-      img{
+
+      img {
         position: absolute;
         top: 50%;
         left: 2rem;
         transform: translateY(-50%);
       }
     }
-    .sort{
+
+    .sort {
       @extend %search-sort;
       width: 19rem;
       @include flexCenter(space-between);
       background: #fff;
-      select{
+
+      select {
         width: 100%;
         cursor: pointer;
         padding: .5rem 1rem;
@@ -57,35 +70,56 @@
         background: transparent;
         color: $color-primary;
         outline: none;
-        option{
+
+        option {
           padding: .3rem;
         }
       }
     }
   }
 }
-.hold-table{
+
+.hold-table {
   margin-top: 2rem;
-  .hold-image{
+
+  .hold-image {
     @include flexCenter(center)
   }
-  .image-in-table{
+
+  .hold-image-school {
+    width: 126px;
+    height: 58px;
+  }
+
+  .image-in-table {
     width: 60px;
     height: 60px;
-    border-radius:50%;
+    border-radius: 50%;
     overflow: hidden;
     object-position: center;
     object-fit: cover;
   }
-  .path{
+
+  .image-school-in-table {
+    @include image;
+    object-fit: cover;
+  }
+
+  .path, .role {
     background: $color-primary;
     color: #fff;
     border-radius: 1rem;
     padding: .2rem .7rem;
     margin-left: .2rem;
   }
+
+  .role {
+    @include flexCenter(center);
+    text-align: center;
+  }
 }
 
-.pointer{
+
+.pointer {
   cursor: pointer;
 }
