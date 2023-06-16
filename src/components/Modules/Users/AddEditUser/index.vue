@@ -79,7 +79,6 @@
                     :rules="'required'"
                     multiple
                   ></SelectSearch>
-                  {{ typeof formValues.roles }}
                 </div>
               </b-col>
             </b-row>
