@@ -87,6 +87,24 @@
                 </ul>
               </div>
             </div>
+              <div class="nav-item">
+              <p>
+                <span>{{ $t("MENU.system_settings") }}</span
+                ><img src="@/assets/images/icons/arrow.svg" />
+              </p>
+              <div class="dropdown-item-list">
+                <ul>
+                  <router-link
+                    tag="li"
+                    :to="route.path"
+                    v-for="(route, index) in routeSettings"
+                    :key="index"
+                  >
+                    {{ route.name }}</router-link
+                  >
+                </ul>
+              </div>
+            </div>
             <div class="nav-item">
               <router-link tag="p" to="/dashboard/home">{{ $t("MENU.infoDashBoard") }}</router-link>
             </div>
@@ -100,7 +118,7 @@
   </header>
 </template>
 <script>
-import { routesUsers, routesSchool, routesContent } from "@/globalData";
+import { routesUsers, routesSchool, routesContent, routeSettings } from "@/globalData";
 
 export default {
   name: "index",
@@ -109,6 +127,7 @@ export default {
     routesUsers: [],
     routesSchool: [],
     routesContent: [],
+    routeSettings: [],
   }),
   watch: {
     $route: function () {
@@ -116,11 +135,10 @@ export default {
     },
     permissions: {
       handler: function (val) {
-        console.log('val', val)
-        console.log("val", val, routesUsers, routesSchool, routesContent);
         this.routesUsers = this.getRoutes(routesUsers);
         this.routesSchool = this.getRoutes(routesSchool);
         this.routesContent = this.getRoutes(routesContent);
+        this.routeSettings = this.getRoutes(routeSettings);
       },
       immediate: true,
     },

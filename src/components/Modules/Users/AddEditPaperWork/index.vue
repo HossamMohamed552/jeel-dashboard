@@ -19,8 +19,10 @@
               <b-col lg="4" class="mb-3 mt-1">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors, invalid}" rules="required">
-                    <b-form-group :label="$t('PAPER_WORK.type')" v-slot="{ ariaDescribedby }" class="type">
-                      <SelectField :rules="'required'" v-model="createPaperWork.type" name="type" :options="paperWorkTypes">
+                    <b-form-group :label="$t('PAPER_WORK.type')" v-slot="{ ariaDescribedby }"
+                                  class="type">
+                      <SelectField :rules="'required'" v-model="createPaperWork.type" name="type"
+                                   :options="paperWorkTypes">
                       </SelectField>
                     </b-form-group>
                   </ValidationProvider>
@@ -28,8 +30,10 @@
               </b-col>
               <b-col lg="5" class="mb-3">
                 <div class="hold-field">
-                  <ValidationProvider v-slot="{errors}" :rules="$route.params.id ? '' : 'required'" name="file">
-                    <b-form-file accept="application/pdf" placeholder="اختر ملف" v-model="createPaperWork.file" name="file">
+                  <ValidationProvider v-slot="{errors}" :rules="$route.params.id ? '' : 'required'"
+                                      name="file">
+                    <b-form-file accept="application/pdf" placeholder="اختر ملف"
+                                 v-model="createPaperWork.file" name="file">
                     </b-form-file>
                     <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                       {{ error }}
@@ -42,8 +46,10 @@
               <b-col lg="5" class="mb-3 mt-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors, invalid}" rules="required">
-                    <b-form-group :label="$t('PAPER_WORK.learning_path')" v-slot="{ ariaDescribedby }" class="learning_path">
-                      <SelectField :rules="'required'" v-model="createPaperWork.learning_path_id" name="learning_path" :options="paths">
+                    <b-form-group :label="$t('PAPER_WORK.learning_path')"
+                                  v-slot="{ ariaDescribedby }" class="learning_path">
+                      <SelectField :rules="'required'" v-model="createPaperWork.learning_path_id"
+                                   name="learning_path" :options="paths">
                       </SelectField>
                     </b-form-group>
                   </ValidationProvider>
@@ -52,8 +58,10 @@
               <b-col lg="5" class="mb-3 mt-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors, invalid}" rules="required">
-                    <b-form-group :label="$t('PAPER_WORK.level')" v-slot="{ ariaDescribedby }" class="level">
-                      <SelectField :rules="'required'" v-model="createPaperWork.level_id" name="level" :options="levels">
+                    <b-form-group :label="$t('PAPER_WORK.level')" v-slot="{ ariaDescribedby }"
+                                  class="level">
+                      <SelectField :rules="'required'" v-model="createPaperWork.level_id"
+                                   name="level" :options="levels">
                       </SelectField>
                     </b-form-group>
                   </ValidationProvider>
@@ -61,8 +69,10 @@
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
-                  <b-form-group :label="$t('PAPER_WORK.Description')" v-slot="{ ariaDescribedby }" class="description">
-                    <TextAreaField v-model="createPaperWork.description" :rules="'required'" rows="5" :name="$t('PAPER_WORK.Description')">
+                  <b-form-group :label="$t('PAPER_WORK.Description')" v-slot="{ ariaDescribedby }"
+                                class="description">
+                    <TextAreaField v-model="createPaperWork.description" :rules="'required|min:5'"
+                                   rows="5" :name="$t('PAPER_WORK.Description')">
                     </TextAreaField>
                   </b-form-group>
                 </div>
@@ -100,7 +110,6 @@ import {getLearningPathsRequest} from "@/api/learningPath";
 import {getLevelsRequest} from "@/api/level";
 
 
-
 export default {
   components: {
     Modal,
@@ -118,26 +127,26 @@ export default {
   data() {
     return {
       paths: [],
-      levels:[],
-      paperWorkTypes:[
-        {value:'single',text:'single'},
-        {value:'multi',text:'multi'},
+      levels: [],
+      paperWorkTypes: [
+        {value: 'single', text: 'single'},
+        {value: 'multi', text: 'multi'},
       ],
       createPaperWork: {
         name: "",
-        description:"",
+        description: "",
         type: "",
         file: null,
         learning_path_id: "",
-        level_id:''
+        level_id: ''
       }
     };
   },
   methods: {
     onSubmit() {
-      this.$refs.addEditPaperWorkForm.validate().then((success) => {
-        if (!success) return;
-      });
+      // this.$refs.addEditPaperWorkForm.validate().then((success) => {
+      //   if (!success) return;
+      // });
       if (this.$route.params.id) {
         this.$emit('handleEditPaperWork', this.createPaperWork)
       } else {
@@ -150,25 +159,30 @@ export default {
     getPaperWorkToEdit() {
       if (this.$route.params.id) {
         this.ApiService(getSinglePaperworkRequest(this.$route.params.id)).then((response) => {
-          this.createPaperWork.name =response.data.data.name
-          this.createPaperWork.type =response.data.data.type
-          this.createPaperWork.description =response.data.data.description
-          this.createPaperWork.file =response.data.data.file
+          this.createPaperWork.name = response.data.data.name
+          this.createPaperWork.type = response.data.data.type
+          this.createPaperWork.description = response.data.data.description
+          this.createPaperWork.file = response.data.data.url
           this.createPaperWork.learning_path_id = response.data.data.learningPath.id
-          this.createPaperWork.level_id=response.data.data.level.id
+          this.createPaperWork.level_id = response.data.data.level.id
+          console.log('this.createPaperWork.file',this.createPaperWork.file)
         })
       }
     },
     getAllLearningPaths() {
       this.ApiService(getLearningPathsRequest()).then((response) => {
-        const pathsArr= response.data.data;
-        this.paths = pathsArr.map(path=>{return {value:path.id,text:path.name}})
+        const pathsArr = response.data.data;
+        this.paths = pathsArr.map(path => {
+          return {value: path.id, text: path.name}
+        })
       })
     },
     getAllLevels() {
       this.ApiService(getLevelsRequest()).then((response) => {
         const levelsArr = response.data.data;
-        this.levels = levelsArr.map(path=>{return {value:path.id,text:path.name}})
+        this.levels = levelsArr.map(path => {
+          return {value: path.id, text: path.name}
+        })
       })
     },
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="add-country">
-    <Modal :content-message="'تمت الإضافة بنجاح'"
+    <Modal :content-message="'تمت التعديل بنجاح'"
            :showModal="showModal"
            :is-success="true"/>
     <AddEditCountry
@@ -29,6 +29,10 @@ export default {
       this.loading = true
       this.ApiService(putCountryRequest(this.$route.params.id,$event)).then(() => {
         this.loading = false
+        this.showModal = true;
+        setTimeout(() => {
+          this.showModal = false;
+        }, 3000);
       }).then(() => {
         this.$router.push("/dashboard/country");
       })

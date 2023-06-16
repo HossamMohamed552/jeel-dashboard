@@ -4,7 +4,7 @@
                :tableItems="schoolsList" :fields-list="fieldsList" :v-search-model="groupSearchWord"  @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
               @refetch="getSchools"
-              :loading="loading"               
+              :loading="loading"
                >
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSchools">
@@ -36,7 +36,7 @@ export default {
       showModal: false,
       groupSearchWord: "",
       schoolsList: [],
-      totalNumber: null,
+      totalNumber: 0,
       fieldsList: [
         {key: "id", label: "التسلسل"},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},

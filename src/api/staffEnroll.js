@@ -26,7 +26,7 @@ export const getStaffEnrollLevelsRequest = (params) => ({
 
 export const getStaffEnrollClassesRequest = (params) => ({
   method: 'get',
-  url: `classes?school_id=${params}`,
+  url: `classes?school_id=${params.schoolId}&level_id=${params.levelId}`,
   config: {}
 })
 

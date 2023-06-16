@@ -10,7 +10,6 @@ export const getSingleUserRequest = (params) => ({
   method: 'get',
   url: `users/${params}`,
 })
-
 export const getRolesRequest = () => ({
   method: 'get',
   url: 'roles',
@@ -28,4 +27,7 @@ export const postAddUserRequest = (data) => ({
   }
 });
 
-
+export const deleteUserRequest = (id) => ({
+  method: "delete",
+  url: `users/${id}`,
+});

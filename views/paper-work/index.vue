@@ -36,7 +36,7 @@ export default {
       showModal: false,
       groupSearchWord: "",
       paperWorkList: [],
-      totalNumber: null,
+      totalNumber: 0,
       fieldsList: [
         {key: "id", label: "التسلسل"},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},

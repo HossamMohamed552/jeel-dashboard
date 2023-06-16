@@ -7,30 +7,46 @@
       :table-items="usersList"
       :v-search-model="userSearchWord"
       :loading="loading"
-      :is-user-page="true"
       @detailItem="detailItem($event)"
+      @editItem="editItem($event)"
+      @deleteItem="deleteItem($event)"
       @refetch="getAllUsers"
+      :is-user-page="true"
     >
+      <!--      <template #buttons>-->
+      <!--        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="handleAddUser">-->
+      <!--          <img src="@/assets/images/icons/plus.svg"/>-->
+
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="handleAddUser"
         >
-          <img src="@/assets/images/icons/plus.svg" />
+          <img src="@/assets/images/icons/plus.svg"/>
           <span>إضافة مستخدم جديد</span>
         </Button>
       </template>
     </ListItems>
+    <Modal
+      :content-message="'حذف المستخدم'"
+      :content-message-question="'هل انت متأكد من حذف المستخدم ؟'"
+      :showModal="showModal"
+      @cancel="cancel($event)"
+      :is-warning="true"
+      @cancelWithConfirm="cancelWithConfirm($event)"
+    />
   </section>
 </template>
 <script>
 import ListItems from "@/components/ListItems/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import { getAllUsersRequest } from "@/api/user";
+import {deleteUserRequest, getAllUsersRequest} from "@/api/user";
+import Modal from "@/components/Shared/Modal/index.vue";
 
 export default {
   name: "index",
   components: {
+    Modal,
     ListItems,
     Button,
   },
@@ -39,6 +55,7 @@ export default {
       loading: false,
       userSearchWord: "",
       usersList: [],
+      showModal: false,
       totalNumber: 0,
       fieldsList: [
         {
@@ -54,7 +71,7 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.name"),
         },
         {
-          key: "roles[0].name",
+          key: "roles",
           label: this.$i18n.t("TABLE_FIELDS.role"),
         },
         {
@@ -91,10 +108,29 @@ export default {
     detailItem($event) {
       this.$router.push(`/dashboard/users/show/${$event}`);
     },
+    editItem($event) {
+      this.$router.push(`/dashboard/users/edit/${$event}`);
+    },
+    deleteItem($event) {
+      this.itemId = $event;
+      this.showModal = true;
+    },
+    cancel($event) {
+      this.showModal = $event;
+    },
+    cancelWithConfirm() {
+      this.ApiService(deleteUserRequest(this.itemId)).then(() => {
+        this.getAllUsers();
+      });
+      this.cancel();
+    },
   },
   mounted() {
     this.getAllUsers();
   },
+  created() {
+    console.log('matched', this.$route.matched)
+  }
 };
 </script>
 

@@ -20,13 +20,13 @@
           accept="image/*"
           @change="onFileChange"
         />
-        <Button color="gray" class="btn-file" @click="$refs.attachment.click()">
-          {{ $t("GLOBAL_UPLOAD") }}
-        </Button>
+<!--        <Button color="gray" class="btn-file" @click="$refs.attachment.click()">-->
+<!--          {{ $t("GLOBAL_UPLOAD") }}-->
+<!--        </Button>-->
       </div>
       <div class="img-wrapper">
-        <div class="hold-img" v-if="schoolImage">
-          <img :src="schoolImage">
+        <div class="hold-img" v-if="itemImage">
+          <img :src="itemImage">
         </div>
         <div v-if="hasError" class="error-wrapper">
           <span class="error-msg">{{ errors[0] }}</span>
@@ -41,7 +41,7 @@ import {mapActions} from "vuex";
 
 export default {
   props: {
-    schoolImage: {
+    itemImage: {
       type: String,
     },
     maxSize: {

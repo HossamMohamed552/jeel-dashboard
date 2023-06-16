@@ -31,12 +31,13 @@ export default{
       this.loading = true
       this.ApiService(postSchoolGroupRequest($event)).then((response) => {
         this.showModal = true
+        this.loading = true
+      }).then(() => {
         this.loading = false
         setTimeout(() => {
           this.showModal = false
-        }, 3000)
-      }).then(() => {
-        this.$router.push("/dashboard/school-group");
+          this.$router.push("/dashboard/school-group");
+        }, 1000)
       })
     },
     handleCancel() {

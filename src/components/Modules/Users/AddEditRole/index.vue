@@ -19,6 +19,7 @@
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <TextAreaField
+                    :rules="'required|min:3'"
                     v-model="createRole.description"
                     :label="$t('ROLES.description')"
                     :name="$t('ROLES.description')"
@@ -34,7 +35,8 @@
                     <div class="hold-permissions">
                       <label v-for="permissionItem in permission" class="permission-item">
                         <b-form-checkbox v-model="permissionSelected" :value="permissionItem.id"
-                                         @change="showPermissionItemsSelected()">
+                                         @change="showPermissionItemsSelected()"
+                                         :disabled="isDefault === 1">
                           {{ permissionItem.name }}
                         </b-form-checkbox>
                       </label>
@@ -45,11 +47,11 @@
                     <div class="buttons">
                       <div>
                         <Button custom-class="transparent-btn rounded-btn all-add"
-                                @click="addAllPermission">
+                                @click="addAllPermission" :disabled="isDefault === 1">
                           {{ $t('GLOBALAddAll') }}
                         </Button>
                         <Button custom-class="transparent-btn rounded-btn all-add"
-                                @click="removeAllPermission">
+                                @click="removeAllPermission" :disabled="isDefault === 1">
                           {{ $t('GLOBALRemoveAll') }}
                         </Button>
                       </div>
@@ -60,7 +62,8 @@
                          v-if="finalSelected && Array.from(finalSelected).length > 0">
                       <label v-for="permissionItem in finalSelected" class="permission-item">
                         <b-form-checkbox v-model="permissionSelected" :value="permissionItem.id"
-                                         @change="showPermissionItemsSelected()">
+                                         @change="showPermissionItemsSelected()"
+                                         :disabled="isDefault === 1">
                           {{ permissionItem.name }}
                         </b-form-checkbox>
                       </label>
@@ -125,7 +128,8 @@ export default {
         permissions: [],
         code: ""
       },
-      finalSelected: []
+      finalSelected: [],
+      isDefault: 0,
     };
   },
   watch: {
@@ -171,6 +175,7 @@ export default {
         this.ApiService(getSingleRoleRequest(this.$route.params.id)).then((response) => {
           this.createRole = response.data.data
           this.permissionSelected = this.createRole.permissions.map((item) => item.id)
+          this.isDefault = this.createRole.is_default
         }).then(() => {
           this.showPermissionItemsSelected()
         })

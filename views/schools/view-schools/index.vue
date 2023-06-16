@@ -16,7 +16,7 @@
                   :subtitle="singleSchool.name"
                 />
               </b-col>
-              <b-col lg="6">
+              <b-col lg="6" v-if="singleSchool && singleSchool.school_group">
                 <ShowItem
                   :title="$t('SCHOOL.school_group')"
                   :subtitle="singleSchool.school_group.name"
@@ -25,13 +25,13 @@
             </b-row>
             <b-dd-divider class="my-4" />
             <b-row class="row-data">
-              <b-col lg="6">
+              <b-col lg="6" v-if="singleSchool && singleSchool.school_type">
                 <ShowItem
                   :title="$t('SCHOOL.school_type')"
                   :subtitle="singleSchool.school_type.name"
                 />
               </b-col>
-              <b-col lg="6">
+              <b-col lg="6" v-if="singleSchool && singleSchool.admin">
                 <ShowItem
                   :title="$t('SCHOOL.userName')"
                   :subtitle="singleSchool.admin.name"
@@ -40,7 +40,7 @@
             </b-row>
             <b-dd-divider class="my-4" />
             <b-row class="row-data">
-              <b-col lg="6">
+              <b-col lg="6" v-if="singleSchool && singleSchool.admin">
                 <ShowItem
                   :title="$t('SCHOOL.email')"
                   :subtitle="singleSchool.admin.email"
@@ -57,13 +57,13 @@
             </b-row>
             <b-dd-divider class="my-4" />
             <b-row class="row-data">
-              <b-col lg="6">
+              <b-col lg="6" v-if="singleSchool && singleSchool.admin">
                 <ShowItem
                   :title="$t('SCHOOL.phone')"
                   :subtitle="singleSchool.admin.mobile"
                 />
               </b-col>
-              <b-col lg="6">
+              <b-col lg="6" v-if="singleSchool && singleSchool.package">
                 <ShowItem
                   :title="$t('SCHOOL.package')"
                   :subtitle="singleSchool.package.name"

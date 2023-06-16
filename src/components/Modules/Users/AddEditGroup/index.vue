@@ -18,57 +18,59 @@
               </b-col>
               <b-col lg="3" class="mb-3">
                 <div class="hold-field">
-                  <ValidationProvider v-slot="{errors, invalid}" rules="required">
-                    <b-form-group :label="$t('GROUP.type')" v-slot="{ ariaDescribedby }"
-                                  class="group-type">
+                  <ValidationProvider rules="required" v-slot="{ errors }">
+                    <b-form-group :label="$t('GROUP.type')"  class="group-type">
                       <b-form-radio v-model="createGroup.type" value="national" name="group-type">محلى
                       </b-form-radio>
                       <b-form-radio v-model="createGroup.type" value="international" name="group-type">دولى
                       </b-form-radio>
                     </b-form-group>
+                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                      {{ error }}
+                    </b-form-invalid-feedback>
                   </ValidationProvider>
                 </div>
               </b-col>
               <b-col lg="3" class="mb-3">
                 <div class="hold-field">
-                  <ValidationProvider v-slot="{errors, invalid}" rules="required">
-                    <b-form-group :label="$t('GROUP.music')" v-slot="{ ariaDescribedby }"
-                                  class="group-type">
-                      <b-form-radio v-model="createGroup.music_status" value="0" name="group-music_type">غير متاح
-                      </b-form-radio>
-                      <b-form-radio v-model="createGroup.music_status" value="1"
-                                    name="group-music_type">
-                        متاح
-                      </b-form-radio>
+                  <ValidationProvider rules="required" v-slot="{ errors }">
+                    <b-form-group :label="$t('GROUP.music')" class="group-type">
+                      <b-form-radio v-model="createGroup.music_status" value="0" name="group-music_type">غير متاح</b-form-radio>
+                      <b-form-radio v-model="createGroup.music_status" value="1" name="group-music_type">متاح</b-form-radio>
                     </b-form-group>
+                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                      {{ error }}
+                    </b-form-invalid-feedback>
                   </ValidationProvider>
                 </div>
               </b-col>
               <b-col lg="3" class="mb-3">
                 <div class="hold-field">
-                  <ValidationProvider v-slot="{errors, invalid}" rules="required">
-                    <b-form-group :label="$t('GROUP.status')" v-slot="{ ariaDescribedby }"
-                                  class="group-type">
+                  <ValidationProvider  rules="required" v-slot="{ errors }">
+                    <b-form-group :label="$t('GROUP.status')" class="group-type">
                       <b-form-radio v-model="createGroup.status" value="0" name="group-status">غير
                         مفعل
                       </b-form-radio>
                       <b-form-radio v-model="createGroup.status" value="1" name="group-status">مفعل
                       </b-form-radio>
                     </b-form-group>
+                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                      {{ error }}
+                    </b-form-invalid-feedback>
                   </ValidationProvider>
                 </div>
               </b-col>
-              <b-col lg="4" class="mt-5">
-                <div class="hold-field">
-                  <TextField
-                    v-model="createGroup.email"
-                    :label="$t('GROUP.email')"
-                    :name="$t('GROUP.email')"
-                    :rules="'email'"
-                  ></TextField>
-                </div>
-              </b-col>
-              <b-col lg="4" class="mt-5">
+<!--              <b-col lg="4" class="mt-5">-->
+<!--                <div class="hold-field">-->
+<!--                  <TextField-->
+<!--                    v-model="createGroup.email"-->
+<!--                    :label="$t('GROUP.email')"-->
+<!--                    :name="$t('GROUP.email')"-->
+<!--                    :rules="'email'"-->
+<!--                  ></TextField>-->
+<!--                </div>-->
+<!--              </b-col>-->
+              <b-col lg="6" class="mt-5">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors, invalid}" rules="required">
                     <label>{{ $t('GROUP.owner') }}</label>
@@ -84,7 +86,7 @@
                   </ValidationProvider>
                 </div>
               </b-col>
-              <b-col lg="4" class="mt-5">
+              <b-col lg="6" class="mt-5">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors, invalid}" rules="required">
                     <label>{{ $t('GROUP.country') }}</label>
@@ -151,9 +153,9 @@ export default {
       countries: null,
       createGroup: {
         name: "",
-        type: null,
+        type: '',
         music_status: '',
-        status: null,
+        status: '',
         owner_id: '',
         country_id: ''
       },
@@ -178,7 +180,7 @@ export default {
         this.ApiService(getSingleSchoolGroupRequest(this.$route.params.id)).then((response) => {
           this.createGroup.name =response.data.data.name
           this.createGroup.type =response.data.data.type
-          this.createGroup.music_type =response.data.data.music_status
+          this.createGroup.music_status =response.data.data.music_status
           this.createGroup.status =response.data.data.status
           this.createGroup.owner_id =response.data.data.owner.id
           this.createGroup.country_id =response.data.data.country.id

@@ -1,26 +1,55 @@
 @import "src/assets/style/scss/_mixin";
 @import "src/assets/style/scss/_variables";
-.show-role{
+//<<<<<<< HEAD
+//.show-user{
+//  @include styleViewList;
+//  min-height: 70vh;
+//=======
+.show-role {
   @include styleViewList;
-  .heading{
+
+  .heading {
     margin-bottom: 3.125rem;
   }
-  .hold-fields{
+
+  .hold-fields {
     margin-bottom: 4rem;
   }
-  .permissions{
-    padding: 4rem 0;
-    border-top: 1px solid #8C8C8C;
-    .permission-item{
-      margin-bottom: 3.125rem;
-      img{
-        margin-left: 1rem;
+
+  .hold-user-img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+      @include image;
+      object-fit: cover;
+      aspect-ratio: 1/1;
+
+      .permissions {
+        padding: 4rem 0;
+        border-top: 1px solid #8C8C8C;
+
+        .permission-item {
+          margin-bottom: 3.125rem;
+
+          img {
+            margin-left: 1rem;
+          }
+
+          span {
+            font-size: 1.2rem;
+            color: $color-primary;
+            font-weight: 600;
+          }
+        }
       }
-      span{
-        font-size: 1.2rem;
-        color: $color-primary;
-        font-weight: 600;
-      }
+    }
+
+    .img-container {
+      width: 250px;
+      height: auto;
     }
   }
 }
