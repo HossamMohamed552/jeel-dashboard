@@ -31,7 +31,7 @@
                 <b-col lg="12" class="mb-3">
                   <SelectSearch
                     multiple
-                    :disabled="$route.params.id"
+                    v-if="!$route.params.id"
                     v-model="createLevel.school_groups"
                     :label="$t('TABLE_FIELDS.school_group')"
                     :name="$t('TABLE_FIELDS.school_group')"
@@ -251,6 +251,7 @@ export default {
   },
   mounted() {
     this.getLevelToEdit();
+    if($route.params.id) this.schoolGroupOptions = []
   },
 };
 </script>
