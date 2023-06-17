@@ -89,6 +89,16 @@
                   ></TextAreaField>
                 </div>
               </b-col>
+              <b-col lg="12" class="mb-3">
+                <div class="hold-field mt-4">
+                  <ImageUploader
+                    :name="'logoSchool'"
+                    :text="$t('MISSIONS.UPLOAD_IMAGE')"
+                    @imageUpload="handleUploadImage"
+                    :item-image="mission.itemImage"
+                  />
+                </div>
+              </b-col>
             </b-row>
             <b-row>
               <div class="action-holder">
@@ -118,13 +128,16 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
-import {getSingleMissionsRequest} from "@/api/missios";
+import { getSingleMissionsRequest } from "@/api/missios";
+import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
+
 export default {
   components: {
     TextField,
     SelectSearch,
     Button,
-    TextAreaField
+    TextAreaField,
+    ImageUploader,
   },
   props: {
     loading: {
@@ -146,7 +159,7 @@ export default {
     countries: {
       type: Array,
       default: () => [],
-    }
+    },
   },
   data() {
     return {
@@ -157,13 +170,16 @@ export default {
         country_id: null,
         term_id: null,
         duration: null,
-        description: null
+        description: null,
+        itemImage: null,
+
+        mission_image: null,
       },
     };
   },
   methods: {
     onSubmit() {
-      this.$emit("onSubmit", this.mission)
+      this.$emit("onSubmit", this.mission);
     },
     handleCancel() {
       this.$emit("handleCancel");
@@ -171,20 +187,26 @@ export default {
     handleBack() {
       this.$emit("handleBack");
     },
+    handleUploadImage(e) {
+      this.mission.itemImage = URL.createObjectURL(e.target.files[0])
+      if (e) this.mission.mission_image = e.target.files[0];
+      else return;
+    },
   },
   mounted() {
-    if (this.$route.params.id){
-      this.ApiService(getSingleMissionsRequest(this.$route.params.id)).then((response)=>{
-        this.mission.name = response.data.data.name
-        this.mission.level_id = response.data.data.level.id
-        this.mission.duration = response.data.data.data_range
-        this.mission.description = response.data.data.description
-        this.mission.country_id = response.data.data.country.id
-        this.mission.term_id = response.data.data.term.id
-        this.mission.learning_path_ids = response.data.data.learningpaths.map((item)=> item.id)
-      })
+    if (this.$route.params.id) {
+      this.ApiService(getSingleMissionsRequest(this.$route.params.id)).then((response) => {
+        this.mission.name = response.data.data.name;
+        this.mission.level_id = response.data.data.level.id;
+        this.mission.duration = response.data.data.data_range;
+        this.mission.description = response.data.data.description;
+        this.mission.country_id = response.data.data.country.id;
+        this.mission.term_id = response.data.data.term.id;
+        this.mission.learning_path_ids = response.data.data.learningpaths.map((item) => item.id);
+        this.mission.itemImage = response.data.data.mission_image
+      });
     }
-  }
+  },
 };
 </script>
 <style scoped lang="scss">

@@ -212,7 +212,8 @@
     "quizzes": "التمارين",
     "description": "الوصف",
     "content": "المحتوى",
-    "ShowDetails": "عرض تفاصيل المرحلة"
+    "ShowDetails": "عرض تفاصيل المرحلة",
+    "UPLOAD_IMAGE": "صورة المرحلة"
   },
   "QUIZZES": {
     "EDIT": "تعديل التمرين",
