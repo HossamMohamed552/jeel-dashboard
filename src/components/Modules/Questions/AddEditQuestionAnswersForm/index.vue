@@ -25,7 +25,7 @@
                   >
                     <b-form-file
                       accept="audio/*"
-                      placeholder="اختر ملف"
+                      :placeholder="formValues.question_audio ? formValues.question_audio : 'اختر ملف'"
                       v-model="formValues.question_audio"
                       name="audio"
                     >
@@ -77,7 +77,7 @@
                   >
                     <b-form-file
                       accept="audio/*"
-                      placeholder="اختر ملف"
+                      :placeholder="answer.audio ? answer.audio : 'اختر ملف'"
                       v-model="answer.audio"
                       name="audio"
                     >
