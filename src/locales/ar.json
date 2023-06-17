@@ -64,7 +64,9 @@
     "role": "الدور",
     "user": "المستخدم",
     "school": "المدرسة",
-    "mobile": "الهاتف"
+    "mobile": "الهاتف",
+    "status": "الحالة",
+    "music_status": "حالة الموسيقى"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
