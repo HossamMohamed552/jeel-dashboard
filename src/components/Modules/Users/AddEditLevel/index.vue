@@ -251,7 +251,6 @@ export default {
   },
   mounted() {
     this.getLevelToEdit();
-    if($route.params.id) this.schoolGroupOptions = []
   },
 };
 </script>
