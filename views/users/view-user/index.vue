@@ -104,34 +104,34 @@
           <b-col lg="6" class="mb-5 img-container">
             <img class="w-100" :src="singleUser.avatar" />
           </b-col>
-          <b-col lg="12">
+          <b-col v-if="singleUser.user_credit" lg="12">
             <h2 class="heading">{{ $t("USER.user_credits") }}:</h2>
           </b-col>
-          <b-col lg="6" class="mb-5">
+          <b-col v-if="singleUser.user_credit" lg="6" class="mb-5">
             <ShowItem
               :title="$t('USER.coins')"
               :subtitle="singleUser.user_credit.jeel_coins"
             />
           </b-col>
-          <b-col lg="6" class="mb-5">
+          <b-col v-if="singleUser.user_credit" lg="6" class="mb-5">
             <ShowItem
               :title="$t('USER.gems')"
               :subtitle="singleUser.user_credit.jeel_gems"
             />
           </b-col>
-          <b-col lg="6" class="mb-5">
+          <b-col v-if="singleUser.user_credit" lg="6" class="mb-5">
             <ShowItem
               :title="$t('USER.xp')"
               :subtitle="singleUser.user_credit.jeel_xp"
             />
           </b-col>
-          <b-col lg="6" class="mb-5">
+          <b-col v-if="singleUser.user_credit" lg="6" class="mb-5">
             <ShowItem
               :title="$t('USER.level')"
               :subtitle="singleUser.user_credit.level"
             />
           </b-col>
-          <b-col lg="6" class="mb-5">
+          <b-col v-if="singleUser.user_credit" lg="6" class="mb-5">
             <ShowItem
               :title="$t('USER.level_percentage')"
               :subtitle="singleUser.user_credit.level_percentage"
