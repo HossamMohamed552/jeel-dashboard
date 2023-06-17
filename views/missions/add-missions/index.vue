@@ -23,7 +23,7 @@
       @handleBack="goToMissionDataForm"
       @handleCancel="handleCancel"
       @goToFinalStep="goToFinalStep"/>
-    <div class="container-fluid custom-container" v-show="currentStep === 2">
+    <div class="container-fluid custom-container" v-if="currentStep === 2">
       <div class="mission-review ">
         <b-row>
           <b-col lg="4">
