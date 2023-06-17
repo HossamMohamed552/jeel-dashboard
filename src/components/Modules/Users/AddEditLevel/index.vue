@@ -215,7 +215,7 @@ export default {
           this.createLevel.name = response.data.data.name;
           this.createLevel.min_levels = response.data.data.min_levels;
           this.createLevel.school_groups = response.data.data.school_groups.map(e => e.id);
-          this.missionNotSelected = response.data.data.missions.filter((item) => item.is_selected === 0)
+          this.missionNotSelected = response.data.data.missions.filter((item) => item.is_selected === null || item.is_selected === 0)
           this.missionsSend = response.data.data.missions.filter((item) => item.is_selected === 1)
         });
       }
