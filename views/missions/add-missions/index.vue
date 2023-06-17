@@ -8,7 +8,7 @@
       :current-step="currentStep"
     />
     <AddEditMissionDataForm
-      v-if="currentStep === 0"
+      v-show="currentStep === 0"
       :levels="levels"
       :learning-paths="learningPaths"
       :terms="terms"
@@ -17,13 +17,13 @@
       @handleCancel="handleCancel"
     />
     <AddEditContent
-      v-if="currentStep === 1"
+      v-show="currentStep === 1"
       :learningPathSelected="learningPathSelected"
       :level="level"
       @handleBack="goToMissionDataForm"
       @handleCancel="handleCancel"
       @goToFinalStep="goToFinalStep"/>
-    <div class="container-fluid custom-container" v-if="currentStep === 2">
+    <div class="container-fluid custom-container" v-show="currentStep === 2">
       <div class="mission-review ">
         <b-row>
           <b-col lg="4">
