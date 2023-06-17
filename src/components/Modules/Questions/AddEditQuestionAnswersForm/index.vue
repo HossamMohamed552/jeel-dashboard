@@ -5,7 +5,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="6" class="mb-3">
+              <b-col lg="8" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="formValues.question"
@@ -15,7 +15,31 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3">
+              <b-col lg="4" class="mb-3">
+                <div class="hold-field">
+                  <label>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                  <ValidationProvider
+                    v-slot="{ errors }"
+                    :rules="$route.params.id ? '' : 'required'"
+                    name="audio"
+                  >
+                    <b-form-file
+                      accept="audio/*"
+                      placeholder="اختر ملف"
+                      v-model="formValues.question_audio"
+                      name="audio"
+                    >
+                    </b-form-file>
+                    <b-form-invalid-feedback
+                      v-for="(error, index) in errors"
+                      :key="index"
+                    >
+                      {{ error }}
+                    </b-form-invalid-feedback>
+                  </ValidationProvider>
+                </div>
+              </b-col>
+              <b-col lg="8" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="formValues.hint"
@@ -27,8 +51,13 @@
               </b-col>
             </b-row>
             <!-- --answersList: {{ answersList }} -->
+            <b-col lg="12" class="mb-3">
+              <div class="hold-field">
+                <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
+              </div>
+            </b-col>
             <b-row v-for="(answer, idx) in answersList" :key="idx">
-              <b-col lg="6" class="mb-3">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="answer.answer"
@@ -39,6 +68,30 @@
                 </div>
               </b-col>
               <b-col lg="4" class="mb-3">
+                <div class="hold-field">
+                  <label>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                  <ValidationProvider
+                    v-slot="{ errors }"
+                    :rules="$route.params.id ? '' : 'required'"
+                    name="audio"
+                  >
+                    <b-form-file
+                      accept="audio/*"
+                      placeholder="اختر ملف"
+                      v-model="answer.audio"
+                      name="audio"
+                    >
+                    </b-form-file>
+                    <b-form-invalid-feedback
+                      v-for="(error, index) in errors"
+                      :key="index"
+                    >
+                      {{ error }}
+                    </b-form-invalid-feedback>
+                  </ValidationProvider>
+                </div>
+              </b-col>
+              <b-col lg="2" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
                     v-model="answer.correct"
@@ -51,13 +104,20 @@
                   ></SelectSearch>
                 </div>
               </b-col>
-              <b-col lg="2" class=" btn-holder">
+              <b-col lg="2" class="btn-holder">
                 <div class="hold-field">
-                  <span class="success" v-if="answersList.length - 1 === idx" @click="addAnswer">إضافة</span>
+                  <span
+                    class="success"
+                    v-if="answersList.length - 1 === idx"
+                    @click="addAnswer"
+                    >إضافة</span
+                  >
                   <span
                     class="mx-3 danger"
                     v-if="answersList.length > 1"
-                    @click="answersList.splice(idx, 1)">حذف</span>
+                    @click="answersList.splice(idx, 1)"
+                    >حذف</span
+                  >
                 </div>
               </b-col>
             </b-row>
@@ -67,16 +127,28 @@
                   <Button
                     type="submit"
                     :loading="loading"
-                    :disabled="invalid || answersList.length <= 0 || answersList[0].answer.length<=0 || !isCorrectAnswer"
+                    :disabled="
+                      invalid ||
+                      answersList.length <= 0 ||
+                      answersList[0].answer.length <= 0 ||
+                      !isCorrectAnswer
+                    "
                     :custom-class="'submit-btn'"
                   >
                     {{ $t("GLOBAL_NEXT") }}
                   </Button>
-                  <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
+                  <Button
+                    class="mx-3"
+                    @click="handleBack"
+                    :custom-class="'submit-btn back-btn'"
+                  >
                     {{ $t("GLOBAL_BACK") }}
                   </Button>
                 </div>
-                <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
+                <Button
+                  @click="handleCancel"
+                  :custom-class="'cancel-btn margin'"
+                >
                   {{ $t("GLOBAL_CANCEL") }}
                 </Button>
               </div>
@@ -94,7 +166,7 @@ import Button from "@/components/Shared/Button/index.vue";
 import getData from "@/mixins/getData/getData";
 
 export default {
-  mixins: [getData('question')],
+  mixins: [getData("question")],
   components: {
     TextField,
     SelectSearch,
@@ -111,12 +183,14 @@ export default {
       formValues: {
         question: "",
         hint: "",
+        question_audio: null,
         answers: [],
       },
       answersList: [
         {
           answer: "",
-          correct: 0,
+          audio: null,
+          correct: 0
         },
       ],
       correctList: [
@@ -131,21 +205,20 @@ export default {
       ],
     };
   },
-  computed:{
-    isCorrectAnswer(){
+  computed: {
+    isCorrectAnswer() {
       const correctAnswer = this.answersList.find((item) => item.correct === 1);
-      if( correctAnswer === undefined){
-        return false
+      if (correctAnswer === undefined) {
+        return false;
       } else {
-        return true
-
+        return true;
       }
-    }
+    },
   },
   methods: {
     onSubmit() {
-      this.assignAnswers()
-      this.$emit("onSubmit", this.formValues)
+      this.assignAnswers();
+      this.$emit("onSubmit", this.formValues);
     },
     handleCancel() {
       this.$emit("handleCancel");
@@ -156,21 +229,25 @@ export default {
     addAnswer() {
       this.answersList.push({
         answer: "",
-        correct: 0,
+        audio: null,
+        correct: 0
       });
     },
     assignAnswers() {
-      this.formValues.answers = this.answersList.filter((answer) => answer.answer);
+      this.formValues.answers = this.answersList.filter(
+        (answer) => answer.answer
+      );
     },
   },
-  watch:{
-    question(questionEdit){
-      this.formValues.question = questionEdit.question
-      this.formValues.hint = questionEdit.hint
-      this.formValues.answers = questionEdit.answers
-      this.answersList = this.formValues.answers
-    }
-  }
+  watch: {
+    question(questionEdit) {
+      this.formValues.question = questionEdit.question;
+      this.formValues.question_audio = questionEdit.question_audio;
+      this.formValues.hint = questionEdit.hint;
+      this.formValues.answers = questionEdit.answers;
+      this.answersList = this.formValues.answers;
+    },
+  },
 };
 </script>
 <style scoped lang="scss">

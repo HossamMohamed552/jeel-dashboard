@@ -190,7 +190,10 @@
     "LANGUAGE_SKILLS": "نوع المهارة اللغوية",
     "LEARNING_PATH": "المسار",
     "RIGHT_ANSWER": "الإجابة الصحيحة",
-    "ShowDetails": "عرض تفاصيل السؤال"
+    "ShowDetails": "عرض تفاصيل السؤال",
+    "QUESTION_TITLE_AUDIO": "التسجيل الصوتى للسؤال",
+    "ANSWERS": "الإجابات",
+    "QUESTION_ANSWER_AUDIO": "التسجيل الصوتى للإجابة"
   },
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",
