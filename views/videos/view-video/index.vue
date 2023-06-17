@@ -26,6 +26,12 @@
             <ShowItem :title="$t('VIDEO.Description')" :subtitle="video.description"/>
           </b-col>
         </b-row>
+        <b-row v-if="video.thumbnail" class="mt-4">
+          <b-col  lg="12">
+            <ShowItem :title="$t('VIDEO.UPLOAD_IMAGE')" />
+            <img :src="video.thumbnail" />
+          </b-col>
+        </b-row>
       </div>
     </div>
   </section>

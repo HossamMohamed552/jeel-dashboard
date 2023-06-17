@@ -23,8 +23,15 @@
                   <p class="name">سعد بن عبد الرحمن الغامدي</p>
                   <p class="role">جيل أدمن</p>
                 </div>
-                <div class="user-image">
-                  <img src="@/assets/images/icons/user.svg" alt="user" title="user" />
+                <div class="dropdown-container" :dir="$i18n.locale == 'ar' ? 'ltr' : 'rtl'">
+                  <b-dropdown no-caret>
+                    <template #button-content>
+                      <div class="user-image">
+                        <img src="@/assets/images/icons/user.svg" alt="user" title="user" />
+                      </div>
+                    </template>
+                    <b-dropdown-item @click="logout">{{ $t("GLOBAL_LOGOUT") }}</b-dropdown-item>
+                  </b-dropdown>
                 </div>
               </div>
             </div>
@@ -87,7 +94,7 @@
                 </ul>
               </div>
             </div>
-              <div class="nav-item">
+            <div class="nav-item">
               <p>
                 <span>{{ $t("MENU.system_settings") }}</span
                 ><img src="@/assets/images/icons/arrow.svg" />
@@ -119,6 +126,7 @@
 </template>
 <script>
 import { routesUsers, routesSchool, routesContent, routeSettings } from "@/globalData";
+import { mapActions } from "vuex";
 
 export default {
   name: "index",
@@ -145,12 +153,16 @@ export default {
   },
   computed: {
     permissions() {
-      return this.$store.getters.user.permissions;
+      return this.$store.getters.user?.permissions;
     },
   },
   methods: {
+    ...mapActions(["removeUser"]),
+    logout() {
+      this.removeUser();
+    },
     getRoutes(routeArr = []) {
-      return routeArr.filter((route) => this.permissions.includes(route.permission));
+      return routeArr.filter((route) => this.permissions?.includes(route.permission));
     },
     checkRoutes() {
       if (this.$route.name !== "main") {

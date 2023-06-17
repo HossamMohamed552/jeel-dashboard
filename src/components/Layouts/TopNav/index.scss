@@ -1,47 +1,47 @@
 @import "src/assets/style/scss/_variables";
 @import "src/assets/style/scss/_mixin";
-header{
+header {
   background-image: url("../../../assets/images/bg/header-bg.png");
   min-height: 20vh;
   background-size: cover;
-  .top{
+  .top {
     padding: 2.125rem 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .logo{
+    .logo {
       width: 120px;
       height: 139px;
       cursor: pointer;
-      img{
+      img {
         @include image;
       }
     }
-    .notification-info-admin{
+    .notification-info-admin {
       display: flex;
       align-items: center;
-      .notification{
+      .notification {
         position: relative;
         margin: 0 0 0 2rem;
         padding-left: 2rem;
-        .bill{
+        .bill {
           width: 35px;
           height: 40px;
-          img{
+          img {
             @include image;
           }
         }
-        .no-of-notification{
+        .no-of-notification {
           background: $color-notify;
           color: $color-primary;
-          padding: .25rem .625rem;
+          padding: 0.25rem 0.625rem;
           border-radius: 50%;
           position: absolute;
           top: 0;
           right: 0;
-          transform: translate(50%,-50%);
+          transform: translate(50%, -50%);
         }
-        &:after{
+        &:after {
           content: "";
           display: block;
           width: 1px;
@@ -50,47 +50,47 @@ header{
           position: absolute;
           left: 0;
           top: 50%;
-          transform: translate(-50%,-50%);
+          transform: translate(-50%, -50%);
         }
       }
-      .info-admin{
+      .info-admin {
         display: flex;
         align-items: center;
         margin: 0 1rem 0 0;
-        .name-role{
+        .name-role {
           text-align: left;
           margin-left: 1rem;
           font-size: 1.2rem;
-          .name{
-            margin-bottom: .5rem;
+          .name {
+            margin-bottom: 0.5rem;
             color: #fff;
           }
-          .role{
+          .role {
             color: $color-admin-role;
           }
         }
-        .user-image{
+        .user-image {
           width: 50px;
           height: 50px;
-          background: #FFFFFF;
+          background: #ffffff;
           border-radius: 50%;
           @include flexCenter(center);
         }
       }
     }
   }
-  .nav{
-    .nav-item{
+  .nav {
+    .nav-item {
       padding: 1.875rem 0;
       margin-left: 5rem;
       color: #fff;
       cursor: pointer;
       position: relative;
-      img{
-        margin-right: .8rem;
-        transition: all ease-in-out .3s;
+      img {
+        margin-right: 0.8rem;
+        transition: all ease-in-out 0.3s;
       }
-      .dropdown-item-list{
+      .dropdown-item-list {
         position: absolute;
         z-index: 2;
         right: 0;
@@ -98,20 +98,27 @@ header{
         bottom: 0;
         transform: translateY(100%);
         color: $color-primary;
-        background-image: linear-gradient(to bottom, rgba(118, 35, 108, 0.15), rgba(255, 255, 255, 1),rgba(255, 255, 255, 1), rgba(255, 255, 255, 1),#fff);
+        background-image: linear-gradient(
+          to bottom,
+          rgba(118, 35, 108, 0.15),
+          rgba(255, 255, 255, 1),
+          rgba(255, 255, 255, 1),
+          rgba(255, 255, 255, 1),
+          #fff
+        );
         border-radius: 1.56rem;
         min-width: 300px;
         display: none;
         opacity: 0;
-        transition: all ease-in-out .3s;
+        transition: all ease-in-out 0.3s;
         overflow: hidden;
-        li{
+        li {
           padding: 1.5rem;
           position: relative;
           z-index: 2;
           border-bottom: 1px solid rgba(233, 233, 233, 0.74);
-          transition: all ease-in-out .3s;
-          &:hover{
+          transition: all ease-in-out 0.3s;
+          &:hover {
             background: rgba(118, 35, 108, 0.76);
             color: #fff;
           }
@@ -124,15 +131,33 @@ header{
           //}
         }
       }
-      &:hover{
-        img{
+      &:hover {
+        img {
           transform: rotate(-180deg);
         }
-        .dropdown-item-list{
+        .dropdown-item-list {
           display: block;
           opacity: 1;
         }
       }
+    }
+  }
+  ::v-deep .btn.dropdown-toggle {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    &:hover,
+    &:focus,
+    &:active,
+    &:focus-visible,
+    &:focus-within,
+    &:visited {
+      background: transparent;
+      border: none;
+      color: #fff;
+      outline: none;
+      box-shadow: none;
     }
   }
 }

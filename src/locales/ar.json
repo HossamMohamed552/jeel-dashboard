@@ -151,7 +151,8 @@
     "attach": "ارفاق فيديو",
     "learning_path": "مسار تعليمي",
     "level": "المرحله",
-    "ShowDetails": "تفاصيل الفيديو"
+    "ShowDetails": "تفاصيل الفيديو",
+    "UPLOAD_IMAGE": "صورة الفيديو"
   },
   "PAPER_WORK": {
     "NAME": "اسم ورقة العمل",
@@ -214,7 +215,8 @@
     "quizzes": "التمارين",
     "description": "الوصف",
     "content": "المحتوى",
-    "ShowDetails": "عرض تفاصيل المرحلة"
+    "ShowDetails": "عرض تفاصيل المرحلة",
+    "UPLOAD_IMAGE": "صورة المرحلة"
   },
   "QUIZZES": {
     "EDIT": "تعديل التمرين",
@@ -340,5 +342,6 @@
   "GLOBAL_NEXT": "التالى",
   "GLOBAL_BACK": "السابق",
   "GLOBAL_NAME": "الاسم",
-  "SLUG": "الرمز"
+  "SLUG": "الرمز",
+  "GLOBAL_LOGOUT": "تسجيل الخروج"
 }

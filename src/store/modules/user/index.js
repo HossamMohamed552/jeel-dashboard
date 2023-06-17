@@ -39,6 +39,8 @@ export default {
     },
     REMOVE_USER(state) {
       state.user = null;
+      state.token = null
+      VueCookies.remove("token")
     },
   },
 };

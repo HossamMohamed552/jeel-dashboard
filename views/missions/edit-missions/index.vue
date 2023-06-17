@@ -1,6 +1,6 @@
 <template>
   <div class="add-mission">
-    <Modal :content-message="'تمت التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="'تمت التعديل بنجاح'" :showModal="showModal" :is-success="true" />
     <Stepper
       v-show="currentStep === 0 || currentStep === 1 || currentStep === 2"
       class="mt-5 mb-3"
@@ -62,19 +62,37 @@
                   <b-col lg="4">
                     <div>
                       <h6>الفيديوهات</h6>
-                      <span v-for="(video,index) in Array.from(path.videos).filter((item)=> path.videoIds.includes(item.id))" :key="`${video.id} ${index}`">{{video.title}}</span>
+                      <span
+                        v-for="(video, index) in Array.from(path.videos).filter((item) =>
+                          path.videoIds.includes(item.id)
+                        )"
+                        :key="`${video.id} ${index}`"
+                        >{{ video.title }}</span
+                      >
                     </div>
                   </b-col>
                   <b-col lg="4">
                     <div>
                       <h6>اوراق العمل</h6>
-                      <span v-for="(paperWork,index) in Array.from(path.paperWorks).filter((item)=> path.paperWorkIds.includes(item.id))" :key="`${paperWork.id} ${index}`">{{paperWork.name}}</span>
+                      <span
+                        v-for="(paperWork, index) in Array.from(path.paperWorks).filter((item) =>
+                          path.paperWorkIds.includes(item.id)
+                        )"
+                        :key="`${paperWork.id} ${index}`"
+                        >{{ paperWork.name }}</span
+                      >
                     </div>
                   </b-col>
                   <b-col lg="4">
                     <div>
                       <h6>التمارين</h6>
-                      <span v-for="(quiz,index) in Array.from(path.quizzes).filter((item)=> path.quizzesIds.includes(item.id))" :key="`${quiz.id} ${index}`">{{quiz.name}}</span>
+                      <span
+                        v-for="(quiz, index) in Array.from(path.quizzes).filter((item) =>
+                          path.quizzesIds.includes(item.id)
+                        )"
+                        :key="`${quiz.id} ${index}`"
+                        >{{ quiz.name }}</span
+                      >
                     </div>
                   </b-col>
                 </b-row>
@@ -119,7 +137,7 @@ export default {
     Button,
     Stepper,
     AddEditMissionDataForm,
-    AddEditContent
+    AddEditContent,
   },
   data() {
     return {
@@ -145,7 +163,7 @@ export default {
         },
       ],
       currentStep: 0,
-      learningPathSelected: []
+      learningPathSelected: [],
     };
   },
   methods: {
@@ -153,57 +171,78 @@ export default {
       this.$router.push("/dashboard/missions");
     },
     goToFillContent(data) {
-      this.handleAssignObject(data)
-      this.handleNavigation(1)
-      let learningPath = this.collectData.learning_path_ids
-      this.learningPathSelected = this.learningPaths.filter((item) => learningPath.includes(item.id))
-      this.level = this.collectData.level_id
+      this.handleAssignObject(data);
+      this.handleNavigation(1);
+      let learningPath = this.collectData.learning_path_ids;
+      this.learningPathSelected = this.learningPaths.filter((item) =>
+        learningPath.includes(item.id)
+      );
+      this.level = this.collectData.level_id;
     },
     goToMissionDataForm() {
-      this.handleNavigation(0)
+      this.handleNavigation(0);
     },
     backToFillContent() {
-      this.handleNavigation(1)
+      this.handleNavigation(1);
     },
     goToFinalStep(data) {
-      Object.assign(this.collectData, {paths: [...data]})
-      this.handleSaveCollectedData(data)
-      this.handleNavigation(2)
+      Object.assign(this.collectData, { paths: [...data] });
+      this.handleSaveCollectedData(data);
+      this.handleNavigation(2);
     },
     createMission() {
-      const formData = new FormData()
-      formData.append('name', this.collectData.name);
-      formData.append('country_id', this.collectData.country_id);
-      formData.append('level_id', this.collectData.level_id);
-      formData.append('data_range', this.collectData.duration);
-      formData.append('description', this.collectData.description);
-      formData.append('term_id', this.collectData.term_id);
-      formData.append('_method', 'PUT');
+      const formData = new FormData();
+      formData.append("name", this.collectData.name);
+      formData.append("country_id", this.collectData.country_id);
+      formData.append("level_id", this.collectData.level_id);
+      formData.append("data_range", this.collectData.duration);
+      formData.append("description", this.collectData.description);
+      formData.append("term_id", this.collectData.term_id);
+      if (this.collectData.mission_image)
+        formData.append("mission_image", this.collectData.mission_image);
+
+      formData.append("_method", "PUT");
       // for to get learnPaths
-      for (let learnPath = 0; learnPath < this.collectData.paths.length;) {
+      for (let learnPath = 0; learnPath < this.collectData.paths.length; ) {
         formData.append(`learningpaths[${learnPath}][id]`, this.collectData.paths[learnPath].id);
-        for (let video = 0; video < this.collectData.paths[learnPath].videoIds.length;) {
-          formData.append(`learningpaths[${learnPath}][videos][${video}][id]`, this.collectData.paths[learnPath].videoIds[video]);
+        for (let video = 0; video < this.collectData.paths[learnPath].videoIds.length; ) {
+          formData.append(
+            `learningpaths[${learnPath}][videos][${video}][id]`,
+            this.collectData.paths[learnPath].videoIds[video]
+          );
           formData.append(`learningpaths[${learnPath}][videos][${video}][order]`, video + 1);
           formData.append(`learningpaths[${learnPath}][videos][${video}][is_selected]`, 1);
-          video++
+          video++;
         }
-        for (let paperWork = 0; paperWork < this.collectData.paths[learnPath].paperWorkIds.length;) {
-          formData.append(`learningpaths[${learnPath}][papersworks][${paperWork}][id]`, this.collectData.paths[learnPath].paperWorkIds[paperWork]);
-          formData.append(`learningpaths[${learnPath}][papersworks][${paperWork}][order]`, paperWork + 1);
+        for (
+          let paperWork = 0;
+          paperWork < this.collectData.paths[learnPath].paperWorkIds.length;
+
+        ) {
+          formData.append(
+            `learningpaths[${learnPath}][papersworks][${paperWork}][id]`,
+            this.collectData.paths[learnPath].paperWorkIds[paperWork]
+          );
+          formData.append(
+            `learningpaths[${learnPath}][papersworks][${paperWork}][order]`,
+            paperWork + 1
+          );
           formData.append(`learningpaths[${learnPath}][papersworks][${paperWork}][is_selected]`, 1);
-          paperWork++
+          paperWork++;
         }
-        for (let quiz = 0; quiz < this.collectData.paths[learnPath].quizzesIds.length;) {
-          formData.append(`learningpaths[${learnPath}][quizzes][${quiz}][id]`, this.collectData.paths[learnPath].quizzesIds[quiz]);
+        for (let quiz = 0; quiz < this.collectData.paths[learnPath].quizzesIds.length; ) {
+          formData.append(
+            `learningpaths[${learnPath}][quizzes][${quiz}][id]`,
+            this.collectData.paths[learnPath].quizzesIds[quiz]
+          );
           formData.append(`learningpaths[${learnPath}][quizzes][${quiz}][order]`, quiz + 1);
           formData.append(`learningpaths[${learnPath}][quizzes][${quiz}][is_selected]`, 1);
-          quiz++
+          quiz++;
         }
-        learnPath++
+        learnPath++;
       }
-      this.loading = true
-      this.showModal = true
+      this.loading = true;
+      this.showModal = true;
       axios
         .post(`/missions/${this.$route.params.id}`, formData, {
           headers: {
@@ -213,24 +252,24 @@ export default {
           },
         })
         .then((res) => {
-          this.loading = false
+          this.loading = false;
           setTimeout(() => {
-            this.showModal = false
-          }, 3000)
+            this.showModal = false;
+          }, 3000);
           this.$router.push("/dashboard/missions");
         });
     },
     handleAssignObject(data) {
-      Object.assign(this.collectData, {...data})
-      this.handleSaveCollectedData(data)
+      Object.assign(this.collectData, { ...data });
+      this.handleSaveCollectedData(data);
     },
     handleSaveCollectedData(data) {
-      sessionStorage.setItem("collectData", data)
+      sessionStorage.setItem("collectData", data);
     },
     handleNavigation(nextStep) {
       this.currentStep = nextStep;
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped lang="scss">

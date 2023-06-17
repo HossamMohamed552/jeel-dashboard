@@ -17,6 +17,10 @@
           <b-col lg="4" v-if="mission && mission.term">
             <ShowItem :title="$t('MISSIONS.terms')" :subtitle="mission.term.name"/>
           </b-col>
+          <b-col v-if="mission && mission.mission_image" lg="4" class="mt-4">
+            <ShowItem :title="$t('MISSIONS.UPLOAD_IMAGE')"/>
+            <img class="mx-2" :src="mission.mission_image" width="120"/>
+          </b-col>
         </b-row>
     </div>
       <div class="divider">
