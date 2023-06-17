@@ -109,5 +109,6 @@
   "showDetails": "showDetails",
   "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}",
   "GLOBAL_NEXT": "Next",
-  "GLOBAL_BACK": "Back"
+  "GLOBAL_BACK": "Back",
+  "GLOBAL_LOGOUT": "Logout"
 }

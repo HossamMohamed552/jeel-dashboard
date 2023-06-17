@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     getRoutes(routeArr = []) {
-      return routeArr.filter((route) => this.permissions.includes(route.permission));
+      return routeArr.filter((route) => this.permissions?.includes(route.permission));
     },
   },
   watch: {
@@ -78,7 +78,7 @@ export default {
   },
   computed: {
     permissions() {
-      return this.$store.getters.user.permissions;
+      return this.$store.getters.user?.permissions;
     },
   },
 };
