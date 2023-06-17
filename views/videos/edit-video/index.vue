@@ -31,7 +31,9 @@ export default {
       formData.append('description',$event.description);
       formData.append('learning_path_id',$event.learning_path_id);
       formData.append('video',$event.video);
-      formData.append('level_id',$event.level_id);
+      formData.append('level_id', $event.level_id);
+      if($event.thumbnail)
+      formData.append('thumbnail', $event.thumbnail);
       this.loading = true;
       axios.put('/videos', formData, {
         headers: {

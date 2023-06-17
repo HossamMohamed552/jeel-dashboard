@@ -151,7 +151,8 @@
     "attach": "ارفاق فيديو",
     "learning_path": "مسار تعليمي",
     "level": "المرحله",
-    "ShowDetails": "تفاصيل الفيديو"
+    "ShowDetails": "تفاصيل الفيديو",
+    "UPLOAD_IMAGE": "صورة الفيديو"
   },
   "PAPER_WORK": {
     "NAME": "اسم ورقة العمل",

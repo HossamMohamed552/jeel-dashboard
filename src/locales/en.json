@@ -61,7 +61,8 @@
     "attach": "Attached File",
     "learning_path": "Learning Path",
     "level": "Level",
-    "ShowDetails": "Video Details"
+    "ShowDetails": "Video Details",
+    "UPLOAD_IMAGE": "Video thumbnail"
   },
   "PAPER_WORK": {
     "NAME": "Paperwork Name",

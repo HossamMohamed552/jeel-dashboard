@@ -57,6 +57,16 @@
                   </ValidationProvider>
                 </div>
               </b-col>
+              <b-col lg="12" class="mb-3">
+                <div class="hold-field mt-4">
+                  <ImageUploader
+                    :name="'videoThumbnail'"
+                    :text="$t('VIDEO.UPLOAD_IMAGE')"
+                    @imageUpload="handleUploadImage"
+                    :item-image="createVideo.img_url"
+                  />
+                </div>
+              </b-col>
             </b-row>
             <b-row>
               <div class="hold-btns-form">
@@ -88,6 +98,7 @@ import Modal from "@/components/Shared/Modal/index.vue";
 import {getSingleVideoRequest} from "@/api/videos";
 import {getLearningPathsRequest} from "@/api/learningPath";
 import {getLevelsRequest} from "@/api/level";
+import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 
 
 
@@ -97,7 +108,8 @@ export default {
     TextField,
     TextAreaField,
     Button,
-    SelectField
+    SelectField,
+    ImageUploader
   },
   props: {
     loading: {
@@ -116,11 +128,19 @@ export default {
         learning_path_id: "",
         title:'',
         original_name:'',
-        level_id:''
+        level_id: '',
+        img_url: null,
+        thumbnail: null
+
       }
     };
   },
   methods: {
+    handleUploadImage(e) {
+      this.createVideo.img_url = URL.createObjectURL(e.target.files[0])
+      if (e) this.createVideo.thumbnail = e.target.files[0];
+      else return;
+    },
     onSubmit() {
       this.$refs.addEditVideoForm.validate().then((success) => {
         if (!success) return;
@@ -142,6 +162,7 @@ export default {
           this.createVideo.video = response.data.data.url
           this.createVideo.learning_path_id = response.data.data.learningPath.id
           this.createVideo.level_id=response.data.data.level.id
+          this.createVideo.img_url=response.data.data.thumbnail
         })
       }
     },
