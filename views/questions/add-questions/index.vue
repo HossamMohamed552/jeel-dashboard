@@ -34,6 +34,7 @@
 
     <AddEditQuestionAnswersForm
       v-show="currentStep === 1"
+      :questionSlug="collectData.question_slug"
       @handleBack="goToQuestionFieldsForm"
       @handleCancel="handleCancel"
       @onSubmit="getSecondStepData"
@@ -141,7 +142,7 @@ import VueCookies from "vue-cookies";
 import globalAssetData from "@/mixins/getData/globalAssetData";
 
 export default {
-  mixins:[globalAssetData],
+  mixins: [globalAssetData],
   components: {
     Modal,
     Button,
@@ -193,6 +194,7 @@ export default {
     getQuestionTypes() {
       const params = {
         page: 1,
+        main_questions: 1
       };
 
       this.ApiService(getQuestionTypsRequest(params)).then((response) => {
@@ -323,7 +325,7 @@ export default {
       formData.append("question_audio", this.collectData.question_audio);
       formData.append("hint", this.collectData.hint);
       for (let answer = 0; answer < this.collectData.answers.length; answer++) {
-        console.log('answer',this.collectData.answers[answer])
+        console.log('answer', this.collectData.answers[answer])
         formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer].answer);
         formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
         formData.append(`answers[${answer}][correct]`, this.collectData.answers[answer].correct);

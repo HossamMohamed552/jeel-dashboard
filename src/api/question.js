@@ -11,7 +11,7 @@ export const getSingleQuestionRequest = (params) => ({
 })
 export const getQuestionTypsRequest = (params) => ({
   method: 'get',
-  url: `question_types?page=${params.page}`,
+  url: `question_types?page=${params.page}&main_questions=${params.main_questions}`,
 })
 
 export const getQuestionSubTypsRequest = (params) => ({

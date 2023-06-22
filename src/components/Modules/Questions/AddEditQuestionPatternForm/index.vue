@@ -31,6 +31,7 @@
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
                     :disabled="!formValues.question_type_id"
+                    @input="setQuestionSlug($event)"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -89,6 +90,7 @@ export default {
       formValues: {
         question_type_id: null,
         question_type_sub_id: null,
+        question_slug: null
       },
     };
   },
@@ -99,6 +101,9 @@ export default {
     }
   },
   methods: {
+    setQuestionSlug($event){
+      this.formValues.question_slug = this.questionSubTypes.filter((item)=> item.id === $event)[0]
+    },
     onSubmit() {
       this.$emit("onSubmit", this.formValues)
     },
