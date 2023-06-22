@@ -8,7 +8,7 @@
       :current-step="currentStep"
     />
     <AddEditMissionDataForm
-      v-show="currentStep === 0"
+      v-if="currentStep === 0"
       :levels="levels"
       :learning-paths="learningPaths"
       :terms="terms"
@@ -17,7 +17,7 @@
       @handleCancel="handleCancel"
     />
     <AddEditContent
-      v-show="currentStep === 1"
+      v-if="currentStep === 1"
       :learningPathSelected="learningPathSelected"
       :level="level"
       @handleBack="goToMissionDataForm"

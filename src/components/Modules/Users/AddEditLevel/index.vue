@@ -111,6 +111,7 @@
                           </b-row>
                         </div>
                       </draggable>
+                      <p v-if="isError" class="text-danger">لم تصل المراحل الى الحد الادنى للمراحل  {{ createLevel.min_levels}}</p>
                     </b-col>
                   </b-row>
                 </b-col>
@@ -182,6 +183,7 @@ export default {
       },
       showModal: false,
       showDate: false,
+      isError: false,
       missionNotSelected: [],
       missionsSend: [],
     };
@@ -245,7 +247,10 @@ export default {
           this.showModal = false;
         }, 3000);
       }).then(() => this.$router.push('/dashboard/levels')).catch((error) => {
-        console.log(error)
+        this.isError = true
+        setTimeout(() => {
+          this.isError = false;
+        }, 3000);
       })
     }
   },

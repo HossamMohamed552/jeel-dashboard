@@ -59,3 +59,48 @@
   background-color: rgba(118, 35, 108, 0.75)  !important;
   border-color: rgba(118, 35, 108, 0.75) !important;
 }
+
+// check box global
+.hold-permissions{
+  display: block;
+  //max-height: 275px;
+  overflow: auto;
+  background: #fff;
+  padding: 1rem;
+  border-radius: .5rem;
+  border: 1px solid #BEBEBE;
+}
+.permission-item {
+  display: block;
+  cursor: pointer;
+}
+::v-deep {
+  .custom-control-input:checked~.custom-control-label::before {
+    background: $color-primary;
+    border-color: $color-primary;
+    box-shadow: none;
+  }
+  .custom-control {
+    cursor: pointer;
+    @media (max-width: 768px) {
+      font-size: .8rem;
+    }
+    &:lang(ar) {
+      padding-right: 1.5rem;
+    }
+  }
+  :lang(ar) {
+    .custom-control-label {
+      cursor: pointer;
+      &::before {
+        right: -1.5rem;
+        left: unset;
+      }
+
+      &::after {
+        right: -1.5rem;
+        left: unset;
+      }
+    }
+  }
+}

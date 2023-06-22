@@ -33,4 +33,14 @@
   font-size: 1.3rem;
   color: $color-primary;
   font-weight: 700;
+  margin-bottom: 1rem;
+}
+.mission-content{
+  color: $color-heading;
+  text-decoration: none;
+  margin-right: 2rem;
+  transition: all ease-in-out .3s;
+  &:hover{
+    color: rgb(98, 98, 98);
+  }
 }

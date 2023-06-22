@@ -9,7 +9,7 @@
         <slot name="buttons"></slot>
       </div>
     </div>
-    <div class="search-sort">
+    <div class="search-sort" v-if="showSortControls">
       <div class="search">
         <b-form-input v-model="inputValue" placeholder="بحث" class="search-input"/>
         <img src="@/assets/images/icons/search.svg"/>
@@ -91,6 +91,16 @@
               }}</span>
           </div>
         </template>
+        <template #cell(allowEdit)="data">
+          <b-form-checkbox v-model="data.item.is_selected" switch></b-form-checkbox>
+        </template>
+        <template #cell(edit)="data">
+          <Button :custom-class="'transparent-btn rounded-btn'"
+                  @click="goToMissionContent(data.item.id,data.item.mission_id)"
+                  :disabled="data.item.is_selected === false">تعديل المحتوى
+          </Button>
+        </template>
+
         <template #cell(actions)="data">
           <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
             <template #button-content>
@@ -99,9 +109,11 @@
             <b-dropdown-item @click="detailItem(data.item.id)"
             >{{ $t("CONTROLS.detailBtn") }}
             </b-dropdown-item>
-            <b-dropdown-divider ></b-dropdown-divider>
+            <b-dropdown-divider
+              v-if="!user.permissions.includes('manage-learningpath')"></b-dropdown-divider>
             <b-dropdown-item @click="editItem(data.item.id)"
-            >{{ $t("CONTROLS.editBtn") }}
+                             v-if="!user.permissions.includes('manage-learningpath')">
+              {{ $t("CONTROLS.editBtn") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="!data.item.is_default"></b-dropdown-divider>
             <b-dropdown-item v-if="!data.item.is_default"
@@ -131,9 +143,14 @@
 </template>
 <script>
 import {debounce} from "lodash";
+import {mapGetters} from "vuex";
+import Button from "@/components/Shared/Button/index.vue";
 
 export default {
   name: "index",
+  components: {
+    Button
+  },
   data() {
     return {
       editIcon: require("@/assets/edit.svg"),
@@ -148,7 +165,14 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapGetters(['user'])
+  },
   props: {
+    showSortControls:{
+      type: Boolean,
+      default: true,
+    },
     isUserPage: {
       type: Boolean,
       default: false,
@@ -212,6 +236,9 @@ export default {
     },
   },
   methods: {
+    goToMissionContent(pathId, missionId) {
+      this.$router.push(`/dashboard/path-content/${pathId}/mission/${missionId}`)
+    },
     handlePageChange(event) {
       this.formValues.page = event;
       this.$emit("refetch", this.formValues);

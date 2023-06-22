@@ -1,0 +1,12 @@
+::v-deep{
+  .custom-control-label::after{
+    right: auto !important;
+  }
+  .custom-control-input{
+    visibility: hidden;
+  }
+  .custom-switch .custom-control-input:checked~.custom-control-label::after{
+    transform: translateX(-0.1rem);
+    right: -1.5rem !important;
+  }
+}

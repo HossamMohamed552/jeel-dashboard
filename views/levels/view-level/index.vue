@@ -21,10 +21,22 @@
             <ShowItem :title="$t('TABLE_FIELDS.school_group')" :subtitle="school_group.name"/>
           </b-col>
         </b-row>
-        <b-row v-if="user.permissions.includes('rearrange-missions')">
-          <b-col lg="12">
+        <b-row
+          v-if="user.permissions.includes('rearrange-missions') || user.permissions.includes('manage-learningpath')">
+          <b-col lg="6">
             <h3 class="mission-title">المراحل</h3>
-            <p class="mission-item" v-for="mission in level.missions">{{mission.name}}</p>
+            <div class="mission-item" v-for="mission in levelNotFiltered">
+              <span>{{ mission.name }}</span>
+            </div>
+          </b-col>
+          <b-col lg="6">
+            <h3 class="mission-title">المراحل المختاره</h3>
+            <div class="mission-item" v-for="mission in levelFiltered">
+              <span>{{ mission.name }}</span>
+              <router-link :to="`/dashboard/path-content/${mission.id}`" class="mission-content"
+                           v-if="user.permissions.includes('manage-learningpath')">تعديل المحتوى <i
+                class="far fa-edit"></i></router-link>
+            </div>
           </b-col>
         </b-row>
       </div>
@@ -48,7 +60,7 @@ import user from "@/store/modules/user";
 export default {
   name: "index",
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user']),
   },
   components: {
     Modal,
@@ -62,6 +74,8 @@ export default {
       missionsSend: [],
       loading: false,
       showModal: false,
+      levelNotFiltered:[],
+      levelFiltered:[]
     };
   },
   methods: {
@@ -94,7 +108,10 @@ export default {
       this.level = response.data.data;
       // this.missionNotSelected = response.data.data.missions.filter((item) => item.is_selected === 0)
       // this.missionsSend = response.data.data.missions.filter((item) => item.is_selected === 1)
-    });
+    }).then(()=>{
+      this.levelNotFiltered = this.level.missions.filter(item => item.is_selected !== 1)
+      this.levelFiltered = this.level.missions.filter(item => item.is_selected === 1)
+    })
   },
 };
 </script>
