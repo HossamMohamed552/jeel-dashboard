@@ -394,6 +394,16 @@ const protectedRoutes = [
         name: "rewarding-actions",
         component: () => import("../../views/rewarding-actions/edit/index.vue"),
       },
+      {
+        path: "/dashboard/path-content/:id",
+        name: "path-content",
+        component: () => import("../../views/path-content/index.vue"),
+      },
+      {
+        path: "/dashboard/path-content/:pathId/mission/:missionId",
+        name: "path-content",
+        component: () => import("../../views/path-content/mission-content/index.vue"),
+      }
     ],
   },
 ];
