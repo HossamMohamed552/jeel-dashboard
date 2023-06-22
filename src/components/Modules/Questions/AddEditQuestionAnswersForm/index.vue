@@ -2,159 +2,515 @@
   <div class="add-edit-user">
     <div class="container-fluid custom-container">
       <div class="add-edit-question-form">
-        <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
-          <form @submit.prevent="onSubmit" class="mt-5">
-            <b-row>
-              <b-col lg="8" class="mb-3">
-                <div class="hold-field">
-                  <TextField
-                    v-model="formValues.question"
-                    :label="$t('QUESTIONS.QUESTION')"
-                    :name="$t('QUESTIONS.QUESTION')"
-                    :rules="'required'"
-                  ></TextField>
-                </div>
-              </b-col>
-              <b-col lg="4" class="mb-3">
-                <div class="hold-field">
-                  <label>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    :rules="$route.params.id ? '' : 'required'"
-                    name="audio"
-                  >
-                    <b-form-file
-                      accept="audio/*"
-                      :placeholder="formValues.question_audio ? formValues.question_audio : 'اختر ملف'"
-                      v-model="formValues.question_audio"
+        <slot v-if="questionSlug.slug === 'choose_answer'">
+          <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
+            <form @submit.prevent="onSubmit" class="mt-5">
+              <b-row>
+                <b-col lg="8" class="mb-3">
+                  <div class="hold-field">
+                    <TextField
+                      v-model="formValues.question"
+                      :label="$t('QUESTIONS.QUESTION')"
+                      :name="$t('QUESTIONS.QUESTION')"
+                      :rules="'required'"
+                    ></TextField>
+                  </div>
+                </b-col>
+                <b-col lg="4" class="mb-3">
+                  <div class="hold-field">
+                    <label>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      :rules="$route.params.id ? '' : 'required'"
                       name="audio"
                     >
-                    </b-form-file>
-                    <b-form-invalid-feedback
-                      v-for="(error, index) in errors"
-                      :key="index"
-                    >
-                      {{ error }}
-                    </b-form-invalid-feedback>
-                  </ValidationProvider>
+                      <b-form-file
+                        accept="audio/*"
+                        :placeholder="formValues.question_audio ? formValues.question_audio : 'اختر ملف'"
+                        v-model="formValues.question_audio"
+                        name="audio"
+                      >
+                      </b-form-file>
+                      <b-form-invalid-feedback
+                        v-for="(error, index) in errors"
+                        :key="index"
+                      >
+                        {{ error }}
+                      </b-form-invalid-feedback>
+                    </ValidationProvider>
+                  </div>
+                </b-col>
+                <b-col lg="8" class="mb-3">
+                  <div class="hold-field">
+                    <TextField
+                      v-model="formValues.hint"
+                      :label="$t('QUESTIONS.HINT')"
+                      :name="$t('QUESTIONS.HINT')"
+                      :rules="'required'"
+                    ></TextField>
+                  </div>
+                </b-col>
+              </b-row>
+              <!-- --answersList: {{ answersList }} -->
+              <b-col lg="12" class="mb-3">
+                <div class="hold-field">
+                  <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
                 </div>
               </b-col>
-              <b-col lg="8" class="mb-3">
-                <div class="hold-field">
-                  <TextField
-                    v-model="formValues.hint"
-                    :label="$t('QUESTIONS.HINT')"
-                    :name="$t('QUESTIONS.HINT')"
-                    :rules="'required'"
-                  ></TextField>
-                </div>
-              </b-col>
-            </b-row>
-            <!-- --answersList: {{ answersList }} -->
-            <b-col lg="12" class="mb-3">
-              <div class="hold-field">
-                <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
-              </div>
-            </b-col>
-            <b-row v-for="(answer, idx) in answersList" :key="idx">
-              <b-col lg="4" class="mb-3">
-                <div class="hold-field">
-                  <TextField
-                    v-model="answer.answer"
-                    :label="$t('QUESTIONS.ANSWER')"
-                    :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
-                    :id="`ANSWER ${idx}`"
-                  ></TextField>
-                </div>
-              </b-col>
-              <b-col lg="4" class="mb-3">
-                <div class="hold-field">
-                  <label>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    :rules="$route.params.id ? '' : 'required'"
-                    name="audio"
-                  >
-                    <b-form-file
-                      accept="audio/*"
-                      :placeholder="answer.audio ? answer.audio : 'اختر ملف'"
-                      v-model="answer.audio"
+              <b-row v-for="(answer, idx) in answersListMcQ" :key="idx">
+                <b-col lg="4" class="mb-3">
+                  <div class="hold-field">
+                    <TextField
+                      v-model="answer.answer"
+                      :label="$t('QUESTIONS.ANSWER')"
+                      :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
+                      :id="`ANSWER ${idx}`"
+                    ></TextField>
+                  </div>
+                </b-col>
+                <b-col lg="4" class="mb-3">
+                  <div class="hold-field">
+                    <label>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      :rules="$route.params.id ? '' : 'required'"
                       name="audio"
                     >
-                    </b-form-file>
-                    <b-form-invalid-feedback
-                      v-for="(error, index) in errors"
-                      :key="index"
+                      <b-form-file
+                        accept="audio/*"
+                        :placeholder="answer.audio ? answer.audio : 'اختر ملف'"
+                        v-model="answer.audio"
+                        name="audio"
+                      >
+                      </b-form-file>
+                      <b-form-invalid-feedback
+                        v-for="(error, index) in errors"
+                        :key="index"
+                      >
+                        {{ error }}
+                      </b-form-invalid-feedback>
+                    </ValidationProvider>
+                  </div>
+                </b-col>
+                <b-col lg="2" class="mb-3">
+                  <div class="hold-field">
+                    <SelectSearch
+                      v-model="answer.correct"
+                      :label="$t('QUESTIONS.ANSWER_TYPE')"
+                      :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
+                      :id="idx"
+                      :options="correctList"
+                      :reduce="(option) => option.id"
+                      :get-option-label="(option) => option.name"
+                      @input="answerMcQ($event,answersListMcQ)"
+                    ></SelectSearch>
+                  </div>
+                </b-col>
+                <b-col lg="2" class="btn-holder">
+                  <div class="hold-field">
+                    <span class="success" v-if="answersListMcQ.length - 1 === idx"
+                          @click="addAnswerMcq">إضافة</span>
+                    <span class="mx-3 danger" v-if="answersListMcQ.length > 1"
+                          @click="answersListMcQ.splice(idx, 1)">حذف</span>
+                  </div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <div class="action-holder">
+                  <div>
+                    <Button type="submit" :loading="loading"
+                            :disabled="invalid || answersListMcQ.length <= 1 || checkOneCorrectAnswerMcq"
+                            :custom-class="'submit-btn'">
+                      {{ $t("GLOBAL_NEXT") }}
+                    </Button>
+                    <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
+                      {{ $t("GLOBAL_BACK") }}
+                    </Button>
+                  </div>
+                  <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
+                    {{ $t("GLOBAL_CANCEL") }}
+                  </Button>
+                </div>
+              </b-row>
+            </form>
+          </validation-observer>
+        </slot>
+        <slot v-if="questionSlug.slug === 'chosse_answers'">
+          <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
+            <form @submit.prevent="onSubmit" class="mt-5">
+              <b-row>
+                <b-col lg="8" class="mb-3">
+                  <div class="hold-field">
+                    <TextField
+                      v-model="formValues.question"
+                      :label="$t('QUESTIONS.QUESTION')"
+                      :name="$t('QUESTIONS.QUESTION')"
+                      :rules="'required'"
+                    ></TextField>
+                  </div>
+                </b-col>
+                <b-col lg="4" class="mb-3">
+                  <div class="hold-field">
+                    <label>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      :rules="$route.params.id ? '' : 'required'"
+                      name="audio"
                     >
-                      {{ error }}
-                    </b-form-invalid-feedback>
-                  </ValidationProvider>
-                </div>
-              </b-col>
-              <b-col lg="2" class="mb-3">
+                      <b-form-file
+                        accept="audio/*"
+                        :placeholder="formValues.question_audio ? formValues.question_audio : 'اختر ملف'"
+                        v-model="formValues.question_audio"
+                        name="audio"
+                      >
+                      </b-form-file>
+                      <b-form-invalid-feedback
+                        v-for="(error, index) in errors"
+                        :key="index"
+                      >
+                        {{ error }}
+                      </b-form-invalid-feedback>
+                    </ValidationProvider>
+                  </div>
+                </b-col>
+                <b-col lg="8" class="mb-3">
+                  <div class="hold-field">
+                    <TextField
+                      v-model="formValues.hint"
+                      :label="$t('QUESTIONS.HINT')"
+                      :name="$t('QUESTIONS.HINT')"
+                      :rules="'required'"
+                    ></TextField>
+                  </div>
+                </b-col>
+              </b-row>
+              <!-- --answersList: {{ answersList }} -->
+              <b-col lg="12" class="mb-3">
                 <div class="hold-field">
-                  <SelectSearch
-                    v-model="answer.correct"
-                    :label="$t('QUESTIONS.ANSWER_TYPE')"
-                    :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
-                    :id="idx"
-                    :options="correctList"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                  ></SelectSearch>
+                  <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
                 </div>
               </b-col>
-              <b-col lg="2" class="btn-holder">
+              <b-row v-for="(answer, idx) in answersListSelect" :key="idx">
+                <b-col lg="4" class="mb-3">
+                  <div class="hold-field">
+                    <TextField
+                      v-model="answer.answer"
+                      :label="$t('QUESTIONS.ANSWER')"
+                      :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
+                      :id="`ANSWER ${idx}`"
+                    ></TextField>
+                  </div>
+                </b-col>
+                <b-col lg="4" class="mb-3">
+                  <div class="hold-field">
+                    <label>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      :rules="$route.params.id ? '' : 'required'"
+                      name="audio"
+                    >
+                      <b-form-file
+                        accept="audio/*"
+                        :placeholder="answer.audio ? answer.audio : 'اختر ملف'"
+                        v-model="answer.audio"
+                        name="audio"
+                      >
+                      </b-form-file>
+                      <b-form-invalid-feedback
+                        v-for="(error, index) in errors"
+                        :key="index"
+                      >
+                        {{ error }}
+                      </b-form-invalid-feedback>
+                    </ValidationProvider>
+                  </div>
+                </b-col>
+                <b-col lg="2" class="mb-3">
+                  <div class="hold-field">
+                    <SelectSearch
+                      v-model="answer.correct"
+                      :label="$t('QUESTIONS.ANSWER_TYPE')"
+                      :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
+                      :id="idx"
+                      :options="correctList"
+                      :reduce="(option) => option.id"
+                      :get-option-label="(option) => option.name"
+                      @input="answerSelect($event,answersListSelect)"
+                    ></SelectSearch>
+                  </div>
+                </b-col>
+                <b-col lg="2" class="btn-holder">
+                  <div class="hold-field">
+                    <span class="success" v-if="answersListSelect.length - 1 === idx"
+                          @click="addAnswerSelect">إضافة</span>
+                    <span class="mx-3 danger" v-if="answersListSelect.length > 1"
+                          @click="answersListSelect.splice(idx, 1)">حذف</span>
+                  </div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <div class="action-holder">
+                  <div>
+                    <Button type="submit" :loading="loading"
+                            :disabled="invalid || answersListSelect.length <= 1 || checkMultiCorrectAnswerSelect"
+                            :custom-class="'submit-btn'">
+                      {{ $t("GLOBAL_NEXT") }}
+                    </Button>
+                    <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
+                      {{ $t("GLOBAL_BACK") }}
+                    </Button>
+                  </div>
+                  <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
+                    {{ $t("GLOBAL_CANCEL") }}
+                  </Button>
+                </div>
+              </b-row>
+            </form>
+          </validation-observer>
+        </slot>
+        <slot v-if="questionSlug.slug === 'chosse_true_false'">
+          <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
+            <form @submit.prevent="onSubmit" class="mt-5">
+              <b-row>
+                <b-col lg="8" class="mb-3">
+                  <div class="hold-field">
+                    <TextField
+                      v-model="formValues.question"
+                      :label="$t('QUESTIONS.QUESTION')"
+                      :name="$t('QUESTIONS.QUESTION')"
+                      :rules="'required'"
+                    ></TextField>
+                  </div>
+                </b-col>
+                <b-col lg="4" class="mb-3">
+                  <div class="hold-field">
+                    <label>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      :rules="$route.params.id ? '' : 'required'"
+                      name="audio"
+                    >
+                      <b-form-file
+                        accept="audio/*"
+                        :placeholder="formValues.question_audio ? formValues.question_audio : 'اختر ملف'"
+                        v-model="formValues.question_audio"
+                        name="audio"
+                      >
+                      </b-form-file>
+                      <b-form-invalid-feedback
+                        v-for="(error, index) in errors"
+                        :key="index"
+                      >
+                        {{ error }}
+                      </b-form-invalid-feedback>
+                    </ValidationProvider>
+                  </div>
+                </b-col>
+                <b-col lg="8" class="mb-3">
+                  <div class="hold-field">
+                    <TextField
+                      v-model="formValues.hint"
+                      :label="$t('QUESTIONS.HINT')"
+                      :name="$t('QUESTIONS.HINT')"
+                      :rules="'required'"
+                    ></TextField>
+                  </div>
+                </b-col>
+              </b-row>
+              <!-- --answersList: {{ answersList }} -->
+              <b-col lg="12" class="mb-3">
                 <div class="hold-field">
-                  <span
-                    class="success"
-                    v-if="answersList.length - 1 === idx"
-                    @click="addAnswer"
-                    >إضافة</span
-                  >
-                  <span
-                    class="mx-3 danger"
-                    v-if="answersList.length > 1"
-                    @click="answersList.splice(idx, 1)"
-                    >حذف</span
-                  >
+                  <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
                 </div>
               </b-col>
-            </b-row>
-            <b-row>
-              <div class="action-holder">
-                <div>
-                  <Button
-                    type="submit"
-                    :loading="loading"
-                    :disabled="
-                      invalid ||
-                      answersList.length <= 0 ||
-                      answersList[0].answer.length <= 0 ||
-                      !isCorrectAnswer
-                    "
-                    :custom-class="'submit-btn'"
-                  >
-                    {{ $t("GLOBAL_NEXT") }}
-                  </Button>
-                  <Button
-                    class="mx-3"
-                    @click="handleBack"
-                    :custom-class="'submit-btn back-btn'"
-                  >
-                    {{ $t("GLOBAL_BACK") }}
+              <b-row v-for="(answer, idx) in answersListTrueFalse" :key="idx">
+                <b-col lg="4" class="mb-3">
+                  <div class="hold-field">
+                    <TextField v-model="answer.answer" :label="$t('QUESTIONS.ANSWER')"
+                               :name="`${$t('QUESTIONS.ANSWER')} ${idx}`" :id="`ANSWER ${idx}`"
+                               disabled="disabled"
+                    ></TextField>
+                  </div>
+                </b-col>
+                <b-col lg="4" class="mb-3">
+                  <div class="hold-field">
+                    <label>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                    <ValidationProvider v-slot="{ errors }"
+                                        :rules="$route.params.id ? '' : 'required'" name="audio">
+                      <b-form-file accept="audio/*"
+                                   :placeholder="answer.audio ? answer.audio : 'اختر ملف'"
+                                   v-model="answer.audio" name="audio"></b-form-file>
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                        {{ error }}
+                      </b-form-invalid-feedback>
+                    </ValidationProvider>
+                  </div>
+                </b-col>
+                <b-col lg="2" class="mb-3">
+                  <div class="hold-field">
+                    <SelectSearch
+                      v-model="answer.correct"
+                      :label="$t('QUESTIONS.ANSWER_TYPE')"
+                      :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
+                      :id="idx"
+                      :options="correctList"
+                      :reduce="(option) => option.id"
+                      :get-option-label="(option) => option.name"
+                      @input="checkAnswerTureFalse($event, answersListTrueFalse)"
+                    ></SelectSearch>
+                  </div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <div class="action-holder">
+                  <div>
+                    <Button type="submit" :loading="loading"
+                            :disabled="invalid || checkOneAnswerTureFalse"
+                            :custom-class="'submit-btn'">{{ $t("GLOBAL_NEXT") }}
+                    </Button>
+                    <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
+                      {{ $t("GLOBAL_BACK") }}
+                    </Button>
+                  </div>
+                  <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
+                    {{ $t("GLOBAL_CANCEL") }}
                   </Button>
                 </div>
-                <Button
-                  @click="handleCancel"
-                  :custom-class="'cancel-btn margin'"
-                >
-                  {{ $t("GLOBAL_CANCEL") }}
-                </Button>
-              </div>
-            </b-row>
-          </form>
-        </validation-observer>
+              </b-row>
+            </form>
+          </validation-observer>
+        </slot>
+        <slot v-if="questionSlug.slug === 'drag_and_drop_one'">
+          <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
+            <form @submit.prevent="onSubmit" class="mt-5">
+              <b-row>
+                <b-col lg="4" class="mb-3">
+                  <div class="hold-field">
+                    <TextField
+                      v-model="formValues.question"
+                      :label="$t('QUESTIONS.QUESTION')"
+                      :name="$t('QUESTIONS.QUESTION')"
+                      :rules="'required'"
+                    ></TextField>
+                    <div class="preview-question-heading">عرض السؤال</div>
+                    <div v-html="previewQuestion" class="preview-question d-flex align-items-center my-3"></div>
+                  </div>
+                </b-col>
+                <b-col lg="4" class="mb-3">
+                  <label class="invisible">إضافه مساحه خالية</label>
+                  <div class="hold-field d-flex justify-content-between align-items-center">
+                    <Button :custom-class="'rounded-btn'" @click="addSpace" :disabled="lockBtn">
+                      إضافه مساحه خالية
+                    </Button>
+                    <Button :custom-class="'rounded-btn transparent-btn'" @click="removeSpace">
+                      إعاده ضبط
+                    </Button>
+                  </div>
+                </b-col>
+                <b-col lg="4" class="mb-3">
+                  <div class="hold-field">
+                    <label>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      :rules="$route.params.id ? '' : 'required'"
+                      name="audio"
+                    >
+                      <b-form-file
+                        accept="audio/*"
+                        :placeholder="formValues.question_audio ? formValues.question_audio : 'اختر ملف'"
+                        v-model="formValues.question_audio"
+                        name="audio"
+                      >
+                      </b-form-file>
+                      <b-form-invalid-feedback
+                        v-for="(error, index) in errors"
+                        :key="index"
+                      >
+                        {{ error }}
+                      </b-form-invalid-feedback>
+                    </ValidationProvider>
+                  </div>
+                </b-col>
+                <b-col lg="8" class="mb-3">
+                  <div class="hold-field">
+                    <TextField
+                      v-model="formValues.hint"
+                      :label="$t('QUESTIONS.HINT')"
+                      :name="$t('QUESTIONS.HINT')"
+                      :rules="'required'"
+                    ></TextField>
+                  </div>
+                </b-col>
+              </b-row>
+              <b-col lg="12" class="mb-3">
+                <div class="hold-field">
+                  <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
+                </div>
+              </b-col>
+              <b-row v-for="(answer, idx) in answersListDragOne" :key="idx">
+                <b-col lg="4" class="mb-3">
+                  <div class="hold-field">
+                    <TextField v-model="answer.answer" :label="$t('QUESTIONS.ANSWER')"
+                               :name="`${$t('QUESTIONS.ANSWER')} ${idx}`" :id="`ANSWER ${idx}`"
+                    ></TextField>
+                  </div>
+                </b-col>
+                <b-col lg="4" class="mb-3">
+                  <div class="hold-field">
+                    <label>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                    <ValidationProvider v-slot="{ errors }"
+                                        :rules="$route.params.id ? '' : 'required'" name="audio">
+                      <b-form-file accept="audio/*"
+                                   :placeholder="answer.audio ? answer.audio : 'اختر ملف'"
+                                   v-model="answer.audio" name="audio"></b-form-file>
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                        {{ error }}
+                      </b-form-invalid-feedback>
+                    </ValidationProvider>
+                  </div>
+                </b-col>
+                <b-col lg="2" class="mb-3">
+                  <div class="hold-field">
+                    <SelectSearch
+                      v-model="answer.correct"
+                      :label="$t('QUESTIONS.ANSWER_TYPE')"
+                      :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
+                      :id="idx"
+                      :options="correctList"
+                      :reduce="(option) => option.id"
+                      :get-option-label="(option) => option.name"
+                      @input="checkAnswerDragOne($event, answersListDragOne)"
+                    ></SelectSearch>
+                  </div>
+                </b-col>
+                <b-col lg="2" class="btn-holder">
+                  <div class="hold-field">
+                    <span class="success" v-if="answersListSelect.length - 1 === idx"
+                          @click="addAnswerDragOne">إضافة</span>
+                    <span class="mx-3 danger" v-if="answersListSelect.length > 1"
+                          @click="answersListDragOne.splice(idx, 1)">حذف</span>
+                  </div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <div class="action-holder">
+                  <div>
+                    <Button type="submit" :loading="loading"
+                            :disabled="invalid || checkOneAnswerDragOne || answersListDragOne.length <=1"
+                            :custom-class="'submit-btn'">{{ $t("GLOBAL_NEXT") }}
+                    </Button>
+                    <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
+                      {{ $t("GLOBAL_BACK") }}
+                    </Button>
+                  </div>
+                  <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
+                    {{ $t("GLOBAL_CANCEL") }}
+                  </Button>
+                </div>
+              </b-row>
+            </form>
+          </validation-observer>
+        </slot>
       </div>
     </div>
   </div>
@@ -164,6 +520,7 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import getData from "@/mixins/getData/getData";
+import tr from "vue2-datepicker/locale/es/tr";
 
 export default {
   mixins: [getData("question")],
@@ -173,6 +530,12 @@ export default {
     Button,
   },
   props: {
+    questionSlug: {
+      type: Object,
+      default: function () {
+        return {}
+      }
+    },
     loading: {
       type: Boolean,
       default: false,
@@ -180,15 +543,47 @@ export default {
   },
   data() {
     return {
+      lockBtn: false,
+      previewQuestion: "",
+      checkOneCorrectAnswerMcq: true,
+      checkOneAnswerTureFalse: true,
+      checkOneAnswerDragOne: true,
+      checkMultiCorrectAnswerSelect: true,
       formValues: {
         question: "",
         hint: "",
         question_audio: null,
         answers: [],
       },
-      answersList: [
+      answersListMcQ: [
         {
           answer: "",
+          audio: null,
+          correct: 0
+        },
+      ],
+      answersListSelect: [
+        {
+          answer: "",
+          audio: null,
+          correct: 0
+        },
+      ],
+      answersListDragOne: [
+        {
+          answer: "",
+          audio: null,
+          correct: 0
+        },
+      ],
+      answersListTrueFalse: [
+        {
+          answer: "صحيح",
+          audio: null,
+          correct: 0
+        },
+        {
+          answer: "خطأ",
           audio: null,
           correct: 0
         },
@@ -205,20 +600,69 @@ export default {
       ],
     };
   },
-  computed: {
-    isCorrectAnswer() {
-      const correctAnswer = this.answersList.find((item) => item.correct === 1);
-      if (correctAnswer === undefined) {
-        return false;
+  methods: {
+    addSpace() {
+      this.formValues.question += '%s'
+      this.lockBtn = true
+      this.previewQuestion = this.formValues.question
+    },
+    removeSpace() {
+      this.formValues.question = this.formValues.question.replace(/%s/g, '')
+      this.lockBtn = false
+      this.previewQuestion = this.formValues.question
+    },
+    answerMcQ($event, answersListMcQ) {
+      let checkOneCorrect = answersListMcQ.filter((item) => item.correct === 1)
+      if (checkOneCorrect.length >= 2) {
+        this.checkOneCorrectAnswerMcq = true
+      } else if (checkOneCorrect.length === 1) {
+        this.checkOneCorrectAnswerMcq = false
       } else {
-        return true;
+        this.checkOneCorrectAnswerMcq = true
       }
     },
-  },
-  methods: {
+    answerSelect($event, answersListSelect) {
+      let checkOneWrong = answersListSelect.filter((item) => item.correct === 0)
+      let checkOneCorrect = answersListSelect.filter((item) => item.correct === 1)
+      console.log('wrong', checkOneWrong)
+      console.log('Correct', checkOneCorrect)
+      if (checkOneWrong.length >= 1 && checkOneCorrect.length >= 1) {
+        this.checkMultiCorrectAnswerSelect = false
+      } else {
+        this.checkMultiCorrectAnswerSelect = true
+      }
+    },
+    checkAnswerTureFalse($event, answersListTrueFalse) {
+      let checkOneCorrect = answersListTrueFalse.filter((item) => item.correct === 1)
+      if (checkOneCorrect.length === 1) {
+        this.checkOneAnswerTureFalse = false
+      } else {
+        this.checkOneAnswerTureFalse = true
+      }
+    },
+    checkAnswerDragOne($event, answersListDragOne) {
+      let checkOneCorrect = answersListDragOne.filter((item) => item.correct === 1)
+      if (checkOneCorrect.length === 1) {
+        this.checkOneAnswerDragOne = false
+      } else {
+        this.checkOneAnswerDragOne = true
+      }
+    },
     onSubmit() {
-      this.assignAnswers();
-      this.$emit("onSubmit", this.formValues);
+      if (this.questionSlug.slug === 'choose_answer') {
+        this.assignAnswersMcq();
+        this.$emit("onSubmit", this.formValues);
+      } else if (this.questionSlug.slug === 'chosse_true_false') {
+        this.assignAnswersTrueFalse();
+        this.$emit("onSubmit", this.formValues);
+      } else if (this.questionSlug.slug === 'chosse_answers') {
+        this.assignAnswersSelect();
+        this.$emit("onSubmit", this.formValues);
+      } else if (this.questionSlug.slug === 'drag_and_drop_one') {
+        this.assignAnswersDragOne();
+        this.$emit("onSubmit", this.formValues);
+      }
+
     },
     handleCancel() {
       this.$emit("handleCancel");
@@ -226,27 +670,69 @@ export default {
     handleBack() {
       this.$emit("handleBack");
     },
-    addAnswer() {
-      this.answersList.push({
+    addAnswerSelect() {
+      this.answersListSelect.push({
         answer: "",
         audio: null,
         correct: 0
       });
     },
-    assignAnswers() {
-      this.formValues.answers = this.answersList.filter(
+    addAnswerMcq() {
+      this.answersListMcQ.push({
+        answer: "",
+        audio: null,
+        correct: 0
+      });
+    },
+    addAnswerDragOne() {
+      this.answersListDragOne.push({
+        answer: "",
+        audio: null,
+        correct: 0
+      });
+    },
+    assignAnswersDragOne() {
+      this.formValues.answers = this.answersListDragOne.filter(
         (answer) => answer.answer
       );
     },
+    assignAnswersTrueFalse() {
+      this.formValues.answers = this.answersListTrueFalse.filter(
+        (answer) => answer.answer
+      );
+    },
+    assignAnswersSelect() {
+      this.formValues.answers = this.answersListSelect.filter(
+        (answer) => answer.answer
+      );
+    },
+    assignAnswersMcq() {
+      this.formValues.answers = this.answersListMcQ.filter(
+        (answer) => answer.answer
+      );
+      console.log('this.formValues.answers', this.formValues.answers)
+    },
   },
   watch: {
+    "formValues.question"(newVal) {
+      // previewQuestion
+      // newVal = newVal.replace('/%s/g', '<span>space</span>')
+      this.lockBtn = newVal.includes('%s')
+      console.log('newVal', newVal)
+      this.previewQuestion = newVal
+      this.previewQuestion = this.previewQuestion.replace(/%s/g, "<span style='display: inline-block; width: 100px; height: 50px; background: #eee; border-radius: 1rem;border: 1px solid; margin: 0 .5rem'></span>")
+      console.log('this.previewQuestion', this.previewQuestion)
+    },
     question(questionEdit) {
       this.formValues.question = questionEdit.question;
       this.formValues.question_audio = questionEdit.question_audio;
       this.formValues.hint = questionEdit.hint;
       this.formValues.answers = questionEdit.answers;
-      this.answersList = this.formValues.answers;
+      this.answersListMcQ = this.formValues.answers;
     },
+    answersListMcQ(newVal) {
+      console.log('newVal', newVal)
+    }
   },
 };
 </script>

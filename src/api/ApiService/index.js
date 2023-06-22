@@ -28,7 +28,6 @@ export default function ApiService({method, url, config = {},headers={}}) {
 axios.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.log('error', error.response.data)
     store.dispatch("showToast", {
       type: "danger",
       message: error.response.data.errors,
