@@ -196,7 +196,8 @@
     "ShowDetails": "عرض تفاصيل السؤال",
     "QUESTION_TITLE_AUDIO": "التسجيل الصوتى للسؤال",
     "ANSWERS": "الإجابات",
-    "QUESTION_ANSWER_AUDIO": "التسجيل الصوتى للإجابة"
+    "QUESTION_ANSWER_AUDIO": "التسجيل الصوتى للإجابة",
+    "sortAnswers": "الترتيب الصحيح للإجابة"
   },
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",

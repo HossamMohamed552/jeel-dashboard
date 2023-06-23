@@ -184,7 +184,6 @@
                   </div>
                 </b-col>
               </b-row>
-              <!-- --answersList: {{ answersList }} -->
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
@@ -317,7 +316,6 @@
                   </div>
                 </b-col>
               </b-row>
-              <!-- --answersList: {{ answersList }} -->
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
@@ -393,7 +391,8 @@
                       :rules="'required'"
                     ></TextField>
                     <div class="preview-question-heading">عرض السؤال</div>
-                    <div v-html="previewQuestion" class="preview-question d-flex align-items-center my-3"></div>
+                    <div v-html="previewQuestion"
+                         class="preview-question d-flex align-items-center my-3"></div>
                   </div>
                 </b-col>
                 <b-col lg="4" class="mb-3">
@@ -485,9 +484,9 @@
                 </b-col>
                 <b-col lg="2" class="btn-holder">
                   <div class="hold-field">
-                    <span class="success" v-if="answersListSelect.length - 1 === idx"
+                    <span class="success" v-if="answersListDragOne.length - 1 === idx"
                           @click="addAnswerDragOne">إضافة</span>
-                    <span class="mx-3 danger" v-if="answersListSelect.length > 1"
+                    <span class="mx-3 danger" v-if="answersListDragOne.length > 1"
                           @click="answersListDragOne.splice(idx, 1)">حذف</span>
                   </div>
                 </b-col>
@@ -511,6 +510,136 @@
             </form>
           </validation-observer>
         </slot>
+        <slot v-if="questionSlug.slug === 'drag_and_drop_many'">
+          <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
+            <form @submit.prevent="onSubmit" class="mt-5">
+              <b-row>
+                <b-col lg="6" class="mb-3">
+                  <div class="hold-field">
+                    <TextField
+                      v-model="formValues.question"
+                      :label="$t('QUESTIONS.QUESTION')"
+                      :name="$t('QUESTIONS.QUESTION')"
+                      :rules="'required'"
+                    ></TextField>
+                  </div>
+                </b-col>
+                <b-col lg="6" class="mb-3">
+                  <div class="hold-field">
+                    <label>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      :rules="$route.params.id ? '' : 'required'"
+                      name="audio"
+                    >
+                      <b-form-file
+                        accept="audio/*"
+                        :placeholder="formValues.question_audio ? formValues.question_audio : 'اختر ملف'"
+                        v-model="formValues.question_audio"
+                        name="audio"
+                      >
+                      </b-form-file>
+                      <b-form-invalid-feedback
+                        v-for="(error, index) in errors"
+                        :key="index"
+                      >
+                        {{ error }}
+                      </b-form-invalid-feedback>
+                    </ValidationProvider>
+                  </div>
+                </b-col>
+                <b-col lg="12" class="mb-3">
+                  <div class="hold-field">
+                    <TextField
+                      v-model="formValues.hint"
+                      :label="$t('QUESTIONS.HINT')"
+                      :name="$t('QUESTIONS.HINT')"
+                      :rules="'required'"
+                    ></TextField>
+                  </div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col lg="7">
+                  <b-row>
+                    <b-col lg="12" class="mb-3">
+                      <div class="hold-field">
+                        <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
+                      </div>
+                    </b-col>
+                    <slot v-for="(answer, idx) in answersListDragSort">
+                      <b-col lg="6" class="mb-3">
+                        <div class="hold-field">
+                          <TextField v-model="answer.answer" :label="$t('QUESTIONS.ANSWER')"
+                                     :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
+                                     :id="`ANSWER ${idx}`"
+                          ></TextField>
+                        </div>
+                      </b-col>
+                      <b-col lg="4" class="mb-3">
+                        <div class="hold-field">
+                          <label>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                          <ValidationProvider v-slot="{ errors }"
+                                              :rules="$route.params.id ? '' : 'required'"
+                                              name="audio">
+                            <b-form-file accept="audio/*"
+                                         :placeholder="answer.audio ? answer.audio : 'اختر ملف'"
+                                         v-model="answer.audio" name="audio"></b-form-file>
+                            <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                              {{ error }}
+                            </b-form-invalid-feedback>
+                          </ValidationProvider>
+                        </div>
+                      </b-col>
+                      <b-col lg="2" class="btn-holder">
+                        <div class="hold-field">
+                                          <span class="success"
+                                                v-if="answersListDragSort.length - 1 === idx"
+                                                @click="addAnswerDragSort">إضافة</span>
+                          <span class="mx-3 danger" v-if="answersListDragSort.length > 1"
+                                @click="answersListDragSort.splice(idx, 1)">حذف</span>
+                        </div>
+                      </b-col>
+                    </slot>
+                  </b-row>
+                </b-col>
+
+                <b-col lg="5">
+                  <b-row>
+                    <b-col lg="12" class="mb-3">
+                      <div class="hold-field">
+                        <label class="mx-0">{{ $t("QUESTIONS.sortAnswers") }}:</label>
+                      </div>
+                    </b-col>
+                    <draggable v-model="answersListDragSort" group="items" :animation="150"
+                               class="list-group" :sort="true" v-if="answersListDragSort.length>=2">
+                      <div v-for="(item,index) in answersListDragSort" :key="item.id"
+                           class="list-group-item">
+                        <p class="answer-name">{{ index + 1 }} - {{ item.answer }}</p>
+                      </div>
+                    </draggable>
+                  </b-row>
+                </b-col>
+              </b-row>
+              <b-row>
+                <div class="action-holder">
+                  <div>
+                    <Button type="submit" :loading="loading"
+                            :disabled="invalid || answersListDragSort.length < 2"
+                            :custom-class="'submit-btn'">{{ $t("GLOBAL_NEXT") }}
+                    </Button>
+                    <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
+                      {{ $t("GLOBAL_BACK") }}
+                    </Button>
+                  </div>
+                  <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
+                    {{ $t("GLOBAL_CANCEL") }}
+                  </Button>
+                </div>
+              </b-row>
+            </form>
+          </validation-observer>
+        </slot>
       </div>
     </div>
   </div>
@@ -520,11 +649,12 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import getData from "@/mixins/getData/getData";
-import tr from "vue2-datepicker/locale/es/tr";
+import draggable from "vuedraggable";
 
 export default {
   mixins: [getData("question")],
   components: {
+    draggable,
     TextField,
     SelectSearch,
     Button,
@@ -555,6 +685,14 @@ export default {
         question_audio: null,
         answers: [],
       },
+      answersListDragSort: [
+        {
+          answer: "",
+          order: 0,
+          audio: null,
+          correct: 0
+        }
+      ],
       answersListMcQ: [
         {
           answer: "",
@@ -598,6 +736,7 @@ export default {
           name: "إجابة خطأ",
         },
       ],
+      answersDragSortToSend: []
     };
   },
   methods: {
@@ -624,8 +763,6 @@ export default {
     answerSelect($event, answersListSelect) {
       let checkOneWrong = answersListSelect.filter((item) => item.correct === 0)
       let checkOneCorrect = answersListSelect.filter((item) => item.correct === 1)
-      console.log('wrong', checkOneWrong)
-      console.log('Correct', checkOneCorrect)
       if (checkOneWrong.length >= 1 && checkOneCorrect.length >= 1) {
         this.checkMultiCorrectAnswerSelect = false
       } else {
@@ -661,8 +798,10 @@ export default {
       } else if (this.questionSlug.slug === 'drag_and_drop_one') {
         this.assignAnswersDragOne();
         this.$emit("onSubmit", this.formValues);
+      } else if (this.questionSlug.slug === 'drag_and_drop_many') {
+        this.assignAnswersDragSort();
+        this.$emit("onSubmit", this.formValues);
       }
-
     },
     handleCancel() {
       this.$emit("handleCancel");
@@ -691,6 +830,13 @@ export default {
         correct: 0
       });
     },
+    addAnswerDragSort() {
+      this.answersListDragSort.push({
+        answer: "",
+        order: 0,
+        audio: null
+      })
+    },
     assignAnswersDragOne() {
       this.formValues.answers = this.answersListDragOne.filter(
         (answer) => answer.answer
@@ -710,18 +856,23 @@ export default {
       this.formValues.answers = this.answersListMcQ.filter(
         (answer) => answer.answer
       );
+    },
+    assignAnswersDragSort() {
+      this.formValues.answers = this.answersDragSortToSend
       console.log('this.formValues.answers', this.formValues.answers)
     },
   },
   watch: {
+    answersListDragSort(newList) {
+      newList = newList.map((item, index) => {
+        return {answer: item.answer, order: index + 1, audio: item.audio, correct: 0}
+      })
+      this.answersDragSortToSend = newList
+    },
     "formValues.question"(newVal) {
-      // previewQuestion
-      // newVal = newVal.replace('/%s/g', '<span>space</span>')
       this.lockBtn = newVal.includes('%s')
-      console.log('newVal', newVal)
       this.previewQuestion = newVal
       this.previewQuestion = this.previewQuestion.replace(/%s/g, "<span style='display: inline-block; width: 100px; height: 50px; background: #eee; border-radius: 1rem;border: 1px solid; margin: 0 .5rem'></span>")
-      console.log('this.previewQuestion', this.previewQuestion)
     },
     question(questionEdit) {
       this.formValues.question = questionEdit.question;
@@ -730,9 +881,6 @@ export default {
       this.formValues.answers = questionEdit.answers;
       this.answersListMcQ = this.formValues.answers;
     },
-    answersListMcQ(newVal) {
-      console.log('newVal', newVal)
-    }
   },
 };
 </script>
