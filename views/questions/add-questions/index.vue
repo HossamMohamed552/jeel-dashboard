@@ -94,7 +94,7 @@
             <h6>{{ `${$t('QUESTIONS.ANSWER')} ${idx + 1}` }}</h6>
             <p>{{ answer.answer }}</p>
           </b-col>
-          <b-col lg="6">
+          <b-col lg="6" v-if="questionTypeSlug !== 'drag_and_drop_many'">
             <h6>{{ $t('QUESTIONS.RIGHT_ANSWER') }}</h6>
             <p v-if="getCorrectAnswer">
               {{ getCorrectAnswer(this.collectData.answers, this.correct_id) }}</p>
@@ -165,7 +165,7 @@ export default {
       collectData: {},
       questionTypesValues: {},
       correct_id: 1,
-      // choicesNumber: null,
+      isDragSort: '',
       steps: [
         {
           icon: "1",
@@ -262,6 +262,7 @@ export default {
       this.$router.push("/dashboard/questions");
     },
     getQuestionPatternData(data) {
+      this.questionTypeSlug = data.question_slug.slug
       this.questionTypesValues = data;
       const object = {
         ...data,
@@ -303,10 +304,14 @@ export default {
       }
     },
     getCorrectAnswer(list, id) {
-      let correctAnswer;
-      if (list && list.length) {
-        correctAnswer = list.find((item) => item.correct == id).answer;
-        return correctAnswer;
+      if(this.questionTypeSlug !== 'drag_and_drop_many'){
+        let correctAnswer;
+        if (list && list.length) {
+          correctAnswer = list.find((item) => item.correct == id).answer;
+          return correctAnswer;
+        }
+      } else {
+        return  []
       }
     },
     saveQuestion() {
@@ -324,11 +329,18 @@ export default {
       formData.append("question", this.collectData.question);
       formData.append("question_audio", this.collectData.question_audio);
       formData.append("hint", this.collectData.hint);
-      for (let answer = 0; answer < this.collectData.answers.length; answer++) {
-        console.log('answer', this.collectData.answers[answer])
-        formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer].answer);
-        formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
-        formData.append(`answers[${answer}][correct]`, this.collectData.answers[answer].correct);
+      if (this.questionTypeSlug === 'drag_and_drop_many'){
+        for (let answer = 0; answer < this.collectData.answers.length; answer++) {
+          formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer].answer);
+          formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
+          formData.append(`answers[${answer}][order]`, this.collectData.answers[answer].order);
+        }
+      } else {
+        for (let answer = 0; answer < this.collectData.answers.length; answer++) {
+          formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer].answer);
+          formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
+          formData.append(`answers[${answer}][correct]`, this.collectData.answers[answer].correct);
+        }
       }
       axios
         .post("/questions", formData, {
