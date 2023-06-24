@@ -877,7 +877,6 @@
                 <div class="hold-field">
                   <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
                 </div>
-                <pre>{{ answersListMatchOneToOne }}</pre>
               </b-col>
               <b-row
                 v-for="(answer, idx) in answersListMatchOneToOne"
