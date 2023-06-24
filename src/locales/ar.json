@@ -197,7 +197,9 @@
     "QUESTION_TITLE_AUDIO": "التسجيل الصوتى للسؤال",
     "ANSWERS": "الإجابات",
     "QUESTION_ANSWER_AUDIO": "التسجيل الصوتى للإجابة",
-    "sortAnswers": "الترتيب الصحيح للإجابة"
+    "sortAnswers": "الترتيب الصحيح للإجابة",
+    "QUESTION_ANSWER_MATCH_TO_AUDIO": "التسجيل الصوتى للإجابة المقابلة",
+    "ANSWER_MATCH_TO": "الإجابة المقابلة"
   },
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",

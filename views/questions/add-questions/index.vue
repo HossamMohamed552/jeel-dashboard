@@ -329,13 +329,27 @@ export default {
       formData.append("question", this.collectData.question);
       formData.append("question_audio", this.collectData.question_audio);
       formData.append("hint", this.collectData.hint);
+      console.log(this.questionTypeSlug , "questionTypeSlug");
+      console.log(typeof this.questionTypeSlug);
       if (this.questionTypeSlug === 'drag_and_drop_many'){
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer].answer);
           formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
           formData.append(`answers[${answer}][order]`, this.collectData.answers[answer].order);
         }
-      } else {
+      }
+       else if (this.questionTypeSlug == 'match_one_to_one') {
+        for (let answer = 0; answer < this.collectData.answers.length; answer++) {
+          console.log(answer);
+          formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer].answer);
+          formData.append(`answers[${answer}][match_from]`, this.collectData.answers[answer].match_from);
+          formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
+          formData.append(`answers[${answer}][answers_to][${answer}][answer]`, this.collectData.answers[answer].answers_to[answer].answer);
+          formData.append(`answers[${answer}][answers_to][${answer}][match_to]`, this.collectData.answers[answer].answers_to[answer].match_to);
+          formData.append(`answers[${answer}][answers_to][${answer}][audio]`, this.collectData.answers[answer].answers_to[answer].audio);
+        }
+      }
+       else {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer].answer);
           formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
