@@ -1275,9 +1275,8 @@ export default {
     assignAnswersMatchOneToOne() {
       console.log(this.answersListMatchOneToOne, "this.answersListMatchOneToOne");
       this.formValues.answers = this.answersListMatchOneToOne.filter(
-        (answer) => {
-          answer.answer;
-        }
+        (answer) =>  answer.answer
+        
       );
     },
     assignAnswersDragSort() {
