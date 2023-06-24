@@ -27,18 +27,13 @@
                       <b-form-file
                         accept="audio/*"
                         :placeholder="
-                          formValues.question_audio
-                            ? formValues.question_audio
-                            : 'اختر ملف'
+                          formValues.question_audio ? formValues.question_audio : 'اختر ملف'
                         "
                         v-model="formValues.question_audio"
                         name="audio"
                       >
                       </b-form-file>
-                      <b-form-invalid-feedback
-                        v-for="(error, index) in errors"
-                        :key="index"
-                      >
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                         {{ error }}
                       </b-form-invalid-feedback>
                     </ValidationProvider>
@@ -87,10 +82,7 @@
                         name="audio"
                       >
                       </b-form-file>
-                      <b-form-invalid-feedback
-                        v-for="(error, index) in errors"
-                        :key="index"
-                      >
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                         {{ error }}
                       </b-form-invalid-feedback>
                     </ValidationProvider>
@@ -133,27 +125,16 @@
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="
-                        invalid ||
-                        answersListMcQ.length <= 1 ||
-                        checkOneCorrectAnswerMcq
-                      "
+                      :disabled="invalid || answersListMcQ.length <= 1 || checkOneCorrectAnswerMcq"
                       :custom-class="'submit-btn'"
                     >
                       {{ $t("GLOBAL_NEXT") }}
                     </Button>
-                    <Button
-                      class="mx-3"
-                      @click="handleBack"
-                      :custom-class="'submit-btn back-btn'"
-                    >
+                    <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
                       {{ $t("GLOBAL_BACK") }}
                     </Button>
                   </div>
-                  <Button
-                    @click="handleCancel"
-                    :custom-class="'cancel-btn margin'"
-                  >
+                  <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
                     {{ $t("GLOBAL_CANCEL") }}
                   </Button>
                 </div>
@@ -186,18 +167,13 @@
                       <b-form-file
                         accept="audio/*"
                         :placeholder="
-                          formValues.question_audio
-                            ? formValues.question_audio
-                            : 'اختر ملف'
+                          formValues.question_audio ? formValues.question_audio : 'اختر ملف'
                         "
                         v-model="formValues.question_audio"
                         name="audio"
                       >
                       </b-form-file>
-                      <b-form-invalid-feedback
-                        v-for="(error, index) in errors"
-                        :key="index"
-                      >
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                         {{ error }}
                       </b-form-invalid-feedback>
                     </ValidationProvider>
@@ -245,10 +221,7 @@
                         name="audio"
                       >
                       </b-form-file>
-                      <b-form-invalid-feedback
-                        v-for="(error, index) in errors"
-                        :key="index"
-                      >
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                         {{ error }}
                       </b-form-invalid-feedback>
                     </ValidationProvider>
@@ -292,26 +265,17 @@
                       type="submit"
                       :loading="loading"
                       :disabled="
-                        invalid ||
-                        answersListSelect.length <= 1 ||
-                        checkMultiCorrectAnswerSelect
+                        invalid || answersListSelect.length <= 1 || checkMultiCorrectAnswerSelect
                       "
                       :custom-class="'submit-btn'"
                     >
                       {{ $t("GLOBAL_NEXT") }}
                     </Button>
-                    <Button
-                      class="mx-3"
-                      @click="handleBack"
-                      :custom-class="'submit-btn back-btn'"
-                    >
+                    <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
                       {{ $t("GLOBAL_BACK") }}
                     </Button>
                   </div>
-                  <Button
-                    @click="handleCancel"
-                    :custom-class="'cancel-btn margin'"
-                  >
+                  <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
                     {{ $t("GLOBAL_CANCEL") }}
                   </Button>
                 </div>
@@ -344,18 +308,13 @@
                       <b-form-file
                         accept="audio/*"
                         :placeholder="
-                          formValues.question_audio
-                            ? formValues.question_audio
-                            : 'اختر ملف'
+                          formValues.question_audio ? formValues.question_audio : 'اختر ملف'
                         "
                         v-model="formValues.question_audio"
                         name="audio"
                       >
                       </b-form-file>
-                      <b-form-invalid-feedback
-                        v-for="(error, index) in errors"
-                        :key="index"
-                      >
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                         {{ error }}
                       </b-form-invalid-feedback>
                     </ValidationProvider>
@@ -403,10 +362,7 @@
                         v-model="answer.audio"
                         name="audio"
                       ></b-form-file>
-                      <b-form-invalid-feedback
-                        v-for="(error, index) in errors"
-                        :key="index"
-                      >
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                         {{ error }}
                       </b-form-invalid-feedback>
                     </ValidationProvider>
@@ -422,9 +378,7 @@
                       :options="correctList"
                       :reduce="(option) => option.id"
                       :get-option-label="(option) => option.name"
-                      @input="
-                        checkAnswerTureFalse($event, answersListTrueFalse)
-                      "
+                      @input="checkAnswerTureFalse($event, answersListTrueFalse)"
                     ></SelectSearch>
                   </div>
                 </b-col>
@@ -439,18 +393,11 @@
                       :custom-class="'submit-btn'"
                       >{{ $t("GLOBAL_NEXT") }}
                     </Button>
-                    <Button
-                      class="mx-3"
-                      @click="handleBack"
-                      :custom-class="'submit-btn back-btn'"
-                    >
+                    <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
                       {{ $t("GLOBAL_BACK") }}
                     </Button>
                   </div>
-                  <Button
-                    @click="handleCancel"
-                    :custom-class="'cancel-btn margin'"
-                  >
+                  <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
                     {{ $t("GLOBAL_CANCEL") }}
                   </Button>
                 </div>
@@ -479,20 +426,11 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <label class="invisible">إضافه مساحه خالية</label>
-                  <div
-                    class="hold-field d-flex justify-content-between align-items-center"
-                  >
-                    <Button
-                      :custom-class="'rounded-btn'"
-                      @click="addSpace"
-                      :disabled="lockBtn"
-                    >
+                  <div class="hold-field d-flex justify-content-between align-items-center">
+                    <Button :custom-class="'rounded-btn'" @click="addSpace" :disabled="lockBtn">
                       إضافه مساحه خالية
                     </Button>
-                    <Button
-                      :custom-class="'rounded-btn transparent-btn'"
-                      @click="removeSpace"
-                    >
+                    <Button :custom-class="'rounded-btn transparent-btn'" @click="removeSpace">
                       إعاده ضبط
                     </Button>
                   </div>
@@ -508,18 +446,13 @@
                       <b-form-file
                         accept="audio/*"
                         :placeholder="
-                          formValues.question_audio
-                            ? formValues.question_audio
-                            : 'اختر ملف'
+                          formValues.question_audio ? formValues.question_audio : 'اختر ملف'
                         "
                         v-model="formValues.question_audio"
                         name="audio"
                       >
                       </b-form-file>
-                      <b-form-invalid-feedback
-                        v-for="(error, index) in errors"
-                        :key="index"
-                      >
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                         {{ error }}
                       </b-form-invalid-feedback>
                     </ValidationProvider>
@@ -566,10 +499,7 @@
                         v-model="answer.audio"
                         name="audio"
                       ></b-form-file>
-                      <b-form-invalid-feedback
-                        v-for="(error, index) in errors"
-                        :key="index"
-                      >
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                         {{ error }}
                       </b-form-invalid-feedback>
                     </ValidationProvider>
@@ -612,26 +542,15 @@
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="
-                        invalid ||
-                        checkOneAnswerDragOne ||
-                        answersListDragOne.length <= 1
-                      "
+                      :disabled="invalid || checkOneAnswerDragOne || answersListDragOne.length <= 1"
                       :custom-class="'submit-btn'"
                       >{{ $t("GLOBAL_NEXT") }}
                     </Button>
-                    <Button
-                      class="mx-3"
-                      @click="handleBack"
-                      :custom-class="'submit-btn back-btn'"
-                    >
+                    <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
                       {{ $t("GLOBAL_BACK") }}
                     </Button>
                   </div>
-                  <Button
-                    @click="handleCancel"
-                    :custom-class="'cancel-btn margin'"
-                  >
+                  <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
                     {{ $t("GLOBAL_CANCEL") }}
                   </Button>
                 </div>
@@ -664,18 +583,13 @@
                       <b-form-file
                         accept="audio/*"
                         :placeholder="
-                          formValues.question_audio
-                            ? formValues.question_audio
-                            : 'اختر ملف'
+                          formValues.question_audio ? formValues.question_audio : 'اختر ملف'
                         "
                         v-model="formValues.question_audio"
                         name="audio"
                       >
                       </b-form-file>
-                      <b-form-invalid-feedback
-                        v-for="(error, index) in errors"
-                        :key="index"
-                      >
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                         {{ error }}
                       </b-form-invalid-feedback>
                     </ValidationProvider>
@@ -697,9 +611,7 @@
                   <b-row>
                     <b-col lg="12" class="mb-3">
                       <div class="hold-field">
-                        <label class="mx-0"
-                          >{{ $t("QUESTIONS.ANSWERS") }}:</label
-                        >
+                        <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
                       </div>
                     </b-col>
                     <slot v-for="(answer, idx) in answersListDragSort">
@@ -715,9 +627,7 @@
                       </b-col>
                       <b-col lg="4" class="mb-3">
                         <div class="hold-field">
-                          <label>{{
-                            $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
-                          }}</label>
+                          <label>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
                           <ValidationProvider
                             v-slot="{ errors }"
                             :rules="$route.params.id ? '' : 'required'"
@@ -725,16 +635,11 @@
                           >
                             <b-form-file
                               accept="audio/*"
-                              :placeholder="
-                                answer.audio ? answer.audio : 'اختر ملف'
-                              "
+                              :placeholder="answer.audio ? answer.audio : 'اختر ملف'"
                               v-model="answer.audio"
                               name="audio"
                             ></b-form-file>
-                            <b-form-invalid-feedback
-                              v-for="(error, index) in errors"
-                              :key="index"
-                            >
+                            <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                               {{ error }}
                             </b-form-invalid-feedback>
                           </ValidationProvider>
@@ -764,9 +669,7 @@
                   <b-row>
                     <b-col lg="12" class="mb-3">
                       <div class="hold-field">
-                        <label class="mx-0"
-                          >{{ $t("QUESTIONS.sortAnswers") }}:</label
-                        >
+                        <label class="mx-0">{{ $t("QUESTIONS.sortAnswers") }}:</label>
                       </div>
                     </b-col>
                     <draggable
@@ -782,9 +685,7 @@
                         :key="item.id"
                         class="list-group-item"
                       >
-                        <p class="answer-name">
-                          {{ index + 1 }} - {{ item.answer }}
-                        </p>
+                        <p class="answer-name">{{ index + 1 }} - {{ item.answer }}</p>
                       </div>
                     </draggable>
                   </b-row>
@@ -800,18 +701,11 @@
                       :custom-class="'submit-btn'"
                       >{{ $t("GLOBAL_NEXT") }}
                     </Button>
-                    <Button
-                      class="mx-3"
-                      @click="handleBack"
-                      :custom-class="'submit-btn back-btn'"
-                    >
+                    <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
                       {{ $t("GLOBAL_BACK") }}
                     </Button>
                   </div>
-                  <Button
-                    @click="handleCancel"
-                    :custom-class="'cancel-btn margin'"
-                  >
+                  <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
                     {{ $t("GLOBAL_CANCEL") }}
                   </Button>
                 </div>
@@ -844,18 +738,13 @@
                       <b-form-file
                         accept="audio/*"
                         :placeholder="
-                          formValues.question_audio
-                            ? formValues.question_audio
-                            : 'اختر ملف'
+                          formValues.question_audio ? formValues.question_audio : 'اختر ملف'
                         "
                         v-model="formValues.question_audio"
                         name="audio"
                       >
                       </b-form-file>
-                      <b-form-invalid-feedback
-                        v-for="(error, index) in errors"
-                        :key="index"
-                      >
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                         {{ error }}
                       </b-form-invalid-feedback>
                     </ValidationProvider>
@@ -878,10 +767,7 @@
                   <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
                 </div>
               </b-col>
-              <b-row
-                v-for="(answer, idx) in answersListMatchOneToOne"
-                :key="idx"
-              >
+              <b-row v-for="(answer, idx) in answersListMatchOneToOne" :key="idx">
                 <b-col lg="6" class="mb-3">
                   <div class="hold-field">
                     <TextField
@@ -907,20 +793,13 @@
                         name="audio"
                       >
                       </b-form-file>
-                      <b-form-invalid-feedback
-                        v-for="(error, index) in errors"
-                        :key="index"
-                      >
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                         {{ error }}
                       </b-form-invalid-feedback>
                     </ValidationProvider>
                   </div>
                 </b-col>
-                <b-col
-                  col="8"
-                  v-for="(answerTo, idx) in answer.answers_to"
-                  :key="idx"
-                >
+                <b-col col="8" v-for="(answerTo, idx) in answer.answers_to" :key="idx">
                   <b-row>
                     <b-col lg="6" class="mb-3">
                       <div class="hold-field">
@@ -934,9 +813,7 @@
                     </b-col>
                     <b-col lg="6" class="mb-3">
                       <div class="hold-field">
-                        <label>{{
-                          $t("QUESTIONS.QUESTION_ANSWER_MATCH_TO_AUDIO")
-                        }}</label>
+                        <label>{{ $t("QUESTIONS.QUESTION_ANSWER_MATCH_TO_AUDIO") }}</label>
                         <ValidationProvider
                           v-slot="{ errors }"
                           :rules="$route.params.id ? '' : 'required'"
@@ -944,17 +821,12 @@
                         >
                           <b-form-file
                             accept="audio/*"
-                            :placeholder="
-                              answerTo.audio ? answerTo.audio : 'اختر ملف'
-                            "
+                            :placeholder="answerTo.audio ? answerTo.audio : 'اختر ملف'"
                             v-model="answerTo.audio"
                             name="audio"
                           >
                           </b-form-file>
-                          <b-form-invalid-feedback
-                            v-for="(error, index) in errors"
-                            :key="index"
-                          >
+                          <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                             {{ error }}
                           </b-form-invalid-feedback>
                         </ValidationProvider>
@@ -989,25 +861,16 @@
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="
-                        invalid || answersListMatchOneToOne.length <= 1
-                      "
+                      :disabled="invalid || answersListMatchOneToOne.length <= 1"
                       :custom-class="'submit-btn'"
                     >
                       {{ $t("GLOBAL_NEXT") }}
                     </Button>
-                    <Button
-                      class="mx-3"
-                      @click="handleBack"
-                      :custom-class="'submit-btn back-btn'"
-                    >
+                    <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
                       {{ $t("GLOBAL_BACK") }}
                     </Button>
                   </div>
-                  <Button
-                    @click="handleCancel"
-                    :custom-class="'cancel-btn margin'"
-                  >
+                  <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
                     {{ $t("GLOBAL_CANCEL") }}
                   </Button>
                 </div>
@@ -1150,12 +1013,8 @@ export default {
       }
     },
     answerSelect($event, answersListSelect) {
-      let checkOneWrong = answersListSelect.filter(
-        (item) => item.correct === 0
-      );
-      let checkOneCorrect = answersListSelect.filter(
-        (item) => item.correct === 1
-      );
+      let checkOneWrong = answersListSelect.filter((item) => item.correct === 0);
+      let checkOneCorrect = answersListSelect.filter((item) => item.correct === 1);
       if (checkOneWrong.length >= 1 && checkOneCorrect.length >= 1) {
         this.checkMultiCorrectAnswerSelect = false;
       } else {
@@ -1163,9 +1022,7 @@ export default {
       }
     },
     checkAnswerTureFalse($event, answersListTrueFalse) {
-      let checkOneCorrect = answersListTrueFalse.filter(
-        (item) => item.correct === 1
-      );
+      let checkOneCorrect = answersListTrueFalse.filter((item) => item.correct === 1);
       if (checkOneCorrect.length === 1) {
         this.checkOneAnswerTureFalse = false;
       } else {
@@ -1173,9 +1030,7 @@ export default {
       }
     },
     checkAnswerDragOne($event, answersListDragOne) {
-      let checkOneCorrect = answersListDragOne.filter(
-        (item) => item.correct === 1
-      );
+      let checkOneCorrect = answersListDragOne.filter((item) => item.correct === 1);
       if (checkOneCorrect.length === 1) {
         this.checkOneAnswerDragOne = false;
       } else {
@@ -1252,31 +1107,20 @@ export default {
       });
     },
     assignAnswersDragOne() {
-      this.formValues.answers = this.answersListDragOne.filter(
-        (answer) => answer.answer
-      );
+      this.formValues.answers = this.answersListDragOne.filter((answer) => answer.answer);
     },
     assignAnswersTrueFalse() {
-      this.formValues.answers = this.answersListTrueFalse.filter(
-        (answer) => answer.answer
-      );
+      this.formValues.answers = this.answersListTrueFalse.filter((answer) => answer.answer);
     },
     assignAnswersSelect() {
-      this.formValues.answers = this.answersListSelect.filter(
-        (answer) => answer.answer
-      );
+      this.formValues.answers = this.answersListSelect.filter((answer) => answer.answer);
     },
     assignAnswersMcq() {
-      this.formValues.answers = this.answersListMcQ.filter(
-        (answer) => answer.answer
-      );
+      this.formValues.answers = this.answersListMcQ.filter((answer) => answer.answer);
     },
     assignAnswersMatchOneToOne() {
       console.log(this.answersListMatchOneToOne, "this.answersListMatchOneToOne");
-      this.formValues.answers = this.answersListMatchOneToOne.filter(
-        (answer) =>  answer.answer
-        
-      );
+      this.formValues.answers = this.answersListMatchOneToOne.filter((answer) => answer.answer);
     },
     assignAnswersDragSort() {
       this.formValues.answers = this.answersDragSortToSend;
@@ -1284,16 +1128,19 @@ export default {
     },
   },
   watch: {
-    answersListDragSort(newList) {
-      newList = newList.map((item, index) => {
-        return {
-          answer: item.answer,
-          order: index + 1,
-          audio: item.audio,
-          correct: 0,
-        };
-      });
-      this.answersDragSortToSend = newList;
+    answersListDragSort: {
+      handler(newList) {
+        const list = newList.map((item, index) => {
+          return {
+            answer: item.answer,
+            order: index + 1,
+            audio: item.audio,
+            correct: 0,
+          };
+        });
+        this.answersDragSortToSend = list;
+      },
+      deep: true,
     },
     "formValues.question"(newVal) {
       this.lockBtn = newVal.includes("%s");
