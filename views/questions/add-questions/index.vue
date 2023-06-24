@@ -282,7 +282,6 @@ export default {
       this.handleNavigation(1);
     },
     getSecondStepData(data) {
-      console.log('data', data)
       const object = {
         ...data,
       };
@@ -341,9 +340,7 @@ export default {
         }
       }
        else if (this.questionTypeSlug == 'match_one_to_one') {
-         console.log('====================================> before', this.collectData.answers);
          for (let answer = 0; answer < this.collectData.answers.length; answer++) {
-          console.log('========================================> after', answer);
           console.log(answer);
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][match_from]`, this.collectData.answers[answer]?.match_from);
