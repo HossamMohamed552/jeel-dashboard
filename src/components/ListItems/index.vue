@@ -76,8 +76,8 @@
         <template #cell(question_difficulty)="data">
           <span>{{ data.item.question_difficulty.name }}</span>
         </template>
-        <template #cell(level)="data">
-          <span>{{ data.item.level.name }}</span>
+        <template  #cell(level)="data">
+          <span v-if="data.item.level">{{ data.item.level.name }}</span>
         </template>
         <template #cell(learningpaths)="data">
           <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{
