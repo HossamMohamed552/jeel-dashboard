@@ -133,11 +133,11 @@
                             <b-form-group :label="$t('SCHOOL.music')" v-slot="{ ariaDescribedby }"
                                           class="group-type">
                               <b-form-radio v-model="createSchool.music_status" value="0"
-                                            name="group-music_type">غير متاح
+                                            name="group-music_type">أكابيلا
                               </b-form-radio>
                               <b-form-radio v-model="createSchool.music_status" value="1"
                                             name="group-music_type">
-                                متاح
+                                بموسيقى
                               </b-form-radio>
                             </b-form-group>
                           </ValidationProvider>

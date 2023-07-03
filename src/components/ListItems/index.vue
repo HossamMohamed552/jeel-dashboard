@@ -48,7 +48,7 @@
           <span>{{ data.item.status === 1 ? "مفعل" : "غير مفعل" }}</span>
         </template>
         <template #cell(music_status)="data">
-          <span>{{ data.item.music_status === 1 ? "متاح" : "غير متاح" }}</span>
+          <span>{{ data.item.music_status === 1 ? "بموسيقى" : "أكابيلا" }}</span>
         </template>
         <template #cell(country)="data">
           <span>{{ data.value.name }}</span>
