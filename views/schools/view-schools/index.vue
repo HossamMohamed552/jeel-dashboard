@@ -50,7 +50,7 @@
                 <ShowItem
                   :title="$t('SCHOOL.music')"
                   :subtitle="
-                    singleSchool.music_status == 0 ? 'غير متاح' : 'متاح'
+                    singleSchool.music_status == 0 ? 'أكابيلا' : 'بموسيقى'
                   "
                 />
               </b-col>

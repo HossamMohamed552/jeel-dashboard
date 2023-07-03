@@ -35,8 +35,8 @@
                 <div class="hold-field">
                   <ValidationProvider rules="required" v-slot="{ errors }">
                     <b-form-group :label="$t('GROUP.music')" class="group-type">
-                      <b-form-radio v-model="createGroup.music_status" value="0" name="group-music_type">غير متاح</b-form-radio>
-                      <b-form-radio v-model="createGroup.music_status" value="1" name="group-music_type">متاح</b-form-radio>
+                      <b-form-radio v-model="createGroup.music_status" value="0" name="group-music_type">أكابيلا</b-form-radio>
+                      <b-form-radio v-model="createGroup.music_status" value="1" name="group-music_type">بموسيقى</b-form-radio>
                     </b-form-group>
                     <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                       {{ error }}
