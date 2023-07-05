@@ -3,6 +3,11 @@ export const getSchoolGroupRequest = (params) => ({
   url: "school-groups",
   config: { params },
 });
+export const getAllSchoolGroupRequest = (params) => ({
+  method: "get",
+  url: "school-groups?list_all=true",
+  config: { params },
+});
 export const getSingleSchoolGroupRequest = (params) => ({
   method: "get",
   url: `school-groups/${params}`,

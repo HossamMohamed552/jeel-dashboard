@@ -23,53 +23,26 @@ export default {
     toast(newVal) {
       if (this.toast.isVisible) {
         this.showToast = true;
-        if (typeof this.toast.message === "string") {
-          newVal.message.forEach((item) => {
-            this.$root.$bvToast.toast(item, {
-              title: this.toast.title,
-              solid: true,
-              variant: this.toast.type,
-              toaster:
-                this.$i18n.locale === "ar"
-                  ? "b-toaster-top-left"
-                  : "b-toaster-top-right",
-            });
-          })
-        } else if (typeof this.toast.message === "object") {
-          console.log(typeof this.toast.message)
-          newVal.message.forEach((item) => {
-            for (const key in item){
-              this.$root.$bvToast.toast(key, {
-                title: this.toast.title,
-                solid: true,
-                variant: this.toast.type,
-                toaster:
-                  this.$i18n.locale === "ar"
-                    ? "b-toaster-top-left"
-                    : "b-toaster-top-right",
-              });
-            }
-            this.$root.$bvToast.toast(item, {
-              title: this.toast.title,
-              solid: true,
-              variant: this.toast.type,
-              toaster:
-                this.$i18n.locale === "ar"
-                  ? "b-toaster-top-left"
-                  : "b-toaster-top-right",
-            });
-          })
-        }
-
-        this.$root.$bvToast.toast(this.toast.message, {
-          title: this.toast.title,
-          solid: true,
-          variant: this.toast.type,
-          toaster:
-            this.$i18n.locale === "ar"
-              ? "b-toaster-top-left"
-              : "b-toaster-top-right",
-        });
+        newVal.message.forEach((item) => {
+          this.$root.$bvToast.toast(item, {
+            title: this.toast.title,
+            solid: true,
+            variant: this.toast.type,
+            toaster:
+              this.$i18n.locale === "ar"
+                ? "b-toaster-top-left"
+                : "b-toaster-top-right",
+          });
+        })
+        // this.$root.$bvToast.toast(this.toast.message, {
+        //   title: this.toast.title,
+        //   solid: true,
+        //   variant: this.toast.type,
+        //   toaster:
+        //     this.$i18n.locale === "ar"
+        //       ? "b-toaster-top-left"
+        //       : "b-toaster-top-right",
+        // });
         // if (typeof this.toast.message === "string") {
         //
         // } else {
