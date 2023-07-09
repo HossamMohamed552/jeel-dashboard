@@ -115,6 +115,11 @@ const protectedRoutes = [
         component: () => import("../../views/levels/index.vue"),
       },
       {
+        path: "/dashboard/level-classes",
+        name: "level-classes",
+        component: () => import("../../views/levels/level-classes/index.vue"),
+      },
+      {
         path: "/dashboard/levels/add",
         name: "add-levels",
         component: () => import("../../views/levels/add-level/index.vue"),

@@ -96,8 +96,8 @@ import SelectField from "@/components/Shared/SelectField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {getSingleVideoRequest} from "@/api/videos";
-import {getLearningPathsRequest} from "@/api/learningPath";
-import {getLevelsRequest} from "@/api/level";
+import {getAllLearningPathsRequest} from "@/api/learningPath";
+import {getAllLevelsRequest} from "@/api/level";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 
 
@@ -131,7 +131,6 @@ export default {
         level_id: '',
         img_url: null,
         thumbnail: null
-
       }
     };
   },
@@ -167,13 +166,13 @@ export default {
       }
     },
     getAllLearningPaths() {
-      this.ApiService(getLearningPathsRequest()).then((response) => {
+      this.ApiService(getAllLearningPathsRequest()).then((response) => {
         const pathsArr= response.data.data;
         this.paths = pathsArr.map(path=>{return {value:path.id,text:path.name}})
       })
     },
     getAllLevels() {
-      this.ApiService(getLevelsRequest()).then((response) => {
+      this.ApiService(getAllLevelsRequest()).then((response) => {
         const levelsArr = response.data.data;
         this.levels = levelsArr.map(path=>{return {value:path.id,text:path.name}})
       })

@@ -184,8 +184,8 @@ import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue"
 import SelectField from "@/components/Shared/SelectField/index.vue";
-import {getLevelsRequest} from "@/api/level";
-import {getLearningPathsRequest, getQuestionRequest} from "@/api/question";
+import {getAllLevelsRequest} from "@/api/level";
+import {getAllLearningPathsRequest, getQuestionRequest} from "@/api/question";
 import {
   getGeneralQuestionRequest,
   getQuestionDifficultyLevelLearnRequest,
@@ -323,13 +323,13 @@ export default {
       this.$emit("handleCancel");
     },
     getAllLevels() {
-      this.ApiService(getLevelsRequest()).then((response) => {
+      this.ApiService(getAllLevelsRequest()).then((response) => {
         this.levels = response.data.data
       })
     },
     getLearningPaths() {
-      const params = {page: 1};
-      this.ApiService(getLearningPathsRequest(params)).then((response) => {
+      // const params = {page: 1};
+      this.ApiService(getAllLearningPathsRequest()).then((response) => {
         this.learningPaths = response.data.data;
       });
     },

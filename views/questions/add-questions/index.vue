@@ -135,6 +135,9 @@ import {
   getQuestionDifficultiesRequest,
   getBloomCategoriesRequest,
   getLearningMethodsRequest,
+  getAllLearningPathsRequest,
+  getAllBloomCategoriesRequest,
+  getAllQuestionDifficultiesRequest,
 } from "@/api/question";
 import Stepper from "@/components/Shared/Stepper/index.vue";
 import axios from "axios";
@@ -166,7 +169,7 @@ export default {
       questionTypesValues: {},
       correct_id: 1,
       isDragSort: '',
-      questionTypeSlug:'',
+      questionTypeSlug: '',
       steps: [
         {
           icon: "1",
@@ -226,7 +229,7 @@ export default {
         page: 1,
       };
 
-      this.ApiService(getQuestionDifficultiesRequest(params)).then((response) => {
+      this.ApiService(getAllQuestionDifficultiesRequest(params)).then((response) => {
         this.questionDifficulties = response.data.data;
       });
     },
@@ -235,7 +238,7 @@ export default {
         page: 1,
       };
 
-      this.ApiService(getBloomCategoriesRequest(params)).then((response) => {
+      this.ApiService(getAllBloomCategoriesRequest(params)).then((response) => {
         this.bloomCategories = response.data.data;
       });
     },
@@ -244,7 +247,7 @@ export default {
         page: 1,
       };
 
-      this.ApiService(getLearningMethodsRequest(params)).then((response) => {
+      this.ApiService(getAllLearningPathsRequest(params)).then((response) => {
         this.learningMethods = response.data.data;
       });
     },
@@ -305,14 +308,14 @@ export default {
       }
     },
     getCorrectAnswer(list, id) {
-      if(this.questionTypeSlug !== 'drag_and_drop_many'){
+      if (this.questionTypeSlug !== 'drag_and_drop_many') {
         let correctAnswer;
         if (list && list.length) {
           correctAnswer = list.find((item) => item.correct == id)?.answer;
           return correctAnswer;
         }
       } else {
-        return  []
+        return []
       }
     },
     saveQuestion() {
@@ -330,17 +333,16 @@ export default {
       formData.append("question", this.collectData.question);
       formData.append("question_audio", this.collectData.question_audio);
       formData.append("hint", this.collectData.hint);
-      console.log(this.questionTypeSlug , "questionTypeSlug");
+      console.log(this.questionTypeSlug, "questionTypeSlug");
       console.log(typeof this.questionTypeSlug);
-      if (this.questionTypeSlug === 'drag_and_drop_many'){
+      if (this.questionTypeSlug === 'drag_and_drop_many') {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
           formData.append(`answers[${answer}][order]`, this.collectData.answers[answer].order);
         }
-      }
-       else if (this.questionTypeSlug == 'match_one_to_one') {
-         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
+      } else if (this.questionTypeSlug == 'match_one_to_one') {
+        for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           console.log(answer);
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][match_from]`, this.collectData.answers[answer]?.match_from);
@@ -349,8 +351,7 @@ export default {
           formData.append(`answers[${answer}][answers_to][${0}][match_to]`, this.collectData.answers[answer].answers_to[0]?.match_to);
           formData.append(`answers[${answer}][answers_to][${0}][audio]`, this.collectData.answers[answer].answers_to[0]?.audio);
         }
-      }
-       else {
+      } else {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
