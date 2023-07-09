@@ -21,8 +21,7 @@
             <ShowItem :title="$t('TABLE_FIELDS.school_group')" :subtitle="school_group.name"/>
           </b-col>
         </b-row>
-        <b-row
-          v-if="user.permissions.includes('rearrange-missions') || user.permissions.includes('manage-learningpath')">
+        <b-row v-if="user.permissions.includes('rearrange-missions')">
           <b-col lg="6">
             <h3 class="mission-title">المراحل</h3>
             <div class="mission-item" v-for="mission in levelNotFiltered">
@@ -39,6 +38,16 @@
             </div>
           </b-col>
         </b-row>
+        <b-row v-if="user.permissions.includes('manage-learningpath')">
+          <b-col lg="12">
+            <h3 class="mission-title">المراحل المختاره</h3>
+            <div class="mission-item" v-for="mission in levelFiltered">
+              <span>{{ mission.name }}</span>
+<!--              :to="`/dashboard/path-content/${mission.id}`"-->
+            </div>
+          </b-col>
+        </b-row>
+
       </div>
     </div>
   </section>

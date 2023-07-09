@@ -23,7 +23,7 @@
                 />
               </b-col>
             </b-row>
-            <b-dd-divider class="my-4" />
+            <b-dd-divider class="my-4"/>
             <b-row class="row-data">
               <b-col lg="6" v-if="singleSchool && singleSchool.school_type">
                 <ShowItem
@@ -38,7 +38,7 @@
                 />
               </b-col>
             </b-row>
-            <b-dd-divider class="my-4" />
+            <b-dd-divider class="my-4"/>
             <b-row class="row-data">
               <b-col lg="6" v-if="singleSchool && singleSchool.admin">
                 <ShowItem
@@ -55,7 +55,7 @@
                 />
               </b-col>
             </b-row>
-            <b-dd-divider class="my-4" />
+            <b-dd-divider class="my-4"/>
             <b-row class="row-data">
               <b-col lg="6" v-if="singleSchool && singleSchool.admin">
                 <ShowItem
@@ -70,7 +70,7 @@
                 />
               </b-col>
             </b-row>
-            <b-dd-divider class="my-4" />
+            <b-dd-divider class="my-4"/>
             <b-row class="row-data">
               <b-col lg="6">
                 <ShowItem
@@ -91,7 +91,7 @@
             class="d-flex justify-content-center align-items-center"
           >
             <div class="img-container">
-              <img class="w-100" :src="singleSchool.logo" />
+              <img class="w-100" :src="singleSchool.logo"/>
             </div>
           </b-col>
         </b-row>
@@ -99,13 +99,13 @@
           <b-col lg="12">
             <SchoolTabs>
               <template v-slot:classes>
-                <ClassesList :schoolId="currentSchoolId" />
+                <ClassesList :schoolId="currentSchoolId" v-if="currentSchoolId"/>
               </template>
               <template v-slot:staff-enroll>
-                <StaffEnrollList :schoolId="currentSchoolId" />
+                <StaffEnrollList :schoolId="currentSchoolId"/>
               </template>
               <template v-slot:student-enroll>
-                <StudentEnrollList :schoolId="currentSchoolId" />
+                <StudentEnrollList :schoolId="currentSchoolId"/>
               </template>
             </SchoolTabs>
           </b-col>
@@ -120,7 +120,8 @@ import SchoolTabs from "@/components/Modules/SchoolDetails/SchoolTabs/index.vue"
 import ClassesList from "@/components/Modules/Classes/ClassesList/index.vue";
 import StaffEnrollList from "@/components/Modules/StaffEnroll/StaffEnrollList/index.vue";
 import StudentEnrollList from "@/components/Modules/StudentEnroll/StudentEnrollList/index.vue";
-import { getSingleSchoolsRequest } from "@/api/school.js";
+import {getSingleSchoolsRequest} from "@/api/school.js";
+
 export default {
   name: "index",
   components: {

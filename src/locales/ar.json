@@ -72,7 +72,8 @@
     "detailBtn": "تفاصيل",
     "editBtn": "تعديل",
     "deleteBtn": "حذف",
-    "addVideoQuestion": "اضافة اسئله الفيديو"
+    "addVideoQuestion": "اضافة اسئله الفيديو",
+    "ManageClasses": "إداره الصفوف"
   },
   "ROLES": {
     "ADD_NEW": "إضافة صلاحية",

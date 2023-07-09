@@ -58,7 +58,7 @@ import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue"
 import {getSingleTermsRequest} from "@/api/term";
-import {getLevelsRequest} from "@/api/level";
+import {getAllLevelsRequest} from "@/api/level";
 
 export default {
   components: {
@@ -104,7 +104,7 @@ export default {
       }
     },
     getAllLevels() {
-      this.ApiService(getLevelsRequest()).then((response) => {
+      this.ApiService(getAllLevelsRequest()).then((response) => {
         this.levels = response.data.data
       })
     }

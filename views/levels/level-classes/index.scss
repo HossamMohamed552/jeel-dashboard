@@ -1,0 +1,44 @@
+@import "src/assets/style/scss/_mixin";
+@import "src/assets/style/scss/_variables";
+.show-level-classes {
+  @include styleViewList;
+}
+.hold-missions-class{
+  background: #fff;
+  color: $color-primary;
+  border : 1px solid $color-primary;
+  padding: 1rem;
+  border-radius: .5rem;
+  .class-name{
+    font-size: 1.5rem;
+    color: #000;
+    font-weight: bold;
+  }
+  .missions{
+    padding: .5rem;
+    min-height: 140px;
+    max-height: 185px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    p{
+      font-size: 1rem;
+      color: #000;
+      font-weight: 600;
+    }
+    .mission-item{
+      background: rgba(190, 190, 190, 0.51);
+      border-radius: .25rem;
+      @include flexCenter(center);
+      padding: 1rem 0;
+      transition: all ease-in-out .3s;
+      i{
+        margin: 0 .5rem;
+      }
+      &:hover{
+        background: $color-primary;
+        color: #fff;
+        cursor: pointer;
+      }
+    }
+  }
+}

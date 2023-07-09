@@ -17,7 +17,7 @@
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddClass"
         >
-          <img src="@/assets/images/icons/plus.svg" />
+          <img src="@/assets/images/icons/plus.svg"/>
           <span>إضافة صف دراسي</span>
         </Button>
       </template>
@@ -36,8 +36,9 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { deleteClassRequest, getClassRequest } from "@/api/class.js";
+import {deleteClassRequest, getClassRequest} from "@/api/class.js";
 import Modal from "@/components/Shared/Modal/index.vue";
+
 export default {
   props: {
     schoolId: {
@@ -45,7 +46,7 @@ export default {
       default: null,
     },
   },
-  components: { Modal, ListItems, Button },
+  components: {Modal, ListItems, Button},
   data() {
     return {
       loading: false,
@@ -83,7 +84,7 @@ export default {
       // this.$router.push("/dashboard/class/add");
       this.$router.push({
         name: "add-class",
-        params: { schoolId: this.schoolId },
+        params: {schoolId: this.schoolId},
       });
     },
     getClasses(event) {
@@ -105,7 +106,7 @@ export default {
       // this.$router.push(`/dashboard/class/edit/${$event}`);
       this.$router.push({
         name: "edit-class",
-        params: { id: $event, schoolId: this.schoolId },
+        params: {id: $event, schoolId: this.schoolId},
       });
     },
     deleteItem($event) {

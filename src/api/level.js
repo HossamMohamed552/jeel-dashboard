@@ -3,6 +3,11 @@ export const getLevelsRequest = (params) => ({
   url: 'levels',
   config: {params}
 })
+export const getAllLevelsRequest = (params) => ({
+  method: 'get',
+  url: 'levels?list_all=true',
+  config: {params}
+})
 export const getSingleLevelRequest = (params) => ({
   method: 'get',
   url: `levels/${params}`,

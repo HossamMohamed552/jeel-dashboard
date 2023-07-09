@@ -106,8 +106,8 @@ import SelectField from "@/components/Shared/SelectField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {getSinglePaperworkRequest} from "@/api/paperWork";
-import {getLearningPathsRequest} from "@/api/learningPath";
-import {getLevelsRequest} from "@/api/level";
+import {getAllLearningPathsRequest, getLearningPathsRequest} from "@/api/learningPath";
+import {getAllLevelsRequest, getLevelsRequest} from "@/api/level";
 
 
 export default {
@@ -170,7 +170,7 @@ export default {
       }
     },
     getAllLearningPaths() {
-      this.ApiService(getLearningPathsRequest()).then((response) => {
+      this.ApiService(getAllLearningPathsRequest()).then((response) => {
         const pathsArr = response.data.data;
         this.paths = pathsArr.map(path => {
           return {value: path.id, text: path.name}
@@ -178,7 +178,7 @@ export default {
       })
     },
     getAllLevels() {
-      this.ApiService(getLevelsRequest()).then((response) => {
+      this.ApiService(getAllLevelsRequest()).then((response) => {
         const levelsArr = response.data.data;
         this.levels = levelsArr.map(path => {
           return {value: path.id, text: path.name}

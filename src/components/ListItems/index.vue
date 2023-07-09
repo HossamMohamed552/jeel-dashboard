@@ -100,7 +100,6 @@
                   :disabled="data.item.is_selected === false">تعديل المحتوى
           </Button>
         </template>
-
         <template #cell(actions)="data">
           <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
             <template #button-content>
@@ -109,11 +108,13 @@
             <b-dropdown-item @click="detailItem(data.item.id)"
             >{{ $t("CONTROLS.detailBtn") }}
             </b-dropdown-item>
-            <b-dropdown-divider
-              v-if="!user.permissions.includes('manage-learningpath')"></b-dropdown-divider>
-            <b-dropdown-item @click="editItem(data.item.id)"
-                             v-if="!user.permissions.includes('manage-learningpath')">
+            <b-dropdown-divider v-if="!user.permissions.includes('manage-learningpath')"></b-dropdown-divider>
+            <b-dropdown-item @click="editItem(data.item.id)" v-if="!user.permissions.includes('manage-learningpath')">
               {{ $t("CONTROLS.editBtn") }}
+            </b-dropdown-item>
+            <b-dropdown-divider v-if="user.permissions.includes('manage-learningpath')"></b-dropdown-divider>
+            <b-dropdown-item v-if="user.permissions.includes('manage-learningpath')" @click="$router.push('/dashboard/level-classes')">
+              {{ $t("CONTROLS.ManageClasses") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="!data.item.is_default"></b-dropdown-divider>
             <b-dropdown-item v-if="!data.item.is_default"
