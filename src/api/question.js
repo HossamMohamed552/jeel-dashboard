@@ -28,6 +28,12 @@ export const getAllLearningPathsRequest = (params) => ({
   url: 'learningpaths?list_all=true',
   config: {params}
 })
+export const getAllLearningMethodsRequest = (params) => ({
+  method: 'get',
+  url: 'language_methods?list_all=true',
+  config: {params}
+})
+
 export const getLaguageSkillsRequest = (params) => ({
   method: 'get',
   url: `language_skills?page=${params.page}`,

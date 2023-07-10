@@ -137,7 +137,7 @@ import {
   getLearningMethodsRequest,
   getAllLearningPathsRequest,
   getAllBloomCategoriesRequest,
-  getAllQuestionDifficultiesRequest,
+  getAllQuestionDifficultiesRequest, getAllLearningMethodsRequest,
 } from "@/api/question";
 import Stepper from "@/components/Shared/Stepper/index.vue";
 import axios from "axios";
@@ -243,11 +243,11 @@ export default {
       });
     },
     getLearningMethods() {
-      const params = {
-        page: 1,
-      };
+      // const params = {
+      //   page: 1,
+      // };
 
-      this.ApiService(getAllLearningPathsRequest(params)).then((response) => {
+      this.ApiService(getAllLearningMethodsRequest()).then((response) => {
         this.learningMethods = response.data.data;
       });
     },
