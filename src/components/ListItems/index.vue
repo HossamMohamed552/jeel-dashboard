@@ -76,7 +76,7 @@
         <template #cell(question_difficulty)="data">
           <span>{{ data.item.question_difficulty.name }}</span>
         </template>
-        <template  #cell(level)="data">
+        <template #cell(level)="data">
           <span v-if="data.item.level">{{ data.item.level.name }}</span>
         </template>
         <template #cell(learningpaths)="data">
@@ -92,7 +92,8 @@
           </div>
         </template>
         <template #cell(allowEdit)="data">
-          <b-form-checkbox v-model="data.item.is_selected" switch></b-form-checkbox>
+          <b-form-checkbox v-model="data.item.is_selected" switch
+                           @change="managePath(data.item)"></b-form-checkbox>
         </template>
         <template #cell(edit)="data">
           <Button :custom-class="'transparent-btn rounded-btn'"
@@ -108,12 +109,16 @@
             <b-dropdown-item @click="detailItem(data.item.id)"
             >{{ $t("CONTROLS.detailBtn") }}
             </b-dropdown-item>
-            <b-dropdown-divider v-if="!user.permissions.includes('manage-learningpath')"></b-dropdown-divider>
-            <b-dropdown-item @click="editItem(data.item.id)" v-if="!user.permissions.includes('manage-learningpath')">
+            <b-dropdown-divider
+              v-if="!user.permissions.includes('manage-learningpath')"></b-dropdown-divider>
+            <b-dropdown-item @click="editItem(data.item.id)"
+                             v-if="!user.permissions.includes('manage-learningpath')">
               {{ $t("CONTROLS.editBtn") }}
             </b-dropdown-item>
-            <b-dropdown-divider v-if="user.permissions.includes('manage-learningpath')"></b-dropdown-divider>
-            <b-dropdown-item v-if="user.permissions.includes('manage-learningpath')" @click="$router.push('/dashboard/level-classes')">
+            <b-dropdown-divider
+              v-if="user.permissions.includes('manage-learningpath')"></b-dropdown-divider>
+            <b-dropdown-item v-if="user.permissions.includes('manage-learningpath')"
+                             @click="$router.push('/dashboard/level-classes')">
               {{ $t("CONTROLS.ManageClasses") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="!data.item.is_default"></b-dropdown-divider>
@@ -146,6 +151,8 @@
 import {debounce} from "lodash";
 import {mapGetters} from "vuex";
 import Button from "@/components/Shared/Button/index.vue";
+import axios from "axios";
+import VueCookies from "vue-cookies";
 
 export default {
   name: "index",
@@ -170,7 +177,7 @@ export default {
     ...mapGetters(['user'])
   },
   props: {
-    showSortControls:{
+    showSortControls: {
       type: Boolean,
       default: true,
     },
@@ -269,8 +276,24 @@ export default {
     addVideoQuestion(id) {
       this.$emit("addVideoQuestion", id);
     },
-  },
-};
+    managePath(item) {
+      axios.put('/manage-mission-learningpath', {
+        "mission_id": item.mission_id,
+        "learningpath_id": item.id,
+        "is_selected": item.is_selected ? 1 : 0
+      }, {
+        headers: {
+          Authorization: `Bearer ${VueCookies.get("token")}`,
+          locale: 'ar',
+          'Content-Type': 'application/json'
+        }}).then((response) => {
+        console.log('item', item)
+      }).catch((error) => {
+        console.log('error', error)
+      })
+    }
+    },
+  };
 </script>
 <style scoped lang="scss">
 @import "./index";
