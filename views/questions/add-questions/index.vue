@@ -34,6 +34,7 @@
 
     <AddEditQuestionAnswersForm
       v-show="currentStep === 1"
+      :questionSlug="collectData.question_slug"
       @handleBack="goToQuestionFieldsForm"
       @handleCancel="handleCancel"
       @onSubmit="getSecondStepData"
@@ -91,9 +92,9 @@
           </b-col>
           <b-col v-for="(answer, idx) in this.collectData.answers" :key="idx" lg="3">
             <h6>{{ `${$t('QUESTIONS.ANSWER')} ${idx + 1}` }}</h6>
-            <p>{{ answer.answer }}</p>
+            <p>{{ answer && answer.answer }}</p>
           </b-col>
-          <b-col lg="6">
+          <b-col lg="6" v-if="questionTypeSlug !== 'drag_and_drop_many'">
             <h6>{{ $t('QUESTIONS.RIGHT_ANSWER') }}</h6>
             <p v-if="getCorrectAnswer">
               {{ getCorrectAnswer(this.collectData.answers, this.correct_id) }}</p>
@@ -134,6 +135,9 @@ import {
   getQuestionDifficultiesRequest,
   getBloomCategoriesRequest,
   getLearningMethodsRequest,
+  getAllLearningPathsRequest,
+  getAllBloomCategoriesRequest,
+  getAllQuestionDifficultiesRequest, getAllLearningMethodsRequest,
 } from "@/api/question";
 import Stepper from "@/components/Shared/Stepper/index.vue";
 import axios from "axios";
@@ -141,7 +145,7 @@ import VueCookies from "vue-cookies";
 import globalAssetData from "@/mixins/getData/globalAssetData";
 
 export default {
-  mixins:[globalAssetData],
+  mixins: [globalAssetData],
   components: {
     Modal,
     Button,
@@ -164,7 +168,8 @@ export default {
       collectData: {},
       questionTypesValues: {},
       correct_id: 1,
-      // choicesNumber: null,
+      isDragSort: '',
+      questionTypeSlug: '',
       steps: [
         {
           icon: "1",
@@ -193,6 +198,7 @@ export default {
     getQuestionTypes() {
       const params = {
         page: 1,
+        main_questions: 1
       };
 
       this.ApiService(getQuestionTypsRequest(params)).then((response) => {
@@ -223,7 +229,7 @@ export default {
         page: 1,
       };
 
-      this.ApiService(getQuestionDifficultiesRequest(params)).then((response) => {
+      this.ApiService(getAllQuestionDifficultiesRequest(params)).then((response) => {
         this.questionDifficulties = response.data.data;
       });
     },
@@ -232,16 +238,16 @@ export default {
         page: 1,
       };
 
-      this.ApiService(getBloomCategoriesRequest(params)).then((response) => {
+      this.ApiService(getAllBloomCategoriesRequest(params)).then((response) => {
         this.bloomCategories = response.data.data;
       });
     },
     getLearningMethods() {
-      const params = {
-        page: 1,
-      };
+      // const params = {
+      //   page: 1,
+      // };
 
-      this.ApiService(getLearningMethodsRequest(params)).then((response) => {
+      this.ApiService(getAllLearningMethodsRequest()).then((response) => {
         this.learningMethods = response.data.data;
       });
     },
@@ -260,6 +266,7 @@ export default {
       this.$router.push("/dashboard/questions");
     },
     getQuestionPatternData(data) {
+      this.questionTypeSlug = data.question_slug.slug
       this.questionTypesValues = data;
       const object = {
         ...data,
@@ -301,10 +308,14 @@ export default {
       }
     },
     getCorrectAnswer(list, id) {
-      let correctAnswer;
-      if (list && list.length) {
-        correctAnswer = list.find((item) => item.correct == id).answer;
-        return correctAnswer;
+      if (this.questionTypeSlug !== 'drag_and_drop_many') {
+        let correctAnswer;
+        if (list && list.length) {
+          correctAnswer = list.find((item) => item.correct == id)?.answer;
+          return correctAnswer;
+        }
+      } else {
+        return []
       }
     },
     saveQuestion() {
@@ -322,11 +333,30 @@ export default {
       formData.append("question", this.collectData.question);
       formData.append("question_audio", this.collectData.question_audio);
       formData.append("hint", this.collectData.hint);
-      for (let answer = 0; answer < this.collectData.answers.length; answer++) {
-        console.log('answer',this.collectData.answers[answer])
-        formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer].answer);
-        formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
-        formData.append(`answers[${answer}][correct]`, this.collectData.answers[answer].correct);
+      console.log(this.questionTypeSlug, "questionTypeSlug");
+      console.log(typeof this.questionTypeSlug);
+      if (this.questionTypeSlug === 'drag_and_drop_many') {
+        for (let answer = 0; answer < this.collectData.answers.length; answer++) {
+          formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
+          formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
+          formData.append(`answers[${answer}][order]`, this.collectData.answers[answer].order);
+        }
+      } else if (this.questionTypeSlug == 'match_one_to_one') {
+        for (let answer = 0; answer < this.collectData.answers.length; answer++) {
+          console.log(answer);
+          formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
+          formData.append(`answers[${answer}][match_from]`, this.collectData.answers[answer]?.match_from);
+          formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer]?.audio);
+          formData.append(`answers[${answer}][answers_to][${0}][answer]`, this.collectData.answers[answer].answers_to[0]?.answer);
+          formData.append(`answers[${answer}][answers_to][${0}][match_to]`, this.collectData.answers[answer].answers_to[0]?.match_to);
+          formData.append(`answers[${answer}][answers_to][${0}][audio]`, this.collectData.answers[answer].answers_to[0]?.audio);
+        }
+      } else {
+        for (let answer = 0; answer < this.collectData.answers.length; answer++) {
+          formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
+          formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
+          formData.append(`answers[${answer}][correct]`, this.collectData.answers[answer].correct);
+        }
       }
       axios
         .post("/questions", formData, {

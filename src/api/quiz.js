@@ -10,6 +10,11 @@ export const getQuizLevelPathRequest = (params) => ({
   url: `quizzes?per_page=200&level_id=${params.levelId}&learning_path_id=${params.learnPathId}`,
   config: {}
 })
+export const getGeneralQuestionRequest = (params) => ({
+  method: 'get',
+  url: `questions?level_id=${params.levelId}&learning_path_id=${params.learnPathId}`,
+  config: {}
+})
 export const getQuestionDifficultyLevelLearnRequest = (params) => ({
   method: 'get',
   url: `quizzes_question_difficulty?level_id=${params.levelId}&learning_path_id=${params.learnPathId}`,

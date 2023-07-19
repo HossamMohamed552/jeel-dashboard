@@ -18,20 +18,15 @@
               </b-col>
               <b-col lg="3" class="mb-3">
                 <div class="hold-field">
-                  <ValidationProvider v-slot="{errors, invalid}" rules="required">
-                    <label>{{ $t('SCHOOL.school_group') }}</label>
-                    <select v-model="createSchool.school_group_id"
-                            class="custom-selectBox form-control">
-                      <option value="''" selected disabled>{{ $t('SCHOOL.school_group') }}</option>
-                      <option v-for="schoolGroup in schoolGroups" :key="schoolGroup.id"
-                              :value="schoolGroup.id">
-                        {{ schoolGroup.name }}
-                      </option>
-                    </select>
-                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                      {{ error }}
-                    </b-form-invalid-feedback>
-                  </ValidationProvider>
+                  <SelectSearch
+                    v-model="createSchool.school_group_id"
+                    :label="$t('SCHOOL.school_group')"
+                    :name="$t('SCHOOL.school_group')"
+                    :options="schoolGroups"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                  ></SelectSearch>
                 </div>
               </b-col>
               <b-col lg="12">
@@ -40,75 +35,41 @@
                     <b-row>
                       <b-col lg="12" class="mb-3">
                         <div class="hold-field">
-                          <ValidationProvider v-slot="{errors, invalid}" rules="required">
-                            <label>{{ $t('SCHOOL.school_type') }}</label>
-                            <select v-model="createSchool.school_type_id"
-                                    class="custom-selectBox form-control">
-                              <option value="''" selected disabled>{{
-                                  $t('SCHOOL.school_type')
-                                }}
-                              </option>
-                              <option v-for="schoolType in schoolTypes" :key="schoolType.id"
-                                      :value="schoolType.id">
-                                {{ schoolType.name }}
-                              </option>
-                            </select>
-                            <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                              {{ error }}
-                            </b-form-invalid-feedback>
-                          </ValidationProvider>
-                        </div>
-                      </b-col>
-                      <!--                      <b-col lg="6" class="mb-3">-->
-                      <!--                        <div class="hold-field">-->
-                      <!--                          <TextField-->
-                      <!--                            v-model="createSchool.email"-->
-                      <!--                            :label="$t('SCHOOL.email')"-->
-                      <!--                            :name="$t('SCHOOL.email')"-->
-                      <!--                            :rules="'email'"-->
-                      <!--                          ></TextField>-->
-                      <!--                        </div>-->
-                      <!--                      </b-col>-->
-                      <b-col lg="6" class="mb-3">
-                        <div class="hold-field">
-                          <ValidationProvider v-slot="{errors, invalid}" rules="required">
-                            <label>{{ $t('SCHOOL.userName') }}</label>
-                            <select v-model="createSchool.admin_id"
-                                    class="custom-selectBox form-control">
-                              <option value="''" selected disabled>{{
-                                  $t('SCHOOL.userName')
-                                }}
-                              </option>
-                              <option v-for="user in users" :key="user.id"
-                                      :value="user.id">
-                                {{ user.name }}
-                              </option>
-                            </select>
-                            <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                              {{ error }}
-                            </b-form-invalid-feedback>
-                          </ValidationProvider>
+                          <SelectSearch
+                            v-model="createSchool.school_type_id"
+                            :label="$t('SCHOOL.school_type')"
+                            :name="$t('SCHOOL.school_type')"
+                            :options="schoolTypes"
+                            :reduce="(option) => option.id"
+                            :get-option-label="(option) => option.name"
+                            :rules="'required'"
+                          ></SelectSearch>
                         </div>
                       </b-col>
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
-                          <ValidationProvider v-slot="{errors, invalid}" rules="required">
-                            <label>{{ $t('SCHOOL.package') }}</label>
-                            <select v-model="createSchool.package_id"
-                                    class="custom-selectBox form-control">
-                              <option value="''" selected disabled>{{
-                                  $t('SCHOOL.package')
-                                }}
-                              </option>
-                              <option v-for="itemPackage in packages" :key="itemPackage.id"
-                                      :value="itemPackage.id">
-                                {{ itemPackage.name }}
-                              </option>
-                            </select>
-                            <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                              {{ error }}
-                            </b-form-invalid-feedback>
-                          </ValidationProvider>
+                          <SelectSearch
+                            v-model="createSchool.admin_id"
+                            :label="$t('SCHOOL.userName')"
+                            :name="$t('SCHOOL.userName')"
+                            :options="users"
+                            :reduce="(option) => option.id"
+                            :get-option-label="(option) => option.name"
+                            :rules="'required'"
+                          ></SelectSearch>
+                        </div>
+                      </b-col>
+                      <b-col lg="6" class="mb-3">
+                        <div class="hold-field">
+                          <SelectSearch
+                            v-model="createSchool.package_id"
+                            :label="$t('SCHOOL.package')"
+                            :name="$t('SCHOOL.package')"
+                            :options="packages"
+                            :reduce="(option) => option.id"
+                            :get-option-label="(option) => option.name"
+                            :rules="'required'"
+                          ></SelectSearch>
                         </div>
                       </b-col>
                       <b-col lg="6" class="mb-3">
@@ -133,11 +94,11 @@
                             <b-form-group :label="$t('SCHOOL.music')" v-slot="{ ariaDescribedby }"
                                           class="group-type">
                               <b-form-radio v-model="createSchool.music_status" value="0"
-                                            name="group-music_type">غير متاح
+                                            name="group-music_type">أكابيلا
                               </b-form-radio>
                               <b-form-radio v-model="createSchool.music_status" value="1"
                                             name="group-music_type">
-                                متاح
+                                بموسيقى
                               </b-form-radio>
                             </b-form-group>
                           </ValidationProvider>
@@ -207,19 +168,21 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import {getSingleSchoolsRequest, postSchoolsRequest} from "@/api/school";
 import Modal from "@/components/Shared/Modal/index.vue";
-import {getPackagesRequest} from "@/api/packages";
-import {getSchoolGroupRequest} from "@/api/schoolGroup";
-import {getSchoolTypesRequest} from "@/api/schoolType"
+import {getAllPackagesRequest} from "@/api/packages";
+import {getAllSchoolGroupRequest} from "@/api/schoolGroup";
+import {getAllSchoolTypesRequest} from "@/api/schoolType"
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
-import {getAllUsersRequest} from "@/api/user";
+import {getAllSearchUsersRequest} from "@/api/user";
 import axios from "axios";
 import VueCookies from "vue-cookies";
 import {routesContent, routesSchool, routesUsers} from "@/globalData";
+import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 
 export default {
   components: {
+    SelectSearch,
     ImageUploader,
     Modal,
     TextField,
@@ -265,22 +228,22 @@ export default {
       else return;
     },
     getAllPackages() {
-      this.ApiService(getPackagesRequest()).then((response) => {
+      this.ApiService(getAllPackagesRequest()).then((response) => {
         this.packages = response.data.data
       })
     },
     getAlSchoolGroups() {
-      this.ApiService(getSchoolGroupRequest()).then((response) => {
+      this.ApiService(getAllSchoolGroupRequest()).then((response) => {
         this.schoolGroups = response.data.data
       })
     },
     getAllSchoolType() {
-      this.ApiService(getSchoolTypesRequest()).then((response) => {
+      this.ApiService(getAllSchoolTypesRequest()).then((response) => {
         this.schoolTypes = response.data.data
       })
     },
     getAllUsers() {
-      this.ApiService(getAllUsersRequest()).then((response) => {
+      this.ApiService(getAllSearchUsersRequest()).then((response) => {
         this.users = response.data.data
       })
     },

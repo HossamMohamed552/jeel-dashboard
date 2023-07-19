@@ -5,7 +5,13 @@ export const getAllUsersRequest = (params) => ({
     params
   }
 })
-
+export const getAllSearchUsersRequest = (params) => ({
+  method: 'get',
+  url: 'users?list_all=true',
+  config: {
+    params
+  }
+})
 export const getSingleUserRequest = (params) => ({
   method: 'get',
   url: `users/${params}`,
@@ -13,6 +19,11 @@ export const getSingleUserRequest = (params) => ({
 export const getRolesRequest = () => ({
   method: 'get',
   url: 'roles',
+  config: {}
+})
+export const getAllRolesRequest = () => ({
+  method: 'get',
+  url: 'roles?list_all=true',
   config: {}
 })
 

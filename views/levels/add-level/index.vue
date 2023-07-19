@@ -13,7 +13,7 @@
 import AddEditLevel from "@/components/Modules/Users/AddEditLevel/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {postLevelRequest} from "@/api/level";
-import {getSchoolGroupRequest} from "@/api/schoolGroup";
+import {getAllSchoolGroupRequest} from "@/api/schoolGroup";
 
 export default {
   components: {
@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     getSchoolGroups() {
-      this.ApiService(getSchoolGroupRequest()).then((response) => {
+      this.ApiService(getAllSchoolGroupRequest()).then((response) => {
         this.schoolGroupOptions = response.data.data;
       });
     },

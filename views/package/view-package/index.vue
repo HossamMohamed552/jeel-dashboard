@@ -8,22 +8,22 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="6">
+          <b-col lg="4" class="mb-5">
             <ShowItem :title="$t('PACKAGE.name')" :subtitle="singlePackage.name" />
           </b-col>
-          <b-col lg="6">
-            <ShowItem :title="$t('PACKAGE.price')" :subtitle="singlePackage.code" />
+          <b-col lg="4" class="mb-5">
+            <ShowItem :title="$t('PACKAGE.price')" :subtitle="singlePackage.price" />
           </b-col>
-          <b-col lg="6">
+          <b-col lg="4" class="mb-5">
             <ShowItem
               :title="$t('PACKAGE.classes_count')"
-              :subtitle="singlePackage.code"
+              :subtitle="singlePackage.classes_count"
             />
           </b-col>
-          <b-col lg="6">
+          <b-col lg="12">
             <ShowItem
               :title="$t('PACKAGE.description')"
-              :subtitle="singlePackage.code"
+              :subtitle="singlePackage.description"
             />
           </b-col>
         </b-row>

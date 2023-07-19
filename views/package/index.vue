@@ -46,7 +46,7 @@ export default {
       showModal: false,
       packageSearchWord: "",
       packagesList: [],
-      totalNumber: null,
+      totalNumber: 0,
       fieldsList: [
         {
           key: "id",

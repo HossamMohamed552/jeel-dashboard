@@ -10,7 +10,7 @@
 </template>
 <script>
 import AddEditUser from "@/components/Modules/Users/AddEditUser/index.vue";
-import { getRolesRequest, postAddUserRequest } from "@/api/user";
+import { getAllRolesRequest, postAddUserRequest } from "@/api/user";
 export default {
   components: {
     AddEditUser,
@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     getSystemRoles() {
-      this.ApiService(getRolesRequest()).then((response) => {
+      this.ApiService(getAllRolesRequest()).then((response) => {
         this.systemRoles = response.data.data;
       });
     },

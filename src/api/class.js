@@ -5,6 +5,13 @@ export const getClassRequest = (params) => ({
     params
   }
 })
+export const getAllClassRequest = (params) => ({
+  method: 'get',
+  url: 'classes?list_all=true',
+  config: {
+    params
+  }
+})
 export const getSingleClassRequest = (params) => ({
   method: 'get',
   url: `classes/${params}`,

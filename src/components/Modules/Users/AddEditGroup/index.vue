@@ -35,8 +35,8 @@
                 <div class="hold-field">
                   <ValidationProvider rules="required" v-slot="{ errors }">
                     <b-form-group :label="$t('GROUP.music')" class="group-type">
-                      <b-form-radio v-model="createGroup.music_status" value="0" name="group-music_type">غير متاح</b-form-radio>
-                      <b-form-radio v-model="createGroup.music_status" value="1" name="group-music_type">متاح</b-form-radio>
+                      <b-form-radio v-model="createGroup.music_status" value="0" name="group-music_type">أكابيلا</b-form-radio>
+                      <b-form-radio v-model="createGroup.music_status" value="1" name="group-music_type">بموسيقى</b-form-radio>
                     </b-form-group>
                     <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                       {{ error }}
@@ -72,34 +72,28 @@
 <!--              </b-col>-->
               <b-col lg="6" class="mt-5">
                 <div class="hold-field">
-                  <ValidationProvider v-slot="{errors, invalid}" rules="required">
-                    <label>{{ $t('GROUP.owner') }}</label>
-                    <select v-model="createGroup.owner_id" class="custom-selectBox form-control">
-                      <option value="''" selected disabled>{{ $t('GROUP.selectUser') }}</option>
-                      <option v-for="user in users" :key="user.id" :value="user.id">
-                        {{ user.name }}
-                      </option>
-                    </select>
-                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                      {{ error }}
-                    </b-form-invalid-feedback>
-                  </ValidationProvider>
+                  <SelectSearch
+                    v-model="createGroup.owner_id"
+                    :label="$t('GROUP.owner')"
+                    :name="$t('GROUP.owner')"
+                    :options="users"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                  ></SelectSearch>
                 </div>
               </b-col>
               <b-col lg="6" class="mt-5">
                 <div class="hold-field">
-                  <ValidationProvider v-slot="{errors, invalid}" rules="required">
-                    <label>{{ $t('GROUP.country') }}</label>
-                    <select v-model="createGroup.country_id" class="custom-selectBox form-control">
-                      <option value="''" selected disabled>{{ $t('GROUP.selectCountry') }}</option>
-                      <option v-for="country in countries" :key="country.id" :value="country.id">
-                        {{ country.name }}
-                      </option>
-                    </select>
-                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                      {{ error }}
-                    </b-form-invalid-feedback>
-                  </ValidationProvider>
+                  <SelectSearch
+                    v-model="createGroup.country_id"
+                    :label="$t('GROUP.country')"
+                    :name="$t('GROUP.country')"
+                    :options="countries"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                  ></SelectSearch>
                 </div>
               </b-col>
               <b-col lg="12">
@@ -132,10 +126,12 @@ import RadioButton from "@/components/Shared/RadioButton/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {getSingleSchoolGroupRequest} from "@/api/schoolGroup";
-import {getAllUsersRequest} from "@/api/user";
-import {getCountryRequest} from "@/api/country";
+import {getAllSearchUsersRequest} from "@/api/user";
+import {getAllCountryRequest} from "@/api/country";
+import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 export default {
   components: {
+    SelectSearch,
     Modal,
     TextField,
     RadioButton,
@@ -188,12 +184,12 @@ export default {
       }
     },
     getAllUsers() {
-      this.ApiService(getAllUsersRequest()).then((response) => {
+      this.ApiService(getAllSearchUsersRequest()).then((response) => {
         this.users = response.data.data
       })
     },
     getAllCountries() {
-      this.ApiService(getCountryRequest()).then((response) => {
+      this.ApiService(getAllCountryRequest()).then((response) => {
         this.countries = response.data.data
       })
     }

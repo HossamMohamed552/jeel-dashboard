@@ -11,7 +11,7 @@ export const getSingleQuestionRequest = (params) => ({
 })
 export const getQuestionTypsRequest = (params) => ({
   method: 'get',
-  url: `question_types?page=${params.page}`,
+  url: `question_types?page=${params.page}&main_questions=${params.main_questions}`,
 })
 
 export const getQuestionSubTypsRequest = (params) => ({
@@ -23,6 +23,16 @@ export const getLearningPathsRequest = (params) => ({
   method: 'get',
   url: `learningpaths?page=${params.page}`,
 })
+export const getAllLearningPathsRequest = (params) => ({
+  method: 'get',
+  url: 'learningpaths?list_all=true',
+  config: {params}
+})
+export const getAllLearningMethodsRequest = (params) => ({
+  method: 'get',
+  url: 'language_methods?list_all=true',
+  config: {params}
+})
 
 export const getLaguageSkillsRequest = (params) => ({
   method: 'get',
@@ -33,12 +43,19 @@ export const getQuestionDifficultiesRequest = (params) => ({
   method: 'get',
   url: `question_difficulties?page=${params.page}`,
 })
+export const getAllQuestionDifficultiesRequest = (params) => ({
+  method: 'get',
+  url: `question_difficulties?list_all=true`,
+})
 
 export const getBloomCategoriesRequest = (params) => ({
   method: 'get',
   url: `bloom_categories?page=${params.page}`,
 })
-
+export const getAllBloomCategoriesRequest = (params) => ({
+  method: 'get',
+  url: `bloom_categories?list_all=true`,
+})
 export const getLearningMethodsRequest = (params) => ({
   method: 'get',
   url: `language_methods?page=${params.page}`,

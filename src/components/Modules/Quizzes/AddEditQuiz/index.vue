@@ -184,9 +184,10 @@ import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue"
 import SelectField from "@/components/Shared/SelectField/index.vue";
-import {getLevelsRequest} from "@/api/level";
-import {getLearningPathsRequest, getQuestionRequest} from "@/api/question";
+import {getAllLevelsRequest} from "@/api/level";
+import {getAllLearningPathsRequest, getQuestionRequest} from "@/api/question";
 import {
+  getGeneralQuestionRequest,
   getQuestionDifficultyLevelLearnRequest,
   getSingleQuizRequest,
   postRandomQuizRequest
@@ -253,12 +254,24 @@ export default {
   watch: {
     "createQuiz.level_id"() {
       this.showSystem()
+      this.getGeneralQuestions()
     },
     "createQuiz.learning_path_id"() {
       this.showSystem()
+      this.getGeneralQuestions()
     },
   },
   methods: {
+    getGeneralQuestions(){
+      if (this.createQuiz.level_id !== null && this.createQuiz.learning_path_id !== null){
+        this.ApiService(getGeneralQuestionRequest({
+          levelId: this.createQuiz.level_id,
+          learnPathId: this.createQuiz.learning_path_id
+        })).then((response) => {
+          this.questionBank = response.data.data
+        })
+      }
+    },
     changeQuestionType(){
       if(this.createQuiz.type !== 'default'){
         this.isEditable = true
@@ -288,7 +301,6 @@ export default {
         levelId: this.createQuiz.level_id,
         learnPathId: this.createQuiz.learning_path_id
       })).then((response) => {
-        console.log(response.data.data)
         let allQuestionsLevel = response.data.data
         this.question_difficulty = allQuestionsLevel.map(item => Object.assign(item, {numberSelected: item.questions_count}))
         this.getNumberQuestionDifficulty()
@@ -311,13 +323,13 @@ export default {
       this.$emit("handleCancel");
     },
     getAllLevels() {
-      this.ApiService(getLevelsRequest()).then((response) => {
+      this.ApiService(getAllLevelsRequest()).then((response) => {
         this.levels = response.data.data
       })
     },
     getLearningPaths() {
-      const params = {page: 1,};
-      this.ApiService(getLearningPathsRequest(params)).then((response) => {
+      // const params = {page: 1};
+      this.ApiService(getAllLearningPathsRequest()).then((response) => {
         this.learningPaths = response.data.data;
       });
     },
@@ -327,7 +339,10 @@ export default {
         learning_path_id: this.createQuiz.learning_path_id,
         question_difficuly: this.createQuiz.question_difficulty,
       }
-      this.ApiService(getQuestionRequest()).then((response) => {
+      this.ApiService(getGeneralQuestionRequest({
+        levelId: this.createQuiz.level_id,
+        learnPathId: this.createQuiz.learning_path_id
+      })).then((response) => {
         this.questionBank = response.data.data
       }).then(() => this.questionBank = this.questionBank.map((item) => {
         return {id: item.id, name: item.question, fixed: false}
@@ -357,9 +372,9 @@ export default {
   mounted() {
     this.getAllLevels()
     this.getLearningPaths()
-    this.ApiService(getQuestionRequest()).then((response) => {
-      this.questionBank = response.data.data
-    })
+    // this.ApiService(getQuestionRequest()).then((response) => {
+    //   this.questionBank = response.data.data
+    // })
     if(this.$route.params.id){
       this.ApiService(getSingleQuizRequest(this.$route.params.id)).then((response)=>{
         console.log('edit',response.data.data)

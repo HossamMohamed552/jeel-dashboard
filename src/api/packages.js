@@ -3,6 +3,11 @@ export const getPackagesRequest = (params) => ({
   url: 'packages',
   config: {params}
 })
+export const getAllPackagesRequest = (params) => ({
+  method: 'get',
+  url: 'packages?list_all=true',
+  config: {params}
+})
 export const getSinglePackagesRequest = (params) => ({
   method: 'get',
   url: `packages/${params}`,

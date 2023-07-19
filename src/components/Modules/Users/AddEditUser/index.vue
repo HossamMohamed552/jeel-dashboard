@@ -1,9 +1,8 @@
 <template>
   <div class="add-edit-user">
-    <b-container>
+    <div class="container-fluid custom-container">
       <div class="add-edit-user-form">
         <h3>{{ $t("USERS.ADD_NEW") }}</h3>
-
         <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -37,7 +36,7 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3">
+              <b-col lg="6" class="mb-3" v-if="!$route.params.id">
                 <div class="hold-field">
                   <TextField
                     v-model="formValues.password"
@@ -67,7 +66,7 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3">
+              <b-col :lg="$route.params.id ? '6': '12'" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
                     v-model="formValues.roles"
@@ -83,7 +82,7 @@
               </b-col>
             </b-row>
             <b-row>
-              <b-col lg="6" class="mb-3">
+              <b-col lg="12" class="mb-3">
                 <div class="hold-field mt-4">
                   <ImageUploader
                     :name="'logoSchool'"
@@ -112,7 +111,7 @@
           </form>
         </validation-observer>
       </div>
-    </b-container>
+    </div>
   </div>
 </template>
 <script>
@@ -152,6 +151,7 @@ export default {
         social_media: "",
         roles: [],
       },
+      editImage: false,
       itemImage: null,
       image: null,
     };
@@ -172,7 +172,7 @@ export default {
           for (let user = 0; user < this.formValues.roles.length; user++) {
             formData.append(`roles[${user}]`, this.formValues.roles[user]);
           }
-          if (this.image) formData.append("image", this.image);
+          if (this.image && this.editImage) formData.append("image", this.image);
           axios.post(`/users/${this.$route.params.id}`, formData, {
             headers: {
               Authorization: `Bearer ${VueCookies.get("token")}`,
@@ -197,7 +197,7 @@ export default {
           for (let user = 0; user < this.formValues.roles.length; user++) {
             formData.append(`roles[${user}]`, this.formValues.roles[user]);
           }
-          if (this.image) formData.append("image", this.image);
+          if (this.image && this.editImage) formData.append("image", this.image);
           axios.post('/users', formData, {
             headers: {
               Authorization: `Bearer ${VueCookies.get("token")}`,
@@ -216,22 +216,25 @@ export default {
       this.$emit("handleCancel");
     },
     handleUploadImage(e) {
+      this.editImage = true
       this.itemImage = URL.createObjectURL(e.target.files[0])
       if (e) this.image = e.target.files[0];
       else return;
     },
   },
   mounted() {
-    this.ApiService(getSingleUserRequest(this.$route.params.id)).then((response) => {
-      this.formValues.first_name = response.data.data.first_name
-      this.formValues.last_name = response.data.data.last_name
-      this.formValues.email = response.data.data.email
-      this.formValues.mobile = response.data.data.mobile
-      this.formValues.social_media = response.data.data.social_media
-      this.formValues.roles =  response.data.data.roles
-      this.itemImage = response.data.data.avatar
-      this.image = response.data.data.avatar
-    })
+    if (this.$route.params.id) {
+      this.ApiService(getSingleUserRequest(this.$route.params.id)).then((response) => {
+        this.formValues.first_name = response.data.data.first_name
+        this.formValues.last_name = response.data.data.last_name
+        this.formValues.email = response.data.data.email
+        this.formValues.mobile = response.data.data.mobile
+        this.formValues.social_media = response.data.data.social_media
+        this.formValues.roles = response.data.data.roles.map((item) => item.id)
+        this.itemImage = response.data.data.avatar
+        this.image = response.data.data.avatar
+      })
+    }
   }
 };
 </script>

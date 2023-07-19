@@ -115,6 +115,11 @@ const protectedRoutes = [
         component: () => import("../../views/levels/index.vue"),
       },
       {
+        path: "/dashboard/level-classes",
+        name: "level-classes",
+        component: () => import("../../views/levels/level-classes/index.vue"),
+      },
+      {
         path: "/dashboard/levels/add",
         name: "add-levels",
         component: () => import("../../views/levels/add-level/index.vue"),
@@ -394,6 +399,16 @@ const protectedRoutes = [
         name: "rewarding-actions",
         component: () => import("../../views/rewarding-actions/edit/index.vue"),
       },
+      {
+        path: "/dashboard/path-content/:id",
+        name: "path-content",
+        component: () => import("../../views/path-content/index.vue"),
+      },
+      {
+        path: "/dashboard/path-content/:pathId/mission/:missionId",
+        name: "path-content",
+        component: () => import("../../views/path-content/mission-content/index.vue"),
+      }
     ],
   },
 ];

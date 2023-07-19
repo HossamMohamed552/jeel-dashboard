@@ -128,9 +128,6 @@ export default {
   mounted() {
     this.getAllUsers();
   },
-  created() {
-    console.log('matched', this.$route.matched)
-  }
 };
 </script>
 

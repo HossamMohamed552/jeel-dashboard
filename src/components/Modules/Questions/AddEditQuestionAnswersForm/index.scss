@@ -89,3 +89,31 @@
     border-radius: 15px;
   }
 }
+.preview-question-heading{
+  color: #76236C;
+  font-weight: bold;
+}
+.preview-question{
+  color: $color-primary;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+//.space{
+//  display: inline-block;
+//  width: 100px;
+//  height: 50px;
+//  background: #eee;
+//  border-radius: 1rem;
+//  border: 1px solid;
+//}
+.list-group{
+  margin-top: 2rem;
+  min-height: 200px;
+  background: #eee;
+  padding: 0;
+  width: 95%
+}
+.answer-name{
+  font-weight: 700;
+}

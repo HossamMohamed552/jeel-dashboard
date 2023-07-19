@@ -38,7 +38,7 @@ export default {
       showModal: false,
       groupSearchWord: "",
       questionsList: [],
-      totalNumber: null,
+      totalNumber: 0,
       fieldsList: [
         {key: "id", label: "التسلسل"},
         {key: "question_type", label: "نوع السؤال"},

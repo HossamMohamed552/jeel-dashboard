@@ -25,7 +25,7 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import {deleteVideosRequest, getVideosRequest} from "@/api/videos";
+import {deleteVideoRequest, getVideosRequest} from "@/api/videos";
 import Modal from "@/components/Shared/Modal/index.vue";
 
 export default {
@@ -79,13 +79,13 @@ export default {
       this.showModal = true
     },
     addVideoQuestion($event){
-      // add video questions 
+      // add video questions
     },
     cancel($event) {
       this.showModal = $event
     },
     cancelWithConfirm() {
-      this.ApiService(deleteVideosRequest(this.itemId)).then(() => {
+      this.ApiService(deleteVideoRequest(this.itemId)).then(() => {
         this.getVideos()
       })
       this.cancel()

@@ -9,7 +9,7 @@
         <slot name="buttons"></slot>
       </div>
     </div>
-    <div class="search-sort">
+    <div class="search-sort" v-if="showSortControls">
       <div class="search">
         <b-form-input v-model="inputValue" placeholder="بحث" class="search-input"/>
         <img src="@/assets/images/icons/search.svg"/>
@@ -48,7 +48,7 @@
           <span>{{ data.item.status === 1 ? "مفعل" : "غير مفعل" }}</span>
         </template>
         <template #cell(music_status)="data">
-          <span>{{ data.item.music_status === 1 ? "متاح" : "غير متاح" }}</span>
+          <span>{{ data.item.music_status === 1 ? "بموسيقى" : "أكابيلا" }}</span>
         </template>
         <template #cell(country)="data">
           <span>{{ data.value.name }}</span>
@@ -77,7 +77,7 @@
           <span>{{ data.item.question_difficulty.name }}</span>
         </template>
         <template #cell(level)="data">
-          <span>{{ data.item.level.name }}</span>
+          <span v-if="data.item.level">{{ data.item.level.name }}</span>
         </template>
         <template #cell(learningpaths)="data">
           <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{
@@ -91,6 +91,16 @@
               }}</span>
           </div>
         </template>
+        <template #cell(allowEdit)="data">
+          <b-form-checkbox v-model="data.item.is_selected" switch
+                           @change="managePath(data.item)"></b-form-checkbox>
+        </template>
+        <template #cell(edit)="data">
+          <Button :custom-class="'transparent-btn rounded-btn'"
+                  @click="goToMissionContent(data.item.id,data.item.mission_id)"
+                  :disabled="data.item.is_selected === false">تعديل المحتوى
+          </Button>
+        </template>
         <template #cell(actions)="data">
           <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
             <template #button-content>
@@ -99,9 +109,17 @@
             <b-dropdown-item @click="detailItem(data.item.id)"
             >{{ $t("CONTROLS.detailBtn") }}
             </b-dropdown-item>
-            <b-dropdown-divider ></b-dropdown-divider>
+            <b-dropdown-divider
+              v-if="!user.permissions.includes('manage-learningpath')"></b-dropdown-divider>
             <b-dropdown-item @click="editItem(data.item.id)"
-            >{{ $t("CONTROLS.editBtn") }}
+                             v-if="!user.permissions.includes('manage-learningpath')">
+              {{ $t("CONTROLS.editBtn") }}
+            </b-dropdown-item>
+            <b-dropdown-divider
+              v-if="user.permissions.includes('manage-learningpath')"></b-dropdown-divider>
+            <b-dropdown-item v-if="user.permissions.includes('manage-learningpath')"
+                             @click="$router.push('/dashboard/level-classes')">
+              {{ $t("CONTROLS.ManageClasses") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="!data.item.is_default"></b-dropdown-divider>
             <b-dropdown-item v-if="!data.item.is_default"
@@ -131,9 +149,16 @@
 </template>
 <script>
 import {debounce} from "lodash";
+import {mapGetters} from "vuex";
+import Button from "@/components/Shared/Button/index.vue";
+import axios from "axios";
+import VueCookies from "vue-cookies";
 
 export default {
   name: "index",
+  components: {
+    Button
+  },
   data() {
     return {
       editIcon: require("@/assets/edit.svg"),
@@ -148,7 +173,14 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapGetters(['user'])
+  },
   props: {
+    showSortControls: {
+      type: Boolean,
+      default: true,
+    },
     isUserPage: {
       type: Boolean,
       default: false,
@@ -212,6 +244,9 @@ export default {
     },
   },
   methods: {
+    goToMissionContent(pathId, missionId) {
+      this.$router.push(`/dashboard/path-content/${pathId}/mission/${missionId}`)
+    },
     handlePageChange(event) {
       this.formValues.page = event;
       this.$emit("refetch", this.formValues);
@@ -241,8 +276,24 @@ export default {
     addVideoQuestion(id) {
       this.$emit("addVideoQuestion", id);
     },
-  },
-};
+    managePath(item) {
+      axios.put('/manage-mission-learningpath', {
+        "mission_id": item.mission_id,
+        "learningpath_id": item.id,
+        "is_selected": item.is_selected ? 1 : 0
+      }, {
+        headers: {
+          Authorization: `Bearer ${VueCookies.get("token")}`,
+          locale: 'ar',
+          'Content-Type': 'application/json'
+        }}).then((response) => {
+        console.log('item', item)
+      }).catch((error) => {
+        console.log('error', error)
+      })
+    }
+    },
+  };
 </script>
 <style scoped lang="scss">
 @import "./index";
