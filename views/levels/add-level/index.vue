@@ -40,7 +40,6 @@ export default {
       this.loading = true;
       this.ApiService(postLevelRequest($event)).then((response) => {
         if (response.code === 200) {
-          console.log('response', response)
           this.loading = false;
           this.showModal = true;
           setTimeout(() => {

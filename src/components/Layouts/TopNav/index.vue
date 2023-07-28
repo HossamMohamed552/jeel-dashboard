@@ -9,25 +9,25 @@
             </router-link>
             <div class="notification-info-admin">
               <div class="notification">
-                <div class="bill">
-                  <img
-                    src="@/assets/images/icons/notification.svg"
-                    alt="notification"
-                    title="notification"
-                  />
-                </div>
-                <span class="no-of-notification">3</span>
+<!--                <div class="bill">-->
+<!--                  <img-->
+<!--                    src="@/assets/images/icons/notification.svg"-->
+<!--                    alt="notification"-->
+<!--                    title="notification"-->
+<!--                  />-->
+<!--                </div>-->
+<!--                <span class="no-of-notification">3</span>-->
               </div>
               <div class="info-admin">
                 <div class="name-role">
-                  <p class="name">سعد بن عبد الرحمن الغامدي</p>
-                  <p class="role">جيل أدمن</p>
+                  <p class="name">{{ user.name }}</p>
+<!--                  <p class="role">جيل أدمن</p>-->
                 </div>
                 <div class="dropdown-container" :dir="$i18n.locale == 'ar' ? 'ltr' : 'rtl'">
                   <b-dropdown no-caret>
                     <template #button-content>
                       <div class="user-image">
-                        <img src="@/assets/images/icons/user.svg" alt="user" title="user" />
+                        <img :src="user.avatar" alt="user" title="user" />
                       </div>
                     </template>
                     <b-dropdown-item @click="logout">{{ $t("GLOBAL_LOGOUT") }}</b-dropdown-item>
@@ -40,13 +40,13 @@
             <router-link tag="div" to="/dashboard/home" class="nav-item"
               >{{ $t("MENU.main") }}
             </router-link>
-            <div class="nav-item">
+            <div class="nav-item" v-if="Array.from(routesUsers).length >= 1">
               <p>
                 <span>{{ $t("MENU.permissionsSystemUsers") }}</span
                 ><img src="@/assets/images/icons/arrow.svg" />
               </p>
               <div class="dropdown-item-list">
-                <ul>
+                <ul >
                   <router-link
                     tag="li"
                     :to="routeUser.path"
@@ -58,13 +58,13 @@
                 </ul>
               </div>
             </div>
-            <div class="nav-item">
+            <div class="nav-item" v-if="Array.from(routesSchool).length >= 1">
               <p>
                 <span>{{ $t("MENU.schools") }}</span
                 ><img src="@/assets/images/icons/arrow.svg" />
               </p>
               <div class="dropdown-item-list">
-                <ul>
+                <ul >
                   <router-link
                     tag="li"
                     :to="routeSchool.path"
@@ -76,13 +76,13 @@
                 </ul>
               </div>
             </div>
-            <div class="nav-item">
+            <div class="nav-item" v-if="Array.from(routesContent).length >= 1">
               <p>
                 <span>{{ $t("MENU.content") }}</span
                 ><img src="@/assets/images/icons/arrow.svg" />
               </p>
               <div class="dropdown-item-list">
-                <ul>
+                <ul >
                   <router-link
                     tag="li"
                     :to="routeContent.path"
@@ -154,6 +154,9 @@ export default {
   computed: {
     permissions() {
       return this.$store.getters.user?.permissions;
+    },
+    user() {
+      return this.$store.getters.user;
     },
   },
   methods: {
