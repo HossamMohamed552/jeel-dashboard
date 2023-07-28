@@ -6,7 +6,7 @@
         <div class="flexContent">
           <div>
             <div class="text-center hold-icon">
-              <img src="@/assets/images/icons/delete.svg" v-show="isWarning">
+              <img src="@/assets/images/icons/delete.svg" v-show="isWarning || isFailed">
               <img src="@/assets/images/icons/success.svg" v-show="isSuccess">
             </div>
             <div class="text-center">
@@ -20,6 +20,11 @@
            <Button :custom-class="'rounded-btn'" @click="cancelWithConfirm()">
              {{$t('GLOBAL_CONFIRM')}}
            </Button>
+           <Button :custom-class="'rounded-btn transparent-btn'" @click="cancel()">
+             {{$t('GLOBAL_CANCEL')}}
+           </Button>
+         </div>
+         <div class="controls mt-3" style="justify-content: center;" v-if="isFailed">
            <Button :custom-class="'rounded-btn transparent-btn'" @click="cancel()">
              {{$t('GLOBAL_CANCEL')}}
            </Button>
@@ -52,6 +57,10 @@ export default {
       default: false
     },
     isWarning:{
+      type:Boolean,
+      default: false
+    },
+    isFailed:{
       type:Boolean,
       default: false
     },

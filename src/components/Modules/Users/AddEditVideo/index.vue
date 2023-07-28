@@ -35,6 +35,18 @@
                   </ValidationProvider>
                 </div>
               </b-col>
+              <b-col lg="5" class="mb-3">
+                <div class="hold-field">
+                  <ValidationProvider v-slot="{errors}" :rules="$route.params.id ? '' : 'required'" name="video">
+                    <b-form-file accept="video/mp4,video/x-m4v,video/*" placeholder=" اضف ملف بدون موسيقى" v-model="createVideo.video_without_music" name="video">
+                    </b-form-file>
+                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                      {{ error }}
+                    </b-form-invalid-feedback>
+                  </ValidationProvider>
+                </div>
+              </b-col>
+
             </b-row>
             <b-row>
               <b-col lg="5" class="mb-3 mt-3">
@@ -125,6 +137,7 @@ export default {
         name: "",
         description: "",
         video: null,
+        video_without_music:null,
         learning_path_id: "",
         title:'',
         original_name:'',
