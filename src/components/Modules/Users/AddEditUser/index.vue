@@ -26,7 +26,7 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3">
+              <b-col lg="6" class="mb-3" v-if="!$route.params.id">
                 <div class="hold-field">
                   <TextField
                     v-model="formValues.email"
@@ -66,7 +66,7 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col :lg="$route.params.id ? '6': '12'" class="mb-3">
+              <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
                     v-model="formValues.roles"

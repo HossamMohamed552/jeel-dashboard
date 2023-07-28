@@ -41,7 +41,6 @@ axios.interceptors.response.use(
       });
       store.dispatch("removeUser");
     }
-
     return Promise.reject(error);
   }
 );

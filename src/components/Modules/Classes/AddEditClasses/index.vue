@@ -31,6 +31,7 @@
                 ></SelectSearch>
                 </div>
               </b-col>
+              <p v-if="isError" class="text-danger">{{messageError }}</p>
             </b-row>
             <b-row>
               <div class="hold-btns-form">
@@ -79,6 +80,14 @@ export default {
       type: Number,
       default: null,
     },
+    isError:{
+      type: Boolean,
+      default: false,
+    },
+    messageError:{
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {

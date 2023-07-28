@@ -43,7 +43,7 @@ export default {
         {key: "school_group", label: this.$i18n.t('TABLE_FIELDS.school_group')},
         {key: "logo", label: this.$i18n.t('TABLE_FIELDS.logo')},
         {key: "school_type", label: this.$i18n.t('TABLE_FIELDS.school_type')},
-        {key: "subscription_start_date", label: ""},
+        {key: "subscription_start_date", label: "بداية التعاقد"},
         {key: "subscription_end_date", label: "نهاية التعاقد"},
         {key: "package", label: this.$i18n.t('TABLE_FIELDS.package')},
         {key: "status", label: this.$i18n.t('TABLE_FIELDS.status')},
