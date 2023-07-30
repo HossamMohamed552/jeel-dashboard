@@ -36,7 +36,7 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3" v-if="!$route.params.id">
+              <b-col :lg="$route.params.id ? '12': '6'" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="formValues.password"
