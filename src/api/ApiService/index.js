@@ -28,18 +28,21 @@ export default function ApiService({method, url, config = {},headers={}}) {
 axios.interceptors.response.use(
   (response) => response,
   (error) => {
-    store.dispatch("showToast", {
-      type: "danger",
-      message: error.response.data.errors,
-    });
     if (error.response.status === 401) {
-      localStorage.removeItem('user');
+      localStorage.clear();
       VueCookies.remove('token');
       store.dispatch("showToast", {
         type: "danger",
         message: error.response.data.errors,
+        time:5000
       });
       store.dispatch("removeUser");
+    } else {
+      store.dispatch("showToast", {
+        type: "danger",
+        message: error.response.data.errors,
+        time:5000
+      });
     }
     return Promise.reject(error);
   }
