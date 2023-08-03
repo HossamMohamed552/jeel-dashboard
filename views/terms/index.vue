@@ -1,12 +1,18 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems :header-name="'قائمة الفصول الدراسية'" :number-of-item="totalNumber"
-               :tableItems="termsList" :fieldsList="fieldsList" :v-search-model="groupSearchWord" @detailItem="detailItem($event)"
+               :tableItems="termsList" :fieldsList="fieldsList" :v-search-model="groupSearchWord"
+               @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-               @refetch="getTerms" 
-               :loading="loading">
+               @refetch="getTerms"
+               :loading="loading"
+               :permission_delete="'delete-terms'"
+               :permission_edit="'edit-terms'"
+               :permission_view="'show-terms'"
+    >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddTerms">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddTerms"
+                v-if="user.permissions.includes(`add-terms`)">
           <img src="@/assets/images/icons/plus.svg">
           <span>إضافة فصل دراسى </span>
         </Button>
@@ -26,6 +32,8 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import {deleteTermsRequest, getTermsRequest} from "@/api/term";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
+
 export default {
   components: {Modal, ListItems, Button},
   data() {
@@ -36,14 +44,14 @@ export default {
       termsList: [],
       totalNumber: null,
       fieldsList: [
-        { key: "id", label: "التسلسل" },
-        { key: "name", label: "اسم الفصل" },
-        { key: "actions",label:"الإجراء" },
+        {key: "id", label: "التسلسل"},
+        {key: "name", label: "اسم الفصل"},
+        {key: "actions", label: "الإجراء"},
       ],
     }
   },
   methods: {
-    goToAddTerms(){
+    goToAddTerms() {
       this.$router.push('/dashboard/terms/add')
     },
     getTerms(event) {
@@ -52,9 +60,9 @@ export default {
       this.ApiService(getTermsRequest(params)).then((response) => {
         this.termsList = response.data.data
         this.totalNumber = response.data.meta.total
-      }) .finally(() => {
-          this.loading = false;
-        });
+      }).finally(() => {
+        this.loading = false;
+      });
     },
     detailItem($event) {
       this.$router.push(`/dashboard/terms/show/${$event}`)
@@ -70,11 +78,14 @@ export default {
       this.showModal = $event
     },
     cancelWithConfirm() {
-      this.ApiService(deleteTermsRequest(this.itemId)).then(()=>{
+      this.ApiService(deleteTermsRequest(this.itemId)).then(() => {
         this.getTerms()
       })
       this.cancel()
     }
+  },
+  computed: {
+    ...mapGetters(['user'])
   },
   mounted() {
     this.getTerms()

@@ -11,11 +11,15 @@
       @deleteItem="deleteItem($event)"
       @refetch="getPackages"
       :loading="loading"
+      :permission_delete="'delete-packages'"
+      :permission_edit="'edit-packages'"
+      :permission_view="'show-packages'"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddPackage"
+          v-if="user.permissions.includes(`add-packages`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
           <span>إضافة باقة</span>
@@ -38,8 +42,12 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import { deletePackagesRequest, getPackagesRequest } from "@/api/packages.js";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
 export default {
   components: { Modal, ListItems, Button },
+  computed:{
+    ...mapGetters(['user'])
+  },
   data() {
     return {
       loading: false,

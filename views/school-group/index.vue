@@ -6,9 +6,12 @@
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getSchoolGroups"
                :loading="loading"
+               :permission_delete="'delete-schoolGroups'"
+               :permission_edit="'edit-schoolGroups'"
+               :permission_view="'show-schoolGroups'"
                >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToSchoolGroup">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToSchoolGroup"  v-if="user.permissions.includes(`add-schoolGroups`)">
           <img src="@/assets/images/icons/plus.svg">
           <span>إضافة مجموعه</span>
         </Button>
@@ -28,9 +31,13 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import {deleteSchoolGroupRequest, getSchoolGroupRequest} from "@/api/schoolGroup";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
 
 export default {
   components: {Modal, ListItems, Button},
+  computed:{
+    ...mapGetters(['user']),
+  },
   data() {
     return {
       loading: false,

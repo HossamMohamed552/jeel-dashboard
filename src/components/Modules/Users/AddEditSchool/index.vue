@@ -19,6 +19,7 @@
               <b-col lg="3" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
+                    :disabled="$route.params.id && !user.permissions.includes(`add-packages`)"
                     v-model="createSchool.school_group_id"
                     :label="$t('SCHOOL.school_group')"
                     :name="$t('SCHOOL.school_group')"
@@ -36,6 +37,7 @@
                       <b-col lg="12" class="mb-3">
                         <div class="hold-field">
                           <SelectSearch
+                            :disabled="$route.params.id && !user.permissions.includes(`add-packages`)"
                             v-model="createSchool.school_type_id"
                             :label="$t('SCHOOL.school_type')"
                             :name="$t('SCHOOL.school_type')"
@@ -49,6 +51,7 @@
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
                           <SelectSearch
+                            :disabled="$route.params.id && !user.permissions.includes(`add-packages`)"
                             v-model="createSchool.admin_id"
                             :label="$t('SCHOOL.userName')"
                             :name="$t('SCHOOL.userName')"
@@ -62,6 +65,7 @@
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
                           <SelectSearch
+                            :disabled="$route.params.id && !user.permissions.includes(`add-packages`)"
                             v-model="createSchool.package_id"
                             :label="$t('SCHOOL.package')"
                             :name="$t('SCHOOL.package')"
@@ -75,15 +79,9 @@
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
                           <ValidationProvider v-slot="{errors, invalid}" rules="required">
-                            <b-form-group :label="$t('SCHOOL.status')" v-slot="{ ariaDescribedby }"
-                                          class="group-type">
-                              <b-form-radio v-model="createSchool.status" value="0"
-                                            name="group-status">غير
-                                مفعل
-                              </b-form-radio>
-                              <b-form-radio v-model="createSchool.status" value="1"
-                                            name="group-status">مفعل
-                              </b-form-radio>
+                            <b-form-group :label="$t('SCHOOL.status')" v-slot="{ ariaDescribedby }" class="group-type">
+                              <b-form-radio :disabled="$route.params.id && !user.permissions.includes(`add-packages`)" v-model="createSchool.status" value="0" name="group-status">غير مفعل</b-form-radio>
+                              <b-form-radio :disabled="$route.params.id && !user.permissions.includes(`add-packages`)" v-model="createSchool.status" value="1" name="group-status">مفعل</b-form-radio>
                             </b-form-group>
                           </ValidationProvider>
                         </div>
@@ -91,15 +89,9 @@
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
                           <ValidationProvider v-slot="{errors, invalid}" rules="required">
-                            <b-form-group :label="$t('SCHOOL.music')" v-slot="{ ariaDescribedby }"
-                                          class="group-type">
-                              <b-form-radio v-model="createSchool.music_status" value="0"
-                                            name="group-music_type">أكابيلا
-                              </b-form-radio>
-                              <b-form-radio v-model="createSchool.music_status" value="1"
-                                            name="group-music_type">
-                                بموسيقى
-                              </b-form-radio>
+                            <b-form-group :label="$t('SCHOOL.music')" v-slot="{ ariaDescribedby }" class="group-type">
+                              <b-form-radio :disabled="$route.params.id && !user.permissions.includes(`add-packages`)" v-model="createSchool.music_status" value="0" name="group-music_type">أكابيلا</b-form-radio>
+                              <b-form-radio :disabled="$route.params.id && !user.permissions.includes(`add-packages`)" v-model="createSchool.music_status" value="1" name="group-music_type">بموسيقى</b-form-radio>
                             </b-form-group>
                           </ValidationProvider>
                         </div>
@@ -110,7 +102,7 @@
                             <label>
                               {{ $t('SCHOOL.start_subscription') }}
                             </label>
-                            <date-picker v-model="createSchool.startDate" @change="changeDate"
+                            <date-picker :disabled="$route.params.id && !user.permissions.includes(`add-packages`)"  :lang="en" v-model="createSchool.startDate" @change="changeDate"
                                          valueType="format"></date-picker>
                             <p class="show-date" v-if="showDate">{{ createSchool.startDate }}</p>
                           </ValidationProvider>
@@ -122,7 +114,9 @@
                             <label>
                               {{ $t('SCHOOL.end_subscription') }}
                             </label>
-                            <date-picker v-model="createSchool.endDate" @change="changeDate"
+                            <date-picker :lang="en" v-model="createSchool.endDate"
+                                         :disabled="$route.params.id && !user.permissions.includes(`add-packages`)"
+                                         @change="changeDate"
                                          valueType="format"></date-picker>
                             <p class="show-date" v-if="showDate">{{ createSchool.endDate }}</p>
                           </ValidationProvider>
@@ -166,19 +160,20 @@
 <script>
 import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import {getSingleSchoolsRequest, postSchoolsRequest} from "@/api/school";
+import {getSchoolOwnerRequest, getSingleSchoolsRequest} from "@/api/school";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {getAllPackagesRequest} from "@/api/packages";
 import {getAllSchoolGroupRequest} from "@/api/schoolGroup";
 import {getAllSchoolTypesRequest} from "@/api/schoolType"
 import DatePicker from "vue2-datepicker";
+import 'vue2-datepicker/locale/en'
 import "vue2-datepicker/index.css";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import {getAllSearchUsersRequest} from "@/api/user";
 import axios from "axios";
 import VueCookies from "vue-cookies";
-import {routesContent, routesSchool, routesUsers} from "@/globalData";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
+import {mapGetters} from "vuex";
 
 export default {
   components: {
@@ -189,6 +184,9 @@ export default {
     Button,
     DatePicker
   },
+  computed:{
+    ...mapGetters(['user'])
+  },
   props: {
     loading: {
       type: Boolean,
@@ -197,6 +195,7 @@ export default {
   },
   data() {
     return {
+      en: 'en',
       schoolGroups: [],
       packages: [],
       schoolTypes: [],
@@ -224,7 +223,9 @@ export default {
     },
     handleUploadImage(e) {
       this.itemImage = URL.createObjectURL(e.target.files[0])
-      if (e) this.createSchool.logo = e.target.files[0];
+      if (e) {
+        this.createSchool.logo = e.target.files[0];
+      }
       else return;
     },
     getAllPackages() {
@@ -243,7 +244,7 @@ export default {
       })
     },
     getAllUsers() {
-      this.ApiService(getAllSearchUsersRequest()).then((response) => {
+      this.ApiService(getSchoolOwnerRequest()).then((response) => {
         this.users = response.data.data
       })
     },
@@ -268,7 +269,9 @@ export default {
             locale: 'ar',
             'Content-Type': 'multipart/form-data'
           }
-        }).then((response) => {this.$router.push('/dashboard/schools')})
+        }).then((response) => {
+          this.$router.push('/dashboard/schools')
+        })
       } else {
         axios.post('/schools', formData, {
           headers: {

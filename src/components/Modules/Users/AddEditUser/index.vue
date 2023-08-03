@@ -42,7 +42,7 @@
                     v-model="formValues.password"
                     :label="$t('USERS.PASSWORD')"
                     :name="$t('USERS.PASSWORD')"
-                    :rules="'required|min:6'"
+                    :rules="$route.params.id ? '' : 'required|min:6'"
                   ></TextField>
                 </div>
               </b-col>
@@ -75,7 +75,6 @@
                     :options="systemRoles"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
-                    :rules="'required'"
                     multiple
                   ></SelectSearch>
                 </div>

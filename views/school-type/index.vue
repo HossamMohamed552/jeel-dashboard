@@ -11,9 +11,12 @@
       @deleteItem="deleteItem($event)"
       @refetch="getSchoolTypes"
       :loading="loading"
+      :permission_delete="'delete-schoolTypes'"
+      :permission_edit="'edit-schoolTypes'"
+      :permission_view="'show-schoolTypes'"
     >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSchoolType">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSchoolType" v-if="user.permissions.includes(`add-schoolTypes`)">
           <img src="@/assets/images/icons/plus.svg" />
           <span>إضافة نوع مدرسة</span>
         </Button>
@@ -35,6 +38,7 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import { deleteSchoolTypesRequest, getSchoolTypesRequest } from "@/api/schoolType.js";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
 export default {
   components: { Modal, ListItems, Button },
   data() {
@@ -95,6 +99,9 @@ export default {
       });
       this.cancel();
     },
+  },
+  computed:{
+    ...mapGetters(['user'])
   },
   mounted() {
     this.getSchoolTypes();

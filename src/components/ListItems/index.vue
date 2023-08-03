@@ -102,27 +102,25 @@
           </Button>
         </template>
         <template #cell(actions)="data">
-          <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
+          <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret
+                      v-if="checkDelete(data) === 'show' || checkDetail() === 'show' || checkEdit() === 'show'">
             <template #button-content>
               <img src="@/assets/images/icons/actions.svg"/>
             </template>
-            <b-dropdown-item @click="detailItem(data.item.id)"
-            >{{ $t("CONTROLS.detailBtn") }}
+            <b-dropdown-item @click="detailItem(data.item.id)" v-if="checkDetail() === 'show'">
+              {{ $t("CONTROLS.detailBtn") }}
             </b-dropdown-item>
-            <b-dropdown-divider
-              v-if="!user.permissions.includes('manage-learningpath')"></b-dropdown-divider>
-            <b-dropdown-item @click="editItem(data.item.id)"
-                             v-if="!user.permissions.includes('manage-learningpath')">
+            <b-dropdown-divider v-if="checkEdit() === 'show'"></b-dropdown-divider>
+            <b-dropdown-item @click="editItem(data.item.id)" v-if="checkEdit() === 'show'">
               {{ $t("CONTROLS.editBtn") }}
             </b-dropdown-item>
-            <b-dropdown-divider
-              v-if="user.permissions.includes('manage-learningpath')"></b-dropdown-divider>
-            <b-dropdown-item v-if="user.permissions.includes('manage-learningpath')"
-                             @click="$router.push('/dashboard/level-classes')">
+            <b-dropdown-divider v-if="checkEditClass() === 'show'"></b-dropdown-divider>
+            <b-dropdown-item v-if="checkEditClass() === 'show'"
+                             @click="$router.push(`/dashboard/level-classes/${data.item.id}`)">
               {{ $t("CONTROLS.ManageClasses") }}
             </b-dropdown-item>
-            <b-dropdown-divider v-if="!data.item.is_default"></b-dropdown-divider>
-            <b-dropdown-item v-if="!data.item.is_default"
+            <b-dropdown-divider v-if="checkDelete(data) === 'show'"></b-dropdown-divider>
+            <b-dropdown-item v-if="checkDelete(data) === 'show'"
                              @click="deleteItem(data.item.id)"
             >{{ $t("CONTROLS.deleteBtn") }}
             </b-dropdown-item>
@@ -153,6 +151,7 @@ import {mapGetters} from "vuex";
 import Button from "@/components/Shared/Button/index.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
+import {type} from "os";
 
 export default {
   name: "index",
@@ -174,9 +173,24 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user']),
+    activePage() {
+      return window.localStorage.getItem('page')
+    }
   },
   props: {
+    permission_delete: {
+      type: String,
+      default: ''
+    },
+    permission_edit:{
+      type: String,
+      default: ''
+    },
+    permission_view:{
+      type: String,
+      default: ''
+    },
     showSortControls: {
       type: Boolean,
       default: true,
@@ -244,6 +258,7 @@ export default {
     },
   },
   methods: {
+    type,
     goToMissionContent(pathId, missionId) {
       this.$router.push(`/dashboard/path-content/${pathId}/mission/${missionId}`)
     },
@@ -259,7 +274,6 @@ export default {
       this.formValues.name = name;
       this.$emit("refetch", this.formValues);
     }, 500),
-
     order(event) {
       this.formValues.order = event.target.value;
       this.$emit("refetch", this.formValues);
@@ -286,14 +300,53 @@ export default {
           Authorization: `Bearer ${VueCookies.get("token")}`,
           locale: 'ar',
           'Content-Type': 'application/json'
-        }}).then((response) => {
+        }
+      }).then((response) => {
         console.log('item', item)
       }).catch((error) => {
         console.log('error', error)
       })
-    }
     },
-  };
+    checkDelete(data) {
+      if (data.item.is_default === 1 && this.user.permissions.includes(`${this.permission_delete}`)) {
+        return 'hide'
+      } else if (data.item.school_owner === true && this.user.permissions.includes(`${this.permission_delete}`)) {
+        return 'hide'
+      } else if (data.item.is_default === 0 || data.item.school_owner === false || this.user.permissions.includes(`${this.permission_delete}`)) {
+        return 'show'
+      } else {
+        return 'hide'
+      }
+    },
+    checkEdit() {
+      if (!this.user.permissions.includes('manage-learningpath') && !this.activePage === 'schoolAdmin') {
+        return 'show'
+      } else if (this.activePage === 'schoolAdmin') {
+        return 'hide'
+      } else if (this.user.permissions.includes(`${this.permission_edit}`)) {
+        return 'show'
+      } else {
+        return 'hide'
+      }
+    },
+    checkDetail() {
+      if (this.activePage === 'schoolAdmin') {
+        return 'hide'
+      } else if (this.user.permissions.includes(`${this.permission_view}`)) {
+        return 'show'
+      } else {
+        return 'hide'
+      }
+    },
+    checkEditClass() {
+      if (this.user.permissions.includes('manage-learningpath') && this.$route.path.includes('levels')) {
+        return 'show'
+      } else {
+        return 'hide'
+      }
+    }
+  },
+};
 </script>
 <style scoped lang="scss">
 @import "./index";

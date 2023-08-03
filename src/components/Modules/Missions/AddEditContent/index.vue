@@ -18,6 +18,7 @@
                   :reduce="(option) => option.id"
                   :get-option-label="(option) => option.original_name"
                   :rules="'required'"
+                  :deselectFromDropdown="true"
                   multiple
                 ></SelectSearch>
               </b-col>
@@ -30,6 +31,7 @@
                   :reduce="(option) => option.id"
                   :get-option-label="(option) => option.name"
                   :rules="'required'"
+                  :deselectFromDropdown="true"
                   multiple
                 ></SelectSearch>
               </b-col>
@@ -42,6 +44,7 @@
                   :reduce="(option) => option.id"
                   :get-option-label="(option) => option.name"
                   :rules="'required'"
+                  :deselectFromDropdown="true"
                   multiple
                 ></SelectSearch>
               </b-col>
@@ -215,4 +218,10 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "./index";
+::v-deep{
+  .vs__dropdown-option--deselect,.vs__dropdown-option--selected{
+    background: #76236C !important;
+    color: #fff;
+  }
+}
 </style>

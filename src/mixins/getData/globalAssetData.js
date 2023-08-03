@@ -1,6 +1,6 @@
 import {getLearningPathsRequest, getLevelsRequest} from "@/api/question";
 import {getTermsRequest} from "@/api/term";
-import {getCountryRequest} from "@/api/country";
+import {getAllCountryRequest, getCountryRequest} from "@/api/country";
 import {getAllLevelsRequest} from "@/api/level";
 import {getAllLearningPathsRequest} from "@/api/learningPath";
 
@@ -32,7 +32,7 @@ export default {
       });
     },
     getCountries() {
-      this.ApiService(getCountryRequest()).then((response) => {
+      this.ApiService(getAllCountryRequest()).then((response) => {
         this.countries = response.data.data;
       });
     }

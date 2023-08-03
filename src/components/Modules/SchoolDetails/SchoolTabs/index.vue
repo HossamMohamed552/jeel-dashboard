@@ -2,25 +2,24 @@
   <section class="inner-routes">
     <div class="taps">
       <div
-        @click="activeTap = 1"
+        @click="activeTapStatus(1,'class')"
         :class="activeTap === 1 ? 'active' : ''"
         class="tap"
       >
         الصفوف الدراسية
       </div>
       <div
-        @click="activeTap = 2"
+        @click="activeTapStatus(2,'staff')"
         :class="activeTap === 2 ? 'active' : ''"
         class="tap"
       >
         تسجيل الموظفين
       </div>
-      <div
-        @click="activeTap = 3"
-        :class="activeTap === 3 ? 'active' : ''"
-        class="tap"
-      >
+      <div @click="activeTapStatus(3,'student')" :class="activeTap === 3 ? 'active' : ''" class="tap">
         تسجيل الطلاب
+      </div>
+      <div @click="activeTapStatus(4,'schoolAdmin')" :class="activeTap === 4 ? 'active' : ''" class="tap">
+        تسجيل المديرين
       </div>
     </div>
     <div class="content">
@@ -35,6 +34,9 @@
           <div class="col-12 px-0" v-if="activeTap === 3">
             <slot name="student-enroll"></slot>
           </div>
+          <div class="col-12 px-0" v-if="activeTap === 4">
+            <slot name="school-admin-enroll"></slot>
+          </div>
         </transition>
       </div>
     </div>
@@ -48,6 +50,15 @@ export default {
       activeTap: 1,
     };
   },
+  methods: {
+    activeTapStatus(id, slot) {
+      this.activeTap = id
+      // window.localStorage.setItem('page', slot)
+    }
+  },
+  beforeDestroy() {
+    window.localStorage.setItem('page', '')
+  }
 };
 </script>
 <style scoped lang="scss">

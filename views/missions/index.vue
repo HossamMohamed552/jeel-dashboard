@@ -7,9 +7,12 @@
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getMissions"
                :loading="loading"
+               :permission_delete="'delete-missions'"
+               :permission_edit="'edit-missions'"
+               :permission_view="'show-missions'"
                >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddMissions">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddMissions" v-if="user.permissions.includes(`add-missions`)">
           <img src="@/assets/images/icons/plus.svg">
           <span>إضافة مرحلة جديد</span>
         </Button>
@@ -29,17 +32,21 @@ import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {deleteMissionsRequest, getMissionsRequest} from "@/api/missios";
 import {getLevelsRequest} from "@/api/level";
+import {mapGetters} from "vuex";
 
 export default{
   name: "index",
   components: {Modal, ListItems, Button},
+  computed:{
+    ...mapGetters(['user'])
+  },
   data(){
     return {
       loading: false,
       showModal: false,
       missionSearchWord: "",
       missionsList: [],
-      totalNumber: null,
+      totalNumber: 0,
       fieldsList: [
         {key: "id", label: "التسلسل"},
         {key: "name", label: "الإسم"},

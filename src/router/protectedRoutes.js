@@ -115,7 +115,7 @@ const protectedRoutes = [
         component: () => import("../../views/levels/index.vue"),
       },
       {
-        path: "/dashboard/level-classes",
+        path: "/dashboard/level-classes/:levelId",
         name: "level-classes",
         component: () => import("../../views/levels/level-classes/index.vue"),
       },
@@ -378,6 +378,11 @@ const protectedRoutes = [
         path: "/dashboard/student-enroll/show/:id",
         name: "show-student-enroll",
         component: () => import("../../views/student-enroll/view-student-enroll/index.vue"),
+      },
+      {
+        path: "/dashboard/school-admin/add",
+        name: "add-school-admin-enroll",
+        component: () => import("../../views/school-admin/add-school-admin/index.vue"),
       },
       {
         path: "/dashboard/jems",
