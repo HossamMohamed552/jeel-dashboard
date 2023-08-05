@@ -4,7 +4,7 @@ export default {
       isVisible: false,
       message: "",
       type: "",
-      time: 3000,
+      time: 5000,
     },
   },
   getters: {
@@ -22,12 +22,6 @@ export default {
   mutations: {
     SHOW_TOAST(state, notification) {
       state.toast = { ...notification, isVisible: true };
-      setTimeout(
-        () => {
-          state.toast = { isVisible: false };
-        },
-        notification.time ? notification.time : 3000
-      );
     },
     HIDE_TOAST(state) {
       state.toast = { isVisible: false, message: "" };

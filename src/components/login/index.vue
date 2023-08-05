@@ -2,7 +2,7 @@
   <div class="content">
     <div class="login-form">
       <div class="login-form__logo">
-        <img src="@/assets/images/logo.svg">
+        <img src="@/assets/images/logo.svg" >
       </div>
       <validation-observer v-slot="{ invalid }" ref="loginForm">
         <form @submit.prevent="onSubmit">

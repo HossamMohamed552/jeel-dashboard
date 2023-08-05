@@ -20,42 +20,41 @@ export default {
     };
   },
   watch: {
-    toast(newVal) {
+    toast() {
       if (this.toast.isVisible) {
         this.showToast = true;
-        newVal.message.forEach((item) => {
-          this.$root.$bvToast.toast(item, {
+        if (typeof this.toast.message === "string") {
+          this.$root.$bvToast.toast(this.toast.message, {
             title: this.toast.title,
             solid: true,
             variant: this.toast.type,
             toaster:
-              this.$i18n.locale === "ar"
+              this.$i18n.locale == "ar"
                 ? "b-toaster-top-left"
                 : "b-toaster-top-right",
           });
-        })
-        // this.$root.$bvToast.toast(this.toast.message, {
-        //   title: this.toast.title,
-        //   solid: true,
-        //   variant: this.toast.type,
-        //   toaster:
-        //     this.$i18n.locale === "ar"
-        //       ? "b-toaster-top-left"
-        //       : "b-toaster-top-right",
-        // });
-        // if (typeof this.toast.message === "string") {
-        //
-        // } else {
-        //   this.$root.$bvToast.toast(this.$t("PLEASE_TRY_AGAIN"), {
-        //     title: this.toast.title,
-        //     solid: true,
-        //     variant: this.toast.type,
-        //     toaster:
-        //       this.$i18n.locale == "ar"
-        //         ? "b-toaster-top-left"
-        //         : "b-toaster-top-right",
-        //   });
-        // }
+        } else if (this.toast.message instanceof Array){
+            this.toast.message.forEach(msg => {
+            this.$root.$bvToast.toast(msg, {
+            title: this.toast.title,
+            solid: true,
+            variant: this.toast.type,
+            appendToast: true,
+            toaster: this.$i18n.locale == "ar" ? "b-toaster-top-left" : "b-toaster-top-right",
+            autoHideDelay: this.toast.time,
+            });
+          });
+        } else {
+          this.$root.$bvToast.toast(this.$t("PLEASE_TRY_AGAIN"), {
+            title: this.toast.title,
+            solid: true,
+            variant: this.toast.type,
+            toaster:
+              this.$i18n.locale == "ar"
+                ? "b-toaster-top-left"
+                : "b-toaster-top-right",
+          });
+        }
       } else {
         this.showToast = false;
       }

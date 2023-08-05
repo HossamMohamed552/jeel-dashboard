@@ -7,9 +7,12 @@
       :loading="loading"
       :levelTerms="levelTerms"
       :schoolId="schoolId"
+      :is-error="isError"
+      :messageError="messageError"
       @handleAddClass="handleAddClass($event)"
       @handleCancel="handleCancel"
     />
+
   </div>
 </template>
 <script>
@@ -25,7 +28,9 @@ export default {
       loading: false,
       showModal: false,
       schoolId: this.$route.params.schoolId,
-      levelTerms: []
+      levelTerms: [],
+      isError: false,
+      messageError:""
     }
   },
   mounted() {
@@ -34,14 +39,20 @@ export default {
   methods:{
     handleAddClass($event) {
       this.loading = true
-      this.showModal = true
       this.ApiService(postClassRequest($event)).then((response) => {
         this.loading = false
+        this.showModal = true
+        this.isError = false
         setTimeout(() => {
           this.showModal = false
         }, 3000)
       }).then(() => {
         this.$router.push(`/dashboard/schools/show/${this.schoolId}`);
+      }).catch((error)=>{
+        this.messageError = error.response.data.errors[0]
+        this.loading = false
+        this.showModal = false
+        this.isError = true
       })
     },
     handleCancel() {
