@@ -121,8 +121,8 @@
                              @click="$router.push('/dashboard/level-classes')">
               {{ $t("CONTROLS.ManageClasses") }}
             </b-dropdown-item>
-            <b-dropdown-divider v-if="!data.item.is_default"></b-dropdown-divider>
-            <b-dropdown-item v-if="!data.item.is_default"
+            <b-dropdown-divider v-if="!data.item.is_default && isDelete"></b-dropdown-divider>
+            <b-dropdown-item v-if="!data.item.is_default && isDelete"
                              @click="deleteItem(data.item.id)"
             >{{ $t("CONTROLS.deleteBtn") }}
             </b-dropdown-item>
@@ -177,6 +177,10 @@ export default {
     ...mapGetters(['user'])
   },
   props: {
+    isDelete: {
+      type: Boolean,
+      default: true
+    },
     showSortControls: {
       type: Boolean,
       default: true,

@@ -347,5 +347,9 @@
   "GLOBAL_BACK": "السابق",
   "GLOBAL_NAME": "الاسم",
   "SLUG": "الرمز",
-  "GLOBAL_LOGOUT": "تسجيل الخروج"
+  "GLOBAL_LOGOUT": "تسجيل الخروج",
+  "QUESTION_DIFFICULTY": "تفاصيل صعوبة السؤال",
+  "NAME": "الإسم",
+  "GRADE_POINTS": "النقاط",
+  "QUESTION_DIFFICULTY_POINTS_EDIT": "تعديل نقاط صعوبة السؤال"
 }
