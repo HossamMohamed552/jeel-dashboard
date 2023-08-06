@@ -127,5 +127,11 @@ let routeSettings = [
     icon: require("@/assets/images/icons/country.svg"),
     permission: "view-countries",
   },
+  {
+    name: "صعوبة السؤال",
+    path: "/dashboard/question-difficulty",
+    icon: require("@/assets/images/icons/question.svg"),
+    permission: "view-questionDifficulty",
+  },
 ];
 export { routesUsers, routesSchool, routesContent, routeSettings };

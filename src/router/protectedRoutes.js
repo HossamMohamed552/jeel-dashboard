@@ -413,7 +413,22 @@ const protectedRoutes = [
         path: "/dashboard/path-content/:pathId/mission/:missionId",
         name: "path-content",
         component: () => import("../../views/path-content/mission-content/index.vue"),
-      }
+      },
+      {
+        path: "/dashboard/question-difficulty",
+        name: "question-difficulty",
+        component: () => import("../../views/question-difficulty/index.vue"),
+      },
+      {
+        path: "/dashboard/question-difficulty/edit/:id",
+        name: "edit-question-difficulty",
+        component: () => import("../../views/question-difficulty/edit-question-difficulty/index.vue"),
+      },
+      {
+        path: "/dashboard/question-difficulty/show/:id",
+        name: "show-question-difficulty",
+        component: () => import("../../views/question-difficulty/view-question-difficulty/index.vue"),
+      },
     ],
   },
 ];

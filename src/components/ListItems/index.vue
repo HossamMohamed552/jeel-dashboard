@@ -120,9 +120,7 @@
               {{ $t("CONTROLS.ManageClasses") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkDelete(data) === 'show'"></b-dropdown-divider>
-            <b-dropdown-item v-if="checkDelete(data) === 'show'"
-                             @click="deleteItem(data.item.id)"
-            >{{ $t("CONTROLS.deleteBtn") }}
+            <b-dropdown-item v-if="checkDelete(data) === 'show'">{{ $t("CONTROLS.deleteBtn") }}
             </b-dropdown-item>
             <b-dropdown-item v-if="videoList" @click="addVideoQuestion(data.item.id)"
             >{{ $t("CONTROLS.addVideoQuestion") }}
@@ -183,13 +181,14 @@ export default {
       type: String,
       default: ''
     },
-    permission_edit:{
+    permission_edit: {
       type: String,
       default: ''
     },
-    permission_view:{
+    permission_view: {
       type: String,
-      default: ''
+      default:
+        ''
     },
     showSortControls: {
       type: Boolean,
@@ -308,12 +307,15 @@ export default {
       })
     },
     checkDelete(data) {
+
       if (data.item.is_default === 1 && this.user.permissions.includes(`${this.permission_delete}`)) {
         return 'hide'
       } else if (data.item.school_owner === true && this.user.permissions.includes(`${this.permission_delete}`)) {
         return 'hide'
       } else if (data.item.is_default === 0 || data.item.school_owner === false || this.user.permissions.includes(`${this.permission_delete}`)) {
         return 'show'
+      } else if (this.$route.path === '/dashboard/question-difficulty') {
+        return 'hide'
       } else {
         return 'hide'
       }
