@@ -38,7 +38,7 @@
           <b-row v-if="video.thumbnail" class="mt-4">
             <b-col lg="12">
               <ShowItem :title="$t('VIDEO.UPLOAD_IMAGE')"/>
-              <img :src="video.thumbnail"/>
+              <img :src="video.thumbnail" class="video-img"/>
             </b-col>
           </b-row>
         </div>

@@ -401,7 +401,7 @@ const protectedRoutes = [
       },
       {
         path: "/dashboard/rewarding-actions/:id",
-        name: "rewarding-actions",
+        name: "rewarding-actions-edit",
         component: () => import("../../views/rewarding-actions/edit/index.vue"),
       },
       {
@@ -411,7 +411,7 @@ const protectedRoutes = [
       },
       {
         path: "/dashboard/path-content/:pathId/mission/:missionId",
-        name: "path-content",
+        name: "path-content-mission",
         component: () => import("../../views/path-content/mission-content/index.vue"),
       },
       {
