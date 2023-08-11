@@ -22,7 +22,7 @@ let routesUsers = [
 ];
 let routesSchool = [
   {
-    name: "مجموعات المدارس",
+    name: "أنواع المدارس",
     path: "/dashboard/school-group",
     icon: require("@/assets/images/icons/school-group.svg"),
     permission: "view-schoolGroups",

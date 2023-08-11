@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة المجموعات'" :number-of-item="totalNumber"
+    <ListItems :header-name="'قائمة أنواع المدارس'" :number-of-item="totalNumber"
                :table-items="schoolGroupList" :v-search-model="groupSearchWord"
                :fieldsList="fieldsList" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
@@ -10,12 +10,12 @@
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToSchoolGroup">
           <img src="@/assets/images/icons/plus.svg">
-          <span>إضافة مجموعه</span>
+          <span>إضافة نوع</span>
         </Button>
       </template>
     </ListItems>
-    <Modal :content-message="'حذف المجموعة المدرسية'"
-           :content-message-question="'هل انت متأكد من حذف المجموعة المدرسية'"
+    <Modal :content-message="'حذف النوع'"
+           :content-message-question="'هل انت متأكد من حذف هذا النوع ؟ '"
            :showModal="showModal"
            @cancel="cancel($event)"
            :is-warning="true"
