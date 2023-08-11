@@ -39,10 +39,10 @@
 .per-page-select {
   width: fit-content !important;
   border-radius: 40px;
-  background-color: $color-extra-ligth !important;
+  background-color: #F1F1F1 !important;
   color: $color-primary;
   border: none;
-  height: 30px;
-  padding: 0px 30px !important;
-  font-weight: 700;
+  // height: 30px;
+  padding: 0px 30px 8px !important;
+  font-weight: bold;
 }
