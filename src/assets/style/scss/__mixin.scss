@@ -28,9 +28,19 @@
 
 // extends
 %search-sort{
-  padding: 1rem 2rem;
+  padding: 0 1.5rem;
   width: 25rem;
-  height: 3.9rem;
   border-radius: 3.125rem;
   border: 1px solid #BEBEBE;
+  font-weight: bold;
+  color: $color-primary;
+}
+
+%search-sort-search-input{
+  padding: 1.3rem 1.5rem 1.8rem;
+  width: 25rem;
+  border-radius: 3.125rem;
+  border: 1px solid #BEBEBE;
+  font-weight: bold;
+  color: $color-primary;
 }
