@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة أنواع المدارس'"
+      :header-name="'قائمة مجموعات المدارس'"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="schoolTypessList"
@@ -18,13 +18,13 @@
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSchoolType" v-if="user.permissions.includes(`add-schoolTypes`)">
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة نوع مدرسة</span>
+          <span>اضافة مجموعة مدارس</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف نوع المدرسة'"
-      :content-message-question="'هل انت متأكد من حذف نوع المدرسة'"
+      :content-message="'حذف مجموعة المدارس'"
+      :content-message-question="'هل انت متأكد من حذف مجموعة المدارس ؟'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"

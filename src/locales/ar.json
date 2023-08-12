@@ -41,7 +41,7 @@
   "TABLE_FIELDS": {
     "id": "التسلسل",
     "name": "الإسم",
-    "school_group": "اسم النوع",
+    "school_group": "نوع المدارس",
     "email": "البريد الإلكترونى",
     "description": "الوصف",
     "code": "كود",
@@ -49,7 +49,7 @@
     "actions": "الإجراء",
     "type": "النوع",
     "logo": "الشعار",
-    "school_type": "نوع المدرسة",
+    "school_type": "مجموعة المدارس",
     "package": "الباقة",
     "start_subscription": "بداية التعاقد",
     "end_subscription": "نهاية التعاقد",
@@ -118,7 +118,7 @@
     "showDetails": "عرض تفاصيل المدرسة",
     "start_subscription": "بداية التعاقد",
     "end_subscription": "نهاية التعاقد",
-    "school_type": "نوع المدرسة",
+    "school_type": "مجموعة المدارس",
     "school_group": "اسم نوع المدرسة",
     "package": "الباقة",
     "UPLOAD_IMAGE": "صورة شعار المدرسة",
@@ -257,10 +257,10 @@
     "EDIT": "تعديل الباقة"
   },
   "SCHOOL_TYPE": {
-    "ADD_NEW": "إضافة نوع مدرسة جديد",
-    "EDIT": "تعديل نوع مدرسة",
+    "ADD_NEW": "إضافة مجموعة مدارس جديدة",
+    "EDIT": "تعديل مجموعة مدارس",
     "name": "الاسم",
-    "showDetails": "تفاصيل نوع المدرسة"
+    "showDetails": "تفاصيل مجموعة المدارس"
   },
   "BLOOM": {
     "BLOOM": "بلوم",

@@ -34,7 +34,7 @@ let routesSchool = [
     permission: "view-schools",
   },
   {
-    name: "قائمة أنواع المدارس",
+    name: "مجموعات المدارس",
     path: "/dashboard/school-type",
     icon: require("@/assets/images/icons/school-list.svg"),
     permission: "view-schoolTypes",
