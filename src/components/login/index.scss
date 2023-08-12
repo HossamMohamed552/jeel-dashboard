@@ -53,8 +53,9 @@
 
   .remember-me{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between !important;
     align-items: center;
+    flex-direction: row;
     a{
       color: $color-show-heading;
       font-weight: bold;
