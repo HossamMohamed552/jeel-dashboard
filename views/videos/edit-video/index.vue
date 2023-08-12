@@ -49,6 +49,7 @@ export default {
       formData.append('description', $event.description);
       formData.append('learning_path_id', $event.learning_path_id);
       formData.append('level_id', $event.level_id);
+      formData.append('term_id', $event.term_id);
       formData.append("_method", 'PUT');
       if ($event.thumbnail)
         formData.append('thumbnail', $event.thumbnail);

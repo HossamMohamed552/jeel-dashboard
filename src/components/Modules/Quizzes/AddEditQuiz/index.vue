@@ -6,7 +6,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditQuizForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="4" class="mb-3">
+              <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="createQuiz.name"
@@ -16,7 +16,8 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="4" class="mb-3">
+              <b-col lg="6" class="mb-3"></b-col>
+              <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
                     v-model="createQuiz.level_id"
@@ -26,10 +27,25 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
+                    @input="getTerms"
                   ></SelectSearch>
                 </div>
               </b-col>
-              <b-col lg="4" class="mb-3">
+              <b-col lg="6" class="mb-3">
+                <div class="hold-field">
+                  <SelectSearch
+                    v-model="createQuiz.term_id"
+                    :label="$t('MISSIONS.terms')"
+                    :name="$t('MISSIONS.terms')"
+                    :options="terms"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                    :disabled="!createQuiz.level_id"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
                     v-model="createQuiz.learning_path_id"
@@ -193,6 +209,7 @@ import {
   postRandomQuizRequest
 } from "@/api/quiz";
 import draggable from 'vuedraggable'
+import { getAllTermsRequest } from "@/api/term";
 
 export default {
   components: {
@@ -213,6 +230,7 @@ export default {
   data() {
     return {
       levels: [],
+      terms: [],
       learningPaths: [],
       typeList: [
         {
@@ -234,6 +252,7 @@ export default {
       createQuiz: {
         name: "",
         level_id: null,
+        term_id: null,
         learning_path_id: null,
         total_question: null,
         description: "",
@@ -368,8 +387,18 @@ export default {
       this.createQuiz.question_difficulty = [...questionDifficultyMapped]
       this.getQuestions()
     },
+    getTerms() {
+      const params =
+      {
+        level_id: this.createQuiz.level_id
+      }
+      this.ApiService(getAllTermsRequest(params)).then((response) => {
+        this.terms = response.data.data;
+      });
+    },
   },
   mounted() {
+    if (this.$route.params.id) this.getTerms()
     this.getAllLevels()
     this.getLearningPaths()
     // this.ApiService(getQuestionRequest()).then((response) => {
@@ -381,6 +410,7 @@ export default {
         this.createQuiz.name = response.data.data.name
         this.createQuiz.description = response.data.data.description
         this.createQuiz.level_id = response.data.data.level.id
+        this.createQuiz.term_id = response.data.data.term.id
         this.createQuiz.learning_path_id = response.data.data.learning_path.id
         this.createQuiz.type = response.data.data.type
         this.question_difficulty =  response.data.data.questions_difficulties.map(item => Object.assign(item, {numberSelected: item.questions_count}))

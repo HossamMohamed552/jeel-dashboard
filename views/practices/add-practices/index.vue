@@ -28,6 +28,7 @@ export default {
       formData.append('type',quiz.type);
       formData.append('learning_path_id',quiz.learning_path_id);
       formData.append('level_id',quiz.level_id);
+      formData.append('term_id',quiz.term_id);
       for (let questions = 0; questions < quiz.questions.length;) {
         formData.append(`questions[${questions}]`, quiz.questions[questions].id);
         questions++

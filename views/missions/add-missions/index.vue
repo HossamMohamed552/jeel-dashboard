@@ -20,6 +20,7 @@
       v-if="currentStep === 1"
       :learningPathSelected="learningPathSelected"
       :level="level"
+      :term="term"
       @handleBack="goToMissionDataForm"
       @handleCancel="handleCancel"
       @goToFinalStep="goToFinalStep"/>
@@ -147,6 +148,7 @@ export default {
       languageSkills: [],
       levels: [],
       level: null,
+      term: null,
       collectData: {},
       steps: [
         {
@@ -178,6 +180,7 @@ export default {
         learningPath.includes(item.id)
       );
       this.level = this.collectData.level_id;
+      this.term = this.collectData.term_id;
     },
     goToMissionDataForm() {
       this.handleNavigation(0);
