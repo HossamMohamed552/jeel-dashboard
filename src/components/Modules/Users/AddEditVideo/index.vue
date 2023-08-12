@@ -19,7 +19,7 @@
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <b-form-group :label="$t('VIDEO.Description')" v-slot="{ ariaDescribedby }" class="description">
-                    <TextAreaField v-model="createVideo.description" :rules="'required'" rows="5" :name="$t('VIDEO.Description')">
+                    <TextAreaField v-model="createVideo.description" rows="5" :name="$t('VIDEO.Description')">
                     </TextAreaField>
                   </b-form-group>
                 </div>
@@ -58,11 +58,23 @@
                   </ValidationProvider>
                 </div>
               </b-col>
+
               <b-col lg="6" class="mb-3 mt-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors, invalid}" rules="required">
                     <b-form-group :label="$t('VIDEO.level')" v-slot="{ ariaDescribedby }" class="level">
-                      <SelectField :rules="'required'" v-model="createVideo.level_id" name="level" :options="levels">
+                      <SelectField :rules="'required'" v-model="createVideo.level_id" name="level" :options="levels" @change="getTerms">
+                      </SelectField>
+                    </b-form-group>
+                  </ValidationProvider>
+                </div>
+              </b-col>
+         
+              <b-col lg="6" class="mb-3 mt-3">
+                <div class="hold-field">
+                  <ValidationProvider v-slot="{errors, invalid}" rules="required">
+                    <b-form-group :label="$t('MISSIONS.terms')" v-slot="{ ariaDescribedby }" class="term">
+                      <SelectField :rules="'required'" v-model="createVideo.term_id" name="term" :options="terms" :disabled="!createVideo.level_id">
                       </SelectField>
                     </b-form-group>
                   </ValidationProvider>
@@ -110,6 +122,7 @@ import {getSingleVideoRequest} from "@/api/videos";
 import {getAllLearningPathsRequest} from "@/api/learningPath";
 import {getAllLevelsRequest} from "@/api/level";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
+import { getAllTermsRequest } from "@/api/term";
 
 
 
@@ -132,6 +145,7 @@ export default {
     return {
       paths: [],
       levels:[],
+      terms: [],
       createVideo: {
         name: "",
         description: "",
@@ -141,6 +155,7 @@ export default {
         title:'',
         original_name:'',
         level_id: '',
+        term_id: '',
         img_url: null,
         thumbnail: null,
         uploadVideo:false,
@@ -181,6 +196,7 @@ export default {
           this.createVideo.video = response.data.data.url
           this.createVideo.learning_path_id = response.data.data.learningPath.id
           this.createVideo.level_id=response.data.data.level.id
+          this.createVideo.term_id=response.data.data.term.id
           this.createVideo.img_url=response.data.data.thumbnail
         })
       }
@@ -197,11 +213,24 @@ export default {
         this.levels = levelsArr.map(path=>{return {value:path.id,text:path.name}})
       })
     },
+    getTerms() {
+      const params =
+      {
+        level_id: this.createVideo.level_id
+      }
+      this.ApiService(getAllTermsRequest(params)).then((response) => {
+        const termsArr = response.data.data;
+        this.terms = termsArr.map((path) => {
+          return { value: path.id, text: path.name };
+        });
+      });
+    },
   },
   mounted() {
     this.getVideoToEdit();
     this.getAllLearningPaths();
     this.getAllLevels();
+    if (this.$route.params.id) this.getTerms()
   }
 };
 </script>

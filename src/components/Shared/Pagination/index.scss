@@ -2,16 +2,8 @@
   align-items: center;
 
   ::v-deep .page-item {
+  
     &.active {
-      display: inline-flex;
-      position: relative;
-      justify-content: center;
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      background-color: $color-primary;
-      margin: 0 6px;
-      color: white;
       .page-link {
         background-color: $color-primary;
         color: white;
@@ -20,15 +12,15 @@
 
     .page-link {
       border: none;
-      color: $color-primary;
+      color: #76236C;
       background-color: transparent;
-
       border-radius: 50%;
       margin: 0 6px;
-      width: 35px;
-      height: 35px;
+      width: 30px;
+      height: 30px;
       font-size: 1rem;
       font-weight: 700;
+      padding: 0 0 0.5rem;
       &:focus {
         box-shadow: none;
       }

@@ -1,5 +1,5 @@
 <template>
-  <b-container class="p-5">
+  <b-container class="holder">
     <div v-if="loading" class="text-center text-danger my-5 my-5">
       <b-spinner class="align-middle"></b-spinner>
     </div>
