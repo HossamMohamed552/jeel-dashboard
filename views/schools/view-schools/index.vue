@@ -107,6 +107,9 @@
               <template v-slot:student-enroll>
                 <StudentEnrollList :schoolId="currentSchoolId"/>
               </template>
+              <template v-slot:school-admin-enroll>
+                <SchoolAdminList :schoolId="currentSchoolId"/>
+              </template>
             </SchoolTabs>
           </b-col>
         </b-row>
@@ -120,6 +123,7 @@ import SchoolTabs from "@/components/Modules/SchoolDetails/SchoolTabs/index.vue"
 import ClassesList from "@/components/Modules/Classes/ClassesList/index.vue";
 import StaffEnrollList from "@/components/Modules/StaffEnroll/StaffEnrollList/index.vue";
 import StudentEnrollList from "@/components/Modules/StudentEnroll/StudentEnrollList/index.vue";
+import SchoolAdminList from "@/components/Modules/SchoolAdmin/SchoolAdminList/index.vue";
 import {getSingleSchoolsRequest} from "@/api/school.js";
 
 export default {
@@ -129,7 +133,8 @@ export default {
     SchoolTabs,
     ClassesList,
     StaffEnrollList,
-    StudentEnrollList
+    StudentEnrollList,
+    SchoolAdminList
   },
   data() {
     return {

@@ -36,13 +36,13 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3" v-if="!$route.params.id">
+              <b-col :lg="$route.params.id ? '12': '6'" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="formValues.password"
                     :label="$t('USERS.PASSWORD')"
                     :name="$t('USERS.PASSWORD')"
-                    :rules="'required|min:6'"
+                    :rules="$route.params.id ? '' : 'required|min:6'"
                   ></TextField>
                 </div>
               </b-col>
@@ -75,7 +75,6 @@
                     :options="systemRoles"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
-                    :rules="'required'"
                     multiple
                   ></SelectSearch>
                 </div>

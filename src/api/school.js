@@ -5,6 +5,13 @@ export const getSchoolsRequest = (params) => ({
     params
   }
 })
+export const getSchoolOwnerRequest = (params) => ({
+  method: 'get',
+  url: 'get_school_owner',
+  config: {
+    params
+  }
+})
 export const getSingleSchoolsRequest = (params) => ({
   method: 'get',
   url: `schools/${params}`,

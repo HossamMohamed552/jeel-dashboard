@@ -7,9 +7,12 @@
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getQuestions"
                :loading="loading"
+               :permission_delete="'delete-questions'"
+               :permission_edit="'edit-questions'"
+               :permission_view="'view-questions'"
                >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddQuestions">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddQuestions" v-if="user.permissions.includes(`add-questions`)">
           <img src="@/assets/images/icons/plus.svg">
           <span>إضافة سؤال جديد</span>
         </Button>
@@ -29,9 +32,13 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {deleteQuestionRequest, getQuestionRequest} from "@/api/question";
+import {mapGetters} from "vuex";
 
 export default {
   components: {Modal, ListItems, Button},
+  computed:{
+    ...mapGetters(['user'])
+  },
   data() {
     return {
       loading:false,

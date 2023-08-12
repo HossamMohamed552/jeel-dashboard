@@ -14,7 +14,9 @@
               <p class="text-center"><span>مراحل</span> <span>{{ levelClass.name }}</span></p>
               <b-row>
                 <b-col lg="6" v-for="mission in levelClass.missions" :key="mission.id">
-                  <p class="mission-item" @click="$router.push(`/dashboard/path-content/${mission.id}`)">{{mission.name}} <i class="far fa-edit"></i></p>
+                  <p class="mission-item"
+                     @click="$router.push(`/dashboard/path-content/${mission.id}`)">
+                    {{ mission.name }} <i class="far fa-edit"></i></p>
                 </b-col>
               </b-row>
             </div>
@@ -35,7 +37,7 @@ export default {
     }
   },
   mounted() {
-    this.ApiService(getAllClassRequest()).then((response) => {
+    this.ApiService(getAllClassRequest(this.$route.params.levelId)).then((response) => {
       this.classesList = response.data.data;
     })
   }

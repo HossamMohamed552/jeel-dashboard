@@ -93,7 +93,7 @@
                                 <label class="mission-date">
                                   {{ $t('LEVEL.startMission') }}
                                 </label>
-                                <date-picker v-model="item.start_date" @change="showDate = false"
+                                <date-picker :lang="en" v-model="item.start_date" @change="showDate = false"
                                              valueType="format"></date-picker>
                                 <p class="show-date" v-if="showDate">{{ item.start_date }}</p>
                               </ValidationProvider>
@@ -103,7 +103,7 @@
                                 <label class="mission-date">
                                   {{ $t('LEVEL.endMission') }}
                                 </label>
-                                <date-picker v-model="item.end_date" @change="showDate = false"
+                                <date-picker :lang="en" v-model="item.end_date" @change="showDate = false"
                                              valueType="format"></date-picker>
                                 <p class="show-date" v-if="showDate">{{ item.end_date }}</p>
                               </ValidationProvider>
@@ -149,6 +149,7 @@ import axios from "axios";
 import VueCookies from "vue-cookies";
 import {mapGetters} from "vuex";
 import DatePicker from "vue2-datepicker";
+import 'vue2-datepicker/locale/en'
 import "vue2-datepicker/index.css";
 
 export default {
@@ -175,6 +176,7 @@ export default {
   },
   data() {
     return {
+      en:'en',
       createLevel: {
         name: "",
         min_levels: null,

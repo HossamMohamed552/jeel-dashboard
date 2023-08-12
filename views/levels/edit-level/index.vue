@@ -23,15 +23,15 @@ export default {
       schoolGroupOptions: []
     };
   },
-  mounted() {
-    this.getSchoolGroups();
-  },
+  // mounted() {
+  //   this.getSchoolGroups();
+  // },
   methods: {
-    getSchoolGroups() {
-      this.ApiService(getSchoolGroupRequest()).then((response) => {
-        this.schoolGroupOptions = response.data.data;
-      });
-    },
+    // getSchoolGroups() {
+    //   this.ApiService(getSchoolGroupRequest()).then((response) => {
+    //     this.schoolGroupOptions = response.data.data;
+    //   });
+    // },
     handleEditLevel($event) {
       this.ApiService(putLevelRequest(this.$route.params.id, $event)).then((response) => {
         this.$router.push("/dashboard/levels");

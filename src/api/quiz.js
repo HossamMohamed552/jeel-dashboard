@@ -12,7 +12,7 @@ export const getQuizLevelPathRequest = (params) => ({
 })
 export const getGeneralQuestionRequest = (params) => ({
   method: 'get',
-  url: `questions?level_id=${params.levelId}&learning_path_id=${params.learnPathId}`,
+  url: `questions?list_all=true&level_id=${params.levelId}&learning_path_id=${params.learnPathId}`,
   config: {}
 })
 export const getQuestionDifficultyLevelLearnRequest = (params) => ({

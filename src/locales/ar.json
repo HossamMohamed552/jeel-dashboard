@@ -164,7 +164,11 @@
     "learning_path": "مسار تعليمي",
     "level": "المرحله",
     "ShowDetails": "تفاصيل ورقة العمل",
-    "type": "نوع ورقة العمل"
+    "type": "نوع ورقة العمل",
+    "color": "ورقة عمل ملونة",
+    "print": "ورقة عمل للطباعة",
+    "UPLOAD_IMAGE": "صورة ورقة عمل",
+    "paper_work_final_degree": "درجة ورقة العمل"
   },
   "PATH": {
     "Name": "اسم المسار",
@@ -311,6 +315,10 @@
     "NEXT_COINS": "مكافأة المرات القادمة",
     "SECOND_EXPERIENCE": "خبرة المرة الثانية",
     "NEXT_EXPERIENCE": "خبرة المرات القادمة"
+  },
+  "SCHOOL_ADMIN": {
+    "ADD_NEW": "إضافة مدير جديد",
+    "schoolAdminName": "إسم المدير"
   },
   "USER": {
     "showDetails": "عرض تفاصيل المستخدم",

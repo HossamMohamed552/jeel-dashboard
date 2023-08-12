@@ -6,9 +6,12 @@
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getLevels"
                :loading="loading"
+               :permission_delete="'delete-levels'"
+               :permission_edit="'edit-levels'"
+               :permission_view="'show-levels'"
                >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddLevel" v-if="user.permissions.includes('add-levels')">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddLevel" v-if="user.permissions.includes(`add-levels`)">
           <img src="@/assets/images/icons/plus.svg">
           <span>إضافة مرحلة دراسية</span>
         </Button>

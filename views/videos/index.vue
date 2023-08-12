@@ -5,9 +5,12 @@
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getVideos"
                :loading="loading"
+               :permission_delete="'delete-video'"
+               :permission_edit="'edit-video'"
+               :permission_view="'show-video'"
                >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSchools">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSchools" v-if="user.permissions.includes(`add-video`)">
           <img src="@/assets/images/icons/plus.svg">
           <span> إضافة فيديو جديد</span>
         </Button>
@@ -27,16 +30,20 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import {deleteVideoRequest, getVideosRequest} from "@/api/videos";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
 
 export default {
   components: {Modal, ListItems, Button},
+  computed:{
+    ...mapGetters(['user'])
+  },
   data() {
     return {
       loading: false,
       showModal: false,
       groupSearchWord: "",
       videosList: [],
-      totalNumber: null,
+      totalNumber: 0,
       fieldsList: [
         {key: "id", label: "التسلسل"},
         {key: "original_name", label: this.$i18n.t('TABLE_FIELDS.name')},

@@ -4,12 +4,15 @@ import protectedRoutes from "./protectedRoutes";
 import publicRoutes from "./publicRoutes";
 import store from "@/store";
 // import { handleRouteNavigation } from "./routerGuard";
-
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+  console.log('location', location)
+  return originalPush.call(this, location).catch((err) => err);
+};
 Vue.use(Router);
-
 const router = new Router({
   mode: "history",
-  base: process.env.BASE_URL,
+  base: process.env.VUE_APP_BASE_URL,
   routes: [
     ...publicRoutes,
     ...protectedRoutes,
@@ -23,13 +26,9 @@ router.beforeEach((to, from, next) => {
   } else {
     if (to.name === "login" && tokenFound) {
       next({name: "main"})
+    } else {
+      next()
     }
-    next()
   }
-
 });
-const originalPush = Router.prototype.push;
-Router.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch((err) => err);
-};
 export default router;
