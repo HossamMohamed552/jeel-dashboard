@@ -8,7 +8,7 @@ export default function getData (type){
       }
     },
     mounted() {
-      if (type === 'question') {
+      if (type === 'question' && this.$route.params.id) {
         this.ApiService(getSingleQuestionRequest(this.$route.params.id)).then((response) => {
           this.question =  response.data.data
         })
