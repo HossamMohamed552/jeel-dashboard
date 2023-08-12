@@ -110,14 +110,14 @@
             >{{ $t("CONTROLS.detailBtn") }}
             </b-dropdown-item>
             <b-dropdown-divider
-              v-if="!user.permissions.includes('manage-learningpath')"></b-dropdown-divider>
+              v-if="!user?.permissions?.includes('manage-learningpath')"></b-dropdown-divider>
             <b-dropdown-item @click="editItem(data.item.id)"
-                             v-if="!user.permissions.includes('manage-learningpath')">
+                             v-if="!user?.permissions?.includes('manage-learningpath')">
               {{ $t("CONTROLS.editBtn") }}
             </b-dropdown-item>
             <b-dropdown-divider
-              v-if="user.permissions.includes('manage-learningpath')"></b-dropdown-divider>
-            <b-dropdown-item v-if="user.permissions.includes('manage-learningpath')"
+              v-if="user?.permissions?.includes('manage-learningpath')"></b-dropdown-divider>
+            <b-dropdown-item v-if="user?.permissions?.includes('manage-learningpath')"
                              @click="$router.push('/dashboard/level-classes')">
               {{ $t("CONTROLS.ManageClasses") }}
             </b-dropdown-item>
