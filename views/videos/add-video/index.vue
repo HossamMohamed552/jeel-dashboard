@@ -50,7 +50,6 @@ export default{
       formData.append('video',$event.video);
       formData.append('video_without_music',$event.video_without_music);
       formData.append('level_id', $event.level_id);
-      if($event.thumbnail)
       formData.append('thumbnail', $event.thumbnail);
       this.loading = true;
       let axiosSource = axios.CancelToken.source();

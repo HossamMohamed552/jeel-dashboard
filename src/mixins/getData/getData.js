@@ -12,6 +12,8 @@ export default function getData (type){
         this.ApiService(getSingleQuestionRequest(this.$route.params.id)).then((response) => {
           this.question =  response.data.data
         })
+      } else {
+        return;
       }
     }
   }

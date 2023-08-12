@@ -5,9 +5,12 @@
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getPaperWorks"
                :loading="loading"
+               :permission_delete="'delete-paperWork'"
+               :permission_edit="'edit-paperWork'"
+               :permission_view="'show-paperWork'"
                >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddPaperWorks">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddPaperWorks" v-if="user.permissions.includes(`add-paperWork`)">
           <img src="@/assets/images/icons/plus.svg">
           <span> إضافة ورقة عمل جديده</span>
         </Button>
@@ -27,9 +30,13 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import {deletePaperWorkRequest, getPaperWorksRequest} from "@/api/paperWork";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
 
 export default {
   components: {Modal, ListItems, Button},
+  computed:{
+    ...mapGetters(['user'])
+  },
   data() {
     return {
       loading: false,

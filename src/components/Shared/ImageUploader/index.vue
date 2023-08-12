@@ -20,9 +20,9 @@
           accept="image/*"
           @change="onFileChange"
         />
-<!--        <Button color="gray" class="btn-file" @click="$refs.attachment.click()">-->
-<!--          {{ $t("GLOBAL_UPLOAD") }}-->
-<!--        </Button>-->
+        <!--        <Button color="gray" class="btn-file" @click="$refs.attachment.click()">-->
+        <!--          {{ $t("GLOBAL_UPLOAD") }}-->
+        <!--        </Button>-->
       </div>
       <div class="img-wrapper">
         <div class="hold-img" v-if="itemImage">
@@ -77,7 +77,6 @@ export default {
   },
   methods: {
     ...mapActions(["ShowToast"]),
-
     onFileChange(changeEvent) {
       this.$emit("imageUpload", changeEvent);
     },

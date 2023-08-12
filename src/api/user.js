@@ -23,7 +23,7 @@ export const getRolesRequest = () => ({
 })
 export const getAllRolesRequest = () => ({
   method: 'get',
-  url: 'roles?list_all=true',
+  url: 'roles?list_all=true&system_role=1',
   config: {}
 })
 

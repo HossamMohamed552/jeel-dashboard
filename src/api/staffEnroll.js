@@ -14,7 +14,7 @@ export const getStaffEnrollUsersRequest = (params) => ({
 
 export const getStaffEnrollRolesRequest = (params) => ({
   method: 'get',
-  url: `roles?school_id=${params}&system_role=0`,
+  url: `roles?school_id=${params}&system_role=0&system_enrollment=1`,
   config: {}
 })
 

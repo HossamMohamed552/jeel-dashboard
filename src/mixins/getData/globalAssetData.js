@@ -1,6 +1,6 @@
 import {getLearningPathsRequest, getLevelsRequest} from "@/api/question";
-import {getTermsRequest} from "@/api/term";
-import {getCountryRequest} from "@/api/country";
+import {getAllTermsRequest, getTermsRequest} from "@/api/term";
+import {getAllCountryRequest, getCountryRequest} from "@/api/country";
 import {getAllLevelsRequest} from "@/api/level";
 import {getAllLearningPathsRequest} from "@/api/learningPath";
 
@@ -27,12 +27,12 @@ export default {
       });
     },
     getTerms() {
-      this.ApiService(getTermsRequest()).then((response) => {
+      this.ApiService(getAllTermsRequest()).then((response) => {
         this.terms = response.data.data;
       });
     },
     getCountries() {
-      this.ApiService(getCountryRequest()).then((response) => {
+      this.ApiService(getAllCountryRequest()).then((response) => {
         this.countries = response.data.data;
       });
     }

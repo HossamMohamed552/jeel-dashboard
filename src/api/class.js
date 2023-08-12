@@ -7,10 +7,7 @@ export const getClassRequest = (params) => ({
 })
 export const getAllClassRequest = (params) => ({
   method: 'get',
-  url: 'classes?list_all=true',
-  config: {
-    params
-  }
+  url: `classes?list_all=true&level_id=${params}`,
 })
 export const getSingleClassRequest = (params) => ({
   method: 'get',

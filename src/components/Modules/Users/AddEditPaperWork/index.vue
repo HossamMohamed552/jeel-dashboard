@@ -6,7 +6,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditPaperWorkForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="6" class="mb-3">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="createPaperWork.name"
@@ -22,28 +22,52 @@
                     <b-form-group :label="$t('PAPER_WORK.type')" v-slot="{ ariaDescribedby }"
                                   class="type">
                       <SelectField :rules="'required'" v-model="createPaperWork.type" name="type"
-                                   :options="paperWorkTypes">
-                      </SelectField>
+                                   :options="paperWorkTypes"></SelectField>
                     </b-form-group>
                   </ValidationProvider>
                 </div>
               </b-col>
-              <b-col lg="5" class="mb-3">
+              <b-col lg="4" class="mb-3 mt-1">
+                <div class="hold-field">
+                  <TextField
+                    v-model="createPaperWork.paper_work_final_degree"
+                    :label="$t('PAPER_WORK.paper_work_final_degree')"
+                    :name="$t('PAPER_WORK.paper_work_final_degree')"
+                    :rules="'required|numeric'"
+                  ></TextField>
+                </div>
+              </b-col>
+              <b-col lg="6" class="mb-3">
+                <div class="hold-field">
+                  <span class="custom-label">{{ $t('PAPER_WORK.print') }}</span>
+                  <ValidationProvider v-slot="{errors}" :rules="$route.params.id ? '' : 'required'"
+                                      name="file">
+                    <b-form-file @change="checkEditPaperWork" accept="application/pdf"
+                                 placeholder="اختر ملف"
+                                 v-model="createPaperWork.paper_work_without_color"
+                                 name="file"></b-form-file>
+                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">{{
+                        error
+                      }}
+                    </b-form-invalid-feedback>
+                  </ValidationProvider>
+                </div>
+              </b-col>
+              <b-col lg="6" class="mb-3">
+                <span class="custom-label">{{ $t('PAPER_WORK.color') }}</span>
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors}" :rules="$route.params.id ? '' : 'required'"
                                       name="file">
-                    <b-form-file accept="application/pdf" placeholder="اختر ملف"
-                                 v-model="createPaperWork.file" name="file">
-                    </b-form-file>
+                    <b-form-file @change="checkEditPaperWorkColor" accept="application/pdf"
+                                 placeholder="اختر ملف" v-model="createPaperWork.file"
+                                 name="file"></b-form-file>
                     <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                       {{ error }}
                     </b-form-invalid-feedback>
                   </ValidationProvider>
                 </div>
               </b-col>
-            </b-row>
-            <b-row>
-              <b-col lg="5" class="mb-3 mt-3">
+              <b-col lg="6" class="mb-3 mt-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors, invalid}" rules="required">
                     <b-form-group :label="$t('PAPER_WORK.learning_path')"
@@ -55,7 +79,7 @@
                   </ValidationProvider>
                 </div>
               </b-col>
-              <b-col lg="5" class="mb-3 mt-3">
+              <b-col lg="6" class="mb-3 mt-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors, invalid}" rules="required">
                     <b-form-group :label="$t('PAPER_WORK.level')" v-slot="{ ariaDescribedby }"
@@ -75,6 +99,16 @@
                                    rows="5" :name="$t('PAPER_WORK.Description')">
                     </TextAreaField>
                   </b-form-group>
+                </div>
+              </b-col>
+              <b-col lg="12" class="mb-3">
+                <div class="hold-field mt-4">
+                  <ImageUploader
+                    :name="'paperWorkThumbnail'"
+                    :text="$t('PAPER_WORK.UPLOAD_IMAGE')"
+                    @imageUpload="handleUploadImage"
+                    :item-image="createPaperWork.img_url"
+                  />
                 </div>
               </b-col>
             </b-row>
@@ -108,10 +142,12 @@ import Modal from "@/components/Shared/Modal/index.vue";
 import {getSinglePaperworkRequest} from "@/api/paperWork";
 import {getAllLearningPathsRequest, getLearningPathsRequest} from "@/api/learningPath";
 import {getAllLevelsRequest, getLevelsRequest} from "@/api/level";
+import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 
 
 export default {
   components: {
+    ImageUploader,
     Modal,
     TextField,
     TextAreaField,
@@ -130,19 +166,36 @@ export default {
       levels: [],
       paperWorkTypes: [
         {value: 'single', text: 'single'},
-        {value: 'multi', text: 'multi'},
+        {value: 'participatory', text: 'participatory'},
       ],
       createPaperWork: {
         name: "",
         description: "",
         type: "",
         file: null,
+        img_url:'',
+        paper_work_without_color: null,
         learning_path_id: "",
-        level_id: ''
+        level_id: '',
+        paper_work_final_degree:'',
+        thumbnail: null,
+        uploadPrint: false,
+        uploadColor: false
       }
     };
   },
   methods: {
+    checkEditPaperWork($event) {
+      this.createPaperWork.uploadPrint = !!$event;
+    },
+    checkEditPaperWorkColor($event) {
+      this.createPaperWork.uploadColor = !!$event;
+    },
+    handleUploadImage(e) {
+      this.createPaperWork.img_url = URL.createObjectURL(e.target.files[0])
+      if (e) this.createPaperWork.thumbnail = e.target.files[0];
+      else return;
+    },
     onSubmit() {
       // this.$refs.addEditPaperWorkForm.validate().then((success) => {
       //   if (!success) return;
@@ -162,10 +215,12 @@ export default {
           this.createPaperWork.name = response.data.data.name
           this.createPaperWork.type = response.data.data.type
           this.createPaperWork.description = response.data.data.description
-          this.createPaperWork.file = response.data.data.url
+          this.createPaperWork.file = response.data.data.paper_work_full_url
+          this.createPaperWork.paper_work_without_color = response.data.data.paper_work_without_color_full_url
           this.createPaperWork.learning_path_id = response.data.data.learningPath.id
           this.createPaperWork.level_id = response.data.data.level.id
-          console.log('this.createPaperWork.file',this.createPaperWork.file)
+          this.createPaperWork.paper_work_final_degree = response.data.data.paper_work_final_degree
+          this.createPaperWork.img_url = response.data.data.thumbnail
         })
       }
     },
