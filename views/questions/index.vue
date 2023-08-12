@@ -45,7 +45,9 @@ export default {
         {key: "question", label: "السؤال"},
         {key: "question_difficulty", label: "مستوى الصعوبة"},
         {key: "question_pattern", label: "نمط السؤال"},
-        {key: "actions", label: "الإجراء"},
+        {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
+        {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.level')},
+        { key: "actions", label: "الإجراء" },
       ],
     }
   },

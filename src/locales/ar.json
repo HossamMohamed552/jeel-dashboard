@@ -200,7 +200,12 @@
     "QUESTION_ANSWER_AUDIO": "التسجيل الصوتى للإجابة",
     "sortAnswers": "الترتيب الصحيح للإجابة",
     "QUESTION_ANSWER_MATCH_TO_AUDIO": "التسجيل الصوتى للإجابة المقابلة",
-    "ANSWER_MATCH_TO": "الإجابة المقابلة"
+    "ANSWER_MATCH_TO": "الإجابة المقابلة",
+    "LANGUAGE_METHOD": "الطريقة اللغوية",
+    "TYPE_NAME": "اسم النوع الفرعي للسؤال",
+    "LANGUAGE_SKILL": "المهارة اللغوية",
+    "LEVEL": "المرحلة",
+    "THE_RIGHT_ANSWER": "الاجابة الصحيحة"
   },
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",
