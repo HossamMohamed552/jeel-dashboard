@@ -79,7 +79,12 @@
     "ADD_NEW": "Add new qustion",
     "CHOOSE_Question_PATTERN": "Choose question pattern",
     "QUESTION_PATTERN": "Question pattern",
-    "QUESTION_SUB_PATTERN": "Question sub pattern"
+    "QUESTION_SUB_PATTERN": "Question sub pattern",
+    "LANGUAGE_METHOD": "Language method",
+    "TYPE_NAME": "Sub-question",
+    "LANGUAGE_SKILL": "Language skill",
+    "LEVEL": "Grade",
+    "THE_RIGHT_ANSWER": "The right answer"
   },
   "PACKAGE": {
     "showDetails": "show package details",
