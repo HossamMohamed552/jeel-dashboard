@@ -7,13 +7,42 @@
             <form @submit.prevent="onSubmit" class="mt-5">
               <b-row>
                 <b-col lg="8" class="mb-3">
-                  <div class="hold-field">
+                  <div v-if="questionPattern == 'text'" class="hold-field">
                     <TextField
                       v-model="formValues.question"
                       :label="$t('QUESTIONS.QUESTION')"
                       :name="$t('QUESTIONS.QUESTION')"
                       :rules="'required'"
                     ></TextField>
+                  </div>
+                  <div v-else-if="questionPattern == 'image'" class="hold-field">
+                    <ImageUploader
+                    :name="'questionThumbnail'"
+                    :text="$t('QUESTIONS.QUESTION')"
+                    @imageUpload="handleUploadImage"
+                    :item-image="formValues.question"
+                  />
+                  </div>
+                  <div v-else-if="questionPattern == 'audio'" class="hold-field">
+                    <label>{{ $t("QUESTIONS.QUESTION") }}</label>
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      :rules="$route.params.id ? '' : 'required'"
+                      name="audio"
+                    >
+                      <b-form-file
+                        accept="audio/*"
+                        :placeholder="
+                          formValues.question_audio ? formValues.question_audio : 'اختر ملف'
+                        "
+                        v-model="formValues.question"
+                        name="audio"
+                      >
+                      </b-form-file>
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                        {{ error }}
+                      </b-form-invalid-feedback>
+                    </ValidationProvider>
                   </div>
                 </b-col>
                 <b-col lg="4" class="mb-3">
@@ -888,6 +917,7 @@ import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import getData from "@/mixins/getData/getData";
 import draggable from "vuedraggable";
+import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 
 export default {
   mixins: [getData("question")],
@@ -896,6 +926,7 @@ export default {
     TextField,
     SelectSearch,
     Button,
+    ImageUploader
   },
   props: {
     questionSlug: {
@@ -908,6 +939,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    questionPattern: {
+      type: String,
+      default: "text"
+    }
   },
   data() {
     return {
@@ -992,6 +1027,12 @@ export default {
     };
   },
   methods: {
+    handleUploadImage(e) {
+      console.log(e, "e");
+      // this.createVideo.img_url = URL.createObjectURL(e.target.files[0])
+      // if (e) this.createVideo.thumbnail = e.target.files[0];
+      // else return;
+    },
     addSpace() {
       this.formValues.question += "%s";
       this.lockBtn = true;

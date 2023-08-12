@@ -55,6 +55,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-direction: row;
     a{
       color: $color-show-heading;
       font-weight: bold;
@@ -84,3 +85,4 @@
     }
   }
 }
+
