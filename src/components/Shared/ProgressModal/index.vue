@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-modal size="lg" centered  v-model="show" :no-close-on-backdrop="true" :clickToClose="false" hide-header hide-footer>
-      <h3 style="margin-bottom: 8%;text-align: center;">{{`Uploading ${title}`}}</h3>
+      <h3 style="margin-bottom: 8%;text-align: center;direction: rtl;">{{`جاري رفع  ${title}`}}</h3>
       <b-progress :max="max" height="2rem">
         <b-progress-bar :value="value" :label="`${value}%`">
         </b-progress-bar>
@@ -25,7 +25,7 @@ export default {
   props:{
     title:{
       required:true,
-      default:'Ahmed'
+      default:'Video'
     },
     show:{
       required:true,

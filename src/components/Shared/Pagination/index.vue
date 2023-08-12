@@ -32,7 +32,7 @@ export default {
     },
     totalItems: {
       type: Number,
-      required: true,
+      required: false,
     },
   },
   data() {

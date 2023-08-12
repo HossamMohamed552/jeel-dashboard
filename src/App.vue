@@ -21,6 +21,19 @@ export default {
 
 <style lang="scss">
 @import "@/assets/style/scss/__variables";
+
+@font-face {
+    font-family: DiodrumArabic ;
+    src: url('~@/assets/fonts/alfont_com_AlFont_com_DiodrumArabic-Regular.ttf');
+}
+
+* {
+  &:lang(ar) {
+    font-family: "DiodrumArabic", sans-serif;
+  }
+}
+
+
 // style scroll bar general
 ::-webkit-scrollbar {
   width: 5px;

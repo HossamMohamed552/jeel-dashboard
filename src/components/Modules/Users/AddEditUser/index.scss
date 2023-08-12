@@ -3,6 +3,9 @@
 
 .add-edit-user-form {
      @include styleViewList;
+     h3 {
+font-weight: bold;
+     }
 }
 
 .action-holder {
