@@ -123,3 +123,10 @@ h2.heading {
     font-weight: bold;
   }
 }
+
+.hold-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 1rem;
+}
