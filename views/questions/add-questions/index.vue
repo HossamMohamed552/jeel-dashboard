@@ -2,7 +2,7 @@
   <div class="add-question">
     <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true"/>
     <AddEditQuestionPatternForm
-      v-show="currentStep === -1"
+      v-if="currentStep === -1"
       :loading="loading"
       :question-types="questionTypes"
       :question-sub-types="questionSubTypes"
@@ -11,13 +11,13 @@
       @onSubmit="getQuestionPatternData"
     />
     <Stepper
-      v-show="currentStep === 0 || currentStep === 1 || currentStep === 2"
+      v-if="currentStep === 0 || currentStep === 1 || currentStep === 2"
       class="mt-5 mb-3"
       :steps="steps"
       :current-step="currentStep"
     />
     <AddEditQuestionFieldsForm
-      v-show="currentStep === 0"
+      v-if="currentStep === 0"
       :question-types="questionTypes"
       :question-sub-types="questionSubTypes"
       :question-types-values="questionTypesValues"
@@ -33,14 +33,14 @@
     />
 
     <AddEditQuestionAnswersForm
-      v-show="currentStep === 1"
+      v-if="currentStep === 1"
       :questionSlug="collectData.question_slug"
       @handleBack="goToQuestionFieldsForm"
       @handleCancel="handleCancel"
       @onSubmit="getSecondStepData"
     />
 
-    <div v-show="currentStep === 2" class="qustion-review">
+    <div v-if="currentStep === 2" class="qustion-review">
       <b-container>
         <b-row>
           <b-col lg="3">

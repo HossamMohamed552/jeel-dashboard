@@ -6,7 +6,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditVideoForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="3" class="mb-3">
+              <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="createVideo.name"
@@ -24,10 +24,10 @@
                   </b-form-group>
                 </div>
               </b-col>
-              <b-col lg="5" class="mb-3">
+              <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors}" :rules="$route.params.id ? '' : 'required'" name="video">
-                    <b-form-file accept="video/mp4,video/x-m4v,video/*" placeholder="اختر ملف" v-model="createVideo.video" name="video">
+                    <b-form-file @change="checkEditVideo($event)" accept="video/mp4,video/x-m4v,video/*" :placeholder="$route.params.id ? createVideo.video :'اختر ملف'" v-model="createVideo.video" name="video">
                     </b-form-file>
                     <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                       {{ error }}
@@ -35,10 +35,10 @@
                   </ValidationProvider>
                 </div>
               </b-col>
-              <b-col lg="5" class="mb-3">
+              <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors}" :rules="$route.params.id ? '' : 'required'" name="video">
-                    <b-form-file accept="video/mp4,video/x-m4v,video/*" placeholder=" اضف ملف بدون موسيقى" v-model="createVideo.video_without_music" name="video">
+                    <b-form-file @change="checkEditVideoWithOut($event)" accept="video/mp4,video/x-m4v,video/*" placeholder=" اضف ملف بدون موسيقى" v-model="createVideo.video_without_music" name="video">
                     </b-form-file>
                     <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                       {{ error }}
@@ -46,10 +46,9 @@
                   </ValidationProvider>
                 </div>
               </b-col>
-
             </b-row>
             <b-row>
-              <b-col lg="5" class="mb-3 mt-3">
+              <b-col lg="6" class="mb-3 mt-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors, invalid}" rules="required">
                     <b-form-group :label="$t('VIDEO.learning_path')" v-slot="{ ariaDescribedby }" class="learning_path">
@@ -59,7 +58,7 @@
                   </ValidationProvider>
                 </div>
               </b-col>
-              <b-col lg="5" class="mb-3 mt-3">
+              <b-col lg="6" class="mb-3 mt-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors, invalid}" rules="required">
                     <b-form-group :label="$t('VIDEO.level')" v-slot="{ ariaDescribedby }" class="level">
@@ -143,11 +142,19 @@ export default {
         original_name:'',
         level_id: '',
         img_url: null,
-        thumbnail: null
+        thumbnail: null,
+        uploadVideo:false,
+        uploadVideoWithoutMusic:false,
       }
     };
   },
   methods: {
+    checkEditVideo($event){
+      this.createVideo.uploadVideo = !!$event;
+    },
+    checkEditVideoWithOut($event){
+      this.createVideo.uploadVideoWithoutMusic = !!$event;
+    },
     handleUploadImage(e) {
       this.createVideo.img_url = URL.createObjectURL(e.target.files[0])
       if (e) this.createVideo.thumbnail = e.target.files[0];

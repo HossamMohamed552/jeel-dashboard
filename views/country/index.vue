@@ -5,9 +5,12 @@
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getCountries"
                :loading="loading"
+               :permission_delete="'delete-countries'"
+               :permission_edit="'edit-countries'"
+               :permission_view="'show-countries'"
                >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'"  @click="goToAddCountry">
+        <Button :custom-class="'btn-add rounded-btn big-padding'"  @click="goToAddCountry" v-if="user.permissions.includes(`add-countries`)">
           <img src="@/assets/images/icons/plus.svg">
           <span>إضافة دولة</span>
         </Button>
@@ -27,8 +30,12 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import {deleteCountryRequest, getCountryRequest} from "@/api/country";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
 export default {
   components: {Modal, ListItems, Button},
+  computed:{
+    ...mapGetters(['user'])
+  },
   data() {
     return {
       loading: false,

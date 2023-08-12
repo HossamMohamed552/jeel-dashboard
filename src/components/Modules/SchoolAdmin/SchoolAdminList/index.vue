@@ -1,16 +1,16 @@
 <template>
   <section class="container-fluid">
     <ListItems
-      :header-name="'قوائم الطلاب'"
+      :header-name="'قائم المديرين'"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
-      :table-items="studentEnrollList"
+      :tableItems="schoolAdminList"
       :loading="loading"
-      :v-search-model="studentEnrollSearchWord"
+      :v-search-model="schoolAdminSearchWord"
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
-      @refetch="getStudentEnrolls"
+      @refetch="getSchoolAdmins"
       :permission_delete="'delete-enrollment'"
       :permission_edit="'edit-enrollment'"
       :permission_view="'show-enrollment'"
@@ -18,17 +18,17 @@
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
-          @click="goToAddStudentEnroll"
+          @click="goToAddSchoolAdminEnroll"
           v-if="user.permissions.includes(`add-enrollment`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة طالب</span>
+          <span>إضافة مدير</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف طالب مسجل'"
-      :content-message-question="'هل انت متأكد من حذف الطالب'"
+      :content-message="'حذف مدير مسجل'"
+      :content-message-question="'هل انت متأكد من حذف المدير'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -40,12 +40,10 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import {
-  deleteStudentEnrollRequest,
-  getStudentEnrollRequest,
-} from "@/api/studentEnroll.js";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {deleteSchoolAdminRequest, getSchoolAdminRequest} from "@/api/schoolAdmin";
 import {mapGetters} from "vuex";
+
 export default {
   props: {
     schoolId: {
@@ -58,49 +56,34 @@ export default {
     return {
       loading: false,
       showModal: false,
-      studentEnrollSearchWord: "",
-      studentEnrollList: [],
+      schoolAdminSearchWord: "",
+      schoolAdminList: [],
       totalNumber: 0,
       fieldsList: [
-        {
-          key: "id",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "user.name",
-          label: this.$i18n.t("TABLE_FIELDS.name"),
-        },
-        {
-          key: "class.name",
-          label: this.$i18n.t("TABLE_FIELDS.class"),
-        },
-        {
-          key: "school.name",
-          label: this.$i18n.t("TABLE_FIELDS.school"),
-        },
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
+        {key: "id", label: "التسلسل"},
+        {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
+        {key: "email", label: this.$i18n.t('TABLE_FIELDS.email')},
+        {key: "actions", label: "الإجراء"},
       ],
       itemId: 0,
     };
   },
   methods: {
-    goToAddStudentEnroll() {
-      // this.$router.push("/dashboard/class/add");
+    goToAddSchoolAdminEnroll() {
       this.$router.push({
-        name: "add-student-enroll",
+        name: "add-school-admin-enroll",
         params: { schoolId: this.schoolId },
       });
     },
-    getStudentEnrolls(event) {
+    getSchoolAdmins(event) {
       this.loading = true;
-      const params = {...event, school_id: this.schoolId};
-      this.ApiService(getStudentEnrollRequest(params)).then((response) => {
-        this.studentEnrollList = response.data.data;
-        this.totalNumber = response.data.meta.total;
-      })        .finally(() => {
+      const params = { ...event, school_id: this.schoolId };
+      this.ApiService(getSchoolAdminRequest(params))
+        .then((response) => {
+          this.schoolAdminList = response.data.data;
+          this.totalNumber = response.data.meta.total;
+        })
+        .finally(() => {
           this.loading = false;
         });
     },
@@ -108,12 +91,12 @@ export default {
       console.log("$event", $event);
     },
     detailItem($event) {
-      this.$router.push(`/dashboard/student-enroll/show/${$event}`);
+      this.$router.push(`/dashboard/staff-enroll/show/${$event}`);
     },
     editItem($event) {
       // this.$router.push(`/dashboard/class/edit/${$event}`);
       this.$router.push({
-        name: "edit-student-enroll",
+        name: "edit-staff-enroll",
         params: { id: $event, schoolId: this.schoolId },
       });
     },
@@ -125,8 +108,8 @@ export default {
       this.showModal = $event;
     },
     cancelWithConfirm() {
-      this.ApiService(deleteStudentEnrollRequest(this.itemId)).then(() => {
-        this.getStudentEnrolls();
+      this.ApiService(deleteSchoolAdminRequest({user_id: this.itemId , school_id: this.schoolId})).then(() => {
+        this.getSchoolAdmins();
       });
       this.cancel();
     },
@@ -135,8 +118,12 @@ export default {
     ...mapGetters(['user'])
   },
   mounted() {
-    this.getStudentEnrolls();
+    this.getSchoolAdmins();
+    window.localStorage.setItem('page', 'schoolAdmin')
   },
+  beforeDestroy() {
+    window.localStorage.setItem('page', '')
+  }
 };
 </script>
 

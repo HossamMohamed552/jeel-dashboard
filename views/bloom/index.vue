@@ -11,11 +11,15 @@
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
       @refetch="getBloomCategories"
+      :permission_delete="'delete-bloomCategory'"
+      :permission_edit="'edit-bloomCategory'"
+      :permission_view="'show-bloomCategory'"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddBloomCategoryRequest"
+          v-if="user.permissions.includes(`add-bloomCategory`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
           <span>إضافة بلوم</span>
@@ -38,6 +42,7 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import { getBloomCategoriesRequest, deleteBloomRequest } from "@/api/bloom.js";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
 export default {
   components: { Modal, ListItems, Button },
   data() {
@@ -63,6 +68,9 @@ export default {
       ],
       itemId: 0,
     };
+  },
+  computed:{
+    ...mapGetters(['user'])
   },
   methods: {
     goToAddBloomCategoryRequest() {

@@ -1,13 +1,18 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems :header-name="'قائمة المدارس'" :number-of-item="totalNumber"
-               :tableItems="schoolsList" :fields-list="fieldsList" :v-search-model="groupSearchWord"  @detailItem="detailItem($event)"
+               :tableItems="schoolsList" :fields-list="fieldsList" :v-search-model="groupSearchWord"
+               @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-              @refetch="getSchools"
-              :loading="loading"
-               >
+               @refetch="getSchools"
+               :loading="loading"
+               :permission_delete="'delete-schools'"
+               :permission_edit="'edit-schools'"
+               :permission_view="'show-schools'"
+    >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSchools">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSchools"
+                v-if="user.permissions.includes(`add-schools`)">
           <img src="@/assets/images/icons/plus.svg">
           <span>إضافة مدرسة</span>
         </Button>
@@ -27,9 +32,13 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import {deleteSchoolsRequest, getSchoolsRequest} from "@/api/school";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
 
 export default {
   components: {Modal, ListItems, Button},
+  computed:{
+    ...mapGetters(['user'])
+  },
   data() {
     return {
       loading: false,
@@ -62,8 +71,8 @@ export default {
         this.schoolsList = response.data.data
         this.totalNumber = response.data.meta.total
       }).finally(() => {
-          this.loading = false;
-        });
+        this.loading = false;
+      });
     },
     detailItem($event) {
       this.$router.push(`/dashboard/schools/show/${$event}`)

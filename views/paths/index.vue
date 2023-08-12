@@ -5,9 +5,12 @@
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getPaths"
                :loading="loading"
+               :permission_delete="'delete-learningpath'"
+               :permission_edit="'edit-learningpath'"
+               :permission_view="'show-learningpath'"
                >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddPath()">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddPath()"  v-if="user.permissions.includes(`add-learningpath`)">
           <img src="@/assets/images/icons/plus.svg">
           <span> إضافة مسار جديد</span>
         </Button>
@@ -27,9 +30,13 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import {deleteLearningPathRequest, getLearningPathsRequest} from "@/api/learningPath";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
 
 export default {
   components: {Modal, ListItems, Button},
+  computed:{
+    ...mapGetters(['user'])
+  },
   data() {
     return {
       loading: false,

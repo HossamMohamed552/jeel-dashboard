@@ -29,9 +29,15 @@ export default {
       formData.append('name', $event.name);
       formData.append('type', $event.type);
       formData.append('learning_path_id', $event.learning_path_id);
-      formData.append('file', $event.file);
       formData.append('level_id', $event.level_id);
       formData.append('description', $event.description);
+      formData.append('paper_work_final_degree', $event.paper_work_final_degree);
+      if ($event.thumbnail)
+        formData.append('thumbnail', $event.thumbnail);
+      if ($event.uploadPrint)
+        formData.append('paper_work_without_color', $event.paper_work_without_color);
+      if ($event.uploadColor)
+        formData.append('file', $event.file);
       formData.append('_method', 'PUT');
       this.loading = true;
       axios.post(`/peper_works/${this.$route.params.id}`, formData, {
