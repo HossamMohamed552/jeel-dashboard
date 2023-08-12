@@ -19,7 +19,7 @@
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <b-form-group :label="$t('VIDEO.Description')" v-slot="{ ariaDescribedby }" class="description">
-                    <TextAreaField v-model="createVideo.description" :rules="'required'" rows="5" :name="$t('VIDEO.Description')">
+                    <TextAreaField v-model="createVideo.description" rows="5" :name="$t('VIDEO.Description')">
                     </TextAreaField>
                   </b-form-group>
                 </div>

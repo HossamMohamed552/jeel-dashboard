@@ -28,6 +28,8 @@
         font-size: 1.5rem;
         font-weight: 600;
         @include flexCenter(center);
+        align-items: flex-start !important;
+        line-height: 1.8;
       }
     }
 
@@ -137,8 +139,9 @@
     background: $color-primary;
     color: #fff;
     border-radius: 1rem;
-    padding: 0.2rem 0.7rem;
+    padding: 0.1rem 0.5rem 0.5rem;
     margin-left: 0.2rem;
+    font-size: 0.8rem;
   }
 
   .role {
@@ -149,4 +152,20 @@
 
 .pointer {
   cursor: pointer;
+}
+
+::v-deep {
+  td {
+    font-weight: bold;
+  }
+
+  ul.dropdown-menu {
+    li {
+      a {
+        color: $color-primary;
+        font-weight: bold;
+        font-size: 0.8rem;
+      }
+    }
+  }
 }

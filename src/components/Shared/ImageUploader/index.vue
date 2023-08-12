@@ -27,6 +27,7 @@
       <div class="img-wrapper">
         <div class="hold-img" v-if="itemImage">
           <img :src="itemImage">
+          <span @click="itemImage = ''">x</span>
         </div>
         <div v-if="hasError" class="error-wrapper">
           <span class="error-msg">{{ errors[0] }}</span>
