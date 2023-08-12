@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <div class="show-question">
-      <div class="hold-fields">
+      <div class="hold-fields" v-if="question">
         <b-row>
           <b-col lg="12">
             <h2 class="heading">{{ $t("QUESTIONS.ShowDetails") }}</h2>
@@ -16,20 +16,19 @@
             <b-col lg="4" class="d-flex align-items-end">
               <ShowItem :title="$t('QUESTIONS.QUESTION')" :subtitle="question.question" />
               <b-icon
-                v-if="isPlaying"
+                v-if="isPlaying && currentActiveId === question.id"
                 variant="primary"
                 class="mx-2 cursor-pointer"
-                @click="toggleAudio(question.id)"
+                @click="playAudio(question.id)"
                 icon="volume-up-fill"
               />
               <b-icon
                 v-else
                 variant="primary"
                 class="mx-2 cursor-pointer"
-                @click="toggleAudio(question.id)"
+                @click="playAudio(question.question_audio, question.id)"
                 icon="volume-up"
               />
-              <audio :ref="question.id" :src="question.question_audio"></audio>
             </b-col>
             <b-col lg="4">
               <ShowItem
@@ -109,20 +108,19 @@
                 >({{ $t("QUESTIONS.THE_RIGHT_ANSWER") }})</span
               >
               <b-icon
-                v-if="isPlaying"
+                v-if="isPlaying && currentActiveId === answer.id + '-' + ind"
                 variant="primary"
                 class="mx-2 cursor-pointer"
-                @click="toggleAudio(answer.answer)"
+                @click="playAudio(answer.audio, answer.id + '-' + ind)"
                 icon="volume-up-fill"
               />
               <b-icon
                 v-else
                 variant="primary"
                 class="mx-2 cursor-pointer"
-                @click="toggleAudio(answer.answer)"
+                @click="playAudio(answer.audio, answer.id + '-' + ind)"
                 icon="volume-up"
               />
-              <audio :ref="answer.answer" :src="answer.audio"></audio>
             </div>
           </div>
         </div>
@@ -141,6 +139,7 @@ export default {
     return {
       question: null,
       isPlaying: false,
+      currentActiveId: null,
     };
   },
   mounted() {
@@ -149,15 +148,17 @@ export default {
     });
   },
   methods: {
-    toggleAudio(id) {
-    console.log('id', id)
-      const audio = this.$refs[id];
-      if (this.isPlaying) {
-        audio.pause();
-      } else {
-        audio.play();
+    playAudio(link, id) {
+      this.currentActiveId = id;
+      if (this.audio) {
+        this.audio.pause();
+        this.audio = null;
+        this.isPlaying = false;
+        return;
       }
-      this.isPlaying = !this.isPlaying;
+      this.audio = new Audio(link);
+      this.audio.play();
+      this.isPlaying = true;
     },
   },
 };
