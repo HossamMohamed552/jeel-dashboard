@@ -1,7 +1,7 @@
-export const getQuizzesRequest = () => ({
+export const getQuizzesRequest = (params) => ({
   method: 'get',
-  url: `quizzes?per_page=200`,
-  config: {}
+  url: `quizzes`,
+  config: {params}
 })
 
 
