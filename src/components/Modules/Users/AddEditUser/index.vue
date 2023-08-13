@@ -12,7 +12,7 @@
                     v-model="formValues.first_name"
                     :label="$t('USERS.FIRST_NAME')"
                     :name="$t('USERS.FIRST_NAME')"
-                    :rules="'required'"
+                    :rules="'required|min:2'"
                   ></TextField>
                 </div>
               </b-col>
@@ -22,7 +22,7 @@
                     v-model="formValues.last_name"
                     :label="$t('USERS.LAST_NAME')"
                     :name="$t('USERS.LAST_NAME')"
-                    :rules="'required'"
+                    :rules="'required|min:2'"
                   ></TextField>
                 </div>
               </b-col>
@@ -32,7 +32,7 @@
                     v-model="formValues.email"
                     :label="$t('USERS.EMAIL')"
                     :name="$t('USERS.EMAIL')"
-                    :rules="'required'"
+                    :rules="'required|email'"
                   ></TextField>
                 </div>
               </b-col>
@@ -52,7 +52,7 @@
                     v-model="formValues.mobile"
                     :label="$t('USERS.PHONE_NUMBER')"
                     :name="$t('USERS.PHONE_NUMBER')"
-                    :rules="'required'"
+                    :rules="{regex: /^\d{11}$/}"
                   ></TextField>
                 </div>
               </b-col>
@@ -62,7 +62,7 @@
                     v-model="formValues.social_media"
                     :label="$t('USERS.SOCIAL_MEDIA')"
                     :name="$t('USERS.SOCIAL_MEDIA')"
-                    :rules="'required'"
+                    rules="'required'"
                   ></TextField>
                 </div>
               </b-col>

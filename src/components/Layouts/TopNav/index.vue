@@ -27,7 +27,7 @@
                   <b-dropdown no-caret>
                     <template #button-content>
                       <div class="user-image">
-                        <img :src="user.avatar" alt="user" title="user" />
+                        <img :src="user.avatar" alt="user" title="user" @error="altImage($event)"/>
                       </div>
                     </template>
                     <b-dropdown-item @click="logout">{{ $t("GLOBAL_LOGOUT") }}</b-dropdown-item>
@@ -161,6 +161,9 @@ export default {
   },
   methods: {
     ...mapActions(["removeUser"]),
+    altImage($event){
+      $event.target.src = require("@/assets/images/icons/user-avatar.png")
+    },
     logout() {
       this.removeUser();
     },
