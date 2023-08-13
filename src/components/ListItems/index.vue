@@ -41,7 +41,7 @@
         </template>
         <template #cell(avatar)="data">
           <div class="hold-image">
-            <img class="image-in-table" :src="data.item.avatar"/>
+            <img class="image-in-table" :src="data.item.avatar" @error="altImage($event)"/>
           </div>
         </template>
         <template #cell(status)="data">
@@ -347,6 +347,9 @@ export default {
       } else {
         return 'hide'
       }
+    },
+    altImage($event){
+      $event.target.src = require("@/assets/images/icons/user-avatar.png")
     }
   },
 };
