@@ -42,7 +42,7 @@ export default {
       showModal: false,
       countrySearchWord: "",
       countriesList: [],
-      totalNumber: null,
+      totalNumber: 0,
       fieldsList: [
         {
           key: "id",
@@ -80,11 +80,9 @@ export default {
     },
     detailItem($event) {
       this.$router.push(`/dashboard/country/show/${$event}`)
-      console.log('detailItem', $event)
     },
     editItem($event) {
       this.$router.push(`/dashboard/country/edit/${$event}`)
-      console.log('editItem', $event)
     },
     deleteItem($event) {
       this.itemId = $event

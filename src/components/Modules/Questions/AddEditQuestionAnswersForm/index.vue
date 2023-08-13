@@ -90,9 +90,9 @@
                 </b-col>
                 <b-col lg="2" class="mb-3">
                   <div class="hold-field">
+                    <label>{{$t('QUESTIONS.ANSWER_TYPE')}}</label>
                     <SelectSearch
                       v-model="answer.correct"
-                      :label="$t('QUESTIONS.ANSWER_TYPE')"
                       :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
                       :id="idx"
                       :options="correctList"
@@ -229,9 +229,9 @@
                 </b-col>
                 <b-col lg="2" class="mb-3">
                   <div class="hold-field">
+                    <label>{{$t('QUESTIONS.ANSWER_TYPE')}}</label>
                     <SelectSearch
                       v-model="answer.correct"
-                      :label="$t('QUESTIONS.ANSWER_TYPE')"
                       :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
                       :id="idx"
                       :options="correctList"
@@ -370,9 +370,9 @@
                 </b-col>
                 <b-col lg="2" class="mb-3">
                   <div class="hold-field">
+                    <label>{{$t('QUESTIONS.ANSWER_TYPE')}}</label>
                     <SelectSearch
                       v-model="answer.correct"
-                      :label="$t('QUESTIONS.ANSWER_TYPE')"
                       :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
                       :id="idx"
                       :options="correctList"
@@ -507,9 +507,9 @@
                 </b-col>
                 <b-col lg="2" class="mb-3">
                   <div class="hold-field">
+                    <label>{{$t('QUESTIONS.ANSWER_TYPE')}}</label>
                     <SelectSearch
                       v-model="answer.correct"
-                      :label="$t('QUESTIONS.ANSWER_TYPE')"
                       :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
                       :id="idx"
                       :options="correctList"
@@ -664,7 +664,6 @@
                     </slot>
                   </b-row>
                 </b-col>
-
                 <b-col lg="5">
                   <b-row>
                     <b-col lg="12" class="mb-3">
@@ -770,9 +769,9 @@
               <b-row v-for="(answer, idx) in answersListMatchOneToOne" :key="idx">
                 <b-col lg="6" class="mb-3">
                   <div class="hold-field">
+                    <label>{{ $t('QUESTIONS.ANSWER')}}</label>
                     <TextField
                       v-model="answer.answer"
-                      :label="$t('QUESTIONS.ANSWER')"
                       :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
                       :id="`ANSWER ${idx}`"
                     ></TextField>

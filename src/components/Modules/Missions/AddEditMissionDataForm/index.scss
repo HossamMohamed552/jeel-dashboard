@@ -15,6 +15,13 @@
   align-items: center;
 }
 ::v-deep{
+  .hold-field {
+    label {
+      color: $color-primary;
+      display: block;
+      margin: 0 0.7rem 0.7rem 0;
+    }
+  }
   .text-field .form-control{
     min-height: 50px;
   }

@@ -102,7 +102,7 @@
           </Button>
         </template>
         <template #cell(actions)="data">
-          <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret
+          <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret class="hold-controls"
                       v-if="checkDelete(data) === 'show' || checkDetail() === 'show' || checkEdit() === 'show'">
             <template #button-content>
               <img src="@/assets/images/icons/actions.svg"/>
@@ -120,7 +120,7 @@
               {{ $t("CONTROLS.ManageClasses") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkDelete(data) === 'show'"></b-dropdown-divider>
-            <b-dropdown-item v-if="checkDelete(data) === 'show'">{{ $t("CONTROLS.deleteBtn") }}
+            <b-dropdown-item v-if="checkDelete(data) === 'show'" @click="deleteItem(data.item.id)">{{ $t("CONTROLS.deleteBtn") }}
             </b-dropdown-item>
             <b-dropdown-item v-if="videoList" @click="addVideoQuestion(data.item.id)"
             >{{ $t("CONTROLS.addVideoQuestion") }}
@@ -284,6 +284,7 @@ export default {
       this.$emit("editItem", id);
     },
     deleteItem(id) {
+      console.log('id',id)
       this.$emit("deleteItem", id);
     },
     addVideoQuestion(id) {

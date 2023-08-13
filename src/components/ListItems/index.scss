@@ -93,6 +93,14 @@
       }
     }
   }
+  .hold-controls{
+    position: relative;
+    .dropdown-menu{
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
 }
 
 .hold-table {
@@ -113,6 +121,7 @@
   .hold-image-school {
     width: 50px;
     height: 50px;
+
     img {
       width: 100%;
       height: 100%;

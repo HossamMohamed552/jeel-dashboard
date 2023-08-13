@@ -8,7 +8,9 @@
 
 .hold-field {
   position: relative;
-
+  label{
+    margin: 0.7rem 0.7rem 1rem;
+  }
   .show-date {
     margin: 0;
     position: absolute;
@@ -24,6 +26,13 @@
 }
 
 ::v-deep {
+  .hold-field {
+    position: relative;
+
+    label {
+      margin: 0.7rem 0.7rem 1rem;
+    }
+  }
   .group-type {
     .col-form-label {
       color: $color-primary !important;
