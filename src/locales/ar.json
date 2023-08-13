@@ -41,6 +41,7 @@
   "TABLE_FIELDS": {
     "id": "التسلسل",
     "name": "الإسم",
+    "avatar": "الصورة",
     "school_group": "اسم المجموعة",
     "email": "البريد الإلكترونى",
     "description": "الوصف",

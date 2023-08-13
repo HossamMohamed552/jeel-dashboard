@@ -65,7 +65,7 @@ export default {
         },
         {
           key: "avatar",
-          label: this.$i18n.t("avatar"),
+          label: this.$i18n.t("TABLE_FIELDS.avatar"),
         },
         {
           key: "name",
