@@ -17,3 +17,22 @@
 ::v-deep .update-button{
     width: 100%;
 }
+
+.holder {
+    min-height:100vh !important;
+    padding-top: 8rem !important;
+}
+
+.label {
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+::v-deep {
+    .btn {
+        font-weight: bold !important;
+        padding-bottom: 1rem !important;
+        border-radius: 100px;
+    }
+}

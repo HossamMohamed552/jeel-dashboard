@@ -47,9 +47,9 @@ export default {
     };
   },
   methods: {
-    getRewardingActions() {
+    getRewardingActions(e) {
       this.loading = true;
-      this.ApiService(getRewardingActionsRequest())
+      this.ApiService(getRewardingActionsRequest(e))
         .then((response) => {
           if (response.data) this.actions = response.data.data;
         })

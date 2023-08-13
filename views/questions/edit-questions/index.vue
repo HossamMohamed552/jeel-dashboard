@@ -217,7 +217,7 @@ export default {
     },
     getLearningPaths() {
       const params = {
-        page: 1,
+        per_page: 2000,
       };
 
       this.ApiService(getLearningPathsRequest(params)).then((response) => {

@@ -30,6 +30,7 @@ export default {
       formData.append('type', $event.type);
       formData.append('learning_path_id', $event.learning_path_id);
       formData.append('level_id', $event.level_id);
+      formData.append('term_id',$event.term_id);
       formData.append('description', $event.description);
       formData.append('paper_work_final_degree', $event.paper_work_final_degree);
       if ($event.thumbnail)

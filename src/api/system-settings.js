@@ -18,10 +18,12 @@ export const putLevelXPRequest = (id, data) => ({
   url: `jeel-level-xps/${id}`,
   config: { data },
 });
-export const getRewardingActionsRequest = () => ({
+export const getRewardingActionsRequest = (params) => ({
   method: "get",
   url: `reward-actions`,
-  config: {},
+  config: {
+    params,
+  },
 });
 export const getRewardingActionByIdRequest = (id) => ({
   method: "get",

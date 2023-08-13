@@ -1,7 +1,7 @@
 ::v-deep {
   .custom-control-input:checked~.custom-control-label::before {
     background: $color-primary;
-    border-color: $color-primary;
+    border-color: $color-light-gray;
     box-shadow: none;
   }
   .custom-control {
@@ -14,6 +14,9 @@
   }
   :lang(ar) {
     .custom-control-label {
+      color: $color-light-gray;
+      font-weight: bold;
+      font-size: 0.9rem;
       &::before {
         right: -1.5rem;
         left: unset;
@@ -48,7 +51,8 @@
       border-radius: 40px;
       padding: 8px 24px;
       font-size: 16px;
-      color: $color-gray-dark;
+      color: $color-light-gray !important;
+      font-weight: bold;
       cursor: pointer;
 
       &::after,
