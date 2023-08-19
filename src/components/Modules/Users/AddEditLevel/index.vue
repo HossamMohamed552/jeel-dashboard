@@ -84,7 +84,13 @@
                         <div v-for="item in missionsSend" :key="item.id" class="list-group-item">
                           <b-row>
                             <b-col lg="12">
-                              <p class="mission-name">{{ item.name }}</p>
+                              <div class="question-holder-details mb-2">
+                              <p class="mission-name mb-0 font-weight-bold">{{ item.name }}</p>
+                              <Button
+                                  @click="handleShowMissionDetails(item.id)"
+                                  >{{ $t("GLOBAL_DETAILS") }}</Button
+                                >
+                              </div>
                             </b-col>
                           </b-row>
                           <b-row>
@@ -136,6 +142,10 @@
         </div>
       </div>
     </div>
+    <MissionDetailsModal
+      :mission-id="selectedMission"
+      @closeModal="handleCloseMissionDetailsModal"
+    />
   </div>
 </template>
 <script>
@@ -151,6 +161,7 @@ import {mapGetters} from "vuex";
 import DatePicker from "vue2-datepicker";
 import 'vue2-datepicker/locale/en'
 import "vue2-datepicker/index.css";
+import MissionDetailsModal from "@/components/Shared/MissionDetailsModal/index.vue";
 
 export default {
   components: {
@@ -159,7 +170,8 @@ export default {
     TextField,
     Button,
     SelectSearch,
-    DatePicker
+    DatePicker,
+    MissionDetailsModal
   },
   props: {
     loading: {
@@ -176,6 +188,7 @@ export default {
   },
   data() {
     return {
+      selectedMission: null,
       en:'en',
       createLevel: {
         name: "",
@@ -196,6 +209,15 @@ export default {
     }
   },
   methods: {
+    handleShowMissionDetails(missionId) {
+      this.selectedMission = missionId;
+      this.$bvModal.show("mission-details-modal");
+      console.log("missionId: ", missionId);
+    },
+    handleCloseMissionDetailsModal() {
+      this.$bvModal.hide("mission-details-modal");
+      this.selectedMission = null;
+    },
     onSubmit() {
       this.$refs.addEditLevelForm.validate().then((success) => {
         if (!success) return;

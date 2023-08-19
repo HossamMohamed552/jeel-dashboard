@@ -1,6 +1,5 @@
 <template>
   <section class="container-fluid custom-container">
-    <pre>{{ mission }}</pre>
     <div class="show-mission">
       <b-row>
         <b-col lg="12">
@@ -179,7 +178,6 @@ export default {
     handleShowQuestionDetails(questionId) {
       this.selectedQuestion = questionId;
       this.$bvModal.show("question-details-modal");
-      console.log("questionId: ", questionId);
     },
     handleCloseQuestionDetailsModal() {
       this.$bvModal.hide("question-details-modal");

@@ -47,7 +47,11 @@
                     icon="volume-up"
                   />
                 </b-col>
-                <b-col lg="6" class="mb-4 mt-1"> 
+                <b-col
+                  v-if="question.question_type.name"
+                  lg="6"
+                  class="mb-4 mt-1"
+                >
                   <ShowItem
                     :title="$t('QUESTIONS.QUESTION_PATTERN')"
                     :subtitle="question.question_type.name"
@@ -57,7 +61,11 @@
             </div>
             <div class="divider">
               <b-row>
-                <b-col lg="6" class="mb-4 mt-1" v-if="question.sub_question_type">
+                <b-col
+                  lg="6"
+                  class="mb-4 mt-1"
+                  v-if="question.sub_question_type"
+                >
                   <ShowItem
                     :title="$t('QUESTIONS.TYPE_NAME')"
                     :subtitle="question.sub_question_type.name"
@@ -174,7 +182,7 @@ export default {
       question: {},
       loading: false,
       isPlaying: false,
-      currentActiveId: null
+      currentActiveId: null,
     };
   },
   watch: {
