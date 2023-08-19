@@ -365,5 +365,8 @@
   "QUESTION_DIFFICULTY": "تفاصيل صعوبة السؤال",
   "NAME": "الإسم",
   "GRADE_POINTS": "النقاط",
-  "QUESTION_DIFFICULTY_POINTS_EDIT": "تعديل نقاط صعوبة السؤال"
+  "QUESTION_DIFFICULTY_POINTS_EDIT": "تعديل نقاط صعوبة السؤال",
+  "GLOBAL_LOADING" : "جارى التحميل...",
+  "QUESTION_DETAILS": "تفاصيل السؤال",
+  "GLOBAL_DETAILS": "التفاصيل"
 }

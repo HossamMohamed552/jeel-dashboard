@@ -3,9 +3,7 @@
 @import "./scss/__global";
 @import "./scss/_mixin";
 
-
-
-.content{
+.content {
   min-height: 100vh;
 }
 .fade-enter-active,
@@ -18,24 +16,23 @@
   opacity: 0;
 }
 
-::v-deep{
-  table{
+::v-deep {
+  table {
     border-collapse: collapse;
     border-radius: 1.2rem;
     overflow: hidden;
-    .dropdown-menu{
+    .dropdown-menu {
       transform: translate3d(147px, 31px, 0px) !important;
     }
   }
-  .thead-gradient{
-    background: linear-gradient(to left, $color-primary,$color-notify);
+  .thead-gradient {
+    background: linear-gradient(to left, $color-primary, $color-notify);
     border-bottom: none;
     color: #fff;
   }
-
 }
-.flex-center{
-  @include flexCenter(center)
+.flex-center {
+  @include flexCenter(center);
 }
 
 // style scroll bar general
@@ -57,27 +54,28 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(118, 35, 108, 0.75);
 }
-.btn-primary.disabled, .btn-primary:disabled{
-  background-color: rgba(118, 35, 108, 0.75)  !important;
+.btn-primary.disabled,
+.btn-primary:disabled {
+  background-color: rgba(118, 35, 108, 0.75) !important;
   border-color: rgba(118, 35, 108, 0.75) !important;
 }
 
 // check box global
-.hold-permissions{
+.hold-permissions {
   display: block;
   //max-height: 275px;
   overflow: auto;
   background: #fff;
   padding: 1rem;
-  border-radius: .5rem;
-  border: 1px solid #BEBEBE;
+  border-radius: 0.5rem;
+  border: 1px solid #bebebe;
 }
 .permission-item {
   display: block;
   cursor: pointer;
 }
 ::v-deep {
-  .custom-control-input:checked~.custom-control-label::before {
+  .custom-control-input:checked ~ .custom-control-label::before {
     background: $color-primary;
     border-color: $color-primary;
     box-shadow: none;
@@ -85,7 +83,7 @@
   .custom-control {
     cursor: pointer;
     @media (max-width: 768px) {
-      font-size: .8rem;
+      font-size: 0.8rem;
     }
     &:lang(ar) {
       padding-right: 1.5rem;
@@ -107,7 +105,6 @@
   }
 }
 
-
 h2.heading {
   font-weight: bold;
 }
@@ -117,7 +114,7 @@ h2.heading {
   font-size: 1rem !important;
 }
 
-.add-edit-group-form { 
+.add-edit-group-form {
   h3 {
     font-weight: bold;
   }
@@ -138,4 +135,17 @@ h2.heading {
 
 label {
   font-weight: bold;
+}
+
+.question-holder-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  ::v-deep {
+    .btn {
+      padding: 0.3rem 0.8rem 0.8rem !important;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+  }
 }
