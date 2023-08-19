@@ -179,6 +179,7 @@
     "ShowDetails": "عرض تفاصيل المسار"
   },
   "QUESTIONS": {
+    "QUESTIONS": "الأسئلة",
     "ADD_NEW": "إضافة سؤال جديد",
     "CHOOSE_Question_PATTERN": "إختيار نمط السؤال",
     "EDIT_Question_PATTERN": "تعديل نمط السؤال",
