@@ -17,3 +17,10 @@
 .mission-date{
   margin-left: 1rem;
 }
+::v-deep{
+  label{
+    color: #76236C;
+    margin: 0.7rem 0.7rem 1rem;
+    font-weight: bold;
+  }
+}

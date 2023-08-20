@@ -102,7 +102,7 @@
                             <label>
                               {{ $t('SCHOOL.start_subscription') }}
                             </label>
-                            <date-picker :disabled="$route.params.id && !user.permissions.includes(`add-packages`)"  :lang="en" v-model="createSchool.startDate" @change="changeDate"
+                            <date-picker :disabled-date="disabledBeforeToday" :disabled="$route.params.id && !user.permissions.includes(`add-packages`)"  :lang="en" v-model="createSchool.startDate" @change="changeDate"
                                          valueType="format"></date-picker>
                             <p class="show-date" v-if="showDate">{{ createSchool.startDate }}</p>
                           </ValidationProvider>
@@ -114,7 +114,7 @@
                             <label>
                               {{ $t('SCHOOL.end_subscription') }}
                             </label>
-                            <date-picker :lang="en" v-model="createSchool.endDate"
+                            <date-picker :disabled-date="disabledBeforeToday" :lang="en" v-model="createSchool.endDate"
                                          :disabled="$route.params.id && !user.permissions.includes(`add-packages`)"
                                          @change="changeDate"
                                          valueType="format"></date-picker>
@@ -129,6 +129,7 @@
                       <ImageUploader
                         :text="$t('SCHOOL.UPLOAD_IMAGE')"
                         @imageUpload="handleUploadImage"
+                        @deleteImage="deleteImage"
                         :itemImage="itemImage"
                       />
                     </div>
@@ -218,6 +219,13 @@ export default {
     };
   },
   methods: {
+    deleteImage(){
+      this.createSchool.logo = null
+      this.itemImage = null
+    },
+    disabledBeforeToday(date){
+      return date <  new Date(new Date().setHours(0,0,0,0))
+    },
     changeDate() {
       this.showDate = false
     },

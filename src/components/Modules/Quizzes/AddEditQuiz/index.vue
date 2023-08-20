@@ -8,7 +8,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditQuizForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="6" class="mb-3">
+              <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="createQuiz.name"
@@ -18,7 +18,6 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3"></b-col>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
@@ -76,23 +75,12 @@
               </b-col>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
-                  <ValidationProvider v-slot="{ errors, invalid }">
-                    <b-form-group
-                      :label="$t('QUIZZES.sort')"
-                      v-slot="{ ariaDescribedby }"
-                      class="group-type"
-                    >
-                      <b-form-radio
-                        v-model="createQuiz.sort"
-                        value="0"
-                        name="sort_type"
-                        >مرتب
+                  <ValidationProvider v-slot="{errors, invalid}">
+                    <label>{{ $t('QUIZZES.sort') }}</label>
+                    <b-form-group v-slot="{ ariaDescribedby }" class="group-type">
+                      <b-form-radio v-model="createQuiz.sort" value="0" name="sort_type">مرتب
                       </b-form-radio>
-                      <b-form-radio
-                        v-model="createQuiz.sort"
-                        value="1"
-                        name="sort_type"
-                      >
+                      <b-form-radio v-model="createQuiz.sort" value="1" name="sort_type">
                         عشوائى
                       </b-form-radio>
                     </b-form-group>
@@ -110,13 +98,12 @@
                 <h3>{{ $t("QUIZZES.systemQuestion") }}</h3>
               </b-col>
               <b-col
-                v-if="
-                  createQuiz.level_id !== null &&
-                  createQuiz.learning_path_id !== null
-                "
-                lg="12"
-                class="mb-4"
-              >
+                v-if=" createQuiz.level_id !== null && createQuiz.learning_path_id !== null "
+                lg="12" class="mb-4">
+                <b-col v-if="createQuiz.level_id !== null && createQuiz.learning_path_id !== null"
+                       lg="12" class="mt-3 mb-4">
+                  <h3>{{ $t("QUIZZES.systemQuestion") }}</h3>
+                </b-col>
                 <div class="hold-system-question">
                   <b-row>
                     <b-col lg="12" class="mb-4">
@@ -141,8 +128,8 @@
                             {{ question.name }}
                           </p>
                           <span class="numberOfQuestions" v-if="!isEditable">{{
-                            question.questions_count
-                          }}</span>
+                              question.questions_count
+                            }}</span>
                           <div class="hold-field" v-if="isEditable">
                             <select
                               v-model="question.numberSelected"
@@ -229,7 +216,8 @@
                                 </p>
                                 <Button
                                   @click="handleShowQuestionDetails(item.id)"
-                                  >{{ $t("GLOBAL_DETAILS") }}</Button
+                                >{{ $t("GLOBAL_DETAILS") }}
+                                </Button
                                 >
                               </div>
                             </div>
@@ -282,8 +270,8 @@ import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import SelectField from "@/components/Shared/SelectField/index.vue";
-import { getAllLevelsRequest } from "@/api/level";
-import { getAllLearningPathsRequest, getQuestionRequest } from "@/api/question";
+import {getAllLevelsRequest} from "@/api/level";
+import {getAllLearningPathsRequest, getQuestionRequest} from "@/api/question";
 import {
   getGeneralQuestionRequest,
   getQuestionDifficultyLevelLearnRequest,
@@ -291,7 +279,7 @@ import {
   postRandomQuizRequest,
 } from "@/api/quiz";
 import draggable from "vuedraggable";
-import { getAllTermsRequest } from "@/api/term";
+import {getAllTermsRequest} from "@/api/term";
 import QuestionDetailsModal from "@/components/Shared/QuestionDetailsModal/index.vue";
 
 export default {
@@ -429,7 +417,7 @@ export default {
       ).then((response) => {
         let allQuestionsLevel = response.data.data;
         this.question_difficulty = allQuestionsLevel.map((item) =>
-          Object.assign(item, { numberSelected: item.questions_count })
+          Object.assign(item, {numberSelected: item.questions_count})
         );
         this.getNumberQuestionDifficulty();
       });
@@ -479,7 +467,7 @@ export default {
         .then(
           () =>
             (this.questionBank = this.questionBank.map((item) => {
-              return { id: item.id, name: item.question, fixed: false };
+              return {id: item.id, name: item.question, fixed: false};
             }))
         )
         .finally(() => {
@@ -489,7 +477,7 @@ export default {
             })
             .then(() => {
               this.questions = this.questions.map((item) => {
-                return { ...item, fixed: false };
+                return {...item, fixed: false};
               });
               this.questionsToSend = this.questionBank.filter((item) =>
                 this.questions.map((item) => item.id).includes(item.id)
@@ -543,7 +531,7 @@ export default {
           this.createQuiz.type = response.data.data.type;
           this.question_difficulty =
             response.data.data.questions_difficulties.map((item) =>
-              Object.assign(item, { numberSelected: item.questions_count })
+              Object.assign(item, {numberSelected: item.questions_count})
             );
           this.createQuiz.total_question = this.question_difficulty.reduce(
             (accumulator, currentValue) =>

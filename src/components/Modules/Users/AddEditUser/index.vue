@@ -2,7 +2,7 @@
   <div class="add-edit-user">
     <div class="container-fluid custom-container">
       <div class="add-edit-user-form">
-        <h3>{{ $t("USERS.ADD_NEW") }}</h3>
+        <h3>{{ $route.params.id ? $t("USERS.EDIT") : $t("USERS.ADD_NEW") }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -62,7 +62,7 @@
                     v-model="formValues.social_media"
                     :label="$t('USERS.SOCIAL_MEDIA')"
                     :name="$t('USERS.SOCIAL_MEDIA')"
-                    rules="'required'"
+                    :rules="'required'"
                   ></TextField>
                 </div>
               </b-col>
