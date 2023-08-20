@@ -6,7 +6,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditQuizForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="6" class="mb-3">
+              <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="createQuiz.name"
@@ -16,7 +16,6 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3"></b-col>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
@@ -75,25 +74,18 @@
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors, invalid}">
-                    <b-form-group :label="$t('QUIZZES.sort')" v-slot="{ ariaDescribedby }"
-                                  class="group-type">
-                      <b-form-radio v-model="createQuiz.sort" value="0"
-                                    name="sort_type">مرتب
-                      </b-form-radio>
-                      <b-form-radio v-model="createQuiz.sort" value="1"
-                                    name="sort_type">
-                        عشوائى
-                      </b-form-radio>
+                    <label>{{$t('QUIZZES.sort')}}</label>
+                    <b-form-group v-slot="{ ariaDescribedby }" class="group-type">
+                      <b-form-radio v-model="createQuiz.sort" value="0" name="sort_type">مرتب</b-form-radio>
+                      <b-form-radio v-model="createQuiz.sort" value="1" name="sort_type">عشوائى</b-form-radio>
                     </b-form-group>
                   </ValidationProvider>
                 </div>
               </b-col>
-              <b-col v-if="createQuiz.level_id !== null && createQuiz.learning_path_id !== null"
-                     lg="12" class="mt-3 mb-4">
+              <b-col v-if="createQuiz.level_id !== null && createQuiz.learning_path_id !== null" lg="12" class="mt-3 mb-4">
                 <h3>{{ $t("QUIZZES.systemQuestion") }}</h3>
               </b-col>
-              <b-col v-if="createQuiz.level_id !== null && createQuiz.learning_path_id !== null"
-                     lg="12" class="mb-4">
+              <b-col v-if="createQuiz.level_id !== null && createQuiz.learning_path_id !== null" lg="12" class="mb-4">
                 <div class="hold-system-question">
                   <b-row>
                     <b-col lg="12" class="mb-4">

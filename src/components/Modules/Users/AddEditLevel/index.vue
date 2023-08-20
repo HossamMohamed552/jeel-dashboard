@@ -93,7 +93,7 @@
                                 <label class="mission-date">
                                   {{ $t('LEVEL.startMission') }}
                                 </label>
-                                <date-picker :lang="en" v-model="item.start_date" @change="showDate = false"
+                                <date-picker :disabled-date="disabledBeforeToday" :lang="en" v-model="item.start_date" @change="showDate = false"
                                              valueType="format"></date-picker>
                                 <p class="show-date" v-if="showDate">{{ item.start_date }}</p>
                               </ValidationProvider>
@@ -103,7 +103,7 @@
                                 <label class="mission-date">
                                   {{ $t('LEVEL.endMission') }}
                                 </label>
-                                <date-picker :lang="en" v-model="item.end_date" @change="showDate = false"
+                                <date-picker :disabled-date="disabledBeforeToday" :lang="en" v-model="item.end_date" @change="showDate = false"
                                              valueType="format"></date-picker>
                                 <p class="show-date" v-if="showDate">{{ item.end_date }}</p>
                               </ValidationProvider>
@@ -196,6 +196,9 @@ export default {
     }
   },
   methods: {
+    disabledBeforeToday(date){
+      return date < new Date(new Date().setHours(0,0,0,0))
+    },
     onSubmit() {
       this.$refs.addEditLevelForm.validate().then((success) => {
         if (!success) return;
