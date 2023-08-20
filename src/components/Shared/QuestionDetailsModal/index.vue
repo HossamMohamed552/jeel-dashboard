@@ -26,7 +26,6 @@
                     :subtitle="question.question_pattern"
                   />
                 </b-col>
-
                 <b-col lg="6" class="d-flex align-items-end mb-4 mt-1">
                   <ShowItem
                     :title="$t('QUESTIONS.QUESTION')"
@@ -227,4 +226,3 @@ export default {
   <style lang="scss" scoped>
 @import "./index.scss";
 </style>
-  

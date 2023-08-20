@@ -101,7 +101,7 @@
                     @click="handlePlayVideo(videoPath.url)"
                   />
                 </div>
-                <!-- 
+                <!--
               you can add configuration to the video
               ----------------------------
               :muted="muted"
@@ -141,31 +141,29 @@
                   />
                 </div>
               </b-col>
-              <b-row>
-                <b-col lg="12">
-                  <ShowItem :title="$t('MISSIONS.quizzes')" />
-                  <div v-for="quizPath in path.quizzes" :key="quizPath.id">
-                    <ShowItem :subtitle="quizPath.name" />
-                    <h5 class="heading-content">
-                      {{ $t("QUESTIONS.QUESTIONS") }}
-                    </h5>
-                    <div
-                      v-for="question in quizPath.questions"
-                      :key="question.id"
-                    >
-                      <div class="icon-play-holder">
-                        <ShowItem :title="question.question" />
-                        <b-icon
-                          class="cursor-pointer"
-                          icon="info-circle"
-                          variant="info"
-                          @click="handleShowQuestionDetails(question.id)"
-                        />
-                      </div>
+              <b-col lg="12">
+                <ShowItem :title="$t('MISSIONS.quizzes')" />
+                <div v-for="quizPath in path.quizzes" :key="quizPath.id">
+                  <ShowItem :subtitle="quizPath.name" />
+                  <h5 class="heading-content">
+                    {{ $t("QUESTIONS.QUESTIONS") }}
+                  </h5>
+                  <div
+                    v-for="question in quizPath.questions"
+                    :key="question.id"
+                  >
+                    <div class="icon-play-holder">
+                      <ShowItem :title="question.question" />
+                      <b-icon
+                        class="cursor-pointer"
+                        icon="info-circle"
+                        variant="info"
+                        @click="handleShowQuestionDetails(question.id)"
+                      />
                     </div>
                   </div>
-                </b-col>
-              </b-row>
+                </div>
+              </b-col>
             </b-row>
           </div>
         </div>
@@ -268,4 +266,3 @@ export default {
   <style lang="scss" scoped>
 @import "./index.scss";
 </style>
-  

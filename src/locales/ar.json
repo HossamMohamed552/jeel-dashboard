@@ -103,7 +103,8 @@
     "country": "إسم الدولة",
     "selectUser": "إختر إسم المالك",
     "selectCountry": "إختر إسم الدولة",
-    "showDetails": "عرض تفاصيل المجموعة"
+    "showDetails": "عرض تفاصيل المجموعة",
+    "missions": "المراحل"
   },
   "SCHOOL": {
     "ADD_NEW": "إضافة مدرسة جديدة",

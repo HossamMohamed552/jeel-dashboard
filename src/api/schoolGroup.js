@@ -10,7 +10,7 @@ export const getAllSchoolGroupRequest = (params) => ({
 });
 export const getSingleSchoolGroupRequest = (params) => ({
   method: "get",
-  url: `school-groups/${params}`,
+  url: `school-groups/${params}/full-details`,
 });
 export const putSchoolGroupRequest = (params, data) => ({
   method: "put",

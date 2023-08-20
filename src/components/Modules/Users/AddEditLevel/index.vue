@@ -86,11 +86,8 @@
                             <b-col lg="12">
                               <div class="question-holder-details mb-2">
                                 <p class="mission-name mb-0 font-weight-bold">{{ item.name }}</p>
-                                <Button
-                                  @click="handleShowMissionDetails(item.id)"
-                                >{{ $t("GLOBAL_DETAILS") }}
-                                </Button
-                                >
+                                <Button @click="handleShowMissionDetails(item.id)">{{ $t("GLOBAL_DETAILS") }}
+                                </Button>
                               </div>
                             </b-col>
                           </b-row>
@@ -216,11 +213,9 @@ export default {
     }
   },
   methods: {
-
     handleShowMissionDetails(missionId) {
       this.selectedMission = missionId;
       this.$bvModal.show("mission-details-modal");
-      console.log("missionId: ", missionId);
     },
     handleCloseMissionDetailsModal() {
       this.$bvModal.hide("mission-details-modal");
