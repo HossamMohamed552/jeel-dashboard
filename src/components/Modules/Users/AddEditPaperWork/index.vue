@@ -251,8 +251,8 @@ export default {
       levels: [],
       terms: [],
       paperWorkTypes: [
-        { value: "single", text: "single" },
-        { value: "participatory", text: "participatory" },
+        { value: "single", text: "فردية" },
+        { value: "participatory", text: "تشاركية" },
       ],
       createPaperWork: {
         name: "",

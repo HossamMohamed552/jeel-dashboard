@@ -16,12 +16,11 @@
           </b-col>
         </b-row>
         <b-row class="mt-5">
-          <b-col cols="12" sm="6" class="mb-4" v-for="(school_group, index) in level.school_groups"
-                 :key="index">
+          <b-col cols="12" sm="6" class="mb-4" v-for="(school_group, index) in level.school_groups" :key="index">
             <ShowItem :title="$t('TABLE_FIELDS.school_group')" :subtitle="school_group.name"/>
           </b-col>
         </b-row>
-        <b-row v-if="user.permissions.includes('rearrange-missions')">
+        <b-row v-if="user.permissions.includes('rearrange-missions') || user.permissions.includes('manage-learningpath')">
           <b-col lg="6">
             <h3 class="mission-title">المراحل</h3>
             <div class="mission-item" v-for="mission in levelNotFiltered">
@@ -32,21 +31,21 @@
             <h3 class="mission-title">المراحل المختاره</h3>
             <div class="mission-item" v-for="mission in levelFiltered">
               <span>{{ mission.name }}</span>
-              <router-link :to="`/dashboard/path-content/${mission.id}`" class="mission-content"
-                           v-if="user.permissions.includes('manage-learningpath')">تعديل المحتوى <i
-                class="far fa-edit"></i></router-link>
+<!--              <router-link :to="`/dashboard/path-content/${mission.id}`" class="mission-content"-->
+<!--                           v-if="user.permissions.includes('manage-learningpath')">تعديل المحتوى <i-->
+<!--                class="far fa-edit"></i></router-link>-->
             </div>
           </b-col>
         </b-row>
-        <b-row v-if="user.permissions.includes('manage-learningpath')">
-          <b-col lg="12">
-            <h3 class="mission-title">المراحل المختاره</h3>
-            <div class="mission-item" v-for="mission in levelFiltered">
-              <span>{{ mission.name }}</span>
-<!--              :to="`/dashboard/path-content/${mission.id}`"-->
-            </div>
-          </b-col>
-        </b-row>
+<!--        <b-row v-if="user.permissions.includes('manage-learningpath')">-->
+<!--          <b-col lg="12">-->
+<!--            <h3 class="mission-title">المراحل المختاره</h3>-->
+<!--            <div class="mission-item" v-for="mission in levelFiltered">-->
+<!--              <span>{{ mission.name }}</span>-->
+<!--&lt;!&ndash;              :to="`/dashboard/path-content/${mission.id}`"&ndash;&gt;-->
+<!--            </div>-->
+<!--          </b-col>-->
+<!--        </b-row>-->
 
       </div>
     </div>

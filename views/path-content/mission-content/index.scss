@@ -47,6 +47,9 @@
 }
 .item{
   direction: rtl;
+  .video{
+    height: 200px;
+  }
 }
 .question-no{
   background: $color-notify;

@@ -1,6 +1,6 @@
 <template>
   <div class="add-mission">
-    <Modal :content-message="'تمت التعديل بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="'تمت التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
     <Stepper
       v-show="currentStep === 0 || currentStep === 1 || currentStep === 2"
       class="mt-5 mb-3"
@@ -20,6 +20,7 @@
       v-if="currentStep === 1"
       :learningPathSelected="learningPathSelected"
       :level="level"
+      :term="term"
       @handleCancel="handleCancel"
       @handleBack="goToMissionDataForm"
       @goToFinalStep="goToFinalStep"/>
@@ -67,7 +68,7 @@
                           path.videoIds.includes(item.id)
                         )"
                         :key="`${video.id} ${index}`"
-                        >{{ video.title }}</span
+                      >{{ video.title }}</span
                       >
                     </div>
                   </b-col>
@@ -79,7 +80,7 @@
                           path.paperWorkIds.includes(item.id)
                         )"
                         :key="`${paperWork.id} ${index}`"
-                        >{{ paperWork.name }}</span
+                      >{{ paperWork.name }}</span
                       >
                     </div>
                   </b-col>
@@ -91,7 +92,7 @@
                           path.quizzesIds.includes(item.id)
                         )"
                         :key="`${quiz.id} ${index}`"
-                        >{{ quiz.name }}</span
+                      >{{ quiz.name }}</span
                       >
                     </div>
                   </b-col>
@@ -148,6 +149,7 @@ export default {
       levels: [],
       level: null,
       collectData: {},
+      term: null,
       steps: [
         {
           icon: "1",
@@ -178,6 +180,7 @@ export default {
         learningPath.includes(item.id)
       );
       this.level = this.collectData.level_id;
+      this.term = this.collectData.term_id;
     },
     goToMissionDataForm() {
       this.handleNavigation(0);
@@ -186,7 +189,7 @@ export default {
       this.handleNavigation(1);
     },
     goToFinalStep(data) {
-      Object.assign(this.collectData, { paths: [...data] });
+      Object.assign(this.collectData, {paths: [...data]});
       this.handleSaveCollectedData(data);
       this.handleNavigation(2);
     },
@@ -203,9 +206,9 @@ export default {
 
       formData.append("_method", "PUT");
       // for to get learnPaths
-      for (let learnPath = 0; learnPath < this.collectData.paths.length; ) {
+      for (let learnPath = 0; learnPath < this.collectData.paths.length;) {
         formData.append(`learningpaths[${learnPath}][id]`, this.collectData.paths[learnPath].id);
-        for (let video = 0; video < this.collectData.paths[learnPath].videoIds.length; ) {
+        for (let video = 0; video < this.collectData.paths[learnPath].videoIds.length;) {
           formData.append(
             `learningpaths[${learnPath}][videos][${video}][id]`,
             this.collectData.paths[learnPath].videoIds[video]
@@ -217,7 +220,6 @@ export default {
         for (
           let paperWork = 0;
           paperWork < this.collectData.paths[learnPath].paperWorkIds.length;
-
         ) {
           formData.append(
             `learningpaths[${learnPath}][papersworks][${paperWork}][id]`,
@@ -230,7 +232,7 @@ export default {
           formData.append(`learningpaths[${learnPath}][papersworks][${paperWork}][is_selected]`, 1);
           paperWork++;
         }
-        for (let quiz = 0; quiz < this.collectData.paths[learnPath].quizzesIds.length; ) {
+        for (let quiz = 0; quiz < this.collectData.paths[learnPath].quizzesIds.length;) {
           formData.append(
             `learningpaths[${learnPath}][quizzes][${quiz}][id]`,
             this.collectData.paths[learnPath].quizzesIds[quiz]
@@ -260,7 +262,7 @@ export default {
         });
     },
     handleAssignObject(data) {
-      Object.assign(this.collectData, { ...data });
+      Object.assign(this.collectData, {...data});
       this.handleSaveCollectedData(data);
     },
     handleSaveCollectedData(data) {
