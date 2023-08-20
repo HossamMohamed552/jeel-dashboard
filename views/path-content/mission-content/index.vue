@@ -2,13 +2,25 @@
   <section class="custom-container">
     <div class="mission-content inner-routes">
       <div class="taps">
-        <div @click="activeTap = 1" :class="activeTap === 1 ? 'active' : ''" class="tap">
+        <div
+          @click="activeTap = 1"
+          :class="activeTap === 1 ? 'active' : ''"
+          class="tap"
+        >
           الفيديوهات
         </div>
-        <div @click="activeTap = 2" :class="activeTap === 2 ? 'active' : ''" class="tap">
+        <div
+          @click="activeTap = 2"
+          :class="activeTap === 2 ? 'active' : ''"
+          class="tap"
+        >
           أوراق العمل
         </div>
-        <div @click="activeTap = 3" :class="activeTap === 3 ? 'active' : ''" class="tap">
+        <div
+          @click="activeTap = 3"
+          :class="activeTap === 3 ? 'active' : ''"
+          class="tap"
+        >
           التمارين
         </div>
       </div>
@@ -36,7 +48,11 @@
             </div>
             <div class="col-12 px-0" v-if="activeTap === 2">
               <b-row>
-                <b-col lg="4" v-for="paperWork in paperWorkContent" :key="paperWork.id">
+                <b-col
+                  lg="4"
+                  v-for="paperWork in paperWorkContent"
+                  :key="paperWork.id"
+                >
                   <div class="hold-permissions">
                     <b-form-checkbox
                       v-model="paperWorkSelected"
@@ -46,7 +62,9 @@
                       <div class="hold-icon">
                         <b-icon icon="file-earmark-pdf"></b-icon>
                       </div>
-                      <div class="d-flex justify-content-between align-items-center">
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
                         <span>{{ paperWork.type }}</span>
                         <span
                           class="video-title"
@@ -61,7 +79,12 @@
             </div>
             <div class="col-12 px-0" v-if="activeTap === 3">
               <b-row>
-                <b-col lg="6" v-for="quiz in quizContent" :key="quiz.id" class="mb-5">
+                <b-col
+                  lg="6"
+                  v-for="quiz in quizContent"
+                  :key="quiz.id"
+                  class="mb-5"
+                >
                   <div class="hold-permissions">
                     <b-form-checkbox
                       v-model="quizSelected"
@@ -72,9 +95,13 @@
                       <div class="hold-icon">
                         <i class="far fa-question-circle"></i>
                       </div>
-                      <div class="d-flex justify-content-between align-items-center">
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
                         <span class="video-title">{{ quiz.name }}</span>
-                        <span class="question-no">{{ quiz.total_question }}</span>
+                        <span class="question-no">{{
+                          quiz.total_question
+                        }}</span>
                       </div>
                       <div class="hold-question">
                         <div class="questions-header">
@@ -97,8 +124,19 @@
                           >
                             <b-row>
                               <b-col lg="1"></b-col>
-                              <b-col lg="3">{{ question.question_type.name }}</b-col>
-                              <b-col lg="8">{{ question.name }}</b-col>
+                              <b-col lg="3">{{
+                                question.question_type.name
+                              }}</b-col>
+                              <b-col lg="7">{{ question.name }}</b-col>
+                              <b-col lg="1">
+                                <b-icon
+                                  class="cursor-pointer"
+                                  icon="info-circle"
+                                  variant="info"
+                                  @click.prevent="
+                                    handleShowQuestionDetails(question.id)
+                                  "
+                              /></b-col>
                             </b-row>
                           </b-form-checkbox>
                         </div>
@@ -122,18 +160,27 @@
         </div>
       </b-row>
     </div>
+    <QuestionDetailsModal
+      :question-id="selectedQuestion"
+      @closeModal="handleCloseQuestionDetailsModal"
+    />
   </section>
 </template>
 <script>
-import { getMissionContentRequest, postEditPathMissionRequest } from "@/api/path-content";
+import {
+  getMissionContentRequest,
+  postEditPathMissionRequest,
+} from "@/api/path-content";
 import RouteItem from "@/components/RouteItem/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
+import QuestionDetailsModal from "@/components/Shared/QuestionDetailsModal/index.vue";
 
 export default {
   name: "index",
-  components: { Button, RouteItem },
+  components: { Button, RouteItem, QuestionDetailsModal },
   data() {
     return {
+      selectedQuestion: null,
       loading: false,
       activeTap: 1,
       videosContent: [],
@@ -170,7 +217,9 @@ export default {
       this.quizContent = response.data.data.quizzes.map((item) => {
         return Object.assign(item, {
           questionsSelected: [
-            ...item.questions.filter((item) => item.is_selected === true).map((item) => item.id),
+            ...item.questions
+              .filter((item) => item.is_selected === true)
+              .map((item) => item.id),
           ],
         });
       });
@@ -180,28 +229,41 @@ export default {
       this.editContentMission.quizzes = response.data.data.quizzes.filter(
         (item) => item.is_selected === true
       );
-      this.editContentMission.quizzes = this.editContentMission.quizzes.map((item) => {
-        return { id: item.id, questions: item.questionsSelected };
-      });
+      this.editContentMission.quizzes = this.editContentMission.quizzes.map(
+        (item) => {
+          return { id: item.id, questions: item.questionsSelected };
+        }
+      );
     });
   },
   methods: {
+    handleShowQuestionDetails(questionId) {
+      this.selectedQuestion = questionId;
+      this.$bvModal.show("question-details-modal");
+    },
+    handleCloseQuestionDetailsModal() {
+      this.$bvModal.hide("question-details-modal");
+      this.selectedQuestion = null;
+    },
     logQuestion($event, question) {
       this.quizContent.filter((item) => question.quiz_id === item.id);
-      this.editContentMission.quizzes = this.editContentMission.quizzes.map((item) => {
-        if (item.id === question.quiz_id) {
-          return { id: item.id, questions: $event };
-        } else {
-          return item;
+      this.editContentMission.quizzes = this.editContentMission.quizzes.map(
+        (item) => {
+          if (item.id === question.quiz_id) {
+            return { id: item.id, questions: $event };
+          } else {
+            return item;
+          }
         }
-      });
+      );
     },
     questionsQuizSelected($event, quizQuestion) {
       if (!$event.includes(quizQuestion.id)) {
         quizQuestion.questionsSelected = [];
-        this.editContentMission.quizzes = this.editContentMission.quizzes.filter((item) => {
-          return item.id !== quizQuestion.id;
-        });
+        this.editContentMission.quizzes =
+          this.editContentMission.quizzes.filter((item) => {
+            return item.id !== quizQuestion.id;
+          });
       }
       this.editContentMission.quizzes = this.quizContent
         .filter((item) => $event.includes(item.id))
@@ -223,9 +285,11 @@ export default {
       this.editContentMission.learningpath_id = this.$route.params.pathId;
       this.editContentMission.videos = this.videoSelected;
       this.editContentMission.papersworks = this.paperWorkSelected;
-      this.ApiService(postEditPathMissionRequest(this.editContentMission)).then((response) => {
-        this.$router.back();
-      });
+      this.ApiService(postEditPathMissionRequest(this.editContentMission)).then(
+        (response) => {
+          this.$router.back();
+        }
+      );
     },
     handleCancel() {
       this.$router.back();

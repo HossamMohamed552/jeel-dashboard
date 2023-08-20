@@ -84,7 +84,11 @@
                         <div v-for="item in missionsSend" :key="item.id" class="list-group-item">
                           <b-row>
                             <b-col lg="12">
-                              <p class="mission-name">{{ item.name }}</p>
+                              <div class="question-holder-details mb-2">
+                                <p class="mission-name mb-0 font-weight-bold">{{ item.name }}</p>
+                                <Button @click="handleShowMissionDetails(item.id)">{{ $t("GLOBAL_DETAILS") }}
+                                </Button>
+                              </div>
                             </b-col>
                           </b-row>
                           <b-row>
@@ -93,7 +97,8 @@
                                 <label class="mission-date">
                                   {{ $t('LEVEL.startMission') }}
                                 </label>
-                                <date-picker :disabled-date="disabledBeforeToday" :lang="en" v-model="item.start_date" @change="showDate = false"
+                                <date-picker :disabled-date="disabledBeforeToday" :lang="en"
+                                             v-model="item.start_date" @change="showDate = false"
                                              valueType="format"></date-picker>
                                 <p class="show-date" v-if="showDate">{{ item.start_date }}</p>
                               </ValidationProvider>
@@ -103,7 +108,8 @@
                                 <label class="mission-date">
                                   {{ $t('LEVEL.endMission') }}
                                 </label>
-                                <date-picker :disabled-date="disabledBeforeToday" :lang="en" v-model="item.end_date" @change="showDate = false"
+                                <date-picker :disabled-date="disabledBeforeToday" :lang="en"
+                                             v-model="item.end_date" @change="showDate = false"
                                              valueType="format"></date-picker>
                                 <p class="show-date" v-if="showDate">{{ item.end_date }}</p>
                               </ValidationProvider>
@@ -111,7 +117,8 @@
                           </b-row>
                         </div>
                       </draggable>
-                      <p v-if="isError" class="text-danger">لم تصل المراحل الى الحد الادنى للمراحل  {{ createLevel.min_levels}}</p>
+                      <p v-if="isError" class="text-danger">لم تصل المراحل الى الحد الادنى للمراحل
+                        {{ createLevel.min_levels }}</p>
                     </b-col>
                   </b-row>
                 </b-col>
@@ -136,6 +143,10 @@
         </div>
       </div>
     </div>
+    <MissionDetailsModal
+      :mission-id="selectedMission"
+      @closeModal="handleCloseMissionDetailsModal"
+    />
   </div>
 </template>
 <script>
@@ -151,6 +162,7 @@ import {mapGetters} from "vuex";
 import DatePicker from "vue2-datepicker";
 import 'vue2-datepicker/locale/en'
 import "vue2-datepicker/index.css";
+import MissionDetailsModal from "@/components/Shared/MissionDetailsModal/index.vue";
 
 export default {
   components: {
@@ -159,7 +171,8 @@ export default {
     TextField,
     Button,
     SelectSearch,
-    DatePicker
+    DatePicker,
+    MissionDetailsModal
   },
   props: {
     loading: {
@@ -176,7 +189,8 @@ export default {
   },
   data() {
     return {
-      en:'en',
+      selectedMission: null,
+      en: 'en',
       createLevel: {
         name: "",
         min_levels: null,
@@ -192,12 +206,24 @@ export default {
   },
   watch: {
     missionsSend(newArray) {
-      newArray.map((item) => Object.assign(item, {start_date: item.start_date ? item.start_date : "" , end_date: item.end_date ? item.end_date : ""}))
+      newArray.map((item) => Object.assign(item, {
+        start_date: item.start_date ? item.start_date : "",
+        end_date: item.end_date ? item.end_date : ""
+      }))
     }
   },
   methods: {
-    disabledBeforeToday(date){
-      return date < new Date(new Date().setHours(0,0,0,0))
+    handleShowMissionDetails(missionId) {
+      this.selectedMission = missionId;
+      this.$bvModal.show("mission-details-modal");
+    },
+    handleCloseMissionDetailsModal() {
+      this.$bvModal.hide("mission-details-modal");
+      this.selectedMission = null;
+    },
+    disabledBeforeToday(date) {
+      return date < new Date(new Date().setHours(0, 0, 0, 0))
+
     },
     onSubmit() {
       this.$refs.addEditLevelForm.validate().then((success) => {

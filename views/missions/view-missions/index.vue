@@ -3,83 +3,201 @@
     <div class="show-mission">
       <b-row>
         <b-col lg="12">
-          <h2 class="heading">{{ $t('MISSIONS.ShowDetails') }}</h2>
+          <h2 class="heading">{{ $t("MISSIONS.ShowDetails") }}</h2>
         </b-col>
       </b-row>
       <div class="divider">
         <b-row>
           <b-col lg="4">
-            <ShowItem :title="$t('MISSIONS.name')" :subtitle="mission.name"/>
+            <ShowItem :title="$t('MISSIONS.name')" :subtitle="mission.name" />
           </b-col>
           <b-col lg="4" v-if="mission && mission.level">
-            <ShowItem :title="$t('MISSIONS.level')" :subtitle="mission.level.name"/>
+            <ShowItem
+              :title="$t('MISSIONS.level')"
+              :subtitle="mission.level.name"
+            />
           </b-col>
           <b-col lg="4" v-if="mission && mission.term">
-            <ShowItem :title="$t('MISSIONS.terms')" :subtitle="mission.term.name"/>
+            <ShowItem
+              :title="$t('MISSIONS.terms')"
+              :subtitle="mission.term.name"
+            />
           </b-col>
           <b-col v-if="mission && mission.mission_image" lg="4" class="mt-4">
-            <ShowItem :title="$t('MISSIONS.UPLOAD_IMAGE')"/>
-            <img class="mx-2" :src="mission.mission_image" width="120"/>
+            <ShowItem :title="$t('MISSIONS.UPLOAD_IMAGE')" />
+            <img class="mx-2" :src="mission.mission_image" width="120" />
           </b-col>
         </b-row>
-    </div>
+      </div>
       <div class="divider">
         <b-row class="mt-4">
           <b-col lg="4" v-if="mission && mission.country">
-            <ShowItem :title="$t('MISSIONS.country')" :subtitle="mission.country.name"/>
+            <ShowItem
+              :title="$t('MISSIONS.country')"
+              :subtitle="mission.country.name"
+            />
           </b-col>
           <b-col lg="4">
-            <ShowItem :title="$t('MISSIONS.description')" :subtitle="mission.description"/>
+            <ShowItem
+              :title="$t('MISSIONS.description')"
+              :subtitle="mission.description"
+            />
           </b-col>
           <b-col lg="4">
-            <ShowItem :title="$t('MISSIONS.duration')" :subtitle="mission.data_range"/>
+            <ShowItem
+              :title="$t('MISSIONS.duration')"
+              :subtitle="mission.data_range"
+            />
           </b-col>
         </b-row>
       </div>
-      <div class="divider" v-if="mission && mission.learningpaths">
+      <div class="divider" v-if="mission && mission.learning_paths">
         <b-col lg="12">
-          <h2 class="heading heading-content text-center">{{ $t('MISSIONS.content') }}</h2>
+          <h2 class="heading heading-content text-center">
+            {{ $t("MISSIONS.content") }}
+          </h2>
         </b-col>
-        <b-row class="mt-4" v-for="path in mission.learningpaths" :key="path.id">
+        <b-row
+          class="mt-4"
+          v-for="path in mission.learning_paths"
+          :key="path.id"
+        >
           <b-col lg="12" class="mb-4">
-            <ShowItem :title="$t('MISSIONS.LEARNING_PATH')" :subtitle="path.name"/>
+            <ShowItem
+              :title="$t('MISSIONS.LEARNING_PATH')"
+              :subtitle="path.name"
+            />
           </b-col>
           <b-col lg="4">
-            <ShowItem :title="$t('MISSIONS.videos')"/>
-            <ShowItem v-for="videoPath in path.videos" :key="videoPath.id" :subtitle="videoPath.original_name"/>
+            <ShowItem :title="$t('MISSIONS.videos')" />
+            <div
+              v-for="videoPath in path.videos"
+              :key="videoPath.id"
+              class="icon-play-holder"
+            >
+              <ShowItem :subtitle="videoPath.original_name" />
+              <b-icon
+                class="cursor-pointer mt-4"
+                icon="play-circle"
+                variant="info"
+                @click="handlePlayVideo(videoPath.url)"
+              />
+            </div>
+            <!-- 
+              you can add configuration to the video
+              ----------------------------
+              :muted="muted"
+              :autoplay="autoplay"
+              :controls="controls"
+              :loop="loop"
+              :width="width"
+              :height="height"
+              :poster="poster"
+              :preload="preload"
+              :playsinline="true"
+              -->
+            <div v-if="videoPlayed" class="video-container">
+              <video
+                :src="selecedVideoSource"
+                ref="player"
+                autoplay="autoplay"
+                controls="controls"
+              />
+            </div>
           </b-col>
           <b-col lg="4">
-            <ShowItem :title="$t('MISSIONS.paperWork')"/>
-            <ShowItem v-for="papersWorkPath in path.papersWork" :key="papersWorkPath.id" :subtitle="papersWorkPath.name"/>
+            <ShowItem :title="$t('MISSIONS.paperWork')" />
+            <div
+              v-for="papersWorkPath in path.papersWork"
+              :key="papersWorkPath.id"
+              class="icon-play-holder"
+            >
+              <ShowItem :subtitle="papersWorkPath.name" />
+              <b-icon
+                class="cursor-pointer mt-4"
+                icon="cloud-download"
+                variant="info"
+                @click="downloadFile(papersWorkPath.name, papersWorkPath.url)"
+              />
+            </div>
           </b-col>
-          <b-col lg="4">
-            <ShowItem :title="$t('MISSIONS.quizzes')"/>
-            <ShowItem v-for="quizPath in path.quizzes" :key="quizPath.id" :subtitle="quizPath.name"/>
-          </b-col>
+          <b-row>
+            <b-col lg="12">
+              <ShowItem :title="$t('MISSIONS.quizzes')" />
+              <div v-for="quizPath in path.quizzes" :key="quizPath.id">
+                <ShowItem :subtitle="quizPath.name" />
+                <h5 class="heading-content">{{ $t("QUESTIONS.QUESTIONS") }}</h5>
+                <div v-for="question in quizPath.questions" :key="question.id">
+                  <div class="icon-play-holder">
+                    <ShowItem :title="question.question" />
+                    <b-icon
+                      class="cursor-pointer"
+                      icon="info-circle"
+                      variant="info"
+                      @click="handleShowQuestionDetails(question.id)"
+                    />
+                  </div>
+                </div>
+              </div>
+            </b-col>
+          </b-row>
         </b-row>
       </div>
     </div>
+    <QuestionDetailsModal
+      :question-id="selectedQuestion"
+      @closeModal="handleCloseQuestionDetailsModal"
+    />
   </section>
 </template>
 <script>
-import {getSingleMissionsRequest} from "@/api/missios";
+import { getSingleMissionsDetailsRequest } from "@/api/missios";
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
+import QuestionDetailsModal from "@/components/Shared/QuestionDetailsModal/index.vue";
 
 export default {
   name: "index",
-  components: {ShowItem},
+  components: { ShowItem, QuestionDetailsModal },
   data() {
     return {
-      mission: {}
-    }
+      mission: {},
+      selectedQuestion: null,
+      selecedVideoSource: "",
+      videoPlayed: false
+    };
   },
   mounted() {
-    this.ApiService(getSingleMissionsRequest(this.$route.params.id)).then((response) => {
-      this.mission = response.data.data
-      console.log('mission',this.mission)
-    })
-  }
-}
+    this.ApiService(
+      getSingleMissionsDetailsRequest(this.$route.params.id)
+    ).then((response) => {
+      this.mission = response.data.data;
+      console.log("mission", this.mission);
+    });
+  },
+  methods: {
+    handleShowQuestionDetails(questionId) {
+      this.selectedQuestion = questionId;
+      this.$bvModal.show("question-details-modal");
+    },
+    handleCloseQuestionDetailsModal() {
+      this.$bvModal.hide("question-details-modal");
+      this.selectedQuestion = null;
+    },
+    downloadFile(name, url) {
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = name;
+      link.target = "_blank";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },
+    handlePlayVideo(url) {
+      this.videoPlayed = true
+      this.selecedVideoSource = url;
+    },
+  },
+};
 </script>
 <style scoped lang="scss">
 @import "./index";

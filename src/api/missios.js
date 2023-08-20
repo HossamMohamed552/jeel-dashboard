@@ -9,6 +9,12 @@ export const getSingleMissionsRequest = (params) => ({
   method: 'get',
   url: `missions/${params}`,
 })
+
+export const getSingleMissionsDetailsRequest = (params) => ({
+  method: 'get',
+  url: `missions/${params}/full-details`,
+})
+
 export const putMissionsRequest = (params,data) => ({
   method: 'put',
   url: `missions/${params}`,

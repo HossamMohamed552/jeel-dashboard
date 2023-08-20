@@ -103,7 +103,8 @@
     "country": "إسم الدولة",
     "selectUser": "إختر إسم المالك",
     "selectCountry": "إختر إسم الدولة",
-    "showDetails": "عرض تفاصيل المجموعة"
+    "showDetails": "عرض تفاصيل المجموعة",
+    "missions": "المراحل"
   },
   "SCHOOL": {
     "ADD_NEW": "إضافة مدرسة جديدة",
@@ -180,6 +181,7 @@
     "ShowDetails": "عرض تفاصيل المسار"
   },
   "QUESTIONS": {
+    "QUESTIONS": "الأسئلة",
     "ADD_NEW": "إضافة سؤال جديد",
     "CHOOSE_Question_PATTERN": "إختيار نمط السؤال",
     "EDIT_Question_PATTERN": "تعديل نمط السؤال",
@@ -366,5 +368,9 @@
   "QUESTION_DIFFICULTY": "تفاصيل صعوبة السؤال",
   "NAME": "الإسم",
   "GRADE_POINTS": "النقاط",
-  "QUESTION_DIFFICULTY_POINTS_EDIT": "تعديل نقاط صعوبة السؤال"
+  "QUESTION_DIFFICULTY_POINTS_EDIT": "تعديل نقاط صعوبة السؤال",
+  "GLOBAL_LOADING" : "جارى التحميل...",
+  "QUESTION_DETAILS": "تفاصيل السؤال",
+  "GLOBAL_DETAILS": "التفاصيل",
+  "MISSSION_DETAILS": "تفاصيل المرحلة"
 }
