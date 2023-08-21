@@ -86,8 +86,9 @@
                   <ImageUploader
                     :name="'logoSchool'"
                     :text="$t('USERS.UPLOAD_IMAGE')"
-                    @imageUpload="handleUploadImage"
                     :item-image="itemImage"
+                    @imageUpload="handleUploadImage"
+                    @deleteImage="deleteImage"
                   />
                 </div>
               </b-col>
@@ -156,6 +157,10 @@ export default {
     };
   },
   methods: {
+    deleteImage(){
+      this.image = null
+      this.itemImage = null
+    },
     onSubmit() {
       if (this.$route.params.id) {
         this.$refs.addEditUserForm.validate().then((success) => {
