@@ -129,8 +129,8 @@
                       <ImageUploader
                         :text="$t('SCHOOL.UPLOAD_IMAGE')"
                         @imageUpload="handleUploadImage"
-                        @deleteImage="deleteImage"
                         :itemImage="itemImage"
+                        @deleteImage="deleteImage"
                       />
                     </div>
                   </b-col>

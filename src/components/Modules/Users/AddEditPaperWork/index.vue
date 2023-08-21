@@ -188,8 +188,9 @@
                   <ImageUploader
                     :name="'paperWorkThumbnail'"
                     :text="$t('PAPER_WORK.UPLOAD_IMAGE')"
-                    @imageUpload="handleUploadImage"
                     :item-image="createPaperWork.img_url"
+                    @imageUpload="handleUploadImage"
+                    @deleteImage="deleteImage"
                   />
                 </div>
               </b-col>
@@ -272,6 +273,10 @@ export default {
     };
   },
   methods: {
+    deleteImage(){
+      this.createPaperWork.thumbnail = null
+      this.createPaperWork.img_url = null
+    },
     checkEditPaperWork($event) {
       this.createPaperWork.uploadPrint = !!$event;
     },

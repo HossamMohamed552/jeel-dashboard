@@ -94,8 +94,9 @@
                   <ImageUploader
                     :name="'logoSchool'"
                     :text="$t('MISSIONS.UPLOAD_IMAGE')"
-                    @imageUpload="handleUploadImage"
                     :item-image="mission.itemImage"
+                    @imageUpload="handleUploadImage"
+                    @deleteImage="deleteImage"
                   />
                 </div>
               </b-col>
@@ -178,6 +179,10 @@ export default {
     };
   },
   methods: {
+    deleteImage(){
+      this.mission.mission_image = null
+      this.mission.itemImage = null
+    },
     onSubmit() {
       this.$emit("onSubmit", this.mission);
     },
