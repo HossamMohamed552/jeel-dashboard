@@ -16,36 +16,36 @@
         <label for="" class="label">{{ $t("SYSTEM_SETTINGS.MAX_TRIAL") }}</label>
         <TextField v-model="action.max_trail" type="number" />
       </b-col>
-      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">
-        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.FIRST_COINS") }}</label>
-        <TextField v-model="action.first_jeel_coins" type="number" />
+      <b-col cols="12" md="6" lg="6" class="mb-1 mb-md-4">
+        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.COINS") }}</label>
+        <TextField v-model="action.jeel_coins" type="number" />
       </b-col>
-      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">
-        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.SECOND_COINS") }}</label>
-        <TextField v-model="action.second_jeel_coins" type="number" />
+<!--      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">-->
+<!--        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.SECOND_COINS") }}</label>-->
+<!--        <TextField v-model="action.second_jeel_coins" type="number" />-->
+<!--      </b-col>-->
+<!--      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">-->
+<!--        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.NEXT_COINS") }}</label>-->
+<!--        <TextField v-model="action.next_jeel_coins" type="number" />-->
+<!--      </b-col>-->
+      <b-col cols="12" md="6" lg="6" class="mb-1 mb-md-4">
+        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.JEEl_EXPERIENCE") }}</label>
+        <TextField v-model="action.jeel_xp" type="number" />
       </b-col>
-      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">
-        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.NEXT_COINS") }}</label>
-        <TextField v-model="action.next_jeel_coins" type="number" />
-      </b-col>
-      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">
-        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.FIRST_EXPERIENCE") }}</label>
-        <TextField v-model="action.first_jeel_xp" type="number" />
-      </b-col>
-      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">
-        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.SECOND_EXPERIENCE") }}</label>
-        <TextField v-model="action.second_jeel_xp" type="number" />
-      </b-col>
-      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">
-        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.NEXT_EXPERIENCE") }}</label>
-        <TextField v-model="action.next_jeel_xp" type="number" />
-      </b-col>
+<!--      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">-->
+<!--        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.SECOND_EXPERIENCE") }}</label>-->
+<!--        <TextField v-model="action.second_jeel_xp" type="number" />-->
+<!--      </b-col>-->
+<!--      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">-->
+<!--        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.NEXT_EXPERIENCE") }}</label>-->
+<!--        <TextField v-model="action.next_jeel_xp" type="number" />-->
+<!--      </b-col>-->
     </b-row>
     <b-row class="justify-content-end">
       <b-col
         cols="12"
         md="6"
-        lg="4"
+        lg="12"
         class="d-flex align-items-end justify-content-end mt-4 mt-lg-0"
       >
         <Button
@@ -75,12 +75,12 @@ export default {
         action_name: "",
         action_desc: "",
         max_trail: 1,
-        first_jeel_coins: 0,
-        second_jeel_coins: 0,
-        next_jeel_coins: 0,
-        first_jeel_xp: 0,
-        second_jeel_xp: 0,
-        next_jeel_xp: 0,
+        jeel_coins: 0,
+        // second_jeel_coins: 0,
+        // next_jeel_coins: 0,
+        // first_jeel_xp: 0,
+        // second_jeel_xp: 0,
+        jeel_xp: 0,
       },
       id: this.$route.params.id,
     };

@@ -47,7 +47,7 @@
                   />
                 </b-col>
                 <b-col
-                  v-if="question.question_type.name"
+                  v-if="question.question_type && question.question_type.name"
                   lg="6"
                   class="mb-4 mt-1"
                 >
