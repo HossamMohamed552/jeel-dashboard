@@ -86,7 +86,7 @@
                             <b-col lg="12">
                               <div class="question-holder-details mb-2">
                                 <p class="mission-name mb-0 font-weight-bold">{{ item.name }}</p>
-                                <Button @click="handleShowMissionDetails(item.id)">{{ $t("GLOBAL_DETAILS") }}
+                                <Button @click="handleShowMissionDetails(item.mission_info_id)">{{ $t("GLOBAL_DETAILS") }}
                                 </Button>
                               </div>
                             </b-col>
