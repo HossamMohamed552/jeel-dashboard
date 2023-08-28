@@ -24,7 +24,12 @@
 }
 .video-img{
   width: 100%;
-  max-height: 700px;
+  height: 300px;
   object-fit: contain;
+  object-position: center;
+}
+.show-video{
+  height: 300px;
+  width: 100%;
   object-position: center;
 }

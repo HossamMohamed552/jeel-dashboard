@@ -39,6 +39,7 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
+                    :deselectFromDropdown="true"
                     multiple
                   ></SelectSearch>
                 </div>
@@ -216,4 +217,10 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "./index";
+::v-deep{
+  .vs__dropdown-option--deselect,.vs__dropdown-option--selected{
+    background: #76236C !important;
+    color: #fff;
+  }
+}
 </style>

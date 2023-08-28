@@ -51,6 +51,7 @@ export default {
         {key: "type", label: "النوع"},
         {key: "total_question", label: "إجمالى الإسئلة"},
         {key: "level", label: "المرحله الدراسية"},
+        {key: "learning_path", label: "المسار"},
         {key: "description", label: "الوصف"},
         {key: "actions", label: "الإجراء"},
       ],

@@ -263,7 +263,7 @@ export default {
           end_date: item.end_date
         }
       })
-      console.log('this.missionsSend', missions)
+
       axios.post('/rearrange-mission', {
         level_id: this.$route.params.id,
         missions: missions

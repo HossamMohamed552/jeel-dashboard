@@ -79,10 +79,16 @@
         <template #cell(level)="data">
           <span v-if="data.item.level">{{ data.item.level.name }}</span>
         </template>
+        <template #cell(level)="data">
+          <span v-if="data.item.level">{{ data.item.level.name }}</span>
+        </template>
         <template #cell(learningpaths)="data">
           <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{
               path.name
             }}</span>
+        </template>
+        <template #cell(learning_path)="data">
+          <span v-if="data.item.learning_path">{{ data.item.learning_path.name }}</span>
         </template>
         <template #cell(roles)="data">
           <div class="d-flex justify-content-start align-items-center">
@@ -284,7 +290,7 @@ export default {
       this.$emit("editItem", id);
     },
     deleteItem(id) {
-      console.log('id',id)
+
       this.$emit("deleteItem", id);
     },
     addVideoQuestion(id) {
@@ -302,9 +308,9 @@ export default {
           'Content-Type': 'application/json'
         }
       }).then((response) => {
-        console.log('item', item)
+
       }).catch((error) => {
-        console.log('error', error)
+
       })
     },
     checkDelete(data) {

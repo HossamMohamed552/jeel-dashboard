@@ -41,7 +41,6 @@ export default {
   },
   methods: {
     handleEditVideo($event) {
-      console.log('$event.uploadVideoWithoutMusic', $event.uploadVideoWithoutMusic)
       const formData = new FormData()
       formData.append('name', $event.name);
       formData.append('title', $event.name);

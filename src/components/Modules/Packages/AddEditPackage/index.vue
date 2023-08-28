@@ -8,7 +8,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditPackageForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="6" class="mb-3">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="createPackage.name"
@@ -18,7 +18,7 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="createPackage.price"
@@ -28,7 +28,7 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="createPackage.classes_count"

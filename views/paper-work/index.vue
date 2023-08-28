@@ -71,11 +71,11 @@ export default {
     },
     detailItem($event) {
       this.$router.push(`/dashboard/paper-work/show/${$event}`)
-      console.log('detailItem', $event)
+
     },
     editItem($event) {
       this.$router.push(`/dashboard/paper-work/edit/${$event}`)
-      console.log('editItem', $event)
+
     },
     deleteItem($event) {
       this.itemId = $event

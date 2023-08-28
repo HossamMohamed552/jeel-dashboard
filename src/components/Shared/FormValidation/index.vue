@@ -34,7 +34,7 @@ export default {
       const isValid = await this.$refs.observer.validate()
       const errors = await this.$refs.observer.errors
       if (!isValid) {
-        console.log("not valid")
+
         this.onInvalidSubmit(errors)
         return
       }

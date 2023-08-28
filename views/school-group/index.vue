@@ -63,10 +63,6 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.status")
         },
         {
-          key: "music_status",
-          label: this.$i18n.t("TABLE_FIELDS.music_status")
-        },
-        {
           key: "email.owner",
           label: this.$i18n.t("TABLE_FIELDS.email")
         },
