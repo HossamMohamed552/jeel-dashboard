@@ -11,37 +11,33 @@
       <span>{{ $t("MISSSION_DETAILS") }}</span>
       <b-icon class="close-modal-icon" icon="x" @click="close" />
     </template>
-    <div :class="$i18n.locale == 'en' ? '' : 'rtl'">
+    <div :class="$i18n.locale === 'en' ? '' : 'rtl'">
       <div class="w-100">
         <div v-if="loading" class="text-center font-weight-bold">
           {{ $t("GLOBAL_LOADING") }}
         </div>
-        <div v-else>
-          <div class="show-mission">
+        <div v-else class="px-4">
+          <div class="show-mission divider">
             <b-row>
-              <b-col lg="6">
+              <b-col lg="3">
                 <ShowItem
                   :title="$t('MISSIONS.name')"
                   :subtitle="mission.name"
                 />
               </b-col>
-              <b-col lg="6" v-if="mission && mission.level">
+              <b-col lg="3" v-if="mission && mission.level">
                 <ShowItem
                   :title="$t('MISSIONS.level')"
                   :subtitle="mission.level.name"
                 />
               </b-col>
-              <b-col lg="6" v-if="mission && mission.term">
+              <b-col lg="3" v-if="mission && mission.term">
                 <ShowItem
                   :title="$t('MISSIONS.terms')"
                   :subtitle="mission.term.name"
                 />
               </b-col>
-              <b-col
-                v-if="mission && mission.mission_image"
-                lg="6"
-                class="mt-4"
-              >
+              <b-col v-if="mission && mission.mission_image" lg="3" >
                 <ShowItem :title="$t('MISSIONS.UPLOAD_IMAGE')" />
                 <img class="mx-2" :src="mission.mission_image" width="120" />
               </b-col>
@@ -49,19 +45,19 @@
           </div>
           <div class="divider">
             <b-row class="mt-4">
-              <b-col lg="6" v-if="mission && mission.country">
+              <b-col lg="4" v-if="mission && mission.country">
                 <ShowItem
                   :title="$t('MISSIONS.country')"
                   :subtitle="mission.country.name"
                 />
               </b-col>
-              <b-col lg="6">
+              <b-col lg="4">
                 <ShowItem
                   :title="$t('MISSIONS.description')"
                   :subtitle="mission.description"
                 />
               </b-col>
-              <b-col lg="6">
+              <b-col lg="4">
                 <ShowItem
                   :title="$t('MISSIONS.duration')"
                   :subtitle="mission.data_range"
@@ -86,20 +82,26 @@
                   :subtitle="path.name"
                 />
               </b-col>
-              <b-col lg="6">
+              <b-col lg="3">
                 <ShowItem :title="$t('MISSIONS.videos')" />
-                <div
-                  v-for="videoPath in path.videos"
-                  :key="videoPath.id"
-                  class="icon-play-holder"
-                >
-                  <ShowItem :subtitle="videoPath.original_name" />
-                  <b-icon
-                    class="cursor-pointer mt-4"
-                    icon="play-circle"
-                    variant="info"
-                    @click="handlePlayVideo(videoPath.url)"
-                  />
+                <div v-for="videoPath in path.videos" :key="videoPath.id">
+                  <div class="icon-play-holder">
+                    <ShowItem :subtitle="videoPath.original_name" />
+                    <b-icon
+                      class="cursor-pointer mt-4"
+                      icon="play-circle"
+                      variant="info"
+                      @click="handlePlayVideo(videoPath.id)"
+                    />
+                  </div>
+<!--                  <div v-if="videoPlayed" class="video-container">-->
+<!--                    <video-->
+<!--                      :src="videoPath.url"-->
+<!--                      ref="player"-->
+<!--                      autoplay="autoplay"-->
+<!--                      controls="controls"-->
+<!--                    />-->
+<!--                  </div>-->
                 </div>
                 <!--
               you can add configuration to the video
@@ -114,16 +116,9 @@
               :preload="preload"
               :playsinline="true"
               -->
-                <div v-if="videoPlayed" class="video-container">
-                  <video
-                    :src="selecedVideoSource"
-                    ref="player"
-                    autoplay="autoplay"
-                    controls="controls"
-                  />
-                </div>
+
               </b-col>
-              <b-col lg="6">
+              <b-col lg="3">
                 <ShowItem :title="$t('MISSIONS.paperWork')" />
                 <div
                   v-for="papersWorkPath in path.papersWork"
@@ -141,19 +136,17 @@
                   />
                 </div>
               </b-col>
-              <b-col lg="12">
+              <b-col lg="6" class="quizzes">
                 <ShowItem :title="$t('MISSIONS.quizzes')" />
                 <div v-for="quizPath in path.quizzes" :key="quizPath.id">
                   <ShowItem :subtitle="quizPath.name" />
-                  <h5 class="heading-content">
-                    {{ $t("QUESTIONS.QUESTIONS") }}
-                  </h5>
+                  <ShowItem :title="$t('QUESTIONS.QUESTIONS')" class="mt-3"/>
                   <div
                     v-for="question in quizPath.questions"
                     :key="question.id"
                   >
                     <div class="icon-play-holder">
-                      <ShowItem :title="question.question" />
+                      <ShowItem :title="question.question" class="question" />
                       <b-icon
                         class="cursor-pointer"
                         icon="info-circle"
@@ -213,7 +206,7 @@ export default {
   },
   methods: {
     getSingleMissionDetails() {
-      console.log("in Mission Modaaaaaaaaal: ", this.missionId);
+
       this.loading = true;
       this.ApiService(getSingleMissionDetailsRequest(this.missionId)).then(
         (response) => {
@@ -256,9 +249,8 @@ export default {
       link.click();
       document.body.removeChild(link);
     },
-    handlePlayVideo(url) {
-      this.videoPlayed = true;
-      this.selecedVideoSource = url;
+    handlePlayVideo(videoId) {
+      this.$router.push(`/dashboard/videos/show/${videoId}`)
     },
   },
 };

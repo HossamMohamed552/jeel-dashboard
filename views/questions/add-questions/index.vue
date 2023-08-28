@@ -333,8 +333,6 @@ export default {
       formData.append("question", this.collectData.question);
       formData.append("question_audio", this.collectData.question_audio);
       formData.append("hint", this.collectData.hint);
-      console.log(this.questionTypeSlug, "questionTypeSlug");
-      console.log(typeof this.questionTypeSlug);
       if (this.questionTypeSlug === 'drag_and_drop_many') {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
@@ -343,7 +341,6 @@ export default {
         }
       } else if (this.questionTypeSlug == 'match_one_to_one') {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
-          console.log(answer);
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][match_from]`, this.collectData.answers[answer]?.match_from);
           formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer]?.audio);
@@ -367,7 +364,7 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
+
           this.$router.push("/dashboard/questions");
         });
     },

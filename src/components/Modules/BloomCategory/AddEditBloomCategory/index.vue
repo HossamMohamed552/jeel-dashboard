@@ -18,8 +18,6 @@
                   ></TextField>
                 </div>
               </b-col>
-            </b-row>
-            <b-row>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <TextField

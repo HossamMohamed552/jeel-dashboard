@@ -71,15 +71,13 @@ export default {
         });
     },
     searchBy($event) {
-      console.log('$event', $event)
+
     },
     detailItem($event) {
       this.$router.push(`/dashboard/videos/show/${$event}`)
-      console.log('detailItem', $event)
     },
     editItem($event) {
       this.$router.push(`/dashboard/videos/edit/${$event}`)
-      console.log('editItem', $event)
     },
     deleteItem($event) {
       this.itemId = $event

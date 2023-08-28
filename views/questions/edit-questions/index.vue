@@ -344,7 +344,7 @@ export default {
       formData.append("question_audio", this.collectData.question_audio);
       formData.append("hint", this.collectData.hint);
       for (let answer = 0; answer < this.collectData.answers.length; answer++) {
-        console.log('answer', this.collectData.answers[answer])
+
         formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer].answer);
         formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
         formData.append(`answers[${answer}][correct]`, this.collectData.answers[answer].correct);

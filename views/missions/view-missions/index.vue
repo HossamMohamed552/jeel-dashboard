@@ -8,24 +8,24 @@
       </b-row>
       <div class="divider">
         <b-row>
-          <b-col lg="4">
+          <b-col lg="3">
             <ShowItem :title="$t('MISSIONS.name')" :subtitle="mission.name" />
           </b-col>
-          <b-col lg="4" v-if="mission && mission.level">
+          <b-col lg="3" v-if="mission && mission.level">
             <ShowItem
               :title="$t('MISSIONS.level')"
               :subtitle="mission.level.name"
             />
           </b-col>
-          <b-col lg="4" v-if="mission && mission.term">
+          <b-col lg="3" v-if="mission && mission.term">
             <ShowItem
               :title="$t('MISSIONS.terms')"
               :subtitle="mission.term.name"
             />
           </b-col>
-          <b-col v-if="mission && mission.mission_image" lg="4" class="mt-4">
+          <b-col lg="3" v-if="mission && mission.mission_image">
             <ShowItem :title="$t('MISSIONS.UPLOAD_IMAGE')" />
-            <img class="mx-2" :src="mission.mission_image" width="120" />
+            <img class="mx-2" :src="mission.mission_image" width="200"/>
           </b-col>
         </b-row>
       </div>
@@ -57,18 +57,14 @@
             {{ $t("MISSIONS.content") }}
           </h2>
         </b-col>
-        <b-row
-          class="mt-4"
-          v-for="path in mission.learning_paths"
-          :key="path.id"
-        >
+        <b-row class="mt-4" v-for="path in mission.learning_paths" :key="path.id">
           <b-col lg="12" class="mb-4">
             <ShowItem
               :title="$t('MISSIONS.LEARNING_PATH')"
               :subtitle="path.name"
             />
           </b-col>
-          <b-col lg="4">
+          <b-col lg="3">
             <ShowItem :title="$t('MISSIONS.videos')" />
             <div
               v-for="videoPath in path.videos"
@@ -83,7 +79,7 @@
                 @click="handlePlayVideo(videoPath.url)"
               />
             </div>
-            <!-- 
+            <!--
               you can add configuration to the video
               ----------------------------
               :muted="muted"
@@ -105,7 +101,7 @@
               />
             </div>
           </b-col>
-          <b-col lg="4">
+          <b-col lg="3">
             <ShowItem :title="$t('MISSIONS.paperWork')" />
             <div
               v-for="papersWorkPath in path.papersWork"
@@ -121,26 +117,24 @@
               />
             </div>
           </b-col>
-          <b-row>
-            <b-col lg="12">
-              <ShowItem :title="$t('MISSIONS.quizzes')" />
-              <div v-for="quizPath in path.quizzes" :key="quizPath.id">
-                <ShowItem :subtitle="quizPath.name" />
-                <h5 class="heading-content">{{ $t("QUESTIONS.QUESTIONS") }}</h5>
-                <div v-for="question in quizPath.questions" :key="question.id">
-                  <div class="icon-play-holder">
-                    <ShowItem :title="question.question" />
-                    <b-icon
-                      class="cursor-pointer"
-                      icon="info-circle"
-                      variant="info"
-                      @click="handleShowQuestionDetails(question.id)"
-                    />
-                  </div>
+          <b-col lg="6" class="quizzes">
+            <ShowItem :title="$t('MISSIONS.quizzes')" />
+            <div v-for="quizPath in path.quizzes" :key="quizPath.id">
+              <ShowItem :subtitle="quizPath.name" />
+              <ShowItem :title="$t('QUESTIONS.QUESTIONS')" class="mt-3"/>
+              <div v-for="question in quizPath.questions" :key="question.id">
+                <div class="icon-play-holder">
+                  <ShowItem :subtitle="question.question" />
+                  <b-icon
+                    class="cursor-pointer"
+                    icon="info-circle"
+                    variant="info"
+                    @click="handleShowQuestionDetails(question.id)"
+                  />
                 </div>
               </div>
-            </b-col>
-          </b-row>
+            </div>
+          </b-col>
         </b-row>
       </div>
     </div>
@@ -171,7 +165,7 @@ export default {
       getSingleMissionsDetailsRequest(this.$route.params.id)
     ).then((response) => {
       this.mission = response.data.data;
-      console.log("mission", this.mission);
+
     });
   },
   methods: {

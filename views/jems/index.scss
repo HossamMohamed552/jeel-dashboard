@@ -1,33 +1,38 @@
-.quantity{
-    font-weight: 700;
-    font-size: 2rem;
-    color: $color-primary;
-}
+@import "src/assets/style/scss/_mixin";
 
-.label{
-    font-size: .875rem;
-    color: $color-paragraph-alt;
-}
-
-.text-field{
-    margin-bottom: 0 !important;
-}
-
-.holder {
-    min-height:100vh !important;
-    padding-top: 8rem !important;
+.quantity {
+  font-weight: 700;
+  font-size: 2rem;
+  color: $color-primary;
 }
 
 .label {
-    font-weight: bold;
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
+  font-size: .875rem;
+  color: $color-paragraph-alt;
 }
 
+.text-field {
+  margin-bottom: 0 !important;
+}
+
+.holder {
+  min-height: 100vh !important;
+  padding-top: 8rem !important;
+}
+
+.label {
+  font-weight: bold;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+.jeems{
+  @include styleViewList;
+  min-height: 70vh;
+}
 ::v-deep {
-    .btn {
-        font-weight: bold !important;
-        padding-bottom: 1rem !important;
-        border-radius: 100px;
-    }
+  .btn {
+    font-weight: bold !important;
+    padding-bottom: 1rem !important;
+    border-radius: 100px;
+  }
 }

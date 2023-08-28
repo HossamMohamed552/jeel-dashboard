@@ -123,7 +123,7 @@ export default {
         });
     },
     searchBy($event) {
-      console.log("$event", $event);
+
     },
     detailItem($event) {
       this.$router.push(`/dashboard/staff-enroll/show/${$event}`);

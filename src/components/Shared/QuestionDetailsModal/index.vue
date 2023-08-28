@@ -16,17 +16,11 @@
         <div v-if="loading" class="text-center font-weight-bold">
           {{ $t("GLOBAL_LOADING") }}
         </div>
-        <div v-else>
+        <div v-else class="px-4">
           <div class="hold-fields" v-if="question">
             <div class="divider">
               <b-row>
-                <b-col lg="6" class="mb-4 mt-1">
-                  <ShowItem
-                    :title="$t('QUESTIONS.TYPE')"
-                    :subtitle="question.question_pattern"
-                  />
-                </b-col>
-                <b-col lg="6" class="d-flex align-items-end mb-4 mt-1">
+                <b-col lg="5" class="d-flex align-items-end mb-4 mt-3">
                   <ShowItem
                     :title="$t('QUESTIONS.QUESTION')"
                     :subtitle="question.question"
@@ -46,37 +40,35 @@
                     icon="volume-up"
                   />
                 </b-col>
-                <b-col
-                  v-if="question.question_type && question.question_type.name"
-                  lg="6"
-                  class="mb-4 mt-1"
-                >
+                <b-col lg="4" class="mb-4 mt-3" v-if="question.question_type && question.question_type.name">
                   <ShowItem
                     :title="$t('QUESTIONS.QUESTION_PATTERN')"
                     :subtitle="question.question_type.name"
+                  />
+                </b-col>
+                <b-col lg="3" class="mb-4 mt-3">
+                  <ShowItem
+                    :title="$t('QUESTIONS.TYPE')"
+                    :subtitle="question.question_pattern"
                   />
                 </b-col>
               </b-row>
             </div>
             <div class="divider">
               <b-row>
-                <b-col
-                  lg="6"
-                  class="mb-4 mt-1"
-                  v-if="question.sub_question_type"
-                >
+                <b-col lg="5" class="mb-4 mt-3" v-if="question.sub_question_type">
                   <ShowItem
                     :title="$t('QUESTIONS.TYPE_NAME')"
                     :subtitle="question.sub_question_type.name"
                   />
                 </b-col>
-                <b-col lg="6" class="mb-4 mt-1" v-if="question.language_skill">
+                <b-col lg="4" class="mb-4 mt-3" v-if="question.language_skill">
                   <ShowItem
                     :title="$t('QUESTIONS.LANGUAGE_SKILL')"
                     :subtitle="question.language_skill.name"
                   />
                 </b-col>
-                <b-col lg="6" class="mb-4 mt-1" v-if="question.language_method">
+                <b-col lg="3" class="mb-4 mt-3" v-if="question.language_method">
                   <ShowItem
                     :title="$t('QUESTIONS.LANGUAGE_METHOD')"
                     :subtitle="question.language_method.name"
@@ -86,16 +78,22 @@
             </div>
             <div class="divider">
               <b-row>
-                <b-col lg="6" class="mb-4 mt-1" v-if="question.hint">
+                <b-col lg="5" class="mb-4 mt-1" v-if="question.hint">
                   <ShowItem
                     :title="$t('QUESTIONS.HINT')"
                     :subtitle="question.hint"
                   />
                 </b-col>
-                <b-col lg="6" class="mb-4 mt-1" v-if="question.level">
+                <b-col lg="4" class="mb-4 mt-1" v-if="question.level">
                   <ShowItem
                     :title="$t('QUESTIONS.LEVEL')"
                     :subtitle="question.level.name"
+                  />
+                </b-col>
+                <b-col lg="3" class="mb-4 mt-1" v-if="question.learningPath">
+                  <ShowItem
+                    :title="$t('QUESTIONS.LEARNING_PATH')"
+                    :subtitle="question.learningPath.name"
                   />
                 </b-col>
               </b-row>
@@ -103,44 +101,28 @@
 
             <div class="divider">
               <b-row>
-                <b-col lg="6" class="mb-4 mt-1">
+                <b-col lg="5" class="mb-4 mt-1" v-if="question.question_difficulty">
                   <ShowItem
                     :title="$t('QUESTIONS.QUESTIONDIFFICULTIES')"
                     :subtitle="question.question_difficulty.name"
                   />
                 </b-col>
-                <b-col lg="6" class="mb-4 mt-1">
+                <b-col lg="4" class="mb-4 mt-1" v-if="question.bloom_category">
                   <ShowItem
                     :title="$t('QUESTIONS.BLOOM_CATEGORIES')"
                     :subtitle="question.bloom_category.name"
                   />
                 </b-col>
-                <b-col lg="6" class="mb-4 mt-1">
-                  <ShowItem
-                    :title="$t('QUESTIONS.LEARNING_METHOD')"
-                    :subtitle="question.learningPath.name"
-                  />
-                </b-col>
+                <b-col lg="3"></b-col>
               </b-row>
             </div>
             <div class="divider-bottom">
-              <div>
-                <h4 class="heading title">{{ $t("QUESTIONS.ANSWERS") }}</h4>
-              </div>
+              <ShowItem :title="$t('QUESTIONS.ANSWERS')"/>
               <div v-if="question.answers">
-                <div
-                  v-for="(answer, ind) in question.answers"
-                  :key="ind"
-                  class="d-flex justify-content-start align-items-end"
-                >
-                  <span class="sub-title">{{ answer.answer }}</span
-                  ><span v-if="answer.correct" class="px-2 the-right-answer"
-                    >({{ $t("QUESTIONS.THE_RIGHT_ANSWER") }})</span
-                  >
+                <div v-for="(answer, ind) in question.answers" :key="ind" class="d-flex justify-content-start align-items-end">
+                  <span class="sub-title">{{ answer.answer }}</span><span v-if="answer.correct" class="px-2 the-right-answer">({{ $t("QUESTIONS.THE_RIGHT_ANSWER") }})</span>
                   <b-icon
-                    v-if="
-                      isPlaying && currentActiveId === answer.id + '-' + ind
-                    "
+                    v-if="isPlaying && currentActiveId === answer.id + '-' + ind "
                     variant="primary"
                     class="mx-2 cursor-pointer"
                     @click="playAudio(answer.audio, answer.id + '-' + ind)"
@@ -194,7 +176,7 @@ export default {
   },
   methods: {
     getSingleQuestionDetails() {
-      console.log("in Question Modaaaaaaaaal: ", this.questionId);
+
       this.loading = true;
       this.ApiService(getSingleQuestionDetailsRequest(this.questionId)).then(
         (response) => {

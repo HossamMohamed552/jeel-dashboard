@@ -1,3 +1,4 @@
+@import "src/assets/style/scss/_mixin";
 .quantity{
     font-weight: 700;
     font-size: 2rem;
@@ -23,7 +24,10 @@
     font-size: 1.3rem;
     margin-bottom: 1rem;
 }
-
+.student-levels{
+    @include styleViewList;
+    min-height: 70vh;
+}
 ::v-deep {
     .btn {
         font-weight: bold !important;

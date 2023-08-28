@@ -203,7 +203,7 @@
                 <Button
                   type="submit"
                   :loading="loading"
-                  :disabled="invalid"
+                  :disabled="invalid || createPaperWork.thumbnail === null"
                   custom-class="submit-btn"
                 >
                   {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
@@ -252,8 +252,8 @@ export default {
       levels: [],
       terms: [],
       paperWorkTypes: [
-        { value: "single", text: "فردية" },
-        { value: "participatory", text: "تشاركية" },
+        { value: "single", text: "اوراق عمل فردية" },
+        { value: "participatory", text: "اوراق عمل تشاركية" },
       ],
       createPaperWork: {
         name: "",

@@ -16,3 +16,21 @@
 .bottom{
   margin-top: 3.125rem;
 }
+.paper-img{
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  object-position: center;
+}
+.hold-permissions{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: $color-primary;
+  text-decoration: none;
+}
+.hold-icon{
+  font-size: 3rem;
+  text-align: center;
+}

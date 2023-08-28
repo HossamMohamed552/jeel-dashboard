@@ -1118,12 +1118,12 @@ export default {
       this.formValues.answers = this.answersListMcQ.filter((answer) => answer.answer);
     },
     assignAnswersMatchOneToOne() {
-      console.log(this.answersListMatchOneToOne, "this.answersListMatchOneToOne");
+
       this.formValues.answers = this.answersListMatchOneToOne.filter((answer) => answer.answer);
     },
     assignAnswersDragSort() {
       this.formValues.answers = this.answersDragSortToSend;
-      console.log("this.formValues.answers", this.formValues.answers);
+
     },
   },
   watch: {

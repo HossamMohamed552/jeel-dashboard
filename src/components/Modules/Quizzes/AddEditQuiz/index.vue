@@ -97,13 +97,7 @@
               >
                 <h3>{{ $t("QUIZZES.systemQuestion") }}</h3>
               </b-col>
-              <b-col
-                v-if=" createQuiz.level_id !== null && createQuiz.learning_path_id !== null "
-                lg="12" class="mb-4">
-                <b-col v-if="createQuiz.level_id !== null && createQuiz.learning_path_id !== null"
-                       lg="12" class="mt-3 mb-4">
-                  <h3>{{ $t("QUIZZES.systemQuestion") }}</h3>
-                </b-col>
+              <b-col v-if=" createQuiz.level_id !== null && createQuiz.learning_path_id !== null " lg="12" class="mb-4">
                 <div class="hold-system-question">
                   <b-row>
                     <b-col lg="12" class="mb-4">
@@ -357,7 +351,7 @@ export default {
     handleShowQuestionDetails(questionId) {
       this.selectedQuestion = questionId;
       this.$bvModal.show("question-details-modal");
-      console.log("questionId: ", questionId);
+
     },
     handleCloseQuestionDetailsModal() {
       this.$bvModal.hide("question-details-modal");
@@ -521,7 +515,6 @@ export default {
     if (this.$route.params.id) {
       this.ApiService(getSingleQuizRequest(this.$route.params.id)).then(
         (response) => {
-          console.log("edit", response.data.data);
           this.createQuiz.name = response.data.data.name;
           this.createQuiz.description = response.data.data.description;
           this.createQuiz.level_id = response.data.data.level.id;

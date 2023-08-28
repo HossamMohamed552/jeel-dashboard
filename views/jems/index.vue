@@ -1,5 +1,5 @@
 <template>
-  <b-container class="holder">
+  <section class="holder custom-container jeems">
     <div v-if="loading" class="text-center text-danger my-5 my-5">
       <b-spinner class="align-middle"></b-spinner>
     </div>
@@ -23,7 +23,7 @@
         >
       </b-col>
     </b-row>
-  </b-container>
+  </section>
 </template>
 
 <script>
@@ -55,7 +55,7 @@ export default {
       this.updateLoading = true;
       this.ApiService(putGemPricesRequest(id, { jeel_coins_quantity: quantity }))
         .then((response) => {
-          console.log("response", response);
+
         })
         .finally(() => {
           this.updateLoading = false;

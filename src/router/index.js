@@ -6,7 +6,6 @@ import store from "@/store";
 // import { handleRouteNavigation } from "./routerGuard";
 const originalPush = Router.prototype.push;
 Router.prototype.push = function push(location) {
-  console.log('location', location)
   return originalPush.call(this, location).catch((err) => err);
 };
 Vue.use(Router);

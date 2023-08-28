@@ -142,7 +142,7 @@ export default {
   },
   watch: {
     "staffEnroll.level_id"(val) {
-      console.log('val', val)
+
       this.getStaffEnrollClasses()
     }
   },
