@@ -14,6 +14,7 @@
       :permission_delete="'delete-enrollment'"
       :permission_edit="'edit-enrollment'"
       :permission_view="'show-enrollment'"
+      class="p-0"
     >
       <template #buttons>
         <Button

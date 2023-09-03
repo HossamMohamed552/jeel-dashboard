@@ -1,7 +1,7 @@
 <template>
   <section class="main">
     <div class="container-fluid custom-container">
-      <InnerRoutes/>
+      <InnerRoutes class="px-0"/>
     </div>
   </section>
 </template>

@@ -7,7 +7,7 @@
                :loading="loading" @refetch="getRoles" :permission_delete="'delete-roles'" :permission_edit="'edit-roles'" :permission_view="'show-roles'">
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddRole" v-if="user.permissions.includes(`add-roles`)">
-          <img src="@/assets/images/icons/plus.svg">
+          <img src="../../src/assets/images/icons/plus.svg">
           <span>إضافة صلاحية جديدة</span>
         </Button>
       </template>
@@ -23,7 +23,7 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import Modal from "@/components/Shared/Modal"
+import Modal from "@/components/Shared/Modal/index.vue"
 import {getRolesRequest} from "@/api/role";
 import {deleteRoleRequest} from "@/api/role";
 import {mapGetters} from "vuex";
@@ -103,5 +103,5 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-@import "./index";
+@import "index";
 </style>

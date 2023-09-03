@@ -15,7 +15,7 @@ const router = new Router({
   routes: [
     ...publicRoutes,
     ...protectedRoutes,
-    {path: '/', redirect: {name: 'main'}},
+    {path: '/', redirect: {path: '/dashboard/home'}},
     {path: '/dashboard', redirect: {path: '/dashboard/home'}}],
 });
 router.beforeEach((to, from, next) => {

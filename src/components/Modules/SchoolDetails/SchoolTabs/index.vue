@@ -1,5 +1,5 @@
 <template>
-  <section class="inner-routes">
+  <section class="inner-routes px-0">
     <div class="taps">
       <div
         @click="activeTapStatus(1,'class')"

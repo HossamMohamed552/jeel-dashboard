@@ -81,7 +81,8 @@
     "ADD_NEW": "إضافة صلاحية",
     "EDIT": "تعديل الصلاحية",
     "name": "إسم الصلاحية",
-    "description": "الوصف"
+    "description": "الوصف",
+    "showDetails": "عرض تفاصيل صلاحية المستخدم"
   },
   "COUNTRY": {
     "ADD_NEW": "إضافة دولة جديدة",
@@ -374,5 +375,6 @@
   "GLOBAL_LOADING" : "جارى التحميل...",
   "QUESTION_DETAILS": "تفاصيل السؤال",
   "GLOBAL_DETAILS": "التفاصيل",
-  "MISSSION_DETAILS": "تفاصيل المرحلة"
+  "MISSSION_DETAILS": "تفاصيل المرحلة",
+  "BACK": "رجوع"
 }

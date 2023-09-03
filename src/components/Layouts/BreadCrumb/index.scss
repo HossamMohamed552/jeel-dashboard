@@ -1,0 +1,54 @@
+.breadcrumb {
+  background: transparent;
+  margin: 2.5rem 0;
+  .icon {
+    width: 50px;
+    height: 45px;
+    object-fit: contain;
+    object-position: center;
+    cursor: pointer;
+  }
+
+  .back {
+    width: 20px;
+    margin-right: .5rem;
+  }
+
+  .navigation-back {
+    font-size: 1.8rem;
+    color: #76236C;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .router-link {
+    .separator{
+      color: #E25199;
+      display: inline-block;
+      margin: 0 .3rem;
+      &:last-of-type{
+        color: #000 ;
+      }
+    }
+    a {
+      color: #E25199;
+      font-weight: 600;
+      text-decoration: none;
+
+    }
+  }
+  .last-link{
+    a{
+      &:last-of-type{
+        color: #000;
+      }
+    }
+  }
+  .router-link-exact-active,.currentRoute {
+    color: #000 !important;
+    font-weight: bold;
+  }
+  .currentRoute{
+    font-size: 1.9rem;
+  }
+}

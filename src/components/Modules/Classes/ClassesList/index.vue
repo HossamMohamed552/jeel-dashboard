@@ -14,6 +14,7 @@
       :permission_delete="'delete-classes'"
       :permission_edit="'edit-classes'"
       :permission_view="'show-classes'"
+      class="p-0"
     >
       <template #buttons>
         <Button

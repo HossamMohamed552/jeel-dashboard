@@ -138,9 +138,9 @@ export default {
         let learnPathsVideoPaperWokQuizWithFilter = this.learnPathsVideoPaperWokQuiz.filter(item => this.watchLearningPathSelected.map(itemMap => itemMap.id).includes(item.id))
         learnPathsVideoPaperWokQuizWithFilter.forEach((item) => {
           this.ApiService(getVideoPerLevelPathRequest({
-            levelId: this.levelMission.id,
+            // levelId: this.levelMission.id,
             learnPathId: item.id,
-             termId: this.term
+            // termId: this.term
           })).then((response) => {
             Object.assign(item, {
               videos: response.data.data,
@@ -148,9 +148,9 @@ export default {
             })
           })
           this.ApiService(getPaperWorkPerLevelPathRequest({
-            levelId: this.levelMission.id,
+            // levelId: this.levelMission.id,
             learnPathId: item.id,
-             termId: this.term
+            // termId: this.term
           })).then((response) => {
             Object.assign(item, {
               paperWorks: response.data.data,
@@ -158,9 +158,9 @@ export default {
             })
           })
           this.ApiService(getQuizLevelPathRequest({
-            levelId: this.levelMission.id,
+            // levelId: this.levelMission.id,
             learnPathId: item.id,
-             termId: this.term
+            // termId: this.term
           })).then((response) => {
             Object.assign(item, {
               quizzes: response.data.data,
@@ -171,16 +171,16 @@ export default {
         let learnPathsVideoPaperWokQuizWithOutFilter = this.watchLearningPathSelected.filter(item => !this.learnPathsVideoPaperWokQuiz.map(itemMap => itemMap.id).includes(item.id))
         learnPathsVideoPaperWokQuizWithOutFilter.forEach((item) => {
           this.ApiService(getVideoPerLevelPathRequest({
-            levelId: this.level,
+            // levelId: this.level,
             learnPathId: item.id,
-             termId: this.term
+            // termId: this.term
           })).then((response) => {
             Object.assign(item, {videos: response.data.data, videoIds: []})
           })
           this.ApiService(getPaperWorkPerLevelPathRequest({
-            levelId: this.level,
+            // levelId: this.level,
             learnPathId: item.id,
-             termId: this.term
+            // termId: this.term
           })).then((response) => {
             Object.assign(item, {
               paperWorks: response.data.data,
@@ -188,9 +188,9 @@ export default {
             })
           })
           this.ApiService(getQuizLevelPathRequest({
-            levelId: this.level,
+            // levelId: this.level,
             learnPathId: item.id,
-             termId: this.term
+            // termId: this.term
           })).then((response) => {
             Object.assign(item, {quizzes: response.data.data, quizzesIds: []})
           })
@@ -202,23 +202,23 @@ export default {
       let collectArray = []
       this.watchLearningPathSelected.forEach((item) => {
         this.ApiService(getVideoPerLevelPathRequest({
-          levelId: this.level,
+          // levelId: this.level,
           learnPathId: item.id,
-           termId: this.term
+          // termId: this.term
         })).then((response) => {
           Object.assign(item, {videos: response.data.data, videoIds: []})
         })
         this.ApiService(getPaperWorkPerLevelPathRequest({
-          levelId: this.level,
+          // levelId: this.level,
           learnPathId: item.id,
-           termId: this.term
+          // termId: this.term
         })).then((response) => {
           Object.assign(item, {paperWorks: response.data.data, paperWorkIds: []})
         })
         this.ApiService(getQuizLevelPathRequest({
-          levelId: this.level,
+          // levelId: this.level,
           learnPathId: item.id,
-           termId: this.term
+          // termId: this.term
         })).then((response) => {
           Object.assign(item, {quizzes: response.data.data, quizzesIds: []})
         })
@@ -231,8 +231,9 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "./index";
-::v-deep{
-  .vs__dropdown-option--deselect,.vs__dropdown-option--selected{
+
+::v-deep {
+  .vs__dropdown-option--deselect, .vs__dropdown-option--selected {
     background: #76236C !important;
     color: #fff;
   }
