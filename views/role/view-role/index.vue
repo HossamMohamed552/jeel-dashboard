@@ -4,7 +4,7 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">{{$t('showDetails')}}</h2>
+            <h2 class="heading">{{$t('ROLES.showDetails')}}</h2>
           </b-col>
         </b-row>
         <b-row>

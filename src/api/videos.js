@@ -5,8 +5,9 @@ export const getVideosRequest = (params) => ({
 })
 export const getVideoPerLevelPathRequest = (params) => ({
   method: 'get',
-  url: `videos?level_id=${params.levelId}&learning_path_id=${params.learnPathId}&term_id=${params.termId}`,
+  url: `videos?&learning_path_id=${params.learnPathId}&list_all=ture`,
   config: {}
+  // level_id=${params.levelId}&learning_path_id=${params.learnPathId}&term_id=${params.termId}
 })
 export const getSingleVideoRequest = (params) => ({
   method: 'get',

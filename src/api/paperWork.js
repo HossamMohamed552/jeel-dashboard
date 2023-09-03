@@ -5,8 +5,9 @@ export const getPaperWorksRequest = (params) => ({
 });
 export const getPaperWorkPerLevelPathRequest = (params) => ({
   method: 'get',
-  url: `peper_works?level_id=${params.levelId}&learning_path_id=${params.learnPathId}&term_id=${params.termId}`,
+  url: `peper_works?learning_path_id=${params.learnPathId}&list_all=ture`,
   config: {}
+  // level_id=${params.levelId}&learning_path_id=${params.learnPathId}&term_id=${params.termId}
 });
 export const getSinglePaperworkRequest = (params) => ({
     method: 'get',

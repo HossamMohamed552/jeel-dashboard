@@ -60,7 +60,7 @@
                   <b-icon icon="file-earmark-pdf"></b-icon>
                 </div>
                 <div class="d-flex justify-content-between align-items-center" v-if="paperwork">
-                  <p class="video-title">{{ paperwork.paper_work_without_color_disk }}</p>
+                  <p class="video-title">{{ paperwork.disk }}</p>
                 </div>
               </div>
             </a>

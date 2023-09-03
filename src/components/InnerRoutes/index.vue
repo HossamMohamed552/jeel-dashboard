@@ -1,5 +1,5 @@
 <template>
-  <section class="inner-routes">
+  <section class="inner-routes p-0">
     <div class="taps">
       <div @click="activeTapActive(1)"
            :class="activeTap === 1 && Array.from(routesUsers).length>= 1 ? 'active' : ''"

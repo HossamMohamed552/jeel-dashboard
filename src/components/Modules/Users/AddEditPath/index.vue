@@ -6,7 +6,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditPathForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="5" class="px-0 mb-3">
+              <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="createPath.name"
