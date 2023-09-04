@@ -39,6 +39,7 @@
               <b-col :lg="$route.params.id ? '12': '6'" class="mb-3">
                 <div class="hold-field">
                   <TextField
+                    type="password"
                     v-model="formValues.password"
                     :label="$t('USERS.PASSWORD')"
                     :name="$t('USERS.PASSWORD')"
@@ -62,7 +63,7 @@
                     v-model="formValues.social_media"
                     :label="$t('USERS.SOCIAL_MEDIA')"
                     :name="$t('USERS.SOCIAL_MEDIA')"
-                    :rules="'required'"
+                    :rules="{regex: /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/ig}"
                   ></TextField>
                 </div>
               </b-col>

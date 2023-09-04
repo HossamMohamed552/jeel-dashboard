@@ -55,7 +55,6 @@ export default {
     },
     breadcrumbItems() {
       const matchedRoutes = this.$route.matched
-      console.log('matchedRoutes', matchedRoutes)
       return matchedRoutes.map(route => ({
         preLabel: route.meta.preLabel,
         preLink: route.meta.preLink,
