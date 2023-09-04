@@ -86,7 +86,7 @@
                 <ShowItem :title="$t('MISSIONS.videos')" />
                 <div v-for="videoPath in path.videos" :key="videoPath.id">
                   <div class="icon-play-holder">
-                    <ShowItem :subtitle="videoPath.original_name" />
+                    <ShowItem :subtitle="videoPath.original_name | cutString" />
                     <b-icon
                       class="cursor-pointer mt-4"
                       icon="play-circle"
@@ -125,7 +125,7 @@
                   :key="papersWorkPath.id"
                   class="icon-play-holder"
                 >
-                  <ShowItem :subtitle="papersWorkPath.name" />
+                  <ShowItem :subtitle="papersWorkPath.name | cutString" />
                   <b-icon
                     class="cursor-pointer mt-4"
                     icon="cloud-download"
@@ -184,6 +184,15 @@ export default {
       type: Number,
       default: null,
     },
+  },
+  filters: {
+    cutString(value) {
+      if (value.length > 15) {
+        return `${value.slice(0, 15)}...`
+      } else {
+        return value
+      }
+    }
   },
   data() {
     return {

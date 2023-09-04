@@ -82,7 +82,7 @@ const protectedRoutes = [
         name: "edit-users",
         component: () => import("../../views/users/edit-user/index.vue"),
         meta: {
-          breadcrumb: 'تعديل المستخدم',
+          breadcrumb: 'تعديل بيانات المستخدم',
           preLabel: 'قائمة المستخدمين',
           preLink: '/dashboard/users'
         }

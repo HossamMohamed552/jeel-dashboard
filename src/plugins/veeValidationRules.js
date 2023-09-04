@@ -1,8 +1,10 @@
-import { configure, extend, localize } from "vee-validate";
+import {configure, extend, localize} from "vee-validate";
 import * as rules from "vee-validate/dist/rules";
+import {url} from "vee-validate/dist/rules";
 import ar from "@/locales/ar-rules.json";
 import en from "@/locales/en-rules.json";
-import { urlRegex, passwordRegex } from "@/helpers";
+import {urlRegex, passwordRegex} from "@/helpers";
+
 for (const rule in rules) {
   extend(rule, rules[rule]);
 }

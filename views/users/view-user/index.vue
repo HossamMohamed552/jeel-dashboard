@@ -41,7 +41,7 @@
           <b-col lg="6" class="mb-5" v-if="singleUser && singleUser.roles">
             <ShowItem
               :title="$t('USER.role')"
-              :subtitle="singleUser.roles[0].name"
+              :listItems="singleUser.roles"
             />
           </b-col>
           <b-col lg="6" class="mb-5 img-container">
