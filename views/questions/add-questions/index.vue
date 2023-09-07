@@ -332,6 +332,7 @@ export default {
       formData.append("level_id", this.collectData.level_id);
       formData.append("question", this.collectData.question);
       formData.append("question_audio", this.collectData.question_audio);
+      formData.append("hint_audio", this.collectData.hint_audio);
       formData.append("hint", this.collectData.hint);
       if (this.questionTypeSlug === 'drag_and_drop_many') {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
