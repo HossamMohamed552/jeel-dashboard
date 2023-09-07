@@ -205,6 +205,7 @@
     "RIGHT_ANSWER": "الإجابة الصحيحة",
     "ShowDetails": "عرض تفاصيل السؤال",
     "QUESTION_TITLE_AUDIO": "التسجيل الصوتى للسؤال",
+    "HINT_TITLE_AUDIO": "التسجيل الصوتى للتلميح",
     "ANSWERS": "الإجابات",
     "QUESTION_ANSWER_AUDIO": "التسجيل الصوتى للإجابة",
     "sortAnswers": "الترتيب الصحيح للإجابة",
