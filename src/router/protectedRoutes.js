@@ -549,6 +549,88 @@ const protectedRoutes = [
           preLink: '/dashboard/bloom'
         }
       },
+      // objective
+      {
+        path: "/dashboard/objective",
+        name: "objective",
+        component: () => import("../../views/objective/index.vue"),
+        meta: {
+          breadcrumb: 'الأهداف التعليمية',
+          preLabel: '',
+          preLink: ''
+        }
+      },
+      {
+        path: "/dashboard/objective/add",
+        name: "add-objective",
+        component: () => import("../../views/objective/add-objective/index.vue"),
+        meta: {
+          breadcrumb: 'إضافة هدف تعليمى',
+          preLabel: 'الأهداف التعليمية',
+          preLink: '/dashboard/objective'
+        }
+      },
+      {
+        path: "/dashboard/objective/edit/:id",
+        name: "edit-objective",
+        component: () => import("../../views/objective/edit-objective/index.vue"),
+        meta: {
+          breadcrumb: 'تعديل الهدف تعليمى',
+          preLabel: 'الأهداف التعليمية',
+          preLink: '/dashboard/objective'
+        }
+      },
+      {
+        path: "/dashboard/objective/show/:id",
+        name: "show-objective",
+        component: () => import("../../views/objective/view-objective/index.vue"),
+        meta: {
+          breadcrumb: 'تفاصيل الهدف تعليمى',
+          preLabel: 'الأهداف التعليمية',
+          preLink: '/dashboard/objective'
+        }
+      },
+      // outcome
+      {
+        path: "/dashboard/outcome",
+        name: "outcome",
+        component: () => import("../../views/outcome/index.vue"),
+        meta: {
+          breadcrumb: 'مخرجات التعلم',
+          preLabel: '',
+          preLink: ''
+        }
+      },
+      {
+        path: "/dashboard/outcome/add",
+        name: "add-outcome",
+        component: () => import("../../views/outcome/add-outcome/index.vue"),
+        meta: {
+          breadcrumb: 'إضافة مخرج التعلم',
+          preLabel: 'مخرجات التعلم',
+          preLink: '/dashboard/outcome'
+        }
+      },
+      {
+        path: "/dashboard/outcome/edit/:id",
+        name: "edit-outcome",
+        component: () => import("../../views/outcome/edit-outcome/index.vue"),
+        meta: {
+          breadcrumb: 'تعديل مخرج التعلم',
+          preLabel: 'مخرجات التعلم',
+          preLink: '/dashboard/outcome'
+        }
+      },
+      {
+        path: "/dashboard/outcome/show/:id",
+        name: "show-outcome",
+        component: () => import("../../views/outcome/view-outcome/index.vue"),
+        meta: {
+          breadcrumb: 'تفاصيل مخرج التعلم',
+          preLabel: 'مخرجات التعلم',
+          preLink: '/dashboard/outcome'
+        }
+      },
       // quiz or practice
       {
         path: "/dashboard/practices",
