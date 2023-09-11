@@ -30,6 +30,7 @@
                         <img :src="user.avatar" alt="user" title="user" @error="altImage($event)"/>
                       </div>
                     </template>
+                    <b-dropdown-item to="/profile">{{ $t("MY_PROFILE") }}</b-dropdown-item>
                     <b-dropdown-item @click="logout">{{ $t("GLOBAL_LOGOUT") }}</b-dropdown-item>
                   </b-dropdown>
                 </div>

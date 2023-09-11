@@ -21,6 +21,13 @@ export const getRolesRequest = () => ({
   url: 'roles',
   config: {}
 })
+
+export const getProfileDataRequest = () => ({
+  method: 'get',
+  url: 'users/current',
+  config: {}
+})
+
 export const getAllRolesRequest = () => ({
   method: 'get',
   url: 'roles?list_all=true&system_role=1',
@@ -42,3 +49,11 @@ export const deleteUserRequest = (id) => ({
   method: "delete",
   url: `users/${id}`,
 });
+
+export const postChangePasswordRequest = (data) => ({
+  method: 'post',
+  url: 'change-password',
+  config: {
+    data
+  }
+})
