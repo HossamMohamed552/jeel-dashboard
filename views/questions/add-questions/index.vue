@@ -327,6 +327,8 @@ export default {
       formData.append("question_difficulty_id", this.collectData.question_difficulty_id);
       formData.append("bloom_category_id", this.collectData.bloom_category_id);
       formData.append("language_method_id", this.collectData.language_method_id);
+      formData.append("question_objective_id", this.collectData.question_objective_id);
+      formData.append("question_outcome_id", this.collectData.question_outcome_id);
       formData.append("question_pattern", this.collectData.question_pattern);
       formData.append("question_type_id", this.collectData.question_type_id);
       formData.append("level_id", this.collectData.level_id);

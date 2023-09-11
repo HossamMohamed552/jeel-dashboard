@@ -5,6 +5,11 @@ export const getOutcomeCategoriesRequest = (params) => ({
     params,
   },
 });
+export const getAllOutcomesRequest = (params) => ({
+  method: 'get',
+  url: `outcome?&learning_path_id=${params}list_all=ture`,
+  config: {}
+})
 export const getOutcomeCategoryByIdRequest = (id) => ({
   method: "get",
   url: `outcome/${id}`,

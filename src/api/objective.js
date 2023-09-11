@@ -5,6 +5,12 @@ export const getObjectiveCategoriesRequest = (params) => ({
     params,
   },
 });
+
+export const getAllObjectivesRequest = (params) => ({
+  method: 'get',
+  url: `objective?&learning_path_id=${params}list_all=ture`,
+  config: {}
+})
 export const getObjectiveCategoryByIdRequest = (id) => ({
   method: "get",
   url: `objective/${id}`,
