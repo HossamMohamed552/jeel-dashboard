@@ -27,6 +27,7 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
+                    @input="getSoundType($event)"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -219,6 +220,11 @@ export default {
     };
   },
   methods: {
+    getSoundType(id) {
+      const choosedItem = this.schoolGroups.find((item) => item.id == id)
+      if (choosedItem.music_status == 0) this.createSchool.music_status = 0
+      else this.createSchool.music_status = 1
+    },
     deleteImage(){
       this.createSchool.logo = null
       this.itemImage = null
