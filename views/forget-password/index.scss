@@ -1,0 +1,27 @@
+.forget-password {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+
+
+&__success,
+&__invalid,
+&__expire {
+    width: 40%;
+    border: 2px solid $color-primary;
+    border-radius: 8px;
+    padding: 2rem;
+}
+
+&__invalid,
+&__expire {
+    h4 {
+        font-weight: 600;
+        color: $color-primary;
+        margin-bottom: 2rem;
+    }
+}
+
+}

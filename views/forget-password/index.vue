@@ -1,14 +1,14 @@
 <template>
   <div class="forget-password">
-    <div class="forget-password__expire">
+    <div v-if="rsponseType == 'expired'" class="forget-password__expire text-center">
       <h4>{{ $t("This link has been expired") }}</h4>
-      <Button>{{ $t("AUTH.login") }}</Button>
+      <Button @click="$router.push('login')">{{ $t("MENU.main") }}</Button>
     </div>
-    <div class="forget-password__invalid">
+    <div v-else-if="rsponseType == 'invalid'" class="forget-password__invalid text-center">
       <h4>{{ $t("This link is invalid") }}</h4>
-      <Button>{{ $t("AUTH.login") }}</Button>
+      <Button @click="$router.push('login')">{{ $t("MENU.main") }}</Button>
     </div>
-    <div class="forget-password__success">
+    <div v-else-if="rsponseType == 'success'" class="forget-password__success">
       <validation-observer v-slot="{ invalid }" ref="changePasswordForm">
         <b-form @submit.prevent="onSubmit" class="px-4">
           <b-row>
@@ -55,13 +55,11 @@
             </b-col>
           </b-row>
 
-          <b-row class="align-items-center mt-4 mb-3">
+          <b-row class="justify-content-end">
             <Button type="submit" :loading="loading" :disabled="invalid">
-              {{ $t("GLOBAL_SAVE") }}
+              {{ $t("GLOBAL_SEND") }}
             </Button>
-            <Button custom-class="cancel-button mx-3" @click="handleCancel">
-              {{ $t("GLOBAL_CANCEL") }}
-            </Button>
+            <Button custom-class="mx-2" @click="$router.push('login')">{{ $t("MENU.main") }}</Button>
           </b-row>
         </b-form>
       </validation-observer>
@@ -93,7 +91,8 @@ export default {
         confirm_password: "",
       },
       loading: false,
-      showSuccessModal: false
+      showSuccessModal: false,
+      rsponseType: 'success'
     };
   },
   methods: {
