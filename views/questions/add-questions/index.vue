@@ -1,6 +1,6 @@
 <template>
   <div class="add-question">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
     <AddEditQuestionPatternForm
       v-if="currentStep === -1"
       :loading="loading"
@@ -45,60 +45,61 @@
       <b-container>
         <b-row>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.QUESTION_PATTERN') }}</h6>
+            <h6>{{ $t("QUESTIONS.QUESTION_PATTERN") }}</h6>
             <p>{{ getName(this.questionTypes, this.collectData.question_type_id) }}</p>
           </b-col>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.QUESTION_SUB_PATTERN') }}</h6>
+            <h6>{{ $t("QUESTIONS.QUESTION_SUB_PATTERN") }}</h6>
             <p>{{ getName(this.questionSubTypes, this.collectData.question_type_sub_id) }}</p>
           </b-col>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.LEARNING_PATH') }}</h6>
+            <h6>{{ $t("QUESTIONS.LEARNING_PATH") }}</h6>
             <p>{{ getName(this.learningPaths, this.collectData.learning_path_id) }}</p>
           </b-col>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.LANGUAGE_SKILLS') }}</h6>
+            <h6>{{ $t("QUESTIONS.LANGUAGE_SKILLS") }}</h6>
             <p>{{ getName(this.languageSkills, this.collectData.language_skill_id) }}</p>
           </b-col>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.QUESTIONDIFFICULTIES') }}</h6>
+            <h6>{{ $t("QUESTIONS.QUESTIONDIFFICULTIES") }}</h6>
             <p>{{ getName(this.questionDifficulties, this.collectData.question_difficulty_id) }}</p>
           </b-col>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.BLOOM_CATEGORIES') }}</h6>
+            <h6>{{ $t("QUESTIONS.BLOOM_CATEGORIES") }}</h6>
             <p>{{ getName(this.bloomCategories, this.collectData.bloom_category_id) }}</p>
           </b-col>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.LEARNING_METHOD') }}</h6>
+            <h6>{{ $t("QUESTIONS.LEARNING_METHOD") }}</h6>
             <p>{{ getName(this.learningMethods, this.collectData.language_method_id) }}</p>
           </b-col>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.TYPE') }}</h6>
+            <h6>{{ $t("QUESTIONS.TYPE") }}</h6>
             <p>{{ this.collectData.question_pattern }}</p>
           </b-col>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.LEVELS') }}</h6>
+            <h6>{{ $t("QUESTIONS.LEVELS") }}</h6>
             <p>{{ getName(this.levels, this.collectData.level_id) }}</p>
           </b-col>
         </b-row>
-        <hr/>
+        <hr />
         <b-row>
           <b-col lg="6">
-            <h6>{{ $t('QUESTIONS.QUESTION') }}</h6>
+            <h6>{{ $t("QUESTIONS.QUESTION") }}</h6>
             <p>{{ this.collectData.question }}</p>
           </b-col>
           <b-col lg="6">
-            <h6>{{ $t('QUESTIONS.HINT') }}</h6>
+            <h6>{{ $t("QUESTIONS.HINT") }}</h6>
             <p>{{ this.collectData.hint }}</p>
           </b-col>
           <b-col v-for="(answer, idx) in this.collectData.answers" :key="idx" lg="3">
-            <h6>{{ `${$t('QUESTIONS.ANSWER')} ${idx + 1}` }}</h6>
+            <h6>{{ `${$t("QUESTIONS.ANSWER")} ${idx + 1}` }}</h6>
             <p>{{ answer && answer.answer }}</p>
           </b-col>
           <b-col lg="6" v-if="questionTypeSlug !== 'drag_and_drop_many'">
-            <h6>{{ $t('QUESTIONS.RIGHT_ANSWER') }}</h6>
+            <h6>{{ $t("QUESTIONS.RIGHT_ANSWER") }}</h6>
             <p v-if="getCorrectAnswer">
-              {{ getCorrectAnswer(this.collectData.answers, this.correct_id) }}</p>
+              {{ getCorrectAnswer(this.collectData.answers, this.correct_id) }}
+            </p>
           </b-col>
         </b-row>
         <b-row>
@@ -121,12 +122,9 @@
   </div>
 </template>
 <script>
-import AddEditQuestionPatternForm
-  from "@/components/Modules/Questions/AddEditQuestionPatternForm/index.vue";
-import AddEditQuestionFieldsForm
-  from "@/components/Modules/Questions/AddEditQuestionFieldsForm/index.vue";
-import AddEditQuestionAnswersForm
-  from "@/components/Modules/Questions/AddEditQuestionAnswersForm/index.vue";
+import AddEditQuestionPatternForm from "@/components/Modules/Questions/AddEditQuestionPatternForm/index.vue";
+import AddEditQuestionFieldsForm from "@/components/Modules/Questions/AddEditQuestionFieldsForm/index.vue";
+import AddEditQuestionAnswersForm from "@/components/Modules/Questions/AddEditQuestionAnswersForm/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {
@@ -138,7 +136,8 @@ import {
   getLearningMethodsRequest,
   getAllLearningPathsRequest,
   getAllBloomCategoriesRequest,
-  getAllQuestionDifficultiesRequest, getAllLearningMethodsRequest,
+  getAllQuestionDifficultiesRequest,
+  getAllLearningMethodsRequest,
 } from "@/api/question";
 import Stepper from "@/components/Shared/Stepper/index.vue";
 import axios from "axios";
@@ -170,8 +169,8 @@ export default {
       collectData: {},
       questionTypesValues: {},
       correct_id: 1,
-      isDragSort: '',
-      questionTypeSlug: '',
+      isDragSort: "",
+      questionTypeSlug: "",
       steps: [
         {
           icon: "1",
@@ -200,7 +199,7 @@ export default {
     getQuestionTypes() {
       const params = {
         page: 1,
-        main_questions: 1
+        main_questions: 1,
       };
 
       this.ApiService(getQuestionTypsRequest(params)).then((response) => {
@@ -268,7 +267,7 @@ export default {
       this.$router.push("/dashboard/questions");
     },
     getQuestionPatternData(data) {
-      this.questionTypeSlug = data.question_slug.slug
+      this.questionTypeSlug = data.question_slug.slug;
       this.questionTypesValues = data;
       const object = {
         ...data,
@@ -280,9 +279,9 @@ export default {
     getFirstStepData(data) {
       // data.choices_number = this.choicesNumber;
       // delete data.choices_number;
-     
+
       //set qestion pattern to step 2 (text, image or audio)
-      this.questionPattern = data.question_pattern
+      this.questionPattern = data.question_pattern;
       const object = {
         ...data,
       };
@@ -303,7 +302,7 @@ export default {
       sessionStorage.setItem("collectData", data);
     },
     handleAssignObject(object) {
-      Object.assign(this.collectData, {...object});
+      Object.assign(this.collectData, { ...object });
       this.handleSaveCollectedData(this.collectData);
     },
     getName(list, id) {
@@ -313,14 +312,14 @@ export default {
       }
     },
     getCorrectAnswer(list, id) {
-      if (this.questionTypeSlug !== 'drag_and_drop_many') {
+      if (this.questionTypeSlug !== "drag_and_drop_many") {
         let correctAnswer;
         if (list && list.length) {
           correctAnswer = list.find((item) => item.correct == id)?.answer;
           return correctAnswer;
         }
       } else {
-        return []
+        return [];
       }
     },
     saveQuestion() {
@@ -335,24 +334,39 @@ export default {
       formData.append("question_pattern", this.collectData.question_pattern);
       formData.append("question_type_id", this.collectData.question_type_id);
       formData.append("level_id", this.collectData.level_id);
-      formData.append("question", this.collectData.question);
       formData.append("question_audio", this.collectData.question_audio);
       formData.append("hint_audio", this.collectData.hint_audio);
       formData.append("hint", this.collectData.hint);
-      if (this.questionTypeSlug === 'drag_and_drop_many') {
+      if (this.collectData.question_pattern === "image")
+        formData.append("question_image", this.collectData.image);
+      if (this.collectData.question_pattern === "text")
+        formData.append("question", this.collectData.question);
+      if (this.questionTypeSlug === "drag_and_drop_many") {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
           formData.append(`answers[${answer}][order]`, this.collectData.answers[answer].order);
         }
-      } else if (this.questionTypeSlug == 'match_one_to_one') {
+      } else if (this.questionTypeSlug == "match_one_to_one") {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
-          formData.append(`answers[${answer}][match_from]`, this.collectData.answers[answer]?.match_from);
+          formData.append(
+            `answers[${answer}][match_from]`,
+            this.collectData.answers[answer]?.match_from
+          );
           formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer]?.audio);
-          formData.append(`answers[${answer}][answers_to][${0}][answer]`, this.collectData.answers[answer].answers_to[0]?.answer);
-          formData.append(`answers[${answer}][answers_to][${0}][match_to]`, this.collectData.answers[answer].answers_to[0]?.match_to);
-          formData.append(`answers[${answer}][answers_to][${0}][audio]`, this.collectData.answers[answer].answers_to[0]?.audio);
+          formData.append(
+            `answers[${answer}][answers_to][${0}][answer]`,
+            this.collectData.answers[answer].answers_to[0]?.answer
+          );
+          formData.append(
+            `answers[${answer}][answers_to][${0}][match_to]`,
+            this.collectData.answers[answer].answers_to[0]?.match_to
+          );
+          formData.append(
+            `answers[${answer}][answers_to][${0}][audio]`,
+            this.collectData.answers[answer].answers_to[0]?.audio
+          );
         }
       } else {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
@@ -370,7 +384,6 @@ export default {
           },
         })
         .then((res) => {
-
           this.$router.push("/dashboard/questions");
         });
     },

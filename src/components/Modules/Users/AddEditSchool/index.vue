@@ -273,6 +273,7 @@ export default {
       formData.append('subscription_start_date', this.createSchool.startDate)
       formData.append('subscription_end_date', this.createSchool.endDate)
       formData.append('package_id', this.createSchool.package_id)
+      if(typeof this.createSchool.logo !== 'string')
       formData.append('logo', this.createSchool.logo)
       if (this.$route.params.id) {
         formData.append('_method', 'PUT')
