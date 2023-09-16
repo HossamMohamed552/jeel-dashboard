@@ -22,7 +22,7 @@ export default {
     return {
       loading: false,
       code: this.$route.query.code,
-      email: this.$route.query.email,
+      email: this.$route.query.user_id,
       message: {
         message: "first case",
         type: "success",
@@ -38,26 +38,26 @@ export default {
       this.ApiService(
         postVerifyRequest({
           code: this.code,
-          email: this.email,
+          user_id: this.user_id,
         })
       )
         .then((res) => {
-          if (false) {
+          if (res.status === 200) {
             this.message = {
               message: this.$t("VERIFICATION.SUCCESS"),
               type: "success",
             };
             this.$router.push("/login");
-          } else if (true) {
-            this.message = {
-              message: this.$t("VERIFICATION.USED"),
-              type: "error",
-            };
-          } else if (false) {
-            this.message = {
-              message: this.$t("VERIFICATION.EXPIRED"),
-              type: "error",
-            };
+        } else if (res.status === 403) {
+              this.message = {
+                message: this.$t("VERIFICATION.EXPIRED"),
+                type: "error",
+              };
+        } else if (res.status === 404) {
+              this.message = {
+                message: this.$t("VERIFICATION.USED"),
+                type: "error",
+              };
           } else {
             this.message = {
               message: this.$t("VERIFICATION.SOMETHING_WRONG"),
