@@ -57,3 +57,11 @@ export const postChangePasswordRequest = (data) => ({
     data
   }
 })
+
+export const postResetPasswordRequest = (data) => ({
+  method: 'post',
+  url: 'reset-password',
+  config: {
+    data
+  }
+})
