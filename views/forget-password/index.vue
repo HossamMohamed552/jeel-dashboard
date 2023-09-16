@@ -104,8 +104,6 @@ export default {
       const data = this.form;
       this.ApiService(postResetPasswordRequest(data))
         .then(() => {
-          this.modalMsg = "CHANGE_PASSWORD_SUCCESS_MSG";
-          this.$bvModal.hide("change-password-modal");
           this.showSuccessModal = true;
           setTimeout(() => {
             this.showSuccessModal = false;
