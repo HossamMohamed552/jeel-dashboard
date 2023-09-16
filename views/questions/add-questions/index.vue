@@ -35,6 +35,7 @@
     <AddEditQuestionAnswersForm
       v-if="currentStep === 1"
       :questionSlug="collectData.question_slug"
+      :question-pattern="questionPattern"
       @handleBack="goToQuestionFieldsForm"
       @handleCancel="handleCancel"
       @onSubmit="getSecondStepData"
@@ -157,6 +158,7 @@ export default {
 
   data() {
     return {
+      questionPattern: "",
       loading: false,
       showModal: false,
       questionTypes: [],
@@ -278,6 +280,9 @@ export default {
     getFirstStepData(data) {
       // data.choices_number = this.choicesNumber;
       // delete data.choices_number;
+     
+      //set qestion pattern to step 2 (text, image or audio)
+      this.questionPattern = data.question_pattern
       const object = {
         ...data,
       };

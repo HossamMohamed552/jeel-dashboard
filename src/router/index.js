@@ -15,18 +15,19 @@ const router = new Router({
   routes: [
     ...publicRoutes,
     ...protectedRoutes,
-    {path: '/', redirect: {path: '/dashboard/home'}},
-    {path: '/dashboard', redirect: {path: '/dashboard/home'}}],
+    { path: "/", redirect: { path: "/dashboard/home" } },
+    { path: "/dashboard", redirect: { path: "/dashboard/home" } },
+  ],
 });
 router.beforeEach((to, from, next) => {
-  let tokenFound = !!store.getters.token
-  if (to.name !== "login" && !tokenFound) {
-    next({name: "login"})
+  let tokenFound = !!store.getters.token;
+  if (!["login", "user-verification"].includes(to.name) && !tokenFound) {
+    next({ name: "login" });
   } else {
     if (to.name === "login" && tokenFound) {
-      next({name: "main"})
+      next({ name: "main" });
     } else {
-      next()
+      next();
     }
   }
 });

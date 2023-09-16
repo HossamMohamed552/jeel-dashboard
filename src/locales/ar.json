@@ -398,5 +398,11 @@
   "LOGIN_CONFIRM_PASSWORD": "اعادة كلمة المرور الجديدة",
   "LOGIN_ENTER_CURRENT_PASSWORD": "برجاء ادخال كلمة المرور الحالية",
   "LOGIN_ENTER_NEW_PASSWORD": "برجاء ادخال كلمة المرور الجديدة ",
-  "CHANGE_PASSWORD_SUCCESS_MSG": "تم تغيير كلمة المرور بنجاح"
+  "CHANGE_PASSWORD_SUCCESS_MSG": "تم تغيير كلمة المرور بنجاح",
+  "VERIFICATION": {
+    "EXPIRED": "صلاحية الكود منتهية",
+    "USED": "الكود مستخدم من قبل",
+    "SUCCESS": "شكرا لك لتوثيق حسابك ، سيتم اعادة توجيهك لصفحة الدخول",
+    "SOMETHING_WRONG": "حدث خطأ ما"
+  }
 }
