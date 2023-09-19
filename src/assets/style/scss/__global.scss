@@ -66,3 +66,27 @@ li {
 .cursor-pointer {
   cursor: pointer;
 }
+
+
+.icon-password {
+  position: absolute;
+  top: 58px;
+  z-index: 10;
+  right: 24px;
+  display: flex !important;
+  align-items: center;
+  color: $color-gray-dark;
+  height: 42px;
+  width: 36px;
+  padding: 8px;
+  cursor: pointer;
+
+  &:lang(ar) {
+    left: 24px;
+    right: unset;
+  }
+}
+
+legend {
+  font-weight: bold;
+}
