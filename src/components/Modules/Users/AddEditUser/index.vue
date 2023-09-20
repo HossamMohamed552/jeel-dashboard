@@ -26,7 +26,7 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3" v-if="!$route.params.id">
+              <b-col lg="6" class="mb-3" :class="isStudent && 'd-none'" v-if="!$route.params.id">
                 <div class="hold-field">
                   <TextField
                     v-model="formValues.email"
@@ -76,7 +76,8 @@
                     :options="systemRoles"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
-                    multiple
+                    :disabled="$route.params.id"
+                    @input="checkIsStudent($event)"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -143,6 +144,7 @@ export default {
   },
   data() {
     return {
+      isStudent: false,
       formValues: {
         first_name: "",
         last_name: "",
@@ -158,6 +160,15 @@ export default {
     };
   },
   methods: {
+    checkIsStudent(id) {
+      console.log(id);
+      if(id == "5") 
+      {
+        this.isStudent = true
+        this.formValues.email = ""
+      }
+      else this.isStudent = false
+    },
     deleteImage(){
       this.image = null
       this.itemImage = null
@@ -199,9 +210,10 @@ export default {
           formData.append("password", this.formValues.password);
           formData.append("mobile", this.formValues.mobile);
           formData.append("social_media", this.formValues.social_media);
-          for (let user = 0; user < this.formValues.roles.length; user++) {
-            formData.append(`roles[${user}]`, this.formValues.roles[user]);
-          }
+          // for (let user = 0; user < this.formValues.roles.length; user++) {
+          //   formData.append(`roles[${user}]`, this.formValues.roles[user]);
+          // }
+          formData.append("roles[0]", this.formValues.roles);
           if (this.image && this.editImage) formData.append("image", this.image);
           axios.post('/users', formData, {
             headers: {
@@ -235,7 +247,8 @@ export default {
         this.formValues.email = response.data.data.email
         this.formValues.mobile = response.data.data.mobile
         this.formValues.social_media = response.data.data.social_media
-        this.formValues.roles = response.data.data.roles.map((item) => item.id)
+        // this.formValues.roles = response.data.data.roles.map((item) => item.id)
+        this.formValues.roles = response.data.data.roles
         this.itemImage = response.data.data.avatar
         this.image = response.data.data.avatar
       })

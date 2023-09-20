@@ -10,7 +10,7 @@
 </template>
 <script>
 import AddEditUser from "@/components/Modules/Users/AddEditUser/index.vue";
-import {getAllRolesRequest, postAddUserRequest} from "@/api/user";
+import { getAllRolesRequest, postAddUserRequest } from "@/api/user";
 export default {
   components: {
     AddEditUser,
@@ -28,6 +28,16 @@ export default {
     getSystemRoles() {
       this.ApiService(getAllRolesRequest()).then((response) => {
         this.systemRoles = response.data.data;
+        this.systemRoles.push(
+          {
+            name: "صلاحيات المدرسة",
+            id: "",
+          },
+          {
+            name: "الطالب",
+            id: "5",
+          }
+        );
       });
     },
     handleAddEditUser(userFormData) {
