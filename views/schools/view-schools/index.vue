@@ -40,6 +40,36 @@
             </b-row>
             <b-dd-divider class="my-4"/>
             <b-row class="row-data">
+              <b-col lg="6">
+                <ShowItem
+                  :title="$t('SCHOOL.userName')"
+                  :subtitle="singleSchool.username"
+                />
+              </b-col>
+              <b-col lg="6">
+                <ShowItem
+                  :title="$t('SCHOOL.email')"
+                  :subtitle="singleSchool.email"
+                />
+              </b-col>
+            </b-row>
+            <b-dd-divider class="my-4"/>
+            <b-row class="row-data">
+              <b-col lg="6">
+                <ShowItem
+                  :title="$t('SCHOOL.address')"
+                  :subtitle="singleSchool.address"
+                />
+              </b-col>
+              <b-col lg="6">
+                <ShowItem
+                  :title="$t('SCHOOL.contact')"
+                  :subtitle="singleSchool.contact"
+                />
+              </b-col>
+            </b-row>
+            <b-dd-divider class="my-4"/>
+            <b-row class="row-data">
               <b-col lg="6" v-if="singleSchool && singleSchool.admin">
                 <ShowItem
                   :title="$t('SCHOOL.email')"
