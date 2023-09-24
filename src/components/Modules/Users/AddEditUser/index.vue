@@ -201,9 +201,10 @@ export default {
           formData.append("mobile", this.formValues.mobile);
           formData.append("social_media", this.formValues.social_media);
           formData.append("_method", "PUT");
-          for (let user = 0; user < this.formValues.roles.length; user++) {
-            formData.append(`roles[${user}]`, this.formValues.roles[user]);
-          }
+          // for (let user = 0; user < this.formValues.roles.length; user++) {
+          //   formData.append(`roles[${user}]`, this.formValues.roles[user]);
+          // }
+          formData.append("roles[0]", this.formValues.roles);
           if (this.image && this.editImage)
             formData.append("image", this.image);
           axios
