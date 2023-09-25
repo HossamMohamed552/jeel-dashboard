@@ -34,3 +34,11 @@ export const getLogoutRequest = () => ({
   method: "get",
   url: "logout",
 });
+
+export const postForgetPasswordRequest = (data) => ({
+  method: "post",
+  url: "forget-password/send",
+  config: {
+    data,
+  },
+});

@@ -28,9 +28,9 @@
               value="rememberMe"
               :name="$t('AUTH.rememberMe')"
             ></CheckboxField>
-            <router-link to="/forget-password">{{
+            <div class="forget" @click="handleForgetPassword">{{
               $t("AUTH.forgetPassword")
-            }}</router-link>
+            }}</div>
           </div>
           <div class="hold-button">
             <Button
@@ -50,6 +50,7 @@
       <span>{{ $t("AUTH.help") }}</span>
     </div>
     <CopyRight />
+    <ForgetPasswordModal />
   </div>
 </template>
 
@@ -58,6 +59,7 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import CheckboxField from "@/components/Shared//CheckboxField";
 import CopyRight from "@/components/Shared/CopyRight/index.vue";
+import ForgetPasswordModal from "@/components/Shared/ForgetPasswordModal/index.vue";
 
 export default {
   components: {
@@ -65,6 +67,7 @@ export default {
     TextField,
     Button,
     CheckboxField,
+    ForgetPasswordModal
   },
   props: {
     loading: {
@@ -93,6 +96,9 @@ export default {
         });
       });
     },
+    handleForgetPassword() {
+      this.$bvModal.show('forget-password-modal')
+    }
   },
 };
 </script>
