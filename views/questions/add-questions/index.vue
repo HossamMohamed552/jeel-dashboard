@@ -84,20 +84,30 @@
         <b-row>
           <b-col lg="6">
             <h6>{{ $t('QUESTIONS.QUESTION') }}</h6>
-            <p>{{ this.collectData.question }}</p>
+            <p v-if="collectData.question_pattern === 'text'">{{ collectData.question }}</p>
+            <img class="question_img" v-else-if="collectData.question_pattern === 'image'"
+                 :src="collectData.questionImage">
+<!--            <audio controls v-else-if="collectData.question_pattern === 'audio'">-->
+<!--              <source :src="collectData.question_audioUser.src"/>-->
+<!--            </audio>-->
           </b-col>
           <b-col lg="6">
             <h6>{{ $t('QUESTIONS.HINT') }}</h6>
             <p>{{ this.collectData.hint }}</p>
           </b-col>
-          <b-col v-for="(answer, idx) in this.collectData.answers" :key="idx" lg="3">
+          <b-col v-for="(answer, idx) in collectData.answers" :key="idx" lg="3">
             <h6>{{ `${$t('QUESTIONS.ANSWER')} ${idx + 1}` }}</h6>
-            <p>{{ answer && answer.answer }}</p>
+            <p v-if="answer.answer_pattern === 'text'">{{ answer && answer.answer }}</p>
+            <img class="question_img" v-else-if="answer.answer_pattern === 'image'"
+                 :src="answer.answerImage">
           </b-col>
           <b-col lg="6" v-if="questionTypeSlug !== 'drag_and_drop_many'">
             <h6>{{ $t('QUESTIONS.RIGHT_ANSWER') }}</h6>
-            <p v-if="getCorrectAnswer">
-              {{ getCorrectAnswer(this.collectData.answers, this.correct_id) }}</p>
+            <p
+              v-if="getCorrectAnswer && getCorrectAnswer(this.collectData.answers, this.correct_id).answer_pattern === 'text'">
+              {{ getCorrectAnswer(this.collectData.answers, this.correct_id).answer }}</p>
+            <img class="question_img" v-else-if="getCorrectAnswer && getCorrectAnswer(this.collectData.answers, this.correct_id).answer_pattern === 'image'"
+                 :src="getCorrectAnswer(this.collectData.answers, this.correct_id).answerImage">
           </b-col>
         </b-row>
         <b-row>
@@ -154,7 +164,6 @@ export default {
     Stepper,
     AddEditQuestionAnswersForm,
   },
-
   data() {
     return {
       loading: false,
@@ -251,7 +260,6 @@ export default {
         this.learningMethods = response.data.data;
       });
     },
-
     goToQuestionPatternForm() {
       this.currentStep = -1;
     },
@@ -261,7 +269,6 @@ export default {
     goToAnswersForm() {
       this.currentStep = 1;
     },
-
     handleCancel() {
       this.$router.push("/dashboard/questions");
     },
@@ -274,7 +281,6 @@ export default {
       this.handleAssignObject(object);
       this.handleNavigation(0);
     },
-
     getFirstStepData(data) {
       // data.choices_number = this.choicesNumber;
       // delete data.choices_number;
@@ -311,8 +317,8 @@ export default {
       if (this.questionTypeSlug !== 'drag_and_drop_many') {
         let correctAnswer;
         if (list && list.length) {
-          correctAnswer = list.find((item) => item.correct == id)?.answer;
-          return correctAnswer;
+          correctAnswer = list.find((item) => item.correct === id);
+          return correctAnswer
         }
       } else {
         return []
@@ -333,9 +339,13 @@ export default {
       formData.append("question_type_id", this.collectData.question_type_id);
       formData.append("level_id", this.collectData.level_id);
       formData.append("question", this.collectData.question);
-      formData.append("question_audio", this.collectData.question_audio);
-      formData.append("hint_audio", this.collectData.hint_audio);
-      formData.append("hint", this.collectData.hint);
+      if (!this.collectData.question_pattern === 'audio') {
+        formData.append("question_audio", this.collectData.question_audio);
+      }
+      if (!this.questionTypeSlug.includes('true_false')) {
+        formData.append("hint_audio", this.collectData.hint_audio);
+        formData.append("hint", this.collectData.hint);
+      }
       if (this.questionTypeSlug === 'drag_and_drop_many') {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
@@ -356,6 +366,7 @@ export default {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
           formData.append(`answers[${answer}][correct]`, this.collectData.answers[answer].correct);
+          formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers[answer].answer_pattern);
         }
       }
       axios
@@ -371,7 +382,7 @@ export default {
           this.$router.push("/dashboard/questions");
         });
     },
-  },
+  }
 };
 </script>
 <style scoped lang="scss">
