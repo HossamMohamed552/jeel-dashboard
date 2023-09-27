@@ -1,10 +1,16 @@
 <template>
   <div class="forget-password">
-    <div v-if="rsponseType == 'expired'" class="forget-password__expire text-center">
+    <div
+      v-if="rsponseType == 'expired'"
+      class="forget-password__expire text-center"
+    >
       <h4>{{ $t("This link has been expired") }}</h4>
       <Button @click="$router.push('login')">{{ $t("MENU.main") }}</Button>
     </div>
-    <div v-else-if="rsponseType == 'invalid'" class="forget-password__invalid text-center">
+    <div
+      v-else-if="rsponseType == 'invalid'"
+      class="forget-password__invalid text-center"
+    >
       <h4>{{ $t("This link is invalid") }}</h4>
       <Button @click="$router.push('login')">{{ $t("MENU.main") }}</Button>
     </div>
@@ -59,7 +65,9 @@
             <Button type="submit" :loading="loading" :disabled="invalid">
               {{ $t("GLOBAL_SEND") }}
             </Button>
-            <Button custom-class="mx-2" @click="$router.push('login')">{{ $t("MENU.main") }}</Button>
+            <Button custom-class="mx-2" @click="$router.push('login')">{{
+              $t("MENU.main")
+            }}</Button>
           </b-row>
         </b-form>
       </validation-observer>
@@ -74,6 +82,7 @@
 
 <script>
 import { postResetPasswordRequest } from "@/api/user.js";
+import { postCheckForgetPasswordStatusRequest } from "@/api/register.js";
 import { TogglePasswordMixins } from "@/mixins/TogglePasswordMixins";
 import Modal from "@/components/Shared/Modal/index.vue";
 
@@ -92,8 +101,12 @@ export default {
       },
       loading: false,
       showSuccessModal: false,
-      rsponseType: 'success'
+      rsponseType: "",
+      token: this.$route.query.token,
     };
+  },
+  mounted() {
+    this.checkForgetPasswordStatus();
   },
   methods: {
     onSubmit() {
@@ -101,18 +114,38 @@ export default {
     },
     handleChangePassword() {
       this.loading = true;
+      this.form.token = this.token
       const data = this.form;
       this.ApiService(postResetPasswordRequest(data))
         .then(() => {
           this.showSuccessModal = true;
           setTimeout(() => {
             this.showSuccessModal = false;
+            this.$router.push("login");
           }, 3000);
-          this.$router.push("login");
-        })
-        .finally(() => {
+        }).catch((err)=> {
+        if(err.response.status == 403) {
+          this.rsponseType = 'expired'
+        } else if(err.response.status == 404) {
+          this.rsponseType = 'invalid'
+        }
+      }).finally(() => {
           this.loading = false;
         });
+    },
+    checkForgetPasswordStatus() {
+      const data = { token: this.token };
+      this.ApiService(postCheckForgetPasswordStatusRequest(data)).then(
+        (res) => {
+          this.rsponseType = 'success'
+        }
+      ).catch((err)=> {
+        if(err.response.status == 403) {
+          this.rsponseType = 'expired'
+        } else if(err.response.status == 404) {
+          this.rsponseType = 'invalid'
+        }
+      })
     },
   },
 };

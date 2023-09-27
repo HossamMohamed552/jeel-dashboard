@@ -20,7 +20,7 @@ const router = new Router({
 });
 router.beforeEach((to, from, next) => {
   let tokenFound = !!store.getters.token
-  if (to.name !== "login" && !tokenFound) {
+  if (!["login", "user-verification", "forget-password"].includes(to.name) && !tokenFound){
     next({name: "login"})
   } else {
     if (to.name === "login" && tokenFound) {

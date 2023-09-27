@@ -3,7 +3,7 @@
     id="forget-password-modal"
     class="mission-modal"
     hide-footer
-    size="xl"
+    size="lg"
     centered
     @hide="handleCloseModal()"
   >
@@ -24,59 +24,63 @@
               ></TextField>
             </div>
             <div class="hold-button">
-            <Button
-              type="submit"
-              :loading="loading"
-              :disabled="invalid"
-              custom-class="w-100 d-block submit-btn"
-            >
-              {{ $t("GLOBAL_SEND") }}
-            </Button>
-          </div>
+              <Button
+                type="submit"
+                :loading="loading"
+                :disabled="invalid"
+                custom-class="w-100 d-block submit-btn"
+              >
+                {{ $t("GLOBAL_SEND") }}
+              </Button>
+            </div>
           </form>
         </validation-observer>
         <Modal
-      :content-message="'تمت الإرسال بنجاح'"
-      :showModal="showSuccessModal"
-      :is-success="true"
-    />
+          :content-message="'تمت الإرسال بنجاح'"
+          :showModal="showSuccessModal"
+          :is-success="true"
+        />
       </div>
     </div>
   </b-modal>
 </template>
   <script>
-  import {postForgetPasswordRequest} from "@/api/register.js"
-  import Modal from "@/components/Shared/Modal/index.vue";
+import { postForgetPasswordRequest } from "@/api/register.js";
+import Modal from "@/components/Shared/Modal/index.vue";
 export default {
   name: "ForgetPasswordModal",
   components: {
-    Modal
+    Modal,
   },
   data() {
     return {
       formValues: {
-        email: ''
+        email: "",
       },
-      showSuccessModal: false
+      showSuccessModal: false,
+      loading: false,
     };
   },
-
   methods: {
-
     onSubmit() {
       this.$refs.forgetPasswordForm.validate().then((success) => {
         if (!success) {
           return;
         }
-        const data = this.formValues
+        this.loading = true;
+        const data = this.formValues;
         this.ApiService(postForgetPasswordRequest(data))
-        .then(() => {
-          this.showSuccessModal = true;
-          setTimeout(() => {
-            this.showSuccessModal = false;
-          }, 3000);
-          this.$bvModal.hide("forget-password-modal");
-        })
+          .then((res) => {
+            this.showSuccessModal = true;
+            setTimeout(() => {
+              this.showSuccessModal = false;
+              this.$bvModal.hide("forget-password-modal");
+            }, 3000);
+          })
+          .finally(() => {
+            this.loading = false;
+            this.formValues.email = "";
+          });
       });
     },
     handleCloseModal() {

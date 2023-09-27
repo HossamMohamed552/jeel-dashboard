@@ -60,7 +60,7 @@ export const postChangePasswordRequest = (data) => ({
 
 export const postResetPasswordRequest = (data) => ({
   method: 'post',
-  url: 'reset-password',
+  url: `${process.env.VUE_APP_AUTH_URL}/reset-password`,
   config: {
     data
   }

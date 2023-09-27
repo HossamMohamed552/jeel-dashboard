@@ -37,7 +37,15 @@ export const getLogoutRequest = () => ({
 
 export const postForgetPasswordRequest = (data) => ({
   method: "post",
-  url: "forget-password/send",
+  url: `${process.env.VUE_APP_AUTH_URL}/forget-password/send`,
+  config: {
+    data,
+  },
+});
+
+export const postCheckForgetPasswordStatusRequest = (data) => ({
+  method: "post",
+  url: `${process.env.VUE_APP_AUTH_URL}/check/forget-password/token`,
   config: {
     data,
   },
