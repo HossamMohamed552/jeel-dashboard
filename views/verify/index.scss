@@ -20,4 +20,10 @@
   .default {
     background-color: rgba(0, 0, 255, 0.05);
   }
+
+  .primary-text {
+    color: $color-primary;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
 }
