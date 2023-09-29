@@ -94,7 +94,7 @@
                       <b-col lg="6" class="px-3 mb-3">
                         <div class="hold-field">
                           <TextField
-                            v-model="createSchool.user_name"
+                            v-model="createSchool.username"
                             :label="$t('SCHOOL.user_name')"
                             :name="$t('SCHOOL.user_name')"
                           ></TextField>
@@ -116,7 +116,7 @@
                             v-model="createSchool.contact"
                             :label="$t('SCHOOL.contact')"
                             :name="$t('SCHOOL.contact')"
-                            rules="numeric"
+                            :rules="{regex: /^\d{11}$/}"
                           ></TextField>
                         </div>
                       </b-col>
@@ -147,7 +147,8 @@
                                 v-model="createSchool.status"
                                 value="0"
                                 name="group-status"
-                                >غير مفعل</b-form-radio
+                              >غير مفعل
+                              </b-form-radio
                               >
                               <b-form-radio
                                 :disabled="
@@ -157,7 +158,8 @@
                                 v-model="createSchool.status"
                                 value="1"
                                 name="group-status"
-                                >مفعل</b-form-radio
+                              >مفعل
+                              </b-form-radio
                               >
                             </b-form-group>
                           </ValidationProvider>
@@ -180,7 +182,8 @@
                                 v-model="createSchool.music_status"
                                 value="0"
                                 name="group-music_type"
-                                >أكابيلا</b-form-radio
+                              >أكابيلا
+                              </b-form-radio
                               >
                               <b-form-radio
                                 :disabled="
@@ -190,7 +193,8 @@
                                 v-model="createSchool.music_status"
                                 value="1"
                                 name="group-music_type"
-                                >بموسيقى</b-form-radio
+                              >بموسيقى
+                              </b-form-radio
                               >
                             </b-form-group>
                           </ValidationProvider>
@@ -285,20 +289,20 @@
 <script>
 import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import { getSchoolOwnerRequest, getSingleSchoolsRequest } from "@/api/school";
+import {getSchoolOwnerRequest, getSingleSchoolsRequest} from "@/api/school";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { getAllPackagesRequest } from "@/api/packages";
-import { getAllSchoolGroupRequest } from "@/api/schoolGroup";
-import { getAllSchoolTypesRequest } from "@/api/schoolType";
+import {getAllPackagesRequest} from "@/api/packages";
+import {getAllSchoolGroupRequest} from "@/api/schoolGroup";
+import {getAllSchoolTypesRequest} from "@/api/schoolType";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/locale/en";
 import "vue2-datepicker/index.css";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
-import { getAllSearchUsersRequest } from "@/api/user";
+import {getAllSearchUsersRequest} from "@/api/user";
 import axios from "axios";
 import VueCookies from "vue-cookies";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
   components: {
@@ -339,8 +343,7 @@ export default {
         music_status: "",
         status: "",
         logo: null,
-        user_name: "",
-        email: "",
+        username: "",
         contact: "",
         address: ""
       },
@@ -389,18 +392,21 @@ export default {
       });
     },
     sendDataNewSchool() {
-      const formData = new FormData()
-      formData.append('name', this.createSchool.name)
-      formData.append('school_group_id', this.createSchool.school_group_id)
-      formData.append('status', this.createSchool.status)
-      formData.append('music_status', this.createSchool.music_status)
-      formData.append('admin_id', this.createSchool.admin_id)
-      formData.append('school_type_id', this.createSchool.school_type_id)
-      formData.append('subscription_start_date', this.createSchool.startDate)
-      formData.append('subscription_end_date', this.createSchool.endDate)
-      formData.append('package_id', this.createSchool.package_id)
-      if(typeof this.createSchool.logo !== 'string')
-      formData.append('logo', this.createSchool.logo)
+      const formData = new FormData();
+      formData.append("name", this.createSchool.name);
+      formData.append("username", this.createSchool.username);
+      formData.append("address", this.createSchool.address);
+      formData.append("contact", this.createSchool.contact);
+      formData.append("email", this.createSchool.email);
+      formData.append("school_group_id", this.createSchool.school_group_id);
+      formData.append("status", this.createSchool.status);
+      formData.append("music_status", this.createSchool.music_status);
+      formData.append("admin_id", this.createSchool.admin_id);
+      formData.append("school_type_id", this.createSchool.school_type_id);
+      formData.append("subscription_start_date", this.createSchool.startDate);
+      formData.append("subscription_end_date", this.createSchool.endDate);
+      formData.append("package_id", this.createSchool.package_id);
+      formData.append("logo", this.createSchool.logo);
       if (this.$route.params.id) {
         formData.append("_method", "PUT");
         // this.ApiService(postSchoolsRequest(formData)).then((res)=>{})
@@ -440,18 +446,18 @@ export default {
         this.ApiService(getSingleSchoolsRequest(this.$route.params.id)).then(
           (response) => {
             this.createSchool.name = response.data.data.name;
+            this.createSchool.username = response.data.data.username;
+            this.createSchool.address = response.data.data.address;
+            this.createSchool.contact = response.data.data.contact;
+            this.createSchool.email = response.data.data.email;
             this.createSchool.admin_id = response.data.data.admin.id;
-            this.createSchool.school_group_id =
-              response.data.data.school_group.id;
-            this.createSchool.school_type_id =
-              response.data.data.school_type.id;
+            this.createSchool.school_group_id = response.data.data.school_group.id;
+            this.createSchool.school_type_id = response.data.data.school_type.id;
             this.createSchool.package_id = response.data.data.package.id;
             this.createSchool.music_status = response.data.data.music_status;
             this.createSchool.status = response.data.data.status;
-            this.createSchool.startDate =
-              response.data.data.subscription_start_date;
-            this.createSchool.endDate =
-              response.data.data.subscription_end_date;
+            this.createSchool.startDate = response.data.data.subscription_start_date;
+            this.createSchool.endDate = response.data.data.subscription_end_date;
             this.itemImage = response.data.data.logo;
             this.createSchool.logo = response.data.data.logo;
           }

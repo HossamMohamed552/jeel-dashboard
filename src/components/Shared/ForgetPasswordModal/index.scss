@@ -1,0 +1,29 @@
+@import "../../../assets/style/scss/_variables";
+
+::v-deep {
+  .modal-content {
+    height: auto;
+  }
+
+  .modal-header {
+    span {
+      font-weight: bold;
+      color: $color-primary;
+      font-size: 1.2rem;
+    }
+  }
+
+  .modal-body {
+    height: 100%;
+    overflow-y: auto;
+  }
+}
+
+
+
+
+.hold-button {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

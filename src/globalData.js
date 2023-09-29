@@ -84,6 +84,18 @@ let routesContent = [
     permission: "view-bloomCategory",
   },
   {
+    name: "الاهداف التعليمية",
+    path: "/dashboard/objective",
+    icon: require("@/assets/images/icons/question.svg"),
+    permission: "view-objective",
+  },
+  {
+    name: "مخرجات التعلم",
+    path: "/dashboard/outcome",
+    icon: require("@/assets/images/icons/question.svg"),
+    permission: "view-outcome",
+  },
+  {
     name: "التمارين",
     path: "/dashboard/practices",
     icon: require("@/assets/images/icons/exercises.svg"),
