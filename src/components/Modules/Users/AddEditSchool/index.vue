@@ -133,12 +133,10 @@
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
                           <ValidationProvider
-                            v-slot="{ errors, invalid }"
                             rules="required"
                           >
                             <b-form-group
                               :label="$t('SCHOOL.status')"
-                              v-slot="{ ariaDescribedby }"
                               class="group-type"
                             >
                               <b-form-radio
@@ -170,12 +168,10 @@
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
                           <ValidationProvider
-                            v-slot="{ errors, invalid }"
                             rules="required"
                           >
                             <b-form-group
                               :label="$t('SCHOOL.music')"
-                              v-slot="{ ariaDescribedby }"
                               class="group-type"
                             >
                               <b-form-radio
@@ -207,7 +203,6 @@
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
                           <ValidationProvider
-                            v-slot="{ errors, invalid }"
                             rules="required"
                           >
                             <label>
@@ -233,7 +228,6 @@
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
                           <ValidationProvider
-                            v-slot="{ errors, invalid }"
                             rules="required"
                           >
                             <label>

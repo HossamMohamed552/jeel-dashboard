@@ -7,7 +7,7 @@
             <form @submit.prevent="onSubmit" class="mt-5">
               <b-row>
                 <b-col lg="8" class="mb-3">
-                  <div class="hold-field">
+                  <div v-if="questionPattern == 'text'" class="hold-field">
                     <TextField
                       v-model="formValues.question"
                       :label="$t('QUESTIONS.QUESTION')"
@@ -15,6 +15,35 @@
                       :rules="'required'"
                     ></TextField>
                   </div>
+                  <div v-else-if="questionPattern == 'image'" class="hold-field">
+                    <ImageUploader
+                      :name="'questionThumbnail'"
+                      :text="$t('QUESTIONS.QUESTION')"
+                      @imageUpload="handleUploadImage"
+                      :item-image="formValues.img_url"
+                    />
+                  </div>
+                  <!-- <div v-else-if="questionPattern == 'audio'" class="hold-field">
+                    <label>{{ $t("QUESTIONS.QUESTION") }}</label>
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      :rules="$route.params.id ? '' : 'required'"
+                      name="audio"
+                    >
+                      <b-form-file
+                        accept="audio/*"
+                        :placeholder="
+                          formValues.question_audio ? formValues.question_audio : 'اختر ملف'
+                        "
+                        v-model="formValues.question"
+                        name="audio"
+                      >
+                      </b-form-file>
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                        {{ error }}
+                      </b-form-invalid-feedback>
+                    </ValidationProvider>
+                  </div> -->
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
@@ -26,7 +55,9 @@
                     >
                       <b-form-file
                         accept="audio/*"
-                        :placeholder="formValues.question_audio ? formValues.question_audio : 'اختر ملف'"
+                        :placeholder="
+                          formValues.question_audio ? formValues.question_audio : 'اختر ملف'
+                        "
                         v-model="formValues.question_audio"
                         name="audio"
                       >
@@ -109,7 +140,7 @@
                 </b-col>
                 <b-col lg="2" class="mb-3">
                   <div class="hold-field">
-                    <label>{{$t('QUESTIONS.ANSWER_TYPE')}}</label>
+                    <label>{{ $t("QUESTIONS.ANSWER_TYPE") }}</label>
                     <SelectSearch
                       v-model="answer.correct"
                       :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
@@ -269,7 +300,7 @@
                 </b-col>
                 <b-col lg="2" class="mb-3">
                   <div class="hold-field">
-                    <label>{{$t('QUESTIONS.ANSWER_TYPE')}}</label>
+                    <label>{{ $t("QUESTIONS.ANSWER_TYPE") }}</label>
                     <SelectSearch
                       v-model="answer.correct"
                       :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
@@ -431,7 +462,7 @@
                 </b-col>
                 <b-col lg="2" class="mb-3">
                   <div class="hold-field">
-                    <label>{{$t('QUESTIONS.ANSWER_TYPE')}}</label>
+                    <label>{{ $t("QUESTIONS.ANSWER_TYPE") }}</label>
                     <SelectSearch
                       v-model="answer.correct"
                       :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
@@ -589,7 +620,7 @@
                 </b-col>
                 <b-col lg="2" class="mb-3">
                   <div class="hold-field">
-                    <label>{{$t('QUESTIONS.ANSWER_TYPE')}}</label>
+                    <label>{{ $t("QUESTIONS.ANSWER_TYPE") }}</label>
                     <SelectSearch
                       v-model="answer.correct"
                       :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
@@ -893,7 +924,7 @@
               <b-row v-for="(answer, idx) in answersListMatchOneToOne" :key="idx">
                 <b-col lg="6" class="mb-3">
                   <div class="hold-field">
-                    <label>{{ $t('QUESTIONS.ANSWER')}}</label>
+                    <label>{{ $t("QUESTIONS.ANSWER") }}</label>
                     <TextField
                       v-model="answer.answer"
                       :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
@@ -1011,6 +1042,7 @@ import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import getData from "@/mixins/getData/getData";
 import draggable from "vuedraggable";
+import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 
 export default {
   mixins: [getData("question")],
@@ -1019,6 +1051,7 @@ export default {
     TextField,
     SelectSearch,
     Button,
+    ImageUploader,
   },
   props: {
     questionSlug: {
@@ -1030,6 +1063,10 @@ export default {
     loading: {
       type: Boolean,
       default: false,
+    },
+    questionPattern: {
+      type: String,
+      default: "text",
     },
   },
   data() {
@@ -1046,6 +1083,8 @@ export default {
         question_audio: null,
         hint_audio: null,
         answers: [],
+        image: null,
+        img_url: "",
       },
       answersListDragSort: [
         {
@@ -1116,6 +1155,11 @@ export default {
     };
   },
   methods: {
+    handleUploadImage(e) {
+      this.formValues.img_url = URL.createObjectURL(e.target.files[0]);
+      if (e) this.formValues.image = e.target.files[0];
+      else return;
+    },
     addSpace() {
       this.formValues.question += "%s";
       this.lockBtn = true;
@@ -1243,12 +1287,10 @@ export default {
       this.formValues.answers = this.answersListMcQ.filter((answer) => answer.answer);
     },
     assignAnswersMatchOneToOne() {
-
       this.formValues.answers = this.answersListMatchOneToOne.filter((answer) => answer.answer);
     },
     assignAnswersDragSort() {
       this.formValues.answers = this.answersDragSortToSend;
-
     },
   },
   watch: {

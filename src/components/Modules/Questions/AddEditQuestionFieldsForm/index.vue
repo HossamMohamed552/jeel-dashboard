@@ -158,6 +158,12 @@
                         name="group-type"
                       >صورة
                       </b-form-radio>
+                      <!-- <b-form-radio
+                        v-model="formValues.question_pattern"
+                        value="audio"
+                        name="group-type"
+                      >صوت
+                      </b-form-radio> -->
                     </b-form-group>
                   </ValidationProvider>
                 </div>
