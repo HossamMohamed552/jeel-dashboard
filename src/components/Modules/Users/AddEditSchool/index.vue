@@ -91,7 +91,7 @@
                           ></SelectSearch>
                         </div>
                       </b-col>
-                      <b-col lg="6" class="px-3 mb-3">
+                      <!-- <b-col lg="6" class="px-3 mb-3">
                         <div class="hold-field">
                           <TextField
                             v-model="createSchool.username"
@@ -99,7 +99,7 @@
                             :name="$t('SCHOOL.user_name')"
                           ></TextField>
                         </div>
-                      </b-col>
+                      </b-col> -->
                       <b-col lg="6" class="px-3 mb-3">
                         <div class="hold-field">
                           <TextField
@@ -343,7 +343,7 @@ export default {
         music_status: "",
         status: "",
         logo: null,
-        username: "",
+        // username: "",
         contact: "",
         address: ""
       },
@@ -394,7 +394,7 @@ export default {
     sendDataNewSchool() {
       const formData = new FormData();
       formData.append("name", this.createSchool.name);
-      formData.append("username", this.createSchool.username);
+      // formData.append("username", this.createSchool.username);
       formData.append("address", this.createSchool.address);
       formData.append("contact", this.createSchool.contact);
       formData.append("email", this.createSchool.email);
@@ -446,7 +446,7 @@ export default {
         this.ApiService(getSingleSchoolsRequest(this.$route.params.id)).then(
           (response) => {
             this.createSchool.name = response.data.data.name;
-            this.createSchool.username = response.data.data.username;
+            // this.createSchool.username = response.data.data.username;
             this.createSchool.address = response.data.data.address;
             this.createSchool.contact = response.data.data.contact;
             this.createSchool.email = response.data.data.email;
