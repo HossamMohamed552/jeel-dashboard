@@ -97,8 +97,8 @@
           <b-col v-for="(answer, idx) in collectData.answers" :key="idx" lg="3">
             <h6>{{ `${$t('QUESTIONS.ANSWER')} ${idx + 1}` }}</h6>
             <p v-if="answer.answer_pattern === 'text'">{{ answer && answer.answer }}</p>
-            <img class="question_img" v-else-if="answer.answer_pattern === 'image'"
-                 :src="answer.answerImage">
+            <img class="question_img" v-else-if="answer.answer_pattern === 'image'" :src="answer.answerImage">
+            <p v-if="answer.answer_pattern === 'audio'">{{  answer.audio.name }}</p>
           </b-col>
           <b-col lg="6" v-if="questionTypeSlug !== 'drag_and_drop_many'">
             <h6>{{ $t('QUESTIONS.RIGHT_ANSWER') }}</h6>
@@ -110,7 +110,7 @@
                  :src="getCorrectAnswer(this.collectData.answers, this.correct_id).answerImage">
             <p
               v-else-if="getCorrectAnswer && getCorrectAnswer(this.collectData.answers, this.correct_id).answer_pattern === 'audio'">
-              {{ getCorrectAnswer(this.collectData.answers, this.correct_id).answer.name }}</p>
+              {{ getCorrectAnswer(this.collectData.answers, this.correct_id).audio.name }}</p>
 
           </b-col>
         </b-row>
