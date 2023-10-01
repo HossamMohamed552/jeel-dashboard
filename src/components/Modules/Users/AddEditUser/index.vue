@@ -37,7 +37,7 @@
                     v-model="formValues.email"
                     :label="$t('USERS.EMAIL')"
                     :name="$t('USERS.EMAIL')"
-                    :rules="'required|email'"
+                    :rules="formValues.roles != '5' ? 'required|email' : ''"
                   ></TextField>
                 </div>
               </b-col>

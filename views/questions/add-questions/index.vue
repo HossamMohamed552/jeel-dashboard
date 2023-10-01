@@ -35,6 +35,7 @@
     <AddEditQuestionAnswersForm
       v-if="currentStep === 1"
       :questionSlug="collectData.question_slug"
+      :question-pattern="questionPattern"
       @handleBack="goToQuestionFieldsForm"
       @handleCancel="handleCancel"
       @onSubmit="getSecondStepData"
@@ -44,39 +45,39 @@
       <b-container>
         <b-row>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.QUESTION_PATTERN') }}</h6>
+            <h6>{{ $t("QUESTIONS.QUESTION_PATTERN") }}</h6>
             <p>{{ getName(this.questionTypes, this.collectData.question_type_id) }}</p>
           </b-col>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.QUESTION_SUB_PATTERN') }}</h6>
+            <h6>{{ $t("QUESTIONS.QUESTION_SUB_PATTERN") }}</h6>
             <p>{{ getName(this.questionSubTypes, this.collectData.question_type_sub_id) }}</p>
           </b-col>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.LEARNING_PATH') }}</h6>
+            <h6>{{ $t("QUESTIONS.LEARNING_PATH") }}</h6>
             <p>{{ getName(this.learningPaths, this.collectData.learning_path_id) }}</p>
           </b-col>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.LANGUAGE_SKILLS') }}</h6>
+            <h6>{{ $t("QUESTIONS.LANGUAGE_SKILLS") }}</h6>
             <p>{{ getName(this.languageSkills, this.collectData.language_skill_id) }}</p>
           </b-col>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.QUESTIONDIFFICULTIES') }}</h6>
+            <h6>{{ $t("QUESTIONS.QUESTIONDIFFICULTIES") }}</h6>
             <p>{{ getName(this.questionDifficulties, this.collectData.question_difficulty_id) }}</p>
           </b-col>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.BLOOM_CATEGORIES') }}</h6>
+            <h6>{{ $t("QUESTIONS.BLOOM_CATEGORIES") }}</h6>
             <p>{{ getName(this.bloomCategories, this.collectData.bloom_category_id) }}</p>
           </b-col>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.LEARNING_METHOD') }}</h6>
+            <h6>{{ $t("QUESTIONS.LEARNING_METHOD") }}</h6>
             <p>{{ getName(this.learningMethods, this.collectData.language_method_id) }}</p>
           </b-col>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.TYPE') }}</h6>
+            <h6>{{ $t("QUESTIONS.TYPE") }}</h6>
             <p>{{ this.collectData.question_pattern }}</p>
           </b-col>
           <b-col lg="3">
-            <h6>{{ $t('QUESTIONS.LEVELS') }}</h6>
+            <h6>{{ $t("QUESTIONS.LEVELS") }}</h6>
             <p>{{ getName(this.levels, this.collectData.level_id) }}</p>
           </b-col>
         </b-row>
@@ -110,6 +111,7 @@
             <p
               v-else-if="getCorrectAnswer && getCorrectAnswer(this.collectData.answers, this.correct_id).answer_pattern === 'audio'">
               {{ getCorrectAnswer(this.collectData.answers, this.correct_id).answer.name }}</p>
+
           </b-col>
         </b-row>
         <b-row>
@@ -149,7 +151,8 @@ import {
   getLearningMethodsRequest,
   getAllLearningPathsRequest,
   getAllBloomCategoriesRequest,
-  getAllQuestionDifficultiesRequest, getAllLearningMethodsRequest,
+  getAllQuestionDifficultiesRequest,
+  getAllLearningMethodsRequest,
 } from "@/api/question";
 import Stepper from "@/components/Shared/Stepper/index.vue";
 import axios from "axios";
@@ -168,6 +171,7 @@ export default {
   },
   data() {
     return {
+      questionPattern: "",
       loading: false,
       showModal: false,
       questionTypes: [],
@@ -179,8 +183,8 @@ export default {
       collectData: {},
       questionTypesValues: {},
       correct_id: 1,
-      isDragSort: '',
-      questionTypeSlug: '',
+      isDragSort: "",
+      questionTypeSlug: "",
       steps: [
         {
           icon: "1",
@@ -209,7 +213,7 @@ export default {
     getQuestionTypes() {
       const params = {
         page: 1,
-        main_questions: 1
+        main_questions: 1,
       };
 
       this.ApiService(getQuestionTypsRequest(params)).then((response) => {
@@ -275,7 +279,7 @@ export default {
       this.$router.push("/dashboard/questions");
     },
     getQuestionPatternData(data) {
-      this.questionTypeSlug = data.question_slug.slug
+      this.questionTypeSlug = data.question_slug.slug;
       this.questionTypesValues = data;
       const object = {
         ...data,
@@ -286,6 +290,9 @@ export default {
     getFirstStepData(data) {
       // data.choices_number = this.choicesNumber;
       // delete data.choices_number;
+
+      //set qestion pattern to step 2 (text, image or audio)
+      this.questionPattern = data.question_pattern;
       const object = {
         ...data,
       };
@@ -316,14 +323,14 @@ export default {
       }
     },
     getCorrectAnswer(list, id) {
-      if (this.questionTypeSlug !== 'drag_and_drop_many') {
+      if (this.questionTypeSlug !== "drag_and_drop_many") {
         let correctAnswer;
         if (list && list.length) {
           correctAnswer = list.find((item) => item.correct === id);
           return correctAnswer
         }
       } else {
-        return []
+        return [];
       }
     },
     saveQuestion() {
@@ -349,20 +356,39 @@ export default {
         formData.append("hint_audio", this.collectData.hint_audio);
         formData.append("hint", this.collectData.hint);
       }
-      if (this.questionTypeSlug === 'drag_and_drop_many') {
+      formData.append("question_audio", this.collectData.question_audio);
+      formData.append("hint_audio", this.collectData.hint_audio);
+      formData.append("hint", this.collectData.hint);
+      if (this.collectData.question_pattern === "image")
+        formData.append("question_image", this.collectData.image);
+      if (this.collectData.question_pattern === "text")
+        formData.append("question", this.collectData.question);
+      if (this.questionTypeSlug === "drag_and_drop_many") {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
           formData.append(`answers[${answer}][order]`, this.collectData.answers[answer].order);
         }
-      } else if (this.questionTypeSlug == 'match_one_to_one') {
+      } else if (this.questionTypeSlug == "match_one_to_one") {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
-          formData.append(`answers[${answer}][match_from]`, this.collectData.answers[answer]?.match_from);
+          formData.append(
+            `answers[${answer}][match_from]`,
+            this.collectData.answers[answer]?.match_from
+          );
           formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer]?.audio);
-          formData.append(`answers[${answer}][answers_to][${0}][answer]`, this.collectData.answers[answer].answers_to[0]?.answer);
-          formData.append(`answers[${answer}][answers_to][${0}][match_to]`, this.collectData.answers[answer].answers_to[0]?.match_to);
-          formData.append(`answers[${answer}][answers_to][${0}][audio]`, this.collectData.answers[answer].answers_to[0]?.audio);
+          formData.append(
+            `answers[${answer}][answers_to][${0}][answer]`,
+            this.collectData.answers[answer].answers_to[0]?.answer
+          );
+          formData.append(
+            `answers[${answer}][answers_to][${0}][match_to]`,
+            this.collectData.answers[answer].answers_to[0]?.match_to
+          );
+          formData.append(
+            `answers[${answer}][answers_to][${0}][audio]`,
+            this.collectData.answers[answer].answers_to[0]?.audio
+          );
         }
       } else {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
@@ -381,10 +407,10 @@ export default {
           },
         })
         .then((res) => {
-
           this.$router.push("/dashboard/questions");
         });
-    },
+    }
+    ,
   }
 };
 </script>

@@ -16,6 +16,7 @@
                       :rules="'required'"
                     ></TextField>
                   </div>
+
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
@@ -109,7 +110,11 @@
                 </b-col>
                 <b-col lg="2" class="mb-3">
                   <div class="hold-field">
+<<<<<<< HEAD
                     <label>{{ $t('QUESTIONS.ANSWER_TYPE') }}</label>
+=======
+                    <label>{{ $t("QUESTIONS.ANSWER_TYPE") }}</label>
+>>>>>>> 95ce408c5bab5c96cda8cf47e838dfb9e81d43cc
                     <SelectSearch
                       v-model="answer.correct"
                       :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
@@ -718,7 +723,11 @@
                 </b-col>
                 <b-col lg="2" class="mb-3">
                   <div class="hold-field">
+<<<<<<< HEAD
                     <label>{{ $t('QUESTIONS.ANSWER_TYPE') }}</label>
+=======
+                    <label>{{ $t("QUESTIONS.ANSWER_TYPE") }}</label>
+>>>>>>> 95ce408c5bab5c96cda8cf47e838dfb9e81d43cc
                     <SelectSearch
                       v-model="answer.correct"
                       :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
@@ -850,7 +859,11 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
+<<<<<<< HEAD
                     <label>{{ $t('QUESTIONS.ANSWER_TYPE') }}</label>
+=======
+                    <label>{{ $t("QUESTIONS.ANSWER_TYPE") }}</label>
+>>>>>>> 95ce408c5bab5c96cda8cf47e838dfb9e81d43cc
                     <SelectSearch
                       v-model="answer.correct"
                       :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
@@ -2030,7 +2043,11 @@
               <b-row v-for="(answer, idx) in answersListMatchOneToOne" :key="idx">
                 <b-col lg="6" class="mb-3">
                   <div class="hold-field">
+<<<<<<< HEAD
                     <label>{{ $t('QUESTIONS.ANSWER') }}</label>
+=======
+                    <label>{{ $t("QUESTIONS.ANSWER") }}</label>
+>>>>>>> 95ce408c5bab5c96cda8cf47e838dfb9e81d43cc
                     <TextField
                       v-model="answer.answer"
                       :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
@@ -2170,6 +2187,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    questionPattern: {
+      type: String,
+      default: "text",
+    },
   },
   data() {
     return {
@@ -2187,7 +2208,8 @@ export default {
         hint_audio: null,
         answers: [],
         questionImage: null,
-        question_image: null
+        question_image: null,
+        img_url: "",
       },
       answersListDragSort: [
         {

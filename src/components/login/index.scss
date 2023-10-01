@@ -56,10 +56,11 @@
     justify-content: space-between !important;
     align-items: center;
     flex-direction: row;
-    a{
+    .forget{
       color: $color-show-heading;
       font-weight: bold;
       text-decoration: underline;
+      cursor: pointer;
       @media (max-width: 768px) {
         font-size: .8rem;
       }
@@ -85,3 +86,4 @@
     }
   }
 }
+
