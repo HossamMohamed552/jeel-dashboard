@@ -218,7 +218,9 @@
     "TYPE_NAME": "اسم النوع الفرعي للسؤال",
     "LANGUAGE_SKILL": "المهارة اللغوية",
     "LEVEL": "المرحلة",
-    "THE_RIGHT_ANSWER": "الاجابة الصحيحة"
+    "THE_RIGHT_ANSWER": "الاجابة الصحيحة",
+    "UPLOAD_IMAGE": "صورة السؤال",
+    "UPLOAD_IMAGE_ANSWER": "صورة الإجابة"
   },
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",

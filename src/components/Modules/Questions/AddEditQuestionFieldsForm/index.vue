@@ -142,33 +142,26 @@
                   ></SelectSearch>
                 </div>
               </b-col>
-              <b-col lg="3" class="mb-3">
-                <div class="hold-field">
-                  <ValidationProvider rules="required">
-                    <b-form-group :label="$t('QUESTIONS.TYPE')" class="group-type">
-                      <b-form-radio
-                        v-model="formValues.question_pattern"
-                        value="text"
-                        name="group-type"
-                      >نص
-                      </b-form-radio>
-                      <b-form-radio
-                        v-model="formValues.question_pattern"
-                        value="image"
-                        name="group-type"
-                      >صورة
-                      </b-form-radio>
-                      <!-- <b-form-radio
-                        v-model="formValues.question_pattern"
-                        value="audio"
-                        name="group-type"
-                      >صوت
-                      </b-form-radio> -->
-                    </b-form-group>
-                  </ValidationProvider>
-                </div>
-              </b-col>
-
+<!--              <b-col lg="3" class="mb-3">-->
+<!--                <div class="hold-field">-->
+<!--                  <ValidationProvider rules="required">-->
+<!--                    <b-form-group :label="$t('QUESTIONS.TYPE')" class="group-type">-->
+<!--                      <b-form-radio-->
+<!--                        v-model="formValues.question_pattern"-->
+<!--                        value="text"-->
+<!--                        name="group-type"-->
+<!--                      >نص-->
+<!--                      </b-form-radio>-->
+<!--                      <b-form-radio-->
+<!--                        v-model="formValues.question_pattern"-->
+<!--                        value="image"-->
+<!--                        name="group-type"-->
+<!--                      >صورة-->
+<!--                      </b-form-radio>-->
+<!--                    </b-form-group>-->
+<!--                  </ValidationProvider>-->
+<!--                </div>-->
+<!--              </b-col>-->
             </b-row>
             <b-row>
               <div class="action-holder">

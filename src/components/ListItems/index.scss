@@ -162,7 +162,12 @@
 .pointer {
   cursor: pointer;
 }
-
+.question-image-show{
+  width: 80px;
+  height: 40px;
+  object-position: center;
+  object-fit: cover;
+}
 ::v-deep {
   td {
     font-weight: bold;

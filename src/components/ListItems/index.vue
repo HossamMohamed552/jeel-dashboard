@@ -70,6 +70,13 @@
         <template #cell(package)="data">
           <span>{{ data.item.package.name }}</span>
         </template>
+        <template #cell(question)="data">
+          <span v-if="data.item.question_pattern === 'text'" >{{ data.item.question }}</span>
+          <img v-else-if="data.item.question_pattern === 'image'" :src="data.item.question" class="question-image-show">
+          <audio v-else-if="data.item.question_pattern === 'audio'" controls>
+            <source :src="data.item.question" />
+          </audio>
+        </template>
         <template #cell(question_type)="data">
           <span>{{ data.item.question_type.name }}</span>
         </template>
