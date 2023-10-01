@@ -87,13 +87,11 @@
             <p v-if="collectData.question_pattern === 'text'">{{ collectData.question }}</p>
             <img class="question_img" v-else-if="collectData.question_pattern === 'image'"
                  :src="collectData.questionImage">
-<!--            <audio controls v-else-if="collectData.question_pattern === 'audio'">-->
-<!--              <source :src="collectData.question_audioUser.src"/>-->
-<!--            </audio>-->
+            <p v-if="collectData.question_pattern === 'audio'">{{ collectData.question.name }}</p>
           </b-col>
           <b-col lg="6">
-            <h6>{{ $t('QUESTIONS.HINT') }}</h6>
-            <p>{{ this.collectData.hint }}</p>
+            <h6 v-if="collectData.hint">{{ $t('QUESTIONS.HINT') }}</h6>
+            <p v-if="collectData.hint"> {{ collectData.hint }}</p>
           </b-col>
           <b-col v-for="(answer, idx) in collectData.answers" :key="idx" lg="3">
             <h6>{{ `${$t('QUESTIONS.ANSWER')} ${idx + 1}` }}</h6>
@@ -106,8 +104,12 @@
             <p
               v-if="getCorrectAnswer && getCorrectAnswer(this.collectData.answers, this.correct_id).answer_pattern === 'text'">
               {{ getCorrectAnswer(this.collectData.answers, this.correct_id).answer }}</p>
-            <img class="question_img" v-else-if="getCorrectAnswer && getCorrectAnswer(this.collectData.answers, this.correct_id).answer_pattern === 'image'"
+            <img class="question_img"
+                 v-else-if="getCorrectAnswer && getCorrectAnswer(this.collectData.answers, this.correct_id).answer_pattern === 'image'"
                  :src="getCorrectAnswer(this.collectData.answers, this.correct_id).answerImage">
+            <p
+              v-else-if="getCorrectAnswer && getCorrectAnswer(this.collectData.answers, this.correct_id).answer_pattern === 'audio'">
+              {{ getCorrectAnswer(this.collectData.answers, this.correct_id).answer.name }}</p>
           </b-col>
         </b-row>
         <b-row>
@@ -339,6 +341,7 @@ export default {
       formData.append("question_type_id", this.collectData.question_type_id);
       formData.append("level_id", this.collectData.level_id);
       formData.append("question", this.collectData.question);
+      formData.append("question_image", this.collectData.question_image);
       if (!this.collectData.question_pattern === 'audio') {
         formData.append("question_audio", this.collectData.question_audio);
       }
