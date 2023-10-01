@@ -2504,7 +2504,7 @@ export default {
         answer: "",
         audio: null,
         correct: 0,
-        answer_pattern: 'audio'
+        answer_pattern: 'text'
       });
     },
     addAnswerDragSort() {
