@@ -120,7 +120,7 @@
                           ></TextField>
                         </div>
                       </b-col>
-                      <b-col lg="6" class="px-3 mb-3">
+                      <b-col lg="12" class="px-3 mb-3">
                         <div class="hold-field">
                           <TextField
                             v-model="createSchool.address"
@@ -351,9 +351,9 @@ export default {
   },
   methods: {
     getSoundType(id) {
-      const choosedItem = this.schoolGroups.find((item) => item.id == id);
-      if (choosedItem.music_status == 0) this.createSchool.music_status = 0;
-      else this.createSchool.music_status = 1;
+      const chosenItem = this.schoolGroups.find((item) => item.id == id);
+      this.createSchool.music_status = chosenItem.music_status;
+      this.createSchool.status = chosenItem.status
     },
     deleteImage() {
       this.createSchool.logo = null;
