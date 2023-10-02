@@ -16,7 +16,7 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="3" class="mb-3">
+              <b-col lg="3" class="mb-3 radio-item">
                 <div class="hold-field">
                   <ValidationProvider rules="required" v-slot="{ errors }">
                     <b-form-group :label="$t('GROUP.type')"  class="group-type">
@@ -31,7 +31,7 @@
                   </ValidationProvider>
                 </div>
               </b-col>
-              <b-col lg="3" class="mb-3">
+              <b-col lg="3" class="mb-3 radio-item">
                 <div class="hold-field">
                   <ValidationProvider rules="required" v-slot="{ errors }">
                     <b-form-group :label="$t('GROUP.music')" class="group-type">
@@ -44,7 +44,7 @@
                   </ValidationProvider>
                 </div>
               </b-col>
-              <b-col lg="3" class="mb-3">
+              <b-col lg="3" class="mb-3 radio-item">
                 <div class="hold-field">
                   <ValidationProvider  rules="required" v-slot="{ errors }">
                     <b-form-group :label="$t('GROUP.status')" class="group-type">
