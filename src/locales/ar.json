@@ -2,6 +2,7 @@
   "REGISTER_HAS_SUCCESSFULLY": "تم التسجيل بنجاح",
   "USER_UPDATED": "تم تحديث المستخدم بنجاح",
   "PASSWORD_CHANGED": "تم تغيير كلمة المرور بنجاح",
+  "EDIT_PROFILE": "تعديل البيانات الشخصية",
   "AUTH": {
     "email": "اسم المستخدم / البريد الالكترونى",
     "password": "كلمه المرور",
