@@ -110,11 +110,7 @@
                 </b-col>
                 <b-col lg="2" class="mb-3">
                   <div class="hold-field">
-<<<<<<< HEAD
                     <label>{{ $t('QUESTIONS.ANSWER_TYPE') }}</label>
-=======
-                    <label>{{ $t("QUESTIONS.ANSWER_TYPE") }}</label>
->>>>>>> 95ce408c5bab5c96cda8cf47e838dfb9e81d43cc
                     <SelectSearch
                       v-model="answer.correct"
                       :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
@@ -723,11 +719,7 @@
                 </b-col>
                 <b-col lg="2" class="mb-3">
                   <div class="hold-field">
-<<<<<<< HEAD
                     <label>{{ $t('QUESTIONS.ANSWER_TYPE') }}</label>
-=======
-                    <label>{{ $t("QUESTIONS.ANSWER_TYPE") }}</label>
->>>>>>> 95ce408c5bab5c96cda8cf47e838dfb9e81d43cc
                     <SelectSearch
                       v-model="answer.correct"
                       :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
@@ -826,7 +818,7 @@
                 </div>
               </b-col>
               <b-row v-for="(answer, idx) in answersListTrueFalse" :key="idx">
-                <b-col lg="4" class="mb-3">
+                <b-col lg="6" class="mb-3">
                   <div class="hold-field">
                     <TextField
                       v-model="answer.answer"
@@ -837,33 +829,29 @@
                     ></TextField>
                   </div>
                 </b-col>
-                <b-col lg="4" class="mb-3">
+<!--                <b-col lg="4" class="mb-3">-->
+<!--                  <div class="hold-field">-->
+<!--                    <label>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>-->
+<!--                    <ValidationProvider-->
+<!--                      v-slot="{ errors }"-->
+<!--                      :rules="$route.params.id ? '' : 'required'"-->
+<!--                      name="audio"-->
+<!--                    >-->
+<!--                      <b-form-file-->
+<!--                        accept="audio/*"-->
+<!--                        :placeholder="answer.audio ? answer.audio.name : 'اختر ملف'"-->
+<!--                        v-model="answer.audio"-->
+<!--                        name="audio"-->
+<!--                      ></b-form-file>-->
+<!--                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">-->
+<!--                        {{ error }}-->
+<!--                      </b-form-invalid-feedback>-->
+<!--                    </ValidationProvider>-->
+<!--                  </div>-->
+<!--                </b-col>-->
+                <b-col lg="6" class="mb-3">
                   <div class="hold-field">
-                    <label>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
-                    <ValidationProvider
-                      v-slot="{ errors }"
-                      :rules="$route.params.id ? '' : 'required'"
-                      name="audio"
-                    >
-                      <b-form-file
-                        accept="audio/*"
-                        :placeholder="answer.audio ? answer.audio.name : 'اختر ملف'"
-                        v-model="answer.audio"
-                        name="audio"
-                      ></b-form-file>
-                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                        {{ error }}
-                      </b-form-invalid-feedback>
-                    </ValidationProvider>
-                  </div>
-                </b-col>
-                <b-col lg="4" class="mb-3">
-                  <div class="hold-field">
-<<<<<<< HEAD
                     <label>{{ $t('QUESTIONS.ANSWER_TYPE') }}</label>
-=======
-                    <label>{{ $t("QUESTIONS.ANSWER_TYPE") }}</label>
->>>>>>> 95ce408c5bab5c96cda8cf47e838dfb9e81d43cc
                     <SelectSearch
                       v-model="answer.correct"
                       :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
@@ -944,7 +932,7 @@
                 </div>
               </b-col>
               <b-row v-for="(answer, idx) in answersListTrueFalse" :key="idx">
-                <b-col lg="4" class="mb-3">
+                <b-col lg="6" class="mb-3">
                   <div class="hold-field">
                     <TextField
                       v-model="answer.answer"
@@ -955,27 +943,7 @@
                     ></TextField>
                   </div>
                 </b-col>
-                <b-col lg="4" class="mb-3">
-                  <div class="hold-field">
-                    <label>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
-                    <ValidationProvider
-                      v-slot="{ errors }"
-                      :rules="$route.params.id ? '' : 'required'"
-                      name="audio"
-                    >
-                      <b-form-file
-                        accept="audio/*"
-                        :placeholder="answer.audio ? answer.audio.name : 'اختر ملف'"
-                        v-model="answer.audio"
-                        name="audio"
-                      ></b-form-file>
-                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                        {{ error }}
-                      </b-form-invalid-feedback>
-                    </ValidationProvider>
-                  </div>
-                </b-col>
-                <b-col lg="4" class="mb-3">
+                <b-col lg="6" class="mb-3">
                   <div class="hold-field">
                     <label>{{ $t('QUESTIONS.ANSWER_TYPE') }}</label>
                     <SelectSearch
@@ -1039,7 +1007,7 @@
                 </div>
               </b-col>
               <b-row v-for="(answer, idx) in answersListTrueFalse" :key="idx">
-                <b-col lg="4" class="mb-3">
+                <b-col lg="6" class="mb-3">
                   <div class="hold-field">
                     <TextField
                       v-model="answer.answer"
@@ -1050,27 +1018,7 @@
                     ></TextField>
                   </div>
                 </b-col>
-                <b-col lg="4" class="mb-3">
-                  <div class="hold-field">
-                    <label>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
-                    <ValidationProvider
-                      v-slot="{ errors }"
-                      :rules="$route.params.id ? '' : 'required'"
-                      name="audio"
-                    >
-                      <b-form-file
-                        accept="audio/*"
-                        :placeholder="answer.audio ? answer.audio.name : 'اختر ملف'"
-                        v-model="answer.audio"
-                        name="audio"
-                      ></b-form-file>
-                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                        {{ error }}
-                      </b-form-invalid-feedback>
-                    </ValidationProvider>
-                  </div>
-                </b-col>
-                <b-col lg="4" class="mb-3">
+                <b-col lg="6" class="mb-3">
                   <div class="hold-field">
                     <label>{{ $t('QUESTIONS.ANSWER_TYPE') }}</label>
                     <SelectSearch
@@ -2273,13 +2221,11 @@ export default {
       answersListTrueFalse: [
         {
           answer: "صحيح",
-          audio: null,
           correct: 0,
           answer_pattern: 'text'
         },
         {
           answer: "خطأ",
-          audio: null,
           correct: 0,
           answer_pattern: 'text'
         },
