@@ -123,7 +123,8 @@
     "SUCCESS": "Thank your for email verification, you will be redirected to home page",
     "SOMETHING_WRONG": "Something went wrong",
     "EMAIL": "Email",
-    "RESEND":"Resend",
+    "RESEND": "Resend",
     "RESEND_SUCCESS": "Verification code has been sent successfully, Please check your email"
-  }
+  },
+  "WELCOME": "Welcome"
 }
