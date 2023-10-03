@@ -221,7 +221,8 @@
     "LEVEL": "المرحلة",
     "THE_RIGHT_ANSWER": "الاجابة الصحيحة",
     "UPLOAD_IMAGE": "صورة السؤال",
-    "UPLOAD_IMAGE_ANSWER": "صورة الإجابة"
+    "UPLOAD_IMAGE_ANSWER": "صورة الإجابة",
+    "RIGHT_sequence": "الترتيب الصحيح"
   },
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",

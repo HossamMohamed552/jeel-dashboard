@@ -101,24 +101,28 @@
                  :src="answer.answerImage">
             <p v-if="answer.answer_pattern === 'audio'">{{ answer.audio.name }}</p>
           </b-col>
-          <b-col lg="12" v-if="questionTypeSlug !== 'drag_and_drop_many'">
+          <b-col lg="12" v-if="!questionTypeSlug.includes('order')">
             <h6>{{ $t('QUESTIONS.RIGHT_ANSWER') }}</h6>
-<!--            <pre>&#45;&#45;&#45;&#45;{{getCorrectAnswer(collectData.answers,1)}}</pre>-->
             <b-row>
-              <b-col v-for="correctAnswer in getCorrectAnswer(collectData.answers,1)" :key="correctAnswer.id">
+              <b-col v-for="correctAnswer in getCorrectAnswer(collectData.answers,1)"
+                     :key="correctAnswer.id">
                 <p v-if="correctAnswer.answer_pattern === 'text'">{{ correctAnswer.answer }}</p>
-                <img v-if="correctAnswer.answer_pattern === 'image'" class="question_img" :src="correctAnswer.answerImage"/>
-                <p v-if="correctAnswer.answer_pattern === 'audio'">{{ correctAnswer.audio.name }}</p>
+                <img v-if="correctAnswer.answer_pattern === 'image'" class="question_img"
+                     :src="correctAnswer.answerImage"/>
+                <p v-if="correctAnswer.answer_pattern === 'audio'">{{
+                    correctAnswer.audio.name
+                  }}</p>
               </b-col>
             </b-row>
-<!--            <div>-->
-<!--              <img class="question_img" v-for="correctAnswer in getCorrectAnswer(collectData.answers,1)"-->
-<!--                   :key="correctAnswer.id" :src="correctAnswer.answerImage"/>-->
-<!--            </div>-->
-<!--            <div>-->
-<!--              <p v-for="correctAnswer in getCorrectAnswer(collectData.answers,1)" :key="correctAnswer.id">-->
-<!--                {{ correctAnswer.audio.name }}</p>-->
-<!--            </div>-->
+          </b-col>
+          <b-col lg="12" v-if="questionTypeSlug.includes('order')">
+            <h6>{{ $t('QUESTIONS.RIGHT_sequence') }}</h6>
+            <b-row>
+              <b-col v-for="correctAnswer in collectData.answers" :key="correctAnswer.id" lg="12">
+                <p v-if="correctAnswer.answer_pattern === 'text'">{{ correctAnswer.answer }}</p>
+                <img class="question_img" v-else-if="correctAnswer.answer_pattern === 'image'" :src="correctAnswer.answerImage">
+              </b-col>
+            </b-row>
           </b-col>
         </b-row>
         <b-row>
@@ -333,7 +337,7 @@ export default {
     },
     getCorrectAnswer(list, id) {
       console.log('list', list)
-      if (this.questionTypeSlug !== "drag_and_drop_many") {
+      if (this.questionTypeSlug !== "order_text_with_question") {
         let correctAnswer;
         if (list && list.length) {
           correctAnswer = list.filter((item) => item.correct === id);
@@ -357,7 +361,6 @@ export default {
       formData.append("question_objective_id", this.collectData.question_objective_id);
       formData.append("question_outcome_id", this.collectData.question_outcome_id);
       formData.append("question_pattern", this.collectData.question_pattern);
-      formData.append("question_type_id", this.collectData.question_type_id);
       formData.append("level_id", this.collectData.level_id);
       formData.append("question", this.collectData.question);
       formData.append("question_image", this.collectData.question_image);
@@ -372,32 +375,21 @@ export default {
         formData.append("question_image", this.collectData.image);
       if (this.collectData.question_pattern === "text")
         formData.append("question", this.collectData.question);
-      if (this.questionTypeSlug === "drag_and_drop_many") {
+      if (this.questionTypeSlug.includes('order')) {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
           formData.append(`answers[${answer}][order]`, this.collectData.answers[answer].order);
+          formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers[answer].answer_pattern);
         }
       } else if (this.questionTypeSlug === "match_one_to_one") {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
-          formData.append(
-            `answers[${answer}][match_from]`,
-            this.collectData.answers[answer]?.match_from
-          );
+          formData.append(`answers[${answer}][match_from]`, this.collectData.answers[answer]?.match_from);
           formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer]?.audio);
-          formData.append(
-            `answers[${answer}][answers_to][${0}][answer]`,
-            this.collectData.answers[answer].answers_to[0]?.answer
-          );
-          formData.append(
-            `answers[${answer}][answers_to][${0}][match_to]`,
-            this.collectData.answers[answer].answers_to[0]?.match_to
-          );
-          formData.append(
-            `answers[${answer}][answers_to][${0}][audio]`,
-            this.collectData.answers[answer].answers_to[0]?.audio
-          );
+          formData.append(`answers[${answer}][answers_to][${0}][answer]`, this.collectData.answers[answer].answers_to[0]?.answer);
+          formData.append(`answers[${answer}][answers_to][${0}][match_to]`, this.collectData.answers[answer].answers_to[0]?.match_to);
+          formData.append(`answers[${answer}][answers_to][${0}][audio]`, this.collectData.answers[answer].answers_to[0]?.audio);
         }
       } else if (this.questionTypeSlug.includes('true_false')) {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
