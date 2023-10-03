@@ -29,4 +29,13 @@
   .custom-radio{
     display: inline-block;
   }
+
+  .col-form-label {
+    margin-bottom: 1.5rem;
+  }
+  
+  .radio-item {
+    display: flex;
+    justify-content: flex-start;
+  }
 }
