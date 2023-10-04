@@ -1646,7 +1646,6 @@
                     </b-col>
                   </b-row>
                 </b-col>
-
               </b-row>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
@@ -1993,7 +1992,7 @@
                       </div>
                     </b-col>
                     <slot v-for="(answer, idx) in answersListDragSortImage">
-                      <b-col lg="6" class="mb-3">
+                      <b-col lg="6" class="mb-3" :key="idx+1">
                         <div class="hold-field">
                           <ImageUploader
                             :name="'questionImage'"
@@ -2014,8 +2013,9 @@
                           >
                             <b-form-file
                               accept="audio/*"
-                              :placeholder="answer.audio ? answer.audio.name : 'اختر ملف'"
+                              :placeholder="answer.audio ? answer.audioName : 'اختر ملف'"
                               v-model="answer.audio"
+                              @input="answer.audioName = answer.audio.name"
                               name="audio"
                             ></b-form-file>
                             <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
@@ -2080,6 +2080,159 @@
                       type="submit"
                       :loading="loading"
                       :disabled="invalid || answersListDragSortImage.length < 2"
+                      :custom-class="'submit-btn'"
+                    >{{ $t("GLOBAL_NEXT") }}
+                    </Button>
+                    <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
+                      {{ $t("GLOBAL_BACK") }}
+                    </Button>
+                  </div>
+                  <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
+                    {{ $t("GLOBAL_CANCEL") }}
+                  </Button>
+                </div>
+              </b-row>
+            </form>
+          </validation-observer>
+        </slot>
+        <!--        order_voice_without_question-->
+        <slot v-if="questionSlug.slug === 'order_voice_without_question'">
+          <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
+            <form @submit.prevent="onSubmit" class="mt-5">
+              <b-row>
+                <b-col lg="12" class="mb-3">
+                  <div class="hold-field">
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      :rules="$route.params.id ? '' : 'required'"
+                      name="audio"
+                    >
+                      <b-form-file
+                        accept="audio/*"
+                        :placeholder="
+                          formValues.question ? formValues.question.name : 'اختر ملف'
+                        "
+                        v-model="formValues.question"
+                        name="audio"
+                      >
+                      </b-form-file>
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                        {{ error }}
+                      </b-form-invalid-feedback>
+                    </ValidationProvider>
+                  </div>
+                </b-col>
+                <b-col lg="8" class="mb-3">
+                  <div class="hold-field">
+                    <TextField
+                      v-model="formValues.hint"
+                      :label="$t('QUESTIONS.HINT')"
+                      :name="$t('QUESTIONS.HINT')"
+                      :rules="'required'"
+                    ></TextField>
+                  </div>
+                </b-col>
+                <b-col lg="4" class="mb-3">
+                  <div class="hold-field">
+                    <label>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      :rules="$route.params.id ? '' : 'required'"
+                      name="audio"
+                    >
+                      <b-form-file
+                        accept="audio/*"
+                        :placeholder="formValues.hint_audio ? formValues.hint_audio.name : 'اختر ملف'"
+                        v-model="formValues.hint_audio"
+                        name="audio"
+                      >
+                      </b-form-file>
+                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                        {{ error }}
+                      </b-form-invalid-feedback>
+                    </ValidationProvider>
+                  </div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col lg="7">
+                  <b-row>
+                    <b-col lg="12" class="mb-3">
+                      <div class="hold-field">
+                        <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
+                      </div>
+                    </b-col>
+                    <slot v-for="(answer, idx) in answersListDragSortAudio">
+                      <b-col lg="10" class="mb-3">
+                        <div class="hold-field">
+                          <label>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                          <ValidationProvider
+                            v-slot="{ errors }"
+                            :rules="$route.params.id ? '' : 'required'"
+                            name="audio"
+                          >
+                            <b-form-file
+                              accept="audio/*"
+                              :placeholder="answer.answer ? answer.answer.name : 'اختر ملف'"
+                              v-model="answer.answer"
+                              name="audio"
+                              @input="answer.audioName = answer.answer.name"
+                            ></b-form-file>
+                            <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                              {{ error }}
+                            </b-form-invalid-feedback>
+                          </ValidationProvider>
+                        </div>
+                      </b-col>
+                      <b-col lg="2" class="btn-holder">
+                        <div class="hold-field">
+                          <span
+                            class="success"
+                            v-if="answersListDragSortAudio.length - 1 === idx"
+                            @click="addAnswersListDragSortAudio"
+                          >إضافة</span
+                          >
+                          <span
+                            class="mx-3 danger"
+                            v-if="answersListDragSortAudio.length > 1"
+                            @click="answersListDragSortAudio.splice(idx, 1)"
+                          >حذف</span
+                          >
+                        </div>
+                      </b-col>
+                    </slot>
+                  </b-row>
+                </b-col>
+                <b-col lg="5">
+                  <b-row>
+                    <b-col lg="12" class="mb-3">
+                      <div class="hold-field">
+                        <label class="mx-0">{{ $t("QUESTIONS.sortAnswers") }}:</label>
+                      </div>
+                    </b-col>
+                    <draggable
+                      v-model="answersListDragSortAudio"
+                      group="items"
+                      :animation="150"
+                      class="list-group"
+                      :sort="true"
+                      v-if="answersListDragSortAudio.length >= 2"
+                    >
+                      <div v-for="(item, index) in answersListDragSortAudio" :key="item.id"
+                           class="list-group-item">
+                        <p>{{ index + 1 }} - {{ item.audioName }}</p>
+                      </div>
+                    </draggable>
+                  </b-row>
+                </b-col>
+              </b-row>
+              <b-row>
+                <div class="action-holder">
+                  <div>
+                    <Button
+                      type="submit"
+                      :loading="loading"
+                      :disabled="invalid || answersListDragSortAudio.length < 2"
                       :custom-class="'submit-btn'"
                     >{{ $t("GLOBAL_NEXT") }}
                     </Button>
@@ -2165,7 +2318,6 @@
                   </div>
                 </b-col>
               </b-row>
-
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
@@ -2174,11 +2326,7 @@
               <b-row v-for="(answer, idx) in answersListMatchOneToOne" :key="idx">
                 <b-col lg="6" class="mb-3">
                   <div class="hold-field">
-                    <<<<<<< HEAD
                     <label>{{ $t('QUESTIONS.ANSWER') }}</label>
-                    =======
-                    <label>{{ $t("QUESTIONS.ANSWER") }}</label>
-                    >>>>>>> 95ce408c5bab5c96cda8cf47e838dfb9e81d43cc
                     <TextField
                       v-model="answer.answer"
                       :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
@@ -2242,7 +2390,6 @@
                     </b-col>
                   </b-row>
                 </b-col>
-
                 <b-col lg="2" class="btn-holder">
                   <div class="hold-field">
                     <span
@@ -2357,7 +2504,17 @@ export default {
           order: 0,
           audio: null,
           correct: 0,
-          answerImage: null
+          answerImage: null,
+          audioName: ''
+        },
+      ],
+      answersListDragSortAudio: [
+        {
+          answer: null,
+          order: 0,
+          correct: 0,
+          answer_pattern: 'audio',
+          audioName: ''
         },
       ],
       answersListMcQ: [
@@ -2565,14 +2722,19 @@ export default {
         this.assignAnswersSelectAudio();
         this.$emit("onSubmit", this.formValues);
       } else if (this.questionSlug.slug === "drag_and_drop_text_text" || this.questionSlug.slug === "drag_and_drop_text_image_text") {
+        this.formValues.question_pattern = 'text'
         this.assignAnswersDragOne();
         this.$emit("onSubmit", this.formValues);
-      } else if (this.questionSlug.slug === "order_text_with_question") {
+      } else if (this.questionSlug.slug === "order_text_with_question" ||  this.questionSlug.slug === "order_text_without_question") {
         this.formValues.question_pattern = 'text'
         this.assignAnswersDragSort();
         this.$emit("onSubmit", this.formValues);
       } else if (this.questionSlug.slug === "order_image_without_question") {
-        this.formValues.question_pattern = 'text'
+        this.formValues.question_pattern = 'image'
+        this.assignAnswersDragSort();
+        this.$emit("onSubmit", this.formValues);
+      } else if (this.questionSlug.slug === "order_voice_without_question") {
+        this.formValues.question_pattern = 'audio'
         this.assignAnswersDragSort();
         this.$emit("onSubmit", this.formValues);
       } else if (this.questionSlug.slug === "match_one_to_one") {
@@ -2666,7 +2828,17 @@ export default {
         order: 0,
         audio: null,
         answer_pattern: 'image',
-        answerImage: null
+        answerImage: null,
+        audioName: ''
+      })
+    },
+    addAnswersListDragSortAudio() {
+      this.answersListDragSortAudio.push({
+        answer: null,
+        order: 0,
+        correct: 0,
+        answer_pattern: 'audio',
+        audioName: ''
       })
     },
     assignAnswersDragOne() {
@@ -2737,11 +2909,26 @@ export default {
             audio: item.audio,
             correct: 0,
             answerImage: item.answerImage,
-            answer_pattern: 'image'
+            answer_pattern: 'image',
+            audioName: item.audioName
           };
         });
-        this.answersDragSortToSend = list;1
-        console.log('this.answersDragSortToSend',this.answersDragSortToSend)
+        this.answersDragSortToSend = list;
+      },
+      deep: true,
+    },
+    answersListDragSortAudio: {
+      handler(newList) {
+        const list = newList.map((item, index) => {
+          return {
+            answer: item.answer,
+            order: index + 1,
+            correct: 0,
+            answer_pattern: 'audio',
+            audioName: item.audioName
+          };
+        });
+        this.answersDragSortToSend = list;
       },
       deep: true,
     },
