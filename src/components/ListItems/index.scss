@@ -71,6 +71,7 @@
       width: 19rem;
       @include flexCenter(space-between);
       background: #fff;
+
       img {
         width: 1.5rem;
       }
@@ -93,9 +94,11 @@
       }
     }
   }
-  .hold-controls{
+
+  .hold-controls {
     position: relative;
-    .dropdown-menu{
+
+    .dropdown-menu {
       position: absolute;
       left: 0;
       top: 0;
@@ -162,12 +165,14 @@
 .pointer {
   cursor: pointer;
 }
-.question-image-show{
+
+.question-image-show {
   width: 145px;
   height: 110px;
   object-position: center;
   object-fit: contain;
 }
+
 ::v-deep {
   td {
     font-weight: bold;

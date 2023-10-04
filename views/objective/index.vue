@@ -21,7 +21,7 @@
           @click="goToAddObjectiveCategory"
           v-if="user.permissions.includes(`add-objective`)"
         >
-          <img src="@/assets/images/icons/plus.svg" />
+          <img src="@/assets/images/icons/plus.svg"/>
           <span>إضافة هدف تعليمى</span>
         </Button>
       </template>
@@ -43,8 +43,9 @@ import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {mapGetters} from "vuex";
 import {deleteObjectiveRequest, getObjectiveCategoriesRequest} from "@/api/objective";
+
 export default {
-  components: { Modal, ListItems, Button },
+  components: {Modal, ListItems, Button},
   data() {
     return {
       loading: false,
@@ -61,6 +62,7 @@ export default {
           key: "name",
           label: this.$i18n.t("TABLE_FIELDS.name"),
         },
+        {key: "learning_path.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
         {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
@@ -69,7 +71,7 @@ export default {
       itemId: 0,
     };
   },
-  computed:{
+  computed: {
     ...mapGetters(['user'])
   },
   methods: {

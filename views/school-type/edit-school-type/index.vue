@@ -15,10 +15,11 @@
 <script>
 import AddEditSchoolType from "@/components/Modules/SchoolTypes/AddEditSchoolType/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { putSchoolTypesRequest } from "@/api/schoolType.js";
+import {putSchoolTypesRequest} from "@/api/schoolType.js";
+
 export default {
   name: "index",
-  components: { Modal, AddEditSchoolType },
+  components: {Modal, AddEditSchoolType},
   data() {
     return {
       loading: false,
@@ -29,13 +30,14 @@ export default {
   methods: {
     handleEditSchoolType($event) {
       this.loading = true;
-      this.ApiService(putSchoolTypesRequest(this.scholTypeId, $event))
-        .then(() => {
-          this.loading = false;
-        })
-        .then(() => {
-          this.$router.push("/dashboard/school-type");
-        });
+      this.ApiService(putSchoolTypesRequest(this.scholTypeId, $event)).then(() => {
+        this.loading = false;
+        this.showModal = true
+        setTimeout(() => {
+          this.showModal = false
+          this.$router.back()
+        }, 3000)
+      })
     },
     handleCancel() {
       this.$router.push("/dashboard/school-type");

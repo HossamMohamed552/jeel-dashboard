@@ -18,8 +18,10 @@
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
-                  <b-form-group :label="$t('PATH.Description')" v-slot="{ ariaDescribedby }" class="description">
-                    <TextAreaField v-model="createPath.description" :rules="'required'" rows="5" :name="$t('VIDEO.Description')">
+                  <b-form-group :label="$t('PATH.Description')" v-slot="{ ariaDescribedby }"
+                                class="description">
+                    <TextAreaField v-model="createPath.description" :rules="'required'" rows="5"
+                                   :name="$t('VIDEO.Description')">
                     </TextAreaField>
                   </b-form-group>
                 </div>
@@ -33,7 +35,7 @@
                 <Button
                   type="submit"
                   :loading="loading"
-                  :disabled="invalid"
+                  :disabled="invalid || canNotSend"
                   custom-class="submit-btn"
                 >
                   {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
@@ -73,7 +75,16 @@ export default {
         name: "",
         description: "",
       },
+      defaultValue:{
+        name: "",
+        description: "",
+      }
     };
+  },
+  computed:{
+    canNotSend(){
+      return (this.createPath.name === this.defaultValue.name) && (this.createPath.description === this.defaultValue.description)
+    }
   },
   methods: {
     onSubmit() {
@@ -93,7 +104,9 @@ export default {
       if (this.$route.params.id) {
         this.ApiService(getSingleLearningPathRequest(this.$route.params.id)).then((response) => {
           this.createPath.name = response.data.data.name
+          this.defaultValue.name = response.data.data.name
           this.createPath.description = response.data.data.description
+          this.defaultValue.description = response.data.data.description
         })
       }
     }

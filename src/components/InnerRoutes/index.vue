@@ -113,7 +113,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.hideModal();
-    }, 250300);
+    }, 6000);
     if (Array.from(this.routesUsers).length >= 1) {
       this.activeTapActive(1);
     } else if (Array.from(this.routesSchool).length >= 1) {

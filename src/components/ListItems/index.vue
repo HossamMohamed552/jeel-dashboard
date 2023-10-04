@@ -32,8 +32,8 @@
         :items="items"
         :fields="fieldsList"
         :busy="loading"
+        :tbody-class="'custom-body'"
       >
-
         <template #table-busy>
           <div class="text-center text-danger my-2 mt-5">
             <b-spinner class="align-middle"></b-spinner>
