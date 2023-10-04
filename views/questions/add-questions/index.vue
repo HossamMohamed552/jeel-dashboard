@@ -99,7 +99,7 @@
             <p v-if="answer.answer_pattern === 'text'">{{ answer && answer.answer }}</p>
             <img class="question_img" v-else-if="answer.answer_pattern === 'image'"
                  :src="answer.answerImage">
-            <p v-if="answer.answer_pattern === 'audio'">{{ answer.audio.name }}</p>
+            <p v-if="answer.answer_pattern === 'audio'">{{ answer.audioName }}</p>
           </b-col>
           <b-col lg="12" v-if="!questionTypeSlug.includes('order')">
             <h6>{{ $t('QUESTIONS.RIGHT_ANSWER') }}</h6>
@@ -109,9 +109,6 @@
                 <p v-if="correctAnswer.answer_pattern === 'text'">{{ correctAnswer.answer }}</p>
                 <img v-if="correctAnswer.answer_pattern === 'image'" class="question_img"
                      :src="correctAnswer.answerImage"/>
-                <p v-if="correctAnswer.answer_pattern === 'audio'">{{
-                    correctAnswer.audio.name
-                  }}</p>
               </b-col>
             </b-row>
           </b-col>
@@ -120,7 +117,9 @@
             <b-row>
               <b-col v-for="correctAnswer in collectData.answers" :key="correctAnswer.id" lg="12">
                 <p v-if="correctAnswer.answer_pattern === 'text'">{{ correctAnswer.answer }}</p>
-                <img class="question_img" v-else-if="correctAnswer.answer_pattern === 'image'" :src="correctAnswer.answerImage">
+                <img class="question_img" v-else-if="correctAnswer.answer_pattern === 'image'"
+                     :src="correctAnswer.answerImage">
+                <p v-if="correctAnswer.answer_pattern === 'audio'">{{ correctAnswer.audioName }}</p>
               </b-col>
             </b-row>
           </b-col>
@@ -375,10 +374,16 @@ export default {
         formData.append("question_image", this.collectData.image);
       if (this.collectData.question_pattern === "text")
         formData.append("question", this.collectData.question);
-      if (this.questionTypeSlug.includes('order')) {
+      if (this.questionTypeSlug.includes('order_text_with_question') || this.questionTypeSlug.includes('order_text_without_question') || this.questionTypeSlug.includes('order_image_without_question')) {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
+          formData.append(`answers[${answer}][order]`, this.collectData.answers[answer].order);
+          formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers[answer].answer_pattern);
+        }
+      } else if (this.questionTypeSlug === "order_voice_without_question") {
+        for (let answer = 0; answer < this.collectData.answers.length; answer++) {
+          formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][order]`, this.collectData.answers[answer].order);
           formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers[answer].answer_pattern);
         }
