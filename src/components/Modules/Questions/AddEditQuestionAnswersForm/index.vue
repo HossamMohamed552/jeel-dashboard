@@ -1061,15 +1061,12 @@
             <form @submit.prevent="onSubmit" class="mt-5">
               <b-row>
                 <b-col lg="8" class="mb-3">
-                  <div class="hold-field">
-                    <ImageUploader
-                      :name="'questionImage'"
-                      :text="$t('QUESTIONS.UPLOAD_IMAGE')"
-                      @imageUpload="handleUploadImage"
-                      @deleteImage="formValues.question = formValues.questionImage = null"
-                      :item-image="formValues.questionImage"
-                    />
-                  </div>
+                  <TextField
+                    v-model="formValues.question"
+                    :label="$t('QUESTIONS.QUESTION')"
+                    :name="$t('QUESTIONS.QUESTION')"
+                    :rules="'required'"
+                  ></TextField>
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
@@ -1222,15 +1219,12 @@
             <form @submit.prevent="onSubmit" class="mt-5">
               <b-row>
                 <b-col lg="8" class="mb-3">
-                  <div class="hold-field">
-                    <ImageUploader
-                      :name="'questionImage'"
-                      :text="$t('QUESTIONS.UPLOAD_IMAGE')"
-                      @imageUpload="handleUploadImage"
-                      @deleteImage="formValues.question = formValues.questionImage = null"
-                      :item-image="formValues.questionImage"
-                    />
-                  </div>
+                  <TextField
+                    v-model="formValues.question"
+                    :label="$t('QUESTIONS.QUESTION')"
+                    :name="$t('QUESTIONS.QUESTION')"
+                    :rules="'required'"
+                  ></TextField>
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
@@ -1302,7 +1296,7 @@
                       <b-form-file
                         accept="audio/*"
                         :placeholder="answer.audio ? answer.audio.name : 'اختر ملف'"
-                        v-model="answer.audio"
+                        v-model="answer.answer"
                         name="audio"
                       >
                       </b-form-file>
@@ -2714,11 +2708,11 @@ export default {
         this.assignAnswersSelect();
         this.$emit("onSubmit", this.formValues);
       } else if (this.questionSlug.slug === "mcq_multi_images") {
-        this.formValues.question_pattern = 'image'
+        this.formValues.question_pattern = 'text'
         this.assignAnswersSelectImages();
         this.$emit("onSubmit", this.formValues);
       } else if (this.questionSlug.slug === "mcq_mtli_voices") {
-        this.formValues.question_pattern = 'audio'
+        this.formValues.question_pattern = 'text'
         this.assignAnswersSelectAudio();
         this.$emit("onSubmit", this.formValues);
       } else if (this.questionSlug.slug === "drag_and_drop_text_text" || this.questionSlug.slug === "drag_and_drop_text_image_text") {
@@ -2854,7 +2848,7 @@ export default {
       this.formValues.answers = this.answersListSelectImage.filter((answer) => answer.answer);
     },
     assignAnswersSelectAudio() {
-      this.formValues.answers = this.answersListSelectAudio.filter((answer) => answer.audio);
+      this.formValues.answers = this.answersListSelectAudio.filter((answer) => answer.answer);
     },
     assignAnswersMcq() {
       this.formValues.answers = this.answersListMcQ.filter((answer) => answer.answer);

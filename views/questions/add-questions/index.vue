@@ -85,10 +85,11 @@
         <b-row>
           <b-col lg="6">
             <h6>{{ $t('QUESTIONS.QUESTION') }}</h6>
-            <p v-if="collectData.question_pattern === 'text'">{{ collectData.question }}</p>
-            <img class="question_img" v-else-if="collectData.question_pattern === 'image'"
-                 :src="collectData.questionImage">
-            <p v-if="collectData.question_pattern === 'audio'">{{ collectData.question.name }}</p>
+            <p v-if="collectData.question_pattern === 'text' &&  collectData.question">{{ collectData.question }}</p>
+            <h6 v-if="collectData.questionImage">{{ $t('QUESTIONS.QUESTIONIMAGE') }}</h6>
+            <img class="question_img" v-if="collectData.questionImage" :src="collectData.questionImage">
+            <img class="question_img" v-else-if="collectData.question_pattern === 'image' &&  collectData.question" :src="collectData.questionImage">
+            <p v-if="collectData.question_pattern === 'audio' &&  collectData.question">{{ collectData.question.name }}</p>
           </b-col>
           <b-col lg="6">
             <h6 v-if="collectData.hint">{{ $t('QUESTIONS.HINT') }}</h6>
@@ -97,18 +98,16 @@
           <b-col v-for="(answer, idx) in collectData.answers" :key="idx" lg="3">
             <h6>{{ `${$t('QUESTIONS.ANSWER')} ${idx + 1}` }}</h6>
             <p v-if="answer.answer_pattern === 'text'">{{ answer && answer.answer }}</p>
-            <img class="question_img" v-else-if="answer.answer_pattern === 'image'"
-                 :src="answer.answerImage">
-            <p v-if="answer.answer_pattern === 'audio'">{{ answer.audioName }}</p>
+            <img class="question_img" v-else-if="answer.answer_pattern === 'image'" :src="answer.answerImage">
+            <p v-if="answer.answer_pattern === 'audio'">{{ answer.audioName ? answer.audioName : answer.answer.name }}</p>
           </b-col>
           <b-col lg="12" v-if="!questionTypeSlug.includes('order')">
             <h6>{{ $t('QUESTIONS.RIGHT_ANSWER') }}</h6>
             <b-row>
-              <b-col v-for="correctAnswer in getCorrectAnswer(collectData.answers,1)"
-                     :key="correctAnswer.id">
+              <b-col v-for="correctAnswer in getCorrectAnswer(collectData.answers,1)" :key="correctAnswer.id">
                 <p v-if="correctAnswer.answer_pattern === 'text'">{{ correctAnswer.answer }}</p>
-                <img v-if="correctAnswer.answer_pattern === 'image'" class="question_img"
-                     :src="correctAnswer.answerImage"/>
+                <img v-if="correctAnswer.answer_pattern === 'image'" class="question_img" :src="correctAnswer.answerImage"/>
+                <p v-if="correctAnswer.answer_pattern === 'audio'">{{ correctAnswer.audioName ? correctAnswer.audioName : correctAnswer.answer.name }}</p>
               </b-col>
             </b-row>
           </b-col>
@@ -117,9 +116,8 @@
             <b-row>
               <b-col v-for="correctAnswer in collectData.answers" :key="correctAnswer.id" lg="12">
                 <p v-if="correctAnswer.answer_pattern === 'text'">{{ correctAnswer.answer }}</p>
-                <img class="question_img" v-else-if="correctAnswer.answer_pattern === 'image'"
-                     :src="correctAnswer.answerImage">
-                <p v-if="correctAnswer.answer_pattern === 'audio'">{{ correctAnswer.audioName }}</p>
+                <img class="question_img" v-else-if="correctAnswer.answer_pattern === 'image'" :src="correctAnswer.answerImage">
+                <p v-if="correctAnswer.answer_pattern === 'audio'">{{ correctAnswer.audioName ? correctAnswer.audioName : correctAnswer.answer.name }}</p>
               </b-col>
             </b-row>
           </b-col>
@@ -361,19 +359,19 @@ export default {
       formData.append("question_outcome_id", this.collectData.question_outcome_id);
       formData.append("question_pattern", this.collectData.question_pattern);
       formData.append("level_id", this.collectData.level_id);
-      formData.append("question", this.collectData.question);
-      formData.append("question_image", this.collectData.question_image);
-      if (!this.collectData.question_pattern === 'audio') {
+      if(this.collectData.question !== null){
+        formData.append("question", this.collectData.question);
+      }
+      if (this.collectData.question_image !== null && this.collectData.question_pattern === 'text') {
+        formData.append("question_image", this.collectData.question_image);
+      }
+      if (this.collectData.question_pattern !== 'audio') {
         formData.append("question_audio", this.collectData.question_audio);
       }
       if (!this.questionTypeSlug.includes('true_false')) {
         formData.append("hint_audio", this.collectData.hint_audio);
         formData.append("hint", this.collectData.hint);
       }
-      if (this.collectData.question_pattern === "image")
-        formData.append("question_image", this.collectData.image);
-      if (this.collectData.question_pattern === "text")
-        formData.append("question", this.collectData.question);
       if (this.questionTypeSlug.includes('order_text_with_question') || this.questionTypeSlug.includes('order_text_without_question') || this.questionTypeSlug.includes('order_image_without_question')) {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
@@ -405,7 +403,9 @@ export default {
       } else {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
-          formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
+          if (this.collectData.answers[answer].audio) {
+            formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
+          }
           formData.append(`answers[${answer}][correct]`, this.collectData.answers[answer].correct);
           formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers[answer].answer_pattern);
         }
