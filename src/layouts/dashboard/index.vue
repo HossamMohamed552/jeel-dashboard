@@ -17,9 +17,6 @@ export default{
     BreadCrumb,
     CopyRight
   },
-  created() {
-    this.$router.push({name:"main"})
-  }
 }
 </script>
 <style scoped lang="scss">

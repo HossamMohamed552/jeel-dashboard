@@ -186,7 +186,7 @@ export default {
       } else this.isStudent = false;
     },
     deleteImage() {
-      this.image = null;
+      this.image = "";
       this.itemImage = null;
     },
     onSubmit() {
@@ -205,8 +205,7 @@ export default {
           //   formData.append(`roles[${user}]`, this.formValues.roles[user]);
           // }
           formData.append("roles[0]", this.formValues.roles);
-          if (this.image && this.editImage)
-            formData.append("image", this.image);
+          formData.append("image", this.image);
           axios
             .post(`/users/${this.$route.params.id}`, formData, {
               headers: {
@@ -263,7 +262,6 @@ export default {
     },
   },
   mounted() {
-    
     if (this.$route.params.id) {
       this.ApiService(getSingleUserRequest(this.$route.params.id)).then(
         (response) => {
