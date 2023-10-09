@@ -2724,11 +2724,11 @@ export default {
         this.assignAnswersDragSort();
         this.$emit("onSubmit", this.formValues);
       } else if (this.questionSlug.slug === "order_image_without_question") {
-        this.formValues.question_pattern = 'image'
+        this.formValues.question_pattern = 'text'
         this.assignAnswersDragSort();
         this.$emit("onSubmit", this.formValues);
       } else if (this.questionSlug.slug === "order_voice_without_question") {
-        this.formValues.question_pattern = 'audio'
+        this.formValues.question_pattern = 'text'
         this.assignAnswersDragSort();
         this.$emit("onSubmit", this.formValues);
       } else if (this.questionSlug.slug === "match_one_to_one") {
