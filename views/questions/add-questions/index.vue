@@ -84,11 +84,11 @@
         <hr/>
         <b-row>
           <b-col lg="6">
-            <h6>{{ $t('QUESTIONS.QUESTION') }}</h6>
+            <h6 v-if="collectData.question_pattern === 'text' || collectData.question_pattern === 'audio'">{{ $t('QUESTIONS.QUESTION') }}</h6>
             <p v-if="collectData.question_pattern === 'text' &&  collectData.question">{{ collectData.question }}</p>
             <h6 v-if="collectData.questionImage">{{ $t('QUESTIONS.QUESTIONIMAGE') }}</h6>
             <img class="question_img" v-if="collectData.questionImage" :src="collectData.questionImage">
-            <img class="question_img" v-else-if="collectData.question_pattern === 'image' &&  collectData.question" :src="collectData.questionImage">
+            <img class="question_img" v-else-if="collectData.question_pattern === 'image' &&  collectData.questionImage" :src="collectData.questionImage">
             <p v-if="collectData.question_pattern === 'audio' &&  collectData.question">{{ collectData.question.name }}</p>
           </b-col>
           <b-col lg="6">
