@@ -11,10 +11,10 @@
           <b-col lg="6" class="mb-3">
             <ShowItem :title="$t('GLOBAL_NAME')" :subtitle="outcomeCategory.name" />
           </b-col>
-          <b-col lg="6" class="mb-3">
-            <ShowItem :title="$t('slug')" :subtitle="outcomeCategory.slug" />
-          </b-col>
-          <b-col lg="12">
+<!--          <b-col lg="6" class="mb-3">-->
+<!--            <ShowItem :title="$t('slug')" :subtitle="outcomeCategory.slug" />-->
+<!--          </b-col>-->
+          <b-col lg="6">
             <ShowItem :title="$t('learningPath')" :subtitle="outcomeCategory.learning_path.name" />
           </b-col>
         </b-row>
