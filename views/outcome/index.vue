@@ -10,7 +10,7 @@
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
-      @refetch="outcomeCategories"
+      @refetch="getOutcomeCategories"
       :permission_delete="'delete-outcome'"
       :permission_edit="'edit-outcome'"
       :permission_view="'show-outcome'"

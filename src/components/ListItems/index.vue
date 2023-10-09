@@ -16,7 +16,7 @@
       </div>
       <div class="sort">
         <img src="@/assets/images/icons/sort.svg"/>
-        <select @change="order">
+        <select @change="orderBy">
           <option value="" selected disabled>ترتيب حسب</option>
           <option v-for="(item, index) in sortArray" :id="item.id" :value="item.value" :key="index">
             {{ item.name }}
@@ -286,7 +286,7 @@ export default {
       this.formValues.name = name;
       this.$emit("refetch", this.formValues);
     }, 500),
-    order(event) {
+    orderBy(event) {
       this.formValues.order = event.target.value;
       this.$emit("refetch", this.formValues);
     },
