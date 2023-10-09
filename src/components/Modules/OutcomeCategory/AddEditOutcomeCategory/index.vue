@@ -18,17 +18,17 @@
                   ></TextField>
                 </div>
               </b-col>
+<!--              <b-col lg="6" class="mb-3">-->
+<!--              <div class="hold-field">-->
+<!--                <TextField-->
+<!--                  v-model="formValues.slug"-->
+<!--                  :label="$t('SLUG')"-->
+<!--                  :name="$t('SLUG')"-->
+<!--                  :rules="'required'"-->
+<!--                ></TextField>-->
+<!--              </div>-->
+<!--            </b-col>-->
               <b-col lg="6" class="mb-3">
-              <div class="hold-field">
-                <TextField
-                  v-model="formValues.slug"
-                  :label="$t('SLUG')"
-                  :name="$t('SLUG')"
-                  :rules="'required'"
-                ></TextField>
-              </div>
-            </b-col>
-              <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <label>
                     {{$t('MISSIONS.LEARNING_PATH')}}
