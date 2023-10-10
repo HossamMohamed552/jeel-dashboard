@@ -37,7 +37,7 @@
                       class="permission-item item"
                     >
                       <video controls class="w-100 video">
-                        <source :src="video.url" type="video/mp4" />
+                        <source :src="video.url" type="video/mp4"/>
                         Your browser does not support the video tag.
                       </video>
                       <span class="video-title">{{ video.title }}</span>
@@ -69,7 +69,7 @@
                         <span
                           class="video-title"
                           @click="downloadFile(paperWork.name, paperWork.url)"
-                          >{{ paperWork.name }}</span
+                        >{{ paperWork.name }}</span
                         >
                       </div>
                     </b-form-checkbox>
@@ -100,8 +100,8 @@
                       >
                         <span class="video-title">{{ quiz.name }}</span>
                         <span class="question-no">{{
-                          quiz.total_question
-                        }}</span>
+                            quiz.total_question
+                          }}</span>
                       </div>
                       <div class="hold-question">
                         <div class="questions-header">
@@ -124,9 +124,7 @@
                           >
                             <b-row>
                               <b-col lg="1"></b-col>
-                              <b-col lg="3">{{
-                                question.question_type.name
-                              }}</b-col>
+                              <b-col lg="3">{{ question.question_type.name }}</b-col>
                               <b-col lg="7">{{ question.name }}</b-col>
                               <b-col lg="1">
                                 <b-icon
@@ -134,9 +132,10 @@
                                   icon="info-circle"
                                   variant="info"
                                   @click.prevent="
-                                    handleShowQuestionDetails(question.id)
-                                  "
-                              /></b-col>
+                                   handleShowQuestionDetails(question.id)
+                                "
+                                />
+                              </b-col>
                             </b-row>
                           </b-form-checkbox>
                         </div>
@@ -177,7 +176,7 @@ import QuestionDetailsModal from "@/components/Shared/QuestionDetailsModal/index
 
 export default {
   name: "index",
-  components: { Button, RouteItem, QuestionDetailsModal },
+  components: {Button, RouteItem, QuestionDetailsModal},
   data() {
     return {
       selectedQuestion: null,
@@ -231,7 +230,7 @@ export default {
       );
       this.editContentMission.quizzes = this.editContentMission.quizzes.map(
         (item) => {
-          return { id: item.id, questions: item.questionsSelected };
+          return {id: item.id, questions: item.questionsSelected};
         }
       );
     });
@@ -250,7 +249,7 @@ export default {
       this.editContentMission.quizzes = this.editContentMission.quizzes.map(
         (item) => {
           if (item.id === question.quiz_id) {
-            return { id: item.id, questions: $event };
+            return {id: item.id, questions: $event};
           } else {
             return item;
           }
@@ -268,7 +267,7 @@ export default {
       this.editContentMission.quizzes = this.quizContent
         .filter((item) => $event.includes(item.id))
         .map((item) => {
-          return { id: item.id, questions: item.questionsSelected };
+          return {id: item.id, questions: item.questionsSelected};
         });
     },
     downloadFile(name, url) {

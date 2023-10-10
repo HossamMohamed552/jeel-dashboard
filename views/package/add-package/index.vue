@@ -27,14 +27,16 @@ export default {
   methods:{
     handleAddPackage($event) {
       this.loading = true
-      this.showModal = true
       this.ApiService(postPackagesRequest($event)).then((response) => {
         this.loading = false
+        this.showModal = true
         setTimeout(() => {
           this.showModal = false
+          this.$router.push("/dashboard/package");
         }, 3000)
-      }).then(() => {
-        this.$router.push("/dashboard/package");
+      }).catch(()=>{
+        this.loading = false
+        this.showModal = false
       })
     },
     handleCancel() {

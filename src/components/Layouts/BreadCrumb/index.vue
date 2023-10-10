@@ -25,8 +25,7 @@
             {{ currentRoute.meta.breadcrumb }}</p>
         </div>
       </div>
-      <div class="navigation-back" v-if="currentRoute && !(currentRoute.name === 'main')"
-           @click="$router.back()">
+      <div class="navigation-back" v-if="currentRoute && !(currentRoute.name === 'main')" @click="$router.back()">
         <span>{{ $t('BACK') }}</span>
         <img src="@/assets/images/icons/left-arrow.png" class="icon back">
       </div>
@@ -41,7 +40,6 @@ export default {
   data() {
     return {
       currentRoute: null,
-
     }
   },
   computed: {
@@ -63,6 +61,9 @@ export default {
         routerName: route.name
       }));
     }
+  },
+  mounted() {
+    this.currentRoute = this.$route
   },
   updated() {
     this.currentRoute = this.$route

@@ -20,25 +20,31 @@
           <div class="hold-fields" v-if="question">
             <div class="divider">
               <b-row>
-                <b-col lg="5" class="d-flex align-items-end mb-4 mt-3">
-                  <ShowItem
-                    :title="$t('QUESTIONS.QUESTION')"
-                    :subtitle="question.question"
-                  />
-                  <b-icon
-                    v-if="isPlaying && currentActiveId === question.id"
-                    variant="primary"
-                    class="mx-2 cursor-pointer"
-                    @click="playAudio(question.id)"
-                    icon="volume-up-fill"
-                  />
-                  <b-icon
-                    v-else
-                    variant="primary"
-                    class="mx-2 cursor-pointer"
-                    @click="playAudio(question.question_audio, question.id)"
-                    icon="volume-up"
-                  />
+                <b-col lg="5">
+                  <ShowItem :title="$t('QUESTIONS.QUESTION')" />
+                  <div class="d-flex align-items-center mb-4 mt-3">
+                    <ShowItem :subtitle="question.question" v-if="question.question_pattern === 'text'"/>
+                    <img class="question_img mb-3" v-else-if="question.question_pattern === 'image'" :src="question.question">
+                    <audio controls v-else-if="question.question_pattern === 'audio'" class="mb-3">
+                      <source :src="question.question" />
+                    </audio>
+                    <div v-if="question.question_audio">
+                      <b-icon
+                        v-if="isPlaying && currentActiveId === question.id"
+                        variant="primary"
+                        class="mx-2 cursor-pointer"
+                        @click="playAudio(question.id)"
+                        icon="volume-up-fill"
+                      />
+                      <b-icon
+                        v-else
+                        variant="primary"
+                        class="mx-2 cursor-pointer"
+                        @click="playAudio(question.question_audio, question.id)"
+                        icon="volume-up"
+                      />
+                    </div>
+                  </div>
                 </b-col>
                 <b-col lg="4" class="mb-4 mt-3" v-if="question.question_type && question.question_type.name">
                   <ShowItem
@@ -120,21 +126,50 @@
               <ShowItem :title="$t('QUESTIONS.ANSWERS')"/>
               <div v-if="question.answers">
                 <div v-for="(answer, ind) in question.answers" :key="ind" class="d-flex justify-content-start align-items-end">
-                  <span class="sub-title">{{ answer.answer }}</span><span v-if="answer.correct" class="px-2 the-right-answer">({{ $t("QUESTIONS.THE_RIGHT_ANSWER") }})</span>
-                  <b-icon
-                    v-if="isPlaying && currentActiveId === answer.id + '-' + ind "
-                    variant="primary"
-                    class="mx-2 cursor-pointer"
-                    @click="playAudio(answer.audio, answer.id + '-' + ind)"
-                    icon="volume-up-fill"
-                  />
-                  <b-icon
-                    v-else
-                    variant="primary"
-                    class="mx-2 cursor-pointer"
-                    @click="playAudio(answer.audio, answer.id + '-' + ind)"
-                    icon="volume-up"
-                  />
+                  <div v-if="answer.answer_pattern === 'text'" class="d-flex justify-content-start align-items-center">
+                    <span class="sub-title" >{{ answer.answer }}</span><span v-if="answer.correct" class="px-2 the-right-answer">({{ $t("QUESTIONS.THE_RIGHT_ANSWER") }})</span>
+                    <div v-if="answer.audio">
+                      <b-icon
+                        v-if="isPlaying && currentActiveId === answer.id + '-' + ind"
+                        variant="primary"
+                        class="mx-2 cursor-pointer"
+                        @click="playAudio(answer.audio, answer.id + '-' + ind)"
+                        icon="volume-up-fill"
+                      />
+                      <b-icon
+                        v-else
+                        variant="primary"
+                        class="mx-2 cursor-pointer"
+                        @click="playAudio(answer.audio, answer.id + '-' + ind)"
+                        icon="volume-up"
+                      />
+                    </div>
+                  </div>
+                  <div v-else-if="answer.answer_pattern === 'image'" class="d-flex justify-content-start align-items-center">
+                    <img :src="answer.answer" class="answer-img"><span v-if="answer.correct" class="px-2 the-right-answer">({{ $t("QUESTIONS.THE_RIGHT_ANSWER") }})</span>
+                    <div v-if="answer.audio">
+                      <b-icon
+                        v-if="isPlaying && currentActiveId === answer.id + '-' + ind"
+                        variant="primary"
+                        class="mx-2 cursor-pointer"
+                        @click="playAudio(answer.audio, answer.id + '-' + ind)"
+                        icon="volume-up-fill"
+                      />
+                      <b-icon
+                        v-else
+                        variant="primary"
+                        class="mx-2 cursor-pointer"
+                        @click="playAudio(answer.audio, answer.id + '-' + ind)"
+                        icon="volume-up"
+                      />
+                    </div>
+                  </div>
+                  <div v-else-if="answer.answer_pattern === 'audio'" class="d-flex justify-content-start align-items-center mb-3">
+                    <audio controls>
+                      <source :src="answer.answer" />
+                    </audio>
+                    <span v-if="answer.correct" class="px-2 the-right-answer">({{ $t("QUESTIONS.THE_RIGHT_ANSWER") }})</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -176,7 +211,6 @@ export default {
   },
   methods: {
     getSingleQuestionDetails() {
-
       this.loading = true;
       this.ApiService(getSingleQuestionDetailsRequest(this.questionId)).then(
         (response) => {
@@ -203,6 +237,9 @@ export default {
       this.isPlaying = true;
     },
   },
+  destroyed() {
+    this.audio.pause();
+  }
 };
 </script>
   <style lang="scss" scoped>
