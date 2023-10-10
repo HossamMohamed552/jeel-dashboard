@@ -215,6 +215,9 @@ export default {
       this.isPlaying = true;
     },
   },
+  destroyed() {
+    this.audio.pause();
+  }
 };
 </script>
 <style scoped lang="scss">

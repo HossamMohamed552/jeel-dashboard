@@ -84,12 +84,19 @@
         <hr/>
         <b-row>
           <b-col lg="6">
-            <h6 v-if="collectData.question_pattern === 'text' || collectData.question_pattern === 'audio'">{{ $t('QUESTIONS.QUESTION') }}</h6>
-            <p v-if="collectData.question_pattern === 'text' &&  collectData.question">{{ collectData.question }}</p>
+            <h6
+              v-if="collectData.question_pattern === 'text' || collectData.question_pattern === 'audio'">
+              {{ $t('QUESTIONS.QUESTION') }}</h6>
+            <p v-if="collectData.question_pattern === 'text' &&  collectData.question">
+              {{ collectData.question }}</p>
             <h6 v-if="collectData.questionImage">{{ $t('QUESTIONS.QUESTIONIMAGE') }}</h6>
-            <img class="question_img" v-if="collectData.questionImage" :src="collectData.questionImage">
-            <img class="question_img" v-else-if="collectData.question_pattern === 'image' &&  collectData.questionImage" :src="collectData.questionImage">
-            <p v-if="collectData.question_pattern === 'audio' &&  collectData.question">{{ collectData.question.name }}</p>
+            <img class="question_img" v-if="collectData.questionImage"
+                 :src="collectData.questionImage">
+            <img class="question_img"
+                 v-else-if="collectData.question_pattern === 'image' &&  collectData.questionImage"
+                 :src="collectData.questionImage">
+            <p v-if="collectData.question_pattern === 'audio' &&  collectData.question">
+              {{ collectData.question.name }}</p>
           </b-col>
           <b-col lg="6">
             <h6 v-if="collectData.hint">{{ $t('QUESTIONS.HINT') }}</h6>
@@ -98,16 +105,22 @@
           <b-col v-for="(answer, idx) in collectData.answers" :key="idx" lg="3">
             <h6>{{ `${$t('QUESTIONS.ANSWER')} ${idx + 1}` }}</h6>
             <p v-if="answer.answer_pattern === 'text'">{{ answer && answer.answer }}</p>
-            <img class="question_img" v-else-if="answer.answer_pattern === 'image'" :src="answer.answerImage">
-            <p v-if="answer.answer_pattern === 'audio'">{{ answer.audioName ? answer.audioName : answer.answer.name }}</p>
+            <img class="question_img" v-else-if="answer.answer_pattern === 'image'"
+                 :src="answer.answerImage">
+            <p v-if="answer.answer_pattern === 'audio'">
+              {{ answer.audioName ? answer.audioName : answer.answer.name }}</p>
           </b-col>
           <b-col lg="12" v-if="!questionTypeSlug.includes('order')">
             <h6>{{ $t('QUESTIONS.RIGHT_ANSWER') }}</h6>
             <b-row>
-              <b-col v-for="correctAnswer in getCorrectAnswer(collectData.answers,1)" :key="correctAnswer.id">
+              <b-col v-for="correctAnswer in getCorrectAnswer(collectData.answers,1)"
+                     :key="correctAnswer.id">
                 <p v-if="correctAnswer.answer_pattern === 'text'">{{ correctAnswer.answer }}</p>
-                <img v-if="correctAnswer.answer_pattern === 'image'" class="question_img" :src="correctAnswer.answerImage"/>
-                <p v-if="correctAnswer.answer_pattern === 'audio'">{{ correctAnswer.audioName ? correctAnswer.audioName : correctAnswer.answer.name }}</p>
+                <img v-if="correctAnswer.answer_pattern === 'image'" class="question_img"
+                     :src="correctAnswer.answerImage"/>
+                <p v-if="correctAnswer.answer_pattern === 'audio'">{{
+                    correctAnswer.audioName ? correctAnswer.audioName : correctAnswer.answer.name
+                  }}</p>
               </b-col>
             </b-row>
           </b-col>
@@ -116,8 +129,11 @@
             <b-row>
               <b-col v-for="correctAnswer in collectData.answers" :key="correctAnswer.id" lg="12">
                 <p v-if="correctAnswer.answer_pattern === 'text'">{{ correctAnswer.answer }}</p>
-                <img class="question_img" v-else-if="correctAnswer.answer_pattern === 'image'" :src="correctAnswer.answerImage">
-                <p v-if="correctAnswer.answer_pattern === 'audio'">{{ correctAnswer.audioName ? correctAnswer.audioName : correctAnswer.answer.name }}</p>
+                <img class="question_img" v-else-if="correctAnswer.answer_pattern === 'image'"
+                     :src="correctAnswer.answerImage">
+                <p v-if="correctAnswer.answer_pattern === 'audio'">{{
+                    correctAnswer.audioName ? correctAnswer.audioName : correctAnswer.answer.name
+                  }}</p>
               </b-col>
             </b-row>
           </b-col>
@@ -347,6 +363,7 @@ export default {
       }
     },
     saveQuestion() {
+      this.loading = true
       const formData = new FormData();
       formData.append("question_type_id", this.collectData.question_type_id);
       formData.append("question_type_sub_id", this.collectData.question_type_sub_id);
@@ -359,7 +376,7 @@ export default {
       formData.append("question_outcome_id", this.collectData.question_outcome_id);
       formData.append("question_pattern", this.collectData.question_pattern);
       formData.append("level_id", this.collectData.level_id);
-      if(this.collectData.question !== null){
+      if (this.collectData.question !== null) {
         formData.append("question", this.collectData.question);
       }
       if (this.collectData.question_image !== null && this.collectData.question_pattern === 'text') {
@@ -419,8 +436,9 @@ export default {
           },
         })
         .then((res) => {
+          this.loading = false
           this.$router.push("/dashboard/questions");
-        });
+        }).catch(() => this.loading = false);
     }
     ,
   }

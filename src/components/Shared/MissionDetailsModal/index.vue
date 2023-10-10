@@ -142,11 +142,16 @@
                   <ShowItem :subtitle="quizPath.name" />
                   <ShowItem :title="$t('QUESTIONS.QUESTIONS')" class="mt-3"/>
                   <div
-                    v-for="question in quizPath.questions"
+                    v-for="(question,index) in quizPath.questions"
                     :key="question.id"
                   >
                     <div class="icon-play-holder">
-                      <ShowItem :title="question.question" class="question" />
+                      <span>{{ index + 1}} - </span>
+                      <ShowItem :title="question.question" class="question mb-3"  v-if="question.question_pattern === 'text'"/>
+                      <img class="question_img mb-3" v-else-if="question.question_pattern === 'image'" :src="question.question">
+                      <audio controls v-else-if="question.question_pattern === 'audio'" class="mb-3">
+                        <source :src="question.question" />
+                      </audio>
                       <b-icon
                         class="cursor-pointer"
                         icon="info-circle"
@@ -262,6 +267,9 @@ export default {
       this.$router.push(`/dashboard/videos/show/${videoId}`)
     },
   },
+  destroyed() {
+    this.audio.pause();
+  }
 };
 </script>
   <style lang="scss" scoped>
