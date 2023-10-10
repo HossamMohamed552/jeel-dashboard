@@ -133,7 +133,7 @@
                     <span
                       class="mx-3 danger"
                       v-if="answersListMcQ.length > 1"
-                      @click="answersListMcQ.splice(idx, 1)"
+                      @click="deleteAnswer(idx)"
                     >حذف</span
                     >
                   </div>
@@ -148,6 +148,7 @@
                       :disabled="invalid || answersListMcQ.length <= 1 || checkOneCorrectAnswerMcq"
                       :custom-class="'submit-btn'"
                     >
+
                       {{ $t("GLOBAL_NEXT") }}
                     </Button>
                     <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
@@ -1331,7 +1332,7 @@
                     <span
                       class="mx-3 danger"
                       v-if="answersListSelectAudio.length > 1"
-                      @click="answersListSelectAudio.splice(idx, 1)"
+                      @click="deleteAnswerSelectAudio(idx)"
                     >حذف</span
                     >
                   </div>
@@ -2635,7 +2636,7 @@ export default {
     answerSelect($event, answersListSelect) {
       let checkOneWrong = answersListSelect.filter((item) => item.correct === 0);
       let checkOneCorrect = answersListSelect.filter((item) => item.correct === 1);
-      if (checkOneWrong.length >= 1 && checkOneCorrect.length >= 1) {
+      if (checkOneWrong.length >= 1 && checkOneCorrect.length >= 2) {
         this.checkMultiCorrectAnswerSelect = false;
       } else {
         this.checkMultiCorrectAnswerSelect = true;
@@ -2719,7 +2720,7 @@ export default {
         this.formValues.question_pattern = 'text'
         this.assignAnswersDragOne();
         this.$emit("onSubmit", this.formValues);
-      } else if (this.questionSlug.slug === "order_text_with_question" ||  this.questionSlug.slug === "order_text_without_question") {
+      } else if (this.questionSlug.slug === "order_text_with_question" || this.questionSlug.slug === "order_text_without_question") {
         this.formValues.question_pattern = 'text'
         this.assignAnswersDragSort();
         this.$emit("onSubmit", this.formValues);
@@ -2835,6 +2836,16 @@ export default {
         audioName: ''
       })
     },
+    // remove answer and check correct
+    deleteAnswer(index) {
+      this.answersListMcQ.splice(index, 1)
+      this.answerMcQ(_, this.answersListMcQ)
+    },
+    deleteAnswerSelectAudio(index) {
+      this.answersListSelectAudio.splice(index, 1)
+      this.answerSelectAudio(_, this.answersListSelectAudio)
+    },
+    // assign answer
     assignAnswersDragOne() {
       this.formValues.answers = this.answersListDragOne.filter((answer) => answer.answer);
     },

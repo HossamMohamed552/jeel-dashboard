@@ -35,7 +35,7 @@
                 <Button
                   type="submit"
                   :loading="loading"
-                  :disabled="invalid"
+                  :disabled="invalid || canNotSend"
                   custom-class="submit-btn"
                 >
                   {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
@@ -71,7 +71,16 @@ export default {
         name: "",
         code: ""
       },
+      defaultValue:{
+        name: "",
+        code: ""
+      }
     };
+  },
+  computed:{
+    canNotSend(){
+      return (this.createCountry.name === this.defaultValue.name) && (this.createCountry.code === this.defaultValue.code)
+    }
   },
   methods: {
     onSubmit() {
@@ -90,7 +99,10 @@ export default {
     getCountryToEdit() {
       if (this.$route.params.id) {
         this.ApiService(getSingleCountryRequest(this.$route.params.id)).then((response) => {
-          this.createCountry = response.data.data
+          this.createCountry.name = response.data.data.name
+          this.defaultValue.name = response.data.data.name
+          this.createCountry.code = response.data.data.code
+          this.defaultValue.code = response.data.data.code
         })
       }
     }

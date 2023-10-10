@@ -27,7 +27,7 @@
                   <b-dropdown no-caret>
                     <template #button-content>
                       <div class="user-image">
-                        <img :src="user.avatar" alt="user" title="user" @error="altImage($event)"/>
+                        <img v-if="user && user.avatar" :src="user.avatar" alt="user" title="user" @error="altImage($event)"/>
                       </div>
                     </template>
                     <b-dropdown-item to="/profile">{{ $t("MY_PROFILE") }}</b-dropdown-item>
