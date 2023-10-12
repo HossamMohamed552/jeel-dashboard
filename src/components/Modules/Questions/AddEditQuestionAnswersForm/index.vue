@@ -2095,8 +2095,19 @@
           <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
             <form @submit.prevent="onSubmit" class="mt-5">
               <b-row>
-                <b-col lg="12" class="mb-3">
+                <b-col lg="8" class="mb-3">
                   <div class="hold-field">
+                    <TextField
+                      v-model="formValues.question"
+                      :label="$t('QUESTIONS.QUESTION')"
+                      :name="$t('QUESTIONS.QUESTION')"
+                      :rules="'required'"
+                    ></TextField>
+                  </div>
+                </b-col>
+                <b-col lg="4" class="mb-3">
+                  <div class="hold-field">
+                    <label>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="$route.params.id ? '' : 'required'"
@@ -2105,9 +2116,9 @@
                       <b-form-file
                         accept="audio/*"
                         :placeholder="
-                          formValues.question ? formValues.question.name : 'اختر ملف'
+                          formValues.question_audio ? formValues.question_audio.name : 'اختر ملف'
                         "
-                        v-model="formValues.question"
+                        v-model="formValues.question_audio"
                         name="audio"
                       >
                       </b-form-file>

@@ -366,7 +366,9 @@ export default {
       this.loading = true
       const formData = new FormData();
       formData.append("question_type_id", this.collectData.question_type_id);
+      formData.append("question_type_slug", this.collectData.main_question_slug.slug);
       formData.append("question_type_sub_id", this.collectData.question_type_sub_id);
+      formData.append("question_sub_type_slug", this.collectData.question_slug.slug);
       formData.append("learning_path_id", this.collectData.learning_path_id);
       formData.append("language_skill_id", this.collectData.language_skill_id);
       formData.append("question_difficulty_id", this.collectData.question_difficulty_id);
