@@ -212,6 +212,8 @@
     "HINT_TITLE_AUDIO": "التسجيل الصوتى للتلميح",
     "ANSWERS": "الإجابات",
     "QUESTION_ANSWER_AUDIO": "التسجيل الصوتى للإجابة",
+    "ANSWERSFROM": "الإجابة من",
+    "ANSWERSTO": "الإجابة إلى",
     "sortAnswers": "الترتيب الصحيح للإجابة",
     "QUESTION_ANSWER_MATCH_TO_AUDIO": "التسجيل الصوتى للإجابة المقابلة",
     "ANSWER_MATCH_TO": "الإجابة المقابلة",
@@ -223,7 +225,9 @@
     "UPLOAD_IMAGE": "صورة السؤال",
     "UPLOAD_IMAGE_ANSWER": "صورة الإجابة",
     "RIGHT_sequence": "الترتيب الصحيح",
-    "QUESTIONIMAGE": "صورة السؤال"
+    "QUESTIONIMAGE": "صورة السؤال",
+    "reset": "إعادة إدخال الإجابات",
+    "confirm": "تأكيد"
   },
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",
@@ -432,5 +436,7 @@
   "This link is invalid": "هذا الرابط غير صالح",
   "This link has been expired": "هذا الرابط انتهت صلاحيته",
   "FORGET_PASSWORD_TITLE": "ادخل بريدك الإلكترونى لإعادة ادخال كلمة المرور",
-  "WELCOME": "مرحبا"
+  "WELCOME": "مرحبا",
+  "ADD_ANSWER": "إضافة",
+  "remove_ANSWER": "حذف"
 }

@@ -90,7 +90,8 @@ export default {
       formValues: {
         question_type_id: null,
         question_type_sub_id: null,
-        question_slug: null
+        question_slug: null,
+        main_question_slug:null
       },
     };
   },
@@ -104,6 +105,9 @@ export default {
     setQuestionSlug($event){
       this.formValues.question_slug = this.questionSubTypes.filter((item)=> item.id === $event)[0]
     },
+    setMainQuestionSlug($event){
+      this.formValues.main_question_slug = this.questionTypes.filter((item)=> item.id === $event)[0]
+    },
     onSubmit() {
       this.$emit("onSubmit", this.formValues)
     },
@@ -111,6 +115,7 @@ export default {
       this.$emit("handleCancel");
     },
     getSubQuestionTypes: debounce(function (id) {
+      this.setMainQuestionSlug(id)
       this.$emit("getSubQuestionTypes", id);
     }, 100),
   },
