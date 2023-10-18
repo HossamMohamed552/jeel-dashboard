@@ -24,11 +24,24 @@
     margin-bottom: 3rem;
   }
 }
-.question_img{
+
+.question_img {
   width: 240px;
   height: 160px;
   object-fit: contain;
   object-position: center;
   margin: 1rem 0;
   border-radius: 1rem;
+}
+
+.answer_match {
+  p {
+    margin: 0;
+    &:first-of-type{
+      margin-left: 1rem;
+    }
+  }
+  .to {
+    margin: 0 2rem;
+  }
 }

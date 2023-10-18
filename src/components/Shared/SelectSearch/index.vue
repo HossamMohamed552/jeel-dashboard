@@ -1,7 +1,6 @@
 <template>
   <ValidationProvider v-slot="{ errors, invalid }" :name="name" :rules="rules">
     <label v-if="label">{{ label }}</label>
-
     <v-select
       v-model="innerValue"
       v-bind="$attrs"
@@ -27,13 +26,17 @@
 </template>
 
 <script>
-import { FieldMixin } from "@/mixins/FieldMixin";
+import {FieldMixin} from "@/mixins/FieldMixin";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 
 export default {
   mixins: [FieldMixin],
   props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     options: {
       type: Array,
       default: () => [],

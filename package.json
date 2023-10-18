@@ -16,6 +16,7 @@
     "core-js": "^3.6.5",
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.1",
+    "element-ui": "^2.15.14",
     "qs": "^6.9.4",
     "sortablejs": "1.10.2",
     "vee-validate": "^3.4.11",

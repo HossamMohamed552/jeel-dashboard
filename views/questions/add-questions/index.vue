@@ -110,7 +110,8 @@
             <p v-if="answer.answer_pattern === 'audio'">
               {{ answer.audioName ? answer.audioName : answer.answer.name }}</p>
           </b-col>
-          <b-col lg="12" v-if="!questionTypeSlug.includes('order')">
+          <b-col lg="12"
+                 v-if="!questionTypeSlug.includes('order') || !questionTypeSlug.includes('match')">
             <h6>{{ $t('QUESTIONS.RIGHT_ANSWER') }}</h6>
             <b-row>
               <b-col v-for="correctAnswer in getCorrectAnswer(collectData.answers,1)"
@@ -136,6 +137,17 @@
                   }}</p>
               </b-col>
             </b-row>
+          </b-col>
+          <b-col lg="12" v-if="questionTypeSlug.includes('match')">
+            <!--            <pre>{{ collectData.answers }}</pre>-->
+            <div v-for="(matchAnswer,index) in collectData.answers" :key="index"
+                 class="d-flex justify-content-start align-items-center answer_match my-3">
+              <p>{{ index + 1 }} - </p>
+              <p>{{ matchAnswer.answer }}</p>
+              <p class="to">to</p>
+              <p v-for="(matchAnswerTo,index) in matchAnswer.answers_to" :key="index">
+                {{ matchAnswerTo.answer }}</p>
+            </div>
           </b-col>
         </b-row>
         <b-row>
@@ -350,11 +362,12 @@ export default {
     },
     getCorrectAnswer(list, id) {
       console.log('list', list)
-      if (this.questionTypeSlug !== "order_text_with_question") {
+      if (this.questionTypeSlug !== "order_text_with_question" || !this.questionTypeSlug.includes('match')) {
+        console.log('this.questionTypeSlug', this.questionTypeSlug)
         let correctAnswer;
         if (list && list.length) {
           correctAnswer = list.filter((item) => item.correct === id);
-          this.answerPattern = correctAnswer[0].answer_pattern
+          this.answerPattern = correctAnswer[0] ? correctAnswer[0].answer_pattern : ""
           this.correctAnswers = correctAnswer
           return correctAnswer
         }
@@ -404,14 +417,20 @@ export default {
           formData.append(`answers[${answer}][order]`, this.collectData.answers[answer].order);
           formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers[answer].answer_pattern);
         }
-      } else if (this.questionTypeSlug === "match_one_to_one") {
+      } else if (this.questionTypeSlug.includes('match')) {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][match_from]`, this.collectData.answers[answer]?.match_from);
           formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer]?.audio);
-          formData.append(`answers[${answer}][answers_to][${0}][answer]`, this.collectData.answers[answer].answers_to[0]?.answer);
-          formData.append(`answers[${answer}][answers_to][${0}][match_to]`, this.collectData.answers[answer].answers_to[0]?.match_to);
-          formData.append(`answers[${answer}][answers_to][${0}][audio]`, this.collectData.answers[answer].answers_to[0]?.audio);
+          formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers[answer]?.answer_pattern);
+          for (let answerTo = 0; answerTo < this.collectData.answers[answer].answers_to.length; answerTo++) {
+            console.log('answer', answer)
+            console.log('answers_to', answerTo)
+            formData.append(`answers[${answer}][answers_to][${answerTo}][answer]`, this.collectData.answers[answer].answers_to[answerTo]?.answer);
+            formData.append(`answers[${answer}][answers_to][${answerTo}][match_to]`, this.collectData.answers[answer].answers_to[answerTo]?.match_to);
+            formData.append(`answers[${answer}][answers_to][${answerTo}][audio]`, this.collectData.answers[answer].answers_to[answerTo]?.audio);
+            formData.append(`answers[${answer}][answers_to][${answerTo}][answer_pattern]`, this.collectData.answers[answer].answers_to[answerTo]?.answer_pattern);
+          }
         }
       } else if (this.questionTypeSlug.includes('true_false')) {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
@@ -442,7 +461,6 @@ export default {
           this.$router.push("/dashboard/questions");
         }).catch(() => this.loading = false);
     }
-    ,
   }
 };
 </script>

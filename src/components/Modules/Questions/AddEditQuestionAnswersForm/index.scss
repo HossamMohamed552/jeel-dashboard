@@ -27,13 +27,14 @@
   }
 }
 
-.hold-field{
-  label{
+.hold-field {
+  label {
     color: $color-primary;
     display: block;
     margin: 0 0.7rem 0.7rem 0;
   }
-  .custom-selectBox{
+
+  .custom-selectBox {
     display: block;
     padding: 0 1.3rem;
     border-radius: 3.125rem;
@@ -42,35 +43,45 @@
   }
 }
 
+.hidden-text {
+  opacity: 0;
+}
+
 ::v-deep {
 
   .text-field input {
     height: 50px;
   }
+
   textarea.form-control {
     border-radius: 10px !important;
     color: purple;
     font-size: 16px;
     font-weight: bold;
   }
+
   .col-form-label {
     color: purple;
     font-size: 18px;
     font-weight: bold;
   }
+
   label {
     color: purple;
     font-size: 18px;
     font-weight: bold;
   }
+
   .custom-file-label {
     border-radius: 15px;
     font-size: 14px;
     height: 50px;
+
     span {
       line-height: 2.2;
     }
   }
+
   .custom-file-label::after {
     content: "اضافه" !important;
     background-color: purple;
@@ -85,16 +96,19 @@
     align-items: center;
 
   }
+
   .custom-select {
     height: 50px;
     border-radius: 15px;
   }
 }
-.preview-question-heading{
+
+.preview-question-heading {
   color: #76236C;
   font-weight: bold;
 }
-.preview-question{
+
+.preview-question {
   color: $color-primary;
   font-size: 1.3rem;
   font-weight: 500;
@@ -108,19 +122,59 @@
 //  border-radius: 1rem;
 //  border: 1px solid;
 //}
-.list-group{
+.list-group {
   margin-top: 2rem;
   min-height: 200px;
   background: #eee;
   padding: 0;
   width: 95%
 }
-.answer-name{
+
+.answer-name {
   font-weight: 700;
 }
-.answer-img{
+
+.answer-img {
   width: 150px;
   height: 150px;
   object-fit: contain;
   object-position: center;
+}
+
+.add-btn,.remove-btn {
+  background: linear-gradient(to left, $color-primary, $color-primary-two);
+  color: #fff;
+  padding: .7rem .5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 3.125rem;
+  font-weight: bold;
+}
+.remove-btn{
+  background: none;
+  color: #76236c;
+  border: 1px solid #76236c;
+  padding: .5rem 1rem;
+}
+
+.answer-item {
+  color: #76236C;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.select{
+  display: block;
+  margin: 1rem 0;
+}
+button:disabled{
+  background: rgba(118, 35, 108, 0.50);
+  cursor: not-allowed;
+}
+.invalid-feedback{
+  display: block;
 }
