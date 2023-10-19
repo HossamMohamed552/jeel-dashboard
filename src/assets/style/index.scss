@@ -36,6 +36,16 @@
       height: 20px !important;
     }
   }
+  .el-scrollbar__wrap{
+    overflow: unset !important;
+  }
+  .el-select-dropdown__item{
+    span{
+      display: block;
+      width: 100%;
+      text-align: right;
+    }
+  }
 }
 .flex-center {
   @include flexCenter(center);
@@ -187,3 +197,4 @@ label {
   object-fit: contain;
   object-position: center;
 }
+

@@ -145,8 +145,10 @@
               <p>{{ index + 1 }} - </p>
               <p>{{ matchAnswer.answer }}</p>
               <p class="to">to</p>
-              <p v-for="(matchAnswerTo,index) in matchAnswer.answers_to" :key="index">
-                {{ matchAnswerTo.answer }}</p>
+              <div v-for="(matchAnswerTo,index) in matchAnswer.answers_to" :key="index">
+                <p v-if="matchAnswerTo.answer_pattern === 'text'">{{ matchAnswerTo.answer }}</p>
+                <p v-if="matchAnswerTo.answer_pattern === 'audio'">{{ matchAnswerTo.answer.name }}</p>
+              </div>
             </div>
           </b-col>
         </b-row>
@@ -361,9 +363,7 @@ export default {
       }
     },
     getCorrectAnswer(list, id) {
-      console.log('list', list)
       if (this.questionTypeSlug !== "order_text_with_question" || !this.questionTypeSlug.includes('match')) {
-        console.log('this.questionTypeSlug', this.questionTypeSlug)
         let correctAnswer;
         if (list && list.length) {
           correctAnswer = list.filter((item) => item.correct === id);
@@ -421,14 +421,16 @@ export default {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][match_from]`, this.collectData.answers[answer]?.match_from);
-          formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer]?.audio);
+          if(this.collectData.answers[answer]?.audio){
+            formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer]?.audio);
+          }
           formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers[answer]?.answer_pattern);
           for (let answerTo = 0; answerTo < this.collectData.answers[answer].answers_to.length; answerTo++) {
-            console.log('answer', answer)
-            console.log('answers_to', answerTo)
             formData.append(`answers[${answer}][answers_to][${answerTo}][answer]`, this.collectData.answers[answer].answers_to[answerTo]?.answer);
             formData.append(`answers[${answer}][answers_to][${answerTo}][match_to]`, this.collectData.answers[answer].answers_to[answerTo]?.match_to);
-            formData.append(`answers[${answer}][answers_to][${answerTo}][audio]`, this.collectData.answers[answer].answers_to[answerTo]?.audio);
+            if(this.collectData.answers[answer].answers_to[answerTo]?.audio){
+              formData.append(`answers[${answer}][answers_to][${answerTo}][audio]`, this.collectData.answers[answer].answers_to[answerTo]?.audio);
+            }
             formData.append(`answers[${answer}][answers_to][${answerTo}][answer_pattern]`, this.collectData.answers[answer].answers_to[answerTo]?.answer_pattern);
           }
         }

@@ -14,7 +14,7 @@
                     v-model="createSchool.name"
                     :label="$t('SCHOOL.name')"
                     :name="$t('SCHOOL.name')"
-                    :rules="'required|min:3'"
+                    :rules="'required|min:3|max:30'"
                   ></TextField>
                 </div>
               </b-col>
@@ -116,13 +116,14 @@
                             v-model="createSchool.contact"
                             :label="$t('SCHOOL.contact')"
                             :name="$t('SCHOOL.contact')"
-                            :rules="{regex: /^\d{11}$/}"
+                            :rules="{regex: /^01[0125][0-9]{8}$/}"
                           ></TextField>
                         </div>
                       </b-col>
                       <b-col lg="12" class="px-3 mb-3">
                         <div class="hold-field">
                           <TextField
+                            :rules="{max: 60}"
                             v-model="createSchool.address"
                             :label="$t('SCHOOL.address')"
                             :name="$t('SCHOOL.address')"

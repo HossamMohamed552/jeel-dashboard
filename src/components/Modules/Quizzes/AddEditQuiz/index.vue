@@ -14,7 +14,7 @@
                     v-model="createQuiz.name"
                     :label="$t('QUIZZES.name')"
                     :name="$t('QUIZZES.name')"
-                    :rules="'required|min:3'"
+                    :rules="'required|min:3|max:30'"
                   ></TextField>
                 </div>
               </b-col>
@@ -226,7 +226,7 @@
                 <div class="hold-field">
                   <TextAreaField
                     :label="$t('QUIZZES.description')"
-                    :rules="'required|min:3'"
+                    :rules="'required|min:3|max:60'"
                     v-model="createQuiz.description"
                   />
                 </div>

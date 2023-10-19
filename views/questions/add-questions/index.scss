@@ -16,12 +16,14 @@
   h6 {
     color: $color-light-gray;
     font-weight: 400;
+    word-break: break-word;
   }
 
   p {
     color: $color-primary;
     font-weight: 500;
     margin-bottom: 3rem;
+    word-break: break-word;
   }
 }
 

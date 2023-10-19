@@ -16,7 +16,7 @@
                     v-model="createPaperWork.name"
                     :label="$t('PAPER_WORK.NAME')"
                     :name="$t('PAPER_WORK.NAME')"
-                    :rules="'required|min:3'"
+                    :rules="'required|min:3|max:30'"
                   ></TextField>
                 </div>
               </b-col>
@@ -175,7 +175,7 @@
                   >
                     <TextAreaField
                       v-model="createPaperWork.description"
-                      :rules="'required|min:5'"
+                      :rules="'required|min:5|max:60'"
                       rows="5"
                       :name="$t('PAPER_WORK.Description')"
                     >

@@ -68,7 +68,7 @@
                     v-model="formValues.mobile"
                     :label="$t('USERS.PHONE_NUMBER')"
                     :name="$t('USERS.PHONE_NUMBER')"
-                    :rules="{ regex: /^\d{11}$/ }"
+                    :rules="{ regex: /^01[0125][0-9]{8}$/ }"
                   ></TextField>
                 </div>
               </b-col>
