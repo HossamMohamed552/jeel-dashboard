@@ -12,14 +12,14 @@
                     v-model="createVideo.name"
                     :label="$t('VIDEO.NAME')"
                     :name="$t('VIDEO.NAME')"
-                    :rules="'required|min:3'"
+                    :rules="'required|min:3|max:30'"
                   ></TextField>
                 </div>
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <b-form-group :label="$t('VIDEO.Description')" v-slot="{ ariaDescribedby }" class="description">
-                    <TextAreaField v-model="createVideo.description" rows="5" :name="$t('VIDEO.Description')">
+                    <TextAreaField v-model="createVideo.description" rows="5" :name="$t('VIDEO.Description')"  :rules="'max:60'">
                     </TextAreaField>
                   </b-form-group>
                 </div>
@@ -69,7 +69,7 @@
                   </ValidationProvider>
                 </div>
               </b-col>
-         
+
               <b-col lg="6" class="mb-3 mt-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors, invalid}" rules="required">

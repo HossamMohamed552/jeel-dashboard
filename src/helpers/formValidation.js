@@ -3,7 +3,6 @@ import { required, email, numeric, image, size, max, max_value, regex } from "ve
 
 extend("required", {
   ...required,
-  message: "Required",
 });
 
 extend("email", {
@@ -13,7 +12,6 @@ extend("email", {
 
 extend("numeric", {
   ...numeric,
-  message: "Please enter a valid number",
 });
 
 extend("image", {
@@ -29,7 +27,6 @@ extend("regex", {
 });
 extend("max_value", {
   ...max_value,
-  message: "Seconds must be less than 60",
 });
 
 extend("size", {

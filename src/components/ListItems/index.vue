@@ -51,7 +51,7 @@
           <span>{{ data.item.music_status === 1 ? "بموسيقى" : "أكابيلا" }}</span>
         </template>
         <template #cell(country)="data">
-          <span>{{ data.value.name }}</span>
+          <span>{{ data.value.name | cutString }}</span>
         </template>
         <template #cell(email.owner)="data">
           <span>{{ data.item.owner.email }}</span>
@@ -62,40 +62,38 @@
           </div>
         </template>
         <template #cell(school_type)="data">
-          <span>{{ data.item.school_type.name }}</span>
+          <span>{{ data.item.school_type.name | cutString}}</span>
         </template>
         <template #cell(school_group)="data">
-          <span>{{ data.item.school_group.name }}</span>
+          <span>{{ data.item.school_group.name | cutString}}</span>
         </template>
         <template #cell(package)="data">
-          <span>{{ data.item.package.name }}</span>
+          <span>{{ data.item.package.name | cutString }}</span>
         </template>
         <template #cell(question)="data">
-          <span v-if="data.item.question_pattern === 'text'" >{{ data.item.question }}</span>
+          <span v-if="data.item.question_pattern === 'text'" >{{ data.item.question | cutString }}</span>
           <img v-else-if="data.item.question_pattern === 'image'" :src="data.item.question" class="question-image-show">
           <audio v-else-if="data.item.question_pattern === 'audio'" controls>
             <source :src="data.item.question" />
           </audio>
         </template>
         <template #cell(question_type)="data">
-          <span>{{ data.item.question_type.name }}</span>
+          <span>{{ data.item.question_type.name | cutString }}</span>
         </template>
         <template #cell(question_difficulty)="data">
-          <span>{{ data.item.question_difficulty.name }}</span>
+          <span>{{ data.item.question_difficulty.name | cutString }}</span>
         </template>
         <template #cell(level)="data">
-          <span v-if="data.item.level">{{ data.item.level.name }}</span>
+          <span v-if="data.item.level">{{ data.item.level.name | cutString }}</span>
         </template>
         <template #cell(level)="data">
-          <span v-if="data.item.level">{{ data.item.level.name }}</span>
+          <span v-if="data.item.level">{{ data.item.level.name | cutString }}</span>
         </template>
         <template #cell(learningpaths)="data">
-          <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{
-              path.name
-            }}</span>
+          <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{path.name | cutString}}</span>
         </template>
         <template #cell(learning_path)="data">
-          <span v-if="data.item.learning_path">{{ data.item.learning_path.name }}</span>
+          <span v-if="data.item.learning_path">{{ data.item.learning_path.name | cutString }}</span>
         </template>
         <template #cell(roles)="data">
           <div class="d-flex justify-content-start align-items-center">
@@ -257,6 +255,15 @@ export default {
       type: Boolean,
       default: false,
     },
+  },
+  filters: {
+    cutString(value) {
+      if (value.length > 40) {
+        return `${value.slice(0, 40)}...`
+      } else {
+        return value
+      }
+    }
   },
   watch: {
     vSearchModel(newVal) {

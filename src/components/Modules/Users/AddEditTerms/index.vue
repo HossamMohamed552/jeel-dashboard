@@ -12,7 +12,7 @@
                     v-model="createTerm.name"
                     :label="$t('TERM.name')"
                     :name="$t('TERM.name')"
-                    :rules="'required|min:3'"
+                    :rules="'required|min:3|max:30'"
                   ></TextField>
                 </div>
               </b-col>

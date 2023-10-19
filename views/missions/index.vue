@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة المراحل'" :number-of-item="totalNumber"
+    <ListItems :header-name="'قائمة المهام'" :number-of-item="totalNumber"
                :tableItems="missionsList" :fieldsList="fieldsList"
                :v-search-model="missionSearchWord"
                @detailItem="detailItem($event)"
@@ -14,12 +14,12 @@
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddMissions" v-if="user.permissions.includes(`add-missions`)">
           <img src="@/assets/images/icons/plus.svg">
-          <span>إضافة مرحلة جديد</span>
+          <span>إضافة مهمة جديد</span>
         </Button>
       </template>
     </ListItems>
-    <Modal :content-message="'حذف المرحلة'"
-           :content-message-question="'هل انت متأكد من حذف المرحلة'"
+    <Modal :content-message="'حذف المهمة'"
+           :content-message-question="'هل انت متأكد من حذف المهمة'"
            :showModal="showModal"
            @cancel="cancel($event)"
            :is-warning="true"

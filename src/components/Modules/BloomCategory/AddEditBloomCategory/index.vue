@@ -14,7 +14,7 @@
                     v-model="formValues.name"
                     :label="$t('GLOBAL_NAME')"
                     :name="$t('GLOBAL_NAME')"
-                    :rules="'required'"
+                    :rules="'required|max:30'"
                   ></TextField>
                 </div>
               </b-col>
@@ -24,7 +24,7 @@
                     v-model="formValues.slug"
                     :label="$t('SLUG')"
                     :name="$t('SLUG')"
-                    :rules="'required'"
+                    :rules="'required|max:10'"
                   ></TextField>
                 </div>
               </b-col>

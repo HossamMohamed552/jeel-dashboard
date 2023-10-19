@@ -12,7 +12,7 @@
                     v-model="createGroup.name"
                     :label="$t('GROUP.name')"
                     :name="$t('GROUP.name')"
-                    :rules="'required|min:3'"
+                    :rules="'required|min:3|max:30'"
                   ></TextField>
                 </div>
               </b-col>

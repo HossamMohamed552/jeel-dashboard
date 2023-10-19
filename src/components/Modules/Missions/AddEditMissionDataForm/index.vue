@@ -25,7 +25,7 @@
                     v-model="mission.name"
                     :label="$t('MISSIONS.name')"
                     :name="$t('MISSIONS.name')"
-                    :rules="'required'"
+                    :rules="'required|max:30'"
                   ></TextField>
                 </div>
               </b-col>
@@ -76,7 +76,7 @@
                     v-model="mission.duration"
                     :label="$t('MISSIONS.duration')"
                     :name="$t('MISSIONS.duration')"
-                    :rules="'required|numeric'"
+                    :rules="'required|numeric|max_value:60'"
                   ></TextField>
                 </div>
               </b-col>
@@ -86,7 +86,7 @@
                     v-model="mission.description"
                     :label="$t('MISSIONS.description')"
                     :name="$t('MISSIONS.description')"
-                    :rules="'required'"
+                    :rules="'required|max:60'"
                   ></TextAreaField>
                 </div>
               </b-col>

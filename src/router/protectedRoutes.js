@@ -719,7 +719,7 @@ const protectedRoutes = [
         name: "missions",
         component: () => import("../../views/missions/index.vue"),
         meta: {
-          breadcrumb: "المراحل",
+          breadcrumb: "المهام",
           preLabel: "",
           preLink: "",
         },
@@ -729,8 +729,8 @@ const protectedRoutes = [
         name: "add-missions",
         component: () => import("../../views/missions/add-missions/index.vue"),
         meta: {
-          breadcrumb: "إضافة مرحلة",
-          preLabel: "المراحل",
+          breadcrumb: "إضافة مهمة",
+          preLabel: "المهام",
           preLink: "/dashboard/missions",
         },
       },
@@ -739,8 +739,8 @@ const protectedRoutes = [
         name: "edit-missions",
         component: () => import("../../views/missions/edit-missions/index.vue"),
         meta: {
-          breadcrumb: "تعديل المرحلة",
-          preLabel: "المراحل",
+          breadcrumb: "تعديل المهمة",
+          preLabel: "المهام",
           preLink: "/dashboard/missions",
         },
       },
@@ -749,8 +749,8 @@ const protectedRoutes = [
         name: "show-missions",
         component: () => import("../../views/missions/view-missions/index.vue"),
         meta: {
-          breadcrumb: "تفاصيل المرحلة",
-          preLabel: "المراحل",
+          breadcrumb: "تفاصيل المهمة",
+          preLabel: "المهام",
           preLink: "/dashboard/missions",
         },
       },

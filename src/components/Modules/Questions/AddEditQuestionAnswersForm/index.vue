@@ -13,7 +13,7 @@
                       v-model="formValues.question"
                       :label="$t('QUESTIONS.QUESTION')"
                       :name="$t('QUESTIONS.QUESTION')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
 
@@ -45,7 +45,7 @@
                       v-model="formValues.hint"
                       :label="$t('QUESTIONS.HINT')"
                       :name="$t('QUESTIONS.HINT')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -80,6 +80,7 @@
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
                     <TextField
+                      :rules="'required|max:80'"
                       v-model="answer.answer"
                       :label="$t('QUESTIONS.ANSWER')"
                       :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
@@ -206,7 +207,7 @@
                       v-model="formValues.hint"
                       :label="$t('QUESTIONS.HINT')"
                       :name="$t('QUESTIONS.HINT')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -350,7 +351,7 @@
                       v-model="formValues.hint"
                       :label="$t('QUESTIONS.HINT')"
                       :name="$t('QUESTIONS.HINT')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -494,7 +495,7 @@
                       v-model="formValues.hint"
                       :label="$t('QUESTIONS.HINT')"
                       :name="$t('QUESTIONS.HINT')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -529,6 +530,7 @@
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
                     <TextField
+                      :rules="'required|max:80'"
                       v-model="answer.answer"
                       :label="$t('QUESTIONS.ANSWER')"
                       :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
@@ -622,7 +624,7 @@
                       v-model="formValues.question"
                       :label="$t('QUESTIONS.QUESTION')"
                       :name="$t('QUESTIONS.QUESTION')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -655,7 +657,7 @@
                       v-model="formValues.hint"
                       :label="$t('QUESTIONS.HINT')"
                       :name="$t('QUESTIONS.HINT')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -690,6 +692,7 @@
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
                     <TextField
+                      :rules="'required|max:80'"
                       v-model="answer.answer"
                       :label="$t('QUESTIONS.ANSWER')"
                       :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
@@ -785,7 +788,7 @@
                       v-model="formValues.question"
                       :label="$t('QUESTIONS.QUESTION')"
                       :name="$t('QUESTIONS.QUESTION')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -1066,7 +1069,7 @@
                     v-model="formValues.question"
                     :label="$t('QUESTIONS.QUESTION')"
                     :name="$t('QUESTIONS.QUESTION')"
-                    :rules="'required'"
+                    :rules="'required|max:80'"
                   ></TextField>
                 </b-col>
                 <b-col lg="4" class="mb-3">
@@ -1096,7 +1099,7 @@
                       v-model="formValues.hint"
                       :label="$t('QUESTIONS.HINT')"
                       :name="$t('QUESTIONS.HINT')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -1224,7 +1227,7 @@
                     v-model="formValues.question"
                     :label="$t('QUESTIONS.QUESTION')"
                     :name="$t('QUESTIONS.QUESTION')"
-                    :rules="'required'"
+                    :rules="'required|max:80'"
                   ></TextField>
                 </b-col>
                 <b-col lg="4" class="mb-3">
@@ -1254,7 +1257,7 @@
                       v-model="formValues.hint"
                       :label="$t('QUESTIONS.HINT')"
                       :name="$t('QUESTIONS.HINT')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -1372,7 +1375,7 @@
                       v-model="formValues.question"
                       :label="$t('QUESTIONS.QUESTION')"
                       :name="$t('QUESTIONS.QUESTION')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                     <div class="preview-question-heading">عرض السؤال</div>
                     <div
@@ -1421,7 +1424,7 @@
                       v-model="formValues.hint"
                       :label="$t('QUESTIONS.HINT')"
                       :name="$t('QUESTIONS.HINT')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -1456,6 +1459,7 @@
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
                     <TextField
+                      :rules="'required|max:80'"
                       v-model="answer.answer"
                       :label="$t('QUESTIONS.ANSWER')"
                       :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
@@ -1547,7 +1551,7 @@
                       v-model="formValues.question"
                       :label="$t('QUESTIONS.QUESTION')"
                       :name="$t('QUESTIONS.QUESTION')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                     <div class="preview-question-heading">عرض السؤال</div>
                     <div
@@ -1611,7 +1615,7 @@
                               v-model="formValues.hint"
                               :label="$t('QUESTIONS.HINT')"
                               :name="$t('QUESTIONS.HINT')"
-                              :rules="'required'"
+                              :rules="'required|max:80'"
                             ></TextField>
                           </div>
                         </b-col>
@@ -1651,6 +1655,7 @@
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
                     <TextField
+                      :rules="'required|max:80'"
                       v-model="answer.answer"
                       :label="$t('QUESTIONS.ANSWER')"
                       :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
@@ -1743,7 +1748,7 @@
                       v-model="formValues.question"
                       :label="$t('QUESTIONS.QUESTION')"
                       :name="$t('QUESTIONS.QUESTION')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -1776,7 +1781,7 @@
                       v-model="formValues.hint"
                       :label="$t('QUESTIONS.HINT')"
                       :name="$t('QUESTIONS.HINT')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -1814,6 +1819,7 @@
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
                           <TextField
+                            :rules="'required|max:80'"
                             v-model="answer.answer"
                             :label="$t('QUESTIONS.ANSWER')"
                             :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
@@ -1919,7 +1925,7 @@
                       v-model="formValues.question"
                       :label="$t('QUESTIONS.QUESTION')"
                       :name="$t('QUESTIONS.QUESTION')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -1952,7 +1958,7 @@
                       v-model="formValues.hint"
                       :label="$t('QUESTIONS.HINT')"
                       :name="$t('QUESTIONS.HINT')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -2101,7 +2107,7 @@
                       v-model="formValues.question"
                       :label="$t('QUESTIONS.QUESTION')"
                       :name="$t('QUESTIONS.QUESTION')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -2134,7 +2140,7 @@
                       v-model="formValues.hint"
                       :label="$t('QUESTIONS.HINT')"
                       :name="$t('QUESTIONS.HINT')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -2255,7 +2261,7 @@
           </validation-observer>
         </slot>
         <!--        match_one_to_one-->
-        <slot v-if="questionSlug.slug === 'match_one_text_text'">
+        <slot v-if="questionSlug.slug.includes('match_one')">
           <validation-observer v-slot="{ invalid }" ref="addAnswer">
             <form @submit.prevent="onSubmit" class="mt-5">
               <b-row>
@@ -2265,7 +2271,7 @@
                       v-model="formValues.question"
                       :label="$t('QUESTIONS.QUESTION')"
                       :name="$t('QUESTIONS.QUESTION')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -2298,7 +2304,7 @@
                       v-model="formValues.hint"
                       :label="$t('QUESTIONS.HINT')"
                       :name="$t('QUESTIONS.HINT')"
-                      :rules="'required'"
+                      :rules="'required|max:80'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -2329,15 +2335,16 @@
                   <label class="mx-0">{{ $t("QUESTIONS.ANSWERSFROM") }}:</label>
                 </div>
                 <b-row v-if="!confirmAnswersFrom">
-                  <validation-observer v-slot="{ invalid }" ref="addAnswerFromForm" class="row w-100">
-                    <b-col lg="6" class="mb-3 px-0">
+                  <validation-observer v-slot="{ invalid }" ref="addAnswerFromForm"
+                                       class="row w-100">
+                    <b-col lg="6" class="mb-3 px-0" v-if="answerMatch.answer_pattern==='text'">
                       <div class="hold-field">
                         <label>{{ $t('QUESTIONS.ANSWER') }}</label>
                         <TextField
                           v-model="answerMatch.answer"
-                          :name="'answerFrom'"
+                          :name="$t('QUESTIONS.ANSWERSFROM')"
                           :id="`ANSWER`"
-                          :rules="'required'"
+                          :rules="'required|max:80'"
                         ></TextField>
                       </div>
                     </b-col>
@@ -2347,7 +2354,7 @@
                         <ValidationProvider
                           v-slot="{ errors }"
                           :rules="$route.params.id ? '' : 'required'"
-                          name="answerFromAudio"
+                          :name="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
                         >
                           <b-form-file
                             accept="audio/*"
@@ -2365,7 +2372,8 @@
                     <b-col lg="2" class="px-0">
                       <div class="hold-field">
                         <label class="mx-0 hidden-text">{{ $t("QUESTIONS.ANSWERSFROM") }}:</label>
-                        <button class="add-btn" @click.prevent="addAnswerMatch()" :disabled="invalid">
+                        <button class="add-btn" @click.prevent="addAnswerMatch()"
+                                :disabled="invalid">
                           {{ $t("ADD_ANSWER") }}
                         </button>
                       </div>
@@ -2415,18 +2423,18 @@
                 </div>
                 <b-row>
                   <validation-observer v-slot="{ invalid }" ref="addAnswerToForm" class="row w-100">
-                    <b-col lg="6" class="mb-3 px-0">
+                    <b-col lg="6" class="mb-3 px-0" v-if="answerMatchTo.answer_pattern==='text'">
                       <div class="hold-field">
                         <label>{{ $t('QUESTIONS.ANSWER') }}</label>
                         <TextField
-                          :rules="'required'"
+                          :rules="'required|max:80'"
                           v-model="answerMatchTo.answer"
                           :name="`${$t('QUESTIONS.ANSWER')}`"
                           :id="`ANSWER`"
                         ></TextField>
                       </div>
                     </b-col>
-                    <b-col lg="4" class="mb-3">
+                    <b-col lg="4" class="mb-3" v-if="answerMatchTo.answer_pattern==='text' || answerMatchTo.answer_pattern==='image'">
                       <div class="hold-field">
                         <label>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
                         <ValidationProvider
@@ -2447,10 +2455,32 @@
                         </ValidationProvider>
                       </div>
                     </b-col>
+                    <b-col lg="4" class="mb-3" v-if="answerMatchTo.answer_pattern==='audio'">
+                      <div class="hold-field">
+                        <label>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          :rules="$route.params.id ? '' : 'required'"
+                          name="audio"
+                        >
+                          <b-form-file
+                            accept="audio/*"
+                            :placeholder="answerMatchTo.answer ? answerMatchTo.answer.name : 'اختر ملف'"
+                            v-model="answerMatchTo.answer"
+                            name="audio"
+                          >
+                          </b-form-file>
+                          <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                            {{ error }}
+                          </b-form-invalid-feedback>
+                        </ValidationProvider>
+                      </div>
+                    </b-col>
                     <b-col lg="2" class="px-0">
                       <div class="hold-field">
                         <label class="mx-0 hidden-text">{{ $t("QUESTIONS.ANSWERSTO") }}:</label>
-                        <button class="add-btn" @click.prevent="addAnswerMatchTo()" :disabled="invalid">
+                        <button class="add-btn" @click.prevent="addAnswerMatchTo()"
+                                :disabled="invalid">
                           {{ $t("ADD_ANSWER") }}
                         </button>
                       </div>
@@ -2461,25 +2491,27 @@
                   <b-row>
                     <b-col lg="2" class="answer-item">الترتيب</b-col>
                     <b-col lg="3" class="answer-item">الإجابة</b-col>
-                    <b-col lg="3" class="answer-item">التسجيل الصوتى للإجابة</b-col>
+                    <b-col lg="3" class="answer-item" v-if="answerMatchTo.answer_pattern !== 'audio'">التسجيل الصوتى للإجابة</b-col>
                     <b-col lg="2" class="answer-item">الإجابة المقابلة</b-col>
                     <b-col lg="2" class="answer-item"></b-col>
                   </b-row>
                   <b-row v-for="(answer, index) in answersListMatchTo" :key="index" class="mb-3">
                     <validation-observer v-slot="{ invalid }" ref="selectAnswers" class="row w-100">
                       <b-col lg="2" class="answer-item">{{ index + 1 }}</b-col>
-                      <b-col lg="3" class="answer-item">{{ answer.answer }}</b-col>
-                      <b-col lg="3" class="answer-item">{{ answer.audio.name }}</b-col>
+                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'text'">{{ answer.answer }}</b-col>
+                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'audio'">{{ answer.answer.name }}</b-col>
+                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern !== 'audio'">{{ answer.audio.name }}</b-col>
                       <b-col lg="2" class="answer-item select">
-                        <validation-provider v-slot="{ errors, invalid }" :name="`${index}-${answer.answer}`" rules="required">
-                          <el-select v-model="answer.answerToId" clearable placeholder="Select"
+                        <validation-provider v-slot="{ errors, invalid }" :name="`الإجابة`" rules="required">
+                          <el-select v-model="answer.answerToId" clearable
+                                     placeholder="إختر الإجابة المقابلة"
                                      @mouseenter.native="getId(answer.answerToId)"
                                      @change="assignAnswerMatch($event)"
-                                     @clear="backToInitValue()">
+                                     @clear="backToInitValue()" class="custom-select-answer">
                             <el-option
                               v-for="item in answersListMatch"
                               :key="item.id"
-                              :label="item.answer"
+                              :label="item.id"
                               :disabled="item.isSelected"
                               :value="item.id">
                             </el-option>
@@ -2716,22 +2748,18 @@ export default {
       })
     },
     addAnswerMatch() {
-      if (this.answerMatch.answer && this.answerMatch.audio) {
-        this.answerId++
-        this.answersListMatch.push({id: this.answerId, ...this.answerMatch})
-        this.answerMatch.answer = ""
-        this.answerMatch.audio = null
-        this.$refs.addAnswerFromForm.reset()
-      }
+      this.answerId++
+      this.answersListMatch.push({id: this.answerId, ...this.answerMatch})
+      this.answerMatch.answer = ""
+      this.answerMatch.audio = null
+      this.$refs.addAnswerFromForm.reset()
     },
     addAnswerMatchTo() {
-      if (this.answerMatchTo.answer && this.answerMatchTo.audio) {
-        this.answerToId++
-        this.answersListMatchTo.push({id: this.answerToId, ...this.answerMatchTo})
-        this.answerMatchTo.answer = ""
-        this.answerMatchTo.audio = null
-        this.$refs.addAnswerToForm.reset()
-      }
+      this.answerToId++
+      this.answersListMatchTo.push({id: this.answerToId, ...this.answerMatchTo})
+      this.answerMatchTo.answer = null
+      this.answerMatchTo.audio = null
+      this.$refs.addAnswerToForm.reset()
     },
     removeAnswerMatch(index) {
       this.answersListMatch.splice(index, 1)
@@ -2889,7 +2917,7 @@ export default {
         this.formValues.question_pattern = 'text'
         this.assignAnswersDragSort();
         this.$emit("onSubmit", this.formValues);
-      } else if (this.questionSlug.slug === "match_one_text_text") {
+      } else if (this.questionSlug.slug.includes('match_one')) {
         this.formValues.question_pattern = 'text'
         this.assignAnswersMatchOneToOne();
         this.$emit("onSubmit", this.formValues);
@@ -3123,6 +3151,15 @@ export default {
       this.answersListMatchOneToOne = this.formValues.answers;
     },
   },
+  mounted() {
+    if (this.questionSlug.slug === 'match_one_text_text') {
+      this.answerMatch.answer_pattern = 'text'
+      this.answerMatchTo.answer_pattern = 'text'
+    } else if (this.questionSlug.slug === 'match_one_voice_text') {
+      this.answerMatch.answer_pattern = 'text'
+      this.answerMatchTo.answer_pattern = 'audio'
+    }
+  }
 };
 </script>
 <style scoped lang="scss">

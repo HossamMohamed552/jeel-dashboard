@@ -12,7 +12,7 @@
                     v-model="createPath.name"
                     :label="$t('PATH.Name')"
                     :name="$t('PATH.Name')"
-                    :rules="'required|min:3'"
+                    :rules="'required|min:3|max:30'"
                   ></TextField>
                 </div>
               </b-col>
@@ -20,7 +20,7 @@
                 <div class="hold-field">
                   <b-form-group :label="$t('PATH.Description')" v-slot="{ ariaDescribedby }"
                                 class="description">
-                    <TextAreaField v-model="createPath.description" :rules="'required'" rows="5"
+                    <TextAreaField v-model="createPath.description" :rules="'required|max:60'" rows="5"
                                    :name="$t('VIDEO.Description')">
                     </TextAreaField>
                   </b-form-group>

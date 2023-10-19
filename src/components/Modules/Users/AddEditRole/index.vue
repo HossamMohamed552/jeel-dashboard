@@ -12,14 +12,14 @@
                     v-model="createRole.name"
                     :label="$t('USERS.FIRST_NAME')"
                     :name="$t('USERS.FIRST_NAME')"
-                    :rules="'required'"
+                    :rules="'required|max:30'"
                   ></TextField>
                 </div>
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <TextAreaField
-                    :rules="'required|min:3'"
+                    :rules="'required|min:3||max:70'"
                     v-model="createRole.description"
                     :label="$t('ROLES.description')"
                     :name="$t('ROLES.description')"

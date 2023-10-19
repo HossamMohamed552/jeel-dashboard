@@ -14,7 +14,7 @@
                       v-model="createLevel.name"
                       :label="$t('LEVEL.name')"
                       :name="$t('LEVEL.name')"
-                      :rules="'required|min:3'"
+                      :rules="'required|min:3|max:30'"
                     ></TextField>
                   </div>
                 </b-col>
@@ -24,7 +24,7 @@
                       v-model="createLevel.min_levels"
                       :label="$t('LEVEL.min_levels')"
                       :name="$t('LEVEL.min_levels')"
-                      :rules="'required|numeric'"
+                      :rules="'required|numeric|max_value:20'"
                     ></TextField>
                   </div>
                 </b-col>

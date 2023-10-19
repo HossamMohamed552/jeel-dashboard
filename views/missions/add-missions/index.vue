@@ -32,7 +32,7 @@
             <p>{{ levels.find((item) => item.id === collectData.level_id).name }}</p>
           </b-col>
           <b-col lg="4">
-            <h6>إسم المرحلة</h6>
+            <h6>إسم المهمة</h6>
             <p>{{ collectData.name }}</p>
           </b-col>
           <b-col lg="4">
