@@ -16,21 +16,35 @@
           </div>
           <div class="hold-field">
             <TextField
+              v-if="showPassword"
+              v-model="user.password"
+              :label="$t('AUTH.password')"
+              :name="'password'"
+              :rules="'required'"
+              type="text"
+              class="password-input"
+            >
+              <b-icon
+                icon="eye-slash"
+                @click="showPassword = !showPassword"
+                class="icon-password"
+              />
+            </TextField>
+            <TextField
+              v-else
               v-model="user.password"
               :label="$t('AUTH.password')"
               :name="'password'"
               :rules="'required'"
               type="password"
-            ></TextField>
+              class="password-input"
+            >
+              <b-icon icon="eye" @click="showPassword = !showPassword" class="icon-password" />
+            </TextField>
           </div>
           <div class="hold-field remember-me">
-            <CheckboxField
-              value="rememberMe"
-              :name="$t('AUTH.rememberMe')"
-            ></CheckboxField>
-            <div class="forget" @click="handleForgetPassword">{{
-              $t("AUTH.forgetPassword")
-            }}</div>
+            <CheckboxField value="rememberMe" :name="$t('AUTH.rememberMe')"></CheckboxField>
+            <div class="forget" @click="handleForgetPassword">{{ $t("AUTH.forgetPassword") }}</div>
           </div>
           <div class="hold-button">
             <Button
@@ -67,7 +81,7 @@ export default {
     TextField,
     Button,
     CheckboxField,
-    ForgetPasswordModal
+    ForgetPasswordModal,
   },
   props: {
     loading: {
@@ -81,6 +95,7 @@ export default {
         email: "",
         password: "",
       },
+      showPassword: false,
     };
   },
   methods: {
@@ -97,8 +112,8 @@ export default {
       });
     },
     handleForgetPassword() {
-      this.$bvModal.show('forget-password-modal')
-    }
+      this.$bvModal.show("forget-password-modal");
+    },
   },
 };
 </script>

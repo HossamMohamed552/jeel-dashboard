@@ -1,32 +1,32 @@
 @import "src/assets/style/scss/_variables";
 @import "src/assets/style/scss/_mixin";
-.content{
+.content {
   width: 35%;
   position: relative;
   @media (max-width: 768px) {
     width: 70%;
   }
 }
-.login-form{
-  background: #FFFFFF;
-  box-shadow: 0px 0px 5px #DBDBDB;
+.login-form {
+  background: #ffffff;
+  box-shadow: 0px 0px 5px #dbdbdb;
   border-radius: 100px;
   padding: 2.809rem 0 3rem;
   position: relative;
   z-index: 1;
-  @media (max-width: 1024px) and (min-width: 768px){
+  @media (max-width: 1024px) and (min-width: 768px) {
     border-radius: 3.25rem;
-    padding: 1rem 0 .5rem 0;
+    padding: 1rem 0 0.5rem 0;
   }
   @media (max-width: 768px) {
     border-radius: 1.25rem;
-    padding: 1rem .5rem .25rem .5rem;
+    padding: 1rem 0.5rem 0.25rem 0.5rem;
   }
-  &__logo{
+  &__logo {
     width: 162.5px;
     height: 190.6px;
     margin: 0 auto 3.375rem auto;
-    @media (max-width: 1024px) and (min-width: 768px){
+    @media (max-width: 1024px) and (min-width: 768px) {
       width: 122.5px;
       height: 150.6px;
       margin: 0 auto 1rem auto;
@@ -35,15 +35,24 @@
       width: 82.5px;
       height: 110.6px;
     }
-    img{
-      @include image
+    img {
+      @include image;
     }
   }
-  .hold-field,.hold-button{
+  .hold-field,
+  .hold-button {
     width: 80%;
     margin: 0 auto;
     @media (max-width: 768px) {
       width: 95%;
+    }
+  }
+  .password-input {
+    position: relative;
+    .icon-password {
+      position: absolute;
+      top: 55%;
+      left: 1rem;
     }
   }
 
@@ -51,39 +60,38 @@
     margin-top: 2rem !important;
   }
 
-  .remember-me{
+  .remember-me {
     display: flex;
     justify-content: space-between !important;
     align-items: center;
     flex-direction: row;
-    .forget{
+    .forget {
       color: $color-show-heading;
       font-weight: bold;
       text-decoration: underline;
       cursor: pointer;
       @media (max-width: 768px) {
-        font-size: .8rem;
+        font-size: 0.8rem;
       }
     }
   }
-  &__help{
+  &__help {
     background: $color-primary-two;
     color: #fff;
     position: absolute;
-    top:7.2rem;
+    top: 7.2rem;
     left: -4.5rem;
     transform: rotate(90deg);
-    border-bottom-left-radius: .5rem;
-    border-bottom-right-radius: .5rem;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
     padding: 1rem 1.5rem;
     z-index: 0;
     cursor: pointer;
     @media (max-width: 768px) {
-      border-bottom-left-radius: .2rem;
-      border-bottom-right-radius: .2rem;
-      padding: .5rem 1rem;
+      border-bottom-left-radius: 0.2rem;
+      border-bottom-right-radius: 0.2rem;
+      padding: 0.5rem 1rem;
       left: -3.5rem;
     }
   }
 }
-
