@@ -21,10 +21,7 @@
               <b-col lg="3" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
-                    :disabled="
-                      $route.params.id &&
-                      !user.permissions.includes(`add-packages`)
-                    "
+                    :disabled="$route.params.id && !user.permissions.includes(`add-packages`)"
                     v-model="createSchool.school_group_id"
                     :label="$t('SCHOOL.school_group')"
                     :name="$t('SCHOOL.school_group')"
@@ -44,8 +41,7 @@
                         <div class="hold-field">
                           <SelectSearch
                             :disabled="
-                              $route.params.id &&
-                              !user.permissions.includes(`add-packages`)
+                              $route.params.id && !user.permissions.includes(`add-packages`)
                             "
                             v-model="createSchool.school_type_id"
                             :label="$t('SCHOOL.school_type')"
@@ -61,8 +57,7 @@
                         <div class="hold-field">
                           <SelectSearch
                             :disabled="
-                              $route.params.id &&
-                              !user.permissions.includes(`add-packages`)
+                              $route.params.id && !user.permissions.includes(`add-packages`)
                             "
                             v-model="createSchool.admin_id"
                             :label="$t('SCHOOL.userName')"
@@ -78,8 +73,7 @@
                         <div class="hold-field">
                           <SelectSearch
                             :disabled="
-                              $route.params.id &&
-                              !user.permissions.includes(`add-packages`)
+                              $route.params.id && !user.permissions.includes(`add-packages`)
                             "
                             v-model="createSchool.package_id"
                             :label="$t('SCHOOL.package')"
@@ -116,14 +110,14 @@
                             v-model="createSchool.contact"
                             :label="$t('SCHOOL.contact')"
                             :name="$t('SCHOOL.contact')"
-                            :rules="{regex: /^01[0125][0-9]{8}$/}"
+                            :rules="{ regex: /^01[0125][0-9]{8}$/ }"
                           ></TextField>
                         </div>
                       </b-col>
                       <b-col lg="12" class="px-3 mb-3">
                         <div class="hold-field">
                           <TextField
-                            :rules="{max: 60}"
+                            :rules="{ max: 60 }"
                             v-model="createSchool.address"
                             :label="$t('SCHOOL.address')"
                             :name="$t('SCHOOL.address')"
@@ -133,87 +127,66 @@
 
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
-                          <ValidationProvider
-                            rules="required"
-                          >
-                            <b-form-group
-                              :label="$t('SCHOOL.status')"
-                              class="group-type"
-                            >
+                          <ValidationProvider rules="required">
+                            <b-form-group :label="$t('SCHOOL.status')" class="group-type">
                               <b-form-radio
                                 :disabled="
-                                  $route.params.id &&
-                                  !user.permissions.includes(`add-packages`)
+                                  $route.params.id && !user.permissions.includes(`add-packages`)
                                 "
                                 v-model="createSchool.status"
                                 value="0"
                                 name="group-status"
-                              >غير مفعل
-                              </b-form-radio
-                              >
+                                >غير مفعل
+                              </b-form-radio>
                               <b-form-radio
                                 :disabled="
-                                  $route.params.id &&
-                                  !user.permissions.includes(`add-packages`)
+                                  $route.params.id && !user.permissions.includes(`add-packages`)
                                 "
                                 v-model="createSchool.status"
                                 value="1"
                                 name="group-status"
-                              >مفعل
-                              </b-form-radio
-                              >
+                                >مفعل
+                              </b-form-radio>
                             </b-form-group>
                           </ValidationProvider>
                         </div>
                       </b-col>
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
-                          <ValidationProvider
-                            rules="required"
-                          >
-                            <b-form-group
-                              :label="$t('SCHOOL.music')"
-                              class="group-type"
-                            >
+                          <ValidationProvider rules="required">
+                            <b-form-group :label="$t('SCHOOL.music')" class="group-type">
                               <b-form-radio
                                 :disabled="
-                                  $route.params.id &&
-                                  !user.permissions.includes(`add-packages`)
+                                  $route.params.id && !user.permissions.includes(`add-packages`)
                                 "
                                 v-model="createSchool.music_status"
                                 value="0"
                                 name="group-music_type"
-                              >أكابيلا
-                              </b-form-radio
-                              >
+                                >أكابيلا
+                              </b-form-radio>
                               <b-form-radio
                                 :disabled="
-                                  $route.params.id &&
-                                  !user.permissions.includes(`add-packages`)
+                                  $route.params.id && !user.permissions.includes(`add-packages`)
                                 "
                                 v-model="createSchool.music_status"
                                 value="1"
                                 name="group-music_type"
-                              >بموسيقى
-                              </b-form-radio
-                              >
+                                >بموسيقى
+                              </b-form-radio>
                             </b-form-group>
                           </ValidationProvider>
                         </div>
                       </b-col>
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
-                          <ValidationProvider
-                            rules="required"
-                          >
+                          <ValidationProvider rules="required">
                             <label>
                               {{ $t("SCHOOL.start_subscription") }}
                             </label>
                             <date-picker
                               :disabled-date="disabledBeforeToday"
                               :disabled="
-                                $route.params.id &&
-                                !user.permissions.includes(`add-packages`)
+                                $route.params.id && !user.permissions.includes(`add-packages`)
                               "
                               :lang="en"
                               v-model="createSchool.startDate"
@@ -228,9 +201,7 @@
                       </b-col>
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
-                          <ValidationProvider
-                            rules="required"
-                          >
+                          <ValidationProvider rules="required">
                             <label>
                               {{ $t("SCHOOL.end_subscription") }}
                             </label>
@@ -239,8 +210,7 @@
                               :lang="en"
                               v-model="createSchool.endDate"
                               :disabled="
-                                $route.params.id &&
-                                !user.permissions.includes(`add-packages`)
+                                $route.params.id && !user.permissions.includes(`add-packages`)
                               "
                               @change="changeDate"
                               valueType="format"
@@ -290,20 +260,20 @@
 <script>
 import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import {getSchoolOwnerRequest, getSingleSchoolsRequest} from "@/api/school";
+import { getSchoolOwnerRequest, getSingleSchoolsRequest } from "@/api/school";
 import Modal from "@/components/Shared/Modal/index.vue";
-import {getAllPackagesRequest} from "@/api/packages";
-import {getAllSchoolGroupRequest} from "@/api/schoolGroup";
-import {getAllSchoolTypesRequest} from "@/api/schoolType";
+import { getAllPackagesRequest } from "@/api/packages";
+import { getAllSchoolGroupRequest } from "@/api/schoolGroup";
+import { getAllSchoolTypesRequest } from "@/api/schoolType";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/locale/en";
 import "vue2-datepicker/index.css";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
-import {getAllSearchUsersRequest} from "@/api/user";
+import { getAllSearchUsersRequest } from "@/api/user";
 import axios from "axios";
 import VueCookies from "vue-cookies";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -346,7 +316,7 @@ export default {
         logo: null,
         // username: "",
         contact: "",
-        address: ""
+        address: "",
       },
     };
   },
@@ -354,7 +324,7 @@ export default {
     getSoundType(id) {
       const chosenItem = this.schoolGroups.find((item) => item.id == id);
       this.createSchool.music_status = chosenItem.music_status;
-      this.createSchool.status = chosenItem.status
+      this.createSchool.status = chosenItem.status;
     },
     deleteImage() {
       this.createSchool.logo = null;
@@ -388,9 +358,11 @@ export default {
       });
     },
     getAllUsers() {
-      this.ApiService(getSchoolOwnerRequest()).then((response) => {
-        this.users = response.data.data;
-      });
+      this.ApiService(getSchoolOwnerRequest({ school_id: this.$route.params.id })).then(
+        (response) => {
+          this.users = response.data.data;
+        }
+      );
     },
     sendDataNewSchool() {
       const formData = new FormData();
@@ -407,7 +379,10 @@ export default {
       formData.append("subscription_start_date", this.createSchool.startDate);
       formData.append("subscription_end_date", this.createSchool.endDate);
       formData.append("package_id", this.createSchool.package_id);
-      formData.append("logo", this.createSchool.logo);
+
+      if (typeof this.createSchool.logo != "string")
+        formData.append("logo", this.createSchool.logo);
+
       if (this.$route.params.id) {
         formData.append("_method", "PUT");
         // this.ApiService(postSchoolsRequest(formData)).then((res)=>{})
@@ -444,25 +419,23 @@ export default {
     },
     getSchoolToEdit() {
       if (this.$route.params.id) {
-        this.ApiService(getSingleSchoolsRequest(this.$route.params.id)).then(
-          (response) => {
-            this.createSchool.name = response.data.data.name;
-            // this.createSchool.username = response.data.data.username;
-            this.createSchool.address = response.data.data.address;
-            this.createSchool.contact = response.data.data.contact;
-            this.createSchool.email = response.data.data.email;
-            this.createSchool.admin_id = response.data.data.admin.id;
-            this.createSchool.school_group_id = response.data.data.school_group.id;
-            this.createSchool.school_type_id = response.data.data.school_type.id;
-            this.createSchool.package_id = response.data.data.package.id;
-            this.createSchool.music_status = response.data.data.music_status;
-            this.createSchool.status = response.data.data.status;
-            this.createSchool.startDate = response.data.data.subscription_start_date;
-            this.createSchool.endDate = response.data.data.subscription_end_date;
-            this.itemImage = response.data.data.logo;
-            this.createSchool.logo = response.data.data.logo;
-          }
-        );
+        this.ApiService(getSingleSchoolsRequest(this.$route.params.id)).then((response) => {
+          this.createSchool.name = response.data.data.name;
+          // this.createSchool.username = response.data.data.username;
+          this.createSchool.address = response.data.data.address;
+          this.createSchool.contact = response.data.data.contact;
+          this.createSchool.email = response.data.data.email;
+          this.createSchool.admin_id = response.data.data.admin.id;
+          this.createSchool.school_group_id = response.data.data.school_group.id;
+          this.createSchool.school_type_id = response.data.data.school_type.id;
+          this.createSchool.package_id = response.data.data.package.id;
+          this.createSchool.music_status = response.data.data.music_status;
+          this.createSchool.status = response.data.data.status;
+          this.createSchool.startDate = response.data.data.subscription_start_date;
+          this.createSchool.endDate = response.data.data.subscription_end_date;
+          this.itemImage = response.data.data.logo;
+          this.createSchool.logo = response.data.data.logo;
+        });
       }
     },
   },
