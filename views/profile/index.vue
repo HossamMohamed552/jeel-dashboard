@@ -35,31 +35,19 @@
       <div class="hold-fields">
         <b-row class="row-data">
           <b-col lg="6" class="mb-5">
-            <ShowItem
-              :title="$t('USERS.FIRST_NAME')"
-              :subtitle="profile.first_name"
-            />
+            <ShowItem :title="$t('USERS.FIRST_NAME')" :subtitle="profile.first_name" />
           </b-col>
           <b-col lg="6" class="mb-5">
-            <ShowItem
-              :title="$t('USERS.LAST_NAME')"
-              :subtitle="profile.last_name"
-            />
+            <ShowItem :title="$t('USERS.LAST_NAME')" :subtitle="profile.last_name" />
           </b-col>
           <b-col lg="6" class="mb-5">
             <ShowItem :title="$t('USERS.EMAIL')" :subtitle="profile.email" />
           </b-col>
           <b-col lg="6" class="mb-5">
-            <ShowItem
-              :title="$t('USERS.PHONE_NUMBER')"
-              :subtitle="profile.mobile"
-            />
+            <ShowItem :title="$t('USERS.PHONE_NUMBER')" :subtitle="profile.mobile" />
           </b-col>
           <b-col lg="6" class="mb-5">
-            <ShowItem
-              :title="$t('USERS.SOCIAL_MEDIA')"
-              :subtitle="profile.social_media"
-            />
+            <ShowItem :title="$t('USERS.SOCIAL_MEDIA')" :subtitle="profile.social_media" />
           </b-col>
           <b-col lg="6" class="mb-5">
             <ShowItem :title="$t('USERS.ROLES')" />
@@ -72,11 +60,7 @@
         </b-row>
       </div>
     </div>
-    <GeneralModal
-      id="change-password-modal"
-      size="lg"
-      :title="$t('CHANGE_PASSWORD')"
-    >
+    <GeneralModal id="change-password-modal" size="lg" :title="$t('CHANGE_PASSWORD')">
       <template #modalBody>
         <validation-observer v-slot="{ invalid }" ref="changePasswordForm">
           <b-form @submit.prevent="onSubmit" class="px-4">
@@ -115,11 +99,7 @@
                     class="p-relative d-block"
                     ref="password"
                   >
-                    <b-icon
-                      :icon="passwordIcon"
-                      @click="hideShowPassword"
-                      class="icon-password"
-                    />
+                    <b-icon :icon="passwordIcon" @click="hideShowPassword" class="icon-password" />
                   </TextField>
                 </b-form-group>
               </b-col>
@@ -159,11 +139,7 @@
       </template>
     </GeneralModal>
     <!--Edit profile Data-->
-    <GeneralModal
-      id="edit-profile-data"
-      size="xl"
-      :title="$t('EDIT_PROFILE')"
-    >
+    <GeneralModal id="edit-profile-data" size="xl" :title="$t('EDIT_PROFILE')">
       <template #modalBody>
         <validation-observer v-slot="{ invalid }" ref="editProfileData">
           <b-form @submit.prevent="submitEdit" class="px-4">
@@ -188,12 +164,7 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col
-                lg="6"
-                class="mb-3"
-                :class="isStudent && 'd-none'"
-                v-if="!profile.id"
-              >
+              <b-col lg="6" class="mb-3" :class="isStudent && 'd-none'" v-if="!profile.id">
                 <div class="hold-field">
                   <TextField
                     v-model="formValues.email"
@@ -213,7 +184,7 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3">
+              <!-- <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     type="password"
@@ -223,7 +194,7 @@
                     :rules="profile.id ? '' : 'required|min:6'"
                   ></TextField>
                 </div>
-              </b-col>
+              </b-col> -->
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <TextField
@@ -241,13 +212,12 @@
                     :label="$t('USERS.SOCIAL_MEDIA')"
                     :name="$t('USERS.SOCIAL_MEDIA')"
                     :rules="{
-                      regex:
-                        /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/gi,
+                      regex: /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/gi,
                     }"
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="12" class="mb-3">
+              <!-- <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
                     v-model="formValues.roles"
@@ -260,7 +230,7 @@
                     @input="checkIsStudent($event)"
                   ></SelectSearch>
                 </div>
-              </b-col>
+              </b-col> -->
             </b-row>
             <b-row>
               <b-col lg="12" class="mb-3">
@@ -301,11 +271,8 @@
     />
   </div>
 </template>
-  <script>
-import {
-  getProfileDataRequest,
-  postChangePasswordRequest,
-} from "@/api/user.js";
+<script>
+import { getProfileDataRequest, postChangePasswordRequest } from "@/api/user.js";
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import { TogglePasswordMixins } from "@/mixins/TogglePasswordMixins";
 import Modal from "@/components/Shared/Modal/index.vue";
@@ -316,7 +283,7 @@ import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
 import { getSingleUserRequest, getAllRolesRequest } from "@/api/user";
-
+import { mapActions } from "vuex";
 export default {
   mixins: [TogglePasswordMixins],
   components: {
@@ -351,7 +318,8 @@ export default {
       editImage: false,
       itemImage: null,
       image: null,
-      systemRoles: []
+      systemRoles: [],
+      userData: {},
     };
   },
   mounted() {
@@ -359,6 +327,7 @@ export default {
     this.getSystemRoles();
   },
   methods: {
+    ...mapActions(["removeUser"]),
     onSubmit() {
       this.handleChangePassword();
     },
@@ -377,6 +346,14 @@ export default {
       this.$bvModal.show("change-password-modal");
     },
     handleShowEditProfileForm() {
+      this.formValues.first_name = this.userData.first_name;
+      this.formValues.last_name = this.userData.last_name;
+      this.formValues.user_name = this.userData.user_name;
+      this.formValues.email = this.userData.email;
+      this.formValues.mobile = this.userData.mobile;
+      this.formValues.social_media = this.userData.social_media;
+      this.formValues.roles = this.userData.roles;
+
       this.$bvModal.show("edit-profile-data");
     },
     handleCancel() {
@@ -409,13 +386,8 @@ export default {
           this.showSuccessModal = true;
           setTimeout(() => {
             this.showSuccessModal = false;
-          }, 3000);
-          this.getProfileData;
-          this.form = {
-            old_password: "",
-            new_password: "",
-            confirm_password: "",
-          };
+            this.removeUser();
+          }, 2000);
         })
         .finally(() => {
           this.loading = false;
@@ -450,7 +422,7 @@ export default {
         formData.append("roles[0]", this.formValues.roles);
         if (this.image && this.editImage) formData.append("image", this.image);
         axios
-          .post(`/users/${this.profile.id}`, formData, {
+          .post(`/user_auth_update`, formData, {
             headers: {
               Authorization: `Bearer ${VueCookies.get("token")}`,
               locale: "ar",
@@ -464,18 +436,8 @@ export default {
             this.showSuccessModal = true;
             setTimeout(() => {
               this.showSuccessModal = false;
-            }, 3000);
-            this.getProfileData;
-            this.formValues = {
-              first_name: "",
-              last_name: "",
-              user_name: "",
-              email: "",
-              password: "",
-              mobile: "",
-              social_media: "",
-              roles: [],
-            };
+            }, 2000);
+            this.getProfileData();
           });
       });
     },
@@ -486,21 +448,19 @@ export default {
       else return;
     },
     getUserData() {
-      this.ApiService(getSingleUserRequest(this.profile.id)).then(
-        (response) => {
-          console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr", response);
-          this.formValues.first_name = response.data.data.first_name;
-          this.formValues.last_name = response.data.data.last_name;
-          this.formValues.user_name = response.data.data.user_name;
-          this.formValues.email = response.data.data.email;
-          this.formValues.mobile = response.data.data.mobile;
-          this.formValues.social_media = response.data.data.social_media;
-          // this.formValues.roles = response.data.data.roles.map((item) => item.id)
-          this.formValues.roles = response.data.data.roles;
-          this.itemImage = response.data.data.avatar;
-          this.image = response.data.data.avatar;
-        }
-      );
+      this.ApiService(getSingleUserRequest(this.profile.id)).then((response) => {
+        this.userData = response.data.data;
+        this.formValues.first_name = response.data.data.first_name;
+        this.formValues.last_name = response.data.data.last_name;
+        this.formValues.user_name = response.data.data.user_name;
+        this.formValues.email = response.data.data.email;
+        this.formValues.mobile = response.data.data.mobile;
+        this.formValues.social_media = response.data.data.social_media;
+        // this.formValues.roles = response.data.data.roles.map((item) => item.id)
+        this.formValues.roles = response.data.data.roles;
+        this.itemImage = response.data.data.avatar;
+        this.image = response.data.data.avatar;
+      });
     },
     getSystemRoles() {
       this.ApiService(getAllRolesRequest()).then((response) => {
@@ -520,6 +480,6 @@ export default {
   },
 };
 </script>
-  <style lang="scss" scoped>
+<style lang="scss" scoped>
 @import "./index.scss";
 </style>
