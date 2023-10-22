@@ -25,6 +25,15 @@
       >
         المحتوي
       </div>
+      <div
+        @click="activeTapActive(4)"
+        :class="activeTap === 4 && Array.from(routeBasicData).length >= 1 ? 'active' : ''"
+        class="tap"
+        v-if="Array.from(routeBasicData).length >= 1"
+      >
+        البيانات الأساسية
+      </div>
+
     </div>
     <div class="content">
       <div class="row">
@@ -32,7 +41,7 @@
           <div class="col-12 px-0" v-if="activeTap === 1 && Array.from(routesUsers).length >= 1">
             <div class="row">
               <div class="col-lg-6 col-12" v-for="(item, index) in routesUsers" :key="index">
-                <RouteItem :item="item" />
+                <RouteItem :item="item"/>
               </div>
             </div>
           </div>
@@ -43,7 +52,7 @@
                 v-for="(item, index) in routesSchool"
                 :key="index"
               >
-                <RouteItem :item="item" />
+                <RouteItem :item="item"/>
               </div>
             </div>
           </div>
@@ -54,21 +63,33 @@
                 v-for="(item, index) in routesContent"
                 :key="index"
               >
-                <RouteItem :item="item" />
+                <RouteItem :item="item"/>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 px-0" v-if="activeTap === 4 && Array.from(routeBasicData).length >= 1">
+            <div class="row">
+              <div
+                class="col-lg-3 col-sm-6 col-12"
+                v-for="(item, index) in routeBasicData"
+                :key="index"
+              >
+                <RouteItem :item="item"/>
               </div>
             </div>
           </div>
         </transition>
       </div>
     </div>
-    <WelcomeModal />
+    <WelcomeModal/>
   </section>
 </template>
 <script>
 import RouteItem from "@/components/RouteItem/index.vue";
-import { routesUsers, routesSchool, routesContent } from "@/globalData";
+import {routesUsers, routesSchool, routesContent, routeBasicData} from "@/globalData";
 import WelcomeModal from "@/components/Shared/WelcomeModal/index.vue";
-import { mapActions } from "vuex";
+import {mapActions} from "vuex";
+
 export default {
   name: "index",
   data() {
@@ -77,6 +98,7 @@ export default {
       routesUsers: [],
       routesSchool: [],
       routesContent: [],
+      routeBasicData: [],
     };
   },
   components: {
@@ -101,6 +123,7 @@ export default {
         this.routesUsers = this.getRoutes(routesUsers);
         this.routesSchool = this.getRoutes(routesSchool);
         this.routesContent = this.getRoutes(routesContent);
+        this.routeBasicData = this.getRoutes(routeBasicData);
       },
       immediate: true,
     },
@@ -118,6 +141,8 @@ export default {
       this.activeTapActive(1);
     } else if (Array.from(this.routesSchool).length >= 1) {
       this.activeTapActive(2);
+    } else if (Array.from((this.routeBasicData).length >= 1)) {
+      this.activeTapActive(4);
     } else {
       this.activeTapActive(3);
     }
