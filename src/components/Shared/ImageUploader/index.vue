@@ -1,32 +1,44 @@
 <template>
   <ValidationProvider
     ref="provider"
-    v-slot="{ errors }"
-    :rules="{ image: true, size: maxSize }"
+    v-slot="{ errors,invalid }"
+    :rules="{ image: true, size: maxSize, required:isRequired }"
     :name="name"
     class="image-uploader"
   >
     <div>
       <h5 class="file-title">
-        {{ $t(text) }}
+        {{ text }}
       </h5>
       <div class="file-input-container">
-        <input
-          v-bind="$attrs"
-          v-on="$listeners"
-          class="file-input"
-          ref="attachment"
-          type="file"
-          accept="image/*"
-          @change="onFileChange"
-        />
+        <b-form-file accept="image/*"
+                     v-model="innerValue"
+                     v-bind="$attrs"
+                     v-on="$listeners"
+                     class="file-input"
+                     ref="attachment"
+                     type="file"
+                     @change="onFileChange"
+                     :class="{
+        'input-disabled': $attrs.disabled,
+        'is-invalid': invalid & errors.length,
+      }"></b-form-file>
+        <!--        <input-->
+        <!--          v-bind="$attrs"-->
+        <!--          v-on="$listeners"-->
+        <!--          class="file-input"-->
+        <!--          ref="attachment"-->
+        <!--          type="file"-->
+        <!--          accept="image/*"-->
+        <!--          @change="onFileChange"-->
+        <!--        />-->
         <!--        <Button color="gray" class="btn-file" @click="$refs.attachment.click()">-->
         <!--          {{ $t("GLOBAL_UPLOAD") }}-->
         <!--        </Button>-->
       </div>
       <div class="img-wrapper">
         <div class="hold-img" v-if="itemImage">
-          <img :src="itemImage">
+          <img :src="itemImage" alt="image">
           <span @click="deleteImage">x</span>
         </div>
         <div v-if="hasError" class="error-wrapper">
@@ -34,14 +46,23 @@
         </div>
       </div>
     </div>
+    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+      {{ error }}
+    </b-form-invalid-feedback>
   </ValidationProvider>
 </template>
 
 <script>
 import {mapActions} from "vuex";
+import {FieldMixin} from "@/mixins/FieldMixin";
 
 export default {
+  mixins: [FieldMixin],
   props: {
+    isRequired: {
+      type: Boolean,
+      default: false
+    },
     itemImage: {
       type: String,
     },
@@ -74,13 +95,14 @@ export default {
   },
   created() {
     this.background = this.defaultImage;
+    this.innerValue = []
   },
   methods: {
     ...mapActions(["ShowToast"]),
     onFileChange(changeEvent) {
       this.$emit("imageUpload", changeEvent);
     },
-    deleteImage(){
+    deleteImage() {
       this.$emit("deleteImage");
     }
   },

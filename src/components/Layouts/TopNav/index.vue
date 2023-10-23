@@ -95,6 +95,24 @@
                 </ul>
               </div>
             </div>
+            <div class="nav-item" v-if="Array.from(routeBasicData).length >= 1">
+              <p>
+                <span>{{ $t("MENU.basicData") }}</span
+                ><img src="@/assets/images/icons/arrow.svg" />
+              </p>
+              <div class="dropdown-item-list">
+                <ul >
+                  <router-link
+                    tag="li"
+                    :to="routeBasic.path"
+                    v-for="(routeBasic, index) in routeBasicData"
+                    :key="index"
+                  >
+                    {{ routeBasic.name }}</router-link
+                  >
+                </ul>
+              </div>
+            </div>
             <div class="nav-item" v-if="user.is_super_admin === 1">
               <p>
                 <span>{{ $t("MENU.system_settings") }}</span
@@ -126,7 +144,7 @@
   </header>
 </template>
 <script>
-import { routesUsers, routesSchool, routesContent, routeSettings } from "@/globalData";
+import { routesUsers, routesSchool, routesContent, routeSettings, routeBasicData } from "@/globalData";
 import { mapActions } from "vuex";
 
 export default {
@@ -137,6 +155,7 @@ export default {
     routesSchool: [],
     routesContent: [],
     routeSettings: [],
+    routeBasicData: [],
   }),
   watch: {
     $route: function () {
@@ -148,6 +167,7 @@ export default {
         this.routesSchool = this.getRoutes(routesSchool);
         this.routesContent = this.getRoutes(routesContent);
         this.routeSettings = this.getRoutes(routeSettings);
+        this.routeBasicData = this.getRoutes(routeBasicData);
       },
       immediate: true,
     },

@@ -11,7 +11,7 @@
   overflow: hidden;
   position: relative;
   text-align: center;
-
+  flex-direction: column;
   .file-title {
     font-weight: 400;
     font-size: 18px;
@@ -61,5 +61,13 @@
     font-size: 1rem;
     cursor: pointer;
     z-index: 1000;
+  }
+}
+.invalid-feedback{
+  display: block;
+}
+::v-deep{
+  .custom-file-label,.custom-file-input{
+    height: 100% !important;
   }
 }

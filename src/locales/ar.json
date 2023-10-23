@@ -38,7 +38,8 @@
     "content": "المحتوى",
     "infoDashBoard": "لوحة المعلومات",
     "reports": "التقارير",
-    "system_settings": "اعدادات النظام"
+    "system_settings": "اعدادات النظام",
+    "basicData": "البيانات الأساسية"
   },
   "TABLE_FIELDS": {
     "id": "التسلسل",
