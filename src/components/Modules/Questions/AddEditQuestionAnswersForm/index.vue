@@ -1412,6 +1412,7 @@
                       :rules="'required|max:80'"
                     ></TextField>
                     <div v-if="validSpace" class="text-danger">يجب ان يوجد مساحة خالية واحده فقط</div>
+                    <div v-if="!lockBtn && formValues.question" class="text-danger">يجب إضافة مساحة خالية واحده فقط</div>
                     <div class="preview-question-heading">عرض السؤال</div>
                     <div
                       v-html="previewQuestion"
@@ -1565,7 +1566,7 @@
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || checkOneAnswerDragOne || answersListDragOne.length <= 1 || validSpace"
+                      :disabled="invalid || checkOneAnswerDragOne || answersListDragOne.length <= 1 || validSpace || !lockBtn"
                       :custom-class="'submit-btn'"
                     >{{ $t("GLOBAL_NEXT") }}
                     </Button>
@@ -1597,6 +1598,7 @@
                       :rules="'required|max:80'"
                     ></TextField>
                     <div v-if="validSpace" class="text-danger">يجب ان يوجد مساحة خالية واحده فقط</div>
+                    <div v-if="!lockBtn && formValues.question" class="text-danger">يجب إضافة مساحة خالية واحده فقط</div>
                     <div class="preview-question-heading">عرض السؤال</div>
                     <div
                       v-html="previewQuestion"
@@ -1773,7 +1775,7 @@
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || checkOneAnswerDragOne || answersListDragOne.length <= 1 || validSpace"
+                      :disabled="invalid || checkOneAnswerDragOne || answersListDragOne.length <= 1 || validSpace || !lockBtn"
                       :custom-class="'submit-btn'"
                     >{{ $t("GLOBAL_NEXT") }}
                     </Button>
