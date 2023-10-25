@@ -62,19 +62,22 @@
           </div>
         </template>
         <template #cell(school_type)="data">
-          <span>{{ data.item.school_type.name | cutString}}</span>
+          <span>{{ data.item.school_type.name | cutString }}</span>
         </template>
         <template #cell(school_group)="data">
-          <span>{{ data.item.school_group.name | cutString}}</span>
+          <span>{{ data.item.school_group.name | cutString }}</span>
         </template>
         <template #cell(package)="data">
           <span>{{ data.item.package.name | cutString }}</span>
         </template>
         <template #cell(question)="data">
-          <span v-if="data.item.question_pattern === 'text'" >{{ data.item.question | cutString }}</span>
-          <img v-else-if="data.item.question_pattern === 'image'" :src="data.item.question" class="question-image-show">
+          <span v-if="data.item.question_pattern === 'text'">{{
+              data.item.question | cutString
+            }}</span>
+          <img v-else-if="data.item.question_pattern === 'image'" :src="data.item.question"
+               class="question-image-show">
           <audio v-else-if="data.item.question_pattern === 'audio'" controls>
-            <source :src="data.item.question" />
+            <source :src="data.item.question"/>
           </audio>
         </template>
         <template #cell(question_type)="data">
@@ -90,7 +93,8 @@
           <span v-if="data.item.level">{{ data.item.level.name | cutString }}</span>
         </template>
         <template #cell(learningpaths)="data">
-          <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{path.name | cutString}}</span>
+          <span v-for="(path, ind) in data.item.learningpaths" :key="ind"
+                class="path">{{ path.name | cutString }}</span>
         </template>
         <template #cell(learning_path)="data">
           <span v-if="data.item.learning_path">{{ data.item.learning_path.name | cutString }}</span>
@@ -113,7 +117,8 @@
           </Button>
         </template>
         <template #cell(actions)="data">
-          <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret class="hold-controls"
+          <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret
+                      class="hold-controls"
                       v-if="checkDelete(data) === 'show' || checkDetail() === 'show' || checkEdit() === 'show'">
             <template #button-content>
               <img src="@/assets/images/icons/actions.svg"/>
@@ -131,7 +136,8 @@
               {{ $t("CONTROLS.ManageClasses") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkDelete(data) === 'show'"></b-dropdown-divider>
-            <b-dropdown-item v-if="checkDelete(data) === 'show'" @click="deleteItem(data.item.id)">{{ $t("CONTROLS.deleteBtn") }}
+            <b-dropdown-item v-if="checkDelete(data) === 'show'" @click="deleteItem(data.item.id)">
+              {{ $t("CONTROLS.deleteBtn") }}
             </b-dropdown-item>
             <b-dropdown-item v-if="videoList" @click="addVideoQuestion(data.item.id)"
             >{{ $t("CONTROLS.addVideoQuestion") }}
@@ -185,9 +191,16 @@ export default {
     ...mapGetters(['user']),
     activePage() {
       return window.localStorage.getItem('page')
+    },
+    watchRefresh: function(){
+      return this.isRefresh
     }
   },
   props: {
+    isRefresh: {
+      type: Boolean,
+      default: false
+    },
     permission_delete: {
       type: String,
       default: ''
@@ -266,6 +279,13 @@ export default {
     }
   },
   watch: {
+    watchRefresh(newVal){
+      console.log('watchRefresh',newVal)
+      if (newVal) {
+        this.handlePageChange(1)
+        this.$emit('resetRefresh',false)
+      }
+    },
     vSearchModel(newVal) {
       this.inputValue = newVal;
     },
@@ -368,7 +388,7 @@ export default {
         return 'hide'
       }
     },
-    altImage($event){
+    altImage($event) {
       $event.target.src = require("@/assets/images/icons/user-avatar.png")
     }
   },

@@ -3248,7 +3248,6 @@ export default {
             let count = currentWordCount ? currentWordCount : 0;
             wordMap[words[i]] = count + 1;
           }
-          console.log(wordMap)
           if(wordMap['%'] >= 2 && wordMap['s'] >= 2){
             this.validSpace = true
             console.log('validSpace',this.validSpace)
