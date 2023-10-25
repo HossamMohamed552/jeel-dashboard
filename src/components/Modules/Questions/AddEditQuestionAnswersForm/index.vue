@@ -20,7 +20,8 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span> {{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>
+                      {{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -51,7 +52,8 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span> {{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>
+                      {{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -90,7 +92,8 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span> {{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>
+                      {{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -111,7 +114,8 @@
                 </b-col>
                 <b-col lg="2" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span> {{ $t('QUESTIONS.ANSWER_TYPE') }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>
+                      {{ $t('QUESTIONS.ANSWER_TYPE') }}</label>
                     <SelectSearch
                       v-model="answer.correct"
                       :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
@@ -185,7 +189,8 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span> {{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>
+                      {{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -217,7 +222,8 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
+                    <label><span><i
+                      class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -259,7 +265,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }" :rules="'required|audio'" :name="`audioAnswer${idx}`">
                       <b-form-file accept="audio/*"
@@ -333,7 +341,9 @@
               <b-row>
                 <b-col lg="12" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_TITLE_AUDIO")
+                      }}</label>
                     <ValidationProvider v-slot="{ errors }" :rules="'required|audio'" name="audio">
                       <b-form-file accept="audio/*"
                                    :placeholder="formValues.question ? formValues.question.name : 'اختر ملف'"
@@ -357,7 +367,8 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span> {{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>
+                      {{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -398,7 +409,8 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span> {{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>
+                      {{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -478,7 +490,9 @@
               <b-row>
                 <b-col lg="12" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_TITLE_AUDIO")
+                      }}</label>
                     <ValidationProvider v-slot="{ errors }"
                                         :rules="'required|audio'" name="questionAudio">
                       <b-form-file accept="audio/*"
@@ -503,7 +517,8 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
+                    <label><span><i
+                      class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -542,7 +557,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -633,7 +650,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_TITLE_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -666,7 +685,8 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
+                    <label><span><i
+                      class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required'"
@@ -705,7 +725,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -796,7 +818,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_TITLE_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -827,7 +851,8 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
+                    <label><span><i
+                      class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -868,7 +893,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -957,7 +984,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_TITLE_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -988,7 +1017,8 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
+                    <label><span><i
+                      class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -1016,7 +1046,9 @@
               <b-row v-for="(answer, idx) in answersListSelectAudio" :key="idx">
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -1108,7 +1140,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_TITLE_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -1205,7 +1239,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_TITLE_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -1289,7 +1325,9 @@
               <b-row>
                 <b-col lg="12" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_TITLE_AUDIO")
+                      }}</label>
                     <ValidationProvider v-slot="{ errors }"
                                         :rules="'required|audio'" name="audio">
                       <b-form-file accept="audio/*"
@@ -1366,11 +1404,14 @@
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
                     <TextField
+                      @paste.prevent
+                      @drop.prevent
                       v-model="formValues.question"
                       :label="$t('QUESTIONS.QUESTION')"
                       :name="$t('QUESTIONS.QUESTION')"
                       :rules="'required|max:80'"
                     ></TextField>
+                    <div v-if="validSpace" class="text-danger">يجب ان يوجد مساحة خالية واحده فقط</div>
                     <div class="preview-question-heading">عرض السؤال</div>
                     <div
                       v-html="previewQuestion"
@@ -1391,7 +1432,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_TITLE_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -1424,7 +1467,8 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
+                    <label><span><i
+                      class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -1463,7 +1507,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -1519,7 +1565,7 @@
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || checkOneAnswerDragOne || answersListDragOne.length <= 1"
+                      :disabled="invalid || checkOneAnswerDragOne || answersListDragOne.length <= 1 || validSpace"
                       :custom-class="'submit-btn'"
                     >{{ $t("GLOBAL_NEXT") }}
                     </Button>
@@ -1543,11 +1589,14 @@
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
                     <TextField
+                      @paste.prevent
+                      @drop.prevent
                       v-model="formValues.question"
                       :label="$t('QUESTIONS.QUESTION')"
                       :name="$t('QUESTIONS.QUESTION')"
                       :rules="'required|max:80'"
                     ></TextField>
+                    <div v-if="validSpace" class="text-danger">يجب ان يوجد مساحة خالية واحده فقط</div>
                     <div class="preview-question-heading">عرض السؤال</div>
                     <div
                       v-html="previewQuestion"
@@ -1568,7 +1617,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_TITLE_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -1618,7 +1669,9 @@
                         </b-col>
                         <b-col lg="4" class="mb-3">
                           <div class="hold-field">
-                            <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
+                            <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                                $t("QUESTIONS.HINT_TITLE_AUDIO")
+                              }}</label>
                             <ValidationProvider
                               v-slot="{ errors }"
                               :rules="'required|audio'"
@@ -1662,7 +1715,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -1718,7 +1773,7 @@
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || checkOneAnswerDragOne || answersListDragOne.length <= 1"
+                      :disabled="invalid || checkOneAnswerDragOne || answersListDragOne.length <= 1 || validSpace"
                       :custom-class="'submit-btn'"
                     >{{ $t("GLOBAL_NEXT") }}
                     </Button>
@@ -1752,7 +1807,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_TITLE_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -1785,7 +1842,8 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
+                    <label><span><i
+                      class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -1827,7 +1885,9 @@
                       </b-col>
                       <b-col lg="4" class="mb-3">
                         <div class="hold-field">
-                          <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                          <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                              $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
+                            }}</label>
                           <ValidationProvider
                             v-slot="{ errors }"
                             :rules="'required|audio'"
@@ -1929,7 +1989,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_TITLE_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -1962,7 +2024,8 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
+                    <label><span><i
+                      class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -1993,7 +2056,9 @@
                     <slot v-for="(answer, idx) in answersListDragSortAudio">
                       <b-col lg="10" class="mb-3">
                         <div class="hold-field">
-                          <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                          <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                              $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
+                            }}</label>
                           <ValidationProvider
                             v-slot="{ errors }"
                             :rules="'required|audio'"
@@ -2093,7 +2158,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_TITLE_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -2126,7 +2193,8 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
+                    <label><span><i
+                      class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="'required|audio'"
@@ -2170,7 +2238,9 @@
                       </b-col>
                       <b-col lg="4" class="mb-3">
                         <div class="hold-field">
-                          <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                          <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                              $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
+                            }}</label>
                           <ValidationProvider
                             v-slot="{ errors }"
                             :rules="'required|audio'"
@@ -2277,7 +2347,9 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label>
+                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        $t("QUESTIONS.QUESTION_TITLE_AUDIO")
+                      }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="$route.params.id ? '' : 'required'"
@@ -2310,7 +2382,8 @@
                 </b-col>
                 <b-col lg="4" class="mb-3">
                   <div class="hold-field">
-                    <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
+                    <label><span><i
+                      class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
                       :rules="$route.params.id ? '' : 'required'"
@@ -2350,7 +2423,9 @@
                     </b-col>
                     <b-col lg="4" class="mb-3">
                       <div class="hold-field">
-                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                            $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
+                          }}</label>
                         <ValidationProvider
                           v-slot="{ errors }"
                           :rules="$route.params.id ? '' : 'required'"
@@ -2437,7 +2512,9 @@
                     <b-col lg="4" class="mb-3"
                            v-if="answerMatchTo.answer_pattern==='text' || answerMatchTo.answer_pattern==='image'">
                       <div class="hold-field">
-                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                            $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
+                          }}</label>
                         <ValidationProvider
                           v-slot="{ errors }"
                           :rules="$route.params.id ? '' : 'required'"
@@ -2458,7 +2535,9 @@
                     </b-col>
                     <b-col lg="4" class="mb-3" v-if="answerMatchTo.answer_pattern==='audio'">
                       <div class="hold-field">
-                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                            $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
+                          }}</label>
                         <ValidationProvider
                           v-slot="{ errors }"
                           :rules="$route.params.id ? '' : 'required'"
@@ -2606,6 +2685,7 @@ export default {
   data() {
     return {
       lockBtn: false,
+      validSpace: false,
       previewQuestion: "",
       checkOneCorrectAnswerMcq: true,
       checkOneAnswerTureFalse: true,
@@ -2799,13 +2879,19 @@ export default {
       }
     },
     //
+    // lockCopyPaste($event){
+    //   console.log('$event',$event.prevent)
+    //   $event.preventDefault()
+    // },
     addSpace() {
-      this.formValues.question += "%s";
-      this.lockBtn = true;
-      this.previewQuestion = this.formValues.question;
+      if (this.formValues.question !== null) {
+        this.formValues.question += "%s";
+        this.lockBtn = true;
+        this.previewQuestion = this.formValues.question;
+      }
     },
     removeSpace() {
-      this.formValues.question = this.formValues.question.replace(/%s/g, "");
+      this.formValues.question = "";
       this.lockBtn = false;
       this.previewQuestion = this.formValues.question;
     },
@@ -3151,6 +3237,24 @@ export default {
           /%s/g,
           "<span style='display: inline-block; width: 100px; height: 50px; background: #eee; border-radius: 1rem;border: 1px solid; margin: 0 .5rem'></span>"
         );
+
+        let countRepeatedWords = (newVal) => {
+          let words = newVal.split("");
+          let wordMap = {};
+          for (let i = 0; i < words.length; i++) {
+            let currentWordCount = wordMap[words[i]];
+            let count = currentWordCount ? currentWordCount : 0;
+            wordMap[words[i]] = count + 1;
+          }
+          console.log(wordMap)
+          if(wordMap['%'] >= 2 && wordMap['s'] >= 2){
+            this.validSpace = true
+            console.log('validSpace',this.validSpace)
+          } else {
+            this.validSpace = false
+          }
+        }
+        countRepeatedWords(newVal)
       }
     },
     question(questionEdit) {
