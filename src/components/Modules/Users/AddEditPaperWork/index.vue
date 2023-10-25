@@ -22,14 +22,13 @@
               </b-col>
               <b-col lg="4" class="mb-3 mt-4">
                 <div class="hold-field">
-                  <ValidationProvider
-                    v-slot="{ errors, invalid }"
-                    rules="required"
-                  >
+                  <ValidationProvider v-slot="{ errors, invalid }" rules="required"
+                                      class="d-flex justify-content-start align-items-start">
+                    <span><i class="fa-solid fa-asterisk"></i></span>
                     <b-form-group
                       :label="$t('PAPER_WORK.type')"
                       v-slot="{ ariaDescribedby }"
-                      class="type"
+                      class="type custom-form-group"
                     >
                       <SelectField
                         :rules="'required'"
@@ -53,49 +52,48 @@
               </b-col>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
-                  <span class="custom-label">{{ $t("PAPER_WORK.print") }}</span>
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    :rules="$route.params.id ? '' : 'required'"
-                    name="file"
-                  >
-                    <b-form-file
-                      @change="checkEditPaperWork"
-                      accept="application/pdf"
-                      placeholder="اختر ملف"
-                      v-model="createPaperWork.paper_work_without_color"
-                      name="file"
-                    ></b-form-file>
-                    <b-form-invalid-feedback
-                      v-for="(error, index) in errors"
-                      :key="index"
-                      >{{ error }}
-                    </b-form-invalid-feedback>
-                  </ValidationProvider>
+                  <span class="custom-label"><span v-if="!$route.params.id"><i
+                    class="fa-solid fa-asterisk"></i></span>{{ $t("PAPER_WORK.print") }}</span>
+                  <ImageUploader
+                    :is-required="true"
+                    :name="'fileImgWithColor'"
+                    :text="$t('PAPER_WORK.print')"
+                    :item-image="image.fileWithoutColor"
+                    v-model="createPaperWork.paper_work_without_color"
+                    @imageUpload="handleUploadImage($event,'fileWithoutColor','paper_work_without_color')"
+                    @deleteImage="deleteImage('fileWithoutColor','paper_work_without_color')"
+                    @change="checkEditPaperWork"
+                  />
                 </div>
               </b-col>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
-                  <span class="custom-label">{{ $t("PAPER_WORK.color") }}</span>
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    :rules="$route.params.id ? '' : 'required'"
-                    name="file"
-                  >
-                    <b-form-file
-                      @change="checkEditPaperWorkColor"
-                      accept="application/pdf"
-                      placeholder="اختر ملف"
-                      v-model="createPaperWork.file"
-                      name="file"
-                    ></b-form-file>
-                    <b-form-invalid-feedback
-                      v-for="(error, index) in errors"
-                      :key="index"
-                    >
-                      {{ error }}
-                    </b-form-invalid-feedback>
-                  </ValidationProvider>
+                  <span class="custom-label"><span v-if="!$route.params.id"><i
+                    class="fa-solid fa-asterisk"></i></span>{{ $t("PAPER_WORK.color") }}</span>
+                  <ImageUploader
+                    :is-required="true"
+                    :name="'file'"
+                    :text="$t('PAPER_WORK.color')"
+                    :item-image="image.fileImg"
+                    v-model="createPaperWork.file"
+                    @imageUpload="handleUploadImage($event,'fileImg','file')"
+                    @deleteImage="deleteImage('fileImg','file')"
+                    @change="checkEditPaperWorkColor"
+                  />
+                  <!--                    <b-form-file-->
+                  <!--                      @change="checkEditPaperWorkColor"-->
+                  <!--                      accept="application/pdf"-->
+                  <!--                      placeholder="اختر ملف"-->
+                  <!--                      v-model="createPaperWork.file"-->
+                  <!--                      name="file"-->
+                  <!--                    ></b-form-file>-->
+                  <!--                    <b-form-invalid-feedback-->
+                  <!--                      v-for="(error, index) in errors"-->
+                  <!--                      :key="index"-->
+                  <!--                    >-->
+                  <!--                      {{ error }}-->
+                  <!--                    </b-form-invalid-feedback>-->
+                  <!--                  </ValidationProvider>-->
                 </div>
               </b-col>
               <b-col lg="4" class="mb-3 mt-3">
@@ -103,11 +101,13 @@
                   <ValidationProvider
                     v-slot="{ errors, invalid }"
                     rules="required"
+                    class="d-flex justify-content-start align-items-start"
                   >
+                    <span><i class="fa-solid fa-asterisk"></i></span>
                     <b-form-group
                       :label="$t('PAPER_WORK.learning_path')"
                       v-slot="{ ariaDescribedby }"
-                      class="learning_path"
+                      class="learning_path custom-form-group"
                     >
                       <SelectField
                         :rules="'required'"
@@ -125,11 +125,13 @@
                   <ValidationProvider
                     v-slot="{ errors, invalid }"
                     rules="required"
+                    class="d-flex justify-content-start align-items-start"
                   >
+                    <span><i class="fa-solid fa-asterisk"></i></span>
                     <b-form-group
                       :label="$t('PAPER_WORK.level')"
                       v-slot="{ ariaDescribedby }"
-                      class="level"
+                      class="level custom-form-group"
                     >
                       <SelectField
                         :rules="'required'"
@@ -148,11 +150,13 @@
                   <ValidationProvider
                     v-slot="{ errors, invalid }"
                     rules="required"
+                    class="d-flex justify-content-start align-items-start"
                   >
+                    <span><i class="fa-solid fa-asterisk"></i></span>
                     <b-form-group
                       :label="$t('MISSIONS.terms')"
                       v-slot="{ ariaDescribedby }"
-                      class="level"
+                      class="level custom-form-group"
                     >
                       <SelectField
                         :rules="'required'"
@@ -186,11 +190,12 @@
               <b-col lg="12" class="mb-3">
                 <div class="hold-field mt-4">
                   <ImageUploader
+                    :is-required="true"
                     :name="'paperWorkThumbnail'"
                     :text="$t('PAPER_WORK.UPLOAD_IMAGE')"
-                    :item-image="createPaperWork.img_url"
-                    @imageUpload="handleUploadImage"
-                    @deleteImage="deleteImage"
+                    :item-image="image.img_url"
+                    @imageUpload="handleUploadImage($event,'img_url','thumbnail')"
+                    @deleteImage="deleteImage('img_url','thumbnail')"
                   />
                 </div>
               </b-col>
@@ -203,7 +208,7 @@
                 <Button
                   type="submit"
                   :loading="loading"
-                  :disabled="invalid || createPaperWork.thumbnail === null"
+                  :disabled="invalid"
                   custom-class="submit-btn"
                 >
                   {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
@@ -222,14 +227,14 @@ import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import SelectField from "@/components/Shared/SelectField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { getSinglePaperworkRequest } from "@/api/paperWork";
+import {getSinglePaperworkRequest} from "@/api/paperWork";
 import {
   getAllLearningPathsRequest,
   getLearningPathsRequest,
 } from "@/api/learningPath";
-import { getAllLevelsRequest, getLevelsRequest } from "@/api/level";
+import {getAllLevelsRequest, getLevelsRequest} from "@/api/level";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
-import { getAllTermsRequest } from "@/api/term";
+import {getAllTermsRequest} from "@/api/term";
 
 export default {
   components: {
@@ -252,30 +257,34 @@ export default {
       levels: [],
       terms: [],
       paperWorkTypes: [
-        { value: "single", text: "اوراق عمل فردية" },
-        { value: "participatory", text: "اوراق عمل تشاركية" },
+        {value: "single", text: "اوراق عمل فردية"},
+        {value: "participatory", text: "اوراق عمل تشاركية"},
       ],
+      image: {
+        fileImg: null,
+        fileWithoutColor: null,
+        img_url: null,
+      },
       createPaperWork: {
         name: "",
         description: "",
         type: "",
         file: null,
-        img_url: "",
+        thumbnail: null,
         paper_work_without_color: null,
         learning_path_id: "",
         level_id: "",
         term_id: "",
         paper_work_final_degree: "",
-        thumbnail: null,
         uploadPrint: false,
         uploadColor: false,
       }
     };
   },
   methods: {
-    deleteImage(){
-      this.createPaperWork.thumbnail = null
-      this.createPaperWork.img_url = null
+    deleteImage(keyToShow, keyToSend) {
+      this.image[keyToShow] = null
+      this.createPaperWork[keyToSend] = null
     },
     checkEditPaperWork($event) {
       this.createPaperWork.uploadPrint = !!$event;
@@ -283,9 +292,9 @@ export default {
     checkEditPaperWorkColor($event) {
       this.createPaperWork.uploadColor = !!$event;
     },
-    handleUploadImage(e) {
-      this.createPaperWork.img_url = URL.createObjectURL(e.target.files[0]);
-      if (e) this.createPaperWork.thumbnail = e.target.files[0];
+    handleUploadImage(e, keyToShow, keyToSend) {
+      this.image[keyToShow] = URL.createObjectURL(e.target.files[0]);
+      if (e) this.createPaperWork[keyToSend] = e.target.files[0];
       else return;
     },
     onSubmit() {
@@ -326,7 +335,7 @@ export default {
       this.ApiService(getAllLearningPathsRequest()).then((response) => {
         const pathsArr = response.data.data;
         this.paths = pathsArr.map((path) => {
-          return { value: path.id, text: path.name };
+          return {value: path.id, text: path.name};
         });
       });
     },
@@ -334,19 +343,19 @@ export default {
       this.ApiService(getAllLevelsRequest()).then((response) => {
         const levelsArr = response.data.data;
         this.levels = levelsArr.map((path) => {
-          return { value: path.id, text: path.name };
+          return {value: path.id, text: path.name};
         });
       });
     },
     getTerms() {
       const params =
-      {
-        level_id: this.createPaperWork.level_id
-      }
+        {
+          level_id: this.createPaperWork.level_id
+        }
       this.ApiService(getAllTermsRequest(params)).then((response) => {
         const termsArr = response.data.data;
         this.terms = termsArr.map((path) => {
-          return { value: path.id, text: path.name };
+          return {value: path.id, text: path.name};
         });
       });
     },

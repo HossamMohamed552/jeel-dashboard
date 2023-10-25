@@ -104,6 +104,7 @@
               <b-col lg="12" class="mb-3">
                 <div class="hold-field mt-4">
                   <ImageUploader
+                    v-model="image"
                     :name="'logoSchool'"
                     :text="$t('USERS.UPLOAD_IMAGE')"
                     :item-image="itemImage"
@@ -141,7 +142,7 @@ import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
-import { getSingleUserRequest } from "@/api/user";
+import {getSingleUserRequest} from "@/api/user";
 
 export default {
   components: {
@@ -199,12 +200,18 @@ export default {
           formData.append("email", this.formValues.email);
           formData.append("password", this.formValues.password);
           formData.append("mobile", this.formValues.mobile);
-          formData.append("social_media", this.formValues.social_media);
+          if (this.formValues.social_media){
+            formData.append("social_media", this.formValues.social_media);
+          }
+          if (this.formValues.roles){
+            formData.append("roles[0]", this.formValues.roles);
+          }
+
           formData.append("_method", "PUT");
           // for (let user = 0; user < this.formValues.roles.length; user++) {
           //   formData.append(`roles[${user}]`, this.formValues.roles[user]);
           // }
-          formData.append("roles[0]", this.formValues.roles);
+
           formData.append("image", this.image);
           axios
             .post(`/users/${this.$route.params.id}`, formData, {
@@ -214,7 +221,8 @@ export default {
                 "Content-Type": "multipart/form-data",
               },
             })
-            .then((response) => {})
+            .then((response) => {
+            })
             .then(() => {
               this.$router.push("/dashboard/users");
             });
@@ -227,12 +235,19 @@ export default {
           formData.append("last_name", this.formValues.last_name);
           formData.append("email", this.formValues.email);
           formData.append("password", this.formValues.password);
-          formData.append("mobile", this.formValues.mobile);
-          formData.append("social_media", this.formValues.social_media);
+          if (this.formValues.mobile){
+            formData.append("mobile", this.formValues.mobile);
+          }
+          if (this.formValues.social_media){
+            formData.append("social_media", this.formValues.social_media);
+          }
+          if (this.formValues.roles[0]){
+            formData.append("roles[0]", this.formValues.roles);
+          }
           // for (let user = 0; user < this.formValues.roles.length; user++) {
           //   formData.append(`roles[${user}]`, this.formValues.roles[user]);
           // }
-          formData.append("roles[0]", this.formValues.roles);
+
           if (this.image && this.editImage)
             formData.append("image", this.image);
           axios
@@ -243,7 +258,8 @@ export default {
                 "Content-Type": "multipart/form-data",
               },
             })
-            .then((response) => {})
+            .then((response) => {
+            })
             .then(() => {
               this.$router.push("/dashboard/users");
             });

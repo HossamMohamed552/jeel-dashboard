@@ -1,7 +1,8 @@
 <template>
   <ValidationProvider v-slot="{ errors, invalid }" :name="name" :rules="rules">
-    <label v-if="label">{{ label }}</label>
+    <label v-if="label"><span v-if="typeof rules === 'string' && rules.includes('required')"><i class="fa-solid fa-asterisk"></i></span> {{ label }}</label>
     <v-select
+      :disabled="disabled"
       v-model="innerValue"
       v-bind="$attrs"
       v-on="$listeners"

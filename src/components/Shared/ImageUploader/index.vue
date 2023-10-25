@@ -8,6 +8,7 @@
   >
     <div>
       <h5 class="file-title">
+        <span v-if="isRequired"><i class="fa-solid fa-asterisk"></i></span>
         {{ text }}
       </h5>
       <div class="file-input-container">
@@ -54,11 +55,9 @@
 
 <script>
 import {mapActions} from "vuex";
-import {FieldMixin} from "@/mixins/FieldMixin";
-
 export default {
-  mixins: [FieldMixin],
   props: {
+    value: {},
     isRequired: {
       type: Boolean,
       default: false
@@ -91,11 +90,24 @@ export default {
     return {
       background: null,
       hasError: false,
+      innerValue: null
     };
   },
   created() {
     this.background = this.defaultImage;
-    this.innerValue = []
+    if (this.value !== null) {
+      this.innerValue = this.value;
+    }
+  },
+  watch: {
+    // Handles internal model changes.
+    innerValue(newVal) {
+      this.$emit("input", newVal);
+    },
+    // Handles external model changes.
+    value(newVal) {
+      this.innerValue = newVal;
+    },
   },
   methods: {
     ...mapActions(["ShowToast"]),

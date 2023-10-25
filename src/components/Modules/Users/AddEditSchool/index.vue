@@ -110,7 +110,7 @@
                             v-model="createSchool.contact"
                             :label="$t('SCHOOL.contact')"
                             :name="$t('SCHOOL.contact')"
-                            :rules="{ regex: /^01[0125][0-9]{8}$/ }"
+                            :rules="{ required:true, regex: /^01[0125][0-9]{8}$/ }"
                           ></TextField>
                         </div>
                       </b-col>
@@ -127,7 +127,9 @@
 
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
-                          <ValidationProvider rules="required">
+                          <ValidationProvider rules="required"
+                                              class="d-flex justify-content-start align-items-start">
+                            <span><i class="fa-solid fa-asterisk"></i></span>
                             <b-form-group :label="$t('SCHOOL.status')" class="group-type">
                               <b-form-radio
                                 :disabled="
@@ -136,7 +138,7 @@
                                 v-model="createSchool.status"
                                 value="0"
                                 name="group-status"
-                                >غير مفعل
+                              >غير مفعل
                               </b-form-radio>
                               <b-form-radio
                                 :disabled="
@@ -145,7 +147,7 @@
                                 v-model="createSchool.status"
                                 value="1"
                                 name="group-status"
-                                >مفعل
+                              >مفعل
                               </b-form-radio>
                             </b-form-group>
                           </ValidationProvider>
@@ -153,7 +155,9 @@
                       </b-col>
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
-                          <ValidationProvider rules="required">
+                          <ValidationProvider rules="required"
+                                              class="d-flex justify-content-start align-items-start">
+                            <span><i class="fa-solid fa-asterisk"></i></span>
                             <b-form-group :label="$t('SCHOOL.music')" class="group-type">
                               <b-form-radio
                                 :disabled="
@@ -162,7 +166,7 @@
                                 v-model="createSchool.music_status"
                                 value="0"
                                 name="group-music_type"
-                                >أكابيلا
+                              >أكابيلا
                               </b-form-radio>
                               <b-form-radio
                                 :disabled="
@@ -171,7 +175,7 @@
                                 v-model="createSchool.music_status"
                                 value="1"
                                 name="group-music_type"
-                                >بموسيقى
+                              >بموسيقى
                               </b-form-radio>
                             </b-form-group>
                           </ValidationProvider>
@@ -180,9 +184,8 @@
                       <b-col lg="6" class="mb-3">
                         <div class="hold-field">
                           <ValidationProvider rules="required">
-                            <label>
-                              {{ $t("SCHOOL.start_subscription") }}
-                            </label>
+                            <label> <span><i class="fa-solid fa-asterisk"></i></span>
+                              {{ $t("SCHOOL.start_subscription") }}</label>
                             <date-picker
                               :disabled-date="disabledBeforeToday"
                               :disabled="
@@ -203,6 +206,7 @@
                         <div class="hold-field">
                           <ValidationProvider rules="required">
                             <label>
+                              <span><i class="fa-solid fa-asterisk"></i></span>
                               {{ $t("SCHOOL.end_subscription") }}
                             </label>
                             <date-picker
@@ -226,6 +230,8 @@
                   <b-col lg="3">
                     <div class="hold-field mt-4">
                       <ImageUploader
+                        name="'schoolLogo'"
+                        v-model="createSchool.logo"
                         :text="$t('SCHOOL.UPLOAD_IMAGE')"
                         @imageUpload="handleUploadImage"
                         :itemImage="itemImage"
@@ -260,20 +266,20 @@
 <script>
 import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import { getSchoolOwnerRequest, getSingleSchoolsRequest } from "@/api/school";
+import {getSchoolOwnerRequest, getSingleSchoolsRequest} from "@/api/school";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { getAllPackagesRequest } from "@/api/packages";
-import { getAllSchoolGroupRequest } from "@/api/schoolGroup";
-import { getAllSchoolTypesRequest } from "@/api/schoolType";
+import {getAllPackagesRequest} from "@/api/packages";
+import {getAllSchoolGroupRequest} from "@/api/schoolGroup";
+import {getAllSchoolTypesRequest} from "@/api/schoolType";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/locale/en";
 import "vue2-datepicker/index.css";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
-import { getAllSearchUsersRequest } from "@/api/user";
+import {getAllSearchUsersRequest} from "@/api/user";
 import axios from "axios";
 import VueCookies from "vue-cookies";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
   components: {
@@ -323,8 +329,8 @@ export default {
   methods: {
     getSoundType(id) {
       const chosenItem = this.schoolGroups.find((item) => item.id == id);
-      this.createSchool.music_status = chosenItem.music_status;
-      this.createSchool.status = chosenItem.status;
+      this.createSchool.music_status = chosenItem ? chosenItem.music_status : "";
+      this.createSchool.status = chosenItem ? chosenItem.status : "";
     },
     deleteImage() {
       this.createSchool.logo = null;
@@ -358,7 +364,7 @@ export default {
       });
     },
     getAllUsers() {
-      this.ApiService(getSchoolOwnerRequest({ school_id: this.$route.params.id })).then(
+      this.ApiService(getSchoolOwnerRequest({school_id: this.$route.params.id})).then(
         (response) => {
           this.users = response.data.data;
         }
@@ -380,7 +386,7 @@ export default {
       formData.append("subscription_end_date", this.createSchool.endDate);
       formData.append("package_id", this.createSchool.package_id);
 
-      if (typeof this.createSchool.logo != "string")
+      if (typeof this.createSchool.logo != "string" && this.createSchool.logo)
         formData.append("logo", this.createSchool.logo);
 
       if (this.$route.params.id) {

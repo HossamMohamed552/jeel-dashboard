@@ -18,11 +18,8 @@
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
-                  <b-form-group :label="$t('PATH.Description')" v-slot="{ ariaDescribedby }"
-                                class="description">
-                    <TextAreaField v-model="createPath.description" :rules="'required|max:60'" rows="5"
-                                   :name="$t('VIDEO.Description')">
-                    </TextAreaField>
+                  <b-form-group v-slot="{ ariaDescribedby }" class="description">
+                    <TextAreaField v-model="createPath.description" :label="$t('PATH.Description')" :rules="'required|max:60'" rows="5" :name="$t('VIDEO.Description')"></TextAreaField>
                   </b-form-group>
                 </div>
               </b-col>

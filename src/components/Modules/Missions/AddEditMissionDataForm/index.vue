@@ -93,7 +93,9 @@
               <b-col lg="12" class="mb-3">
                 <div class="hold-field mt-4">
                   <ImageUploader
-                    :name="'logoSchool'"
+                    :is-required="true"
+                    v-model="mission.mission_image"
+                    :name="'logoMission'"
                     :text="$t('MISSIONS.UPLOAD_IMAGE')"
                     :item-image="mission.itemImage"
                     @imageUpload="handleUploadImage"

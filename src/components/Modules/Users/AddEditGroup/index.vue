@@ -18,8 +18,8 @@
               </b-col>
               <b-col lg="3" class="mb-3 radio-item">
                 <div class="hold-field">
-                  <ValidationProvider rules="required" v-slot="{ errors }">
-                    <b-form-group :label="$t('GROUP.type')" class="group-type">
+                  <ValidationProvider rules="required" v-slot="{ errors }" class="d-flex justify-content-start align-items-start">
+                    <span><i class="fa-solid fa-asterisk"></i></span> <b-form-group :label="$t('GROUP.type')" class="group-type">
                       <b-form-radio v-model="createGroup.type" value="national" name="group-type">
                         محلى
                       </b-form-radio>
@@ -35,8 +35,8 @@
               </b-col>
               <b-col lg="3" class="mb-3 radio-item">
                 <div class="hold-field">
-                  <ValidationProvider rules="required" v-slot="{ errors }">
-                    <b-form-group :label="$t('GROUP.music')" class="group-type">
+                  <ValidationProvider rules="required" v-slot="{ errors }" class="d-flex justify-content-start align-items-start">
+                    <span><i class="fa-solid fa-asterisk"></i></span><b-form-group :label="$t('GROUP.music')" class="group-type">
                       <b-form-radio v-model="createGroup.music_status" value="0"
                                     name="group-music_type">أكابيلا
                       </b-form-radio>
@@ -52,8 +52,8 @@
               </b-col>
               <b-col lg="3" class="mb-3 radio-item">
                 <div class="hold-field">
-                  <ValidationProvider rules="required" v-slot="{ errors }">
-                    <b-form-group :label="$t('GROUP.status')" class="group-type">
+                  <ValidationProvider rules="required" v-slot="{ errors }" class="d-flex justify-content-start align-items-start">
+                    <span><i class="fa-solid fa-asterisk"></i></span> <b-form-group :label="$t('GROUP.status')" class="group-type">
                       <b-form-radio v-model="createGroup.status" value="0" name="group-status">غير
                         مفعل
                       </b-form-radio>
@@ -77,7 +77,7 @@
               <!--                </div>-->
               <!--              </b-col>-->
               <b-col lg="6" class="mt-5">
-                <div class="hold-field">
+                <div class="hold-field" v-if="users">
                   <SelectSearch
                     v-model="createGroup.owner_id"
                     :label="$t('GROUP.owner')"
@@ -90,7 +90,7 @@
                 </div>
               </b-col>
               <b-col lg="6" class="mt-5">
-                <div class="hold-field">
+                <div class="hold-field" v-if="countries">
                   <SelectSearch
                     v-model="createGroup.country_id"
                     :label="$t('GROUP.country')"
