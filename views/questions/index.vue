@@ -6,13 +6,16 @@
                @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getQuestions"
+               @resetRefresh="refreshIt=false"
+               :isRefresh="refreshIt"
                :loading="loading"
                :permission_delete="'delete-questions'"
                :permission_edit="'edit-questions'"
                :permission_view="'view-questions'"
-               >
+    >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddQuestions" v-if="user.permissions.includes(`add-questions`)">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddQuestions"
+                v-if="user.permissions.includes(`add-questions`)">
           <img src="@/assets/images/icons/plus.svg">
           <span>إضافة سؤال جديد</span>
         </Button>
@@ -36,16 +39,17 @@ import {mapGetters} from "vuex";
 
 export default {
   components: {Modal, ListItems, Button},
-  computed:{
+  computed: {
     ...mapGetters(['user'])
   },
   data() {
     return {
-      loading:false,
+      loading: false,
       showModal: false,
       groupSearchWord: "",
       questionsList: [],
       totalNumber: 0,
+      refreshIt: false,
       fieldsList: [
         {key: "id", label: "التسلسل"},
         {key: "question_type", label: "نوع السؤال"},
@@ -54,7 +58,7 @@ export default {
         {key: "question_pattern", label: "نمط السؤال"},
         {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
         {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.level')},
-        { key: "actions", label: "الإجراء" },
+        {key: "actions", label: "الإجراء"},
       ],
     }
   },
@@ -68,9 +72,9 @@ export default {
       this.ApiService(getQuestionRequest(params)).then((response) => {
         this.questionsList = response.data.data
         this.totalNumber = response.data.meta.total
-      }) .finally(() => {
-          this.loading = false;
-        });
+      }).finally(() => {
+        this.loading = false;
+      });
     },
     detailItem($event) {
       this.$router.push(`/dashboard/questions/show/${$event}`)
@@ -88,6 +92,7 @@ export default {
     cancelWithConfirm() {
       this.ApiService(deleteQuestionRequest(this.itemId)).then(() => {
         this.getQuestions()
+        this.refreshIt = true
       })
       this.cancel()
     }
