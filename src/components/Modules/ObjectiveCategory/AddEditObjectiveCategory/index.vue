@@ -21,6 +21,7 @@
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <label>
+                    <span><i class="fa-solid fa-asterisk"></i></span>
                     {{$t('MISSIONS.LEARNING_PATH')}}
                   </label>
                   <SelectSearch

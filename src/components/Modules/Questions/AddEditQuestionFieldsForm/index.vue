@@ -14,7 +14,7 @@
                     :options="questionTypes"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
-                    disabled
+                    :disabled="true"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -27,7 +27,7 @@
                     :options="questionSubTypes"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
-                    disabled
+                    :disabled="true"
                   ></SelectSearch>
                 </div>
               </b-col>
