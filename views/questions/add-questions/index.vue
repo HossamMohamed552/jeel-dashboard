@@ -139,15 +139,16 @@
             </b-row>
           </b-col>
           <b-col lg="12" v-if="questionTypeSlug.includes('match')">
-            <!--            <pre>{{ collectData.answers }}</pre>-->
             <div v-for="(matchAnswer,index) in collectData.answers" :key="index"
                  class="d-flex justify-content-start align-items-center answer_match my-3">
               <p>{{ index + 1 }} - </p>
               <p>{{ matchAnswer.answer }}</p>
-              <p class="to">to</p>
+              <p class="to">إلى</p>
               <div v-for="(matchAnswerTo,index) in matchAnswer.answers_to" :key="index">
                 <p v-if="matchAnswerTo.answer_pattern === 'text'">{{ matchAnswerTo.answer }}</p>
-                <p v-if="matchAnswerTo.answer_pattern === 'audio'">{{ matchAnswerTo.answer.name }}</p>
+                <p v-if="matchAnswerTo.answer_pattern === 'audio'">{{
+                    matchAnswerTo.answer.name
+                  }}</p>
               </div>
             </div>
           </b-col>
@@ -207,6 +208,9 @@ export default {
     Stepper,
     AddEditQuestionAnswersForm,
   },
+  destroyed() {
+    localStorage.removeItem('collectData')
+  },
   data() {
     return {
       questionPattern: "",
@@ -249,6 +253,14 @@ export default {
     this.getBloomCategories();
     this.getLearningMethods();
   },
+  // watch:{
+  //   collectData: {
+  //     handler(newVal){
+  //
+  //     },
+  //     deep: true
+  //   }
+  // },
   methods: {
     getQuestionTypes() {
       const params = {
@@ -350,7 +362,7 @@ export default {
       this.currentStep = value;
     },
     handleSaveCollectedData(data) {
-      sessionStorage.setItem("collectData", data);
+      localStorage.setItem("collectData", JSON.stringify(data));
     },
     handleAssignObject(object) {
       Object.assign(this.collectData, {...object});
@@ -421,14 +433,14 @@ export default {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][match_from]`, this.collectData.answers[answer]?.match_from);
-          if(this.collectData.answers[answer]?.audio){
+          if (this.collectData.answers[answer]?.audio) {
             formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer]?.audio);
           }
           formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers[answer]?.answer_pattern);
           for (let answerTo = 0; answerTo < this.collectData.answers[answer].answers_to.length; answerTo++) {
             formData.append(`answers[${answer}][answers_to][${answerTo}][answer]`, this.collectData.answers[answer].answers_to[answerTo]?.answer);
             formData.append(`answers[${answer}][answers_to][${answerTo}][match_to]`, this.collectData.answers[answer].answers_to[answerTo]?.match_to);
-            if(this.collectData.answers[answer].answers_to[answerTo]?.audio){
+            if (this.collectData.answers[answer].answers_to[answerTo]?.audio) {
               formData.append(`answers[${answer}][answers_to][${answerTo}][audio]`, this.collectData.answers[answer].answers_to[answerTo]?.audio);
             }
             formData.append(`answers[${answer}][answers_to][${answerTo}][answer_pattern]`, this.collectData.answers[answer].answers_to[answerTo]?.answer_pattern);

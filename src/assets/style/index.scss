@@ -206,3 +206,9 @@ label {
   display: inline-block;
   width: 100%;
 }
+::v-deep{
+  .vs__dropdown-option--deselect,.vs__dropdown-option--selected{
+    background: #76236C !important;
+    color: #fff;
+  }
+}
