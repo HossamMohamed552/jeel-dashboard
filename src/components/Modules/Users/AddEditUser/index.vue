@@ -241,7 +241,7 @@ export default {
           if (this.formValues.social_media){
             formData.append("social_media", this.formValues.social_media);
           }
-          if (this.formValues.roles[0]){
+          if (this.formValues.roles){
             formData.append("roles[0]", this.formValues.roles);
           }
           // for (let user = 0; user < this.formValues.roles.length; user++) {

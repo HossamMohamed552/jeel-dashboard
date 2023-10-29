@@ -1,24 +1,41 @@
 <template>
   <section class="login">
-    <Login @handleLogin="handleLogin($event)" :loading="loading" />
+    <Login @handleLogin="handleLogin($event)" :loading="loading"/>
+    <Modal
+      :content-message="'يتم إرسال التحقيق إلى بريدك الإلكترونى'"
+      :showModal="showModalVerify"
+      :is-verify="true"
+      @cancelWithConfirm="cancelWithConfirm($event)"
+    />
+    <Modal
+      :content-message="'برجاء التاكد من بريدك الإلكترونى'"
+      :showModal="showModalVerifyCheck"
+      :is-verify-check="true"
+      @cancelWithConfirm="cancelWithConfirmCheck($event)"
+    />
   </section>
 </template>
 
 <script>
 import Login from "@/components/login/index.vue";
 import CopyRight from "@/components/Shared/CopyRight/index.vue";
-import { postLoginRequest } from "@/api/register";
-import { mapActions } from "vuex";
+import {postLoginRequest, postVerifyRequest} from "@/api/register";
+import {mapActions} from "vuex";
+import Modal from "@/components/Shared/Modal/index.vue";
 
 export default {
   name: "login",
   components: {
+    Modal,
     Login,
     CopyRight,
   },
   data() {
     return {
       loading: false,
+      showModalVerify: false,
+      showModalVerifyCheck: false,
+      email:""
     };
   },
   methods: {
@@ -28,6 +45,7 @@ export default {
     },
     handleLogin($event) {
       this.loading = true;
+      this.email = $event.email
       this.ApiService(postLoginRequest($event))
         .then((response) => {
           response.data.code === 200 ? (this.loading = false) : (this.loading = true);
@@ -37,10 +55,23 @@ export default {
           this.showModal();
           this.setUser(payload);
         })
-        .catch(() => {
+        .catch((error) => {
           this.loading = false;
+          if (error.response.status === 403) {
+            this.showModalVerify = true
+          }
         });
     },
+    cancelWithConfirm(){
+      this.ApiService(postVerifyRequest({email: this.email})).then((response) => {
+        this.showModalVerify = false
+      }).then(()=>{
+        this.showModalVerifyCheck = true
+      })
+    },
+    cancelWithConfirmCheck(){
+      this.showModalVerifyCheck = false
+    }
   },
 };
 </script>

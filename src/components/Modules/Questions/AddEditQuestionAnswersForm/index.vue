@@ -144,16 +144,18 @@
                   </div>
                 </b-col>
               </b-row>
+              <b-row v-if="answersListMcQ.length > 8">
+                <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+              </b-row>
               <b-row>
                 <div class="action-holder">
                   <div>
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || answersListMcQ.length <= 1 || checkOneCorrectAnswerMcq"
+                      :disabled="invalid || answersListMcQ.length <= 1  || answersListMcQ.length > 8 || checkOneCorrectAnswerMcq"
                       :custom-class="'submit-btn'"
                     >
-
                       {{ $t("GLOBAL_NEXT") }}
                     </Button>
                     <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
@@ -311,13 +313,16 @@
                   </div>
                 </b-col>
               </b-row>
+              <b-row v-if="answersListMcQImage.length > 8">
+                <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+              </b-row>
               <b-row>
                 <div class="action-holder">
                   <div>
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || answersListMcQImage.length <= 1 || checkOneCorrectAnswerMcq"
+                      :disabled="invalid || answersListMcQImage.length <= 1 || checkOneCorrectAnswerMcq || answersListMcQImage.length > 8"
                       :custom-class="'submit-btn'"
                     >
                       {{ $t("GLOBAL_NEXT") }}
@@ -460,13 +465,16 @@
                   </div>
                 </b-col>
               </b-row>
+              <b-row v-if="answersListMcQImage.length > 8">
+                <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+              </b-row>
               <b-row>
                 <div class="action-holder">
                   <div>
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || answersListMcQImage.length <= 1 || checkOneCorrectAnswerMcq"
+                      :disabled="invalid || answersListMcQImage.length <= 1 || checkOneCorrectAnswerMcq || answersListMcQImage.length > 8"
                       :custom-class="'submit-btn'"
                     >
                       {{ $t("GLOBAL_NEXT") }}
@@ -610,13 +618,16 @@
                   </div>
                 </b-col>
               </b-row>
+              <b-row v-if="answersListMcQ.length > 8">
+                <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+              </b-row>
               <b-row>
                 <div class="action-holder">
                   <div>
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || answersListMcQ.length <= 1 || checkOneCorrectAnswerMcq"
+                      :disabled="invalid || answersListMcQ.length <= 1 || checkOneCorrectAnswerMcq || answersListMcQ.length > 8"
                       :custom-class="'submit-btn'"
                     >
                       {{ $t("GLOBAL_NEXT") }}
@@ -778,15 +789,16 @@
                   </div>
                 </b-col>
               </b-row>
+              <b-row v-if="answersListSelect.length > 8">
+                <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+              </b-row>
               <b-row>
                 <div class="action-holder">
                   <div>
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="
-                        invalid || answersListSelect.length <= 1 || checkMultiCorrectAnswerSelect
-                      "
+                      :disabled="invalid || answersListSelect.length <= 1 || checkMultiCorrectAnswerSelect || answersListSelect.length > 8"
                       :custom-class="'submit-btn'"
                     >
                       {{ $t("GLOBAL_NEXT") }}
@@ -946,13 +958,16 @@
                   </div>
                 </b-col>
               </b-row>
+              <b-row v-if="answersListSelectImage.length > 8">
+                <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+              </b-row>
               <b-row>
                 <div class="action-holder">
                   <div>
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || answersListSelectImage.length <= 1 || checkMultiCorrectAnswerSelect"
+                      :disabled="invalid || answersListSelectImage.length <= 1 || checkMultiCorrectAnswerSelect || answersListSelectImage.length > 8"
                       :custom-class="'submit-btn'"
                     >
                       {{ $t("GLOBAL_NEXT") }}
@@ -1100,13 +1115,16 @@
                   </div>
                 </b-col>
               </b-row>
+              <b-row v-if="answersListSelectAudio.length > 8">
+                <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+              </b-row>
               <b-row>
                 <div class="action-holder">
                   <div>
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || answersListSelectAudio.length <= 1 || checkMultiCorrectAnswerSelect"
+                      :disabled="invalid || answersListSelectAudio.length <= 1 || checkMultiCorrectAnswerSelect || answersListSelectAudio.length > 8"
                       :custom-class="'submit-btn'"
                     >
                       {{ $t("GLOBAL_NEXT") }}
@@ -1560,13 +1578,16 @@
                   </div>
                 </b-col>
               </b-row>
+              <b-row v-if="answersListDragOne.length > 8">
+                <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+              </b-row>
               <b-row>
                 <div class="action-holder">
                   <div>
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || checkOneAnswerDragOne || answersListDragOne.length <= 1 || validSpace || !lockBtn"
+                      :disabled="invalid || checkOneAnswerDragOne || answersListDragOne.length <= 1 || validSpace || !lockBtn || answersListDragOne.length > 8"
                       :custom-class="'submit-btn'"
                     >{{ $t("GLOBAL_NEXT") }}
                     </Button>
@@ -1769,13 +1790,16 @@
                   </div>
                 </b-col>
               </b-row>
+              <b-row v-if="answersListDragOne.length > 8">
+                <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+              </b-row>
               <b-row>
                 <div class="action-holder">
                   <div>
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || checkOneAnswerDragOne || answersListDragOne.length <= 1 || validSpace || !lockBtn"
+                      :disabled="invalid || checkOneAnswerDragOne || answersListDragOne.length <= 1 || validSpace || !lockBtn || answersListDragOne.length > 8"
                       :custom-class="'submit-btn'"
                     >{{ $t("GLOBAL_NEXT") }}
                     </Button>
@@ -1952,13 +1976,16 @@
                   </b-row>
                 </b-col>
               </b-row>
+              <b-row v-if="answersListDragSort.length > 8">
+                <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+              </b-row>
               <b-row>
                 <div class="action-holder">
                   <div>
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || answersListDragSort.length < 2"
+                      :disabled="invalid || answersListDragSort.length < 2 || answersListDragSort.length > 8"
                       :custom-class="'submit-btn'"
                     >{{ $t("GLOBAL_NEXT") }}
                     </Button>
@@ -2121,13 +2148,16 @@
                   </b-row>
                 </b-col>
               </b-row>
+              <b-row v-if="answersListDragSortAudio.length > 8">
+                <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+              </b-row>
               <b-row>
                 <div class="action-holder">
                   <div>
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || answersListDragSortAudio.length < 2"
+                      :disabled="invalid || answersListDragSortAudio.length < 2 || answersListDragSortAudio.length > 8"
                       :custom-class="'submit-btn'"
                     >{{ $t("GLOBAL_NEXT") }}
                     </Button>
@@ -2310,13 +2340,16 @@
                   </b-row>
                 </b-col>
               </b-row>
+              <b-row v-if="answersListDragSortImage.length > 8">
+                <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+              </b-row>
               <b-row>
                 <div class="action-holder">
                   <div>
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || answersListDragSortImage.length < 2"
+                      :disabled="invalid || answersListDragSortImage.length < 2 || answersListDragSortImage.length > 8"
                       :custom-class="'submit-btn'"
                     >{{ $t("GLOBAL_NEXT") }}
                     </Button>
@@ -2475,11 +2508,14 @@
                       </button>
                     </b-col>
                   </b-row>
+                  <b-row v-if="answersListMatch.length > 8">
+                    <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+                  </b-row>
                   <b-row>
                     <b-col lg="12">
                       <div class="hold-field my-3">
                         <button class="add-btn" @click="confirmAnswersFrom = true"
-                                v-if="!confirmAnswersFrom" :disabled="answersListMatch.length<=1">
+                                v-if="!confirmAnswersFrom" :disabled="answersListMatch.length<=1 || answersListMatch.length > 8">
                           {{ $t("QUESTIONS.confirm") }}
                         </button>
                       </div>
@@ -2621,6 +2657,9 @@
                   </b-row>
                 </slot>
               </b-col>
+              <b-row v-if="answersListMatchTo.length > 8">
+                <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+              </b-row>
               <b-row>
                 <div class="action-holder">
                   <div>
@@ -2628,7 +2667,7 @@
                       type="submit"
                       :loading="loading"
                       :custom-class="'submit-btn'"
-                      :disabled="checkAssignAnswers || (answersListMatch.length !== answersListMatchTo.length)"
+                      :disabled="checkAssignAnswers || (answersListMatch.length !== answersListMatchTo.length) || answersListMatch.length > 8 || answersListMatchTo.length > 8"
                     >
                       {{ $t("GLOBAL_NEXT") }}
                     </Button>
@@ -3267,15 +3306,6 @@ export default {
       this.answersListMatchOneToOne = this.formValues.answers;
     },
   },
-  mounted() {
-    if (this.questionSlug.slug === 'match_one_text_text') {
-      this.answerMatch.answer_pattern = 'text'
-      this.answerMatchTo.answer_pattern = 'text'
-    } else if (this.questionSlug.slug === 'match_one_voice_text') {
-      this.answerMatch.answer_pattern = 'text'
-      this.answerMatchTo.answer_pattern = 'audio'
-    }
-  }
 };
 </script>
 <style scoped lang="scss">

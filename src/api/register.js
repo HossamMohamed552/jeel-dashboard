@@ -5,7 +5,13 @@ export const postLoginRequest = (data) => ({
     data,
   },
 });
-
+export const postVerifyRequest = (data) => ({
+  method: "post",
+  url: `${process.env.VUE_APP_AUTH_URL}/verify-email/send`,
+  config: {
+    data,
+  },
+});
 export const postRegisterRequest = (data) => ({
   method: "post",
   url: "register",

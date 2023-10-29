@@ -176,7 +176,6 @@ export default {
         duration: null,
         description: null,
         itemImage: null,
-
         mission_image: null,
       },
     };
@@ -219,10 +218,5 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "./index";
-::v-deep{
-  .vs__dropdown-option--deselect,.vs__dropdown-option--selected{
-    background: #76236C !important;
-    color: #fff;
-  }
-}
+
 </style>
