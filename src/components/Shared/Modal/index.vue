@@ -6,6 +6,8 @@
         <div class="flexContent">
           <div>
             <div class="text-center hold-icon">
+              <img src="@/assets/images/icons/email.png" v-show="isVerify">
+              <img src="@/assets/images/icons/badge.png" v-show="isVerifyCheck">
               <img src="@/assets/images/icons/delete.svg" v-show="isWarning || isFailed">
               <img src="@/assets/images/icons/success.svg" v-show="isSuccess">
             </div>
@@ -29,6 +31,16 @@
              {{$t('GLOBAL_CANCEL')}}
            </Button>
          </div>
+          <div class="d-flex justify-content-center align-items-center mt-5" v-if="isVerify">
+            <Button :custom-class="'rounded-btn'" @click="cancelWithConfirm()">
+              {{$t('verifyEmail')}}
+            </Button>
+          </div>
+          <div class="d-flex justify-content-center align-items-center mt-5" v-if="isVerifyCheck">
+            <Button :custom-class="'rounded-btn'" @click="cancelWithConfirm()">
+              {{$t('close')}}
+            </Button>
+          </div>
         </template>
       </div>
     </b-modal>
@@ -57,6 +69,14 @@ export default {
       default: false
     },
     isWarning:{
+      type:Boolean,
+      default: false
+    },
+    isVerify:{
+      type:Boolean,
+      default: false
+    },
+    isVerifyCheck:{
       type:Boolean,
       default: false
     },

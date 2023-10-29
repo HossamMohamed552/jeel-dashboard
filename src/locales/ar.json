@@ -439,5 +439,7 @@
   "FORGET_PASSWORD_TITLE": "ادخل بريدك الإلكترونى لإعادة ادخال كلمة المرور",
   "WELCOME": "مرحبا",
   "ADD_ANSWER": "إضافة",
-  "remove_ANSWER": "حذف"
+  "remove_ANSWER": "حذف",
+  "verifyEmail": "تحقق من بريدك الإلكترونى",
+  "close": "إغلاق"
 }

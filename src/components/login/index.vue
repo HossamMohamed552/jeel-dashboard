@@ -105,7 +105,7 @@ export default {
           return;
         }
         this.$emit("handleLogin", this.user);
-        this.user.email = this.user.password = "";
+        // this.user.email = this.user.password = "";
         this.$nextTick(() => {
           this.$refs.loginForm.reset();
         });
