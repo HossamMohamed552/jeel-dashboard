@@ -6,7 +6,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditGroupForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="3" class="mb-3">
+              <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="createGroup.name"
@@ -16,23 +16,23 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="3" class="mb-3 radio-item">
-                <div class="hold-field">
-                  <ValidationProvider rules="required" v-slot="{ errors }" class="d-flex justify-content-start align-items-start">
-                    <span><i class="fa-solid fa-asterisk"></i></span> <b-form-group :label="$t('GROUP.type')" class="group-type">
-                      <b-form-radio v-model="createGroup.type" value="national" name="group-type">
-                        محلى
-                      </b-form-radio>
-                      <b-form-radio v-model="createGroup.type" value="international"
-                                    name="group-type">دولى
-                      </b-form-radio>
-                    </b-form-group>
-                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                      {{ error }}
-                    </b-form-invalid-feedback>
-                  </ValidationProvider>
-                </div>
-              </b-col>
+<!--              <b-col lg="3" class="mb-3 radio-item">-->
+<!--                <div class="hold-field">-->
+<!--                  <ValidationProvider rules="required" v-slot="{ errors }" class="d-flex justify-content-start align-items-start">-->
+<!--                    <span><i class="fa-solid fa-asterisk"></i></span> <b-form-group :label="$t('GROUP.type')" class="group-type">-->
+<!--                      <b-form-radio v-model="createGroup.type" value="national" name="group-type">-->
+<!--                        محلى-->
+<!--                      </b-form-radio>-->
+<!--                      <b-form-radio v-model="createGroup.type" value="international"-->
+<!--                                    name="group-type">دولى-->
+<!--                      </b-form-radio>-->
+<!--                    </b-form-group>-->
+<!--                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">-->
+<!--                      {{ error }}-->
+<!--                    </b-form-invalid-feedback>-->
+<!--                  </ValidationProvider>-->
+<!--                </div>-->
+<!--              </b-col>-->
               <b-col lg="3" class="mb-3 radio-item">
                 <div class="hold-field">
                   <ValidationProvider rules="required" v-slot="{ errors }" class="d-flex justify-content-start align-items-start">
@@ -156,7 +156,7 @@ export default {
       countries: null,
       createGroup: {
         name: "",
-        type: '',
+        // type: '',
         music_status: '',
         status: '',
         owner_id: '',
@@ -164,7 +164,7 @@ export default {
       },
       defaultGroup: {
         name: "",
-        type: '',
+        // type: '',
         music_status: '',
         status: '',
         owner_id: '',
@@ -174,7 +174,8 @@ export default {
   },
   computed: {
     canNotSend() {
-      return (this.createGroup.name === this.defaultGroup.name) && (this.createGroup.type === this.defaultGroup.type) && (this.createGroup.music_status === this.defaultGroup.music_status) && (this.createGroup.status === this.defaultGroup.status) && (this.createGroup.owner_id === this.defaultGroup.owner_id) && (this.createGroup.country_id === this.defaultGroup.country_id)
+    // && (this.createGroup.type === this.defaultGroup.type)
+      return (this.createGroup.name === this.defaultGroup.name) && (this.createGroup.music_status === this.defaultGroup.music_status) && (this.createGroup.status === this.defaultGroup.status) && (this.createGroup.owner_id === this.defaultGroup.owner_id) && (this.createGroup.country_id === this.defaultGroup.country_id)
     }
   },
   methods: {
