@@ -24,6 +24,8 @@ export default {
   methods:{
     handleEditTerm($event) {
       this.loading = true
+      console.log('$event',$event)
+      console.log('$event.levels',$event.levels)
       this.ApiService(putTermsRequest(this.$route.params.id,$event)).then(() => {
         this.loading = false
       }).then(() => {

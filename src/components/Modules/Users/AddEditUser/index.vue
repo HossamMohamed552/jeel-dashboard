@@ -68,7 +68,7 @@
                     v-model="formValues.mobile"
                     :label="$t('USERS.PHONE_NUMBER')"
                     :name="$t('USERS.PHONE_NUMBER')"
-                    :rules="{ regex: /^01[0125][0-9]{8}$/ }"
+                    :rules="{ regex: /^01[0125][0-9]{8}$/,required:true }"
                   ></TextField>
                 </div>
               </b-col>
@@ -88,6 +88,7 @@
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
+                    :rules="'required'"
                     v-model="formValues.roles"
                     :label="$t('USERS.ROLES')"
                     :name="$t('USERS.ROLES')"
@@ -200,10 +201,10 @@ export default {
           formData.append("email", this.formValues.email);
           formData.append("password", this.formValues.password);
           formData.append("mobile", this.formValues.mobile);
-          if (this.formValues.social_media){
+          if (this.formValues.social_media) {
             formData.append("social_media", this.formValues.social_media);
           }
-          if (this.formValues.roles){
+          if (this.formValues.roles) {
             formData.append("roles[0]", this.formValues.roles);
           }
 
@@ -235,13 +236,13 @@ export default {
           formData.append("last_name", this.formValues.last_name);
           formData.append("email", this.formValues.email);
           formData.append("password", this.formValues.password);
-          if (this.formValues.mobile){
+          if (this.formValues.mobile) {
             formData.append("mobile", this.formValues.mobile);
           }
-          if (this.formValues.social_media){
+          if (this.formValues.social_media) {
             formData.append("social_media", this.formValues.social_media);
           }
-          if (this.formValues.roles){
+          if (this.formValues.roles) {
             formData.append("roles[0]", this.formValues.roles);
           }
           // for (let user = 0; user < this.formValues.roles.length; user++) {

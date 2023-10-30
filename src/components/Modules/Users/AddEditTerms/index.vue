@@ -78,7 +78,8 @@ export default {
       levels: [],
       createTerm: {
         name: "",
-        levels: []
+        levels: [],
+        school_id: null
       },
     };
   },
@@ -99,7 +100,8 @@ export default {
     getTermToEdit() {
       if (this.$route.params.id) {
         this.ApiService(getSingleTermsRequest(this.$route.params.id)).then((response) => {
-          this.createTerm = response.data.data
+          this.createTerm.name = response.data.data.name
+          this.createTerm.levels = response.data.data.levels.map((item)=> item.id)
         })
       }
     },

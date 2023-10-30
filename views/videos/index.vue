@@ -5,6 +5,8 @@
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getVideos"
                :loading="loading"
+               @resetRefresh="refreshIt=false"
+               :isRefresh="refreshIt"
                :permission_delete="'delete-video'"
                :permission_edit="'edit-video'"
                :permission_view="'show-video'"
@@ -41,6 +43,7 @@ export default {
     return {
       loading: false,
       showModal: false,
+      refreshIt: false,
       groupSearchWord: "",
       videosList: [],
       totalNumber: 0,
@@ -92,6 +95,7 @@ export default {
     cancelWithConfirm() {
       this.ApiService(deleteVideoRequest(this.itemId)).then(() => {
         this.getVideos()
+        this.refreshIt = true
       })
       this.cancel()
     }

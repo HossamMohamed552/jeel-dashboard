@@ -28,6 +28,7 @@ export default {
     handleAddTerm($event) {
       this.loading = true
       this.showModal = true
+      // $event.levels = $event.levels.map((item) => item.id)
       this.ApiService(postTermsRequest($event)).then((response) => {
         this.loading = false
         setTimeout(() => {
