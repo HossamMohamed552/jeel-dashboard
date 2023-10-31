@@ -55,9 +55,12 @@
 
 <script>
 import {mapActions} from "vuex";
+
 export default {
   props: {
-    value: {},
+    value: {
+      type: String,
+    },
     isRequired: {
       type: Boolean,
       default: false

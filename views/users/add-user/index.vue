@@ -31,11 +31,11 @@ export default {
         this.systemRoles.push(
           {
             name: "صلاحيات المدرسة",
-            id: "",
+            id: 10,
           },
           {
             name: "الطالب",
-            id: "5",
+            id: 5,
           }
         );
       });

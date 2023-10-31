@@ -182,7 +182,7 @@ export default {
   },
   methods: {
     checkIsStudent(id) {
-      if (id == "5") {
+      if (id === 5) {
         this.isStudent = true;
         this.formValues.email = "";
       } else this.isStudent = false;
@@ -204,8 +204,12 @@ export default {
           if (this.formValues.social_media) {
             formData.append("social_media", this.formValues.social_media);
           }
-          if (this.formValues.roles) {
+          if (this.formValues.roles && this.formValues.roles !== 10) {
             formData.append("roles[0]", this.formValues.roles);
+          }
+          if(this.formValues.roles && this.formValues.roles === 10)
+          {
+            formData.append("roles[0]", "");
           }
 
           formData.append("_method", "PUT");
@@ -242,9 +246,16 @@ export default {
           if (this.formValues.social_media) {
             formData.append("social_media", this.formValues.social_media);
           }
-          if (this.formValues.roles) {
+          // if (this.formValues.roles) {
+          //   formData.append("roles[0]", this.formValues.roles);
+          // }
+          if (this.formValues.roles && this.formValues.roles !== 10) {
             formData.append("roles[0]", this.formValues.roles);
           }
+          // if(this.formValues.roles && this.formValues.roles === 10)
+          // {
+          //   formData.append("roles[0]", "");
+          // }
           // for (let user = 0; user < this.formValues.roles.length; user++) {
           //   formData.append(`roles[${user}]`, this.formValues.roles[user]);
           // }
