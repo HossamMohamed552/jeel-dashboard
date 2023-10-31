@@ -171,6 +171,7 @@ export default {
       (response) => {
         this.singleSchool = response.data.data;
         this.currentSchoolId = response.data.data.id
+        localStorage.setItem('currentSchoolId',this.currentSchoolId)
       }
     );
   },

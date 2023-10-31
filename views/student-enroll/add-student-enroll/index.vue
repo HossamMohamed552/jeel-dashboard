@@ -30,7 +30,7 @@ export default {
     return {
       loading: false,
       showModal: false,
-      schoolId: this.$route.params.schoolId,
+      schoolId: localStorage.getItem('currentSchoolId'),
       studentUsers: [],
       studentClasses: [],
     };

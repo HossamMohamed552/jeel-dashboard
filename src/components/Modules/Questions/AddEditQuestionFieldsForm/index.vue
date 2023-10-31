@@ -41,6 +41,7 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
+                    @input="setItems($event)"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -83,7 +84,7 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
-                    :disabled="!formValues.learning_path_id"
+                    :disabled="!formValues.learning_path_id || !formValues.level_id"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -98,7 +99,7 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
-                    :disabled="!formValues.learning_path_id"
+                    :disabled="!formValues.learning_path_id || !formValues.level_id"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -291,10 +292,16 @@ export default {
       this.$emit("handleBack")
     },
     setItems() {
-      this.ApiService(getAllObjectivesRequest(this.formValues.learning_path_id)).then((response) => {
+      this.ApiService(getAllObjectivesRequest({
+        learning_path_id: this.formValues.learning_path_id,
+        level_id: this.formValues.level_id
+      })).then((response) => {
         this.objectives = response.data.data
       })
-      this.ApiService(getAllOutcomesRequest(this.formValues.learning_path_id)).then((response) => {
+      this.ApiService(getAllOutcomesRequest({
+        learning_path_id: this.formValues.learning_path_id,
+        level_id: this.formValues.level_id
+      })).then((response) => {
         this.outcomes = response.data.data
       })
     }

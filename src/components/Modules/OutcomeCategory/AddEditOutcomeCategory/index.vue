@@ -8,7 +8,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditSchoolTyeForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="6" class="mb-3">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="formValues.name"
@@ -18,17 +18,24 @@
                   ></TextField>
                 </div>
               </b-col>
-<!--              <b-col lg="6" class="mb-3">-->
-<!--              <div class="hold-field">-->
-<!--                <TextField-->
-<!--                  v-model="formValues.slug"-->
-<!--                  :label="$t('SLUG')"-->
-<!--                  :name="$t('SLUG')"-->
-<!--                  :rules="'required'"-->
-<!--                ></TextField>-->
-<!--              </div>-->
-<!--            </b-col>-->
-              <b-col lg="6" class="mb-3">
+              <b-col lg="4" class="mb-3">
+                <div class="hold-field">
+                  <label>
+                    <span><i class="fa-solid fa-asterisk"></i></span>
+                    {{$t('QUESTIONS.LEVELS')}}
+                  </label>
+                  <SelectSearch
+                    v-model="formValues.level_id"
+                    :name="$t('QUESTIONS.LEVELS')"
+                    :options="levels"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                    :deselectFromDropdown="true"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <label>
                     <span><i class="fa-solid fa-asterisk"></i></span>
@@ -74,6 +81,7 @@ import Modal from "@/components/Shared/Modal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import {getAllLearningPathsRequest} from "@/api/learningPath";
 import {getOutcomeCategoryByIdRequest} from "@/api/outcome";
+import {getAllLevelsRequest} from "@/api/level";
 export default {
   components: {
     SelectSearch,
@@ -91,11 +99,12 @@ export default {
     return {
       formValues: {
         name: "",
-        slug: "",
-        learning_path_id: ""
+        learning_path_id: "",
+        level_id: ""
       },
       outcomeId: this.$route.params.id,
       learningPaths:[],
+      levels:[],
     };
   },
   methods: {
@@ -124,9 +133,15 @@ export default {
       this.ApiService(getAllLearningPathsRequest()).then((response) => {
         this.learningPaths = response.data.data;
       });
+    },
+    getAllLevels(){
+      this.ApiService(getAllLevelsRequest()).then((response) => {
+        this.levels = response.data.data
+      })
     }
   },
   mounted() {
+    this.getAllLevels()
     this.getOutcomeCategoryById();
     this.getLearningPaths();
   },

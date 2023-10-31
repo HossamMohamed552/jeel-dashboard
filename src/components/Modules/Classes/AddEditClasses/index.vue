@@ -94,7 +94,7 @@ export default {
       classData: {
         name: "",
         level_term_id: null,
-        school_id: this.schoolId
+        school_id: localStorage.getItem('currentSchoolId')
       },
       classId: this.$route.params.id,
     };

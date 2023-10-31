@@ -48,7 +48,7 @@ import {mapGetters} from "vuex";
 export default {
   props: {
     schoolId: {
-      type: Number,
+      type: String,
       default: null,
     },
   },
