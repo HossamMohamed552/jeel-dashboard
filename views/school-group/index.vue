@@ -54,10 +54,10 @@ export default {
           key: "name",
           label: this.$i18n.t("TABLE_FIELDS.name")
         },
-        {
-          key: "type",
-          label: this.$i18n.t("TABLE_FIELDS.type")
-        },
+        // {
+        //   key: "type",
+        //   label: this.$i18n.t("TABLE_FIELDS.type")
+        // },
         {
           key: "status",
           label: this.$i18n.t("TABLE_FIELDS.status")

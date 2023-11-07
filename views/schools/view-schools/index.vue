@@ -42,12 +42,6 @@
             <b-row class="row-data">
               <b-col lg="6">
                 <ShowItem
-                  :title="$t('SCHOOL.userName')"
-                  :subtitle="singleSchool.username"
-                />
-              </b-col>
-              <b-col lg="6">
-                <ShowItem
                   :title="$t('SCHOOL.email')"
                   :subtitle="singleSchool.email"
                 />
@@ -87,12 +81,12 @@
             </b-row>
             <b-dd-divider class="my-4"/>
             <b-row class="row-data">
-              <b-col lg="6" v-if="singleSchool && singleSchool.admin">
-                <ShowItem
-                  :title="$t('SCHOOL.phone')"
-                  :subtitle="singleSchool.admin.mobile"
-                />
-              </b-col>
+<!--              <b-col lg="6" v-if="singleSchool && singleSchool.admin">-->
+<!--                <ShowItem-->
+<!--                  :title="$t('SCHOOL.phone')"-->
+<!--                  :subtitle="singleSchool.admin.mobile"-->
+<!--                />-->
+<!--              </b-col>-->
               <b-col lg="6" v-if="singleSchool && singleSchool.package">
                 <ShowItem
                   :title="$t('SCHOOL.package')"
@@ -177,6 +171,7 @@ export default {
       (response) => {
         this.singleSchool = response.data.data;
         this.currentSchoolId = response.data.data.id
+        localStorage.setItem('currentSchoolId',this.currentSchoolId)
       }
     );
   },

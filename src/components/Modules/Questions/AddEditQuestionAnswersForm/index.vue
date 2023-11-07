@@ -1429,8 +1429,11 @@
                       :name="$t('QUESTIONS.QUESTION')"
                       :rules="'required|max:80'"
                     ></TextField>
-                    <div v-if="validSpace" class="text-danger">يجب ان يوجد مساحة خالية واحده فقط</div>
-                    <div v-if="!lockBtn && formValues.question" class="text-danger">يجب إضافة مساحة خالية واحده فقط</div>
+                    <div v-if="validSpace" class="text-danger">يجب ان يوجد مساحة خالية واحده فقط
+                    </div>
+                    <div v-if="!lockBtn && formValues.question" class="text-danger">يجب إضافة مساحة
+                      خالية واحده فقط
+                    </div>
                     <div class="preview-question-heading">عرض السؤال</div>
                     <div
                       v-html="previewQuestion"
@@ -1618,8 +1621,11 @@
                       :name="$t('QUESTIONS.QUESTION')"
                       :rules="'required|max:80'"
                     ></TextField>
-                    <div v-if="validSpace" class="text-danger">يجب ان يوجد مساحة خالية واحده فقط</div>
-                    <div v-if="!lockBtn && formValues.question" class="text-danger">يجب إضافة مساحة خالية واحده فقط</div>
+                    <div v-if="validSpace" class="text-danger">يجب ان يوجد مساحة خالية واحده فقط
+                    </div>
+                    <div v-if="!lockBtn && formValues.question" class="text-danger">يجب إضافة مساحة
+                      خالية واحده فقط
+                    </div>
                     <div class="preview-question-heading">عرض السؤال</div>
                     <div
                       v-html="previewQuestion"
@@ -2515,7 +2521,8 @@
                     <b-col lg="12">
                       <div class="hold-field my-3">
                         <button class="add-btn" @click="confirmAnswersFrom = true"
-                                v-if="!confirmAnswersFrom" :disabled="answersListMatch.length<=1 || answersListMatch.length > 8">
+                                v-if="!confirmAnswersFrom"
+                                :disabled="answersListMatch.length<=1 || answersListMatch.length > 8">
                           {{ $t("QUESTIONS.confirm") }}
                         </button>
                       </div>
@@ -2550,20 +2557,18 @@
                     <b-col lg="4" class="mb-3"
                            v-if="answerMatchTo.answer_pattern==='text' || answerMatchTo.answer_pattern==='image'">
                       <div class="hold-field">
-                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                        <label><span><i
+                          class="fa-solid fa-asterisk"></i></span>{{
                             $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
                           }}</label>
                         <ValidationProvider
-                          v-slot="{ errors }"
-                          :rules="$route.params.id ? '' : 'required'"
-                          name="audio"
-                        >
+                          v-slot="{ errors }" :rules="$route.params.id ? '' : 'required'"
+                          name="audio">
                           <b-form-file
                             accept="audio/*"
                             :placeholder="answerMatchTo.audio ? answerMatchTo.audio.name : 'اختر ملف'"
                             v-model="answerMatchTo.audio"
-                            name="audio"
-                          >
+                            name="audio">
                           </b-form-file>
                           <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                             {{ error }}
@@ -2609,9 +2614,7 @@
                   <b-row>
                     <b-col lg="2" class="answer-item">الترتيب</b-col>
                     <b-col lg="3" class="answer-item">الإجابة</b-col>
-                    <b-col lg="3" class="answer-item"
-                           v-if="answerMatchTo.answer_pattern !== 'audio'">التسجيل الصوتى للإجابة
-                    </b-col>
+                    <b-col lg="3" class="answer-item" v-if="answerMatchTo.answer_pattern !== 'audio'">التسجيل الصوتى للإجابة</b-col>
                     <b-col lg="2" class="answer-item">الإجابة المقابلة</b-col>
                     <b-col lg="2" class="answer-item"></b-col>
                   </b-row>
@@ -2696,6 +2699,7 @@ import draggable from "vuedraggable";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import index from "vuex";
 import vSelect from "vue-select";
+import he from "vue2-datepicker/locale/es/he";
 
 export default {
   mixins: [getData("question")],
@@ -2919,11 +2923,6 @@ export default {
         return;
       }
     },
-    //
-    // lockCopyPaste($event){
-    //   console.log('$event',$event.prevent)
-    //   $event.preventDefault()
-    // },
     addSpace() {
       if (this.formValues.question !== null) {
         this.formValues.question += "%s";
@@ -3287,9 +3286,8 @@ export default {
             let count = currentWordCount ? currentWordCount : 0;
             wordMap[words[i]] = count + 1;
           }
-          if(wordMap['%'] >= 2 && wordMap['s'] >= 2){
+          if (wordMap['%'] >= 2 && wordMap['s'] >= 2) {
             this.validSpace = true
-            console.log('validSpace',this.validSpace)
           } else {
             this.validSpace = false
           }
@@ -3306,6 +3304,12 @@ export default {
       this.answersListMatchOneToOne = this.formValues.answers;
     },
   },
+  mounted() {
+    console.log('questionSlug', this.questionSlug.slug)
+    if (this.questionSlug.slug === 'match_one_voice_text'){
+      this.answerMatchTo.answer_pattern = 'audio'
+    }
+  }
 };
 </script>
 <style scoped lang="scss">

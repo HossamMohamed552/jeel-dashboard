@@ -31,7 +31,6 @@
       @handleCancel="handleCancel"
       @onSubmit="getFirstStepData"
     />
-
     <AddEditQuestionAnswersForm
       v-if="currentStep === 1"
       :questionSlug="collectData.question_slug"
@@ -40,7 +39,6 @@
       @handleCancel="handleCancel"
       @onSubmit="getSecondStepData"
     />
-
     <div v-if="currentStep === 2" class="qustion-review">
       <b-container>
         <b-row>
@@ -170,6 +168,8 @@
         </b-row>
       </b-container>
     </div>
+    <ProgressModal :show="loading" :value="progress" :title="'السؤال'"
+                   @cancel="cancelUpload()"></ProgressModal>
   </div>
 </template>
 <script>
@@ -197,10 +197,12 @@ import Stepper from "@/components/Shared/Stepper/index.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
 import globalAssetData from "@/mixins/getData/globalAssetData";
+import ProgressModal from "@/components/Shared/ProgressModal/index.vue";
 
 export default {
   mixins: [globalAssetData],
   components: {
+    ProgressModal,
     Modal,
     Button,
     AddEditQuestionPatternForm,
@@ -243,7 +245,8 @@ export default {
       ],
       currentStep: -1,
       correctAnswers: [],
-      answerPattern: ''
+      answerPattern: '',
+      progress: 0
     };
   },
   mounted() {
@@ -469,11 +472,18 @@ export default {
             locale: "ar",
             "Content-Type": "multipart/form-data",
           },
+          onUploadProgress: ({loaded, total}) => {
+            this.progress = Math.floor((loaded / total) * 100)
+          }
         })
         .then((res) => {
           this.loading = false
           this.$router.push("/dashboard/questions");
         }).catch(() => this.loading = false);
+    },
+    cancelUpload() {
+      this.loading = false
+      this.cancelSource.cancel();
     }
   }
 };

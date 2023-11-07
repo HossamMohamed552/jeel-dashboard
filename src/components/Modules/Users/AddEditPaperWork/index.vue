@@ -22,22 +22,14 @@
               </b-col>
               <b-col lg="4" class="mb-3 mt-4">
                 <div class="hold-field">
-                  <ValidationProvider v-slot="{ errors, invalid }" rules="required"
-                                      class="d-flex justify-content-start align-items-start">
-                    <span><i class="fa-solid fa-asterisk"></i></span>
-                    <b-form-group
-                      :label="$t('PAPER_WORK.type')"
-                      v-slot="{ ariaDescribedby }"
-                      class="type custom-form-group"
-                    >
-                      <SelectField
-                        :rules="'required'"
-                        v-model="createPaperWork.type"
-                        name="type"
-                        :options="paperWorkTypes"
-                      ></SelectField>
-                    </b-form-group>
-                  </ValidationProvider>
+                  <SelectField
+                    :label="$t('PAPER_WORK.type')"
+                    class="type custom-form-group"
+                    :rules="'required'"
+                    v-model="createPaperWork.type"
+                    name="type"
+                    :options="paperWorkTypes"
+                  ></SelectField>
                 </div>
               </b-col>
               <b-col lg="4" class="mb-3 mt-1">
@@ -59,7 +51,8 @@
                     :name="'fileImgWithColor'"
                     :text="$t('PAPER_WORK.print')"
                     :item-image="image.fileWithoutColor"
-                    v-model="createPaperWork.paper_work_without_color"
+                    :value="createPaperWork.paper_work_without_color"
+                    @input="logEvent($event)"
                     @imageUpload="handleUploadImage($event,'fileWithoutColor','paper_work_without_color')"
                     @deleteImage="deleteImage('fileWithoutColor','paper_work_without_color')"
                     @change="checkEditPaperWork"
@@ -68,8 +61,10 @@
               </b-col>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
-                  <span class="custom-label"><span v-if="!$route.params.id"><i
-                    class="fa-solid fa-asterisk"></i></span>{{ $t("PAPER_WORK.color") }}</span>
+                                <span class="custom-label"><span v-if="!$route.params.id"><i
+                                  class="fa-solid fa-asterisk"></i></span>{{
+                                    $t("PAPER_WORK.color")
+                                  }}</span>
                   <ImageUploader
                     :is-required="true"
                     :name="'file'"
@@ -80,20 +75,6 @@
                     @deleteImage="deleteImage('fileImg','file')"
                     @change="checkEditPaperWorkColor"
                   />
-                  <!--                    <b-form-file-->
-                  <!--                      @change="checkEditPaperWorkColor"-->
-                  <!--                      accept="application/pdf"-->
-                  <!--                      placeholder="اختر ملف"-->
-                  <!--                      v-model="createPaperWork.file"-->
-                  <!--                      name="file"-->
-                  <!--                    ></b-form-file>-->
-                  <!--                    <b-form-invalid-feedback-->
-                  <!--                      v-for="(error, index) in errors"-->
-                  <!--                      :key="index"-->
-                  <!--                    >-->
-                  <!--                      {{ error }}-->
-                  <!--                    </b-form-invalid-feedback>-->
-                  <!--                  </ValidationProvider>-->
                 </div>
               </b-col>
               <b-col lg="4" class="mb-3 mt-3">
@@ -228,13 +209,13 @@ import SelectField from "@/components/Shared/SelectField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {getSinglePaperworkRequest} from "@/api/paperWork";
-import {
-  getAllLearningPathsRequest,
-  getLearningPathsRequest,
-} from "@/api/learningPath";
-import {getAllLevelsRequest, getLevelsRequest} from "@/api/level";
+import {getAllLearningPathsRequest,} from "@/api/learningPath";
+import {getAllLevelsRequest} from "@/api/level";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import {getAllTermsRequest} from "@/api/term";
+import axios from "axios";
+import {decode} from "qs/lib/utils";
+import th from "vue2-datepicker/locale/es/th";
 
 export default {
   components: {
@@ -278,10 +259,43 @@ export default {
         paper_work_final_degree: "",
         uploadPrint: false,
         uploadColor: false,
+      },
+      base64: {
+        file: null,
+        thumbnail: null,
+        paper_work_without_color: null,
       }
     };
   },
   methods: {
+    logEvent($event){
+
+    },
+    convertToBase64(storeTo, paperWork, image) {
+      let imageReplaced = image.replace('https://jeeladmin.suredemos.com/', 'http://localhost:8080/')
+      let extension = imageReplaced.split('.').pop()
+      axios.get(imageReplaced, {responseType: 'arraybuffer'})
+        .then(response => {
+          let base64Image = btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+          this.base64[paperWork] = `data:${response.headers['content-type']};base64,${base64Image}`;
+        }).then(() => {
+        this.saveBase64ToFile(storeTo, this.base64[paperWork], `${extension}`)
+      })
+        .catch(error => {
+          console.error('Error fetching image:', error);
+        });
+    },
+    saveBase64ToFile(storeTo, base64String, mimeType) {
+      const binaryString = decode(`${base64String}`);
+      const byteArray = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        byteArray[i] = binaryString.charCodeAt(i);
+      }
+      const blob = new Blob([byteArray], {type: mimeType});
+      const fileName = 'paperWork';
+      const file = new File([blob], fileName, {type: `image/${mimeType}`});
+      this.createPaperWork[storeTo] = file
+    },
     deleteImage(keyToShow, keyToSend) {
       this.image[keyToShow] = null
       this.createPaperWork[keyToSend] = null
@@ -317,16 +331,16 @@ export default {
             this.createPaperWork.name = response.data.data.name;
             this.createPaperWork.type = response.data.data.type;
             this.createPaperWork.description = response.data.data.description;
-            this.createPaperWork.file = response.data.data.paper_work_full_url;
-            this.createPaperWork.paper_work_without_color =
-              response.data.data.paper_work_without_color_full_url;
-            this.createPaperWork.learning_path_id =
-              response.data.data.learningPath.id;
+            this.convertToBase64('file', 'file', response.data.data.paper_work_full_url)
+            this.image.fileImg = response.data.data.paper_work_full_url;
+            this.convertToBase64('paper_work_without_color', 'paper_work_without_color', response.data.data.paper_work_without_color_full_url)
+            this.image.fileWithoutColor = response.data.data.paper_work_without_color_full_url;
+            this.createPaperWork.learning_path_id = response.data.data.learningPath.id;
             this.createPaperWork.level_id = response.data.data.level.id;
             this.createPaperWork.term_id = response.data.data.term.id;
-            this.createPaperWork.paper_work_final_degree =
-              response.data.data.paper_work_final_degree;
-            this.createPaperWork.img_url = response.data.data.thumbnail;
+            this.createPaperWork.paper_work_final_degree = response.data.data.paper_work_final_degree;
+            this.convertToBase64('thumbnail', 'thumbnail', response.data.data.thumbnail)
+            this.image.img_url = response.data.data.thumbnail;
           }
         );
       }

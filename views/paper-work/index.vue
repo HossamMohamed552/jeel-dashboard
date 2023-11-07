@@ -4,6 +4,8 @@
                :tableItems="paperWorkList" :fields-list="fieldsList" :v-search-model="groupSearchWord" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getPaperWorks"
+               @resetRefresh="refreshIt=false"
+               :isRefresh="refreshIt"
                :loading="loading"
                :permission_delete="'delete-paperWork'"
                :permission_edit="'edit-paperWork'"
@@ -41,6 +43,7 @@ export default {
     return {
       loading: false,
       showModal: false,
+      refreshIt: false,
       groupSearchWord: "",
       paperWorkList: [],
       totalNumber: 0,
@@ -86,7 +89,8 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deletePaperWorkRequest(this.itemId)).then(() => {
-        this.getVideos()
+        this.getPaperWorks()
+        this.refreshIt = true
       })
       this.cancel()
     }

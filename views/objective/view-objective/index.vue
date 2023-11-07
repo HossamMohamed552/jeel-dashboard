@@ -8,11 +8,14 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="6" class="mb-3">
+          <b-col lg="4" class="mb-3">
             <ShowItem :title="$t('GLOBAL_NAME')" :subtitle="objectiveCategory.name" />
           </b-col>
-          <b-col lg="6">
-            <ShowItem :title="$t('learningPath')" :subtitle="objectiveCategory.learning_path.name" />
+          <b-col lg="4" v-if="objectiveCategory.level">
+            <ShowItem :title="$t('MISSIONS.level')" :subtitle="objectiveCategory.level.name" />
+          </b-col>
+          <b-col lg="4" v-if="objectiveCategory.learning_path">
+            <ShowItem :title="$t('MISSIONS.LEARNING_PATH')" :subtitle="objectiveCategory.learning_path.name" />
           </b-col>
         </b-row>
       </div>

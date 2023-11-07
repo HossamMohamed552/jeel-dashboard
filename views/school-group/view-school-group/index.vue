@@ -12,9 +12,9 @@
             <b-col lg="4">
               <ShowItem :title="$t('GROUP.name')" :subtitle="group.name"/>
             </b-col>
-            <b-col lg="4">
-              <ShowItem :title="$t('GROUP.type')" :subtitle="group.type"/>
-            </b-col>
+<!--            <b-col lg="4">-->
+<!--              <ShowItem :title="$t('GROUP.type')" :subtitle="group.type"/>-->
+<!--            </b-col>-->
             <b-col lg="4">
               <ShowItem :title="$t('GROUP.music')"
                         :subtitle="group.music_type === 1 ?  'أكابيلا' :'بموسيقى'"/>

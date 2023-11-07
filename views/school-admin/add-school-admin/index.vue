@@ -11,9 +11,9 @@ export default {
   components: {Modal,AddEditSchoolAdmin},
   data(){
     return{
-      schoolId: this.$route.params.schoolId,
+      schoolId: localStorage.getItem('currentSchoolId'),
     }
-  }
+  },
 }
 </script>
 <style scoped lang="scss">
