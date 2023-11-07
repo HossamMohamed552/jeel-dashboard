@@ -280,7 +280,6 @@ export default {
   },
   watch: {
     watchRefresh(newVal){
-      console.log('watchRefresh',newVal)
       if (newVal) {
         this.handlePageChange(1)
         this.$emit('resetRefresh',false)

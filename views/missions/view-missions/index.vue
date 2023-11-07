@@ -124,7 +124,11 @@
               <ShowItem :title="$t('QUESTIONS.QUESTIONS')" class="mt-3"/>
               <div v-for="question in quizPath.questions" :key="question.id">
                 <div class="icon-play-holder">
-                  <ShowItem :subtitle="question.question" />
+                  <ShowItem :subtitle="question.question" v-if="question.question_pattern === 'text'" class="my-3"/>
+                  <img class="question_img my-3" :src="question.question" v-if="question.question_pattern === 'image'">
+                  <audio controls v-if="question.question_pattern === 'audio'" class="my-3">
+                    <source :src="question.question" />
+                  </audio>
                   <b-icon
                     class="cursor-pointer"
                     icon="info-circle"

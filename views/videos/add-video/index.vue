@@ -55,7 +55,6 @@ export default {
       formData.append('thumbnail', $event.thumbnail);
       this.loading = true;
       let axiosSource = axios.CancelToken.source();
-      console.log('axiosSource', axiosSource)
       this.cancelSource = axiosSource;
       axios.post('/videos', formData, {
         cancelToken: axiosSource.token,

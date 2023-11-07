@@ -6,6 +6,7 @@
     :name="name"
     class="image-uploader"
   >
+<!--    immediate-->
     <div>
       <h5 class="file-title">
         <span v-if="isRequired"><i class="fa-solid fa-asterisk"></i></span>
@@ -19,6 +20,8 @@
                      class="file-input"
                      ref="attachment"
                      type="file"
+                     :id="name"
+                     :name="name"
                      @change="onFileChange"
                      :class="{
         'input-disabled': $attrs.disabled,
@@ -59,7 +62,7 @@ import {mapActions} from "vuex";
 export default {
   props: {
     value: {
-      type: String,
+      type: Object | String,
     },
     isRequired: {
       type: Boolean,
@@ -115,12 +118,13 @@ export default {
   methods: {
     ...mapActions(["ShowToast"]),
     onFileChange(changeEvent) {
+
       this.$emit("imageUpload", changeEvent);
     },
     deleteImage() {
       this.$emit("deleteImage");
     }
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>

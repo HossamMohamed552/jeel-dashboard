@@ -34,7 +34,7 @@ export default {
         })
         .then(() => {
           this.$router.push("/dashboard/objective");
-        });
+        }).catch(()=>this.loading = false)
     },
     handleCancel() {
       this.$router.push("/dashboard/objective");

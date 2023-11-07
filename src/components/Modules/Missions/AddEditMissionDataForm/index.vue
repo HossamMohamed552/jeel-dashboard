@@ -211,6 +211,7 @@ export default {
         this.mission.term_id = response.data.data.term.id;
         this.mission.learning_path_ids = response.data.data.learningpaths.map((item) => item.id);
         this.mission.itemImage = response.data.data.mission_image
+        this.mission.mission_image = response.data.data.mission_image
       });
     }
   },

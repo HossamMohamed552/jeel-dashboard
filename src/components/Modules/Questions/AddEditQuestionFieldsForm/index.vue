@@ -269,7 +269,7 @@ export default {
   },
   watch: {
     question(question) {
-      console.log('question', question)
+
       this.formValues.learning_path_id = question.learningPath.id
       this.formValues.language_skill_id = question.language_skill.id
       this.formValues.question_difficulty_id = question.question_difficulty.id

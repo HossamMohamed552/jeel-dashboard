@@ -127,6 +127,7 @@ export default {
         this.ApiService(getObjectiveCategoryByIdRequest(this.objectiveId)).then((response) => {
           this.formValues = response.data.data;
           this.formValues.learning_path_id = response.data.data.learning_path.id
+          this.formValues.level_id = response.data.data.level.id
         });
       }
     },
