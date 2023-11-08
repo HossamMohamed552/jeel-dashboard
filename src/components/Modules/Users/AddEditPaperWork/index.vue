@@ -48,8 +48,8 @@
                     class="fa-solid fa-asterisk"></i></span>{{ $t("PAPER_WORK.print") }}</span>
                   <ImageUploader
                     :is-required="true"
-                    :name="'fileImgWithColor'"
-                    :text="$t('PAPER_WORK.print')"
+                    :name="`${$t('PAPER_WORK.fileImgWithOutColor')}`"
+                    :text="$t('PAPER_WORK.fileImgWithOutColor')"
                     :item-image="image.fileWithoutColor"
                     :value="createPaperWork.paper_work_without_color"
                     @input="logEvent($event)"
@@ -67,8 +67,8 @@
                                   }}</span>
                   <ImageUploader
                     :is-required="true"
-                    :name="'file'"
-                    :text="$t('PAPER_WORK.color')"
+                    :name="`${$t('PAPER_WORK.file')}`"
+                    :text="$t('PAPER_WORK.file')"
                     :item-image="image.fileImg"
                     v-model="createPaperWork.file"
                     @imageUpload="handleUploadImage($event,'fileImg','file')"
@@ -153,27 +153,23 @@
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
-                  <b-form-group
+                  <TextAreaField
                     :label="$t('PAPER_WORK.Description')"
-                    v-slot="{ ariaDescribedby }"
-                    class="description"
+                    v-model="createPaperWork.description"
+                    :rules="'required|min:5|max:60'"
+                    rows="5"
+                    :name="$t('PAPER_WORK.Description')"
                   >
-                    <TextAreaField
-                      v-model="createPaperWork.description"
-                      :rules="'required|min:5|max:60'"
-                      rows="5"
-                      :name="$t('PAPER_WORK.Description')"
-                    >
-                    </TextAreaField>
-                  </b-form-group>
+                  </TextAreaField>
                 </div>
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field mt-4">
                   <ImageUploader
+                    v-model="createPaperWork.thumbnail"
                     :is-required="true"
-                    :name="'paperWorkThumbnail'"
-                    :text="$t('PAPER_WORK.UPLOAD_IMAGE')"
+                    :name="`${$t('PAPER_WORK.paperWorkThumbnail')}`"
+                    :text="$t('PAPER_WORK.paperWorkThumbnail')"
                     :item-image="image.img_url"
                     @imageUpload="handleUploadImage($event,'img_url','thumbnail')"
                     @deleteImage="deleteImage('img_url','thumbnail')"
