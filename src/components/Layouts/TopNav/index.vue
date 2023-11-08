@@ -48,14 +48,8 @@
               </p>
               <div class="dropdown-item-list">
                 <ul >
-                  <router-link
-                    tag="li"
-                    :to="routeUser.path"
-                    v-for="(routeUser, index) in routesUsers"
-                    :key="index"
-                  >
-                    {{ routeUser.name }}</router-link
-                  >
+                  <router-link tag="li" v-if="routeUser.permission === 'view-roles' && user.is_super_admin === 1" :to="routeUser.path" v-for="(routeUser, index) in routesUsers" :key="index">{{ routeUser.name }}</router-link>
+                  <router-link tag="li" v-if="routeUser.permission !== 'view-roles'" :to="routeUser.path" v-for="(routeUser, index) in routesUsers" :key="index">{{ routeUser.name }}</router-link>
                 </ul>
               </div>
             </div>
