@@ -137,16 +137,15 @@
             </b-row>
           </b-col>
           <b-col lg="12" v-if="questionTypeSlug.includes('match')">
-            <div v-for="(matchAnswer,index) in collectData.answers" :key="index"
-                 class="d-flex justify-content-start align-items-center answer_match my-3">
+            <div v-for="(matchAnswer,index) in collectData.answers" :key="index" class="d-flex justify-content-start align-items-center answer_match my-3">
               <p>{{ index + 1 }} - </p>
-              <p>{{ matchAnswer.answer }}</p>
+              <p v-if="matchAnswer.answer_pattern === 'text'">{{ matchAnswer.answer }}</p>
+              <p v-if="matchAnswer.answer_pattern === 'audio'">{{matchAnswer.answer.name}}</p>
               <p class="to">إلى</p>
               <div v-for="(matchAnswerTo,index) in matchAnswer.answers_to" :key="index">
                 <p v-if="matchAnswerTo.answer_pattern === 'text'">{{ matchAnswerTo.answer }}</p>
-                <p v-if="matchAnswerTo.answer_pattern === 'audio'">{{
-                    matchAnswerTo.answer.name
-                  }}</p>
+                <p v-if="matchAnswerTo.answer_pattern === 'audio'">{{matchAnswerTo.answer.name}}</p>
+                <p v-if="matchAnswerTo.answer_pattern === 'image'"><img :src="matchAnswerTo.answerImage" alt="answer image" class="answer_image"></p>
               </div>
             </div>
           </b-col>

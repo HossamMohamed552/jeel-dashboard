@@ -2393,14 +2393,12 @@
                       }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
-                      :rules="$route.params.id ? '' : 'required'"
-                      name="audio"
+                      :rules="'required|audio'"
+                      name="questionAudio"
                     >
                       <b-form-file
                         accept="audio/*"
-                        :placeholder="
-                          formValues.question_audio ? formValues.question_audio.name : 'اختر ملف'
-                        "
+                        :placeholder=" formValues.question_audio ? formValues.question_audio.name : 'اختر ملف'"
                         v-model="formValues.question_audio"
                         name="audio"
                       >
@@ -2427,8 +2425,8 @@
                       class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label>
                     <ValidationProvider
                       v-slot="{ errors }"
-                      :rules="$route.params.id ? '' : 'required'"
-                      name="audio"
+                      :rules="'required|audio'"
+                      name="hintAudio"
                     >
                       <b-form-file
                         accept="audio/*"
@@ -2444,13 +2442,14 @@
                   </div>
                 </b-col>
               </b-row>
+              <!-- answer from section -->
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <label class="mx-0">{{ $t("QUESTIONS.ANSWERSFROM") }}:</label>
                 </div>
+                <!-- add answer from with type based on answer patter -->
                 <b-row v-if="!confirmAnswersFrom">
-                  <validation-observer v-slot="{ invalid }" ref="addAnswerFromForm"
-                                       class="row w-100">
+                  <validation-observer v-slot="{ invalid }" ref="addAnswerFromForm" class="row w-100">
                     <b-col lg="6" class="mb-3 px-0" v-if="answerMatch.answer_pattern==='text'">
                       <div class="hold-field">
                         <label>{{ $t('QUESTIONS.ANSWER') }}</label>
@@ -2462,22 +2461,32 @@
                         ></TextField>
                       </div>
                     </b-col>
-                    <b-col lg="4" class="mb-3">
+                    <b-col lg="4" class="mb-3" v-if="answerMatch.answer_pattern==='text' || answerMatch.answer_pattern==='image'">
                       <div class="hold-field">
-                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{
-                            $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
-                          }}</label>
-                        <ValidationProvider
-                          v-slot="{ errors }"
-                          :rules="$route.params.id ? '' : 'required'"
-                          :name="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
-                        >
+                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                        <ValidationProvider v-slot="{ errors }" :rules="'required|audio'" :name="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')">
                           <b-form-file
                             accept="audio/*"
                             :placeholder="answerMatch.audio ? answerMatch.audio.name : 'اختر ملف'"
                             v-model="answerMatch.audio"
-                            name="audio"
+                            name="answerMatchAudio"
                           >
+                          </b-form-file>
+                          <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                            {{ error }}
+                          </b-form-invalid-feedback>
+                        </ValidationProvider>
+                      </div>
+                    </b-col>
+                    <b-col lg="4" class="mb-3" v-if="answerMatch.answer_pattern==='audio'">
+                      <div class="hold-field">
+                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                        <ValidationProvider v-slot="{ errors }" :rules="'required|audio'" name="audio">
+                          <b-form-file
+                            accept="audio/*"
+                            :placeholder="answerMatch.answer ? answerMatch.answer.name : 'اختر ملف'"
+                            v-model="answerMatch.answer"
+                            name="answerMatchAudioAnswer">
                           </b-form-file>
                           <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                             {{ error }}
@@ -2496,17 +2505,27 @@
                     </b-col>
                   </validation-observer>
                 </b-row>
+                <!-- show answer based on answer patter -->
                 <slot v-if="answersListMatch.length > 0">
                   <b-row class="mb-3">
                     <b-col lg="2" class="answer-item">الترتيب</b-col>
                     <b-col lg="4" class="answer-item">الإجابة</b-col>
-                    <b-col lg="4" class="answer-item">التسجيل الصوتى للإجابة</b-col>
+                    <b-col lg="4" class="answer-item" v-if="answerMatch.answer_pattern !== 'audio'">
+                      التسجيل الصوتى للإجابة
+                    </b-col>
                     <b-col lg="2" class="answer-item"></b-col>
                   </b-row>
                   <b-row v-for="(answer, index) in answersListMatch" :key="index" class="mb-3">
                     <b-col lg="2" class="answer-item">{{ index + 1 }}</b-col>
-                    <b-col lg="4" class="answer-item">{{ answer.answer }}</b-col>
-                    <b-col lg="4" class="answer-item">{{ answer.audio.name }}</b-col>
+                    <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'text'">
+                      {{ answer.answer }}
+                    </b-col>
+                    <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'audio'">
+                      {{ answer.answer.name }}
+                    </b-col>
+                    <b-col lg="3" class="answer-item" v-if="answer.answer_pattern !== 'audio'">
+                      {{ answer.audio.name }}
+                    </b-col>
                     <b-col lg="2">
                       <button class="remove-btn" @click="removeAnswerMatch(index)"
                               v-if="!confirmAnswersFrom">
@@ -2537,10 +2556,12 @@
                   </b-row>
                 </slot>
               </b-col>
+              <!-- answer to section -->
               <b-col lg="12" class="mb-3" v-if="confirmAnswersFrom">
                 <div class="hold-field">
                   <label class="mx-0">{{ $t("QUESTIONS.ANSWERSTO") }}:</label>
                 </div>
+                <!-- add answer to with type based on answer patter -->
                 <b-row>
                   <validation-observer v-slot="{ invalid }" ref="addAnswerToForm" class="row w-100">
                     <b-col lg="6" class="mb-3 px-0" v-if="answerMatchTo.answer_pattern==='text'">
@@ -2554,21 +2575,28 @@
                         ></TextField>
                       </div>
                     </b-col>
-                    <b-col lg="4" class="mb-3"
-                           v-if="answerMatchTo.answer_pattern==='text' || answerMatchTo.answer_pattern==='image'">
+                    <b-col lg="6" class="mb-3 px-0" v-if="answerMatchTo.answer_pattern==='image'">
                       <div class="hold-field">
-                        <label><span><i
-                          class="fa-solid fa-asterisk"></i></span>{{
-                            $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
-                          }}</label>
-                        <ValidationProvider
-                          v-slot="{ errors }" :rules="$route.params.id ? '' : 'required'"
-                          name="audio">
+                        <ImageUploader
+                          v-model="answerMatchTo.answer"
+                          :is-required="true"
+                          :name="`answerMatchToImage`"
+                          :text="'صوره الإجابة'"
+                          @imageUpload="handleUploadImageOnAnswers(answerMatchTo,$event)"
+                          @deleteImage="answerMatchTo.answer = answerMatchTo.answerImage= null"
+                          :item-image="answerMatchTo.answerImage"
+                        />
+                      </div>
+                    </b-col>
+                    <b-col lg="4" class="mb-3" v-if="answerMatchTo.answer_pattern==='text' || answerMatchTo.answer_pattern==='image'">
+                      <div class="hold-field">
+                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                        <ValidationProvider v-slot="{ errors }" :rules="'required|audio'" name="audio">
                           <b-form-file
                             accept="audio/*"
                             :placeholder="answerMatchTo.audio ? answerMatchTo.audio.name : 'اختر ملف'"
                             v-model="answerMatchTo.audio"
-                            name="audio">
+                            name="answerMatchToAudio">
                           </b-form-file>
                           <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                             {{ error }}
@@ -2578,20 +2606,14 @@
                     </b-col>
                     <b-col lg="4" class="mb-3" v-if="answerMatchTo.answer_pattern==='audio'">
                       <div class="hold-field">
-                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{
-                            $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
-                          }}</label>
-                        <ValidationProvider
-                          v-slot="{ errors }"
-                          :rules="$route.params.id ? '' : 'required'"
-                          name="audio"
-                        >
+                        <label><span><i
+                          class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                        <ValidationProvider v-slot="{ errors }" :rules="'required|audio'" name="answerMatchToAudioAnswer">
                           <b-form-file
                             accept="audio/*"
                             :placeholder="answerMatchTo.answer ? answerMatchTo.answer.name : 'اختر ملف'"
                             v-model="answerMatchTo.answer"
-                            name="audio"
-                          >
+                            name="audio">
                           </b-form-file>
                           <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                             {{ error }}
@@ -2610,6 +2632,7 @@
                     </b-col>
                   </validation-observer>
                 </b-row>
+                <!-- show answer to based on answer patter -->
                 <slot v-if="answersListMatchTo.length > 0">
                   <b-row>
                     <b-col lg="2" class="answer-item">الترتيب</b-col>
@@ -2621,15 +2644,10 @@
                   <b-row v-for="(answer, index) in answersListMatchTo" :key="index" class="mb-3">
                     <validation-observer v-slot="{ invalid }" ref="selectAnswers" class="row w-100">
                       <b-col lg="2" class="answer-item">{{ index + 1 }}</b-col>
-                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'text'">
-                        {{ answer.answer }}
-                      </b-col>
-                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'audio'">
-                        {{ answer.answer.name }}
-                      </b-col>
-                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern !== 'audio'">
-                        {{ answer.audio.name }}
-                      </b-col>
+                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'text'">{{ answer.answer }}</b-col>
+                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'image'"><img :src="answer.answerImage" alt="answer image" class="answer_image"></b-col>
+                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'audio'">{{ answer.answer.name }}</b-col>
+                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern !== 'audio'">{{ answer.audio.name }}</b-col>
                       <b-col lg="2" class="answer-item select">
                         <validation-provider v-slot="{ errors, invalid }" :name="`الإجابة`"
                                              rules="required">
@@ -2846,6 +2864,7 @@ export default {
         audio: null,
         answers_to: [],
         answer_pattern: 'text',
+        answerImage:null,
         isSelected: false,
       },
       answerId: 0,
@@ -2854,6 +2873,7 @@ export default {
         match_to: 1,
         audio: null,
         answer_pattern: 'text',
+        answerImage:null,
         answerToId: '',
       },
       currentSelectId: null,
@@ -2885,16 +2905,21 @@ export default {
     addAnswerMatch() {
       this.answerId++
       this.answersListMatch.push({id: this.answerId, ...this.answerMatch})
-      this.answerMatch.answer = ""
+      this.answerMatch.answer = null
       this.answerMatch.audio = null
-      this.$refs.addAnswerFromForm.reset()
+      this.$nextTick(()=>{
+        this.$refs.addAnswerFromForm.reset()
+      })
     },
     addAnswerMatchTo() {
       this.answerToId++
       this.answersListMatchTo.push({id: this.answerToId, ...this.answerMatchTo})
       this.answerMatchTo.answer = null
       this.answerMatchTo.audio = null
-      this.$refs.addAnswerToForm.reset()
+      this.answerMatchTo.answerImage = null
+      this.$nextTick(()=>{
+        this.$refs.addAnswerToForm.reset()
+      })
     },
     removeAnswerMatch(index) {
       this.answersListMatch.splice(index, 1)
@@ -3306,8 +3331,16 @@ export default {
   },
   mounted() {
     console.log('questionSlug', this.questionSlug.slug)
-    if (this.questionSlug.slug === 'match_one_voice_text'){
+    if (this.questionSlug.slug === 'match_one_voice_text') {
       this.answerMatchTo.answer_pattern = 'audio'
+    } else if (this.questionSlug.slug === 'match_one_voice_voice') {
+      this.answerMatch.answer_pattern = 'audio'
+      this.answerMatchTo.answer_pattern = 'audio'
+    } else if (this.questionSlug.slug === 'match_one_text_image') {
+      this.answerMatchTo.answer_pattern = 'image'
+    }else if (this.questionSlug.slug === 'match_one_voice_image') {
+      this.answerMatch.answer_pattern = 'audio'
+      this.answerMatchTo.answer_pattern = 'image'
     }
   }
 };

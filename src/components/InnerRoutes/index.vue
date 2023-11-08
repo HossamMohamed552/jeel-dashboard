@@ -33,7 +33,6 @@
       >
         البيانات الأساسية
       </div>
-
     </div>
     <div class="content">
       <div class="row">
@@ -41,7 +40,8 @@
           <div class="col-12 px-0" v-if="activeTap === 1 && Array.from(routesUsers).length >= 1">
             <div class="row">
               <div class="col-lg-6 col-12" v-for="(item, index) in routesUsers" :key="index">
-                <RouteItem :item="item"/>
+                <RouteItem :item="item" v-if="item.permission === 'view-roles' && user.is_super_admin === 1"/>
+                <RouteItem :item="item" v-if="item.permission !== 'view-roles'"/>
               </div>
             </div>
           </div>
@@ -131,7 +131,10 @@ export default {
   computed: {
     permissions() {
       return this.$store.getters.user?.permissions;
+    }, user() {
+      return this.$store.getters.user;
     },
+
   },
   mounted() {
     setTimeout(() => {
