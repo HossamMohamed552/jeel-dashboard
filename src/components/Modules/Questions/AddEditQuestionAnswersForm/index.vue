@@ -2372,7 +2372,7 @@
           </validation-observer>
         </slot>
         <!--        match_one_to_one-->
-        <slot v-if="questionSlug.slug.includes('match_one')">
+        <slot v-if="questionSlug.slug.includes('match')">
           <validation-observer v-slot="{ invalid }" ref="addAnswer">
             <form @submit.prevent="onSubmit" class="mt-5">
               <b-row>
@@ -2649,13 +2649,32 @@
                       <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'audio'">{{ answer.answer.name }}</b-col>
                       <b-col lg="3" class="answer-item" v-if="answer.answer_pattern !== 'audio'">{{ answer.audio.name }}</b-col>
                       <b-col lg="2" class="answer-item select">
-                        <validation-provider v-slot="{ errors, invalid }" :name="`الإجابة`"
-                                             rules="required">
+                        <validation-provider v-slot="{ errors, invalid }" :name="`الإجابة`" rules="required" v-if="questionSlug.slug.includes('match_one')">
                           <el-select v-model="answer.answerToId" clearable
+                                     :multiple="questionSlug.slug.includes('match_many')"
                                      placeholder="إختر الإجابة المقابلة"
                                      @mouseenter.native="getId(answer.answerToId)"
                                      @change="assignAnswerMatch($event)"
                                      @clear="backToInitValue()" class="custom-select-answer">
+                            <el-option
+                              v-for="item in answersListMatch"
+                              :key="item.id"
+                              :label="item.id"
+                              :disabled="item.isSelected"
+                              :value="item.id">
+                            </el-option>
+                          </el-select>
+                          <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                            {{ error }}
+                          </b-form-invalid-feedback>
+                        </validation-provider>
+                        <validation-provider v-slot="{ errors, invalid }" :name="`الإجابة المقابلة`" rules="required" v-if="questionSlug.slug.includes('match_many')">
+                          <el-select v-model="answer.answerToId" clearable
+                                     multiple
+                                     placeholder="إختر الإجابة المقابلة"
+                                     @mouseenter.native="getIds(answer.answerToId)"
+                                     @change="assignAnswersMatch($event)"
+                                     @clear="backToInitValues()" class="custom-select-answer">
                             <el-option
                               v-for="item in answersListMatch"
                               :key="item.id"
@@ -2715,10 +2734,7 @@ import Button from "@/components/Shared/Button/index.vue";
 import getData from "@/mixins/getData/getData";
 import draggable from "vuedraggable";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
-import index from "vuex";
 import vSelect from "vue-select";
-import he from "vue2-datepicker/locale/es/he";
-
 export default {
   mixins: [getData("question")],
   components: {
@@ -2877,6 +2893,7 @@ export default {
         answerToId: '',
       },
       currentSelectId: null,
+      currentSelectIds: null,
       answerToId: 0,
       confirmAnswersFrom: false,
       correctList: [
@@ -2937,8 +2954,20 @@ export default {
         this.answersListMatch[indexToBeChange].isSelected = true
       }
     },
+    assignAnswersMatch($event) {
+      if ($event) {
+        // this.backToInitValues()
+        $event.forEach((itemAnswer)=>{
+          let indexToBeChange = this.answersListMatch.findIndex((item) => item.id === itemAnswer)
+          this.answersListMatch[indexToBeChange].isSelected = true
+        })
+      }
+    },
     getId(id) {
       this.currentSelectId = id
+    },
+    getIds(ids){
+      this.currentSelectIds = ids
     },
     backToInitValue() {
       if (this.currentSelectId) {
