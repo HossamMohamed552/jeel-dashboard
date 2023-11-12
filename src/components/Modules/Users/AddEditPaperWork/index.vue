@@ -10,7 +10,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditPaperWorkForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="4" class="mb-3">
+              <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="createPaperWork.name"
@@ -20,7 +20,29 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="4" class="mb-3 mt-4">
+              <b-col lg="6" class="mb-3">
+                <div class="hold-field">
+                  <label><span><i class="fa-solid fa-asterisk"></i></span>
+                    {{ $t("PAPER_WORK.AUDIO") }}</label>
+                  <ValidationProvider
+                    v-slot="{ errors }"
+                    :rules="'required|audio'"
+                    name="PAPER_WORKAudio"
+                  >
+                    <b-form-file
+                      accept="audio/*"
+                      :placeholder="createPaperWork.audio ? createPaperWork.audio : 'اختر ملف'"
+                      v-model="createPaperWork.audio"
+                      name="audio"
+                    >
+                    </b-form-file>
+                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                      {{ error }}
+                    </b-form-invalid-feedback>
+                  </ValidationProvider>
+                </div>
+              </b-col>
+              <b-col lg="6" class="mb-3 mt-4">
                 <div class="hold-field">
                   <SelectField
                     :label="$t('PAPER_WORK.type')"
@@ -32,7 +54,7 @@
                   ></SelectField>
                 </div>
               </b-col>
-              <b-col lg="4" class="mb-3 mt-1">
+              <b-col lg="6" class="mb-3 mt-1">
                 <div class="hold-field">
                   <TextField
                     v-model="createPaperWork.paper_work_final_degree"
@@ -246,6 +268,7 @@ export default {
         name: "",
         description: "",
         type: "",
+        audio: null,
         file: null,
         thumbnail: null,
         paper_work_without_color: null,
@@ -264,7 +287,7 @@ export default {
     };
   },
   methods: {
-    logEvent($event){
+    logEvent($event) {
 
     },
     convertToBase64(storeTo, paperWork, image) {
@@ -325,6 +348,7 @@ export default {
         this.ApiService(getSinglePaperworkRequest(this.$route.params.id)).then(
           (response) => {
             this.createPaperWork.name = response.data.data.name;
+            this.createPaperWork.audio = response.data.data.audio;
             this.createPaperWork.type = response.data.data.type;
             this.createPaperWork.description = response.data.data.description;
             this.convertToBase64('file', 'file', response.data.data.paper_work_full_url)
