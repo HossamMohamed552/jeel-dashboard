@@ -2372,7 +2372,7 @@
           </validation-observer>
         </slot>
         <!--        match_one_to_one-->
-        <slot v-if="questionSlug.slug.includes('match_one')">
+        <slot v-if="questionSlug.slug.includes('match')">
           <validation-observer v-slot="{ invalid }" ref="addAnswer">
             <form @submit.prevent="onSubmit" class="mt-5">
               <b-row>
@@ -2461,9 +2461,25 @@
                         ></TextField>
                       </div>
                     </b-col>
-                    <b-col lg="4" class="mb-3" v-if="answerMatch.answer_pattern==='text' || answerMatch.answer_pattern==='image'">
+                    <b-col lg="6" class="mb-3 px-0" v-if="answerMatch.answer_pattern==='image'">
                       <div class="hold-field">
-                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                        <ImageUploader
+                          v-model="answerMatch.answer"
+                          :is-required="true"
+                          :name="`answerMatchImage`"
+                          :text="'صوره الإجابة'"
+                          @imageUpload="handleUploadImageOnAnswers(answerMatch,$event)"
+                          @deleteImage="answerMatch.answer = answerMatch.answerImage= null"
+                          :item-image="answerMatch.answerImage"
+                        />
+                      </div>
+                    </b-col>
+                    <b-col lg="4" class="mb-3"
+                           v-if="answerMatch.answer_pattern==='text' || answerMatch.answer_pattern==='image'">
+                      <div class="hold-field">
+                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                            $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
+                          }}</label>
                         <ValidationProvider v-slot="{ errors }" :rules="'required|audio'" :name="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')">
                           <b-form-file
                             accept="audio/*"
@@ -2480,8 +2496,11 @@
                     </b-col>
                     <b-col lg="4" class="mb-3" v-if="answerMatch.answer_pattern==='audio'">
                       <div class="hold-field">
-                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
-                        <ValidationProvider v-slot="{ errors }" :rules="'required|audio'" name="audio">
+                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                            $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
+                          }}</label>
+                        <ValidationProvider v-slot="{ errors }" :rules="'required|audio'"
+                                            name="audio">
                           <b-form-file
                             accept="audio/*"
                             :placeholder="answerMatch.answer ? answerMatch.answer.name : 'اختر ملف'"
@@ -2509,8 +2528,8 @@
                 <slot v-if="answersListMatch.length > 0">
                   <b-row class="mb-3">
                     <b-col lg="2" class="answer-item">الترتيب</b-col>
-                    <b-col lg="4" class="answer-item">الإجابة</b-col>
-                    <b-col lg="4" class="answer-item" v-if="answerMatch.answer_pattern !== 'audio'">
+                    <b-col lg="3" class="answer-item">الإجابة</b-col>
+                    <b-col lg="3" class="answer-item" v-if="answerMatch.answer_pattern !== 'audio'">
                       التسجيل الصوتى للإجابة
                     </b-col>
                     <b-col lg="2" class="answer-item"></b-col>
@@ -2519,6 +2538,9 @@
                     <b-col lg="2" class="answer-item">{{ index + 1 }}</b-col>
                     <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'text'">
                       {{ answer.answer }}
+                    </b-col>
+                    <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'image'">
+                      <img :src="answer.answerImage" alt="answer image" class="answer_image">
                     </b-col>
                     <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'audio'">
                       {{ answer.answer.name }}
@@ -2590,8 +2612,10 @@
                     </b-col>
                     <b-col lg="4" class="mb-3" v-if="answerMatchTo.answer_pattern==='text' || answerMatchTo.answer_pattern==='image'">
                       <div class="hold-field">
-                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
-                        <ValidationProvider v-slot="{ errors }" :rules="'required|audio'" name="audio">
+                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                            $t("QUESTIONS.QUESTION_ANSWER_AUDIO")
+                          }}</label>
+                        <ValidationProvider v-slot="{ errors }" :rules="'required|audio'" name="answerMatchToAudio">
                           <b-form-file
                             accept="audio/*"
                             :placeholder="answerMatchTo.audio ? answerMatchTo.audio.name : 'اختر ملف'"
@@ -2606,8 +2630,7 @@
                     </b-col>
                     <b-col lg="4" class="mb-3" v-if="answerMatchTo.answer_pattern==='audio'">
                       <div class="hold-field">
-                        <label><span><i
-                          class="fa-solid fa-asterisk"></i></span>{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label>
+                        <label><span><i class="fa-solid fa-asterisk"></i></span>{{$t("QUESTIONS.QUESTION_ANSWER_AUDIO")}}</label>
                         <ValidationProvider v-slot="{ errors }" :rules="'required|audio'" name="answerMatchToAudioAnswer">
                           <b-form-file
                             accept="audio/*"
@@ -2624,10 +2647,7 @@
                     <b-col lg="2" class="px-0">
                       <div class="hold-field">
                         <label class="mx-0 hidden-text">{{ $t("QUESTIONS.ANSWERSTO") }}:</label>
-                        <button class="add-btn" @click.prevent="addAnswerMatchTo()"
-                                :disabled="invalid">
-                          {{ $t("ADD_ANSWER") }}
-                        </button>
+                        <button class="add-btn" @click.prevent="addAnswerMatchTo()" :disabled="invalid">{{ $t("ADD_ANSWER") }}</button>
                       </div>
                     </b-col>
                   </validation-observer>
@@ -2637,21 +2657,31 @@
                   <b-row>
                     <b-col lg="2" class="answer-item">الترتيب</b-col>
                     <b-col lg="3" class="answer-item">الإجابة</b-col>
-                    <b-col lg="3" class="answer-item" v-if="answerMatchTo.answer_pattern !== 'audio'">التسجيل الصوتى للإجابة</b-col>
+                    <b-col lg="3" class="answer-item"
+                           v-if="answerMatchTo.answer_pattern !== 'audio'">التسجيل الصوتى للإجابة
+                    </b-col>
                     <b-col lg="2" class="answer-item">الإجابة المقابلة</b-col>
                     <b-col lg="2" class="answer-item"></b-col>
                   </b-row>
                   <b-row v-for="(answer, index) in answersListMatchTo" :key="index" class="mb-3">
                     <validation-observer v-slot="{ invalid }" ref="selectAnswers" class="row w-100">
                       <b-col lg="2" class="answer-item">{{ index + 1 }}</b-col>
-                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'text'">{{ answer.answer }}</b-col>
-                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'image'"><img :src="answer.answerImage" alt="answer image" class="answer_image"></b-col>
-                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'audio'">{{ answer.answer.name }}</b-col>
-                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern !== 'audio'">{{ answer.audio.name }}</b-col>
+                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'text'">
+                        {{ answer.answer }}
+                      </b-col>
+                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'image'">
+                        <img :src="answer.answerImage" alt="answer image" class="answer_image">
+                      </b-col>
+                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'audio'">
+                        {{ answer.answer.name }}
+                      </b-col>
+                      <b-col lg="3" class="answer-item" v-if="answer.answer_pattern !== 'audio'">
+                        {{ answer.audio.name }}
+                      </b-col>
                       <b-col lg="2" class="answer-item select">
-                        <validation-provider v-slot="{ errors, invalid }" :name="`الإجابة`"
-                                             rules="required">
+                        <validation-provider v-slot="{ errors, invalid }" :name="`الإجابة`" rules="required" v-if="questionSlug.slug.includes('match_one')">
                           <el-select v-model="answer.answerToId" clearable
+                                     :multiple="questionSlug.slug.includes('match_many')"
                                      placeholder="إختر الإجابة المقابلة"
                                      @mouseenter.native="getId(answer.answerToId)"
                                      @change="assignAnswerMatch($event)"
@@ -2668,9 +2698,28 @@
                             {{ error }}
                           </b-form-invalid-feedback>
                         </validation-provider>
+                        <validation-provider v-slot="{ errors, invalid }" :name="`الإجابة المقابلة`" rules="required" v-if="questionSlug.slug.includes('match_many')">
+                          <el-select v-model="answer.answerToId" clearable
+                                     multiple
+                                     placeholder="إختر الإجابة المقابلة"
+                                     @mouseenter.native="getIds(answer.answerToId)"
+                                     @change="assignAnswersMatch($event)"
+                                     @clear="backToInitValues()" class="custom-select-answer">
+                            <el-option
+                              v-for="item in answersListMatch"
+                              :key="item.id"
+                              :label="item.id"
+                              :disabled="item.isSelected"
+                              :value="item.id">
+                            </el-option>
+                          </el-select>
+                          <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                            {{ error }}
+                          </b-form-invalid-feedback>
+                        </validation-provider>
                       </b-col>
                       <b-col lg="2">
-                        <button class="remove-btn" @click="removeAnswerMatchTo(index)">
+                        <button class="remove-btn" @click="removeAnswersMatchTo(index)">
                           {{ $t("remove_ANSWER") }}
                         </button>
                       </b-col>
@@ -2685,10 +2734,20 @@
                 <div class="action-holder">
                   <div>
                     <Button
+                      v-if="questionSlug.slug.includes('match_one')"
                       type="submit"
                       :loading="loading"
                       :custom-class="'submit-btn'"
                       :disabled="checkAssignAnswers || (answersListMatch.length !== answersListMatchTo.length) || answersListMatch.length > 8 || answersListMatchTo.length > 8"
+                    >
+                      {{ $t("GLOBAL_NEXT") }}
+                    </Button>
+                    <Button
+                      v-if="questionSlug.slug.includes('match_many') && questionSlug.slug === 'match_many_image_images'"
+                      type="submit"
+                      :loading="loading"
+                      :custom-class="'submit-btn'"
+                      :disabled="checkAssignAnswers ||  answersListMatchTo.length !== 1 || answersListMatch.length > 8 || answersListMatchTo.length > 8"
                     >
                       {{ $t("GLOBAL_NEXT") }}
                     </Button>
@@ -2715,9 +2774,7 @@ import Button from "@/components/Shared/Button/index.vue";
 import getData from "@/mixins/getData/getData";
 import draggable from "vuedraggable";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
-import index from "vuex";
 import vSelect from "vue-select";
-import he from "vue2-datepicker/locale/es/he";
 
 export default {
   mixins: [getData("question")],
@@ -2864,7 +2921,7 @@ export default {
         audio: null,
         answers_to: [],
         answer_pattern: 'text',
-        answerImage:null,
+        answerImage: null,
         isSelected: false,
       },
       answerId: 0,
@@ -2873,10 +2930,11 @@ export default {
         match_to: 1,
         audio: null,
         answer_pattern: 'text',
-        answerImage:null,
+        answerImage: null,
         answerToId: '',
       },
       currentSelectId: null,
+      currentSelectIds: null,
       answerToId: 0,
       confirmAnswersFrom: false,
       correctList: [
@@ -2906,8 +2964,9 @@ export default {
       this.answerId++
       this.answersListMatch.push({id: this.answerId, ...this.answerMatch})
       this.answerMatch.answer = null
+      this.answerMatch.answerImage = null
       this.answerMatch.audio = null
-      this.$nextTick(()=>{
+      this.$nextTick(() => {
         this.$refs.addAnswerFromForm.reset()
       })
     },
@@ -2917,7 +2976,7 @@ export default {
       this.answerMatchTo.answer = null
       this.answerMatchTo.audio = null
       this.answerMatchTo.answerImage = null
-      this.$nextTick(()=>{
+      this.$nextTick(() => {
         this.$refs.addAnswerToForm.reset()
       })
     },
@@ -2930,6 +2989,12 @@ export default {
       this.backToInitValue()
       this.answersListMatchTo.splice(index, 1)
     },
+    removeAnswersMatchTo(index){
+      let indexToBeChangeAnswerMatchTo = this.answersListMatchTo[index]
+      this.getIds(indexToBeChangeAnswerMatchTo.answerToId)
+      this.backToInitValues()
+      this.answersListMatchTo.splice(index, 1)
+    },
     assignAnswerMatch($event) {
       if ($event) {
         this.backToInitValue()
@@ -2937,13 +3002,35 @@ export default {
         this.answersListMatch[indexToBeChange].isSelected = true
       }
     },
+    assignAnswersMatch($event) {
+      if ($event) {
+        this.backToInitValues()
+        $event.forEach((itemAnswer) => {
+          let indexToBeChange = this.answersListMatch.findIndex((item) => item.id === itemAnswer)
+          this.answersListMatch[indexToBeChange].isSelected = true
+        })
+      }
+    },
     getId(id) {
       this.currentSelectId = id
+    },
+    getIds(ids) {
+      this.currentSelectIds = ids
     },
     backToInitValue() {
       if (this.currentSelectId) {
         let indexToBeChange = this.answersListMatch.findIndex((item) => item.id === this.currentSelectId)
         this.answersListMatch[indexToBeChange].isSelected = false
+      } else {
+        return;
+      }
+    },
+    backToInitValues() {
+      if (this.currentSelectIds) {
+        this.currentSelectIds.forEach((id) => {
+          let indexToBeChange = this.answersListMatch.findIndex((item) => item.id === id)
+          this.answersListMatch[indexToBeChange].isSelected = false
+        })
       } else {
         return;
       }
@@ -3081,6 +3168,11 @@ export default {
         this.$emit("onSubmit", this.formValues);
       } else if (this.questionSlug.slug.includes('match_one')) {
         this.formValues.question_pattern = 'text'
+        this.assignAnswersMatchOneToOne();
+        this.$emit("onSubmit", this.formValues);
+      }
+      else if (this.questionSlug.slug.includes('match_many_image_images')) {
+        this.formValues.question_pattern = 'image'
         this.assignAnswersMatchOneToOne();
         this.$emit("onSubmit", this.formValues);
       }
@@ -3338,11 +3430,15 @@ export default {
       this.answerMatchTo.answer_pattern = 'audio'
     } else if (this.questionSlug.slug === 'match_one_text_image') {
       this.answerMatchTo.answer_pattern = 'image'
-    }else if (this.questionSlug.slug === 'match_one_voice_image') {
+    } else if (this.questionSlug.slug === 'match_one_voice_image') {
       this.answerMatch.answer_pattern = 'audio'
+      this.answerMatchTo.answer_pattern = 'image'
+    } else if(this.questionSlug.slug === 'match_many_image_images'){
+      this.answerMatch.answer_pattern = 'image'
       this.answerMatchTo.answer_pattern = 'image'
     }
   }
+
 };
 </script>
 <style scoped lang="scss">

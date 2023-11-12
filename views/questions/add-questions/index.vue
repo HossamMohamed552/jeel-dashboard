@@ -435,9 +435,7 @@ export default {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][match_from]`, this.collectData.answers[answer]?.match_from);
-          if (this.collectData.answers[answer]?.audio) {
-            formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer]?.audio);
-          }
+          if (this.collectData.answers[answer]?.audio) {formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer]?.audio);}
           formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers[answer]?.answer_pattern);
           for (let answerTo = 0; answerTo < this.collectData.answers[answer].answers_to.length; answerTo++) {
             formData.append(`answers[${answer}][answers_to][${answerTo}][answer]`, this.collectData.answers[answer].answers_to[answerTo]?.answer);

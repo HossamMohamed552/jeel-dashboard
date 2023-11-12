@@ -38,6 +38,16 @@
                   ></TextField>
                 </div>
               </b-col>
+              <b-col v-for="role in createPackage.roles" :key="role.role_id" lg="4" class="mb-3">
+                <div class="hold-field">
+                  <TextField
+                    v-model="role.number"
+                    :label="` عدد ${role.name} `"
+                    :name="` عدد ${role.name} `"
+                    :rules="'required|numeric'"
+                  ></TextField>
+                </div>
+              </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <TextAreaField
@@ -73,8 +83,10 @@
 <script>
 import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import { getSinglePackagesRequest } from "@/api/packages";
+import {getSinglePackagesRequest} from "@/api/packages";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {getAllRolesRequest, getAllRolesSystemRequest} from "@/api/user";
+
 export default {
   components: {
     Modal,
@@ -93,7 +105,8 @@ export default {
         name: "",
         price: "",
         classes_count: "",
-        description: ""
+        description: "",
+        roles: []
       },
       packageId: this.$route.params.id
     };
@@ -121,9 +134,25 @@ export default {
         );
       }
     },
+    getAllRoles() {
+      this.ApiService(getAllRolesSystemRequest()).then((response) => {
+        this.createPackage.roles = response.data.data
+        this.createPackage.roles.forEach((item) => {
+          Object.assign(item, {number: ""})
+        })
+        this.createPackage.roles = this.createPackage.roles.map((item)=>{
+          return {
+            role_id: item.id,
+            number: item.number,
+            name: item.name
+          }
+        })
+      })
+    }
   },
   mounted() {
     this.getPackageToEdit();
+    this.getAllRoles();
   },
 };
 </script>

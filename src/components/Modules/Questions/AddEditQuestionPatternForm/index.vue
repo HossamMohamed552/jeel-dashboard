@@ -39,21 +39,30 @@
               </b-col>
             </b-row>
             <b-row>
-              <div class="action-holder">
-                <Button @click="handleCancel" custom-class="cancel-btn margin">
-                  {{ $t("GLOBAL_CANCEL") }}
-                </Button>
-                <Button
-                  type="submit"
-                  :loading="loading"
-                  :disabled="invalid"
-                  :custom-class="'submit-btn'"
-                >
-                  {{ $t("GLOBAL_NEXT") }}
-                </Button>
-              </div>
+              <b-col
+                :lg="formValues.question_slug && formValues.question_slug.question_type_image ? 6 : 9">
+                <img :src="formValues.question_slug.question_type_image"
+                     v-if="formValues.question_slug && formValues.question_slug.question_type_image"
+                     class="question_img" alt="question image"></b-col>
+              <b-col
+                :lg="formValues.question_slug && formValues.question_slug.question_type_image ? 6 : 3">
+                <div class="action-holder">
+                  <Button @click="handleCancel" custom-class="cancel-btn margin">
+                    {{ $t("GLOBAL_CANCEL") }}
+                  </Button>
+                  <Button
+                    type="submit"
+                    :loading="loading"
+                    :disabled="invalid"
+                    :custom-class="'submit-btn'"
+                  >
+                    {{ $t("GLOBAL_NEXT") }}
+                  </Button>
+                </div>
+              </b-col>
             </b-row>
           </form>
+
         </validation-observer>
       </div>
     </div>

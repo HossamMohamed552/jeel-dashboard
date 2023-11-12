@@ -177,7 +177,11 @@
     "color": "ورقة عمل ملونة",
     "print": "ورقة عمل للطباعة",
     "UPLOAD_IMAGE": "صورة ورقة عمل",
-    "paper_work_final_degree": "درجة ورقة العمل"
+    "paper_work_final_degree": "درجة ورقة العمل",
+    "fileImgWithOutColor": "ورقه عمل للطباعة",
+    "file": "ورقه عمل ملونة",
+    "paperWorkThumbnail": "صوره ورقه عمل",
+    "AUDIO": "التسجيل الصوتى لورقه العمل"
   },
   "PATH": {
     "Name": "اسم المسار",

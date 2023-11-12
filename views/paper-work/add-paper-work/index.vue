@@ -31,6 +31,7 @@ export default{
     handleAddPaperWork($event) {
       const formData = new FormData()
       formData.append('name',$event.name);
+      formData.append('audio',$event.audio);
       formData.append('type',$event.type);
       formData.append('learning_path_id',$event.learning_path_id);
       formData.append('file',$event.file);

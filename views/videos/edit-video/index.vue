@@ -26,7 +26,7 @@ import ProgressModal from "@/components/Shared/ProgressModal/index.vue";
 
 export default {
   name: "index",
-  components: {Modal, AddEditVideo},
+  components: {Modal, AddEditVideo,ProgressModal},
   data() {
     return {
       loading: false,
@@ -41,6 +41,7 @@ export default {
   },
   methods: {
     handleEditVideo($event) {
+      this.video_name = $event.name;
       const formData = new FormData()
       formData.append('name', $event.name);
       formData.append('title', $event.name);
