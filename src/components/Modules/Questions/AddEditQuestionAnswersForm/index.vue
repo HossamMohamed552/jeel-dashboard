@@ -2662,10 +2662,10 @@
                     </b-col>
                   </validation-observer>
                   <p
-                    v-if="answersListMatchTo.length !== 1 && questionSlug.slug === 'match_many_image_images'"
+                    v-if="answersListMatchTo.length !== 1 && (questionSlug.slug === 'match_many_image_images' || questionSlug.slug === 'match_many_image_voices')"
                     class="text-danger font-weight-bold">يجب إضافة صوره واحدة</p>
                   <p
-                    v-if="answersListMatchTo.length !== 2 && questionSlug.slug === 'match_many_images_images'"
+                    v-if="answersListMatchTo.length !== 2 && (questionSlug.slug === 'match_many_images_images' || questionSlug.slug === 'match_many_images_text' || questionSlug.slug === 'match_many_images_voices')"
                     class="text-danger font-weight-bold">يجب إضافة صورتين فقط</p>
                 </b-row>
                 <!-- show answer to based on answer patter -->
@@ -2763,7 +2763,7 @@
                       {{ $t("GLOBAL_NEXT") }}
                     </Button>
                     <Button
-                      v-if="questionSlug.slug.includes('match_many') && questionSlug.slug === 'match_many_image_images'"
+                      v-if="questionSlug.slug.includes('match_many') && (questionSlug.slug === 'match_many_image_images' || questionSlug.slug === 'match_many_image_voices')"
                       type="submit"
                       :loading="loading"
                       :custom-class="'submit-btn'"
@@ -2772,7 +2772,7 @@
                       {{ $t("GLOBAL_NEXT") }}
                     </Button>
                     <Button
-                      v-if="questionSlug.slug.includes('match_many') && questionSlug.slug === 'match_many_images_images'"
+                      v-if="questionSlug.slug.includes('match_many') && (questionSlug.slug === 'match_many_images_images' || questionSlug.slug === 'match_many_images_text' || questionSlug.slug === 'match_many_images_voices')"
                       type="submit"
                       :loading="loading"
                       :custom-class="'submit-btn'"
@@ -3199,7 +3199,7 @@ export default {
         this.formValues.question_pattern = 'text'
         this.assignAnswersMatchOneToOne();
         this.$emit("onSubmit", this.formValues);
-      } else if (this.questionSlug.slug.includes('match_many_image_images') || this.questionSlug.slug.includes('match_many_images_images')) {
+      } else if (this.questionSlug.slug.includes('match_many')) {
         this.formValues.question_pattern = 'text'
         this.assignAnswersMatchOneToMany();
         this.$emit("onSubmit", this.formValues);
@@ -3369,7 +3369,7 @@ export default {
         newVal.forEach((item) => {
           checkArray.push(item.answerToId)
         })
-        console.log('checkArray',checkArray.includes(''))
+        console.log('checkArray', checkArray.includes(''))
         this.checkAssignAnswers = checkArray.includes('');
       },
       deep: true
@@ -3470,6 +3470,15 @@ export default {
       this.answerMatchTo.answer_pattern = 'image'
     } else if (this.questionSlug.slug === 'match_many_image_images' || this.questionSlug.slug === 'match_many_images_images') {
       this.answerMatch.answer_pattern = 'image'
+      this.answerMatchTo.answer_pattern = 'image'
+    } else if (this.questionSlug.slug === 'match_many_image_voices') {
+      this.answerMatch.answer_pattern = 'audio'
+      this.answerMatchTo.answer_pattern = 'image'
+    } else if (this.questionSlug.slug === 'match_many_images_text') {
+      this.answerMatch.answer_pattern = 'text'
+      this.answerMatchTo.answer_pattern = 'image'
+    } else if (this.questionSlug.slug === 'match_many_images_voices') {
+      this.answerMatch.answer_pattern = 'audio'
       this.answerMatchTo.answer_pattern = 'image'
     }
   }
