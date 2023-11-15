@@ -137,15 +137,18 @@
             </b-row>
           </b-col>
           <b-col lg="12" v-if="questionTypeSlug.includes('match')">
-            <div v-for="(matchAnswer,index) in collectData.answers" :key="index" class="d-flex justify-content-start align-items-center answer_match my-3">
+            <div v-for="(matchAnswer,index) in collectData.answers" :key="index"
+                 class="d-flex justify-content-start align-items-center answer_match my-3">
               <p>{{ index + 1 }} - </p>
               <p v-if="matchAnswer.answer_pattern === 'text'">{{ matchAnswer.answer }}</p>
-              <p v-if="matchAnswer.answer_pattern === 'audio'">{{matchAnswer.answer.name}}</p>
+              <p v-if="matchAnswer.answer_pattern === 'audio'">{{ matchAnswer.answer.name }}</p>
               <p class="to">إلى</p>
               <div v-for="(matchAnswerTo,index) in matchAnswer.answers_to" :key="index">
                 <p v-if="matchAnswerTo.answer_pattern === 'text'">{{ matchAnswerTo.answer }}</p>
-                <p v-if="matchAnswerTo.answer_pattern === 'audio'">{{matchAnswerTo.answer.name}}</p>
-                <p v-if="matchAnswerTo.answer_pattern === 'image'"><img :src="matchAnswerTo.answerImage" alt="answer image" class="answer_image"></p>
+                <p v-if="matchAnswerTo.answer_pattern === 'audio'">
+                  {{ matchAnswerTo.answer.name }}</p>
+                <p v-if="matchAnswerTo.answer_pattern === 'image'"><img
+                  :src="matchAnswerTo.answerImage" alt="answer image" class="answer_image"></p>
               </div>
             </div>
           </b-col>
@@ -431,11 +434,13 @@ export default {
           formData.append(`answers[${answer}][order]`, this.collectData.answers[answer].order);
           formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers[answer].answer_pattern);
         }
-      } else if (this.questionTypeSlug.includes('match')) {
+      } else if (this.questionTypeSlug.includes('match_one')) {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][match_from]`, this.collectData.answers[answer]?.match_from);
-          if (this.collectData.answers[answer]?.audio) {formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer]?.audio);}
+          if (this.collectData.answers[answer]?.audio) {
+            formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer]?.audio);
+          }
           formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers[answer]?.answer_pattern);
           for (let answerTo = 0; answerTo < this.collectData.answers[answer].answers_to.length; answerTo++) {
             formData.append(`answers[${answer}][answers_to][${answerTo}][answer]`, this.collectData.answers[answer].answers_to[answerTo]?.answer);
@@ -445,6 +450,30 @@ export default {
             }
             formData.append(`answers[${answer}][answers_to][${answerTo}][answer_pattern]`, this.collectData.answers[answer].answers_to[answerTo]?.answer_pattern);
           }
+        }
+      } else if (this.questionTypeSlug.includes('match_many')) {
+        for (let answer = 0; answer < this.collectData.answers.answersListMatch.length; answer++) {
+          formData.append(`answers[${answer}][answer]`, this.collectData.answers.answersListMatch[answer]?.answer);
+          formData.append(`answers[${answer}][match_from]`, this.collectData.answers.answersListMatch[answer]?.match_from);
+          if (this.collectData.answers.answersListMatch[answer]?.audio) {
+            formData.append(`answers[${answer}][audio]`, this.collectData.answers.answersListMatch[answer]?.audio);
+          }
+          formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers.answersListMatch[answer]?.answer_pattern);
+        }
+        for (let answerTo = 0; answerTo < this.collectData.answers.answersListMatchTo.length; answerTo++) {
+          formData.append(`answers_to[${answerTo}][answer]`, this.collectData.answers.answersListMatchTo[answerTo]?.answer);
+          formData.append(`answers_to[${answerTo}][match_to]`, this.collectData.answers.answersListMatchTo[answerTo]?.match_to);
+          console.log('this.collectData.answers.answersListMatchTo[answerTo].answerToId',this.collectData.answers.answersListMatchTo[answerTo].answerToId)
+          for (let id = 0; id < this.collectData.answers.answersListMatchTo[answerTo].answerToId.length; id++) {
+            let indexOfId;
+            indexOfId = this.collectData.answers.answersListMatch.findIndex((item) => item.id === this.collectData.answers.answersListMatchTo[answerTo].answerToId[id])
+            console.log('indexOfId',indexOfId)
+            formData.append(`answers_to[${answerTo}][index_id][${id}]`,indexOfId);
+          }
+          if (this.collectData.answers.answersListMatchTo[answerTo]?.audio) {
+            formData.append(`answers_to[${answerTo}][audio]`, this.collectData.answers.answersListMatchTo[answerTo]?.audio);
+          }
+          formData.append(`answers_to[${answerTo}][answer_pattern]`, this.collectData.answers.answersListMatchTo[answerTo]?.answer_pattern);
         }
       } else if (this.questionTypeSlug.includes('true_false')) {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
