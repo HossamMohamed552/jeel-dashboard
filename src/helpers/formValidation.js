@@ -16,7 +16,7 @@ extend("required", {
 
 extend("email", {
   ...email,
-  message: "Please enter a valid email",
+  message: "يرجى إدخال البريد الإلكتروني الصحيح",
 });
 
 extend("numeric", {

@@ -62,6 +62,15 @@
     color: $color-primary;
   }
 }
+.profile-btn{
+  margin: 0;
+  font-weight: bold;
+  font-size: 1.3rem;
+  &:hover{
+    color: #fff !important;
+    background: $color-primary !important;
+  }
+}
 .back-btn {
   background: $color-notify;
   &:hover {

@@ -2449,8 +2449,7 @@
                 </div>
                 <!-- add answer from with type based on answer patter -->
                 <b-row v-if="!confirmAnswersFrom">
-                  <validation-observer v-slot="{ invalid }" ref="addAnswerFromForm"
-                                       class="row w-100">
+                  <validation-observer v-slot="{ invalid }" ref="addAnswerFromForm" class="row w-100">
                     <b-col lg="6" class="mb-3 px-0" v-if="answerMatch.answer_pattern==='text'">
                       <div class="hold-field">
                         <label>{{ $t('QUESTIONS.ANSWER') }}</label>
@@ -2551,7 +2550,7 @@
                       {{ answer.audio.name }}
                     </b-col>
                     <b-col lg="2">
-                      <button class="remove-btn" @click="removeAnswerMatch(index)"
+                      <button class="remove-btn" @click.prevent="removeAnswerMatch(index)"
                               v-if="!confirmAnswersFrom">
                         {{ $t("remove_ANSWER") }}
                       </button>
@@ -2572,7 +2571,7 @@
                     </b-col>
                     <b-col lg="12">
                       <div class="hold-field my-3">
-                        <button class="remove-btn" @click="resetAnswers()"
+                        <button class="remove-btn" @click.prevent="resetAnswers()"
                                 v-if="confirmAnswersFrom">{{ $t("QUESTIONS.reset") }}
                         </button>
                       </div>
@@ -2739,7 +2738,7 @@
                         </validation-provider>
                       </b-col>
                       <b-col lg="2">
-                        <button class="remove-btn" @click="removeAnswersMatchTo(index)">
+                        <button class="remove-btn" @click.prevent="removeAnswersMatchTo(index)">
                           {{ $t("remove_ANSWER") }}
                         </button>
                       </b-col>

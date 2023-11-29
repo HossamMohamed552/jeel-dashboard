@@ -26,6 +26,7 @@
     </div>
     <div class="hold-table">
       <b-table
+        v-if="Array.from(items).length > 0"
         :head-variant="'gradient'"
         responsive
         striped
@@ -92,6 +93,9 @@
         <template #cell(level)="data">
           <span v-if="data.item.level">{{ data.item.level.name | cutString }}</span>
         </template>
+        <template #cell(term)="data">
+          <span v-if="data.item.term">{{ data.item.term.name | cutString }}</span>
+        </template>
         <template #cell(learningpaths)="data">
           <span v-for="(path, ind) in data.item.learningpaths" :key="ind"
                 class="path">{{ path.name | cutString }}</span>
@@ -150,8 +154,12 @@
           </span>
         </template>
       </b-table>
+      <div v-if="Array.from(items).length === 0 && inputValue" class="empty-state">
+        لا توجد نتائج بحث ل {{inputValue}}
+      </div>
     </div>
     <Pagination
+      v-if="Array.from(items).length > 0"
       :currentPage="formValues.page"
       :perPage="formValues.per_page"
       :totalItems="numberOfItem"

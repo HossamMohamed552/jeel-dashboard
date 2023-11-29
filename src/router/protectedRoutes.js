@@ -975,6 +975,25 @@ const protectedRoutes = [
           breadcrumb: "حسابي",
         },
       },
+      {
+        path: "/dashboard/super-class",
+        name: "super-class",
+        component: () => import("../../views/super-class/index.vue"),
+        meta: {
+          breadcrumb: "الفصول",
+        },
+      },
+      {
+        path: "/dashboard/super-class/show/:id",
+        name: "show-super-class",
+        component: () =>
+          import("../../views/super-class/view-super-class/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل  الفصل",
+          preLabel: "",
+          preLink: "",
+        },
+      },
     ],
   },
 ];

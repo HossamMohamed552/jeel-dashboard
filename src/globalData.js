@@ -193,4 +193,56 @@ let routeBasicData = [
     permission: "view-outcome",
   }
 ]
-export {routesUsers, routesSchool, routesContent, routeSettings, routeBasicData};
+let routeSuperVisor = [
+
+  {
+    name: "الفصول",
+    path: "/dashboard/super-class",
+    altImage: 'super-class',
+    titleImage: 'super-class',
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-classes",
+  },
+  {
+    name: "المهام",
+    path: "/dashboard/missions-supervisor",
+    altImage: 'missions-supervisor',
+    titleImage: 'missions-supervisor',
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-supervisor-missions",
+  },
+  {
+    name: "المدرسين",
+    path: "/dashboard/teachers",
+    altImage: 'view-teachers',
+    titleImage: 'view-teachers',
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-teachers",
+  },
+  {
+    name: "الطلاب",
+    path: "/dashboard/students",
+    altImage: 'view-students',
+    titleImage: 'view-students',
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-roles",
+  },
+  {
+    name: "المسابقات",
+    path: "/dashboard/competitions",
+    altImage: 'view-competitions',
+    titleImage: 'view-competitions',
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-roles",
+  },
+  {
+    name: "الإعلانات",
+    path: "/dashboard/advertisements",
+    altImage: 'view-advertisements',
+    titleImage: 'view-advertisements',
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-roles",
+  }
+
+]
+export {routesUsers, routesSchool, routesContent, routeSettings, routeBasicData, routeSuperVisor};

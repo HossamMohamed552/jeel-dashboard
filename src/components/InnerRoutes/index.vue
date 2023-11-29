@@ -1,6 +1,6 @@
 <template>
-  <section class="inner-routes p-0">
-    <div class="taps">
+  <section class="inner-routes p-0" :class="isSuperVisor ? 'mt-0':''">
+    <div v-if="!isSuperVisor" class="taps">
       <div
         @click="activeTapActive(1)"
         :class="activeTap === 1 && Array.from(routesUsers).length >= 1 ? 'active' : ''"
@@ -34,13 +34,14 @@
         البيانات الأساسية
       </div>
     </div>
-    <div class="content">
+    <div v-if="!isSuperVisor" class="content">
       <div class="row">
         <transition name="fade">
           <div class="col-12 px-0" v-if="activeTap === 1 && Array.from(routesUsers).length >= 1">
             <div class="row">
               <div class="col-lg-6 col-12" v-for="(item, index) in routesUsers" :key="index">
-                <RouteItem :item="item" v-if="item.permission === 'view-roles' && user.is_super_admin === 1"/>
+                <RouteItem :item="item"
+                           v-if="item.permission === 'view-roles' && user.is_super_admin === 1"/>
                 <RouteItem :item="item" v-if="item.permission !== 'view-roles'"/>
               </div>
             </div>
@@ -81,6 +82,120 @@
         </transition>
       </div>
     </div>
+    <div v-if="isSuperVisor" class="supervisor-section">
+      <b-row>
+        <b-col lg="3">
+          <div class="profile-card item-card">
+            <div>
+              <div class="hold-img-profile">
+                <img :src="user.avatar" alt="avatar" title="avatar" @error="altImage($event)">
+              </div>
+              <div class="hold-info">
+                <p class="name">{{ user.name }}</p>
+                <p class="role">{{ user.roles[0]?.name }}</p>
+                <p class="school-name">{{ user.school.name }}</p>
+                <Button custom-class="cancel-btn profile-btn">
+                  {{ $t("profile-page") }}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </b-col>
+        <b-col lg="9">
+          <b-row>
+            <b-col lg="4" class="mb-5">
+              <div class="item-card route-card">
+                <div class="item-number">27</div>
+                <div class="item-name">
+                  <span>المراحل</span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                </div>
+              </div>
+            </b-col>
+            <b-col lg="4" class="mb-5">
+              <div class="item-card route-card">
+                <div class="item-number">85</div>
+                <div class="item-name">
+                  <span>المهام</span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                </div>
+              </div>
+            </b-col>
+            <b-col lg="4" class="mb-5">
+              <div class="item-card route-card">
+                <div class="item-number">150</div>
+                <div class="item-name">
+                  <span>الطلاب</span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                </div>
+              </div>
+            </b-col>
+            <b-col lg="4">
+              <div class="item-card route-card">
+                <div class="item-number">14</div>
+                <div class="item-name">
+                  <span>المدرسين</span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                </div>
+              </div>
+            </b-col>
+            <b-col lg="4">
+              <div class="item-card route-card">
+                <div class="item-number">8</div>
+                <div class="item-name">
+                  <span>المسابقات</span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                </div>
+              </div>
+            </b-col>
+            <b-col lg="4">
+              <div class="item-card route-card">
+                <div class="item-number">740</div>
+                <div class="item-name">
+                  <span>الإعلانات</span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                </div>
+              </div>
+            </b-col>
+          </b-row>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col lg="4">
+          <div class="stats">
+            <div class="heading">
+              <span>المهام</span>
+            </div>
+            <ChartMission/>
+            <div class="item-link">
+              <router-link to="missions"><span>الكل</span> <span><img src="@/assets/images/icons/arrow-left.svg"></span></router-link>
+            </div>
+          </div>
+        </b-col>
+        <b-col lg="4">
+          <div class="stats leader-board">
+            <div class="heading">
+              <span>لوحة الصدارة</span>
+            </div>
+            <LeaderBoard/>
+            <div class="item-link">
+              <router-link to="missions"><span>الكل</span> <span><img src="@/assets/images/icons/arrow-left.svg"></span></router-link>
+            </div>
+          </div>
+        </b-col>
+        <b-col lg="4">
+          <div class="stats">
+            <div class="heading">
+              <span>المسابقات</span>
+            </div>
+            <ChartCompetition/>
+            <div class="item-link">
+              <router-link to="missions"><span>الكل</span> <span><img src="@/assets/images/icons/arrow-left.svg"></span></router-link>
+            </div>
+          </div>
+        </b-col>
+      </b-row>
+    </div>
     <WelcomeModal/>
   </section>
 </template>
@@ -89,6 +204,10 @@ import RouteItem from "@/components/RouteItem/index.vue";
 import {routesUsers, routesSchool, routesContent, routeBasicData} from "@/globalData";
 import WelcomeModal from "@/components/Shared/WelcomeModal/index.vue";
 import {mapActions} from "vuex";
+import Button from "@/components/Shared/Button/index.vue";
+import ChartMission from "@/components/ChartMissions/ChartMission.vue";
+import ChartCompetition from "@/components/ChartCompetitions/ChartCompetitions.vue";
+import LeaderBoard from "@/components/LeaderBoard/LeaderBoard.vue";
 
 export default {
   name: "index",
@@ -99,9 +218,16 @@ export default {
       routesSchool: [],
       routesContent: [],
       routeBasicData: [],
+      isSuperVisor: false,
+
     };
   },
+
   components: {
+    LeaderBoard,
+    ChartCompetition,
+    ChartMission,
+    Button,
     RouteItem,
     WelcomeModal,
   },
@@ -115,6 +241,9 @@ export default {
     },
     activeTapActive(tap) {
       this.activeTap = tap;
+    },
+    altImage($event) {
+      $event.target.src = require("@/assets/images/icons/user-avatar.png")
     },
   },
   watch: {
@@ -149,9 +278,84 @@ export default {
     } else {
       this.activeTapActive(3);
     }
+    this.isSuperVisor = this.user.roles[0]?.code === 'supervisor';
   },
 };
 </script>
 <style scoped lang="scss">
 @import "./index";
+.item-card {
+  background: url("../../assets/images/bg/bg-super.svg");
+  background-color: #fff;
+  border-radius: 1.5rem;
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: 100%;
+  border: 1px solid #F4EDF3;
+
+  .item-number {
+    color: #76236C;
+    font-size: 2.8rem;
+    font-weight: bold;
+  }
+
+  .item-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #000000;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1rem 0 0 0;
+  }
+}
+.route-card {
+  padding: 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+
+  span {
+    &:last-of-type {
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 1px solid #F4EDF3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 45px;
+      height: 45px;
+      cursor: pointer;
+      opacity: 0;
+      position: relative;
+      left: -1.5rem;
+      transition: all ease-in-out .3s;
+
+      &:hover {
+        background: $color-primary;
+
+        img {
+          filter: brightness(0) invert(1);
+          -webkit-filter: brightness(0) invert(1);
+        }
+      }
+    }
+  }
+
+  &:hover {
+    span {
+      &:last-of-type {
+        opacity: 1;
+      }
+    }
+  }
+}
+.leader-board{
+  background: url("../../assets/images/bg/leader-bg.svg");
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-size: 80%;
+  background-position: center;
+}
 </style>

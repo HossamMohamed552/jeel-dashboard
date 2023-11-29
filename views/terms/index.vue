@@ -45,7 +45,7 @@ export default {
       totalNumber: null,
       fieldsList: [
         {key: "id", label: "التسلسل"},
-        {key: "name", label: "اسم الفصل"},
+        {key: "name", label: "اسم الفصل الدراسى"},
         {key: "actions", label: "الإجراء"},
       ],
     }
@@ -89,6 +89,14 @@ export default {
   },
   mounted() {
     this.getTerms()
+    if (this.user.roles[0].code === 'supervisor'){
+      this.fieldsList = [
+        {key: "id", label: "التسلسل"},
+        {key: "name", label: "اسم الفصل الدراسى"},
+        {key: "classes_count", label: "عدد الفصول"},
+        {key: "actions", label: "الإجراء"},
+      ]
+    }
   }
 
 }

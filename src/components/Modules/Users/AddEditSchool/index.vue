@@ -131,6 +131,7 @@
                                               class="d-flex justify-content-start align-items-start">
                             <span><i class="fa-solid fa-asterisk"></i></span>
                             <b-form-group :label="$t('SCHOOL.status')" class="group-type">
+
                               <b-form-radio
                                 :disabled="
                                   $route.params.id && !user.permissions.includes(`add-packages`)
@@ -329,9 +330,11 @@ export default {
   },
   methods: {
     getSoundType(id) {
-      const chosenItem = this.schoolGroups.find((item) => item.id == id);
-      this.createSchool.music_status = chosenItem ? chosenItem.music_status : "";
-      this.createSchool.status = chosenItem ? chosenItem.status : "";
+     if (!this.$route.params.id){
+       const chosenItem = this.schoolGroups.find((item) => item.id == id);
+       this.createSchool.music_status = chosenItem ? chosenItem.music_status : "";
+       this.createSchool.status = chosenItem ? chosenItem.status : "";
+     }
     },
     deleteImage() {
       this.createSchool.logo = null;
@@ -426,6 +429,8 @@ export default {
     getSchoolToEdit() {
       if (this.$route.params.id) {
         this.ApiService(getSingleSchoolsRequest(this.$route.params.id)).then((response) => {
+          console.log('response.data.data.music_status',response.data.data.music_status)
+          console.log('response.data.data.status',response.data.data.status)
           this.createSchool.name = response.data.data.name;
           // this.createSchool.username = response.data.data.username;
           this.createSchool.address = response.data.data.address;

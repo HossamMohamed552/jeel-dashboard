@@ -370,7 +370,9 @@ export default {
       localStorage.setItem("collectData", JSON.stringify(data));
     },
     handleAssignObject(object) {
+      console.log('assign object')
       Object.assign(this.collectData, {...object});
+      console.log('after assign object')
       this.handleSaveCollectedData(this.collectData);
     },
     getName(list, id) {
@@ -463,11 +465,9 @@ export default {
         for (let answerTo = 0; answerTo < this.collectData.answers.answersListMatchTo.length; answerTo++) {
           formData.append(`answers_to[${answerTo}][answer]`, this.collectData.answers.answersListMatchTo[answerTo]?.answer);
           formData.append(`answers_to[${answerTo}][match_to]`, this.collectData.answers.answersListMatchTo[answerTo]?.match_to);
-          console.log('this.collectData.answers.answersListMatchTo[answerTo].answerToId',this.collectData.answers.answersListMatchTo[answerTo].answerToId)
           for (let id = 0; id < this.collectData.answers.answersListMatchTo[answerTo].answerToId.length; id++) {
             let indexOfId;
             indexOfId = this.collectData.answers.answersListMatch.findIndex((item) => item.id === this.collectData.answers.answersListMatchTo[answerTo].answerToId[id])
-            console.log('indexOfId',indexOfId)
             formData.append(`answers_to[${answerTo}][index_id][${id}]`,indexOfId);
           }
           if (this.collectData.answers.answersListMatchTo[answerTo]?.audio) {

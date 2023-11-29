@@ -3,7 +3,7 @@
     <div class="container-fluid custom-container">
       <div class="row">
         <div class="col-12">
-          <div class="top">
+          <div class="top" :class="isSuperVisor && $route.name === 'main' ? 'top-supervisor': ''">
             <router-link to="/dashboard/home" tag="div" class="logo">
               <img src="@/assets/images/logo-white.png" alt="logo" title="geel logo" />
             </router-link>
@@ -37,7 +37,7 @@
               </div>
             </div>
           </div>
-          <div class="nav" v-if="showNavigationBar">
+          <div class="nav" v-if="showNavigationBar &&  !isSuperVisor">
             <router-link tag="div" to="/dashboard/home" class="nav-item"
               >{{ $t("MENU.main") }}
             </router-link>
@@ -132,24 +132,44 @@
               <router-link tag="p" to="/dashboard/home">{{ $t("MENU.reports") }}</router-link>
             </div>
           </div>
+          <div class="nav" v-if="isSuperVisor" :class="isSuperVisor && $route.name === 'main' ? 'nav-supervisor': ''">
+            <router-link tag="div" to="/dashboard/home" class="nav-item">{{ $t("MENU.main") }}</router-link>
+            <div class="nav-item" v-if="Array.from(routesUsers).length >= 1" v-for="(routeUser, index) in routesUsers" :key="index">
+              <router-link tag="li" :to="routeUser.path" >{{ routeUser.name }}</router-link>
+            </div>
+            <div class="nav-item" v-if="Array.from(routesSchool).length >= 1" v-for="(routeSchool, index) in routesSchool" :key="index">
+              <router-link tag="li" :to="routeSchool.path" >{{ routeSchool.name }}</router-link>
+            </div>
+            <div class="nav-item" v-if="Array.from(routesContent).length >= 1" v-for="(routeContent, index) in routesContent" :key="index">
+              <router-link tag="li" :to="routeContent.path" >{{ routeContent.name }}</router-link>
+            </div>
+            <div class="nav-item" v-if="Array.from(routeBasicData).length >= 1" v-for="(routeBasic, index) in routeBasicData" :key="index">
+              <router-link tag="li" :to="routeBasic.path" >{{ routeBasic.name }}</router-link>
+            </div>
+            <div class="nav-item" v-if="Array.from(routeSuperVisor).length >= 1" v-for="(routeSuper, index) in routeSuperVisor" :key="index">
+              <router-link tag="li" :to="routeSuper.path" >{{ routeSuper.name }}</router-link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </header>
 </template>
 <script>
-import { routesUsers, routesSchool, routesContent, routeSettings, routeBasicData } from "@/globalData";
+import { routesUsers, routesSchool, routesContent, routeSettings, routeBasicData, routeSuperVisor } from "@/globalData";
 import { mapActions } from "vuex";
 
 export default {
   name: "index",
   data: () => ({
     showNavigationBar: false,
+    isSuperVisor: false,
     routesUsers: [],
     routesSchool: [],
     routesContent: [],
     routeSettings: [],
     routeBasicData: [],
+    routeSuperVisor: [],
   }),
   watch: {
     $route: function () {
@@ -162,6 +182,7 @@ export default {
         this.routesContent = this.getRoutes(routesContent);
         this.routeSettings = this.getRoutes(routeSettings);
         this.routeBasicData = this.getRoutes(routeBasicData);
+        this.routeSuperVisor = this.getRoutes(routeSuperVisor);
       },
       immediate: true,
     },
@@ -186,15 +207,12 @@ export default {
       return routeArr.filter((route) => this.permissions?.includes(route.permission));
     },
     checkRoutes() {
-      if (this.$route.name !== "main") {
-        this.showNavigationBar = true;
-      } else {
-        this.showNavigationBar = false;
-      }
+      this.showNavigationBar = this.$route.name !== "main";
     },
   },
   mounted() {
     this.checkRoutes();
+    this.isSuperVisor = this.user.roles[0]?.code === 'supervisor';
   },
 };
 </script>

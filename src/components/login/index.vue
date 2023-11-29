@@ -10,7 +10,7 @@
             <TextField
               v-model="user.email"
               :label="$t('AUTH.email')"
-              :name="'email'"
+              :name="$t('AUTH.email')"
               :rules="'required|email'"
             ></TextField>
           </div>
@@ -34,7 +34,7 @@
               v-else
               v-model="user.password"
               :label="$t('AUTH.password')"
-              :name="'password'"
+              :name="$t('AUTH.password')"
               :rules="'required'"
               type="password"
               class="password-input"

@@ -70,7 +70,9 @@
     "school": "المدرسة",
     "mobile": "الهاتف",
     "status": "الحالة",
-    "music_status": "حالة الموسيقى"
+    "music_status": "حالة الموسيقى",
+    "superTerm": "اسم الفصل الدراسي",
+    "students_count": "عدد الطلاب"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -151,7 +153,8 @@
     "name": "اسم الفصل الدراسى",
     "level": "اسم الصف",
     "phases": "المراحل الدراسية",
-    "showDetails": "عرض تفاصيل فصل دراسى"
+    "showDetails": "عرض تفاصيل فصل دراسى",
+    "classes_count":"عدد الفصول"
   },
   "VIDEO": {
     "NAME": "اسم الفيديو",
@@ -311,11 +314,16 @@
   "CLASS": {
     "ADD_NEW": "إضافة صف دراسي جديد",
     "name": "الاسم",
+    "ٍsuperName": "الاسم الفصل",
     "levelTerms": "المرحله و الصف",
     "EDIT": "تعديل الصف الدراسي",
     "showDetails": "تفاصيل الصف الدراسي",
+    "showSuperDetails": "تفاصيل الفصل الدراسي",
     "term": "الصف الدراسي",
-    "level": "المرحله"
+    "superTerm": "اسم الفصل الدراسي",
+    "superSchool": "المدرسة",
+    "level": "المرحله",
+    "students_count": "عدد الطلاب"
   },
   "STAFF_ENROLL": {
     "ADD_NEW": "إضافة موظف جديد",
@@ -445,5 +453,6 @@
   "ADD_ANSWER": "إضافة",
   "remove_ANSWER": "حذف",
   "verifyEmail": "تحقق من بريدك الإلكترونى",
-  "close": "إغلاق"
+  "close": "إغلاق",
+  "profile-page": "الملف الشخصي"
 }

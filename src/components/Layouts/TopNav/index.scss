@@ -3,7 +3,8 @@
 header {
   background-image: url("../../../assets/images/bg/header-bg.png");
   min-height: 20vh;
-  background-size: cover;
+  background-size: 130% 105%;
+  background-repeat: no-repeat;
   .top {
     padding: 2.125rem 0;
     display: flex;
@@ -11,10 +12,11 @@ header {
     align-items: center;
     .logo {
       width: 120px;
-      height: 139px;
+      height: 105px;
       cursor: pointer;
       img {
         @include image;
+        object-position: right;
       }
     }
     .notification-info-admin {
@@ -87,10 +89,15 @@ header {
       }
     }
   }
+  .top-supervisor{
+    padding: 2.125rem 0 5rem 0;
+  }
   .nav {
+    position: relative;
+    top: -.8rem;
     .nav-item {
       padding: 1.875rem 0;
-      margin-left: 3rem;
+      margin-left: 2.5rem;
       color: #FFFFFF;
       font-size: 1.1rem;
       font-weight: bold;
@@ -151,6 +158,10 @@ header {
         }
       }
     }
+  }
+  .nav-supervisor{
+    position: relative;
+    top: -4.5rem;
   }
   ::v-deep .btn.dropdown-toggle {
     background: transparent;
