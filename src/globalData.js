@@ -238,10 +238,10 @@ let routeSuperVisor = [
   {
     name: "الإعلانات",
     path: "/dashboard/advertisements",
-    altImage: 'view-advertisements',
+    altImage: 'view-announcements',
     titleImage: 'view-advertisements',
     icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-roles",
+    permission: "view-announcements",
   }
 
 ]

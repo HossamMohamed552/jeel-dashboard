@@ -100,6 +100,10 @@
           <span v-for="(path, ind) in data.item.learningpaths" :key="ind"
                 class="path">{{ path.name | cutString }}</span>
         </template>
+        <template #cell(teachers)="data">
+          <span v-for="(teacher, ind) in data.item.teachers" :key="ind"
+                class="path">{{ teacher.name | cutString }}</span>
+        </template>
         <template #cell(learning_path)="data">
           <span v-if="data.item.learning_path">{{ data.item.learning_path.name | cutString }}</span>
         </template>

@@ -72,7 +72,11 @@
     "status": "الحالة",
     "music_status": "حالة الموسيقى",
     "superTerm": "اسم الفصل الدراسي",
-    "students_count": "عدد الطلاب"
+    "students_count": "عدد الطلاب",
+    "superLevel": "المرحلة الدراسية",
+    "superTeachersTo": "موجهة لـ",
+    "subject": "العنوان",
+    "superDescription": "الإعلان"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -154,7 +158,7 @@
     "level": "اسم الصف",
     "phases": "المراحل الدراسية",
     "showDetails": "عرض تفاصيل فصل دراسى",
-    "classes_count":"عدد الفصول"
+    "classes_count": "عدد الفصول"
   },
   "VIDEO": {
     "NAME": "اسم الفيديو",
@@ -444,6 +448,11 @@
     "EMAIL": "البريد الالكتروني",
     "RESEND": "اعادة ارسال",
     "RESEND_SUCCESS": "تم اعادة ارسال كود التفعيل برجاء مراجعة البريد الالكتروني الخاص بكم"
+  },
+  "ads": {
+    "ADD": "إضافة اعلان",
+    "superLevel": "المرحلة الدراسية",
+    "superTeachersTo": "موجهة لـ"
   },
   "GLOBAL_SEND": "إرسال",
   "This link is invalid": "هذا الرابط غير صالح",

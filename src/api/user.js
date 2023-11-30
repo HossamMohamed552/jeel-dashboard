@@ -5,6 +5,13 @@ export const getAllUsersRequest = (params) => ({
     params
   }
 })
+export const getAllTeachersRequest = (schoolId,params) => ({
+    method: 'get',
+    url: `school/${schoolId}/teachers`,
+    config: {
+      params
+    }
+  })
 export const getAllSearchUsersRequest = (params) => ({
   method: 'get',
   url: 'users?list_all=true',

@@ -994,6 +994,24 @@ const protectedRoutes = [
           preLink: "",
         },
       },
+      {
+        path: "/dashboard/advertisements",
+        name: "advertisements",
+        component: () => import("../../views/advertisement/index.vue"),
+        meta: {
+          breadcrumb: "الإعلانات",
+        },
+      },
+      {
+        path: "/dashboard/advertisements/add",
+        name: "add-advertisement",
+        component: () => import("../../views/advertisement/add-advertisement/index.vue"),
+        meta: {
+          breadcrumb: "إعلان جديد",
+          preLabel: "قائمة الإعلانات",
+          preLink: "/dashboard/advertisements",
+        },
+      },
     ],
   },
 ];
