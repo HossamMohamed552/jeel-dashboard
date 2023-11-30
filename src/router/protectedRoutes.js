@@ -1004,12 +1004,30 @@ const protectedRoutes = [
       },
       {
         path: "/dashboard/advertisements/add",
-        name: "add-advertisement",
+        name: "add-advertisements",
         component: () => import("../../views/advertisement/add-advertisement/index.vue"),
         meta: {
           breadcrumb: "إعلان جديد",
           preLabel: "قائمة الإعلانات",
           preLink: "/dashboard/advertisements",
+        },
+      },
+      {
+        path: "/dashboard/advertisements/show/:id",
+        name: "show-advertisements",
+        component: () => import("../../views/advertisement/view-advertisement/index.vue"),
+        meta: {
+          breadcrumb: "تعديل الاعلان",
+          preLabel: "قائمة الإعلانات",
+          preLink: "/dashboard/advertisements",
+        },
+      },
+      {
+        path: "/dashboard/teachers",
+        name: "teachers",
+        component: () => import("../../views/teachers/index.vue"),
+        meta: {
+          breadcrumb: "الإعلانات",
         },
       },
     ],

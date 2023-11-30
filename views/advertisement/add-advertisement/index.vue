@@ -33,11 +33,11 @@ export default {
           }, 3000);
         })
         .then(() => {
-          this.$router.push("/dashboard/advertisement");
+          this.$router.push("/dashboard/advertisements");
         }).catch(()=>this.loading = false)
     },
     handleCancel() {
-      this.$router.push("/dashboard/advertisement");
+      this.$router.push("/dashboard/advertisements");
     },
   },
 };

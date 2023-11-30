@@ -90,10 +90,10 @@ export default {
         });
     },
     detailItem($event) {
-      this.$router.push(`/dashboard/objective/show/${$event}`);
+      this.$router.push(`/dashboard/advertisements/show/${$event}`);
     },
     editItem($event) {
-      this.$router.push(`/dashboard/objective/edit/${$event}`);
+      this.$router.push(`/dashboard/advertisements/edit/${$event}`);
     },
     deleteItem($event) {
       this.itemId = $event;

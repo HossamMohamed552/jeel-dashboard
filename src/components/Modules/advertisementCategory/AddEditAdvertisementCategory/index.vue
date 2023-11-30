@@ -22,7 +22,7 @@
               </b-col>
               <b-col lg="4">
                 <SelectSearch
-                  v-model="adObject.teacher_id"
+                  v-model="adObject.users"
                   :label="$t('ads.superTeachersTo')"
                   :name="$t('ads.superTeachersTo')"
                   :options="teachers"
@@ -33,6 +33,41 @@
                   :deselectFromDropdown="true"
                 ></SelectSearch>
               </b-col>
+              <b-col lg="4">
+                <div class="hold-field">
+                  <TextField
+                    v-model="adObject.subject"
+                    :label="$t('ads.subject')"
+                    :name="$t('ads.subject')"
+                    :rules="'required|min:3|max:30'"
+                  ></TextField>
+                </div>
+              </b-col>
+              <b-col lg="12" class="mb-3">
+                <div class="hold-field">
+                  <TextAreaField
+                    v-model="adObject.description"
+                    :label="$t('ads.superDescription')"
+                    :name="$t('ads.superDescription')"
+                    :rules="'required|min:20'"
+                  ></TextAreaField>
+                </div>
+              </b-col>
+            </b-row>
+            <b-row>
+              <div class="hold-btns-form">
+                <Button @click="handleCancel" custom-class="cancel-btn margin">
+                  {{ $t("GLOBAL_CANCEL") }}
+                </Button>
+                <Button
+                  type="submit"
+                  :loading="loading"
+                  :disabled="invalid"
+                  custom-class="submit-btn"
+                >
+                  {{ adId ? $t("GLOBAL_EDITAd") : $t("GLOBAL_SEND") }}
+                </Button>
+              </div>
             </b-row>
           </form>
         </validation-observer>
@@ -42,22 +77,21 @@
 </template>
 <script>
 import TextField from "@/components/Shared/TextField/index.vue";
+import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import {getBloomCategoryByIdRequest} from "@/api/bloom.js";
 import Modal from "@/components/Shared/Modal/index.vue";
 import SelectField from "@/components/Shared/SelectField/index.vue";
 import {mapGetters} from "vuex";
 import {getLevelsRequest} from "@/api/level";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import {getAllTeachersRequest} from "@/api/user";
-import te from "vue2-datepicker/locale/es/te";
-
 export default {
   components: {
     SelectSearch,
     SelectField,
     Modal,
     TextField,
+    TextAreaField,
     Button,
   },
   props: {
@@ -70,9 +104,10 @@ export default {
     return {
       adObject: {
         level_id: "",
-        teacher_id: "",
-        name: "",
-        slug: "",
+        users: "",
+        subject: "",
+        description: "",
+        school_id : ""
       },
       levels: [],
       teachers: [],
@@ -84,21 +119,14 @@ export default {
       this.$refs.addEditSchoolTyeForm.validate().then((success) => {
         if (!success) return;
       });
-      if (this.bloomTypeId) {
-        this.$emit("editBloomCategory", this.formValues);
+      if (this.adId) {
+        this.$emit("editAdCategory", this.adObject);
       } else {
-        this.$emit("handleAddAdCategory", this.formValues);
+        this.$emit("handleAddAdCategory", this.adObject);
       }
     },
     handleCancel() {
       this.$emit("handleCancel");
-    },
-    getBloomCategoryById() {
-      if (this.bloomTypeId) {
-        this.ApiService(getBloomCategoryByIdRequest(this.bloomTypeId)).then((response) => {
-          this.formValues = response.data.data;
-        });
-      }
     },
     getLevelsBySchoolId() {
       this.ApiService(getLevelsRequest({school_id: this.user.school.id})).then((response) => {
@@ -115,7 +143,7 @@ export default {
     ...mapGetters(["user"]),
   },
   mounted() {
-    this.getBloomCategoryById();
+    this.adObject.school_id = this.user.school.id
     this.getLevelsBySchoolId();
     this.getAllTeachers()
   },
