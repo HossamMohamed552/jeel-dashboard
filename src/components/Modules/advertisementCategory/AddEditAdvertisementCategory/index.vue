@@ -85,6 +85,8 @@ import {mapGetters} from "vuex";
 import {getLevelsRequest} from "@/api/level";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import {getAllTeachersRequest} from "@/api/user";
+import {getAnnouncementByIdRequest} from "@/api/announcement";
+
 export default {
   components: {
     SelectSearch,
@@ -107,7 +109,7 @@ export default {
         users: "",
         subject: "",
         description: "",
-        school_id : ""
+        school_id: ""
       },
       levels: [],
       teachers: [],
@@ -133,8 +135,8 @@ export default {
         this.levels = response.data.data
       })
     },
-    getAllTeachers(){
-      this.ApiService(getAllTeachersRequest(this.user.school.id)).then((response)=>{
+    getAllTeachers() {
+      this.ApiService(getAllTeachersRequest(this.user.school.id)).then((response) => {
         this.teachers = response.data.data
       })
     }
@@ -146,6 +148,17 @@ export default {
     this.adObject.school_id = this.user.school.id
     this.getLevelsBySchoolId();
     this.getAllTeachers()
+    if (this.adId) {
+      this.ApiService(getAnnouncementByIdRequest(this.adId)).then((response) => {
+        console.log('response', response)
+        this.adObject.level_id = response.data.data.level.id
+        this.adObject.users = response.data.data.teachers.map((item)=>{
+          return item.id
+        })
+        this.adObject.subject = response.data.data.subject
+        this.adObject.description = response.data.data.description
+      })
+    }
   },
 };
 </script>

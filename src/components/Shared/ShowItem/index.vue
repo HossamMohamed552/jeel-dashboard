@@ -7,7 +7,7 @@
       {{ subtitle }}
     </div>
     <slot class="subtitle" v-if="listItems">
-      <span class="item" v-for="item in listItems">{{item.name}}</span>
+      <span class="item listItem" v-for="item in listItems">{{item.name}}</span>
     </slot>
   </div>
 </template>

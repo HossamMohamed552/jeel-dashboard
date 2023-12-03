@@ -93,7 +93,7 @@ export default {
       this.$router.push(`/dashboard/advertisements/show/${$event}`);
     },
     editItem($event) {
-      this.$router.push(`/dashboard/advertisements/edit/${$event}`);
+      this.$router.push(`/dashboard/advertisements/${$event}`);
     },
     deleteItem($event) {
       this.itemId = $event;

@@ -7,9 +7,23 @@
             <h2 class="heading">{{ $t("ads.DETAILS") }}</h2>
           </b-col>
         </b-row>
+        <b-row class="divider">
+          <b-col lg="4">
+            <ShowItem :title="$t('ads.superLevel')" :subtitle="adObject.level.name"/>
+          </b-col>
+          <b-col lg="4" v-if="adObject && adObject.teachers">
+            <ShowItem
+              :title="$t('ads.superTeachersTo')"
+              :listItems="adObject.teachers"
+            />
+          </b-col>
+          <b-col lg="4">
+            <ShowItem :title="$t('ads.subject')" :subtitle="adObject.subject"/>
+          </b-col>
+        </b-row>
         <b-row>
-          <b-col lg="6">
-            <ShowItem :title="$t('GLOBAL_NAME')" :subtitle="bloomCategory.name" />
+          <b-col lg="12">
+            <ShowItem :title="$t('ads.superDescription')" :subtitle="adObject.description"/>
           </b-col>
         </b-row>
       </div>
@@ -18,7 +32,7 @@
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import { getBloomCategoryByIdRequest } from "@/api/bloom";
+import { getAnnouncementByIdRequest } from "@/api/announcement";
 export default {
   name: "index",
   components: {
@@ -26,12 +40,12 @@ export default {
   },
   data() {
     return {
-      bloomCategory: {},
+      adObject: {},
     };
   },
   mounted() {
-    this.ApiService(getBloomCategoryByIdRequest(this.$route.params.id)).then((response) => {
-      this.bloomCategory = response.data.data;
+    this.ApiService(getAnnouncementByIdRequest(this.$route.params.id)).then((response) => {
+      this.adObject = response.data.data;
     });
   },
 };
