@@ -463,5 +463,19 @@
   "remove_ANSWER": "حذف",
   "verifyEmail": "تحقق من بريدك الإلكترونى",
   "close": "إغلاق",
-  "profile-page": "الملف الشخصي"
+  "profile-page": "الملف الشخصي",
+  "COMPETITIONS": {
+    "STEP_ONE": "البيانات الاساسية",
+    "STEP_TWO": "أسئلة المسابقة",
+    "STEP_THREE": "الجوائز",
+    "NAME": "اسم المسابقة",
+    "LEVEL": "المرحلة الدراسية",
+    "MISSIONS": "المهمات",
+    "GOALS": "الاهداف التعليمية",
+    "OUTPUTS": "مخرجات التعلم",
+    "FROM": "من",
+    "TO": "إلى",
+    "TIME_PERIOD": "المدة الزمنية",
+    "COMPETITION_PERIOD": "فترة المسابقة"
+  }
 }

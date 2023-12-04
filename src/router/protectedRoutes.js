@@ -986,8 +986,7 @@ const protectedRoutes = [
       {
         path: "/dashboard/super-class/show/:id",
         name: "show-super-class",
-        component: () =>
-          import("../../views/super-class/view-super-class/index.vue"),
+        component: () => import("../../views/super-class/view-super-class/index.vue"),
         meta: {
           breadcrumb: "تفاصيل  الفصل",
           preLabel: "",
@@ -1010,6 +1009,48 @@ const protectedRoutes = [
           breadcrumb: "إعلان جديد",
           preLabel: "قائمة الإعلانات",
           preLink: "/dashboard/advertisements",
+        },
+      },
+      //competitions
+      {
+        path: "/dashboard/competitions",
+        name: "competitions",
+        component: () => import("../../views/competitions/index.vue"),
+        meta: {
+          breadcrumb: "المسابقات",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+
+      {
+        path: "/dashboard/competitions/add",
+        name: "add-competitions",
+        component: () => import("../../views/competitions/add-competition/index.vue"),
+        meta: {
+          breadcrumb: "إضافة مسابقة",
+          preLabel: "المسابقات",
+          preLink: "/dashboard/competitions",
+        },
+      },
+      {
+        path: "/dashboard/competitions/edit/:id",
+        name: "edit-competitions",
+        component: () => import("../../views/competitions/edit-competition/index.vue"),
+        meta: {
+          breadcrumb: "تعديل المسابقة",
+          preLabel: "المسابقات",
+          preLink: "/dashboard/competitions",
+        },
+      },
+      {
+        path: "/dashboard/competitions/show/:id",
+        name: "show-competitions",
+        component: () => import("../../views/competitions/view-competition/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل المسابقة",
+          preLabel: "المسابقات",
+          preLink: "/dashboard/competitions",
         },
       },
     ],

@@ -1,0 +1,33 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+
+.add-edit-competition-form {
+  background: #F9F9F9;
+  border-radius: 1.56rem;
+  padding: 3.375rem 2.375rem 0;
+  height: max-content;
+  margin: 1.5rem 0 4rem;
+
+}
+
+.action-holder {
+  width: 100%;
+  @include flexCenter(space-between);
+}
+.btn-holder {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+::v-deep{
+  .hold-field {
+    label {
+      color: $color-primary;
+      display: block;
+      margin: 0 0.7rem 0.7rem 0;
+    }
+  }
+  .text-field .form-control{
+    min-height: 50px;
+  }
+}

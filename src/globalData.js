@@ -233,7 +233,8 @@ let routeSuperVisor = [
     altImage: 'view-competitions',
     titleImage: 'view-competitions',
     icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-roles",
+    permission: "view-competitions"
+    ,
   },
   {
     name: "الإعلانات",

@@ -222,3 +222,16 @@ label {
   object-position: center;
   margin-top: 1rem;
 }
+
+::v-deep {
+.mx-input {
+  padding: 1.5rem 2rem;
+    border-radius: 3.5rem;
+
+    &::placeholder {
+      color: $color-primary;
+      font-weight: bold;
+      margin-top: -1rem;
+    }
+}
+}
