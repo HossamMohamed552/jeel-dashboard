@@ -1034,10 +1034,40 @@ const protectedRoutes = [
       },
       {
         path: "/dashboard/teachers",
-        name: "teachers",
+        name: "view-teachers",
         component: () => import("../../views/teachers/index.vue"),
         meta: {
           breadcrumb: "الإعلانات",
+        },
+      },
+      {
+        path: "/dashboard/teachers/show/:id",
+        name: "show-teacher",
+        component: () => import("../../views/teachers/view-teacher/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل المدرس",
+          preLabel: "قائمة المدرسين",
+          preLink: "/dashboard/teachers",
+        },
+      },
+      {
+        path: "/dashboard/super-mission",
+        name: "super-mission",
+        component: () => import("../../views/super-mission/index.vue"),
+        meta: {
+          breadcrumb: " تعديل المهام الدراسية",
+          preLabel: "المهام",
+          preLink: "/dashboard/super-mission",
+        },
+      },
+      {
+        path: "/dashboard/mission-detail/:id",
+        name: "mission-detail",
+        component: () => import("../../views/super-mission/mission-detail/index.vue"),
+        meta: {
+          breadcrumb: " تفاصبل المهام الدراسية",
+          preLabel: "المهام",
+          preLink: "/dashboard/super-mission",
         },
       },
     ],

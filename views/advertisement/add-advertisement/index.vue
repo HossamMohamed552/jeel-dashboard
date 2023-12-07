@@ -44,4 +44,10 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "./index";
+.text-field {
+  label {
+    margin: 0 !important;
+  }
+}
+
 </style>

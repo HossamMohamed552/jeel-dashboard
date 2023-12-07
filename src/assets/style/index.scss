@@ -222,3 +222,34 @@ label {
   object-position: center;
   margin-top: 1rem;
 }
+.show-role{
+  @include styleViewList;
+  .heading{
+    margin-bottom: 3.125rem;
+  }
+  .hold-fields{
+    margin-bottom: 4rem;
+  }
+  .permissions{
+    padding: 4rem 0;
+    border-top: 1px solid #8C8C8C;
+    .permission-item{
+      margin-bottom: 3.125rem;
+      img{
+        margin-left: 1rem;
+      }
+      span{
+        font-size: 1.2rem;
+        color: $color-primary;
+        font-weight: 600;
+      }
+    }
+  }
+}
+.custom-video-player .vjs-poster {
+  background-size: cover;
+
+  img {
+    object-fit: cover !important;
+  }
+}

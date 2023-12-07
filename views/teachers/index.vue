@@ -8,7 +8,7 @@
       :v-search-model="teachersSearchWord"
       :loading="loading"
       @detailItem="detailItem($event)"
-      @refetch="getAnnouncement"
+      @refetch="getAllTeachers"
       :permission_delete="'delete-teachers'"
       :permission_edit="'edit-teachers'"
       :permission_view="'show-teachers'"
@@ -23,7 +23,6 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {mapGetters} from "vuex";
-import {deleteAnnouncementRequest, getAnnouncementRequest} from "@/api/announcement";
 import {getAllTeachersRequest} from "@/api/user";
 
 export default {
@@ -53,28 +52,13 @@ export default {
     ...mapGetters(['user'])
   },
   methods: {
-    goToAddAnnouncement() {
-      this.$router.push("/dashboard/advertisements/add");
-    },
-    getAnnouncement(event) {
-      this.loading = true;
-      const params = event;
-      this.ApiService(getAnnouncementRequest(params))
-        .then((response) => {
-          this.announcement = response.data.data;
-          this.totalNumber = response.data.meta.total;
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    },
     getAllTeachers(){
       this.ApiService(getAllTeachersRequest(this.user.school.id)).then((response)=>{
         this.teachers = response.data.data
       })
     },
     detailItem($event) {
-      this.$router.push(`/dashboard/advertisements/show/${$event}`);
+      this.$router.push(`/dashboard/teachers/show/${$event}`);
     },
   },
   mounted() {

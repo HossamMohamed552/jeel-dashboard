@@ -223,7 +223,6 @@ export default {
     },
     disabledBeforeToday(date) {
       return date < new Date(new Date().setHours(0, 0, 0, 0))
-
     },
     onSubmit() {
       this.$refs.addEditLevelForm.validate().then((success) => {

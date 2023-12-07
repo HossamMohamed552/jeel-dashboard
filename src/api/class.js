@@ -5,6 +5,13 @@ export const getClassRequest = (params) => ({
     params
   }
 })
+// export const getClassForTeacherRequest = (params) => ({
+//   method: 'get',
+//   url: 'classes',
+//   config: {
+//     params
+//   }
+// })
 export const getAllClassRequest = (params) => ({
   method: 'get',
   url: `classes?list_all=true&level_id=${params}`,

@@ -131,7 +131,7 @@
             <template #button-content>
               <img src="@/assets/images/icons/actions.svg"/>
             </template>
-            <b-dropdown-item @click="detailItem(data.item.id)" v-if="checkDetail() === 'show'">
+            <b-dropdown-item @click="detailItem(data.item)" v-if="checkDetail() === 'show'">
               {{ $t("CONTROLS.detailBtn") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkEdit() === 'show'"></b-dropdown-divider>
@@ -147,6 +147,11 @@
             <b-dropdown-item v-if="checkDelete(data) === 'show'" @click="deleteItem(data.item.id)">
               {{ $t("CONTROLS.deleteBtn") }}
             </b-dropdown-item>
+            <b-dropdown-divider v-if="checkAddAd(data) === 'show'"></b-dropdown-divider>
+            <b-dropdown-item v-if="checkAddAd(data) === 'show'"
+                             @click="goToAnnouncements(data.item.id)">
+              {{ $t("CONTROLS.addAd") }}
+            </b-dropdown-item>
             <b-dropdown-item v-if="videoList" @click="addVideoQuestion(data.item.id)"
             >{{ $t("CONTROLS.addVideoQuestion") }}
             </b-dropdown-item>
@@ -159,7 +164,7 @@
         </template>
       </b-table>
       <div v-if="Array.from(items).length === 0 && inputValue" class="empty-state">
-        لا توجد نتائج بحث ل {{inputValue}}
+        لا توجد نتائج بحث ل {{ inputValue }}
       </div>
     </div>
     <Pagination
@@ -179,6 +184,7 @@ import Button from "@/components/Shared/Button/index.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
 import {type} from "os";
+import th from "vue2-datepicker/locale/es/th";
 
 export default {
   name: "index",
@@ -204,7 +210,7 @@ export default {
     activePage() {
       return window.localStorage.getItem('page')
     },
-    watchRefresh: function(){
+    watchRefresh: function () {
       return this.isRefresh
     }
   },
@@ -291,10 +297,10 @@ export default {
     }
   },
   watch: {
-    watchRefresh(newVal){
+    watchRefresh(newVal) {
       if (newVal) {
         this.handlePageChange(1)
-        this.$emit('resetRefresh',false)
+        this.$emit('resetRefresh', false)
       }
     },
     vSearchModel(newVal) {
@@ -328,8 +334,12 @@ export default {
       this.formValues.order = event.target.value;
       this.$emit("refetch", this.formValues);
     },
-    detailItem(id) {
-      this.$emit("detailItem", id);
+    detailItem(item) {
+      if (this.$route.name === 'show-teacher') {
+        this.$emit("detailItem", item.term.id);
+      } else {
+        this.$emit("detailItem", item.id);
+      }
     },
     editItem(id) {
       this.$emit("editItem", id);
@@ -359,7 +369,6 @@ export default {
       })
     },
     checkDelete(data) {
-
       if (data.item.is_default === 1 && this.user.permissions.includes(`${this.permission_delete}`)) {
         return 'hide'
       } else if (data.item.school_owner === true && this.user.permissions.includes(`${this.permission_delete}`)) {
@@ -399,8 +408,19 @@ export default {
         return 'hide'
       }
     },
+    checkAddAd(data) {
+      if (this.user.permissions.includes('add-announcements') && this.user.permissions.includes('view-teachers') && this.$route.name === 'view-teachers') {
+        return 'show'
+      } else {
+        return 'hide'
+      }
+    },
     altImage($event) {
       $event.target.src = require("@/assets/images/icons/user-avatar.png")
+    },
+    goToAnnouncements(itemId) {
+      this.$store.commit('SET_TEACHER_ID', itemId)
+      this.$router.push('/dashboard/advertisements/add')
     }
   },
 };

@@ -205,7 +205,7 @@ let routeSuperVisor = [
   },
   {
     name: "المهام",
-    path: "/dashboard/missions-supervisor",
+    path: "/dashboard/super-mission",
     altImage: 'missions-supervisor',
     titleImage: 'missions-supervisor',
     icon: require("@/assets/images/icons/steps.svg"),

@@ -5,6 +5,7 @@ import store from "./store";
 import i18n from "./plugins/i18n"
 import "./plugins";
 import "./helpers/formValidation";
+import 'video.js/dist/video-js.css'
 import ApiService from "./api/ApiService";
 import dayjs from 'dayjs';
 Vue.config.productionTip = false;

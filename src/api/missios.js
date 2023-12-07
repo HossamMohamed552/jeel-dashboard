@@ -9,6 +9,10 @@ export const getSingleMissionsRequest = (params) => ({
   method: 'get',
   url: `missions/${params}`,
 })
+export const getSuperMissionsRequest = (levelId) => ({
+    method: 'get',
+    url: `level/${levelId}/school-missions`,
+  })
 
 export const getSingleMissionsDetailsRequest = (params) => ({
   method: 'get',
@@ -32,4 +36,12 @@ export const postMissionsRequest = (data) => ({
 export const deleteMissionsRequest = (params) =>({
   method: 'delete',
   url: `missions/${params}`,
+})
+export const getDetailMissionsWithLearningPaths = (missionId) =>({
+  method: 'get',
+  url: `mission/${missionId}/learningpaths`
+})
+export const getLearningPathInMission = (missionId,learningPathId) =>({
+  method: 'get',
+  url: `mission-path-contents?mission_id=${missionId}&learningpath_id=${learningPathId}`
 })

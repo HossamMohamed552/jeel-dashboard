@@ -77,14 +77,16 @@
     "superTeachersTo": "موجهة لـ",
     "subject": "العنوان",
     "superDescription": "الإعلان",
-    "teacherName": "اسم المدرس"
+    "teacherName": "اسم المدرس",
+    "superClass":"اسم الصف الدراسى"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
     "editBtn": "تعديل",
     "deleteBtn": "حذف",
     "addVideoQuestion": "اضافة اسئله الفيديو",
-    "ManageClasses": "إداره الصفوف"
+    "ManageClasses": "إداره الصفوف",
+    "addAd": "إضافة إعلان"
   },
   "ROLES": {
     "ADD_NEW": "إضافة صلاحية",
@@ -459,6 +461,28 @@
     "DETAILS": "تفاصيل الاعلان",
     "EDIT": "تعديل الاعلان"
   },
+  "teacher": {
+    "data": "بيانات المدرس",
+    "teacherName": "اسم المستخدم",
+    "firstName": "اسم الأول",
+    "lastName": "اسم الثانى",
+    "role": "الصلاحية",
+    "mobile": "رقم الهاتف",
+    "email": "البريد الالكترونى",
+    "social_media": "رابط وسائل التواصل الإجتماعى",
+    "school": "المدرسة",
+    "enrollment_school_date": "تاريخ الإنضمام"
+  },
+  "superMission": {
+    "missionDetail": "تفاصيل المهام الدراسية",
+    "missionName": "اسم المهمة",
+    "startDate": "بداية المهمة",
+    "endDate": "نهاية المهمة",
+    "range": "المدة الزمنية",
+    "status": "الحالة",
+    "description": "الوصف ",
+    "learningPath": "المسارات"
+  },
   "GLOBAL_SEND": "إرسال",
   "GLOBAL_EDITAd": "تعديل الإعلان",
   "This link is invalid": "هذا الرابط غير صالح",
@@ -469,5 +493,6 @@
   "remove_ANSWER": "حذف",
   "verifyEmail": "تحقق من بريدك الإلكترونى",
   "close": "إغلاق",
-  "profile-page": "الملف الشخصي"
+  "profile-page": "الملف الشخصي",
+  "detail": "التفاصيل"
 }

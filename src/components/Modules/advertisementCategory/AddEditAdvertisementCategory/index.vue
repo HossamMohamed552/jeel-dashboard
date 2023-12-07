@@ -3,7 +3,7 @@
     <div class="container-fluid custom-container">
       <div class="add-edit-country-form">
         <h3>
-          {{ adId ? $t("BLOOM.EDIT") : $t("ads.ADD") }}
+          {{ adId ? $t("ads.EDIT") : $t("ads.ADD") }}
         </h3>
         <validation-observer v-slot="{ invalid }" ref="addEditSchoolTyeForm">
           <form @submit.prevent="onSubmit" class="mt-5">
@@ -35,9 +35,10 @@
               </b-col>
               <b-col lg="4">
                 <div class="hold-field">
+                  <label class="m-0"> <span><i class="fa-solid fa-asterisk"></i></span> {{$t('ads.subject')}}</label>
                   <TextField
+                    class="subject"
                     v-model="adObject.subject"
-                    :label="$t('ads.subject')"
                     :name="$t('ads.subject')"
                     :rules="'required|min:3|max:30'"
                   ></TextField>
@@ -106,7 +107,7 @@ export default {
     return {
       adObject: {
         level_id: "",
-        users: "",
+        users: [],
         subject: "",
         description: "",
         school_id: ""
@@ -142,7 +143,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["user"]),
+    ...mapGetters(["user", "teacherId"]),
   },
   mounted() {
     this.adObject.school_id = this.user.school.id
@@ -150,16 +151,21 @@ export default {
     this.getAllTeachers()
     if (this.adId) {
       this.ApiService(getAnnouncementByIdRequest(this.adId)).then((response) => {
-        console.log('response', response)
         this.adObject.level_id = response.data.data.level.id
-        this.adObject.users = response.data.data.teachers.map((item)=>{
+        this.adObject.users = response.data.data.teachers.map((item) => {
           return item.id
         })
         this.adObject.subject = response.data.data.subject
         this.adObject.description = response.data.data.description
       })
     }
+    if (this.teacherId) {
+      this.adObject.users.push(this.teacherId)
+    }
   },
+  destroyed() {
+    this.$store.commit('teacherId', null)
+  }
 };
 </script>
 <style scoped lang="scss">
