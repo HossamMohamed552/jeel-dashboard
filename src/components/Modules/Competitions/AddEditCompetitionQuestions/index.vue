@@ -2,132 +2,176 @@
   <div class="add-edit-competition">
     <div class="container-fluid custom-container">
       <div class="add-edit-competition-form">
-        <!-- <h3>{{ $route.params.id ? $t("MISSIONS.EDIT") : $t("MISSIONS.ADD_NEW") }}</h3> -->
         <validation-observer v-slot="{ invalid }" ref="addEditCompetitionForm">
           <form @submit.prevent="onSubmit" class="mt-5">
-            <b-row>
-              <b-col class="mb-3">
-                <div class="hold-field">
-                  <TextField
-                    v-model="mission.name"
-                    :label="$t('COMPETITIONS.NAME')"
-                    :name="$t('COMPETITIONS.NAME')"
-                    :rules="'required|max:30'"
-                  ></TextField>
-                </div>
-              </b-col>
-              <b-col class="mb-3">
-                <div class="hold-field">
-                  <SelectSearch
-                    v-model="mission.level_id"
-                    :label="$t('COMPETITIONS.LEVEL')"
-                    :name="$t('COMPETITIONS.LEVEL')"
-                    :options="levels"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                    :rules="'required'"
-                  ></SelectSearch>
-                </div>
-              </b-col>
-              <b-col class="mb-3">
-                <div class="hold-field">
-                  <SelectSearch
-                    v-model="mission.level_id"
-                    :label="$t('COMPETITIONS.MISSIONS')"
-                    :name="$t('COMPETITIONS.MISSIONS')"
-                    :options="levels"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                    :rules="'required'"
-                  ></SelectSearch>
-                </div>
-              </b-col>
-            </b-row>
-            <b-row>
-              <b-col class="mb-3">
-                <div class="hold-field">
-                  <SelectSearch
-                    v-model="mission.level_id"
-                    :label="$t('COMPETITIONS.GOALS')"
-                    :name="$t('COMPETITIONS.GOALS')"
-                    :options="levels"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                    :rules="'required'"
-                  ></SelectSearch>
-                </div>
-              </b-col>
-              <b-col class="mb-3">
-                <div class="hold-field">
-                  <SelectSearch
-                    v-model="mission.level_id"
-                    :label="$t('COMPETITIONS.OUTPUTS')"
-                    :name="$t('COMPETITIONS.OUTPUTS')"
-                    :options="levels"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                    :rules="'required'"
-                  ></SelectSearch>
-                </div>
-              </b-col>
-              <b-col class="mb-3">
-                <b-row>
-                  <b-col>
+            <div v-if="!isGeneratedQuestion" class="question-counter-container">
+              <b-row>
+                <h5 class="title">الاسئلة</h5>
+                <p v-if="disableRandomQuestionBtn" class="warning-error">
+                  * يجب ان يكون مجموع عدد انواع الاسئلة الثلاثة مساوى لعدد
+                  الاسئلة الكلى
+                </p>
+              </b-row>
+
+              <div class="question-counter-holder">
+                <div class="question-counter">
+                  <div class="total-count">
                     <div class="hold-field">
-                      <ValidationProvider rules="required">
-                        <label>
-                          <span><i class="fa-solid fa-asterisk"></i></span>
-                          {{ $t("COMPETITIONS.COMPETITION_PERIOD") }}</label
-                        >
-                        <date-picker
-                          :lang="en"
-                          :placeholder="$t('COMPETITIONS.FROM')"
-                          v-model="mission.name"
-                          @change="changeDate"
-                          valueType="format"
-                        ></date-picker>
-                        <p class="show-date" v-if="showDate">
-                          alaa
-                          <!-- {{ createSchool.startDate }} -->
-                        </p>
-                      </ValidationProvider>
+                      <SelectSearch
+                        v-model="totalQuestionCount"
+                        :label="$t('COMPETITIONS.QUESTION_NUMBER')"
+                        :name="$t('COMPETITIONS.QUESTION_NUMBER')"
+                        :options="totalQuestionCountList"
+                        :reduce="(option) => option"
+                        :get-option-label="(option) => option"
+                        @input="checkTotalNumbers"
+                      ></SelectSearch>
                     </div>
-                  </b-col>
-                  <b-col>
-                    <div class="hold-field mt-4">
-                      <ValidationProvider rules="required">
-                        <label>
-                          <!-- <span><i class="fa-solid fa-asterisk"></i></span> -->
-                        </label>
-                        <date-picker
-                          :lang="en"
-                          :placeholder="$t('COMPETITIONS.TO')"
-                          v-model="mission.name"
-                          @change="changeDate"
-                          valueType="format"
-                        ></date-picker>
-                        <p class="show-date" v-if="showDate">
-                          Alaa
-                          <!-- {{ createSchool.startDate }} -->
-                        </p>
-                      </ValidationProvider>
+                  </div>
+                  <div class="question-types">
+                    <div class="hold-field">
+                      <SelectSearch
+                        v-model="totalEsay"
+                        :label="$t('COMPETITIONS.EASY_QUESTIONS')"
+                        :name="$t('COMPETITIONS.EASY_QUESTIONS')"
+                        :options="totalEsayList"
+                        :reduce="(option) => option"
+                        :get-option-label="(option) => option"
+                        @input="checkTotalNumbers"
+                      ></SelectSearch>
                     </div>
-                  </b-col>
-                </b-row>
-              </b-col>
-            </b-row>
-            <b-row>
-              <b-col lg="4" class="mb-3">
-                <div class="hold-field">
-                  <TextField
-                    v-model="mission.name"
-                    :label="$t('COMPETITIONS.TIME_PERIOD')"
-                    :name="$t('COMPETITIONS.TIME_PERIOD')"
-                    :rules="'required|max:30'"
-                  ></TextField>
+                    <div class="hold-field">
+                      <SelectSearch
+                        v-model="totalMedium"
+                        :label="$t('COMPETITIONS.MEDIUM_QUESTIONS')"
+                        :name="$t('COMPETITIONS.MEDIUM_QUESTIONS')"
+                        :options="totalMediumList"
+                        :reduce="(option) => option"
+                        :get-option-label="(option) => option"
+                        @input="checkTotalNumbers"
+                      ></SelectSearch>
+                    </div>
+                    <div class="hold-field">
+                      <SelectSearch
+                        v-model="totalHard"
+                        :label="$t('COMPETITIONS.DIFFICULT_QUESTIONS')"
+                        :name="$t('COMPETITIONS.DIFFICULT_QUESTIONS')"
+                        :options="totalHardList"
+                        :reduce="(option) => option"
+                        :get-option-label="(option) => option"
+                        @input="checkTotalNumbers"
+                      ></SelectSearch>
+                    </div>
+                  </div>
                 </div>
-              </b-col>
-            </b-row>
+                <div class="counter-actions">
+                  <Button
+                    :loading="loading"
+                    :custom-class="'submit-btn'"
+                    :disabled="disableRandomQuestionBtn"
+                    @click="generateRandomQuestions"
+                  >
+                    إنشاء الأسئلة
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <div v-else class="question-counter-container">
+              <b-row>
+                <h5 class="title">الاسئلة</h5>
+              </b-row>
+
+              <div class="question-counter-holder">
+                <div class="question-counter">
+                  <div class="total-count">
+                    <div class="hold-count-filed">
+                      <p>{{ $t("COMPETITIONS.QUESTION_NUMBER") }}</p>
+                      <p>{{ totalQuestionCount }}</p>
+                    </div>
+                  </div>
+                  <div class="question-types">
+                    <div class="hold-count-filed">
+                      <p>
+                        {{ $t("COMPETITIONS.EASY_QUESTIONS") }}
+                      </p>
+                      <p>{{ totalEsay }}</p>
+                    </div>
+                    <div class="hold-count-filed">
+                      <p>{{ $t("COMPETITIONS.MEDIUM_QUESTIONS") }}</p>
+                      <p>{{ totalMedium }}</p>
+                    </div>
+                    <div class="hold-count-filed">
+                      <p>{{ $t("COMPETITIONS.DIFFICULT_QUESTIONS") }}</p>
+                      <p>{{ totalHard }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="counter-actions">
+                  <Button
+                    :loading="loading"
+                    :custom-class="'cancel-btn'"
+                    @click="isGeneratedQuestion = !isGeneratedQuestion"
+                  >
+                    إعادة الضبط
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <!--generated question table -->
+            <div v-if="isGeneratedQuestion" class="hold-table">
+              <b-table
+                striped
+                :head-variant="'gradient'"
+                :tbody-class="'custom-body'"
+                :items="actions"
+                :fields="fieldsList"
+              >
+                <template #cell(question_difficulty.name)="data">
+                  <div
+                    v-if="data.item.question_difficulty.id == 1"
+                    class="easy"
+                  >
+                    {{ data.item.question_difficulty.name }}
+                  </div>
+                  <div
+                    v-else-if="data.item.question_difficulty.id == 2"
+                    class="medium"
+                  >
+                    {{ data.item.question_difficulty.name }}
+                  </div>
+                  <div
+                    v-else-if="data.item.question_difficulty.id == 3"
+                    class="hard"
+                  >
+                    {{ data.item.question_difficulty.name }}
+                  </div>
+                </template>
+                <template #empty>
+                  <div class="text-center p-5">لا يوجد اسئلة لعرضها</div>
+                </template>
+                <template #cell(id)="data">
+                  <div>
+                    {{ data.index + 1 }}
+                  </div>
+                </template>
+                <template #cell(random_question_action)="data">
+                  <div class="random-question-actions">
+                    <img
+                      class="cursor-pointer"
+                      src="@/assets/images/icons/random-question.svg"
+                      @click="changeSingleRandomQuestion(data.item.id)"
+                    />
+                    <img
+                      class="cursor-pointer"
+                      src="@/assets/images/icons/view-random-question.svg"
+                    />
+                  </div>
+                </template>
+              </b-table>
+            </div>
+
             <b-row>
               <div class="action-holder">
                 <div>
@@ -147,7 +191,10 @@
                     {{ $t("GLOBAL_BACK") }}
                   </Button>
                 </div>
-                <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
+                <Button
+                  @click="handleCancel"
+                  :custom-class="'cancel-btn margin'"
+                >
                   {{ $t("GLOBAL_CANCEL") }}
                 </Button>
               </div>
@@ -163,12 +210,8 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
-import { getSingleMissionsRequest } from "@/api/missios";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
-import { getLevelsRequest } from "@/api/level";
-import DatePicker from "vue2-datepicker";
-import "vue2-datepicker/locale/en";
-import "vue2-datepicker/index.css";
+import { debounce } from "lodash";
 
 export default {
   components: {
@@ -177,56 +220,81 @@ export default {
     Button,
     TextAreaField,
     ImageUploader,
-    DatePicker,
   },
   props: {
-    loading: {
-      type: Boolean,
-      default: false,
+    questionsNumbers: {
+      type: Object,
+      default: () => {},
     },
-    levels: {
-      type: Array,
-      default: () => [],
-    },
-    learningPaths: {
-      type: Array,
-      default: () => [],
-    },
-    terms: {
-      type: Array,
-      default: () => [],
-    },
-    countries: {
+    randomQuestions: {
       type: Array,
       default: () => [],
     },
   },
   data() {
     return {
-      showDate: true,
-      mission: {
-        name: "",
-        level_id: null,
-        learning_path_ids: null,
-        country_id: null,
-        term_id: null,
-        duration: null,
-        description: null,
-        itemImage: null,
-        mission_image: null,
-      },
+      loading: false,
+      actions: [],
+      fieldsList: [
+        {
+          key: "id",
+          label: this.$i18n.t("#"),
+        },
+        {
+          key: "question_type.name",
+          label: this.$i18n.t("QUESTION_TYPE"),
+        },
+        {
+          key: "sub_question_type.name",
+          label: this.$i18n.t("SUB_QUESTION_TYPE"),
+        },
+        {
+          key: "question",
+          label: this.$i18n.t("QUESTION"),
+        },
+        {
+          key: "question_difficulty.name",
+          label: this.$i18n.t("QUESTION_DIFFICULTY_TABLE"),
+        },
+        {
+          key: "random_question_action",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ],
+      totalQuestionCount: 0,
+      totalEsay: 0,
+      totalMedium: 0,
+      totalHard: 0,
+      totalQuestionCountList: [],
+      totalEsayList: [],
+      totalMediumList: [],
+      totalHardList: [],
+      disableRandomQuestionBtn: false,
+      isGeneratedQuestion: false,
     };
   },
+  watch: {
+    questionsNumbers(val) {
+      this.totalQuestionCount = this.questionsNumbers.meta.total_question;
+      this.totalEsay = this.questionsNumbers.data[0].questions_count;
+      this.totalMedium = this.questionsNumbers.data[1].questions_count;
+      this.totalHard = this.questionsNumbers.data[2].questions_count;
+      // this.totalQuestionCount = 10;
+      // this.totalEsay = 3;
+      // this.totalMedium = 2;
+      // this.totalHard = 5;
+
+      this.createTotalsLists();
+    },
+    randomQuestions(val) {
+      this.actions = this.randomQuestions;
+      this.isGeneratedQuestion = true;
+    },
+  },
   methods: {
-    changeDate() {
-      this.showDate = false;
-    },
-    deleteImage() {
-      this.mission.mission_image = null;
-      this.mission.itemImage = null;
-    },
     onSubmit() {
-      this.$emit("onSubmit", this.mission);
+      const questionsIds = this.randomQuestions.map(obj => obj.id);
+      this.$emit("onSubmit", {'questions': questionsIds});
     },
     handleCancel() {
       this.$emit("handleCancel");
@@ -234,30 +302,62 @@ export default {
     handleBack() {
       this.$emit("handleBack");
     },
-    handleUploadImage(e) {
-      this.mission.itemImage = URL.createObjectURL(e.target.files[0]);
-      if (e) this.mission.mission_image = e.target.files[0];
-      else return;
+    createTotalsLists() {
+      for (let i = 0; i <= this.totalQuestionCount; i++) {
+        this.totalQuestionCountList.push(i);
+      }
+
+      for (let i = 0; i <= this.totalEsay; i++) {
+        this.totalEsayList.push(i);
+      }
+
+      for (let i = 0; i <= this.totalMedium; i++) {
+        this.totalMediumList.push(i);
+      }
+
+      for (let i = 0; i <= this.totalHard; i++) {
+        this.totalHardList.push(i);
+      }
     },
+    checkTotalNumbers: debounce(function () {
+      const total = this.totalEsay + this.totalMedium + this.totalHard;
+      if (total > this.totalQuestionCount || total != this.totalQuestionCount)
+        this.disableRandomQuestionBtn = true;
+      else this.disableRandomQuestionBtn = false;
+    }, 500),
+    generateRandomQuestions() {
+      let question_difficuly = [];
+
+      const easy = {
+        question_difficulty_id: 1,
+        questions_count: this.totalEsay,
+      };
+
+      question_difficuly.push(easy);
+
+      const medium = {
+        question_difficulty_id: 2,
+        questions_count: this.totalMedium,
+      };
+
+      question_difficuly.push(medium);
+
+      const hard = {
+        question_difficulty_id: 3,
+        questions_count: this.totalHard,
+      };
+
+      question_difficuly.push(hard);
+
+      this.$emit("generateRandomQuestions", question_difficuly);
+    },
+    changeSingleRandomQuestion(questionId) {
+      console.log(questionId);
+    }
   },
   mounted() {
-    if (this.$route.params.id) {
-      this.ApiService(getSingleMissionsRequest(this.$route.params.id)).then(
-        (response) => {
-          this.mission.name = response.data.data.name;
-          this.mission.level_id = response.data.data.level.id;
-          this.mission.duration = response.data.data.data_range;
-          this.mission.description = response.data.data.description;
-          this.mission.country_id = response.data.data.country.id;
-          this.mission.term_id = response.data.data.term.id;
-          this.mission.learning_path_ids = response.data.data.learningpaths.map(
-            (item) => item.id
-          );
-          this.mission.itemImage = response.data.data.mission_image;
-          this.mission.mission_image = response.data.data.mission_image;
-        }
-      );
-    }
+    // if (this.$route.params.id) {
+    // }
   },
 };
 </script>

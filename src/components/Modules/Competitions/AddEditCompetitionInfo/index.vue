@@ -9,37 +9,41 @@
               <b-col class="mb-3">
                 <div class="hold-field">
                   <TextField
-                    v-model="mission.name"
+                    v-model="formValues.name"
                     :label="$t('COMPETITIONS.NAME')"
                     :name="$t('COMPETITIONS.NAME')"
-                    ></TextField>
-                    <!-- :rules="'required|max:30'" -->
+                    :rules="'required|max:30'"
+                  ></TextField>
                 </div>
               </b-col>
               <b-col class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
-                    v-model="mission.level_id"
+                    v-model="formValues.level_id"
                     :label="$t('COMPETITIONS.LEVEL')"
                     :name="$t('COMPETITIONS.LEVEL')"
                     :options="levels"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
-                    ></SelectSearch>
-                    <!-- :rules="'required'"  -->
+                    @input="getMissions()"
+                    :rules="'required'" 
+                  ></SelectSearch>
                 </div>
               </b-col>
               <b-col class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
-                    v-model="mission.level_id"
+                    :multiple="true"
+                    v-model="formValues.missions"
                     :label="$t('COMPETITIONS.MISSIONS')"
                     :name="$t('COMPETITIONS.MISSIONS')"
-                    :options="levels"
+                    :options="missions"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
-                    ></SelectSearch>
-                    <!-- :rules="'required'" -->
+                    :disabled="!formValues.level_id"
+                    @input="getGoalsAndOutcomes"
+                    :rules="'required'"
+                  ></SelectSearch>
                 </div>
               </b-col>
             </b-row>
@@ -47,27 +51,29 @@
               <b-col class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
-                    v-model="mission.level_id"
+                    v-model="formValues.objective_id"
                     :label="$t('COMPETITIONS.GOALS')"
                     :name="$t('COMPETITIONS.GOALS')"
-                    :options="levels"
+                    :options="goals"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
-                    ></SelectSearch>
-                    <!-- :rules="'required'" -->
+                    :disabled="!formValues.missions.length"
+                  ></SelectSearch>
+                  <!-- :rules="'required'" -->
                 </div>
               </b-col>
               <b-col class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
-                    v-model="mission.level_id"
+                    v-model="formValues.outcome_id"
                     :label="$t('COMPETITIONS.OUTPUTS')"
                     :name="$t('COMPETITIONS.OUTPUTS')"
-                    :options="levels"
+                    :options="outcomes"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
-                    ></SelectSearch>
-                    <!-- :rules="'required'" -->
+                    :disabled="!formValues.missions.length"
+                  ></SelectSearch>
+                  <!-- :rules="'required'" -->
                 </div>
               </b-col>
               <b-col class="mb-3">
@@ -75,7 +81,7 @@
                   <b-col>
                     <div class="hold-field">
                       <!-- rules="required" -->
-                      <ValidationProvider >
+                      <ValidationProvider>
                         <label>
                           <span><i class="fa-solid fa-asterisk"></i></span>
                           {{ $t("COMPETITIONS.COMPETITION_PERIOD") }}</label
@@ -83,12 +89,12 @@
                         <date-picker
                           :lang="en"
                           :placeholder="$t('COMPETITIONS.FROM')"
-                          v-model="mission.name"
+                          v-model="formValues.start_date"
                           @change="changeDate"
                           valueType="format"
+                          :rules="'required'"
                         ></date-picker>
                         <p class="show-date" v-if="showDate">
-                          alaa
                           <!-- {{ createSchool.startDate }} -->
                         </p>
                       </ValidationProvider>
@@ -97,19 +103,19 @@
                   <b-col>
                     <div class="hold-field mt-4">
                       <!-- rules="required" -->
-                      <ValidationProvider >
+                      <ValidationProvider>
                         <label>
                           <!-- <span><i class="fa-solid fa-asterisk"></i></span> -->
                         </label>
                         <date-picker
                           :lang="en"
                           :placeholder="$t('COMPETITIONS.TO')"
-                          v-model="mission.name"
+                          v-model="formValues.end_date"
                           @change="changeDate"
                           valueType="format"
+                          :rules="'required'"
                         ></date-picker>
                         <p class="show-date" v-if="showDate">
-                          Alaa
                           <!-- {{ createSchool.startDate }} -->
                         </p>
                       </ValidationProvider>
@@ -122,11 +128,12 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
-                    v-model="mission.name"
+                    v-model="formValues.competition_time"
                     :label="$t('COMPETITIONS.TIME_PERIOD')"
                     :name="$t('COMPETITIONS.TIME_PERIOD')"
-                    ></TextField>
-                    <!-- :rules="'required|max:30'" -->
+                    placeholder="مثال: 01:30"
+                    :rules="'required|max:30'"
+                  ></TextField>
                 </div>
               </b-col>
             </b-row>
@@ -167,6 +174,7 @@ import { getLevelsRequest } from "@/api/level";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/locale/en";
 import "vue2-datepicker/index.css";
+import { debounce } from "lodash";
 
 export default {
   components: {
@@ -186,32 +194,32 @@ export default {
       type: Array,
       default: () => [],
     },
-    learningPaths: {
+    missions: {
       type: Array,
       default: () => [],
     },
-    terms: {
+    goals: {
       type: Array,
       default: () => [],
     },
-    countries: {
+    outcomes: {
       type: Array,
       default: () => [],
     },
   },
   data() {
     return {
+      en: "en",
       showDate: true,
-      mission: {
+      formValues: {
         name: "",
         level_id: null,
-        learning_path_ids: null,
-        country_id: null,
-        term_id: null,
-        duration: null,
-        description: null,
-        itemImage: null,
-        mission_image: null,
+        missions: [],
+        start_date: null,
+        end_date: null,
+        competition_time: null,
+        objective_id: null,
+        outcome_id: null,
       },
     };
   },
@@ -219,12 +227,8 @@ export default {
     changeDate() {
       this.showDate = false;
     },
-    deleteImage() {
-      this.mission.mission_image = null;
-      this.mission.itemImage = null;
-    },
     onSubmit() {
-      this.$emit("onSubmit", this.mission);
+      this.$emit("onSubmit", this.formValues);
     },
     handleCancel() {
       this.$emit("handleCancel");
@@ -232,30 +236,20 @@ export default {
     handleBack() {
       this.$emit("handleBack");
     },
-    handleUploadImage(e) {
-      this.mission.itemImage = URL.createObjectURL(e.target.files[0]);
-      if (e) this.mission.mission_image = e.target.files[0];
-      else return;
-    },
+    getMissions: debounce(function () {
+      this.$emit("getMissions", this.formValues.level_id);
+    }, 500),
+
+    getGoalsAndOutcomes: debounce(function () {
+      if (this.formValues.missions?.length) {
+        const missions = this.formValues.missions.join(",");
+        this.$emit("getGoalsAndOutcomes", missions);
+      }
+    }, 500),
   },
   mounted() {
-    if (this.$route.params.id) {
-      this.ApiService(getSingleMissionsRequest(this.$route.params.id)).then(
-        (response) => {
-          this.mission.name = response.data.data.name;
-          this.mission.level_id = response.data.data.level.id;
-          this.mission.duration = response.data.data.data_range;
-          this.mission.description = response.data.data.description;
-          this.mission.country_id = response.data.data.country.id;
-          this.mission.term_id = response.data.data.term.id;
-          this.mission.learning_path_ids = response.data.data.learningpaths.map(
-            (item) => item.id
-          );
-          this.mission.itemImage = response.data.data.mission_image;
-          this.mission.mission_image = response.data.data.mission_image;
-        }
-      );
-    }
+    // if (this.$route.params.id) {
+    // }
   },
 };
 </script>

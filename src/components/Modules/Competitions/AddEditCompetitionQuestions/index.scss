@@ -4,7 +4,7 @@
 .add-edit-competition-form {
   background: #F9F9F9;
   border-radius: 1.56rem;
-  padding: 3.375rem 2.375rem 0;
+  padding: 1rem 2.375rem 0;
   height: max-content;
   margin: 1.5rem 0 4rem;
 
@@ -21,6 +21,7 @@
 }
 ::v-deep{
   .hold-field {
+    width: 150px;
     label {
       color: $color-primary;
       display: block;
@@ -30,4 +31,181 @@
   .text-field .form-control{
     min-height: 50px;
   }
+}
+
+
+.question-counter-holder {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.question-counter {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 100px;
+  flex-wrap: wrap;
+}
+
+.question-types {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 34px;
+  flex-wrap: wrap;
+}
+
+.question-counter-container {
+  background: rgba(88, 198, 242, 0.2);
+  padding: 30px;
+  border-radius: 10px;
+  margin-bottom: 100px;
+}
+
+h5.title {
+  color: rgba(2, 41, 48, 1);
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.hold-count-filed p {
+  color: $color-primary;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+
+
+
+//table
+.hold-table {
+  margin-top: 2rem;
+
+  .hold-image {
+    @include flexCenter(center);
+    width: 50px;
+    height: 50px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+  }
+
+  .hold-image-school {
+    width: 50px;
+    height: 50px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+  }
+
+  .image-in-table {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    object-position: center;
+    object-fit: cover;
+  }
+
+  .image-school-in-table {
+    @include image;
+    object-fit: cover;
+  }
+
+  .path,
+  .role {
+    background: $color-primary;
+    color: #fff;
+    border-radius: 1rem;
+    padding: 0.1rem 0.5rem 0.5rem;
+    margin-left: 0.2rem;
+    font-size: 0.8rem;
+  }
+
+  .role {
+    @include flexCenter(center);
+    text-align: center;
+  }
+}
+
+::v-deep {
+  table {
+    min-height: unset !important;
+    border-collapse: collapse;
+    border-radius: 1.2rem;
+    overflow: hidden;
+    .dropdown-menu {
+      transform: translate3d(147px, 31px, 0px) !important;
+    }
+  }
+
+  td {
+    font-weight: bold;
+    height: 2rem !important;
+  }
+
+  ul.dropdown-menu {
+    li {
+      a {
+        color: $color-primary;
+        font-weight: bold;
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  table tbody tr:nth-child(odd) {
+    background: #F4EDF3 !important;
+    height: 1rem;
+  }
+}
+
+
+.random-question-actions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
+.easy {
+padding: 0rem 1rem 0.3rem;
+background: #D4EDDA;
+color: #155724;
+border-radius: 20px;
+width: max-content
+}
+
+.medium {
+  padding: 0rem 1rem 0.3rem;
+  background: #FFF3CD;
+  color: #856404;
+  border-radius: 20px;
+  width: max-content
+}
+
+.hard {
+  padding: 0rem 1rem 0.3rem;
+  background: #F8D7DA;
+  color: #721C24;
+  border-radius: 20px;
+  width: max-content
+}
+
+
+p.warning-error {
+  color: $color-danger !important;
+  margin-right: 1rem;
+  font-weight: bold;
+  font-size: 14px;
 }

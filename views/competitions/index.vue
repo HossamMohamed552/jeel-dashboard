@@ -58,10 +58,9 @@ export default {
           key: "id",
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
-        {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.superLevel')},
-        {key: "teachers", label: this.$i18n.t('TABLE_FIELDS.superTeachersTo')},
-        {key: "subject", label: this.$i18n.t('TABLE_FIELDS.subject')},
-        {key: "description", label: this.$i18n.t('TABLE_FIELDS.superDescription')},
+        {key: "name", label: this.$i18n.t('COMPETITIONS.NAME')},
+        {key: "level.name", label: this.$i18n.t('COMPETITIONS.LEVEL')},
+        {key: "competition_duration", label: this.$i18n.t('COMPETITIONS.DURATION')},
         {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),

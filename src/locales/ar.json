@@ -476,6 +476,15 @@
     "FROM": "من",
     "TO": "إلى",
     "TIME_PERIOD": "المدة الزمنية",
-    "COMPETITION_PERIOD": "فترة المسابقة"
-  }
+    "COMPETITION_PERIOD": "فترة المسابقة",
+    "QUESTION_NUMBER": "عدد الاسئلة",
+    "EASY_QUESTIONS": "الاسئلة السهلة",
+    "MEDIUM_QUESTIONS": "الاسئلة المتوسطة",
+    "DIFFICULT_QUESTIONS": "الأسئلة الصعبة",
+    "DURATION": "المدة الزمنية"
+  },
+  "QUESTION_TYPE": "نمط السؤال",
+    "SUB_QUESTION_TYPE": "نمط السؤال الفرعي",
+    "QUESTION": "السؤال",
+    "QUESTION_DIFFICULTY_TABLE": "المستوى"
 }
