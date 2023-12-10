@@ -3333,7 +3333,7 @@ export default {
     assignAnswersMatchOneToMany() {
       this.formValues.answers.answersListMatch = this.answersListMatch
       this.formValues.answers.answersListMatchTo = this.answersListMatchTo
-      console.log('this.formValues.answers', this.formValues.answers)
+      // console.log('this.formValues.answers', this.formValues.answers)
     },
     assignAnswersDragSort() {
       this.formValues.answers = this.answersDragSortToSend;
@@ -3364,11 +3364,11 @@ export default {
     answersListMatchTo: {
       handler(newVal) {
         let checkArray = []
-        console.log('newVal', newVal)
+        // console.log('newVal', newVal)
         newVal.forEach((item) => {
           checkArray.push(item.answerToId)
         })
-        console.log('checkArray', checkArray.includes(''))
+        // console.log('checkArray', checkArray.includes(''))
         this.checkAssignAnswers = checkArray.includes('');
       },
       deep: true
@@ -3456,7 +3456,7 @@ export default {
     },
   },
   mounted() {
-    console.log('questionSlug', this.questionSlug.slug)
+    // console.log('questionSlug', this.questionSlug.slug)
     if (this.questionSlug.slug === 'match_one_voice_text') {
       this.answerMatchTo.answer_pattern = 'audio'
     } else if (this.questionSlug.slug === 'match_one_voice_voice') {

@@ -429,8 +429,8 @@ export default {
     getSchoolToEdit() {
       if (this.$route.params.id) {
         this.ApiService(getSingleSchoolsRequest(this.$route.params.id)).then((response) => {
-          console.log('response.data.data.music_status',response.data.data.music_status)
-          console.log('response.data.data.status',response.data.data.status)
+          // console.log('response.data.data.music_status',response.data.data.music_status)
+          // console.log('response.data.data.status',response.data.data.status)
           this.createSchool.name = response.data.data.name;
           // this.createSchool.username = response.data.data.username;
           this.createSchool.address = response.data.data.address;

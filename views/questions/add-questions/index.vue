@@ -370,9 +370,9 @@ export default {
       localStorage.setItem("collectData", JSON.stringify(data));
     },
     handleAssignObject(object) {
-      console.log('assign object')
+      // console.log('assign object')
       Object.assign(this.collectData, {...object});
-      console.log('after assign object')
+      // console.log('after assign object')
       this.handleSaveCollectedData(this.collectData);
     },
     getName(list, id) {

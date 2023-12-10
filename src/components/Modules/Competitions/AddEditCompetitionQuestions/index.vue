@@ -352,7 +352,7 @@ export default {
       this.$emit("generateRandomQuestions", question_difficuly);
     },
     changeSingleRandomQuestion(questionId) {
-      console.log(questionId);
+      // console.log(questionId);
     }
   },
   mounted() {
@@ -364,4 +364,3 @@ export default {
   <style scoped lang="scss">
 @import "./index";
 </style>
-  

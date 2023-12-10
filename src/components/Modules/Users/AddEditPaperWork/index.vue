@@ -301,7 +301,7 @@ export default {
         this.saveBase64ToFile(storeTo, this.base64[paperWork], `${extension}`)
       })
         .catch(error => {
-          console.error('Error fetching image:', error);
+          // console.error('Error fetching image:', error);
         });
     },
     saveBase64ToFile(storeTo, base64String, mimeType) {

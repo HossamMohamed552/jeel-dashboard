@@ -253,35 +253,35 @@ export default {
       }
     },
     selectSortMissions() {
-      let missions = this.missionsSend.map((item, index) => {
-        return {
-          id: item.id,
-          order: index + 1,
-          is_selected: 1,
-          start_date: item.start_date,
-          end_date: item.end_date
-        }
-      })
-
-      axios.post('/rearrange-mission', {
-        level_id: this.$route.params.id,
-        missions: missions
-      }, {
-        headers: {
-          Authorization: `Bearer ${VueCookies.get("token")}`,
-          locale: 'ar',
-        }
-      }).then(() => {
-        this.showModal = true
-        setTimeout(() => {
-          this.showModal = false;
-        }, 3000);
-      }).then(() => this.$router.push('/dashboard/levels')).catch((error) => {
-        this.isError = true
-        setTimeout(() => {
-          this.isError = false;
-        }, 3000);
-      })
+      // let missions = this.missionsSend.map((item, index) => {
+      //   return {
+      //     id: item.id,
+      //     order: index + 1,
+      //     is_selected: 1,
+      //     start_date: item.start_date,
+      //     end_date: item.end_date
+      //   }
+      // })
+      //
+      // axios.post('/rearrange-mission', {
+      //   level_id: this.$route.params.id,
+      //   missions: missions
+      // }, {
+      //   headers: {
+      //     Authorization: `Bearer ${VueCookies.get("token")}`,
+      //     locale: 'ar',
+      //   }
+      // }).then(() => {
+      //   this.showModal = true
+      //   setTimeout(() => {
+      //     this.showModal = false;
+      //   }, 3000);
+      // }).then(() => this.$router.push('/dashboard/levels')).catch((error) => {
+      //   this.isError = true
+      //   setTimeout(() => {
+      //     this.isError = false;
+      //   }, 3000);
+      // })
     }
   },
   mounted() {
