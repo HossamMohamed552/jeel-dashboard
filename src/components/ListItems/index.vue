@@ -436,18 +436,19 @@ export default {
       this.$router.push('/dashboard/advertisements/add')
     },
     async downloadImg(item) {
-      try {
-        const response = await axios.get(`${item.url}`, {
-          responseType: 'arraybuffer'
-        });
-        const blob = new Blob([response.data], {type: response.headers['content-type']})
-        const link = document.createElement('a')
-        link.href = window.URL.createObjectURL(blob)
-        link.click()
-        window.URL.revokeObjectURL(link.href)
-      } catch (error) {
-        console.error('Error downloading image', error);
-      }
+      window.open(item.url,'_blank','noreferrer')
+      // try {
+      //   const response = await axios.get(`${item.url}`, {
+      //     responseType: 'arraybuffer'
+      //   });
+      //   const blob = new Blob([response.data], {type: response.headers['content-type']})
+      //   const link = document.createElement('a')
+      //   link.href = window.URL.createObjectURL(blob)
+      //   link.click()
+      //   window.URL.revokeObjectURL(link.href)
+      // } catch (error) {
+      //   console.error('Error downloading image', error);
+      // }
     },
   },
 };

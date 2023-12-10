@@ -76,7 +76,8 @@
                   <div class="row">
                     <transition-group name="fade" tag="div" class="w-100">
                       <!-- video slider -->
-                      <div class="col-12 px-0 videos" :key="learningPath.id" v-show="activeTap === 1">
+                      <div class="col-12 px-0 videos" :key="learningPath.id"
+                           v-show="activeTap === 1">
                         <div ref="swiper" class="swiper">
                           <div class="swiper-wrapper">
                             <div class="swiper-slide" v-for="video in contentLearningPath.videos"
@@ -100,10 +101,48 @@
                         </div>
                       </div>
                       <!--/-->
-                      <div class="col-12 px-0 quizzes" :key="learningPath.id" v-show="activeTap === 2">
-                        <div>{{ contentLearningPath.quizzes }} asdasdasds</div>
+                      <div class="col-12  quizzes" :key="learningPath.id" v-show="activeTap === 2">
+                        <div class="row" v-for="quiz in contentLearningPath.quizzes" :key="quiz.id">
+                          <div class="col-12">
+                            <b-col class="content-quizzes">
+                              <div class="content-quizzes-header">
+                                <p>{{ quiz.name }}</p>
+                                <button class="show-hide"><img
+                                  :src=" require('@/assets/images/icons/minus.png')"></button>
+                              </div>
+                              <b-row class="divider" v-for="question in quiz.questions"
+                                     :key="question.id">
+                                <b-col lg="6" class="mt-4"
+                                       v-if="question.question_pattern === 'text'">
+                                  <ShowItem :title="$t('QUESTIONS.QUESTION')"
+                                            :subtitle="question.name"/>
+                                </b-col>
+                                <b-col lg="6" class="mt-4"
+                                       v-else-if="question.question_pattern === 'image'">
+                                  <ShowItem :title="$t('QUESTIONS.QUESTION')"/>
+                                  <div class="d-flex justify-content-start align-items-center">
+                                    <img class="question_img" :src="question.name">
+                                  </div>
+                                </b-col>
+                                <b-col lg="6" class="mt-4"
+                                       v-else-if="question.question_pattern === 'audio'">
+                                  <ShowItem :title="$t('QUESTIONS.QUESTION')"/>
+                                  <audio controls>
+                                    <source :src="question.name"/>
+                                  </audio>
+                                </b-col>
+                                <b-col lg="3" class="mt-4">
+                                  <ShowItem :title="$t('QUESTIONS.QUESTION_TYPE')"
+                                            :subtitle="question.question_type.name"/>
+                                </b-col>
+                              </b-row>
+                            </b-col>
+                          </div>
+                        </div>
                       </div>
-                      <div class="col-12 px-0 paper-work" :key="learningPath.id" v-show="activeTap === 3">
+
+                      <div class="col-12 px-0 paper-work" :key="learningPath.id"
+                           v-show="activeTap === 3">
                         <ListItems
                           class="m-0 py-0"
                           :tableItems="contentLearningPath.papersWork"

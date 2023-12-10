@@ -242,7 +242,8 @@
     "RIGHT_sequence": "الترتيب الصحيح",
     "QUESTIONIMAGE": "صورة السؤال",
     "reset": "إعادة إدخال الإجابات",
-    "confirm": "تأكيد"
+    "confirm": "تأكيد",
+    "QUESTION_TYPE": "نوع السؤال"
   },
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",
