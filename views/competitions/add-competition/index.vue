@@ -1,6 +1,6 @@
 <template>
   <div class="add-mission">
-    {{ collectData }}
+    <!-- {{ collectData }} -->
     <!-- <pre>{{ user.school.id }}</pre> -->
     <Modal
       :content-message="'تمت الإضافة بنجاح'"
