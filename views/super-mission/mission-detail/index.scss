@@ -85,3 +85,36 @@
     min-height: unset;
   }
 }
+.videos{
+  position: relative;
+  .back-slide,.next-slide{
+    z-index: 150;
+    position: absolute;
+    top: 50%;
+    background-color: #fff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 1.5vw;
+  }
+  .next-slide{
+    right: auto;
+    left: 1.5vw;
+  }
+}
+::v-deep{
+  .table{
+    min-height: unset;
+  }
+  .list{
+    background: transparent;
+    padding: 0 1.5rem;
+    min-height: unset;
+    .header, .hold-table{
+      margin: 0;
+    }
+  }
+}

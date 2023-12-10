@@ -158,8 +158,13 @@
           </b-dropdown>
         </template>
         <template #cell(edit_action)="data">
-          <span class="pointer cursor-pointer" @click="editItem(data.item.id)"
-          >{{ $t("CONTROLS.editBtn") }}
+          <span class="pointer cursor-pointer"
+                @click="editItem(data.item.id)">{{ $t("CONTROLS.editBtn") }}</span>
+        </template>
+        <template #cell(download)="data">
+          <span class="pointer cursor-pointer" v-if="showDownloadBtn"
+                @click="downloadImg(data.item)">
+            <img src="@/assets/images/icons/download.png">
           </span>
         </template>
       </b-table>
@@ -168,7 +173,7 @@
       </div>
     </div>
     <Pagination
-      v-if="Array.from(items).length > 0"
+      v-if="Array.from(items).length > 0 && notHidePagination"
       :currentPage="formValues.page"
       :perPage="formValues.per_page"
       :totalItems="numberOfItem"
@@ -215,6 +220,14 @@ export default {
     }
   },
   props: {
+    showDownloadBtn: {
+      type: Boolean,
+      default: false
+    },
+    notHidePagination: {
+      type: Boolean,
+      default: true
+    },
     isRefresh: {
       type: Boolean,
       default: false
@@ -421,7 +434,21 @@ export default {
     goToAnnouncements(itemId) {
       this.$store.commit('SET_TEACHER_ID', itemId)
       this.$router.push('/dashboard/advertisements/add')
-    }
+    },
+    async downloadImg(item) {
+      try {
+        const response = await axios.get(`${item.url}`, {
+          responseType: 'arraybuffer'
+        });
+        const blob = new Blob([response.data], {type: response.headers['content-type']})
+        const link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.click()
+        window.URL.revokeObjectURL(link.href)
+      } catch (error) {
+        console.error('Error downloading image', error);
+      }
+    },
   },
 };
 </script>

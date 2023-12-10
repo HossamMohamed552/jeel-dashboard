@@ -68,19 +68,19 @@
                   <div @click="activeTap = 2" :class="activeTap === 2 ? 'active' : ''" class="tap">
                     التمارين
                   </div>
-                  <div @click="activeTap = 3" :class="activeTap === 3 ? 'active' : ''"
-                       class="tap">
+                  <div @click="activeTap = 3" :class="activeTap === 3 ? 'active' : ''" class="tap">
                     أوراق العمل
                   </div>
                 </div>
                 <div class="content">
                   <div class="row">
-                    <transition name="fade">
+                    <transition-group name="fade" tag="div" class="w-100">
                       <!-- video slider -->
-                      <div class="col-12 px-0 videos" v-if="activeTap === 1">
+                      <div class="col-12 px-0 videos" :key="learningPath.id" v-show="activeTap === 1">
                         <div ref="swiper" class="swiper">
                           <div class="swiper-wrapper">
-                            <div class="swiper-slide" v-for="video in contentLearningPath.videos" :id="video.id">
+                            <div class="swiper-slide" v-for="video in contentLearningPath.videos"
+                                 :id="video.id">
                               <div class="video-cont">
                                 <video-player :videoId="video.id" :options="{
                             controls:true,
@@ -100,13 +100,21 @@
                         </div>
                       </div>
                       <!--/-->
-                      <div class="col-12 px-0 quizzes" v-if="activeTap === 2">
-                        <div>{{ contentLearningPath.quizzes }}</div>
+                      <div class="col-12 px-0 quizzes" :key="learningPath.id" v-show="activeTap === 2">
+                        <div>{{ contentLearningPath.quizzes }} asdasdasds</div>
                       </div>
-                      <div class="col-12 px-0 paper-work" v-if="activeTap === 3">
-                        <div>{{ contentLearningPath.papersWork }}</div>
+                      <div class="col-12 px-0 paper-work" :key="learningPath.id" v-show="activeTap === 3">
+                        <ListItems
+                          class="m-0 py-0"
+                          :tableItems="contentLearningPath.papersWork"
+                          :notHidePagination="false"
+                          :showSortControls="false"
+                          :fields-list="paperWorkFieldsList"
+                          :showDownloadBtn="true"
+                        >
+                        </ListItems>
                       </div>
-                    </transition>
+                    </transition-group>
                   </div>
                 </div>
               </div>
@@ -122,16 +130,26 @@ import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import {getDetailMissionsWithLearningPaths, getLearningPathInMission} from "@/api/missios";
 import Swiper from "swiper/swiper-bundle";
 import "swiper/swiper-bundle.css"
+import ListItems from "@/components/ListItems/index.vue";
+import Button from "@/components/Shared/Button/index.vue";
+
 export default {
   name: "index",
-  components: {ShowItem},
+  components: {Button, ListItems, ShowItem},
   data() {
     return {
       missionDetail: {},
       learningPaths: [],
       firstLearningPathId: null,
       contentLearningPath: {},
-      activeTap: 1
+      activeTap: 1,
+      paperWorkFieldsList: [
+        {key: "id", label: "التسلسل"},
+        {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
+        {key: "type", label: this.$i18n.t('TABLE_FIELDS.type')},
+        {key: "description", label: this.$i18n.t('TABLE_FIELDS.description')},
+        {key: "download", label: "المرفق"},
+      ]
     }
   },
   methods: {
@@ -166,7 +184,6 @@ export default {
   updated() {
     new Swiper('.swiper', {
       // Optional parameters
-      loop: true,
       // Navigation arrows
       navigation: {
         nextEl: '.next-slide',
