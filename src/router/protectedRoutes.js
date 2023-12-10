@@ -467,6 +467,16 @@ const protectedRoutes = [
           preLink: "/dashboard/video",
         },
       },
+      {
+        path: "/dashboard/video/:id/questions",
+        name: "video-questions",
+        component: () => import("../../views/videos/questions/index.vue"),
+        meta: {
+          breadcrumb: "إضافة أسئلة للفيديو",
+          preLabel: "قائمة الفيديوهات",
+          preLink: "/dashboard/video",
+        },
+      },
       // questions
       {
         path: "/dashboard/questions",

@@ -1,7 +1,8 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems :header-name="'قائمة الفيديوهات'" :number-of-item="totalNumber"
-               :tableItems="videosList" :fields-list="fieldsList" :v-search-model="groupSearchWord" @detailItem="detailItem($event)"
+               :tableItems="videosList" :fields-list="fieldsList" :v-search-model="groupSearchWord"
+               @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getVideos"
                :loading="loading"
@@ -10,9 +11,10 @@
                :permission_delete="'delete-video'"
                :permission_edit="'edit-video'"
                :permission_view="'show-video'"
-               >
+    >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSchools" v-if="user.permissions.includes(`add-video`)">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSchools"
+                v-if="user.permissions.includes(`add-video`)">
           <img src="@/assets/images/icons/plus.svg">
           <span> إضافة فيديو جديد</span>
         </Button>
@@ -36,7 +38,7 @@ import {mapGetters} from "vuex";
 
 export default {
   components: {Modal, ListItems, Button},
-  computed:{
+  computed: {
     ...mapGetters(['user'])
   },
   data() {
@@ -65,13 +67,13 @@ export default {
     },
     getVideos(event) {
       this.loading = true
-      const params = !event ? { per_page: 10 } : event;
+      const params = !event ? {per_page: 10} : event;
       this.ApiService(getVideosRequest(params)).then((response) => {
         this.videosList = response.data.data
         this.totalNumber = response.data.meta.total
-      }) .finally(() => {
-          this.loading = false;
-        });
+      }).finally(() => {
+        this.loading = false;
+      });
     },
     searchBy($event) {
 
@@ -86,7 +88,7 @@ export default {
       this.itemId = $event
       this.showModal = true
     },
-    addVideoQuestion($event){
+    addVideoQuestion($event) {
       // add video questions
     },
     cancel($event) {

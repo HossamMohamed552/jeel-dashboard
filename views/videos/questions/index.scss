@@ -1,0 +1,27 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+
+.questions_video {
+  @include styleViewList;
+  margin: 1.5rem auto;
+}
+
+.name-of-item {
+  color: $color-paragraph;
+  font-size: 1.8rem;
+  margin: 0 0 2.5rem 0;
+  font-weight: bold;
+}
+
+.video-player {
+  width: 100%;
+  height: 330px;
+  margin: 0 auto;
+}
+
+::v-deep{
+  .video-js{
+    height: 100%;
+    border-radius:0;
+  }
+}

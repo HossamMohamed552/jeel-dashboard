@@ -18,16 +18,18 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="4" class="mb-3">
-                <div class="hold-field">
-                  <TextField
-                    v-model="createPackage.price"
-                    :label="$t('PACKAGE.price')"
-                    :name="$t('PACKAGE.price')"
-                    :rules="'required|numeric'"
-                  ></TextField>
-                </div>
-              </b-col>
+            </b-row>
+            <b-row>
+<!--              <b-col lg="4" class="mb-3">-->
+<!--                <div class="hold-field">-->
+<!--                  <TextField-->
+<!--                    v-model="createPackage.price"-->
+<!--                    :label="$t('PACKAGE.price')"-->
+<!--                    :name="$t('PACKAGE.price')"-->
+<!--                    :rules="'required|numeric'"-->
+<!--                  ></TextField>-->
+<!--                </div>-->
+<!--              </b-col>-->
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
@@ -130,6 +132,13 @@ export default {
         this.ApiService(getSinglePackagesRequest(this.packageId)).then(
           (response) => {
             this.createPackage = response.data.data;
+            this.createPackage.roles = this.createPackage.number_users_roles.map((item)=>{
+              return {
+                role_id: item.id,
+                number: item.number,
+                name: item.name
+              }
+            })
           }
         );
       }

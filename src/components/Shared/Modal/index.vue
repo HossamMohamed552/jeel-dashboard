@@ -1,7 +1,6 @@
 <template>
   <div>
-    <b-modal v-model="innerModal" class="custom-rounded" @hide="cancel()" centered title="BootstrapVue" hide-footer
-             hide-header>
+    <b-modal v-model="innerModal" class="custom-rounded" @hide="cancel()" centered title="BootstrapVue" hide-footer hide-header>
       <div class="all-content">
         <div class="flexContent">
           <div>

@@ -13,6 +13,18 @@ export const getSingleVideoRequest = (params) => ({
   method: 'get',
   url: `videos/${params}`,
 })
+
+
+export const getQuestionOfVideo = (params)=>({
+  method: 'get',
+  url: `videos/${params}/quesitons`,
+})
+
+export const deleteQuestionOfVideo = (params)=>({
+  method: 'get',
+  url: `videos/question/${params}`,
+})
+
 export const putVideoRequest = (params, data) => ({
   method: 'put',
   url: `videos/${params}`,
@@ -30,6 +42,7 @@ export const postVideoRequest = (data) => ({
     'Content-Type': 'multipart/form-data'
   }
 })
+
 export const deleteVideoRequest = (params) => ({
   method: 'delete',
   url: `videos/${params}`,

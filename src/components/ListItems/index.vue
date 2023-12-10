@@ -81,6 +81,9 @@
             <source :src="data.item.question"/>
           </audio>
         </template>
+        <template #cell(questionName)="data">
+          <span>{{ data.item.question| cutString }}</span>
+        </template>
         <template #cell(question_type)="data">
           <span>{{ data.item.question_type.name | cutString }}</span>
         </template>
@@ -114,6 +117,18 @@
               }}</span>
           </div>
         </template>
+        <template #cell(number_users_roles[0])="data">
+          <span v-if="data.item.number_users_roles[0]">{{ data.item.number_users_roles[0].number }}</span>
+        </template>
+        <template #cell(number_users_roles[1])="data">
+          <span v-if="data.item.number_users_roles[1]">{{ data.item.number_users_roles[1].number }}</span>
+        </template>
+        <template #cell(number_users_roles[2])="data">
+          <span v-if="data.item.number_users_roles[2]">{{ data.item.number_users_roles[2].number }}</span>
+        </template>
+        <template #cell(number_users_roles[3])="data">
+          <span v-if="data.item.number_users_roles[3]">{{ data.item.number_users_roles[3].number }}</span>
+        </template>
         <template #cell(allowEdit)="data">
           <b-form-checkbox v-model="data.item.is_selected" switch
                            @change="managePath(data.item)"></b-form-checkbox>
@@ -142,6 +157,10 @@
             <b-dropdown-item v-if="checkEditClass() === 'show'"
                              @click="$router.push(`/dashboard/level-classes/${data.item.id}`)">
               {{ $t("CONTROLS.ManageClasses") }}
+            </b-dropdown-item>
+            <b-dropdown-divider v-if="checkAddVideo() === 'show'"></b-dropdown-divider>
+            <b-dropdown-item v-if="checkAddVideo() === 'show'" @click="goToAddVideo(data.item.id)">
+              {{ $t("CONTROLS.AddVideo") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkDelete(data) === 'show'"></b-dropdown-divider>
             <b-dropdown-item v-if="checkDelete(data) === 'show'" @click="deleteItem(data.item.id)">
@@ -394,6 +413,13 @@ export default {
         return 'hide'
       }
     },
+    checkAddVideo() {
+      if (this.$route.name === 'videos') {
+        return 'show'
+      } else {
+        return 'hide'
+      }
+    },
     checkEdit() {
       if (!this.user.permissions.includes('manage-learningpath') && !this.activePage === 'schoolAdmin') {
         return 'show'
@@ -436,7 +462,7 @@ export default {
       this.$router.push('/dashboard/advertisements/add')
     },
     async downloadImg(item) {
-      window.open(item.url,'_blank','noreferrer')
+      window.open(item.url, '_blank', 'noreferrer')
       // try {
       //   const response = await axios.get(`${item.url}`, {
       //     responseType: 'arraybuffer'
@@ -450,6 +476,9 @@ export default {
       //   console.error('Error downloading image', error);
       // }
     },
+    goToAddVideo(videoId) {
+      this.$router.push(`/dashboard/video/${videoId}/questions`)
+    }
   },
 };
 </script>
