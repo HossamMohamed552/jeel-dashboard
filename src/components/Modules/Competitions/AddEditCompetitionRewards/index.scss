@@ -1,0 +1,269 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+
+.add-edit-competition-form {
+  background: #f9f9f9;
+  border-radius: 1.56rem;
+  padding: 1rem 2.375rem 0;
+  height: max-content;
+  margin: 1.5rem 0 4rem;
+}
+
+.action-holder {
+  width: 100%;
+  @include flexCenter(space-between);
+}
+.btn-holder {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+::v-deep {
+  .hold-field {
+    width: 150px;
+    label {
+      color: $color-primary;
+      display: block;
+      margin: 0 0.7rem 0.7rem 0;
+    }
+  }
+  .text-field .form-control {
+    min-height: 50px;
+  }
+}
+
+.question-counter-holder {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.question-counter {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 100px;
+  flex-wrap: wrap;
+}
+
+.question-types {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 34px;
+  flex-wrap: wrap;
+}
+
+.question-counter-container {
+  background: rgba(88, 198, 242, 0.2);
+  padding: 30px;
+  border-radius: 10px;
+  margin-bottom: 100px;
+}
+
+h5.title {
+  color: rgba(2, 41, 48, 1);
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.hold-count-filed p {
+  color: $color-primary;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.arrangments-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 2rem;
+}
+
+.arrangment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+
+  .number {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #f4edf3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .name {
+    color: #022930;
+    font-weight: bold;
+    font-size: 18px;
+  }
+}
+
+.no-reward,
+.yes-reward {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2rem;
+
+  p {
+    color: #022930;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  p.reward-name {
+    color: $color-primary;
+  }
+}
+
+.reward-title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+
+  .reward-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #f4edf3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.search {
+  position: relative;
+
+  .search-input {
+    padding: 1.3rem 1.5rem 1.8rem;
+    width: 100%;
+    border-radius: 3.125rem;
+    border: 1px solid #bebebe;
+    font-weight: bold;
+    color: $color-primary;
+  }
+
+  .search-input::placeholder {
+    color: $color-primary;
+    font-weight: bold;
+  }
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 2rem;
+    transform: translateY(-50%);
+    width: 1.5rem;
+  }
+}
+
+.reward-modal-title {
+  color: $color-primary;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: right;
+  margin-bottom: 2.5rem;
+}
+
+p.arrangment {
+  color: #8c8c8c;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+p.arrangment-name {
+  color: $color-primary;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: right;
+  margin-bottom: 2rem;
+}
+
+.choose-reward {
+  border-radius: 10px;
+  border: 1px solid #d1d1d1;
+  padding: 1rem;
+  height: 350px;
+
+  .header {
+    text-align: right;
+    border-bottom: 1px solid #d1d1d1;
+    margin-bottom: 1rem;
+    p {
+      font-size: 16px;
+      color: $color-primary;
+      font-weight: bold;
+    }
+  }
+
+  .content {
+    text-align: right;
+
+    .reward-list {
+      height: 200px;
+      overflow-y: auto;
+
+      .selected-reward {
+        border-bottom: 2px solid #3DDC97 !important;
+        .reward-circle {
+          border: 2px solid #3DDC97;
+
+        }
+      }
+
+      .reward-item {
+        cursor: pointer;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #d1d1d1;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+
+        .reward-circle {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background: #f4edf3;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        p.reward-name {
+          font-size: 16px;
+          font-weight: bold;
+          color: $color-primary;
+        }
+      }
+    }
+  }
+}
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

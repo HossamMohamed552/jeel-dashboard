@@ -78,7 +78,7 @@
     "subject": "العنوان",
     "superDescription": "الإعلان",
     "teacherName": "اسم المدرس",
-    "superClass":"اسم الصف الدراسى"
+    "superClass": "اسم الصف الدراسى"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -495,5 +495,28 @@
   "verifyEmail": "تحقق من بريدك الإلكترونى",
   "close": "إغلاق",
   "profile-page": "الملف الشخصي",
-  "detail": "التفاصيل"
+  "detail": "التفاصيل",
+  "COMPETITIONS": {
+    "STEP_ONE": "البيانات الاساسية",
+    "STEP_TWO": "أسئلة المسابقة",
+    "STEP_THREE": "الجوائز",
+    "NAME": "اسم المسابقة",
+    "LEVEL": "المرحلة الدراسية",
+    "MISSIONS": "المهمات",
+    "GOALS": "الاهداف التعليمية",
+    "OUTPUTS": "مخرجات التعلم",
+    "FROM": "من",
+    "TO": "إلى",
+    "TIME_PERIOD": "المدة الزمنية",
+    "COMPETITION_PERIOD": "فترة المسابقة",
+    "QUESTION_NUMBER": "عدد الاسئلة",
+    "EASY_QUESTIONS": "الاسئلة السهلة",
+    "MEDIUM_QUESTIONS": "الاسئلة المتوسطة",
+    "DIFFICULT_QUESTIONS": "الأسئلة الصعبة",
+    "DURATION": "المدة الزمنية"
+  },
+  "QUESTION_TYPE": "نمط السؤال",
+  "SUB_QUESTION_TYPE": "نمط السؤال الفرعي",
+  "QUESTION": "السؤال",
+  "QUESTION_DIFFICULTY_TABLE": "المستوى"
 }
