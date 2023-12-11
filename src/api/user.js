@@ -34,7 +34,11 @@ export const getProfileDataRequest = () => ({
   url: 'users/current',
   config: {}
 })
-
+export const getReligionsRequest = () => ({
+  method: 'get',
+  url: 'religions',
+  config: {}
+})
 export const getAllRolesRequest = () => ({
   method: 'get',
   url: 'roles?list_all=true&system_role=1',

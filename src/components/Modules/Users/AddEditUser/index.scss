@@ -2,13 +2,32 @@
 @import "src/assets/style/scss/_mixin";
 
 .add-edit-user-form {
-     @include styleViewList;
-     h3 {
-font-weight: bold;
-     }
+  @include styleViewList;
+
+  h3 {
+    font-weight: bold;
+  }
 }
 
 .action-holder {
-     width: 100%;
-     @include flexCenter(flex-end);
+  width: 100%;
+  @include flexCenter(flex-end);
+}
+::v-deep {
+  .group-type {
+    margin-right: .2rem;
+    .col-form-label {
+      color: $color-primary !important;
+    }
+    .custom-radio{
+      &:first-of-type{
+        padding-right: .2rem;
+      }
+    }
+  }
+
+  .custom-radio {
+    display: inline-block;
+    margin-top: 1.5rem;
+  }
 }

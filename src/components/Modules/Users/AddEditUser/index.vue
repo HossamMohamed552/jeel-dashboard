@@ -26,6 +26,53 @@
                   ></TextField>
                 </div>
               </b-col>
+              <b-col lg="4" class="mb-3">
+                <div class="hold-field">
+                  <label><span><i class="fa-solid fa-asterisk"></i></span>
+                    {{ $t('MISSIONS.country') }}</label>
+                  <SelectSearch
+                    v-model="formValues.country_id"
+                    :name="`country`"
+                    :options="countries"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="4" class="mb-3">
+                <div class="hold-field">
+                  <label><span><i class="fa-solid fa-asterisk"></i></span>
+                    {{ $t('USERS.religion') }}</label>
+                  <SelectSearch
+                    v-model="formValues.religion_id"
+                    :name="`religion`"
+                    :options="religions"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="4">
+                <div class="hold-field">
+                  <ValidationProvider rules="required" class="d-flex justify-content-start align-items-start">
+                    <span><i class="fa-solid fa-asterisk"></i></span>
+                    <b-form-group :label="$t('USERS.gender')" class="group-type">
+                      <b-form-radio
+                        v-model="formValues.gender"
+                        value="male"
+                        name="group-status"
+                      >ذكر
+                      </b-form-radio>
+                      <b-form-radio
+                        v-model="formValues.gender"
+                        value="female"
+                        name="group-status"
+                      >انثى
+                      </b-form-radio>
+                    </b-form-group>
+                  </ValidationProvider>
+                </div>
+              </b-col>
               <b-col
                 lg="6"
                 class="mb-3"
@@ -143,7 +190,8 @@ import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
-import {getSingleUserRequest} from "@/api/user";
+import {getReligionsRequest, getSingleUserRequest} from "@/api/user";
+import {getAllCountryRequest} from "@/api/country";
 
 export default {
   components: {
@@ -174,10 +222,15 @@ export default {
         mobile: "",
         social_media: "",
         roles: [],
+        country_id:"",
+        gender:"",
+        religion_id:""
       },
       editImage: false,
       itemImage: null,
       image: null,
+      countries:[],
+      religions:[]
     };
   },
   methods: {
@@ -201,6 +254,9 @@ export default {
           formData.append("email", this.formValues.email);
           formData.append("password", this.formValues.password);
           formData.append("mobile", this.formValues.mobile);
+          formData.append("country_id", this.formValues.country_id);
+          formData.append("gender", this.formValues.gender);
+          formData.append("religion_id", this.formValues.religion_id);
           if (this.formValues.social_media) {
             formData.append("social_media", this.formValues.social_media);
           }
@@ -240,6 +296,9 @@ export default {
           formData.append("last_name", this.formValues.last_name);
           formData.append("email", this.formValues.email);
           formData.append("password", this.formValues.password);
+          formData.append("country_id", this.formValues.country_id);
+          formData.append("gender", this.formValues.gender);
+          formData.append("religion_id", this.formValues.religion_id);
           if (this.formValues.mobile) {
             formData.append("mobile", this.formValues.mobile);
           }
@@ -288,6 +347,16 @@ export default {
       if (e) this.image = e.target.files[0];
       else return;
     },
+    getAllCountries() {
+      this.ApiService(getAllCountryRequest()).then((response) => {
+        this.countries = response.data.data
+      })
+    },
+    getAllReligions() {
+      this.ApiService(getReligionsRequest()).then((response) => {
+        this.religions = response.data.data
+      })
+    }
   },
   mounted() {
     if (this.$route.params.id) {
@@ -303,9 +372,14 @@ export default {
           this.formValues.roles = response.data.data.roles;
           this.itemImage = response.data.data.avatar;
           this.image = response.data.data.avatar;
+          this.formValues.country_id = response.data.data.user_country.id;
+          this.formValues.religion_id = response.data.data.user_religion.id;
+          this.formValues.gender = response.data.data.gender;
         }
       );
     }
+    this.getAllCountries();
+    this.getAllReligions();
   },
 };
 </script>

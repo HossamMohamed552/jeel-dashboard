@@ -131,7 +131,6 @@
                                               class="d-flex justify-content-start align-items-start">
                             <span><i class="fa-solid fa-asterisk"></i></span>
                             <b-form-group :label="$t('SCHOOL.status')" class="group-type">
-
                               <b-form-radio
                                 :disabled="
                                   $route.params.id && !user.permissions.includes(`add-packages`)
