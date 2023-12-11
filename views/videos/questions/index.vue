@@ -6,12 +6,10 @@
       </b-col>
       <b-col lg="4">
         <div class="video-cont">
-          <video-player :videoId="videoDetail.id" :options="{
-                            controls:true,
-                            poster: `${videoDetail.thumbnail ? videoDetail.thumbnail : 'https://picsum.photos/1000'}`,
-                            autoplay:false,
-                            sources:[ {src: videoDetail.url, type:'video/mp4'}  ]
-                          }"></video-player>
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" :src="`https://player.vimeo.com/video/${videoDetail.video_with_music_path}`">
+            </iframe>
+          </div>
         </div>
       </b-col>
       <b-col lg="8">
@@ -45,7 +43,7 @@
                    :permission_view="'show-video'"
         >
           <template #buttons>
-            <Button :custom-class="'btn-add rounded-btn big-padding'">
+            <Button :custom-class="'btn-add rounded-btn big-padding'" @click="showModalQuestion=true">
               <img src="@/assets/images/icons/plus.svg">
               <span> إضافة سؤال جديد</span>
             </Button>
@@ -59,6 +57,7 @@
            @cancel="cancel($event)"
            :is-warning="true"
            @cancelWithConfirm="cancelWithConfirm($event)"/>
+    <QuestionModal :showModal="showModalQuestion"/>
   </section>
 </template>
 <script>
@@ -71,17 +70,19 @@ import {
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
+import QuestionModal from "@/components/Shared/QuestionModal/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 
 export default {
   name: "index",
-  components: {Button, Modal, ListItems, ShowItem},
+  components: {Button, Modal, ListItems, ShowItem, QuestionModal},
   data() {
     return {
       loading: false,
       questionsList: [],
       totalNumber: 0,
       showModal: false,
+      showModalQuestion: false,
       fieldsList: [
         {key: "id", label: "التسلسل"},
         {key: "questionName", label: "نص السؤال"},

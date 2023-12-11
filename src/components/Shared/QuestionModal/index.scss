@@ -1,0 +1,26 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+.all-content{
+  padding: 1.3125rem;
+}
+.custom-rounded{
+  border-radius: 3.125rem !important;
+}
+.flexContent{
+  .add-title{
+    color: $color-primary;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  .add-question{
+    padding: 2rem;
+    border-radius: .5rem;
+    background: #F9F9F9;
+  }
+}
+.fa-envelope-circle-check{
+  color: $color-primary
+}
+.controls{
+  @include flexCenter(space-between)
+}
