@@ -24,8 +24,21 @@
                     v-model="createPackage.price"
                     :label="$t('PACKAGE.price')"
                     :name="$t('PACKAGE.price')"
-                    :rules="'required|numeric'"
+                    :rules="'required'"
                   ></TextField>
+                </div>
+              </b-col>
+              <b-col lg="4" class="mt-3">
+                <div class="hold-field" v-if="countries">
+                  <SelectSearch
+                    v-model="createPackage.country_id"
+                    :label="$t('GROUP.country')"
+                    :name="$t('GROUP.country')"
+                    :options="countries"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                  ></SelectSearch>
                 </div>
               </b-col>
             </b-row>
@@ -51,12 +64,12 @@
                 </div>
               </b-col>
               <b-col lg="12" class="mb-3">
+<!--                :rules="'min:20'"-->
                 <div class="hold-field">
                   <TextAreaField
                     v-model="createPackage.description"
                     :label="$t('PACKAGE.description')"
                     :name="$t('PACKAGE.description')"
-                    :rules="'required|min:20'"
                   ></TextAreaField>
                 </div>
               </b-col>
@@ -88,9 +101,12 @@ import Button from "@/components/Shared/Button/index.vue";
 import {getSinglePackagesRequest} from "@/api/packages";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {getAllRolesRequest, getAllRolesSystemRequest} from "@/api/user";
+import {getAllCountryRequest} from "@/api/country";
+import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 
 export default {
   components: {
+    SelectSearch,
     Modal,
     TextField,
     Button,
@@ -103,11 +119,13 @@ export default {
   },
   data() {
     return {
+      countries:[],
       createPackage: {
         name: "",
         price: "",
         classes_count: "",
         description: "",
+        country_id:"",
         roles: [
           {
             role_id: 2,
@@ -164,6 +182,7 @@ export default {
             this.createPackage.price = response.data.data.price
             this.createPackage.classes_count = response.data.data.classes_count
             this.createPackage.description = response.data.data.description
+            this.createPackage.country_id = response.data.data.country.id
             this.createPackage.roles[0].number = response.data.data.number_users_roles[0].number
             this.createPackage.roles[1].number = response.data.data.number_users_roles[1].number
             this.createPackage.roles[2].number = response.data.data.number_users_roles[2].number
@@ -180,6 +199,11 @@ export default {
         );
       }
     },
+    getAllCountries() {
+      this.ApiService(getAllCountryRequest()).then((response) => {
+        this.countries = response.data.data
+      })
+    }
     // getAllRoles() {
     //   this.ApiService(getAllRolesSystemRequest()).then((response) => {
     //     this.createPackage.roles = response.data.data
@@ -198,6 +222,7 @@ export default {
   },
   mounted() {
     this.getPackageToEdit();
+    this.getAllCountries();
     // this.getAllRoles();
   },
 };

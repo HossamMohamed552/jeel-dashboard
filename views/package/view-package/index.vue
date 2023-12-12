@@ -12,6 +12,9 @@
             <ShowItem :title="$t('PACKAGE.name')" :subtitle="singlePackage.name" />
           </b-col>
           <b-col lg="4" class="mb-5">
+            <ShowItem :title="$t('PACKAGE.price')" :subtitle="singlePackage.price" />
+          </b-col>
+          <b-col lg="4" class="mb-5">
             <ShowItem
               :title="$t('PACKAGE.classes_count')"
               :subtitle="singlePackage.classes_count"

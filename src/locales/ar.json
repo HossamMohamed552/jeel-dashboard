@@ -80,7 +80,8 @@
     "subject": "العنوان",
     "superDescription": "الإعلان",
     "teacherName": "اسم المدرس",
-    "superClass": "اسم الصف الدراسى"
+    "superClass": "اسم الصف الدراسى",
+    "countryName": "إسم الدولة"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",

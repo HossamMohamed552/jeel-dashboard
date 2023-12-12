@@ -65,29 +65,37 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.name"),
         },
         {
+          key: "country.name",
+          label: this.$i18n.t("TABLE_FIELDS.countryName"),
+        },
+        {
+          key: "price",
+          label: this.$i18n.t("TABLE_FIELDS.price"),
+        },
+        {
           key: "classes_count",
           label: this.$i18n.t("TABLE_FIELDS.classes_count"),
         },
-        {
-          key: "number_users_roles[0]",
-          label: "عدد المديرين",
-        },
-        {
-          key: "number_users_roles[1]",
-          label: "عدد المشرفين",
-        },
-        {
-          key: "number_users_roles[2]",
-          label: "عدد المدرسين",
-        },
+        // {
+        //   key: "number_users_roles[0]",
+        //   label: "عدد مديرين المدرسة",
+        // },
+        // {
+        //   key: "number_users_roles[1]",
+        //   label: "عدد المشرفين",
+        // },
+        // {
+        //   key: "number_users_roles[2]",
+        //   label: "عدد المدرسين",
+        // },
         {
           key: "number_users_roles[3]",
           label: "عدد الطلاب",
         },
-        {
-          key: "number_users_roles[4]",
-          label: "عدد الأبوين",
-        },
+        // {
+        //   key: "number_users_roles[4]",
+        //   label: "عدد أولياء الامور",
+        // },
         {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
