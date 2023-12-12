@@ -129,6 +129,10 @@
         <template #cell(number_users_roles[3])="data">
           <span v-if="data.item.number_users_roles[3]">{{ data.item.number_users_roles[3].number }}</span>
         </template>
+        <template #cell(number_users_roles[4])="data">
+          <span v-if="data.item.number_users_roles[4]">{{ data.item.number_users_roles[4].number }}</span>
+        </template>
+
         <template #cell(allowEdit)="data">
           <b-form-checkbox v-model="data.item.is_selected" switch
                            @change="managePath(data.item)"></b-form-checkbox>

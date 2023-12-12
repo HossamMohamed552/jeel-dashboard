@@ -18,18 +18,18 @@
                   ></TextField>
                 </div>
               </b-col>
+              <b-col lg="4" class="mb-3">
+                <div class="hold-field">
+                  <TextField
+                    v-model="createPackage.price"
+                    :label="$t('PACKAGE.price')"
+                    :name="$t('PACKAGE.price')"
+                    :rules="'required|numeric'"
+                  ></TextField>
+                </div>
+              </b-col>
             </b-row>
             <b-row>
-<!--              <b-col lg="4" class="mb-3">-->
-<!--                <div class="hold-field">-->
-<!--                  <TextField-->
-<!--                    v-model="createPackage.price"-->
-<!--                    :label="$t('PACKAGE.price')"-->
-<!--                    :name="$t('PACKAGE.price')"-->
-<!--                    :rules="'required|numeric'"-->
-<!--                  ></TextField>-->
-<!--                </div>-->
-<!--              </b-col>-->
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
@@ -40,7 +40,7 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col v-for="role in createPackage.roles" :key="role.role_id" lg="4" class="mb-3">
+              <b-col v-for="role in createPackage.roles" :key="role.id" lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="role.number"
@@ -108,7 +108,34 @@ export default {
         price: "",
         classes_count: "",
         description: "",
-        roles: []
+        roles: [
+          {
+            role_id: 2,
+            name: "مديرين المدرسة",
+            number: "",
+          },
+          {
+            role_id: 3,
+            name: "المشرفين",
+            number: "",
+          },
+          {
+            role_id: 4,
+            name: "المدرسين",
+            number: "",
+          },
+          {
+            role_id: 5,
+            name: "الطلاب",
+            number: "",
+          },
+          {
+            role_id: 6,
+            name: "أولياء الأمور",
+            number: "",
+          }
+
+        ]
       },
       packageId: this.$route.params.id
     };
@@ -131,37 +158,47 @@ export default {
       if (this.packageId) {
         this.ApiService(getSinglePackagesRequest(this.packageId)).then(
           (response) => {
-            this.createPackage = response.data.data;
-            this.createPackage.roles = this.createPackage.number_users_roles.map((item)=>{
-              return {
-                role_id: item.id,
-                number: item.number,
-                name: item.name
-              }
-            })
+            // this.createPackage = response.data.data;
+            // this.createPackage.roles = this.createPackage.number_users_roles
+            this.createPackage.name = response.data.data.name
+            this.createPackage.price = response.data.data.price
+            this.createPackage.classes_count = response.data.data.classes_count
+            this.createPackage.description = response.data.data.description
+            this.createPackage.roles[0].number = response.data.data.number_users_roles[0].number
+            this.createPackage.roles[1].number = response.data.data.number_users_roles[1].number
+            this.createPackage.roles[2].number = response.data.data.number_users_roles[2].number
+            this.createPackage.roles[3].number = response.data.data.number_users_roles[3].number
+            this.createPackage.roles[4].number = response.data.data.number_users_roles[4].number
+            // this.createPackage.roles = this.createPackage.number_users_roles.map((item) => {
+            //   return {
+            //     role_id: item.id,
+            //     number: item.number,
+            //     name: item.name
+            //   }
+            // })
           }
         );
       }
     },
-    getAllRoles() {
-      this.ApiService(getAllRolesSystemRequest()).then((response) => {
-        this.createPackage.roles = response.data.data
-        this.createPackage.roles.forEach((item) => {
-          Object.assign(item, {number: ""})
-        })
-        this.createPackage.roles = this.createPackage.roles.map((item)=>{
-          return {
-            role_id: item.id,
-            number: item.number,
-            name: item.name
-          }
-        })
-      })
-    }
+    // getAllRoles() {
+    //   this.ApiService(getAllRolesSystemRequest()).then((response) => {
+    //     this.createPackage.roles = response.data.data
+    //     this.createPackage.roles.forEach((item) => {
+    //       Object.assign(item, {number: ""})
+    //     })
+    //     this.createPackage.roles = this.createPackage.roles.map((item)=>{
+    //       return {
+    //         role_id: item.id,
+    //         number: item.number,
+    //         name: item.name
+    //       }
+    //     })
+    //   })
+    // }
   },
   mounted() {
     this.getPackageToEdit();
-    this.getAllRoles();
+    // this.getAllRoles();
   },
 };
 </script>

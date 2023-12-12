@@ -177,7 +177,13 @@
     "videoQuestionLevel": "المرحله الدراسية",
     "videoQuestionTerm": "الفصل الدراسى",
     "ShowDetails": "تفاصيل الفيديو",
-    "UPLOAD_IMAGE": "صورة الفيديو"
+    "UPLOAD_IMAGE": "صورة الفيديو",
+    "duration": "التوقيت",
+    "question": "السؤال",
+    "answer":"الاجابة",
+    "correctAnswer":"الاجابة الصحيحة",
+    "answerSort":"الاجابة {index}",
+    "answersCount": "عدد الاختيارات"
   },
   "PAPER_WORK": {
     "NAME": "اسم ورقة العمل",

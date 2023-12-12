@@ -85,6 +85,10 @@ export default {
           label: "عدد الطلاب",
         },
         {
+          key: "number_users_roles[4]",
+          label: "عدد الأبوين",
+        },
+        {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },

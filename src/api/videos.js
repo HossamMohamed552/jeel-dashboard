@@ -24,7 +24,13 @@ export const deleteQuestionOfVideo = (params)=>({
   method: 'get',
   url: `videos/question/${params}`,
 })
-
+export const addQuestionOnVideo = (data)=>({
+  method: 'post',
+  url:'/videos/quesitons',
+  config: {
+    data
+  }
+})
 export const putVideoRequest = (params, data) => ({
   method: 'put',
   url: `videos/${params}`,

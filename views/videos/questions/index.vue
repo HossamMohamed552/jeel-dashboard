@@ -7,7 +7,8 @@
       <b-col lg="4">
         <div class="video-cont">
           <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" :src="`https://player.vimeo.com/video/${videoDetail.video_with_music_path}`">
+            <iframe class="embed-responsive-item"
+                    :src="`https://player.vimeo.com/video/${videoDetail.video_with_music_path}`">
             </iframe>
           </div>
         </div>
@@ -43,7 +44,8 @@
                    :permission_view="'show-video'"
         >
           <template #buttons>
-            <Button :custom-class="'btn-add rounded-btn big-padding'" @click="showModalQuestion=true">
+            <Button :custom-class="'btn-add rounded-btn big-padding'"
+                    @click="showModalQuestion=true">
               <img src="@/assets/images/icons/plus.svg">
               <span> إضافة سؤال جديد</span>
             </Button>
@@ -57,11 +59,13 @@
            @cancel="cancel($event)"
            :is-warning="true"
            @cancelWithConfirm="cancelWithConfirm($event)"/>
-    <QuestionModal :showModal="showModalQuestion"/>
+    <QuestionModal :showModal="showModalQuestion" @addQuestion="addQuestion($event)"
+                   @cancelQuestion="cancelQuestion($event)"/>
   </section>
 </template>
 <script>
 import {
+  addQuestionOnVideo,
   deleteQuestionOfVideo,
   deleteVideoRequest,
   getQuestionOfVideo,
@@ -121,11 +125,22 @@ export default {
     cancel($event) {
       this.showModal = $event
     },
+    cancelQuestion($event) {
+      this.showModalQuestion = $event
+    },
     cancelWithConfirm() {
       this.ApiService(deleteQuestionOfVideo(this.itemId)).then(() => {
         this.getQuestionOfVideo(this.$route.params.id)
       })
       this.cancel()
+    },
+    addQuestion($event) {
+      delete $event['answers_id']
+      $event.question_time = Number($event.question_time)
+      this.ApiService(addQuestionOnVideo($event)).then((response) => {
+        this.getQuestionOfVideo(this.$route.params.id)
+        this.showModalQuestion = false
+      })
     }
   },
   mounted() {

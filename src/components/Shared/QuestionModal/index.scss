@@ -7,6 +7,7 @@
   border-radius: 3.125rem !important;
 }
 .flexContent{
+  text-align: right;
   .add-title{
     color: $color-primary;
     font-weight: bold;
@@ -23,4 +24,28 @@
 }
 .controls{
   @include flexCenter(space-between)
+}
+::v-deep {
+  .group-type {
+    margin: .8rem 0 0 0;
+    .col-form-label {
+      color: $color-primary !important;
+    }
+    .custom-radio{
+      &:first-of-type{
+        padding-right: .2rem;
+      }
+    }
+  }
+
+  .custom-radio {
+    display: inline-block;
+    margin-top: .5rem;
+    color: $color-primary
+  }
+}
+.action-holder{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
