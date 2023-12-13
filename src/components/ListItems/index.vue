@@ -34,7 +34,17 @@
         :fields="fieldsList"
         :busy="loading"
         :tbody-class="'custom-body'"
+        data-custom-sort="customSort"
       >
+        <template :slot="`head(${headerItem.key})`" v-for="headerItem in fieldsList">
+          <div
+               :class="headerItem.key !== 'actions' ? 'sort' : ''">
+            <span class="sortIcon" v-if="headerItem.key !== 'actions'">
+              <img src="@/assets/images/icons/up-arrow.png" @click="sortBy(headerItem.key,'DESC')">
+              <img src="@/assets/images/icons/down-arrow.png" @click="sortBy(headerItem.key,'ASC')">
+            </span>
+            <span>{{ headerItem.label }}</span></div>
+        </template>
         <template #table-busy>
           <div class="text-center text-danger my-2 mt-5">
             <b-spinner class="align-middle"></b-spinner>
@@ -118,21 +128,30 @@
           </div>
         </template>
         <template #cell(number_users_roles[0])="data">
-          <span v-if="data.item.number_users_roles[0]">{{ data.item.number_users_roles[0].number }}</span>
+          <span v-if="data.item.number_users_roles[0]">{{
+              data.item.number_users_roles[0].number
+            }}</span>
         </template>
         <template #cell(number_users_roles[1])="data">
-          <span v-if="data.item.number_users_roles[1]">{{ data.item.number_users_roles[1].number }}</span>
+          <span v-if="data.item.number_users_roles[1]">{{
+              data.item.number_users_roles[1].number
+            }}</span>
         </template>
         <template #cell(number_users_roles[2])="data">
-          <span v-if="data.item.number_users_roles[2]">{{ data.item.number_users_roles[2].number }}</span>
+          <span v-if="data.item.number_users_roles[2]">{{
+              data.item.number_users_roles[2].number
+            }}</span>
         </template>
         <template #cell(number_users_roles[3])="data">
-          <span v-if="data.item.number_users_roles[3]">{{ data.item.number_users_roles[3].number }}</span>
+          <span v-if="data.item.number_users_roles[3]">{{
+              data.item.number_users_roles[3].number
+            }}</span>
         </template>
         <template #cell(number_users_roles[4])="data">
-          <span v-if="data.item.number_users_roles[4]">{{ data.item.number_users_roles[4].number }}</span>
+          <span v-if="data.item.number_users_roles[4]">{{
+              data.item.number_users_roles[4].number
+            }}</span>
         </template>
-
         <template #cell(allowEdit)="data">
           <b-form-checkbox v-model="data.item.is_selected" switch
                            @change="managePath(data.item)"></b-form-checkbox>
@@ -230,6 +249,7 @@ export default {
         page: 1,
         name: "",
         order: "",
+        order_by: ""
       },
     };
   },
@@ -482,7 +502,12 @@ export default {
     },
     goToAddVideo(videoId) {
       this.$router.push(`/dashboard/video/${videoId}/questions`)
-    }
+    },
+    sortBy(key,order) {
+      this.formValues.order_by = key
+      this.formValues.order = order
+      this.$emit("refetch", this.formValues);
+    },
   },
 };
 </script>

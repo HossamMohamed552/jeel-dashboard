@@ -141,7 +141,7 @@ export default {
     SelectSearch,
     Button,
     DatePicker,
-    TextField
+    TextField,
   },
   data() {
     return {
@@ -210,7 +210,8 @@ export default {
           },
         ],
       },
-      answerHasEmpty: false
+      answerHasEmpty: false,
+      durationTime: 0,
     }
   },
   watch: {
@@ -257,6 +258,10 @@ export default {
     contentMessageQuestion: {
       type: String,
       default: ""
+    },
+    duration: {
+      type: Number,
+      default: 0
     }
   },
   methods: {
@@ -346,6 +351,7 @@ export default {
   mounted() {
     this.questionVideo.video_id = Number(this.$route.params.id)
     this.getAllDifficulties()
+    this.questionVideo.question_time = this.duration
   }
 }
 </script>

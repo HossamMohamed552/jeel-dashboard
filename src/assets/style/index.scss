@@ -28,7 +28,9 @@
       transform: translate3d(147px, 31px, 0px) !important;
     }
   }
-
+  .th{
+    border-top: none !important;
+  }
   .thead-gradient {
     background: linear-gradient(to left, $color-primary, $color-notify);
     border-bottom: none;

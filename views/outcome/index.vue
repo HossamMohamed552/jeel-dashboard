@@ -62,7 +62,7 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.name"),
         },
         {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.level')},
-        {key: "learning_path.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
+        {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
         {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),

@@ -6,11 +6,25 @@
       </b-col>
       <b-col lg="4">
         <div class="video-cont">
-          <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item"
-                    :src="`https://player.vimeo.com/video/${videoDetail.video_with_music_path}`">
-            </iframe>
-          </div>
+          <vimeo-player
+            v-if="videoUrl"
+            class="vimeo-player"
+            ref="videoPlayer"
+            :video-url="`${videoUrl}`"
+            :options="{'responsive':true}"
+            @ready="registerPlayerEvents($event)"
+            @pause="getCurrentDuration($event)"
+            @durationchange="getCurrentDuration($event)"
+          ></vimeo-player>
+          <!--          @play="playVideo()"-->
+          <!--          @ended="endedVideo()"-->
+          <!--          @ready="registerPlayerEvents($event)"-->
+          <!--          @timeupdate="onTimeUpdate($event)"-->
+          <!--          <div class="embed-responsive embed-responsive-16by9">-->
+          <!--            <iframe class="embed-responsive-item"-->
+          <!--                    :src="`https://player.vimeo.com/video/${videoDetail.video_with_music_path}`">-->
+          <!--            </iframe>-->
+          <!--          </div>-->
         </div>
       </b-col>
       <b-col lg="8">
@@ -60,7 +74,7 @@
            :is-warning="true"
            @cancelWithConfirm="cancelWithConfirm($event)"/>
     <QuestionModal :showModal="showModalQuestion" @addQuestion="addQuestion($event)"
-                   @cancelQuestion="cancelQuestion($event)"/>
+                   @cancelQuestion="cancelQuestion($event)" :duration="duration"/>
   </section>
 </template>
 <script>
@@ -76,10 +90,11 @@ import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import QuestionModal from "@/components/Shared/QuestionModal/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
+import {vueVimeoPlayer} from 'vue-vimeo-player'
 
 export default {
   name: "index",
-  components: {Button, Modal, ListItems, ShowItem, QuestionModal},
+  components: {Button, Modal, ListItems, ShowItem, QuestionModal, VimeoPlayer: vueVimeoPlayer},
   data() {
     return {
       loading: false,
@@ -94,13 +109,22 @@ export default {
         {key: "question_type.name", label: "نوع السؤال"},
         {key: "actions", label: "الإجراء"},
       ],
-      videoDetail: {}
+      videoDetail: {},
+      videoUrl: null,
+      videoId: null,
+      player: null,
+      duration: null,
     }
   },
   methods: {
     getVideoDetail(videoId) {
       this.ApiService(getSingleVideoRequest(videoId)).then((response) => {
         this.videoDetail = response.data.data
+      }).then(() => {
+        this.videoUrl = this.videoDetail.vimeo_video_with_music_url.replace("https", "http")
+        this.videoId = this.videoDetail.viemo_video_with_music_path
+      }).then(() => {
+        this.registerPlayerEvents()
       })
     },
     getQuestionOfVideo(videoId) {
@@ -141,6 +165,18 @@ export default {
         this.getQuestionOfVideo(this.$route.params.id)
         this.showModalQuestion = false
       })
+    },
+    async registerPlayerEvents(player) {
+      this.player = player
+      // this.player.getDuration().then((duration) => {
+      //   this.duration = (duration / 60)
+      // })
+    },
+    async getCurrentDuration($event) {
+      console.log("event", $event.seconds)
+      console.log("event", Math.floor($event.seconds))
+      let time = Math.floor($event.seconds)
+      // if ()
     }
   },
   mounted() {
