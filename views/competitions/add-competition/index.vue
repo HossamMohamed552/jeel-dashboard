@@ -32,6 +32,7 @@
       @handleBack="backToStepOne"
       @handleCancel="handleCancel"
       @generateRandomQuestions="generateRandomQuestions"
+      @viewRandomQuestionDetails="viewRandomQuestionDetails"
     />
     <AddEditCompetitionRewards
       v-show="currentStep === 2"
@@ -208,6 +209,10 @@ export default {
         this.arrangmentList = response.data.data;
       });
     },
+    viewRandomQuestionDetails(id) {
+      console.log(id);
+      this.$bvModal.show('question-detais-modal')
+    }
   },
 };
 </script>

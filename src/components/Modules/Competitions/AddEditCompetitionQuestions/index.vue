@@ -166,6 +166,7 @@
                     <img
                       class="cursor-pointer"
                       src="@/assets/images/icons/view-random-question.svg"
+                      @click="viewRandomQuestionDetails(data.item.id)"
                     />
                   </div>
                 </template>
@@ -203,6 +204,33 @@
         </validation-observer>
       </div>
     </div>
+    <b-modal
+      id="question-detais-modal"
+      class="question-modal"
+      hide-footer
+      size="lg"
+      centered
+      @hide="cancelRewardModal"
+    >
+      <template v-slot:modal-header="{ close }">
+        <span class="question-modal-title">تفاصيل السؤال</span>
+        <b-icon
+          class="close-modal-icon cursor-pointer"
+          icon="x"
+          @click="close"
+        />
+      </template>
+      <div :class="$i18n.locale === 'en' ? '' : 'rtl'">
+        <RandomQuestionTabs>
+          <template v-slot:info>
+            info
+          </template>
+          <template v-slot:review>
+            review
+          </template>
+        </RandomQuestionTabs>
+      </div>
+    </b-modal>
   </div>
 </template>
   <script>
@@ -211,6 +239,7 @@ import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
+import RandomQuestionTabs from "@/components/Modules/Competitions/RandomQuestionTabs/index.vue";
 import { debounce } from "lodash";
 
 export default {
@@ -220,6 +249,7 @@ export default {
     Button,
     TextAreaField,
     ImageUploader,
+    RandomQuestionTabs,
   },
   props: {
     questionsNumbers: {
@@ -293,8 +323,8 @@ export default {
   },
   methods: {
     onSubmit() {
-      const questionsIds = this.randomQuestions.map(obj => obj.id);
-      this.$emit("onSubmit", {'questions': questionsIds});
+      const questionsIds = this.randomQuestions.map((obj) => obj.id);
+      this.$emit("onSubmit", { questions: questionsIds });
     },
     handleCancel() {
       this.$emit("handleCancel");
@@ -353,7 +383,13 @@ export default {
     },
     changeSingleRandomQuestion(questionId) {
       // console.log(questionId);
-    }
+    },
+    viewRandomQuestionDetails(questionId) {
+      this.$emit("viewRandomQuestionDetails", questionId);
+    },
+    close() {
+      this.$bvModal.hide("question-detais-modal");
+    },
   },
   mounted() {
     // if (this.$route.params.id) {
