@@ -641,6 +641,47 @@ const protectedRoutes = [
           preLink: "/dashboard/outcome",
         },
       },
+      // Lessons
+      {
+        path: "/dashboard/lessons",
+        name: "lessons",
+        component: () => import("../../views/lessons/index.vue"),
+        meta: {
+          breadcrumb: "الدروس",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/lessons/add",
+        name: "add-lessons",
+        component: () => import("../../views/lessons/add-lessons/index.vue"),
+        meta: {
+          breadcrumb: "إضافة الدرس",
+          preLabel: "الدروس",
+          preLink: "/dashboard/lessons",
+        },
+      },
+      {
+        path: "/dashboard/lessons/edit/:id",
+        name: "edit-lessons",
+        component: () => import("../../views/lessons/edit-lessons/index.vue"),
+        meta: {
+          breadcrumb: "تعديل الدرس",
+          preLabel: "الدروس",
+          preLink: "/dashboard/lessons",
+        },
+      },
+      {
+        path: "/dashboard/lessons/show/:id",
+        name: "show-lessons",
+        component: () => import("../../views/lessons/view-lessons/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل الدرس",
+          preLabel: "الدروس",
+          preLink: "/dashboard/lessons",
+        },
+      },
       // quiz or practice
       {
         path: "/dashboard/practices",
@@ -1076,8 +1117,8 @@ const protectedRoutes = [
         meta: {
           breadcrumb: " تفاصبل المهام الدراسية",
           preLabel: "المهام",
-          preLink: "/dashboard/super-mission"
-        }
+          preLink: "/dashboard/super-mission",
+        },
       },
       //competitions
       {
