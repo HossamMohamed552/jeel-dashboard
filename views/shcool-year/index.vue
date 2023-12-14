@@ -1,15 +1,15 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة الترم الدراسي'"
+      :header-name="'قائمة العام الدراسي'"
       :number-of-item="totalNumber"
-      :tableItems="termsList"
+      :tableItems="schoolYearsList"
       :fieldsList="fieldsList"
       :v-search-model="groupSearchWord"
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
-      @refetch="getTerms"
+      @refetch="getSchoolYears"
       :loading="loading"
       :permission_delete="'delete-terms'"
       :permission_edit="'edit-terms'"
@@ -18,17 +18,17 @@
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
-          @click="goToAddTerms"
+          @click="goToAddSchoolYear"
           v-if="user.permissions.includes(`add-terms`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة ترم دراسي </span>
+          <span>إضافة عام دراسي </span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف الترم الدراسي'"
-      :content-message-question="'هل انت متأكد من حذف الترم الدراسي '"
+      :content-message="'حذف العام الدراسي'"
+      :content-message-question="'هل انت متأكد من حذف العام الدراسي '"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -40,7 +40,7 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { deleteTermsRequest, getTermsRequest } from "@/api/term";
+import { getSchoolYearRequest, deleteSchoolYearRequest } from "@/api/school-year";
 import Modal from "@/components/Shared/Modal/index.vue";
 import { mapGetters } from "vuex";
 
@@ -51,25 +51,25 @@ export default {
       loading: false,
       showModal: false,
       groupSearchWord: "",
-      termsList: [],
+      schoolYearsList: [],
       totalNumber: null,
       fieldsList: [
         { key: "id", label: "التسلسل" },
-        { key: "name", label: "اسم الترم الدراسي" },
+        { key: "name", label: "اسم العام الدراسي" },
         { key: "actions", label: "الإجراء" },
       ],
     };
   },
   methods: {
-    goToAddTerms() {
-      this.$router.push("/dashboard/terms/add");
+    goToAddSchoolYear() {
+      this.$router.push("/dashboard/school-year/add");
     },
-    getTerms(event) {
+    getSchoolYears(event) {
       this.loading = true;
       const params = event;
-      this.ApiService(getTermsRequest(params))
+      this.ApiService(getSchoolYearRequest(params))
         .then((response) => {
-          this.termsList = response.data.data;
+          this.schoolYearsList = response.data.data;
           this.totalNumber = response.data.meta.total;
         })
         .finally(() => {
@@ -77,10 +77,10 @@ export default {
         });
     },
     detailItem($event) {
-      this.$router.push(`/dashboard/terms/show/${$event}`);
+      this.$router.push(`/dashboard/school-year/show/${$event}`);
     },
     editItem($event) {
-      this.$router.push(`/dashboard/terms/edit/${$event}`);
+      this.$router.push(`/dashboard/school-year/edit/${$event}`);
     },
     deleteItem($event) {
       this.itemId = $event;
@@ -90,8 +90,8 @@ export default {
       this.showModal = $event;
     },
     cancelWithConfirm() {
-      this.ApiService(deleteTermsRequest(this.itemId)).then(() => {
-        this.getTerms();
+      this.ApiService(deleteSchoolYearRequest(this.itemId)).then(() => {
+        this.getSchoolYears();
       });
       this.cancel();
     },
@@ -100,11 +100,11 @@ export default {
     ...mapGetters(["user"]),
   },
   mounted() {
-    this.getTerms();
+    this.getSchoolYears();
     if (this.user.roles[0].code === "supervisor") {
       this.fieldsList = [
         { key: "id", label: "التسلسل" },
-        { key: "name", label: "اسم الترم الدراسي" },
+        { key: "name", label: "اسم hguhl الدراسي" },
         { key: "classes_count", label: "عدد الفصول" },
         { key: "actions", label: "الإجراء" },
       ];
