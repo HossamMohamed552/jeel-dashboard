@@ -52,10 +52,10 @@ export default {
           key: "name",
           label: this.$i18n.t("TABLE_FIELDS.name")
         },
-        {
-          key: "code",
-          label: this.$i18n.t("TABLE_FIELDS.code")
-        },
+        // {
+        //   key: "code",
+        //   label: this.$i18n.t("TABLE_FIELDS.code")
+        // },
         {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions")

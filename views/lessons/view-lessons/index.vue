@@ -17,7 +17,7 @@
           <b-col lg="4" v-if="LessonData.level">
             <ShowItem :title="$t('MISSIONS.terms')" :subtitle="LessonData.term.name" />
           </b-col>
-          <b-col lg="4" v-if="LessonData.learningPath">
+          <b-col lg="4" v-if="LessonData.learningPath"  class="mt-3">
             <ShowItem :title="$t('MISSIONS.LEARNING_PATH')" :subtitle="LessonData.learningPath.name" />
           </b-col>
         </b-row>

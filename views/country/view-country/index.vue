@@ -8,12 +8,12 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="6">
+          <b-col lg="12">
             <ShowItem :title="$t('COUNTRY.name')" :subtitle="country.name"/>
           </b-col>
-          <b-col lg="6">
-            <ShowItem :title="$t('COUNTRY.countryCode')" :subtitle="country.code"/>
-          </b-col>
+<!--          <b-col lg="6">-->
+<!--            <ShowItem :title="$t('COUNTRY.countryCode')" :subtitle="country.code"/>-->
+<!--          </b-col>-->
         </b-row>
       </div>
     </div>

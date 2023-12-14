@@ -81,7 +81,7 @@ export default {
     },
     getLessonsList(event) {
       this.loading = true;
-      this.ApiService(getLessonsRequest())
+      this.ApiService(getLessonsRequest(event))
         .then((response) => {
           this.lessonsList = response.data.data;
           this.totalNumber = response.data.meta.total;

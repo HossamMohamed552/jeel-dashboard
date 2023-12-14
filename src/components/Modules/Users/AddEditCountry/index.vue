@@ -6,7 +6,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditCountryForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="6" class="mb-3">
+              <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="createCountry.name"
@@ -16,16 +16,16 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3">
-                <div class="hold-field">
-                  <TextField
-                    v-model="createCountry.code"
-                    :label="$t('COUNTRY.countryCode')"
-                    :name="$t('COUNTRY.countryCode')"
-                    :rules="'required|min:2|max:5'"
-                  ></TextField>
-                </div>
-              </b-col>
+<!--              <b-col lg="6" class="mb-3">-->
+<!--                <div class="hold-field">-->
+<!--                  <TextField-->
+<!--                    v-model="createCountry.code"-->
+<!--                    :label="$t('COUNTRY.countryCode')"-->
+<!--                    :name="$t('COUNTRY.countryCode')"-->
+<!--                    :rules="'required|min:2|max:5'"-->
+<!--                  ></TextField>-->
+<!--                </div>-->
+<!--              </b-col>-->
             </b-row>
             <b-row>
               <div class="hold-btns-form">
@@ -69,17 +69,18 @@ export default {
     return {
       createCountry: {
         name: "",
-        code: ""
+        // code: ""
       },
       defaultValue:{
         name: "",
-        code: ""
+        // code: ""
       }
     };
   },
   computed:{
+    // && (this.createCountry.code === this.defaultValue.code)
     canNotSend(){
-      return (this.createCountry.name === this.defaultValue.name) && (this.createCountry.code === this.defaultValue.code)
+      return (this.createCountry.name === this.defaultValue.name)
     }
   },
   methods: {
@@ -100,9 +101,9 @@ export default {
       if (this.$route.params.id) {
         this.ApiService(getSingleCountryRequest(this.$route.params.id)).then((response) => {
           this.createCountry.name = response.data.data.name
-          this.defaultValue.name = response.data.data.name
+          // this.defaultValue.name = response.data.data.name
           this.createCountry.code = response.data.data.code
-          this.defaultValue.code = response.data.data.code
+          // this.defaultValue.code = response.data.data.code
         })
       }
     }

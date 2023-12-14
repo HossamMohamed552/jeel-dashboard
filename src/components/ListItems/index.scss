@@ -178,11 +178,19 @@
   font-size: 2.5rem;
   text-align: center;
 }
+.sort{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
 .sortIcon{
   display: inline-flex;
-  margin-left: .5rem;
+  margin-right: .5rem;
+  margin-top: 0.5rem;
   img{
     cursor: pointer;
+    width: 16px;
+    height: 16px;
   }
 }
 

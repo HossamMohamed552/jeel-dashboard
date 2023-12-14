@@ -159,8 +159,9 @@ export default {
       this.cancel()
     },
     addQuestion($event) {
+      console.log('$event', $event)
       delete $event['answers_id']
-      $event.question_time = Number($event.question_time)
+      // $event.question_time = Number($event.question_time)
       this.ApiService(addQuestionOnVideo($event)).then((response) => {
         this.getQuestionOfVideo(this.$route.params.id)
         this.showModalQuestion = false
@@ -168,9 +169,9 @@ export default {
     },
     async registerPlayerEvents(player) {
       this.player = player
-      // this.player.getDuration().then((duration) => {
-      //   this.duration = (duration / 60)
-      // })
+      this.player.getDuration().then((duration) => {
+        console.log('full duration', (duration / 60))
+      })
     },
     async getCurrentDuration($event) {
       console.log("event", $event.seconds)

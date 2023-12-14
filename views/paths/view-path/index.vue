@@ -8,7 +8,7 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="12 mt-5" class="divider">
+          <b-col lg="12 mt-5" >
             <ShowItem :title="$t('PATH.Name')" :subtitle="path.name"/>
           </b-col>
           <b-col lg="12 mt-5">

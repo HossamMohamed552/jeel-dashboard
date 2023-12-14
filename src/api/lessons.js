@@ -1,8 +1,8 @@
-export const getLessonsRequest = () => ({
+export const getLessonsRequest = (params) => ({
   method: "get",
   url: `lesson`,
   config: {
-    
+    params
   },
 });
 // export const getAllLessonsRequest = (params) => ({

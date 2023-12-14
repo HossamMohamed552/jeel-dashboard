@@ -37,13 +37,12 @@
         data-custom-sort="customSort"
       >
         <template :slot="`head(${headerItem.key})`" v-for="headerItem in fieldsList">
-          <div
-               :class="headerItem.key !== 'actions' ? 'sort' : ''">
+          <div :class="headerItem.key !== 'actions' ? 'sort' : ''">
+            <span>{{ headerItem.label }}</span>
             <span class="sortIcon" v-if="headerItem.key !== 'actions'">
-              <img src="@/assets/images/icons/up-arrow.png" @click="sortBy(headerItem.key,'DESC')">
-              <img src="@/assets/images/icons/down-arrow.png" @click="sortBy(headerItem.key,'ASC')">
+              <img src="@/assets/images/icons/arrow-up-down.png" @click="sortBy(headerItem.key)">
             </span>
-            <span>{{ headerItem.label }}</span></div>
+          </div>
         </template>
         <template #table-busy>
           <div class="text-center text-danger my-2 mt-5">
@@ -231,7 +230,6 @@ import Button from "@/components/Shared/Button/index.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
 import {type} from "os";
-import th from "vue2-datepicker/locale/es/th";
 
 export default {
   name: "index",
@@ -244,6 +242,7 @@ export default {
       deleteIcon: require("@/assets/delete.svg"),
       inputValue: "",
       items: [],
+      switchSort: 'DESC',
       formValues: {
         per_page: 10,
         page: 1,
@@ -503,10 +502,16 @@ export default {
     goToAddVideo(videoId) {
       this.$router.push(`/dashboard/video/${videoId}/questions`)
     },
-    sortBy(key,order) {
+    sortBy(key) {
       this.formValues.order_by = key
-      this.formValues.order = order
+      this.formValues.order = this.switchSort
       this.$emit("refetch", this.formValues);
+      if (this.formValues.order === 'DESC') {
+        this.switchSort = 'ASC'
+
+      } else {
+        this.switchSort = 'DESC'
+      }
     },
   },
 };

@@ -1,7 +1,7 @@
 <template>
   <div class="add-edit-school-year">
     <div class="container-fluid custom-container">
-      <div class="add-edit-school-year-form">
+      <div class="add-edit-term-form">
         <h3>{{ $route.params.id ? "تعديل العام الدراسي" : "اضافة عام دراسي جديد" }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditSchoolYearForm">
           <form @submit.prevent="onSubmit" class="mt-5">

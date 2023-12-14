@@ -40,9 +40,9 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { getLevelsRequest, deleteLevelRequest } from "@/api/level";
+import {deleteLevelRequest, getLevelsRequest} from "@/api/level";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
   components: { Modal, ListItems, Button },
@@ -69,8 +69,7 @@ export default {
     },
     getLevels(event) {
       this.loading = true;
-      const params = event;
-      this.ApiService(getLevelsRequest(params))
+      this.ApiService(getLevelsRequest(event))
         .then((response) => {
           this.levelsList = response.data.data;
           this.totalNumber = response.data.meta.total;

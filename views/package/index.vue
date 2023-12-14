@@ -40,9 +40,10 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { deletePackagesRequest, getPackagesRequest } from "@/api/packages.js";
+import {deletePackagesRequest, getPackagesRequest} from "@/api/packages.js";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {mapGetters} from "vuex";
+
 export default {
   components: { Modal, ListItems, Button },
   computed:{
@@ -110,13 +111,12 @@ export default {
     },
     getPackages(event) {
       this.loading = true
-      const params = event
-      this.ApiService(getPackagesRequest(params)).then((response) => {
+      this.ApiService(getPackagesRequest(event)).then((response) => {
         this.packagesList = response.data.data;
         this.totalNumber = response.data.meta.total;
       }) .finally(() => {
           this.loading = false;
-        });;
+        });
     },
 
     detailItem($event) {

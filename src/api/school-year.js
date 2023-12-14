@@ -1,6 +1,7 @@
-export const getSchoolYearRequest = () => ({
+export const getSchoolYearRequest = (params) => ({
   method: "get",
   url: "study_years",
+  config: {params}
 });
 export const getSchoolYearByIdRequest = (params) => ({
   method: "get",

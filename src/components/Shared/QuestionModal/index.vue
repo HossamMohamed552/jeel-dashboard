@@ -6,122 +6,161 @@
         <div class="flexContent">
           <p class="text-right add-title">إضافة سؤال</p>
           <div class="add-question">
-            <b-row>
-              <b-col lg="3">
-                <TextField
-                  v-model="questionVideo.question_time"
-                  :label="$t('VIDEO.duration')"
-                  :name="$t('VIDEO.duration')"
-                  :rules="'numeric'"
-                ></TextField>
-              </b-col>
-              <b-col lg="9">
-                <b-form-group :label="$t('نوع السؤال')" class="group-type">
-                  <b-form-radio v-model="questionVideo.question_slug" value="true_false"
-                                name="group-music_type" @input="changeQuestionType($event)">صح وخطأ
-                  </b-form-radio>
-                  <b-form-radio v-model="questionVideo.question_slug" value="mcq"
-                                name="group-music_type" @input="changeQuestionType($event)">
-                    إختيارات
-                  </b-form-radio>
-                </b-form-group>
-              </b-col>
-              <b-col :lg="questionVideo.question_slug === 'true_false'? 12 : 8">
-                <TextField
-                  v-model="questionVideo.question"
-                  :label="$t('VIDEO.question')"
-                  :name="$t('VIDEO.duration')"
-                  :rules="'required'"
-                ></TextField>
-              </b-col>
-              <b-col lg="4" v-if="questionVideo.question_slug === 'mcq'" class="mt-3">
-                <SelectSearch
-                  v-model="answersCountSelected"
-                  :label="$t('VIDEO.answersCount')"
-                  :name="$t('VIDEO.answersCount')"
-                  :options="answersCount"
-                  :reduce="(option) => option.id"
-                  :get-option-label="(option) => option.number"
-                  :rules="'required'"
-                  @input="assignAnswers($event)"
-                ></SelectSearch>
-              </b-col>
-              <b-col lg="6" v-if="questionVideo.question_slug === 'true_false'">
-                <SelectSearch
-                  v-model="questionVideo.answers_id"
-                  :label="$t('VIDEO.answer')"
-                  :name="$t('VIDEO.answer')"
-                  :options="questionVideo.answers"
-                  :reduce="(option) => option.id"
-                  :get-option-label="(option) => option.answer"
-                  @input="assignCorrectAnswer($event)"
-                ></SelectSearch>
-              </b-col>
-              <b-col lg="12" v-if="questionVideo.question_slug === 'mcq'">
-                <b-row v-if="questionVideo.question_slug === 'mcq'">
-                  <b-col v-for="(answer,index) in questionVideo.answers" :key="answer.id">
+            <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
+              <form @submit.prevent="addQuestion" class="mt-5">
+                <b-row>
+                  <b-col lg="3">
                     <TextField
-                      v-model="answer.answer"
-                      :label="$t('VIDEO.answerSort',{ index:`${index + 1 }`})"
-                      :name="$t('VIDEO.answerSort',{ index:`${index + 1 }`})"
+                      v-model="questionVideo.question_time"
+                      :label="$t('VIDEO.duration')"
+                      :name="$t('VIDEO.duration')"
+                      :rules="'required'"
                     ></TextField>
                   </b-col>
+                  <b-col lg="9">
+                    <ValidationProvider v-slot="{errors, invalid}" rules="'required'">
+                      <b-form-group :label="$t('نوع السؤال')" class="group-type">
+                        <b-form-radio v-model="questionVideo.question_slug" value="true_false"
+                                      name="group-music_type" @input="changeQuestionType($event)">صح وخطأ
+                        </b-form-radio>
+                        <b-form-radio v-model="questionVideo.question_slug" value="mcq"
+                                      name="group-music_type" @input="changeQuestionType($event)">
+                          إختيارات
+                        </b-form-radio>
+                      </b-form-group>
+                    </ValidationProvider>
+                  </b-col>
+                  <b-col lg="12">
+                    <TextField
+                      v-model="questionVideo.question"
+                      :label="$t('VIDEO.question')"
+                      :name="$t('VIDEO.duration')"
+                      :rules="'required'"
+                    ></TextField>
+                  </b-col>
+                  <b-col lg="6">
+                    <div class="hold-field question-label">
+                      <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                          $t("QUESTIONS.QUESTION_TITLE_AUDIO")
+                        }}</label>
+                      <ValidationProvider
+                        v-slot="{ errors }"
+                        :rules="'required|audio'"
+                        name="questionAudio"
+                      >
+                        <b-form-file
+                          accept="audio/*"
+                          :placeholder="questionVideo.question_audio ? questionVideo.question_audio : 'اختر ملف'"
+                          v-model="questionVideo.question_audio"
+                          name="audio"
+                        >
+                        </b-form-file>
+                        <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                          {{ error }}
+                        </b-form-invalid-feedback>
+                      </ValidationProvider>
+                    </div>
+                  </b-col>
+                  <b-col lg="6">
+                    <SelectSearch
+                      v-model="questionVideo.question_difficulty_id"
+                      :label="$t('QUESTIONS.QUESTIONDIFFICULTIES')"
+                      :name="$t('QUESTIONS.QUESTIONDIFFICULTIES')"
+                      :options="questionDifficulties"
+                      :reduce="(option) => option.id"
+                      :get-option-label="(option) => option.name"
+                      :rules="'required'"
+                    ></SelectSearch>
+                  </b-col>
+                  <b-col lg="4" v-if="questionVideo.question_slug === 'mcq'">
+                    <SelectSearch
+                      v-model="answersCountSelected"
+                      :label="$t('VIDEO.answersCount')"
+                      :name="$t('VIDEO.answersCount')"
+                      :options="answersCount"
+                      :reduce="(option) => option.id"
+                      :get-option-label="(option) => option.number"
+                      :rules="'required'"
+                      @input="assignAnswers($event)"
+                    ></SelectSearch>
+                  </b-col>
+                  <b-col lg="12" v-if="questionVideo.question_slug === 'mcq'">
+                    <b-row v-if="questionVideo.question_slug === 'mcq'" v-for="(answer,index) in questionVideo.answers" :key="answer.id">
+                      <b-col lg="6">
+                        <TextField
+                          v-model="answer.answer"
+                          :rules="'required'"
+                          :label="$t('VIDEO.answerSort',{ index:`${index + 1 }`})"
+                          :name="$t('VIDEO.answerSort',{ index:`${index + 1 }`})"
+                        ></TextField>
+                      </b-col>
+                      <b-col lg="6">
+                        <div class="hold-field question-label">
+                          <label><span><i class="fa-solid fa-asterisk"></i></span>{{
+                              $t("QUESTIONS.QUESTION_TITLE_AUDIO")
+                            }}</label>
+                          <ValidationProvider
+                            v-slot="{ errors }"
+                            :rules="'required|audio'"
+                            :name="`answerAudio${index}`"
+                          >
+                            <b-form-file
+                              accept="audio/*"
+                              :placeholder="answer.audio ? answer.audio : 'اختر ملف'"
+                              v-model="answer.audio"
+                              name="audio"
+                            >
+                            </b-form-file>
+                            <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                              {{ error }}
+                            </b-form-invalid-feedback>
+                          </ValidationProvider>
+                        </div>
+                      </b-col>
+                    </b-row>
+                  </b-col>
+                  <b-col lg="6" v-if="questionVideo.question_slug === 'true_false'">
+                    <SelectSearch
+                      :rules="'required'"
+                      v-model="questionVideo.answers_id"
+                      :label="$t('VIDEO.answer')"
+                      :name="$t('VIDEO.answer')"
+                      :options="questionVideo.answers"
+                      :reduce="(option) => option.id"
+                      :get-option-label="(option) => option.answer"
+                      @input="assignCorrectAnswer($event)"
+                    ></SelectSearch>
+                  </b-col>
+                  <b-col lg="6" v-if="questionVideo.question_slug === 'mcq'">
+                    <SelectSearch
+                      v-model="answerSelected"
+                      :label="$t('VIDEO.correctAnswer')"
+                      :name="$t('VIDEO.correctAnswer')"
+                      :options="questionVideo.answers"
+                      :reduce="(option) => option.id"
+                      :get-option-label="(option) => option.answer"
+                      :rules="'required'"
+                      :disabled="questionVideo.answers.length === 0|| answerHasEmpty"
+                      @input="assignAnswerCorrect($event)"
+                    ></SelectSearch>
+                  </b-col>
                 </b-row>
-              </b-col>
-              <b-col lg="6" v-if="questionVideo.question_slug === 'mcq'">
-                <SelectSearch
-                  v-model="answerSelected"
-                  :label="$t('VIDEO.correctAnswer')"
-                  :name="$t('VIDEO.correctAnswer')"
-                  :options="questionVideo.answers"
-                  :reduce="(option) => option.id"
-                  :get-option-label="(option) => option.answer"
-                  :rules="'required'"
-                  :disabled="questionVideo.answers.length === 0|| answerHasEmpty"
-                  @input="assignAnswerCorrect($event)"
-                ></SelectSearch>
-              </b-col>
-              <b-col lg="6">
-                <SelectSearch
-                  v-model="questionVideo.question_difficulty_id"
-                  :label="$t('QUESTIONS.QUESTIONDIFFICULTIES')"
-                  :name="$t('QUESTIONS.QUESTIONDIFFICULTIES')"
-                  :options="questionDifficulties"
-                  :reduce="(option) => option.id"
-                  :get-option-label="(option) => option.name"
-                  :rules="'required'"
-                ></SelectSearch>
-              </b-col>
-            </b-row>
-            <b-row>
-              <b-col lg="12">
-                <div class="action-holder">
-                  <Button :custom-class="'cancel-btn margin'" @click="cancel">
-                    {{ $t("GLOBAL_CANCEL") }}
-                  </Button>
-                  <Button :custom-class="'submit-btn'" @click="addQuestion">
-                    {{ $t("GLOBAL_SAVE") }}
-                  </Button>
-                </div>
-              </b-col>
-            </b-row>
+                <b-row>
+                  <b-col lg="12">
+                    <div class="action-holder">
+                      <Button :custom-class="'cancel-btn margin'" @click="cancel">
+                        {{ $t("GLOBAL_CANCEL") }}
+                      </Button>
+                      <Button :custom-class="'submit-btn'" @click="addQuestion" :disabled="invalid">
+                        {{ $t("GLOBAL_SAVE") }}
+                      </Button>
+                    </div>
+                  </b-col>
+                </b-row>
+              </form>
+            </validation-observer>
           </div>
         </div>
-        <template>
-          <div class="controls" v-if="isWarning">
-            <Button :custom-class="'rounded-btn'" @click="cancelWithConfirm()">
-              {{ $t('GLOBAL_CONFIRM') }}
-            </Button>
-            <Button :custom-class="'rounded-btn transparent-btn'" @click="cancel()">
-              {{ $t('GLOBAL_CANCEL') }}
-            </Button>
-          </div>
-          <div class="controls mt-3" style="justify-content: center;" v-if="isFailed">
-            <Button :custom-class="'rounded-btn transparent-btn'" @click="cancel()">
-              {{ $t('GLOBAL_CANCEL') }}
-            </Button>
-          </div>
-        </template>
       </div>
     </b-modal>
   </div>
@@ -189,6 +228,7 @@ export default {
       questionVideo: {
         video_id: "",
         question: "",
+        question_audio: null,
         question_slug: "true_false",
         question_type_id: 2,
         question_type_sub_id: 13,
@@ -286,6 +326,7 @@ export default {
       this.$emit('addQuestion', this.questionVideo)
       this.questionVideo.question = "";
       this.questionVideo.question_slug = "true_false";
+      this.questionVideo.question_audio = null;
       this.questionVideo.question_type_id = 2;
       this.questionVideo.question_type_sub_id = 13;
       this.questionVideo.question_difficulty_id = 1;
@@ -338,6 +379,7 @@ export default {
         this.questionVideo.answers.push({
           id: answer + 1,
           answer: "",
+          audio: "",
           correct: 0,
           order: answer + 1
         })

@@ -8,7 +8,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditSchoolTyeForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="6" class="mb-3">
+              <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="formValues.name"
@@ -18,16 +18,16 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3">
-                <div class="hold-field">
-                  <TextField
-                    v-model="formValues.slug"
-                    :label="$t('SLUG')"
-                    :name="$t('SLUG')"
-                    :rules="'required|max:10'"
-                  ></TextField>
-                </div>
-              </b-col>
+<!--              <b-col lg="6" class="mb-3">-->
+<!--                <div class="hold-field">-->
+<!--                  <TextField-->
+<!--                    v-model="formValues.slug"-->
+<!--                    :label="$t('SLUG')"-->
+<!--                    :name="$t('SLUG')"-->
+<!--                    :rules="'required|max:10'"-->
+<!--                  ></TextField>-->
+<!--                </div>-->
+<!--              </b-col>-->
             </b-row>
             <b-row>
               <div class="hold-btns-form">
@@ -71,7 +71,7 @@ export default {
     return {
       formValues: {
         name: "",
-        slug: "",
+        // slug: "",
       },
       bloomTypeId: this.$route.params.id,
     };
