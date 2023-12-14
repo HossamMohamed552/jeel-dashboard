@@ -201,6 +201,14 @@ let routeBasicData = [
     icon: require("@/assets/images/icons/question.svg"),
     permission: "view-outcome",
   },
+  {
+    name: "الدروس",
+    path: "/dashboard/lessons",
+    altImage: "lessons",
+    titleImage: "lessons",
+    icon: require("@/assets/images/icons/question.svg"),
+    permission: "view-outcome",
+  },
 ];
 let routeSuperVisor = [
   {
