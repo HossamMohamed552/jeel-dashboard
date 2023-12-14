@@ -267,7 +267,7 @@ const protectedRoutes = [
         name: "levels",
         component: () => import("../../views/levels/index.vue"),
         meta: {
-          breadcrumb: "المراحل الدراسية",
+          breadcrumb: "الصفوف الدراسية",
           preLabel: "",
           preLink: "",
         },
@@ -278,8 +278,8 @@ const protectedRoutes = [
         name: "add-levels",
         component: () => import("../../views/levels/add-level/index.vue"),
         meta: {
-          breadcrumb: "إضافة مرحلة دراسية",
-          preLabel: "المراحل الدراسية",
+          breadcrumb: "إضافة صف دراسي",
+          preLabel: "الصفوف الدراسية",
           preLink: "/dashboard/levels",
         },
       },
@@ -289,7 +289,7 @@ const protectedRoutes = [
         component: () => import("../../views/levels/edit-level/index.vue"),
         meta: {
           breadcrumb: "تعديل المرحلة الدراسية",
-          preLabel: "المراحل الدراسية",
+          preLabel: "الصفوف الدراسية",
           preLink: "/dashboard/levels",
         },
       },
@@ -299,7 +299,7 @@ const protectedRoutes = [
         component: () => import("../../views/levels/view-level/index.vue"),
         meta: {
           breadcrumb: "تفاصيل المرحلة الدراسية",
-          preLabel: "المراحل الدراسية",
+          preLabel: "الصفوف الدراسية",
           preLink: "/dashboard/levels",
         },
       },
@@ -309,7 +309,7 @@ const protectedRoutes = [
         name: "terms",
         component: () => import("../../views/terms/index.vue"),
         meta: {
-          breadcrumb: "الفصول الدراسية",
+          breadcrumb: "الترم الدراسي",
           preLabel: "",
           preLink: "",
         },
@@ -319,8 +319,8 @@ const protectedRoutes = [
         name: "add-terms",
         component: () => import("../../views/terms/add-terms/index.vue"),
         meta: {
-          breadcrumb: "إضافة فصل دراسى",
-          preLabel: "الفصول الدراسية",
+          breadcrumb: "إضافة ترم دراسي",
+          preLabel: "الترم الدراسي",
           preLink: "/dashboard/terms",
         },
       },
@@ -329,8 +329,8 @@ const protectedRoutes = [
         name: "edit-terms",
         component: () => import("../../views/terms/edit-terms/index.vue"),
         meta: {
-          breadcrumb: "تعديل  الفصل الدراسى",
-          preLabel: "الفصول الدراسية",
+          breadcrumb: "تعديل  الترم الدراسي",
+          preLabel: "الترم الدراسي",
           preLink: "/dashboard/terms",
         },
       },
@@ -339,9 +339,50 @@ const protectedRoutes = [
         name: "show-terms",
         component: () => import("../../views/terms/view-terms/index.vue"),
         meta: {
-          breadcrumb: "تفاصيل الفصل الدراسى",
-          preLabel: "الفصول الدراسية",
+          breadcrumb: "تفاصيل الترم الدراسي",
+          preLabel: "الترم الدراسي",
           preLink: "/dashboard/terms",
+        },
+      },
+      // school year
+      {
+        path: "/dashboard/school-year",
+        name: "school-year",
+        component: () => import("../../views/shcool-year/index.vue"),
+        meta: {
+          breadcrumb: "العام الدراسي",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-year/add",
+        name: "add-school-year",
+        component: () => import("../../views/shcool-year/add-school-year/index.vue"),
+        meta: {
+          breadcrumb: "إضافة عام دراسي",
+          preLabel: "العام الدراسي",
+          preLink: "/dashboard/school-year",
+        },
+      },
+      {
+        path: "/dashboard/school-year/edit/:id",
+        name: "edit-school-year",
+        component: () => import("../../views/shcool-year/edit-school-year/index.vue"),
+        meta: {
+          breadcrumb: "تعديل العام الدراسي",
+          preLabel: "العام الدراسي",
+          preLink: "/dashboard/school-year",
+        },
+      },
+      {
+        path: "/dashboard/school-year/show/:id",
+        name: "show-school-year",
+        component: () => import("../../views/shcool-year/view-school-year/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل العام الدراسي",
+          preLabel: "العام الدراسي",
+          preLink: "/dashboard/school-year",
         },
       },
       // country
@@ -639,6 +680,47 @@ const protectedRoutes = [
           breadcrumb: "تفاصيل مخرج التعلم",
           preLabel: "مخرجات التعلم",
           preLink: "/dashboard/outcome",
+        },
+      },
+      // Lessons
+      {
+        path: "/dashboard/lessons",
+        name: "lessons",
+        component: () => import("../../views/lessons/index.vue"),
+        meta: {
+          breadcrumb: "الدروس",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/lessons/add",
+        name: "add-lessons",
+        component: () => import("../../views/lessons/add-lessons/index.vue"),
+        meta: {
+          breadcrumb: "إضافة الدرس",
+          preLabel: "الدروس",
+          preLink: "/dashboard/lessons",
+        },
+      },
+      {
+        path: "/dashboard/lessons/edit/:id",
+        name: "edit-lessons",
+        component: () => import("../../views/lessons/edit-lessons/index.vue"),
+        meta: {
+          breadcrumb: "تعديل الدرس",
+          preLabel: "الدروس",
+          preLink: "/dashboard/lessons",
+        },
+      },
+      {
+        path: "/dashboard/lessons/show/:id",
+        name: "show-lessons",
+        component: () => import("../../views/lessons/view-lessons/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل الدرس",
+          preLabel: "الدروس",
+          preLink: "/dashboard/lessons",
         },
       },
       // quiz or practice
@@ -1076,8 +1158,8 @@ const protectedRoutes = [
         meta: {
           breadcrumb: " تفاصبل المهام الدراسية",
           preLabel: "المهام",
-          preLink: "/dashboard/super-mission"
-        }
+          preLink: "/dashboard/super-mission",
+        },
       },
       //competitions
       {

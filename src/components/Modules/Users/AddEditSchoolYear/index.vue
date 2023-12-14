@@ -1,35 +1,21 @@
 <template>
-  <div class="add-edit-term">
+  <div class="add-edit-school-year">
     <div class="container-fluid custom-container">
-      <div class="add-edit-term-form">
-        <h3>{{ $route.params.id ? $t("TERM.EDIT") : $t("TERM.ADD_NEW") }}</h3>
-        <validation-observer v-slot="{ invalid }" ref="addEditTermForm">
+      <div class="add-edit-school-year-form">
+        <h3>{{ $route.params.id ? "تعديل العام الدراسي" : "اضافة عام دراسي جديد" }}</h3>
+        <validation-observer v-slot="{ invalid }" ref="addEditSchoolYearForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <TextField
-                    v-model="createTerm.name"
-                    :label="$t('TERM.name')"
-                    :name="$t('TERM.name')"
+                    v-model="name"
+                    label="الاسم"
+                    name="الاسم"
                     :rules="'required|min:3|max:30'"
                   ></TextField>
                 </div>
               </b-col>
-              <!-- <b-col lg="6" class="mb-3">
-                <div class="hold-field">
-                  <SelectSearch
-                    v-model="createTerm.levels"
-                    :label="$t('TERM.level')"
-                    :name="$t('TERM.level')"
-                    :options="levels"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                    :rules="'required'"
-                    multiple
-                  ></SelectSearch>
-                </div>
-              </b-col> -->
             </b-row>
             <b-row>
               <div class="hold-btns-form">
@@ -57,8 +43,7 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
-import { getSingleTermsRequest } from "@/api/term";
-import { getAllLevelsRequest } from "@/api/level";
+import { getSchoolYearByIdRequest } from "@/api/school-year";
 
 export default {
   components: {
@@ -75,45 +60,33 @@ export default {
   },
   data() {
     return {
-      levels: [],
-      createTerm: {
-        name: "",
-        levels: [],
-        school_id: null,
-      },
+      name: "",
     };
   },
   methods: {
     onSubmit() {
-      this.$refs.addEditTermForm.validate().then((success) => {
+      this.$refs.addEditSchoolYearForm.validate().then((success) => {
         if (!success) return;
       });
       if (this.$route.params.id) {
-        this.$emit("handleEditTerm", { ...this.createTerm, levels: [1] });
+        this.$emit("handleEditSchoolYear", this.name);
       } else {
-        this.$emit("handleAddTerm", { ...this.createTerm, levels: [1] });
+        this.$emit("handleAddSchoolYear", this.name);
       }
     },
     handleCancel() {
       this.$emit("handleCancel");
     },
-    getTermToEdit() {
+    getSchoolYear() {
       if (this.$route.params.id) {
-        this.ApiService(getSingleTermsRequest(this.$route.params.id)).then((response) => {
-          this.createTerm.name = response.data.data.name;
-          this.createTerm.levels = response.data.data.levels.map((item) => item.id);
+        this.ApiService(getSchoolYearByIdRequest(this.$route.params.id)).then((response) => {
+          this.name = response.data.data.name;
         });
       }
     },
-    getAllLevels() {
-      this.ApiService(getAllLevelsRequest()).then((response) => {
-        this.levels = response.data.data;
-      });
-    },
   },
   mounted() {
-    this.getTermToEdit();
-    this.getAllLevels();
+    this.getSchoolYear();
   },
 };
 </script>

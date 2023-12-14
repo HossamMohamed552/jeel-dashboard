@@ -1,20 +1,20 @@
 <template>
   <div class="add-country">
     <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
-    <AddEditTerms
+    <AddEditLesson
       :loading="loading"
-      @handleAddTerm="handleAddTerm($event)"
+      @addLessons="handleAddLessons($event)"
       @handleCancel="handleCancel"
     />
   </div>
 </template>
 <script>
-import AddEditTerms from "@/components/Modules/Users/AddEditTerms/index.vue";
+import AddEditLesson from "@/components/Modules/Lessons/AddEditLesson/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { postTermsRequest } from "@/api/term";
+import {postAddLessonRequest} from "@/api/lessons";
 export default {
   name: "index",
-  components: { Modal, AddEditTerms },
+  components: { Modal, AddEditLesson },
   data() {
     return {
       loading: false,
@@ -22,22 +22,24 @@ export default {
     };
   },
   methods: {
-    handleAddTerm($event) {
+    handleAddLessons($event) {
       this.loading = true;
-      // $event.levels = $event.levels.map((item) => item.id)
-      this.ApiService(postTermsRequest($event))
+      this.ApiService(postAddLessonRequest($event))
         .then((response) => {
+          this.loading = false;
           this.showModal = true;
           setTimeout(() => {
-            this.$router.push("/dashboard/terms");
+            this.showModal = false;
           }, 3000);
         })
-        .finally(() => {
-          this.loading = false;
-        });
+        .then(() => {
+          this.$router.push("/dashboard/lessons");
+        }).catch(()=>{
+        this.loading = false;
+      })
     },
     handleCancel() {
-      this.$router.push("/dashboard/terms");
+      this.$router.push("/dashboard/lessons");
     },
   },
 };
