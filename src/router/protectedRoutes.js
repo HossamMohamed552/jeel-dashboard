@@ -344,6 +344,47 @@ const protectedRoutes = [
           preLink: "/dashboard/terms",
         },
       },
+      // school year
+      {
+        path: "/dashboard/school-year",
+        name: "school-year",
+        component: () => import("../../views/shcool-year/index.vue"),
+        meta: {
+          breadcrumb: "العام الدراسي",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-year/add",
+        name: "add-school-year",
+        component: () => import("../../views/shcool-year/add-school-year/index.vue"),
+        meta: {
+          breadcrumb: "إضافة عام دراسي",
+          preLabel: "العام الدراسي",
+          preLink: "/dashboard/school-year",
+        },
+      },
+      {
+        path: "/dashboard/school-year/edit/:id",
+        name: "edit-school-year",
+        component: () => import("../../views/shcool-year/edit-school-year/index.vue"),
+        meta: {
+          breadcrumb: "تعديل العام الدراسي",
+          preLabel: "العام الدراسي",
+          preLink: "/dashboard/school-year",
+        },
+      },
+      {
+        path: "/dashboard/school-year/show/:id",
+        name: "show-school-year",
+        component: () => import("../../views/shcool-year/view-school-year/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل العام الدراسي",
+          preLabel: "العام الدراسي",
+          preLink: "/dashboard/school-year",
+        },
+      },
       // country
       {
         path: "/dashboard/country",

@@ -67,6 +67,15 @@ let routesSchool = [
     icon: require("@/assets/images/icons/school-section.svg"),
     permission: "view-terms",
   },
+  {
+    name: "العام الدراسي",
+    path: "/dashboard/school-year",
+    altImage: "school-year",
+    titleImage: "school-year",
+    icon: require("@/assets/images/icons/school-section.svg"),
+    // todo to change the permission
+    permission: "view-terms",
+  },
 ];
 let routesContent = [
   {
