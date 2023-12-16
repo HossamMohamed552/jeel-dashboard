@@ -22,7 +22,7 @@
           v-if="user.permissions.includes(`add-packages`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة باقة</span>
+          <span>إضافة باقة جديدة</span>
         </Button>
       </template>
     </ListItems>
@@ -40,14 +40,14 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import {deletePackagesRequest, getPackagesRequest} from "@/api/packages.js";
+import { deletePackagesRequest, getPackagesRequest } from "@/api/packages.js";
 import Modal from "@/components/Shared/Modal/index.vue";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   components: { Modal, ListItems, Button },
-  computed:{
-    ...mapGetters(['user'])
+  computed: {
+    ...mapGetters(["user"]),
   },
   data() {
     return {
@@ -63,20 +63,29 @@ export default {
         },
         {
           key: "name",
-          label: this.$i18n.t("TABLE_FIELDS.name"),
+          label: this.$i18n.t("PACKAGE.NAME"),
         },
         {
           key: "country.name",
           label: this.$i18n.t("TABLE_FIELDS.countryName"),
         },
         {
-          key: "price",
-          label: this.$i18n.t("TABLE_FIELDS.price"),
-        },
-        {
           key: "classes_count",
           label: this.$i18n.t("TABLE_FIELDS.classes_count"),
         },
+        {
+          key: "price",
+          label: this.$i18n.t("PACKAGE.CURRENT_PRICE"),
+        },
+        {
+          key: "price",
+          label: "PACKAGE.CURRENCY",
+        },
+        // {
+        //   key: "number_users_roles[3]",
+        //   label: "عدد الطلاب",
+        // },
+
         // {
         //   key: "number_users_roles[0]",
         //   label: "عدد مديرين المدرسة",
@@ -89,10 +98,6 @@ export default {
         //   key: "number_users_roles[2]",
         //   label: "عدد المدرسين",
         // },
-        {
-          key: "number_users_roles[3]",
-          label: "عدد الطلاب",
-        },
         // {
         //   key: "number_users_roles[4]",
         //   label: "عدد أولياء الامور",
@@ -110,22 +115,22 @@ export default {
       this.$router.push("/dashboard/package/add");
     },
     getPackages(event) {
-      this.loading = true
-      this.ApiService(getPackagesRequest(event)).then((response) => {
-        this.packagesList = response.data.data;
-        this.totalNumber = response.data.meta.total;
-      }) .finally(() => {
+      this.loading = true;
+      this.ApiService(getPackagesRequest(event))
+        .then((response) => {
+          this.packagesList = response.data.data;
+          this.totalNumber = response.data.meta.total;
+        })
+        .finally(() => {
           this.loading = false;
         });
     },
 
     detailItem($event) {
       this.$router.push(`/dashboard/package/show/${$event}`);
-
     },
     editItem($event) {
       this.$router.push(`/dashboard/package/edit/${$event}`);
-
     },
     deleteItem($event) {
       this.itemId = $event;

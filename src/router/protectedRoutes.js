@@ -113,7 +113,7 @@ const protectedRoutes = [
         name: "add-package",
         component: () => import("../../views/package/add-package/index.vue"),
         meta: {
-          breadcrumb: "إضافة باقة",
+          breadcrumb: "إضافة باقة جديدة",
           preLabel: "الباقات",
           preLink: "/dashboard/package",
         },
@@ -657,7 +657,7 @@ const protectedRoutes = [
         name: "add-outcome",
         component: () => import("../../views/outcome/add-outcome/index.vue"),
         meta: {
-          breadcrumb: "إضافة مخرج التعلم",
+          breadcrumb: "إضافة مخرج تعليمي",
           preLabel: "مخرجات التعلم",
           preLink: "/dashboard/outcome",
         },
@@ -688,7 +688,7 @@ const protectedRoutes = [
         name: "lessons",
         component: () => import("../../views/lessons/index.vue"),
         meta: {
-          breadcrumb: "الدروس",
+          breadcrumb: "الدروس التعليمية",
           preLabel: "",
           preLink: "",
         },
@@ -698,8 +698,8 @@ const protectedRoutes = [
         name: "add-lessons",
         component: () => import("../../views/lessons/add-lessons/index.vue"),
         meta: {
-          breadcrumb: "إضافة الدرس",
-          preLabel: "الدروس",
+          breadcrumb: "إضافة درس تعليمي",
+          preLabel: "الدروس التعليمية",
           preLink: "/dashboard/lessons",
         },
       },

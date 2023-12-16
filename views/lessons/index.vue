@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'الدروس'"
+      :header-name="'قائمة الدروس التعليمية'"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="lessonsList"
@@ -22,7 +22,7 @@
           v-if="user.permissions.includes(`add-outcome`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة درس</span>
+          <span>إضافة درس تعليمي</span>
         </Button>
       </template>
     </ListItems>
@@ -61,8 +61,6 @@ export default {
           key: "name",
           label: this.$i18n.t("TABLE_FIELDS.name"),
         },
-        {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.level')},
-        {key: "term.name", label: this.$i18n.t('TABLE_FIELDS.term')},
         {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
         {
           key: "actions",

@@ -81,7 +81,7 @@
     "superDescription": "الإعلان",
     "teacherName": "اسم المدرس",
     "superClass": "اسم الصف الدراسى",
-    "countryName": "إسم الدولة"
+    "countryName": "الدولة"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -280,8 +280,10 @@
   "LESSONS": {
     "LESSONS": "الدروس",
     "DETAILS": "تفاصيل الدرس",
-    "ADD": "اضافة الدرس",
-    "EDIT": "تعديل الدرس"
+    "ADD": "إضافة درس تعليمي",
+    "EDIT": "تعديل الدرس",
+    "NAME": "اسم الدرس",
+    "ENTER_LESSON_NAME": "أدخل اسم الدرس"
   },
   "QUIZZES": {
     "EDIT": "تعديل التمرين",
@@ -312,7 +314,10 @@
     "description": "الملاحظات",
     "ADD_NEW": "إضافة باقة جديدة",
     "EDIT": "تعديل الباقة",
-    "countryName": "اسم الدولة"
+    "countryName": "الدولة",
+    "NAME": "اسم الباقة",
+    "CURRENT_PRICE": "السعر الحالى للباقة",
+    "CURRENCY": "العملة"
   },
   "SCHOOL_TYPE": {
     "ADD_NEW": "إضافة نوع مدرسة جديد",
@@ -329,14 +334,16 @@
   "OBJECTIVE": {
     "OBJECTIVE": "الأهداف التعليمية",
     "DETAILS": "تفاصيل الهدف التعليمى",
-    "ADD": "اضافة هدف التعليمى",
-    "EDIT": "تعديل هدف التعليمى"
+    "ADD": "اضافة هدف تعليمي",
+    "EDIT": "تعديل هدف التعليمى",
+    "NAME": "اسم الهدف"
   },
   "OUTCOME": {
     "OUTCOME": "مخرجات التعلم",
     "DETAILS": "تفاصيل مخرج التعلم",
-    "ADD": "اضافة مخرج التعلم",
-    "EDIT": "تعديل مخرج التعلم"
+    "ADD": "إضافة مخرج تعليمي",
+    "EDIT": "تعديل مخرج التعلم",
+    "NAME": "اسم المخرج التعليمي"
   },
   "CLASS": {
     "ADD_NEW": "إضافة صف دراسي جديد",
@@ -537,5 +544,9 @@
   "QUESTION_TYPE": "نمط السؤال",
   "SUB_QUESTION_TYPE": "نمط السؤال الفرعي",
   "QUESTION": "السؤال",
-  "QUESTION_DIFFICULTY_TABLE": "المستوى"
+  "QUESTION_DIFFICULTY_TABLE": "المستوى",
+  "LEARNING_PATH": {
+    "LEARNING_PATH": "المسار التعليمي",
+    "CHOOSE_LEARNING_PATH": "اختر المسار التعليمي"
+  }
 }

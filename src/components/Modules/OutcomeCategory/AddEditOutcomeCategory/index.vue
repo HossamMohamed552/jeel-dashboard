@@ -12,8 +12,8 @@
                 <div class="hold-field">
                   <TextField
                     v-model="formValues.name"
-                    :label="$t('GLOBAL_NAME')"
-                    :name="$t('GLOBAL_NAME')"
+                    :label="$t('OUTCOME.NAME')"
+                    :name="$t('OUTCOME.NAME')"
                     :rules="'required|max:30'"
                   ></TextField>
                 </div>
@@ -22,16 +22,17 @@
                 <div class="hold-field">
                   <label>
                     <span><i class="fa-solid fa-asterisk"></i></span>
-                    {{$t('QUESTIONS.LEVELS')}}
+                    {{ $t("LEARNING_PATH.LEARNING_PATH") }}
                   </label>
                   <SelectSearch
-                    v-model="formValues.level_id"
-                    :name="$t('QUESTIONS.LEVELS')"
-                    :options="levels"
+                    v-model="formValues.learning_path_id"
+                    :name="$t('LEARNING_PATH.LEARNING_PATH')"
+                    :options="learningPaths"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
                     :deselectFromDropdown="true"
+                    @input="getLessons"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -39,12 +40,13 @@
                 <div class="hold-field">
                   <label>
                     <span><i class="fa-solid fa-asterisk"></i></span>
-                    {{$t('MISSIONS.LEARNING_PATH')}}
+                    {{ $t("LESSONS.NAME") }}
                   </label>
                   <SelectSearch
-                    v-model="formValues.learning_path_id"
-                    :name="$t('MISSIONS.LEARNING_PATH')"
-                    :options="learningPaths"
+                    :disabled="!formValues.learning_path_id"
+                    v-model="formValues.lesson_id"
+                    :name="$t('LESSONS.NAME')"
+                    :options="lessons"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
@@ -79,9 +81,10 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
-import {getAllLearningPathsRequest} from "@/api/learningPath";
-import {getOutcomeCategoryByIdRequest} from "@/api/outcome";
-import {getAllLevelsRequest} from "@/api/level";
+import { getAllLearningPathsRequest } from "@/api/learningPath";
+import { getOutcomeCategoryByIdRequest } from "@/api/outcome";
+import { getLessonsRequest } from "@/api/lessons";
+import { debounce } from "lodash";
 export default {
   components: {
     SelectSearch,
@@ -100,11 +103,12 @@ export default {
       formValues: {
         name: "",
         learning_path_id: "",
-        level_id: ""
+        lesson_id: "",
       },
       outcomeId: this.$route.params.id,
-      learningPaths:[],
-      levels:[],
+      learningPaths: [],
+      lessons: [],
+      selectedLearningPath: null,
     };
   },
   methods: {
@@ -123,11 +127,14 @@ export default {
     },
     getOutcomeCategoryById() {
       if (this.outcomeId) {
-        this.ApiService(getOutcomeCategoryByIdRequest(this.outcomeId)).then((response) => {
-          this.formValues = response.data.data;
-          this.formValues.learning_path_id = response.data.data.learning_path.id
-          this.formValues.level_id = response.data.data.level.id
-        });
+        this.ApiService(getOutcomeCategoryByIdRequest(this.outcomeId)).then(
+          (response) => {
+            this.formValues = response.data.data;
+            this.formValues.learning_path_id =
+              response.data.data.learning_path.id;
+            this.formValues.lesson_id = response.data.data.lesson.id;
+          }
+        );
       }
     },
     getLearningPaths() {
@@ -135,14 +142,16 @@ export default {
         this.learningPaths = response.data.data;
       });
     },
-    getAllLevels(){
-      this.ApiService(getAllLevelsRequest()).then((response) => {
-        this.levels = response.data.data
-      })
-    }
+    getLessons: debounce(function () {
+      this.selectedLearningPath = this.formValues.learning_path_id;
+      this.ApiService(
+        getLessonsRequest({ learning_path_id: this.selectedLearningPath })
+      ).then((response) => {
+        this.lessons = response.data.data;
+      });
+    }, 500),
   },
   mounted() {
-    this.getAllLevels()
     this.getOutcomeCategoryById();
     this.getLearningPaths();
   },

@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'الأهداف التعليمة'"
+      :header-name="'قائمة أهداف التعلم'"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="objectiveCategories"
@@ -60,10 +60,10 @@ export default {
         },
         {
           key: "name",
-          label: this.$i18n.t("TABLE_FIELDS.name"),
+          label: this.$i18n.t("OBJECTIVE.NAME"),
         },
-        {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.level')},
-        {key: "learning_path.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
+        {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
+        {key: "lesson.name", label: this.$i18n.t('LESSONS.NAME')},
         {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),

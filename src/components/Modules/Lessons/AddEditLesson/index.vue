@@ -12,55 +12,24 @@
                 <div class="hold-field">
                   <TextField
                     v-model="formValues.name"
-                    :label="$t('GLOBAL_NAME')"
-                    :name="$t('GLOBAL_NAME')"
+                    :label="$t('LESSONS.NAME')"
+                    :name="$t('LESSONS.NAME')"
+                    :placeholder="$t('LESSONS.ENTER_LESSON_NAME')"
                     :rules="'required|max:30'"
                   ></TextField>
                 </div>
               </b-col>
+
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <label>
                     <span><i class="fa-solid fa-asterisk"></i></span>
-                    {{ $t("QUESTIONS.LEVELS") }}
-                  </label>
-                  <SelectSearch
-                    v-model="formValues.level_id"
-                    :name="$t('QUESTIONS.LEVELS')"
-                    :options="levels"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                    :rules="'required'"
-                    :deselectFromDropdown="true"
-                  ></SelectSearch>
-                </div>
-              </b-col>
-              <b-col lg="4" class="mb-3">
-                <div class="hold-field">
-                  <label>
-                    <span><i class="fa-solid fa-asterisk"></i></span>
-                    {{ $t("MISSIONS.terms") }}
-                  </label>
-                  <SelectSearch
-                    v-model="formValues.term_id"
-                    :name="$t('MISSIONS.terms')"
-                    :options="terms"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                    :rules="'required'"
-                    :deselectFromDropdown="true"
-                  ></SelectSearch>
-                </div>
-              </b-col>
-              <b-col lg="4" class="mb-3">
-                <div class="hold-field">
-                  <label>
-                    <span><i class="fa-solid fa-asterisk"></i></span>
-                    {{ $t("MISSIONS.LEARNING_PATH") }}
+                    {{ $t("LEARNING_PATH.LEARNING_PATH") }}
                   </label>
                   <SelectSearch
                     v-model="formValues.learning_path_id"
-                    :name="$t('MISSIONS.LEARNING_PATH')"
+                    :name="$t('LEARNING_PATH.LEARNING_PATH')"
+                    :placeholder="$t('LEARNING_PATH.CHOOSE_LEARNING_PATH')"
                     :options="learningPaths"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -98,8 +67,6 @@ import Modal from "@/components/Shared/Modal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import { getAllLearningPathsRequest } from "@/api/learningPath";
 import { getLessonByIdRequest } from "@/api/lessons";
-import { getAllLevelsRequest } from "@/api/level";
-import {getAllTermsRequest} from "@/api/term";
 export default {
   components: {
     SelectSearch,
@@ -117,14 +84,10 @@ export default {
     return {
       formValues: {
         name: "",
-        learning_path_id: "",
-        term_id: "",
-        level_id: "",
+        learning_path_id: ""
       },
       lessonId: this.$route.params.id,
       learningPaths: [],
-      levels: [],
-      terms: [],
     };
   },
   methods: {
@@ -147,8 +110,6 @@ export default {
           (response) => {
             this.formValues = response.data.data;
             this.formValues.learning_path_id = response.data.data.learningPath.id;
-            this.formValues.level_id = response.data.data.level.id;
-            this.formValues.term_id = response.data.data.term.id;
           }
         );
       }
@@ -158,22 +119,10 @@ export default {
         this.learningPaths = response.data.data;
       });
     },
-    getAllLevels() {
-      this.ApiService(getAllLevelsRequest()).then((response) => {
-        this.levels = response.data.data;
-      });
-    },
-    getTerms() {
-      this.ApiService(getAllTermsRequest()).then((response) => {
-        this.terms = response.data.data;
-      });
-    },
   },
   mounted() {
-    this.getAllLevels();
     this.getLessonById();
     this.getLearningPaths();
-    this.getTerms()
   },
 };
 </script>
