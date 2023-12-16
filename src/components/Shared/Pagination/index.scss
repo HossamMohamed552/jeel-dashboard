@@ -2,7 +2,6 @@
   align-items: center;
 
   ::v-deep .page-item {
-  
     &.active {
       .page-link {
         background-color: $color-primary;
@@ -12,7 +11,7 @@
 
     .page-link {
       border: none;
-      color: #76236C;
+      color: #76236c;
       background-color: transparent;
       border-radius: 50%;
       margin: 0 6px;
@@ -26,15 +25,19 @@
       }
     }
   }
- 
 }
 .per-page-select {
   width: fit-content !important;
   border-radius: 40px;
-  background-color: #F1F1F1 !important;
+  background-color: #f1f1f1 !important;
   color: $color-primary;
   border: none;
   // height: 30px;
   padding: 0px 30px 8px !important;
   font-weight: bold;
+}
+.number-of-data-shown {
+  color: #8a8a8a;
+  font-weight: bold;
+  font-size: 0.875rem;
 }
