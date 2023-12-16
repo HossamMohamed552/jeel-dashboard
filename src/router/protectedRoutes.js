@@ -385,6 +385,129 @@ const protectedRoutes = [
           preLink: "/dashboard/school-year",
         },
       },
+      // currency
+      {
+        path: "/dashboard/currency",
+        name: "currency",
+        component: () => import("../../views/currency/index.vue"),
+        meta: {
+          breadcrumb: "العملة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/currency/add",
+        name: "add-currency",
+        component: () => import("../../views/currency/add-currency/index.vue"),
+        meta: {
+          breadcrumb: "إضافة عملة",
+          preLabel: "العملة",
+          preLink: "/dashboard/currency",
+        },
+      },
+      {
+        path: "/dashboard/currency/edit/:id",
+        name: "edit-currency",
+        component: () => import("../../views/currency/edit-currency/index.vue"),
+        meta: {
+          breadcrumb: "تعديل العملة",
+          preLabel: "العملة",
+          preLink: "/dashboard/currency",
+        },
+      },
+      {
+        path: "/dashboard/currency/show/:id",
+        name: "show-currency",
+        component: () => import("../../views/currency/view-currency/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل العملة",
+          preLabel: "العملة",
+          preLink: "/dashboard/currency",
+        },
+      },
+      // learning-style
+      {
+        path: "/dashboard/learning-style",
+        name: "learning-style",
+        component: () => import("../../views/learning-style/index.vue"),
+        meta: {
+          breadcrumb: "أسلوب التعلم",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/learning-style/add",
+        name: "add-learning-style",
+        component: () => import("../../views/learning-style/add-learning-style/index.vue"),
+        meta: {
+          breadcrumb: "إضافة أسلوب تعلم",
+          preLabel: "أسلوب التعلم",
+          preLink: "/dashboard/learning-style",
+        },
+      },
+      {
+        path: "/dashboard/learning-style/edit/:id",
+        name: "edit-learning-style",
+        component: () => import("../../views/learning-style/edit-learning-style/index.vue"),
+        meta: {
+          breadcrumb: "تعديل أسلوب التعلم",
+          preLabel: "أسلوب التعلم",
+          preLink: "/dashboard/learning-style",
+        },
+      },
+      {
+        path: "/dashboard/learning-style/show/:id",
+        name: "show-learning-style",
+        component: () => import("../../views/learning-style/view-learning-style/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل أسلوب التعلم",
+          preLabel: "أسلوب التعلم",
+          preLink: "/dashboard/learning-style",
+        },
+      },
+      // learning-skill
+      {
+        path: "/dashboard/learning-skill",
+        name: "learning-skill",
+        component: () => import("../../views/learning-skill/index.vue"),
+        meta: {
+          breadcrumb: "قائمة المهارات",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/learning-skill/add",
+        name: "add-learning-skill",
+        component: () => import("../../views/learning-skill/add-learning-skill/index.vue"),
+        meta: {
+          breadcrumb: "إضافة مهارة تعلم",
+          preLabel: "مهارة التعلم",
+          preLink: "/dashboard/learning-skill",
+        },
+      },
+      {
+        path: "/dashboard/learning-skill/edit/:id",
+        name: "edit-learning-skill",
+        component: () => import("../../views/learning-skill/edit-learning-skill/index.vue"),
+        meta: {
+          breadcrumb: "تعديل مهارة التعلم",
+          preLabel: "مهارة التعلم",
+          preLink: "/dashboard/learning-skill",
+        },
+      },
+      {
+        path: "/dashboard/learning-skill/show/:id",
+        name: "show-learning-skill",
+        component: () => import("../../views/learning-skill/view-learning-skill/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل مهارة التعلم",
+          preLabel: "مهارة التعلم",
+          preLink: "/dashboard/learning-skill",
+        },
+      },
       // country
       {
         path: "/dashboard/country",

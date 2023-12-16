@@ -209,6 +209,33 @@ let routeBasicData = [
     icon: require("@/assets/images/icons/question.svg"),
     permission: "view-outcome",
   },
+  {
+    name: "العملة",
+    path: "/dashboard/currency",
+    altImage: "currency",
+    titleImage: "currency",
+    icon: require("@/assets/images/icons/school-section.svg"),
+    // todo to change the permission
+    permission: "view-outcome",
+  },
+  {
+    name: "أسلوب التعلم",
+    path: "/dashboard/learning-style",
+    altImage: "learning-style",
+    titleImage: "learning-style",
+    icon: require("@/assets/images/icons/school-section.svg"),
+    // todo to change the permission
+    permission: "view-outcome",
+  },
+  {
+    name: "مهارة التعلم",
+    path: "/dashboard/learning-skill",
+    altImage: "learning-skill",
+    titleImage: "learning-skill",
+    icon: require("@/assets/images/icons/school-section.svg"),
+    // todo to change the permission
+    permission: "view-outcome",
+  },
 ];
 let routeSuperVisor = [
   {

@@ -18,7 +18,7 @@
                     ></TextField>
                   </div>
                 </b-col>
-                <b-col lg="6" class="mb-3">
+                <!-- <b-col lg="6" class="mb-3">
                   <div class="hold-field">
                     <TextField
                       v-model="createLevel.min_levels"
@@ -27,7 +27,7 @@
                       :rules="'required|numeric|max_value:20'"
                     ></TextField>
                   </div>
-                </b-col>
+                </b-col> -->
                 <!-- <b-col lg="12" class="mb-3">
                   <SelectSearch
                     multiple
