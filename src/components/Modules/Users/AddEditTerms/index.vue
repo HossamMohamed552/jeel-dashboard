@@ -16,6 +16,16 @@
                   ></TextField>
                 </div>
               </b-col>
+              <b-col lg="6" class="mb-3">
+                <div class="hold-field">
+                  <TextField
+                    v-model="createTerm.min_missions"
+                    :label="$t('LEVEL.min_levels')"
+                    :name="$t('LEVEL.min_levels')"
+                    :rules="'required|numeric|max_value:20'"
+                  ></TextField>
+                </div>
+              </b-col>
               <!-- <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
@@ -77,6 +87,7 @@ export default {
     return {
       levels: [],
       createTerm: {
+        min_missions: null,
         name: "",
         levels: [],
         school_id: null,
@@ -101,6 +112,7 @@ export default {
       if (this.$route.params.id) {
         this.ApiService(getSingleTermsRequest(this.$route.params.id)).then((response) => {
           this.createTerm.name = response.data.data.name;
+          this.createTerm.min_missions = response.data.data.min_missions;
           this.createTerm.levels = response.data.data.levels.map((item) => item.id);
         });
       }
