@@ -74,7 +74,7 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.classes_count"),
         },
         {
-          key: "price",
+          key: "currency",
           label: this.$i18n.t("PACKAGE.CURRENT_PRICE"),
         },
         {
