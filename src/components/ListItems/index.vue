@@ -514,6 +514,32 @@ export default {
       }
     },
   },
+  updated(){
+    // To ADD TH TEXT INSIDE TD ATTR
+    const htmlDoc = document.documentElement
+    htmlDoc.setAttribute("lang", this.$i18n.locale === "ar" ? "ar" : "en")
+    htmlDoc.setAttribute("dir", this.$i18n.locale === "ar" ? "rtl" : "ltr")
+    const tables = document.querySelectorAll('.table');
+    tables.forEach(table => {
+      var headertext = [],
+        headers = table.querySelectorAll('table th'),
+        tablerows = table.querySelectorAll('table th'),
+        tablebody = table.querySelector('table tbody');
+      for (var i = 0; i < headers.length; i++) {
+        var current = headers[i];
+        headertext.push(current.textContent.replace(/\r?\n|\r/, ''));
+      }
+      if (tablebody !== null) {
+        for (var i = 0, row; row = tablebody.rows[i]; i++) {
+          for (var j = 0, col; col = row.cells[j]; j++) {
+            if (headertext[j] != undefined) {
+              col.setAttribute('data-th', headertext[j]);
+            }
+          }
+        }
+      }
+    });
+  }
 };
 </script>
 <style scoped lang="scss">
