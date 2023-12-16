@@ -62,7 +62,7 @@ export default {
           label: this.$i18n.t("OUTCOME.NAME"),
         },
         {key: "learningPath.name", label: this.$i18n.t('LEARNING_PATH.LEARNING_PATH')},
-        {key: "lesson.name", label: this.$i18n.t('LESSONS.NAME')},
+        {key: "lesson.name", label: this.$i18n.t('LESSONS.NAME_OF_LESSON')},
         {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),

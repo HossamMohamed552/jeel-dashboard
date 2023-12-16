@@ -6,7 +6,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditCountryForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="12" class="mb-3">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="createCountry.name"
@@ -102,7 +102,7 @@ export default {
         this.ApiService(getSingleCountryRequest(this.$route.params.id)).then((response) => {
           this.createCountry.name = response.data.data.name
           // this.defaultValue.name = response.data.data.name
-          this.createCountry.code = response.data.data.code
+          // this.createCountry.code = response.data.data.code
           // this.defaultValue.code = response.data.data.code
         })
       }

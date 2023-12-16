@@ -28,7 +28,7 @@
               </b-col>
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
-                  <label><span><i class="fa-solid fa-asterisk"></i></span>
+                  <label>
                     {{ $t('MISSIONS.country') }}</label>
                   <SelectSearch
                     v-model="formValues.country_id"
@@ -41,7 +41,7 @@
               </b-col>
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
-                  <label><span><i class="fa-solid fa-asterisk"></i></span>
+                  <label>
                     {{ $t('USERS.religion') }}</label>
                   <SelectSearch
                     v-model="formValues.religion_id"
@@ -55,8 +55,9 @@
               <b-col lg="4">
                 <div class="hold-field">
                   <ValidationProvider rules="required" class="d-flex justify-content-start align-items-start">
+                    <label for="gender" class="group-type">{{ $t('USERS.gender') }}</label>
                     <span><i class="fa-solid fa-asterisk"></i></span>
-                    <b-form-group :label="$t('USERS.gender')" class="group-type">
+                    <b-form-group id="gender" class="mt-4">
                       <b-form-radio
                         v-model="formValues.gender"
                         value="male"

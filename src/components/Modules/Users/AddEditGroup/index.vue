@@ -16,35 +16,51 @@
                   ></TextField>
                 </div>
               </b-col>
-<!--              <b-col lg="3" class="mb-3 radio-item">-->
-<!--                <div class="hold-field">-->
-<!--                  <ValidationProvider rules="required" v-slot="{ errors }" class="d-flex justify-content-start align-items-start">-->
-<!--                    <span><i class="fa-solid fa-asterisk"></i></span> <b-form-group :label="$t('GROUP.type')" class="group-type">-->
-<!--                      <b-form-radio v-model="createGroup.type" value="national" name="group-type">-->
-<!--                        محلى-->
-<!--                      </b-form-radio>-->
-<!--                      <b-form-radio v-model="createGroup.type" value="international"-->
-<!--                                    name="group-type">دولى-->
-<!--                      </b-form-radio>-->
-<!--                    </b-form-group>-->
-<!--                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">-->
-<!--                      {{ error }}-->
-<!--                    </b-form-invalid-feedback>-->
-<!--                  </ValidationProvider>-->
-<!--                </div>-->
-<!--              </b-col>-->
+              <!--              <b-col lg="3" class="mb-3 radio-item">-->
+              <!--                <div class="hold-field">-->
+              <!--                  <ValidationProvider rules="required" v-slot="{ errors }" class="d-flex justify-content-start align-items-start">-->
+              <!--                    <span><i class="fa-solid fa-asterisk"></i></span> <b-form-group :label="$t('GROUP.type')" class="group-type">-->
+              <!--                      <b-form-radio v-model="createGroup.type" value="national" name="group-type">-->
+              <!--                        محلى-->
+              <!--                      </b-form-radio>-->
+              <!--                      <b-form-radio v-model="createGroup.type" value="international"-->
+              <!--                                    name="group-type">دولى-->
+              <!--                      </b-form-radio>-->
+              <!--                    </b-form-group>-->
+              <!--                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">-->
+              <!--                      {{ error }}-->
+              <!--                    </b-form-invalid-feedback>-->
+              <!--                  </ValidationProvider>-->
+              <!--                </div>-->
+              <!--              </b-col>-->
               <b-col lg="3" class="mb-3 radio-item">
                 <div class="hold-field">
-                  <ValidationProvider rules="required" v-slot="{ errors }" class="d-flex justify-content-start align-items-start">
-                    <span><i class="fa-solid fa-asterisk"></i></span><b-form-group :label="$t('GROUP.music')" class="group-type">
-                      <b-form-radio v-model="createGroup.music_status" value="0"
-                                    name="group-music_type">أكابيلا
+                  <ValidationProvider rules="required" v-slot="{ errors }">
+                    <label for="music" class="group-type d-inline-block">{{
+                      $t("GROUP.music")
+                    }}</label>
+                    <span><i class="fa-solid fa-asterisk"></i></span>
+                    <b-form-group
+                      id="music"
+                      class="d-flex justify-content-start align-items-start mt-3"
+                    >
+                      <b-form-radio
+                        v-model="createGroup.music_status"
+                        value="0"
+                        name="group-music_type"
+                        >أكابيلا
                       </b-form-radio>
-                      <b-form-radio v-model="createGroup.music_status" value="1"
-                                    name="group-music_type">بموسيقى
+                      <b-form-radio
+                        v-model="createGroup.music_status"
+                        value="1"
+                        name="group-music_type"
+                        >بموسيقى
                       </b-form-radio>
                     </b-form-group>
-                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                    <b-form-invalid-feedback
+                      v-for="(error, index) in errors"
+                      :key="index"
+                    >
                       {{ error }}
                     </b-form-invalid-feedback>
                   </ValidationProvider>
@@ -52,15 +68,36 @@
               </b-col>
               <b-col lg="3" class="mb-3 radio-item">
                 <div class="hold-field">
-                  <ValidationProvider rules="required" v-slot="{ errors }" class="d-flex justify-content-start align-items-start">
-                    <span><i class="fa-solid fa-asterisk"></i></span> <b-form-group :label="$t('GROUP.status')" class="group-type">
-                      <b-form-radio v-model="createGroup.status" value="0" name="group-status">غير
-                        مفعل
+                  <ValidationProvider
+                    rules="required"
+                    v-slot="{ errors }"
+                    
+                  >
+                    <label for="active" class="group-type d-inline-block">{{
+                      $t("GROUP.status")
+                    }}</label>
+                    <span><i class="fa-solid fa-asterisk"></i></span>
+                    <b-form-group
+                      id="active"
+                      class="d-flex justify-content-start align-items-start mt-3"
+                    >
+                      <b-form-radio
+                        v-model="createGroup.status"
+                        value="0"
+                        name="group-status"
+                        >غير مفعل
                       </b-form-radio>
-                      <b-form-radio v-model="createGroup.status" value="1" name="group-status">مفعل
+                      <b-form-radio
+                        v-model="createGroup.status"
+                        value="1"
+                        name="group-status"
+                        >مفعل
                       </b-form-radio>
                     </b-form-group>
-                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                    <b-form-invalid-feedback
+                      v-for="(error, index) in errors"
+                      :key="index"
+                    >
                       {{ error }}
                     </b-form-invalid-feedback>
                   </ValidationProvider>
@@ -105,7 +142,10 @@
               <b-col lg="12">
                 <b-row>
                   <div class="hold-btns-form">
-                    <Button @click="handleCancel" custom-class="cancel-btn margin">
+                    <Button
+                      @click="handleCancel"
+                      custom-class="cancel-btn margin"
+                    >
                       {{ $t("GLOBAL_CANCEL") }}
                     </Button>
                     <Button
@@ -114,7 +154,9 @@
                       :disabled="invalid || canNotSend"
                       custom-class="submit-btn"
                     >
-                      {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
+                      {{
+                        $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE")
+                      }}
                     </Button>
                   </div>
                 </b-row>
@@ -131,9 +173,9 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import RadioButton from "@/components/Shared/RadioButton/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import {getSingleSchoolGroupRequest} from "@/api/schoolGroup";
-import {getAllSearchUsersRequest} from "@/api/user";
-import {getAllCountryRequest} from "@/api/country";
+import { getSingleSchoolGroupRequest } from "@/api/schoolGroup";
+import { getAllSearchUsersRequest } from "@/api/user";
+import { getAllCountryRequest } from "@/api/country";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 
 export default {
@@ -142,7 +184,7 @@ export default {
     Modal,
     TextField,
     RadioButton,
-    Button
+    Button,
   },
   props: {
     loading: {
@@ -157,26 +199,32 @@ export default {
       createGroup: {
         name: "",
         // type: '',
-        music_status: '',
-        status: '',
-        owner_id: '',
-        country_id: ''
+        music_status: "",
+        status: "",
+        owner_id: "",
+        country_id: "",
       },
       defaultGroup: {
         name: "",
         // type: '',
-        music_status: '',
-        status: '',
-        owner_id: '',
-        country_id: ''
-      }
+        music_status: "",
+        status: "",
+        owner_id: "",
+        country_id: "",
+      },
     };
   },
   computed: {
     canNotSend() {
-    // && (this.createGroup.type === this.defaultGroup.type)
-      return (this.createGroup.name === this.defaultGroup.name) && (this.createGroup.music_status === this.defaultGroup.music_status) && (this.createGroup.status === this.defaultGroup.status) && (this.createGroup.owner_id === this.defaultGroup.owner_id) && (this.createGroup.country_id === this.defaultGroup.country_id)
-    }
+      // && (this.createGroup.type === this.defaultGroup.type)
+      return (
+        this.createGroup.name === this.defaultGroup.name &&
+        this.createGroup.music_status === this.defaultGroup.music_status &&
+        this.createGroup.status === this.defaultGroup.status &&
+        this.createGroup.owner_id === this.defaultGroup.owner_id &&
+        this.createGroup.country_id === this.defaultGroup.country_id
+      );
+    },
   },
   methods: {
     onSubmit() {
@@ -184,9 +232,9 @@ export default {
         if (!success) return;
       });
       if (this.$route.params.id) {
-        this.$emit('handleEditGroup', this.createGroup)
+        this.$emit("handleEditGroup", this.createGroup);
       } else {
-        this.$emit('handleAddGroup', this.createGroup)
+        this.$emit("handleAddGroup", this.createGroup);
       }
     },
     handleCancel() {
@@ -194,38 +242,40 @@ export default {
     },
     getGroupToEdit() {
       if (this.$route.params.id) {
-        this.ApiService(getSingleSchoolGroupRequest(this.$route.params.id)).then((response) => {
-          this.createGroup.name = response.data.data.name
-          this.defaultGroup.name = response.data.data.name
-          this.createGroup.type = response.data.data.type
-          this.defaultGroup.type = response.data.data.type
-          this.createGroup.music_status = response.data.data.music_status
-          this.defaultGroup.music_status = response.data.data.music_status
-          this.createGroup.status = response.data.data.status
-          this.defaultGroup.status = response.data.data.status
-          this.createGroup.owner_id = response.data.data.owner.id
-          this.defaultGroup.owner_id = response.data.data.owner.id
-          this.createGroup.country_id = response.data.data.country.id
-          this.defaultGroup.country_id = response.data.data.country.id
-        })
+        this.ApiService(
+          getSingleSchoolGroupRequest(this.$route.params.id)
+        ).then((response) => {
+          this.createGroup.name = response.data.data.name;
+          this.defaultGroup.name = response.data.data.name;
+          this.createGroup.type = response.data.data.type;
+          this.defaultGroup.type = response.data.data.type;
+          this.createGroup.music_status = response.data.data.music_status;
+          this.defaultGroup.music_status = response.data.data.music_status;
+          this.createGroup.status = response.data.data.status;
+          this.defaultGroup.status = response.data.data.status;
+          this.createGroup.owner_id = response.data.data.owner.id;
+          this.defaultGroup.owner_id = response.data.data.owner.id;
+          this.createGroup.country_id = response.data.data.country.id;
+          this.defaultGroup.country_id = response.data.data.country.id;
+        });
       }
     },
     getAllUsers() {
       this.ApiService(getAllSearchUsersRequest()).then((response) => {
-        this.users = response.data.data
-      })
+        this.users = response.data.data;
+      });
     },
     getAllCountries() {
       this.ApiService(getAllCountryRequest()).then((response) => {
-        this.countries = response.data.data
-      })
-    }
+        this.countries = response.data.data;
+      });
+    },
   },
   mounted() {
-    this.getGroupToEdit()
-    this.getAllUsers()
-    this.getAllCountries()
-  }
+    this.getGroupToEdit();
+    this.getAllUsers();
+    this.getAllCountries();
+  },
 };
 </script>
 <style scoped lang="scss">

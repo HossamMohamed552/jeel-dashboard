@@ -22,8 +22,8 @@
               </b-col>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
-                  <label><span><i class="fa-solid fa-asterisk"></i></span>
-                    {{ $t("PAPER_WORK.AUDIO") }}</label>
+                  <label>{{ $t("PAPER_WORK.AUDIO") }}
+                  <span><i class="fa-solid fa-asterisk"></i></span></label>
                   <ValidationProvider
                     v-slot="{ errors }"
                     :rules="'required|audio'"
@@ -66,8 +66,8 @@
               </b-col>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
-                  <span class="custom-label"><span v-if="!$route.params.id"><i
-                    class="fa-solid fa-asterisk"></i></span>{{ $t("PAPER_WORK.print") }}</span>
+                  <span class="custom-label">{{ $t("PAPER_WORK.print") }} <span v-if="!$route.params.id"><i
+                    class="fa-solid fa-asterisk"></i></span></span>
                   <ImageUploader
                     :is-required="true"
                     :name="`${$t('PAPER_WORK.fileImgWithOutColor')}`"
@@ -104,11 +104,10 @@
                   <ValidationProvider
                     v-slot="{ errors, invalid }"
                     rules="required"
-                    class="d-flex justify-content-start align-items-start"
+                    
                   >
-                    <span><i class="fa-solid fa-asterisk"></i></span>
+                   <label>{{ $t('PAPER_WORK.learning_path') }} <span><i class="fa-solid fa-asterisk"></i></span></label>
                     <b-form-group
-                      :label="$t('PAPER_WORK.learning_path')"
                       v-slot="{ ariaDescribedby }"
                       class="learning_path custom-form-group"
                     >
@@ -128,11 +127,11 @@
                   <ValidationProvider
                     v-slot="{ errors, invalid }"
                     rules="required"
-                    class="d-flex justify-content-start align-items-start"
+                    
                   >
-                    <span><i class="fa-solid fa-asterisk"></i></span>
+                   <label>{{ $t('PAPER_WORK.level') }} <span><i class="fa-solid fa-asterisk"></i></span></label>
                     <b-form-group
-                      :label="$t('PAPER_WORK.level')"
+                     
                       v-slot="{ ariaDescribedby }"
                       class="level custom-form-group"
                     >
@@ -153,11 +152,11 @@
                   <ValidationProvider
                     v-slot="{ errors, invalid }"
                     rules="required"
-                    class="d-flex justify-content-start align-items-start"
+                    
                   >
-                    <span><i class="fa-solid fa-asterisk"></i></span>
+                    <label>{{ $t('MISSIONS.terms') }} <span><i class="fa-solid fa-asterisk"></i></span></label>
                     <b-form-group
-                      :label="$t('MISSIONS.terms')"
+                    
                       v-slot="{ ariaDescribedby }"
                       class="level custom-form-group"
                     >

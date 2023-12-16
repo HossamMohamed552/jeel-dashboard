@@ -50,7 +50,7 @@ export default {
         },
         {
           key: "name",
-          label: this.$i18n.t("TABLE_FIELDS.name")
+          label: this.$i18n.t("COUNTRY.name")
         },
         // {
         //   key: "code",

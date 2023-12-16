@@ -9,8 +9,8 @@
 <!--    immediate-->
     <div>
       <h5 class="file-title">
-        <span v-if="isRequired"><i class="fa-solid fa-asterisk"></i></span>
         {{ text }}
+        <span v-if="isRequired"><i class="fa-solid fa-asterisk"></i></span>
       </h5>
       <div class="file-input-container">
         <b-form-file accept="image/*"

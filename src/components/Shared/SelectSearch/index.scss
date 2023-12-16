@@ -2,6 +2,7 @@ label{
   color: #76236C;
   display: block;
 }
+
 ::v-deep {
   .is-invalid {
     .vs__dropdown-toggle {
@@ -19,3 +20,18 @@ label{
   }
 
 }
+
+
+.required-flag {
+  position: relative;
+  &::after {
+    content: " * ";
+    font-size: 1.2rem;
+    position: absolute;
+    top: -5px;
+    // left: -10px;
+    color: #dc3545;
+  }
+}
+
+

@@ -34,6 +34,12 @@ export const FieldMixin = {
       this.innerValue = newVal;
     },
   },
+  computed: {
+    isRequired() {
+      if (typeof this.rules === "string") return !!this.rules.includes("required")
+      else return this.rules.hasOwnProperty("required") ? this.rules.required : false
+    }
+  },
   created() {
     if (this.value !== null) {
       this.innerValue = this.value;

@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة المهارات'"
+      :header-name="'قائمة أنواع المهارات'"
       :number-of-item="totalNumber"
       :tableItems="LearningSkillsList"
       :fieldsList="fieldsList"
@@ -11,15 +11,15 @@
       @deleteItem="deleteItem($event)"
       @refetch="getLearningSkills"
       :loading="loading"
-      :permission_delete="'delete-terms'"
-      :permission_edit="'edit-terms'"
-      :permission_view="'show-terms'"
+      :permission_delete="'delete-languageSkill'"
+      :permission_edit="'edit-languageSkill'"
+      :permission_view="'show-languageSkill'"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddLearningSkills"
-          v-if="user.permissions.includes(`add-terms`)"
+          v-if="user.permissions.includes(`add-languageSkill`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
           <span>إضافة مهارة </span>
@@ -55,7 +55,7 @@ export default {
       totalNumber: null,
       fieldsList: [
         { key: "id", label: "التسلسل" },
-        { key: "name", label: "اسم المهارة" },
+        { key: "name", label: "نوع المهارة" },
         { key: "actions", label: "الإجراء" },
       ],
     };

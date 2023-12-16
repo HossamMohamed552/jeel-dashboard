@@ -27,7 +27,7 @@
                 </div>
               </b-col>
               <b-col lg="12">
-                <p class="heading-permission"><span><i class="fa-solid fa-asterisk"></i></span> <span>الصلاحيات</span></p>
+                <p class="heading-permission"><span>الصلاحيات</span> <span><i class="fa-solid fa-asterisk"></i></span></p>
               </b-col>
               <b-col lg="12">
                 <b-row>

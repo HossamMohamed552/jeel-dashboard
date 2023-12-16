@@ -22,7 +22,7 @@
           v-if="user.permissions.includes(`add-packages`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة باقة جديدة</span>
+          <span>إضافة باقة</span>
         </Button>
       </template>
     </ListItems>
@@ -74,12 +74,12 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.classes_count"),
         },
         {
-          key: "currency",
+          key: "price",
           label: this.$i18n.t("PACKAGE.CURRENT_PRICE"),
         },
         {
-          key: "price",
-          label: "PACKAGE.CURRENCY",
+          key: "currency.name",
+          label: this.$i18n.t("PACKAGE.CURRENCY"),
         },
         // {
         //   key: "number_users_roles[3]",

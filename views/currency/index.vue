@@ -3,7 +3,7 @@
     <ListItems
       :header-name="'قائمة العملات'"
       :number-of-item="totalNumber"
-      :tableItems="CurrencyList"
+      :tableItems="currencyList"
       :fieldsList="fieldsList"
       :v-search-model="groupSearchWord"
       @detailItem="detailItem($event)"
@@ -11,15 +11,15 @@
       @deleteItem="deleteItem($event)"
       @refetch="getCurrency"
       :loading="loading"
-      :permission_delete="'delete-terms'"
-      :permission_edit="'edit-terms'"
-      :permission_view="'show-terms'"
+      :permission_delete="'delete-currencies'"
+      :permission_edit="'edit-currencies'"
+      :permission_view="'show-currencies'"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddCurrency"
-          v-if="user.permissions.includes(`add-terms`)"
+          v-if="user.permissions.includes(`add-currencies`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
           <span>إضافة عملة </span>
@@ -51,7 +51,7 @@ export default {
       loading: false,
       showModal: false,
       groupSearchWord: "",
-      CurrencyList: [],
+      currencyList: [],
       totalNumber: null,
       fieldsList: [
         { key: "id", label: "التسلسل" },
@@ -69,7 +69,7 @@ export default {
       const params = event;
       this.ApiService(getCurrencyRequest(params))
         .then((response) => {
-          this.CurrencyList = response.data.data;
+          this.currencyList = response.data.data;
           this.totalNumber = response.data.meta.total;
         })
         .finally(() => {

@@ -2,7 +2,7 @@
   <div class="add-edit-school-year">
     <div class="container-fluid custom-container">
       <div class="add-edit-term-form">
-        <h3>{{ $route.params.id ? "تعديل العام الدراسي" : "اضافة عام دراسي جديد" }}</h3>
+        <h3>{{ $route.params.id ? "تعديل العام الدراسي" : "اضافة عام دراسي" }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditSchoolYearForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -10,8 +10,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="name"
-                    label="الاسم"
-                    name="الاسم"
+                    label="اسم العام الدراسي"
+                    name="اسم العام الدراسي"
+                    placeholder="أدخل العام الدراسي"
                     :rules="'required|min:3|max:30'"
                   ></TextField>
                 </div>

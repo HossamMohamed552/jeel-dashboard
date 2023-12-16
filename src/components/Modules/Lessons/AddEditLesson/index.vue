@@ -23,8 +23,8 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <label>
-                    <span><i class="fa-solid fa-asterisk"></i></span>
                     {{ $t("LEARNING_PATH.LEARNING_PATH") }}
+                    <span><i class="fa-solid fa-asterisk"></i></span>
                   </label>
                   <SelectSearch
                     v-model="formValues.learning_path_id"
@@ -33,7 +33,7 @@
                     :options="learningPaths"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
-                    :rules="'required'"
+                    rules="required"
                     :deselectFromDropdown="true"
                   ></SelectSearch>
                 </div>

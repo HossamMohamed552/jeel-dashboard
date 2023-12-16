@@ -65,9 +65,9 @@
               <b-col lg="6" class="mb-3 mt-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors, invalid}" rules="required"
-                                      class="d-flex justify-content-start align-items-start">
-                    <span><i class="fa-solid fa-asterisk"></i></span>
-                    <b-form-group :label="$t('VIDEO.learning_path')" v-slot="{ ariaDescribedby }"
+                                      >
+                   <label>{{ $t('VIDEO.learning_path') }} <span><i class="fa-solid fa-asterisk"></i></span></label> 
+                    <b-form-group v-slot="{ ariaDescribedby }"
                                   class="learning_path custom-form-group">
                       <SelectField :rules="'required'" v-model="createVideo.learning_path_id"
                                    name="learning_path" :options="paths">
@@ -80,9 +80,9 @@
               <b-col lg="6" class="mb-3 mt-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors, invalid}" rules="required"
-                                      class="d-flex justify-content-start align-items-start">
-                    <span><i class="fa-solid fa-asterisk"></i></span>
-                    <b-form-group :label="$t('VIDEO.level')" v-slot="{ ariaDescribedby }"
+                                      >
+                    <label>{{ $t('VIDEO.level') }} <span><i class="fa-solid fa-asterisk"></i></span></label>
+                    <b-form-group v-slot="{ ariaDescribedby }"
                                   class="level custom-form-group">
                       <SelectField :rules="'required'" v-model="createVideo.level_id" name="level"
                                    :options="levels" @change="getTerms">
@@ -95,9 +95,9 @@
               <b-col lg="6" class="mb-3 mt-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors, invalid}" rules="required"
-                                      class="d-flex justify-content-start align-items-start">
-                    <span><i class="fa-solid fa-asterisk"></i></span>
-                    <b-form-group :label="$t('MISSIONS.terms')" v-slot="{ ariaDescribedby }"
+                                      >
+                   <label>{{ $t('MISSIONS.terms') }} <span><i class="fa-solid fa-asterisk"></i></span></label> 
+                    <b-form-group  v-slot="{ ariaDescribedby }"
                                   class="term custom-form-group">
                       <SelectField :rules="'required'" v-model="createVideo.term_id" name="term"
                                    :options="terms" :disabled="!createVideo.level_id">

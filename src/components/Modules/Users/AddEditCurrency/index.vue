@@ -2,7 +2,7 @@
   <div class="add-edit-currency">
     <div class="container-fluid custom-container">
       <div class="add-edit-term-form">
-        <h3>{{ $route.params.id ? "تعديل العملة" : "اضافة عملة جديد" }}</h3>
+        <h3>{{ $route.params.id ? "تعديل العملة" : "إضافة عملة جديدة" }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditCurrency">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -10,8 +10,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="name"
-                    label="الاسم"
-                    name="الاسم"
+                    label="اسم العملة"
+                    name="اسم العملة"
+                    placeholder="أدخل اسم العملة"
                     :rules="'required|min:3|max:30'"
                   ></TextField>
                 </div>

@@ -186,7 +186,7 @@ let routeBasicData = [
     permission: "view-bloomCategory",
   },
   {
-    name: "الاهداف التعليمية",
+    name: "أهداف التعلم",
     path: "/dashboard/objective",
     altImage: "objective",
     titleImage: "objective",
@@ -210,7 +210,7 @@ let routeBasicData = [
     permission: "view-outcome",
   },
   {
-    name: "العملة",
+    name: "العملات",
     path: "/dashboard/currency",
     altImage: "currency",
     titleImage: "currency",
@@ -219,7 +219,7 @@ let routeBasicData = [
     permission: "view-outcome",
   },
   {
-    name: "أسلوب التعلم",
+    name: "أساليب التعلم",
     path: "/dashboard/learning-style",
     altImage: "learning-style",
     titleImage: "learning-style",
@@ -228,7 +228,7 @@ let routeBasicData = [
     permission: "view-outcome",
   },
   {
-    name: "مهارة التعلم",
+    name: "أنواع المهارات",
     path: "/dashboard/learning-skill",
     altImage: "learning-skill",
     titleImage: "learning-skill",

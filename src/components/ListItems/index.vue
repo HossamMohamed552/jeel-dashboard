@@ -36,7 +36,7 @@
         show-empty
       >
         <template #empty>
-          <div class="mt-5 pt-5 text-center">لا توجد نتائج بحث ل {{ inputValue }}</div>
+          <div class="mt-5 pt-5 text-center">لا توجد بيانات</div>
         </template>
         <template #emptyfiltered="scope">
           <h4>{{ scope.emptyFilteredText }}</h4>

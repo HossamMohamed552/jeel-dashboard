@@ -1,8 +1,8 @@
 <template>
   <ValidationProvider v-slot="{ errors, invalid }" :name="name" :rules="rules">
-    <label v-if="label">
-      <span v-if="typeof rules === 'string' && rules.includes('required')"><i class="fa-solid fa-asterisk"></i></span>
-      <span v-else-if="typeof rules === 'object' && rules.required"><i class="fa-solid fa-asterisk"></i></span>
+    <label v-if="label" :class="isRequired && 'required-flag'">
+      <!-- <span v-if="typeof rules === 'string' && rules.includes('required')"><i class="fa-solid fa-asterisk"></i></span>
+      <span v-else-if="typeof rules === 'object' && rules.required"><i class="fa-solid fa-asterisk"></i></span> -->
       {{ label }}
     </label>
     <b-form-select

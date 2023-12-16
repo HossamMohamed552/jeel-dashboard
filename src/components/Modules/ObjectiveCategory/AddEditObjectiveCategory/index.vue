@@ -12,8 +12,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="formValues.name"
-                    :label="$t('GLOBAL_NAME')"
-                    :name="$t('GLOBAL_NAME')"
+                    :label="$t('OBJECTIVE.NAME')"
+                    :name="$t('OBJECTIVE.NAME')"
+                    placeholder="أدخل اسم الهدف التعليمي"
                     :rules="'required|max:30'"
                   ></TextField>
                 </div>
@@ -21,12 +22,13 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <label>
-                    <span><i class="fa-solid fa-asterisk"></i></span>
                     {{ $t("LEARNING_PATH.LEARNING_PATH") }}
+                    <span><i class="fa-solid fa-asterisk"></i></span>
                   </label>
                   <SelectSearch
                     v-model="formValues.learning_path_id"
                     :name="$t('LEARNING_PATH.LEARNING_PATH')"
+                    placeholder="اختر المسار التعليمي"
                     :options="learningPaths"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -39,13 +41,14 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <label>
-                    <span><i class="fa-solid fa-asterisk"></i></span>
                     {{ $t("LESSONS.NAME") }}
+                    <span><i class="fa-solid fa-asterisk"></i></span>
                   </label>
                   <SelectSearch
                     :disabled="!formValues.learning_path_id"
                     v-model="formValues.lesson_id"
                     :name="$t('LESSONS.NAME')"
+                    placeholder="اختر اسم الدرس"
                     :options="lessons"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"

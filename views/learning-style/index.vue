@@ -11,18 +11,18 @@
       @deleteItem="deleteItem($event)"
       @refetch="getLearningStyle"
       :loading="loading"
-      :permission_delete="'delete-terms'"
-      :permission_edit="'edit-terms'"
-      :permission_view="'show-terms'"
+      :permission_delete="'delete-languageMethod'"
+      :permission_edit="'edit-languageMethod'"
+      :permission_view="'show-languageMethod'"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddSchoolYear"
-          v-if="user.permissions.includes(`add-terms`)"
+          v-if="user.permissions.includes(`add-languageMethod`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة أسلوب تعلم </span>
+          <span>إضافة أسلوب التعلم </span>
         </Button>
       </template>
     </ListItems>

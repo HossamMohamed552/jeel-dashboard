@@ -350,7 +350,7 @@ const protectedRoutes = [
         name: "school-year",
         component: () => import("../../views/shcool-year/index.vue"),
         meta: {
-          breadcrumb: "العام الدراسي",
+          breadcrumb: "الأعوام الدراسية",
           preLabel: "",
           preLink: "",
         },
@@ -391,7 +391,7 @@ const protectedRoutes = [
         name: "currency",
         component: () => import("../../views/currency/index.vue"),
         meta: {
-          breadcrumb: "العملة",
+          breadcrumb: "العملات",
           preLabel: "",
           preLink: "",
         },
@@ -432,7 +432,7 @@ const protectedRoutes = [
         name: "learning-style",
         component: () => import("../../views/learning-style/index.vue"),
         meta: {
-          breadcrumb: "أسلوب التعلم",
+          breadcrumb: "أساليب التعلم",
           preLabel: "",
           preLink: "",
         },
@@ -442,8 +442,8 @@ const protectedRoutes = [
         name: "add-learning-style",
         component: () => import("../../views/learning-style/add-learning-style/index.vue"),
         meta: {
-          breadcrumb: "إضافة أسلوب تعلم",
-          preLabel: "أسلوب التعلم",
+          breadcrumb: "إضافة إسلوب التعلم",
+          preLabel: "أساليب التعلم",
           preLink: "/dashboard/learning-style",
         },
       },
@@ -452,8 +452,8 @@ const protectedRoutes = [
         name: "edit-learning-style",
         component: () => import("../../views/learning-style/edit-learning-style/index.vue"),
         meta: {
-          breadcrumb: "تعديل أسلوب التعلم",
-          preLabel: "أسلوب التعلم",
+          breadcrumb: "تعديل إسلوب التعلم",
+          preLabel: "إسلوب التعلم",
           preLink: "/dashboard/learning-style",
         },
       },
@@ -462,8 +462,8 @@ const protectedRoutes = [
         name: "show-learning-style",
         component: () => import("../../views/learning-style/view-learning-style/index.vue"),
         meta: {
-          breadcrumb: "تفاصيل أسلوب التعلم",
-          preLabel: "أسلوب التعلم",
+          breadcrumb: "تفاصيل إسلوب التعلم",
+          preLabel: "إسلوب التعلم",
           preLink: "/dashboard/learning-style",
         },
       },
@@ -473,7 +473,7 @@ const protectedRoutes = [
         name: "learning-skill",
         component: () => import("../../views/learning-skill/index.vue"),
         meta: {
-          breadcrumb: "قائمة المهارات",
+          breadcrumb: "أنواع المهارات",
           preLabel: "",
           preLink: "",
         },
@@ -483,7 +483,7 @@ const protectedRoutes = [
         name: "add-learning-skill",
         component: () => import("../../views/learning-skill/add-learning-skill/index.vue"),
         meta: {
-          breadcrumb: "إضافة مهارة تعلم",
+          breadcrumb: "إضافة نوع مهارة",
           preLabel: "مهارة التعلم",
           preLink: "/dashboard/learning-skill",
         },
@@ -524,7 +524,7 @@ const protectedRoutes = [
         name: "add-country",
         component: () => import("../../views/country/add-country/index.vue"),
         meta: {
-          breadcrumb: "إضافة دولة",
+          breadcrumb: "إضافة دولة جديدة",
           preLabel: "الدول",
           preLink: "/dashboard/country",
         },

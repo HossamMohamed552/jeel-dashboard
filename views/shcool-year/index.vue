@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة العام الدراسي'"
+      :header-name="'قائمة الأعوام الدراسية'"
       :number-of-item="totalNumber"
       :tableItems="schoolYearsList"
       :fieldsList="fieldsList"
@@ -11,15 +11,15 @@
       @deleteItem="deleteItem($event)"
       @refetch="getSchoolYears"
       :loading="loading"
-      :permission_delete="'delete-terms'"
-      :permission_edit="'edit-terms'"
-      :permission_view="'show-terms'"
+      :permission_delete="'delete-studyYear'"
+      :permission_edit="'edit-studyYear'"
+      :permission_view="'show-studyYear'"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddSchoolYear"
-          v-if="user.permissions.includes(`add-terms`)"
+          v-if="user.permissions.includes(`add-studyYear`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
           <span>إضافة عام دراسي </span>
