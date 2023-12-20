@@ -22,7 +22,7 @@ const components = {
   Pagination,
   Toast,
   GeneralModal,
-  VideoPlayer
+  VideoPlayer,
 };
 
 Object.entries(components).forEach(([name, component]) => {

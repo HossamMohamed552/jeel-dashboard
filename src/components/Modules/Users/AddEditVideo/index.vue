@@ -10,48 +10,26 @@
                 <div class="hold-field">
                   <TextField
                     v-model="createVideo.name"
-                    :label="$t('VIDEO.NAME')"
-                    :name="$t('VIDEO.NAME')"
+                    :label="$t('VIDEO.VIDEONAME')"
+                    :name="$t('VIDEO.VIDEONAME')"
+                    :placeholder="$t('VIDEO.placeVIDEONAME')"
                     :rules="'required|min:3|max:30'"
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="12" class="mb-3">
-                <div class="hold-field">
-                  <b-form-group :label="$t('VIDEO.Description')" v-slot="{ ariaDescribedby }"
-                                class="description">
-                    <TextAreaField v-model="createVideo.description" rows="5"
-                                   :name="$t('VIDEO.Description')" :rules="'max:60'">
-                    </TextAreaField>
-                  </b-form-group>
-                </div>
+              <b-col lg="6" class="mb-3">
+
               </b-col>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{errors}" :rules="$route.params.id ? '' : 'required'"
-                                      name="video"
-                                      class="d-flex justify-content-start align-items-start">
-                    <span v-if="!$route.params.id"><i class="fa-solid fa-asterisk"></i></span>
-                    <b-form-file @change="checkEditVideo($event)"
-                                 accept="video/mp4,video/x-m4v,video/*"
-                                 :placeholder="$route.params.id ? createVideo.video :'اختر ملف'"
-                                 v-model="createVideo.video" name="video">
-                    </b-form-file>
-                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                      {{ error }}
-                    </b-form-invalid-feedback>
-                  </ValidationProvider>
-                </div>
-              </b-col>
-              <b-col lg="6" class="mb-3">
-                <div class="hold-field">
-                  <ValidationProvider v-slot="{errors}" :rules="$route.params.id ? '' : 'required'"
-                                      name="video_without_music"
-                                      class="d-flex justify-content-start align-items-start">
-                    <span v-if="!$route.params.id"><i class="fa-solid fa-asterisk"></i></span>
+                                      name="video_without_music">
+                    <span v-if="!$route.params.id"
+                          class="video-label"><label>{{ $t('VIDEO.videoWithoutMusic') }}</label><i
+                      class="fa-solid fa-asterisk"></i></span>
                     <b-form-file @change="checkEditVideoWithOut($event)"
                                  accept="video/mp4,video/x-m4v,video/*"
-                                 placeholder=" اضف ملف بدون موسيقى"
+                                 placeholder="اسم ملف"
                                  v-model="createVideo.video_without_music" name="video">
                     </b-form-file>
                     <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
@@ -59,64 +37,77 @@
                     </b-form-invalid-feedback>
                   </ValidationProvider>
                 </div>
+                <div class="hold-progress">
+                  <b-progress max="100" height="2rem" v-if="progressWithOutMusic">
+                    <b-progress-bar :value="progressWithOutMusic"
+                                    :label="`${progressWithOutMusic}%`">
+                    </b-progress-bar>
+                  </b-progress>
+                  <p v-if="errorVideoWithOut" class="error-status">حدث خطأ ما عند رفع الفيديو</p>
+                  <p v-if="successVideoWithOut" class="success-status">تم رفع الفيديو بنجاح</p>
+                </div>
+              </b-col>
+              <b-col lg="12" class="mb-3">
+                <div class="hold-field mt-4">
+                  <UploadAttachment :type-of-attachment="'image'" :accept-files="'image/*'"/>
+                  <!--                  @vdropzone-file-added="fileAdded($event)"-->
+                  <!--                  <ImageUploader-->
+                  <!--                    :is-required="true"-->
+                  <!--                    v-model="createVideo.img_url"-->
+                  <!--                    :name="'videoThumbnail'"-->
+                  <!--                    :text="$t('VIDEO.UPLOAD_IMAGE')"-->
+                  <!--                    @imageUpload="handleUploadImage"-->
+                  <!--                    :item-image="videoImage"-->
+                  <!--                    @deleteImage="videoImage = null"-->
+                  <!--                  />-->
+                </div>
               </b-col>
             </b-row>
             <b-row>
               <b-col lg="6" class="mb-3 mt-3">
                 <div class="hold-field">
-                  <ValidationProvider v-slot="{errors, invalid}" rules="required"
-                                      >
-                   <label>{{ $t('VIDEO.learning_path') }} <span><i class="fa-solid fa-asterisk"></i></span></label> 
-                    <b-form-group v-slot="{ ariaDescribedby }"
-                                  class="learning_path custom-form-group">
-                      <SelectField :rules="'required'" v-model="createVideo.learning_path_id"
-                                   name="learning_path" :options="paths">
-                      </SelectField>
-                    </b-form-group>
+                  <ValidationProvider v-slot="{errors, invalid}">
+                    <SelectSearch
+                      v-model="createVideo.learning_path_id"
+                      :label="$t('VIDEO.learning_path')"
+                      :placeholder="$t('VIDEO.selectPath')"
+                      :name="'learning_path'"
+                      :options="paths"
+                      :get-option-label="(option) => option.name"
+                      :reduce="(option) => option.id"
+                      :rules="'required'"
+                      @input="getAllLessonBasedOnPath"
+                    />
+                  </ValidationProvider>
+                </div>
+              </b-col>
+              <b-col lg="6" class="mb-3 mt-3">
+                <div class="hold-field">
+                  <ValidationProvider v-slot="{errors, invalid}" rules="required">
+                    <SelectSearch
+                      v-model="createVideo.lesson_id"
+                      :label="$t('LESSONS.videoNAME')"
+                      :placeholder="$t('LESSONS.selectLesson')"
+                      :name="'lesson'"
+                      :options="lessons"
+                      :get-option-label="(option) => option.name"
+                      :reduce="(option) => option.id"
+                      :rules="'required'"
+                      :disabled="!createVideo.learning_path_id"
+                    />
                   </ValidationProvider>
                 </div>
               </b-col>
 
-              <b-col lg="6" class="mb-3 mt-3">
-                <div class="hold-field">
-                  <ValidationProvider v-slot="{errors, invalid}" rules="required"
-                                      >
-                    <label>{{ $t('VIDEO.level') }} <span><i class="fa-solid fa-asterisk"></i></span></label>
-                    <b-form-group v-slot="{ ariaDescribedby }"
-                                  class="level custom-form-group">
-                      <SelectField :rules="'required'" v-model="createVideo.level_id" name="level"
-                                   :options="levels" @change="getTerms">
-                      </SelectField>
-                    </b-form-group>
-                  </ValidationProvider>
-                </div>
-              </b-col>
-
-              <b-col lg="6" class="mb-3 mt-3">
-                <div class="hold-field">
-                  <ValidationProvider v-slot="{errors, invalid}" rules="required"
-                                      >
-                   <label>{{ $t('MISSIONS.terms') }} <span><i class="fa-solid fa-asterisk"></i></span></label> 
-                    <b-form-group  v-slot="{ ariaDescribedby }"
-                                  class="term custom-form-group">
-                      <SelectField :rules="'required'" v-model="createVideo.term_id" name="term"
-                                   :options="terms" :disabled="!createVideo.level_id">
-                      </SelectField>
-                    </b-form-group>
-                  </ValidationProvider>
-                </div>
-              </b-col>
               <b-col lg="12" class="mb-3">
-                <div class="hold-field mt-4">
-                  <ImageUploader
-                    :is-required="true"
-                    v-model="createVideo.img_url"
-                    :name="'videoThumbnail'"
-                    :text="$t('VIDEO.UPLOAD_IMAGE')"
-                    @imageUpload="handleUploadImage"
-                    :item-image="videoImage"
-                    @deleteImage="videoImage = null"
-                  />
+                <div class="hold-field">
+                  <b-form-group :label="$t('VIDEO.Description')" v-slot="{ ariaDescribedby }"
+                                class="description">
+                    <TextAreaField v-model="createVideo.description" rows="5"
+                                   :name="$t('VIDEO.Description')"
+                                   :placeholder="$t('VIDEO.Description')" :rules="'max:60'">
+                    </TextAreaField>
+                  </b-form-group>
                 </div>
               </b-col>
             </b-row>
@@ -152,16 +143,20 @@ import {getAllLearningPathsRequest} from "@/api/learningPath";
 import {getAllLevelsRequest} from "@/api/level";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import {getAllTermsRequest} from "@/api/term";
-
-
+import {getLessonsRequest} from "@/api/lessons";
+import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
+import UploadAttachment from "@/components/Shared/UploadAttachment"
+import VueCookies from "vue-cookies";
 export default {
   components: {
+    SelectSearch,
     Modal,
     TextField,
     TextAreaField,
     Button,
     SelectField,
-    ImageUploader
+    ImageUploader,
+    UploadAttachment
   },
   props: {
     loading: {
@@ -174,13 +169,21 @@ export default {
       paths: [],
       levels: [],
       terms: [],
+      lessons: [],
       videoImage: null,
+      progressWithMusic: 0,
+      progressWithOutMusic: 0,
+      errorVideo: false,
+      successVideo: false,
+      errorVideoWithOut: false,
+      successVideoWithOut: false,
       createVideo: {
         name: "",
         description: "",
         video: null,
         video_without_music: null,
         learning_path_id: "",
+        lesson_id: "",
         title: '',
         original_name: '',
         level_id: '',
@@ -234,10 +237,7 @@ export default {
     },
     getAllLearningPaths() {
       this.ApiService(getAllLearningPathsRequest()).then((response) => {
-        const pathsArr = response.data.data;
-        this.paths = pathsArr.map(path => {
-          return {value: path.id, text: path.name}
-        })
+        this.paths = response.data.data;
       })
     },
     getAllLevels() {
@@ -246,6 +246,11 @@ export default {
         this.levels = levelsArr.map(path => {
           return {value: path.id, text: path.name}
         })
+      })
+    },
+    getAllLessonBasedOnPath() {
+      this.ApiService(getLessonsRequest({learning_path_id: this.createVideo.learning_path_id})).then((response) => {
+        this.lessons = response.data.data
       })
     },
     getTerms() {
@@ -260,6 +265,9 @@ export default {
         });
       });
     },
+    sendImage(file, xhr, formData) {
+      formData.append('type', 'image');
+    },
   },
   mounted() {
     this.getVideoToEdit();
@@ -267,7 +275,7 @@ export default {
     this.getAllLevels();
     if (this.$route.params.id) this.getTerms()
   }
-};
+}
 </script>
 <style scoped lang="scss">
 @import "./index";

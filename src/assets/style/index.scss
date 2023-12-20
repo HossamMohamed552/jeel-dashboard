@@ -28,9 +28,11 @@
       transform: translate3d(147px, 31px, 0px) !important;
     }
   }
-  .th{
+
+  .th {
     border-top: none !important;
   }
+
   .thead-gradient {
     background: linear-gradient(to left, $color-primary, $color-notify);
     border-bottom: none;
@@ -245,6 +247,7 @@ label {
   object-position: center;
   margin-top: 1rem;
 }
+
 .show-role {
   @include styleViewList;
 
@@ -300,5 +303,18 @@ label {
       margin-top: -1rem;
     }
   }
-}
 
+  .vs__dropdown-toggle {
+    overflow: hidden;
+  }
+}
+.hold-progress{
+  width: 98%;
+  margin: 1rem auto 0 0;
+}
+.error-status{
+  color: #CC0000;
+}
+.success-status{
+  color: #1c7430;
+}

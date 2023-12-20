@@ -9,6 +9,7 @@
       v-bind="$attrs"
       v-on="$listeners"
       class="custom-text-area"
+      :placeholder="placeholder"
       :class="{
         'input-disabled': $attrs.disabled,
         'is-invalid': invalid & errors.length,
@@ -27,6 +28,12 @@ import {FieldMixin} from "@/mixins/FieldMixin";
 
 export default {
   mixins: [FieldMixin],
+  props: {
+    placeholder: {
+      type: String,
+      default: ""
+    }
+  }
 };
 </script>
 

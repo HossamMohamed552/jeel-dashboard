@@ -7,7 +7,7 @@
 
 .hold-field{
   label{
-    color: $color-primary;
+    //color: $color-primary;
     display: block;
     margin: 0 0.7rem 0.7rem 0;
   }
@@ -16,27 +16,37 @@
     padding: 0 1.3rem;
     border-radius: 3.125rem;
     border: 1px solid #BEBEBE;
-    color: $color-primary;
+    //color: $color-primary;
   }
 }
-
+.video-label{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  label{
+    margin: .7rem !important;
+  }
+}
+.description{
+  margin: 0.7rem;
+}
 ::v-deep {
   .text-field input {
     height: 50px;
   }
   textarea.form-control {
     border-radius: 10px !important;
-    color: purple;
+    //color: purple;
     font-size: 16px;
     font-weight: bold;
   }
   .col-form-label {
-    color: purple;
+    //color: purple;
     font-size: 18px;
     font-weight: bold;
   }
   label {
-    color: purple;
+    //color: purple;
     font-size: 18px;
     font-weight: bold;
   }
@@ -62,5 +72,83 @@
   .custom-select {
     height: 50px;
     border-radius: 15px;
+  }
+}
+::v-deep{
+  .dropzone .dz-preview.dz-image-preview{
+    width: 100%;
+    background: transparent !important;
+  }
+  //.dz-details{
+  //  display: none;
+  //}
+  .vue-dropzone>.dz-preview .dz-remove{
+    position: absolute;
+    z-index: 30;
+    top: 40%;
+    transform: translateY(-50%);
+    bottom: auto;
+    color: #CC0000;
+    font-weight: 800;
+    left: 0;
+    opacity: 1;
+    border: none;
+    text-decoration: none;
+    letter-spacing: 0;
+    font-size: 1.5rem;
+  }
+  .dropzone .dz-preview .dz-image{
+    width: 200px;
+    height: 109px;
+    border-radius: 1rem;
+    overflow: hidden;
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+  .dropzone .dz-preview{
+    &:hover{
+      .dz-image{
+        img{
+          transform: scale(1.05, 1.05);
+          filter: blur(0);
+        }
+      }
+    }
+    .dz-progress{
+      background: rgba(118, 35, 108, 0.9);
+    }
+    .dz-details{
+      opacity: 1;
+      background-color: transparent;
+      text-align: right;
+      color: $color-primary;
+      position: relative;
+      max-width: unset;
+      min-width: unset;
+      max-height: unset;
+      .dz-filename{
+        margin-bottom: 1rem;
+      }
+      .dz-size{
+        margin: 0;
+      }
+    }
+  }
+  .dz-success-mark{
+    span{
+      background: purple;
+      padding: 0.5rem;
+      border-radius: 50%;
+      color: #fff;
+      width: 30px;
+      display: flex;
+      height: 30px;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }

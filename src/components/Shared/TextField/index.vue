@@ -14,13 +14,14 @@
       v-model="innerValue"
       v-bind="$attrs"
       v-on="$listeners"
+      :placeholder="placeholder"
       :class="{
         'input-disabled': $attrs.disabled,
         'is-invalid': invalid & errors.length,
       }"
     />
 
-    <slot />
+    <slot/>
 
     <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
       {{ error }}
@@ -29,7 +30,7 @@
 </template>
 
 <script>
-import { FieldMixin } from "@/mixins/FieldMixin";
+import {FieldMixin} from "@/mixins/FieldMixin";
 
 export default {
   mixins: [FieldMixin],
@@ -38,6 +39,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    placeholder: {
+      type: String,
+      default: ""
+    }
   },
 };
 </script>

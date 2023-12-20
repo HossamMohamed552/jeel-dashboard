@@ -169,9 +169,11 @@
   },
   "VIDEO": {
     "NAME": "اسم الفيديو",
+    "VIDEONAME": "عنوان الفيديو",
+    "placeVIDEONAME": "ادخل عنوان الفيديو",
     "EDIT": "تعديل فيديو",
     "ADD_NEW": "إضافة فيديو جديد",
-    "Description": "وصف الفيديو",
+    "Description": "تفاصيل الفيديو",
     "attach": "ارفاق فيديو",
     "learning_path": "مسار تعليمي",
     "level": "المرحله",
@@ -184,7 +186,10 @@
     "answer": "الاجابة",
     "correctAnswer": "الاجابة الصحيحة",
     "answerSort": "الاجابة {index}",
-    "answersCount": "عدد الاختيارات"
+    "answersCount": "عدد الاختيارات",
+    "videoWithMusic": "ملف الفيديو",
+    "videoWithoutMusic": "ملف الفيديو بدون موسيقى",
+    "selectPath": "أختر المسار التعليمى"
   },
   "PAPER_WORK": {
     "NAME": "اسم ورقة العمل",
@@ -283,8 +288,10 @@
     "ADD": "إضافة درس تعليمي",
     "EDIT": "تعديل الدرس",
     "NAME": "اسم الدرس",
+    "videoNAME": "الدرس",
     "ENTER_LESSON_NAME": "أدخل اسم الدرس",
-    "NAME_OF_LESSON": "الدرس التعليمي"
+    "NAME_OF_LESSON": "الدرس التعليمي",
+    "selectLesson": "أختر الدرس"
   },
   "QUIZZES": {
     "EDIT": "تعديل التمرين",

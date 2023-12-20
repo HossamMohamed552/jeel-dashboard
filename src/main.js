@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 Vue.config.productionTip = false;
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 Vue.use(ElementUI)
 new Vue({
   router,
