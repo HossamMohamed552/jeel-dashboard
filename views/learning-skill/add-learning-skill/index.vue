@@ -1,5 +1,5 @@
 <template>
-  <div class="add-country">
+  <div class="add-edit-learning-skill">
     <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
     <AddEditLearningSkill
       :loading="loading"

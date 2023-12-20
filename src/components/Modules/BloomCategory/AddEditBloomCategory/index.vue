@@ -14,20 +14,20 @@
                     v-model="formValues.name"
                     :label="$t('GLOBAL_NAME')"
                     :name="$t('GLOBAL_NAME')"
-                    :rules="'required|max:30'"
+                    :rules="'required|max:100'"
                   ></TextField>
                 </div>
               </b-col>
-<!--              <b-col lg="6" class="mb-3">-->
-<!--                <div class="hold-field">-->
-<!--                  <TextField-->
-<!--                    v-model="formValues.slug"-->
-<!--                    :label="$t('SLUG')"-->
-<!--                    :name="$t('SLUG')"-->
-<!--                    :rules="'required|max:10'"-->
-<!--                  ></TextField>-->
-<!--                </div>-->
-<!--              </b-col>-->
+              <!--              <b-col lg="6" class="mb-3">-->
+              <!--                <div class="hold-field">-->
+              <!--                  <TextField-->
+              <!--                    v-model="formValues.slug"-->
+              <!--                    :label="$t('SLUG')"-->
+              <!--                    :name="$t('SLUG')"-->
+              <!--                    :rules="'required|max:10'"-->
+              <!--                  ></TextField>-->
+              <!--                </div>-->
+              <!--              </b-col>-->
             </b-row>
             <b-row>
               <div class="hold-btns-form">

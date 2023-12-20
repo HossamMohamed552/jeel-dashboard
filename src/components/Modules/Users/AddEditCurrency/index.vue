@@ -13,7 +13,7 @@
                     label="اسم العملة"
                     name="اسم العملة"
                     placeholder="أدخل اسم العملة"
-                    :rules="'required|min:3|max:30'"
+                    :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
               </b-col>

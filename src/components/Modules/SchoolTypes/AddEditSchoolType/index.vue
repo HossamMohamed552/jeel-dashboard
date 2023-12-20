@@ -14,7 +14,7 @@
                     v-model="schoolType.name"
                     :label="$t('SCHOOL_TYPE.name')"
                     :name="$t('SCHOOL_TYPE.name')"
-                    :rules="'required|min:3|max:30'"
+                    :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
               </b-col>
@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       schoolType: {
-        name: ""
+        name: "",
       },
       schoolTypeId: this.$route.params.id,
     };
@@ -81,11 +81,9 @@ export default {
     },
     getSchoolTypeToEdit() {
       if (this.schoolTypeId) {
-        this.ApiService(getSingleSchoolTypesRequest(this.schoolTypeId)).then(
-          (response) => {
-            this.schoolType = response.data.data;
-          }
-        );
+        this.ApiService(getSingleSchoolTypesRequest(this.schoolTypeId)).then((response) => {
+          this.schoolType = response.data.data;
+        });
       }
     },
   },

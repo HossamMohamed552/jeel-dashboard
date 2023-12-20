@@ -4,18 +4,21 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">{{ $t("OBJECTIVE.DETAILS") }}</h2>
+            <h3 class="heading">{{ $t("OBJECTIVE.DETAILS") }}</h3>
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="4" class="mb-3">
+          <b-col lg="4" class="with-border-bottom">
             <ShowItem :title="$t('GLOBAL_NAME')" :subtitle="objectiveCategory.name" />
           </b-col>
-          <b-col lg="4" v-if="objectiveCategory.level">
+          <b-col lg="4" class="with-border-bottom" v-if="objectiveCategory.level">
             <ShowItem :title="$t('MISSIONS.level')" :subtitle="objectiveCategory.level.name" />
           </b-col>
-          <b-col lg="4" v-if="objectiveCategory.learning_path">
-            <ShowItem :title="$t('MISSIONS.LEARNING_PATH')" :subtitle="objectiveCategory.learning_path.name" />
+          <b-col lg="4" class="with-border-bottom" v-if="objectiveCategory.learning_path">
+            <ShowItem
+              :title="$t('MISSIONS.LEARNING_PATH')"
+              :subtitle="objectiveCategory.learning_path.name"
+            />
           </b-col>
         </b-row>
       </div>
@@ -24,7 +27,7 @@
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import {getObjectiveCategoryByIdRequest} from "@/api/objective";
+import { getObjectiveCategoryByIdRequest } from "@/api/objective";
 export default {
   name: "index",
   components: {

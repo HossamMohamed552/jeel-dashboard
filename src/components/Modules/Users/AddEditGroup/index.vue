@@ -12,7 +12,7 @@
                     v-model="createGroup.name"
                     :label="$t('GROUP.name')"
                     :name="$t('GROUP.name')"
-                    :rules="'required|min:3|max:30'"
+                    :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
               </b-col>
@@ -57,10 +57,7 @@
                         >بموسيقى
                       </b-form-radio>
                     </b-form-group>
-                    <b-form-invalid-feedback
-                      v-for="(error, index) in errors"
-                      :key="index"
-                    >
+                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                       {{ error }}
                     </b-form-invalid-feedback>
                   </ValidationProvider>
@@ -68,11 +65,7 @@
               </b-col>
               <b-col lg="3" class="mb-3 radio-item">
                 <div class="hold-field">
-                  <ValidationProvider
-                    rules="required"
-                    v-slot="{ errors }"
-                    
-                  >
+                  <ValidationProvider rules="required" v-slot="{ errors }">
                     <label for="active" class="group-type d-inline-block">{{
                       $t("GROUP.status")
                     }}</label>
@@ -81,23 +74,14 @@
                       id="active"
                       class="d-flex justify-content-start align-items-start mt-3"
                     >
-                      <b-form-radio
-                        v-model="createGroup.status"
-                        value="0"
-                        name="group-status"
+                      <b-form-radio v-model="createGroup.status" value="0" name="group-status"
                         >غير مفعل
                       </b-form-radio>
-                      <b-form-radio
-                        v-model="createGroup.status"
-                        value="1"
-                        name="group-status"
+                      <b-form-radio v-model="createGroup.status" value="1" name="group-status"
                         >مفعل
                       </b-form-radio>
                     </b-form-group>
-                    <b-form-invalid-feedback
-                      v-for="(error, index) in errors"
-                      :key="index"
-                    >
+                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
                       {{ error }}
                     </b-form-invalid-feedback>
                   </ValidationProvider>
@@ -142,10 +126,7 @@
               <b-col lg="12">
                 <b-row>
                   <div class="hold-btns-form">
-                    <Button
-                      @click="handleCancel"
-                      custom-class="cancel-btn margin"
-                    >
+                    <Button @click="handleCancel" custom-class="cancel-btn margin">
                       {{ $t("GLOBAL_CANCEL") }}
                     </Button>
                     <Button
@@ -154,9 +135,7 @@
                       :disabled="invalid || canNotSend"
                       custom-class="submit-btn"
                     >
-                      {{
-                        $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE")
-                      }}
+                      {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
                     </Button>
                   </div>
                 </b-row>
@@ -242,9 +221,7 @@ export default {
     },
     getGroupToEdit() {
       if (this.$route.params.id) {
-        this.ApiService(
-          getSingleSchoolGroupRequest(this.$route.params.id)
-        ).then((response) => {
+        this.ApiService(getSingleSchoolGroupRequest(this.$route.params.id)).then((response) => {
           this.createGroup.name = response.data.data.name;
           this.defaultGroup.name = response.data.data.name;
           this.createGroup.type = response.data.data.type;

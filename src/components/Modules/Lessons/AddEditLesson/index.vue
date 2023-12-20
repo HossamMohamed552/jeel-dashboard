@@ -15,7 +15,7 @@
                     :label="$t('LESSONS.NAME')"
                     :name="$t('LESSONS.NAME')"
                     :placeholder="$t('LESSONS.ENTER_LESSON_NAME')"
-                    :rules="'required|max:30'"
+                    :rules="'required|max:100'"
                   ></TextField>
                 </div>
               </b-col>
@@ -84,7 +84,7 @@ export default {
     return {
       formValues: {
         name: "",
-        learning_path_id: ""
+        learning_path_id: "",
       },
       lessonId: this.$route.params.id,
       learningPaths: [],
@@ -106,12 +106,10 @@ export default {
     },
     getLessonById() {
       if (this.lessonId) {
-        this.ApiService(getLessonByIdRequest(this.lessonId)).then(
-          (response) => {
-            this.formValues = response.data.data;
-            this.formValues.learning_path_id = response.data.data.learningPath.id;
-          }
-        );
+        this.ApiService(getLessonByIdRequest(this.lessonId)).then((response) => {
+          this.formValues = response.data.data;
+          this.formValues.learning_path_id = response.data.data.learningPath.id;
+        });
       }
     },
     getLearningPaths() {

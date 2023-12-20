@@ -25,7 +25,7 @@
                     v-model="mission.name"
                     :label="$t('MISSIONS.name')"
                     :name="$t('MISSIONS.name')"
-                    :rules="'required|max:30'"
+                    :rules="'required|max:100'"
                   ></TextField>
                 </div>
               </b-col>
@@ -86,7 +86,7 @@
                     v-model="mission.description"
                     :label="$t('MISSIONS.description')"
                     :name="$t('MISSIONS.description')"
-                    :rules="'required|max:60'"
+                    :rules="'required|max:250'"
                   ></TextAreaField>
                 </div>
               </b-col>
@@ -134,7 +134,7 @@ import Button from "@/components/Shared/Button/index.vue";
 import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import { getSingleMissionsRequest } from "@/api/missios";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
-import {getLevelsRequest} from "@/api/level";
+import { getLevelsRequest } from "@/api/level";
 
 export default {
   components: {
@@ -182,9 +182,9 @@ export default {
     };
   },
   methods: {
-    deleteImage(){
-      this.mission.mission_image = null
-      this.mission.itemImage = null
+    deleteImage() {
+      this.mission.mission_image = null;
+      this.mission.itemImage = null;
     },
     onSubmit() {
       this.$emit("onSubmit", this.mission);
@@ -196,7 +196,7 @@ export default {
       this.$emit("handleBack");
     },
     handleUploadImage(e) {
-      this.mission.itemImage = URL.createObjectURL(e.target.files[0])
+      this.mission.itemImage = URL.createObjectURL(e.target.files[0]);
       if (e) this.mission.mission_image = e.target.files[0];
       else return;
     },
@@ -211,8 +211,8 @@ export default {
         this.mission.country_id = response.data.data.country.id;
         this.mission.term_id = response.data.data.term.id;
         this.mission.learning_path_ids = response.data.data.learningpaths.map((item) => item.id);
-        this.mission.itemImage = response.data.data.mission_image
-        this.mission.mission_image = response.data.data.mission_image
+        this.mission.itemImage = response.data.data.mission_image;
+        this.mission.mission_image = response.data.data.mission_image;
       });
     }
   },
@@ -220,5 +220,4 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "./index";
-
 </style>

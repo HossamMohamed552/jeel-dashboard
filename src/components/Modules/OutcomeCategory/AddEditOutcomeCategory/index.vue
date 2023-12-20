@@ -15,7 +15,7 @@
                     :label="$t('OUTCOME.NAME_2')"
                     :name="$t('OUTCOME.NAME_2')"
                     placeholder="أدخل اسم المخرج التعليمي"
-                    :rules="'required|max:30'"
+                    :rules="'required|max:100'"
                   ></TextField>
                 </div>
               </b-col>
@@ -130,14 +130,11 @@ export default {
     },
     getOutcomeCategoryById() {
       if (this.outcomeId) {
-        this.ApiService(getOutcomeCategoryByIdRequest(this.outcomeId)).then(
-          (response) => {
-            this.formValues = response.data.data;
-            this.formValues.learning_path_id =
-              response.data.data.learning_path.id;
-            this.formValues.lesson_id = response.data.data.lesson.id;
-          }
-        );
+        this.ApiService(getOutcomeCategoryByIdRequest(this.outcomeId)).then((response) => {
+          this.formValues = response.data.data;
+          this.formValues.learning_path_id = response.data.data.learning_path.id;
+          this.formValues.lesson_id = response.data.data.lesson.id;
+        });
       }
     },
     getLearningPaths() {
@@ -147,11 +144,11 @@ export default {
     },
     getLessons: debounce(function () {
       this.selectedLearningPath = this.formValues.learning_path_id;
-      this.ApiService(
-        getLessonsRequest({ learning_path_id: this.selectedLearningPath })
-      ).then((response) => {
-        this.lessons = response.data.data;
-      });
+      this.ApiService(getLessonsRequest({ learning_path_id: this.selectedLearningPath })).then(
+        (response) => {
+          this.lessons = response.data.data;
+        }
+      );
     }, 500),
   },
   mounted() {

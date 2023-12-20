@@ -35,12 +35,14 @@
               </b-col>
               <b-col lg="4">
                 <div class="hold-field">
-                  <label class="m-0"> <span><i class="fa-solid fa-asterisk"></i></span> {{$t('ads.subject')}}</label>
+                  <label class="m-0">
+                    <span><i class="fa-solid fa-asterisk"></i></span> {{ $t("ads.subject") }}</label
+                  >
                   <TextField
                     class="subject"
                     v-model="adObject.subject"
                     :name="$t('ads.subject')"
-                    :rules="'required|min:3|max:30'"
+                    :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
               </b-col>
@@ -50,7 +52,7 @@
                     v-model="adObject.description"
                     :label="$t('ads.superDescription')"
                     :name="$t('ads.superDescription')"
-                    :rules="'required|min:20'"
+                    :rules="'required|min:250'"
                   ></TextAreaField>
                 </div>
               </b-col>
@@ -82,11 +84,11 @@ import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import SelectField from "@/components/Shared/SelectField/index.vue";
-import {mapGetters} from "vuex";
-import {getLevelsRequest} from "@/api/level";
+import { mapGetters } from "vuex";
+import { getLevelsRequest } from "@/api/level";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
-import {getAllTeachersRequest} from "@/api/user";
-import {getAnnouncementByIdRequest} from "@/api/announcement";
+import { getAllTeachersRequest } from "@/api/user";
+import { getAnnouncementByIdRequest } from "@/api/announcement";
 
 export default {
   components: {
@@ -110,7 +112,7 @@ export default {
         users: [],
         subject: "",
         description: "",
-        school_id: ""
+        school_id: "",
       },
       levels: [],
       teachers: [],
@@ -132,40 +134,40 @@ export default {
       this.$emit("handleCancel");
     },
     getLevelsBySchoolId() {
-      this.ApiService(getLevelsRequest({school_id: this.user.school.id})).then((response) => {
-        this.levels = response.data.data
-      })
+      this.ApiService(getLevelsRequest({ school_id: this.user.school.id })).then((response) => {
+        this.levels = response.data.data;
+      });
     },
     getAllTeachers() {
       this.ApiService(getAllTeachersRequest(this.user.school.id)).then((response) => {
-        this.teachers = response.data.data
-      })
-    }
+        this.teachers = response.data.data;
+      });
+    },
   },
   computed: {
     ...mapGetters(["user", "teacherId"]),
   },
   mounted() {
-    this.adObject.school_id = this.user.school.id
+    this.adObject.school_id = this.user.school.id;
     this.getLevelsBySchoolId();
-    this.getAllTeachers()
+    this.getAllTeachers();
     if (this.adId) {
       this.ApiService(getAnnouncementByIdRequest(this.adId)).then((response) => {
-        this.adObject.level_id = response.data.data.level.id
+        this.adObject.level_id = response.data.data.level.id;
         this.adObject.users = response.data.data.teachers.map((item) => {
-          return item.id
-        })
-        this.adObject.subject = response.data.data.subject
-        this.adObject.description = response.data.data.description
-      })
+          return item.id;
+        });
+        this.adObject.subject = response.data.data.subject;
+        this.adObject.description = response.data.data.description;
+      });
     }
     if (this.teacherId) {
-      this.adObject.users.push(this.teacherId)
+      this.adObject.users.push(this.teacherId);
     }
   },
   destroyed() {
-    this.$store.commit('teacherId', null)
-  }
+    this.$store.commit("teacherId", null);
+  },
 };
 </script>
 <style scoped lang="scss">

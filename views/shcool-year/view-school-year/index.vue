@@ -3,16 +3,17 @@
     <div class="show-term">
       <div class="hold-fields">
         <b-row>
-          <!-- <b-col lg="12">
-              <h2 class="heading">{{$t('TERM.showDetails')}}</h2>
-          </b-col> -->
+          <b-col lg="12">
+            <h3 class="heading">تفاصيل العام الدراسي</h3>
+          </b-col>
         </b-row>
         <b-row>
-          <b-col lg="6">
-            <ShowItem title="الاسم بالعربية" :subtitle="schoolYear.name" />
-          </b-col>
-          <b-col lg="6">
-            <ShowItem title="الاسم بالانجليزية" :subtitle="schoolYear.name" />
+          <b-col cols="12" md="6" lg="4">
+            <ShowItem
+              title="اسم العام الدراسي"
+              :subtitle="schoolYear.name"
+              class="with-border-bottom"
+            />
           </b-col>
         </b-row>
       </div>

@@ -12,20 +12,20 @@
                     v-model="createCountry.name"
                     :label="$t('COUNTRY.countryName')"
                     :name="$t('COUNTRY.countryName')"
-                    :rules="'required|min:3|max:30'"
+                    :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
               </b-col>
-<!--              <b-col lg="6" class="mb-3">-->
-<!--                <div class="hold-field">-->
-<!--                  <TextField-->
-<!--                    v-model="createCountry.code"-->
-<!--                    :label="$t('COUNTRY.countryCode')"-->
-<!--                    :name="$t('COUNTRY.countryCode')"-->
-<!--                    :rules="'required|min:2|max:5'"-->
-<!--                  ></TextField>-->
-<!--                </div>-->
-<!--              </b-col>-->
+              <!--              <b-col lg="6" class="mb-3">-->
+              <!--                <div class="hold-field">-->
+              <!--                  <TextField-->
+              <!--                    v-model="createCountry.code"-->
+              <!--                    :label="$t('COUNTRY.countryCode')"-->
+              <!--                    :name="$t('COUNTRY.countryCode')"-->
+              <!--                    :rules="'required|min:2|max:5'"-->
+              <!--                  ></TextField>-->
+              <!--                </div>-->
+              <!--              </b-col>-->
             </b-row>
             <b-row>
               <div class="hold-btns-form">
@@ -51,13 +51,13 @@
 <script>
 import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import {getSingleCountryRequest} from "@/api/country";
+import { getSingleCountryRequest } from "@/api/country";
 import Modal from "@/components/Shared/Modal/index.vue";
 export default {
   components: {
     Modal,
     TextField,
-    Button
+    Button,
   },
   props: {
     loading: {
@@ -71,17 +71,17 @@ export default {
         name: "",
         // code: ""
       },
-      defaultValue:{
+      defaultValue: {
         name: "",
         // code: ""
-      }
+      },
     };
   },
-  computed:{
+  computed: {
     // && (this.createCountry.code === this.defaultValue.code)
-    canNotSend(){
-      return (this.createCountry.name === this.defaultValue.name)
-    }
+    canNotSend() {
+      return this.createCountry.name === this.defaultValue.name;
+    },
   },
   methods: {
     onSubmit() {
@@ -89,9 +89,9 @@ export default {
         if (!success) return;
       });
       if (this.$route.params.id) {
-        this.$emit('handleEditCountry', this.createCountry)
+        this.$emit("handleEditCountry", this.createCountry);
       } else {
-        this.$emit('handleAddCountry', this.createCountry)
+        this.$emit("handleAddCountry", this.createCountry);
       }
     },
     handleCancel() {
@@ -100,17 +100,17 @@ export default {
     getCountryToEdit() {
       if (this.$route.params.id) {
         this.ApiService(getSingleCountryRequest(this.$route.params.id)).then((response) => {
-          this.createCountry.name = response.data.data.name
+          this.createCountry.name = response.data.data.name;
           // this.defaultValue.name = response.data.data.name
           // this.createCountry.code = response.data.data.code
           // this.defaultValue.code = response.data.data.code
-        })
+        });
       }
-    }
+    },
   },
   mounted() {
-    this.getCountryToEdit()
-  }
+    this.getCountryToEdit();
+  },
 };
 </script>
 <style scoped lang="scss">

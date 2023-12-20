@@ -4,8 +4,8 @@
       <div class="hold-fields">
         <b-row> </b-row>
         <b-row>
-          <b-col lg="6">
-            <ShowItem title="الاسم " :subtitle="LearningSkill.name" />
+          <b-col cols="12" md="6" lg="4">
+            <ShowItem title="الاسم " :subtitle="LearningSkill.name" class="with-border-bottom" />
           </b-col>
         </b-row>
       </div>

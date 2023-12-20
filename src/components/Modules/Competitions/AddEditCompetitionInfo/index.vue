@@ -12,7 +12,7 @@
                     v-model="formValues.name"
                     :label="$t('COMPETITIONS.NAME')"
                     :name="$t('COMPETITIONS.NAME')"
-                    :rules="'required|max:30'"
+                    :rules="'required|max:100'"
                   ></TextField>
                 </div>
               </b-col>
@@ -26,7 +26,7 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     @input="getMissions()"
-                    :rules="'required'" 
+                    :rules="'required'"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -132,7 +132,7 @@
                     :label="$t('COMPETITIONS.TIME_PERIOD')"
                     :name="$t('COMPETITIONS.TIME_PERIOD')"
                     placeholder="مثال: 01:30"
-                    :rules="'required|max:30'"
+                    :rules="'required|max:100'"
                   ></TextField>
                 </div>
               </b-col>
@@ -149,10 +149,7 @@
                     {{ $t("GLOBAL_NEXT") }}
                   </Button>
                 </div>
-                <Button
-                  @click="handleCancel"
-                  :custom-class="'cancel-btn margin'"
-                >
+                <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
                   {{ $t("GLOBAL_CANCEL") }}
                 </Button>
               </div>
@@ -163,7 +160,7 @@
     </div>
   </div>
 </template>
-  <script>
+<script>
 import TextField from "@/components/Shared/TextField/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
@@ -253,7 +250,6 @@ export default {
   },
 };
 </script>
-  <style scoped lang="scss">
+<style scoped lang="scss">
 @import "./index";
 </style>
-  

@@ -14,7 +14,7 @@
                     v-model="createQuiz.name"
                     :label="$t('QUIZZES.name')"
                     :name="$t('QUIZZES.name')"
-                    :rules="'required|min:3|max:30'"
+                    :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
               </b-col>
@@ -75,10 +75,11 @@
               </b-col>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
-                  <ValidationProvider v-slot="{errors, invalid}">
-                    <label>{{ $t('QUIZZES.sort') }}</label>
+                  <ValidationProvider v-slot="{ errors, invalid }">
+                    <label>{{ $t("QUIZZES.sort") }}</label>
                     <b-form-group v-slot="{ ariaDescribedby }" class="group-type">
-                      <b-form-radio v-model="createQuiz.sort" value="0" name="sort_type">مرتب
+                      <b-form-radio v-model="createQuiz.sort" value="0" name="sort_type"
+                        >مرتب
                       </b-form-radio>
                       <b-form-radio v-model="createQuiz.sort" value="1" name="sort_type">
                         عشوائى
@@ -88,16 +89,17 @@
                 </div>
               </b-col>
               <b-col
-                v-if="
-                  createQuiz.level_id !== null &&
-                  createQuiz.learning_path_id !== null
-                "
+                v-if="createQuiz.level_id !== null && createQuiz.learning_path_id !== null"
                 lg="12"
                 class="mt-3 mb-4"
               >
                 <h3>{{ $t("QUIZZES.systemQuestion") }}</h3>
               </b-col>
-              <b-col v-if=" createQuiz.level_id !== null && createQuiz.learning_path_id !== null " lg="12" class="mb-4">
+              <b-col
+                v-if="createQuiz.level_id !== null && createQuiz.learning_path_id !== null"
+                lg="12"
+                class="mb-4"
+              >
                 <div class="hold-system-question">
                   <b-row>
                     <b-col lg="12" class="mb-4">
@@ -114,16 +116,12 @@
                     <b-col lg="5">
                       <b-row>
                         <b-col lg="4" v-for="question in question_difficulty">
-                          <p
-                            :class="
-                              isEditable ? 'question-type' : 'question-type-alt'
-                            "
-                          >
+                          <p :class="isEditable ? 'question-type' : 'question-type-alt'">
                             {{ question.name }}
                           </p>
                           <span class="numberOfQuestions" v-if="!isEditable">{{
-                              question.questions_count
-                            }}</span>
+                            question.questions_count
+                          }}</span>
                           <div class="hold-field" v-if="isEditable">
                             <select
                               v-model="question.numberSelected"
@@ -208,11 +206,9 @@
                                 <p class="mb-0 font-weight-bold">
                                   {{ item.name }}
                                 </p>
-                                <Button
-                                  @click="handleShowQuestionDetails(item.id)"
-                                >{{ $t("GLOBAL_DETAILS") }}
-                                </Button
-                                >
+                                <Button @click="handleShowQuestionDetails(item.id)"
+                                  >{{ $t("GLOBAL_DETAILS") }}
+                                </Button>
                               </div>
                             </div>
                           </draggable>
@@ -226,7 +222,7 @@
                 <div class="hold-field">
                   <TextAreaField
                     :label="$t('QUIZZES.description')"
-                    :rules="'required|min:3|max:60'"
+                    :rules="'required|min:3|max:250'"
                     v-model="createQuiz.description"
                   />
                 </div>
@@ -264,8 +260,8 @@ import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import SelectField from "@/components/Shared/SelectField/index.vue";
-import {getAllLevelsRequest} from "@/api/level";
-import {getAllLearningPathsRequest, getQuestionRequest} from "@/api/question";
+import { getAllLevelsRequest } from "@/api/level";
+import { getAllLearningPathsRequest, getQuestionRequest } from "@/api/question";
 import {
   getGeneralQuestionRequest,
   getQuestionDifficultyLevelLearnRequest,
@@ -273,7 +269,7 @@ import {
   postRandomQuizRequest,
 } from "@/api/quiz";
 import draggable from "vuedraggable";
-import {getAllTermsRequest} from "@/api/term";
+import { getAllTermsRequest } from "@/api/term";
 import QuestionDetailsModal from "@/components/Shared/QuestionDetailsModal/index.vue";
 
 export default {
@@ -351,17 +347,13 @@ export default {
     handleShowQuestionDetails(questionId) {
       this.selectedQuestion = questionId;
       this.$bvModal.show("question-details-modal");
-
     },
     handleCloseQuestionDetailsModal() {
       this.$bvModal.hide("question-details-modal");
       this.selectedQuestion = null;
     },
     getGeneralQuestions() {
-      if (
-        this.createQuiz.level_id !== null &&
-        this.createQuiz.learning_path_id !== null
-      ) {
+      if (this.createQuiz.level_id !== null && this.createQuiz.learning_path_id !== null) {
         this.ApiService(
           getGeneralQuestionRequest({
             levelId: this.createQuiz.level_id,
@@ -389,16 +381,12 @@ export default {
     },
     getNumberQuestionDifficulty() {
       this.createQuiz.total_question = this.question_difficulty.reduce(
-        (accumulator, currentValue) =>
-          accumulator + currentValue.numberSelected,
+        (accumulator, currentValue) => accumulator + currentValue.numberSelected,
         0
       );
     },
     showSystem() {
-      if (
-        this.createQuiz.level_id !== null &&
-        this.createQuiz.learning_path_id !== null
-      ) {
+      if (this.createQuiz.level_id !== null && this.createQuiz.learning_path_id !== null) {
         this.getQuestionsDifficultyLevelLearn();
       }
     },
@@ -411,7 +399,7 @@ export default {
       ).then((response) => {
         let allQuestionsLevel = response.data.data;
         this.question_difficulty = allQuestionsLevel.map((item) =>
-          Object.assign(item, {numberSelected: item.questions_count})
+          Object.assign(item, { numberSelected: item.questions_count })
         );
         this.getNumberQuestionDifficulty();
       });
@@ -461,7 +449,7 @@ export default {
         .then(
           () =>
             (this.questionBank = this.questionBank.map((item) => {
-              return {id: item.id, name: item.question, fixed: false};
+              return { id: item.id, name: item.question, fixed: false };
             }))
         )
         .finally(() => {
@@ -471,14 +459,13 @@ export default {
             })
             .then(() => {
               this.questions = this.questions.map((item) => {
-                return {...item, fixed: false};
+                return { ...item, fixed: false };
               });
               this.questionsToSend = this.questionBank.filter((item) =>
                 this.questions.map((item) => item.id).includes(item.id)
               );
               this.questionBank = this.questionBank.filter(
-                (item) =>
-                  !this.questions.map((item) => item.id).includes(item.id)
+                (item) => !this.questions.map((item) => item.id).includes(item.id)
               );
               this.createQuiz.questions = this.questionsToSend;
               this.enableToSendData = true;
@@ -513,31 +500,24 @@ export default {
     //   this.questionBank = response.data.data
     // })
     if (this.$route.params.id) {
-      this.ApiService(getSingleQuizRequest(this.$route.params.id)).then(
-        (response) => {
-          this.createQuiz.name = response.data.data.name;
-          this.createQuiz.description = response.data.data.description;
-          this.createQuiz.level_id = response.data.data.level.id;
-          this.createQuiz.term_id = response.data.data.term.id;
-          this.createQuiz.learning_path_id =
-            response.data.data.learning_path.id;
-          this.createQuiz.type = response.data.data.type;
-          this.question_difficulty =
-            response.data.data.questions_difficulties.map((item) =>
-              Object.assign(item, {numberSelected: item.questions_count})
-            );
-          this.createQuiz.total_question = this.question_difficulty.reduce(
-            (accumulator, currentValue) =>
-              accumulator + currentValue.numberSelected,
-            0
-          );
-          this.questionsToSend = this.questionBank.filter((item) =>
-            response.data.data.questions
-              .map((item) => item.id)
-              .includes(item.id)
-          );
-        }
-      );
+      this.ApiService(getSingleQuizRequest(this.$route.params.id)).then((response) => {
+        this.createQuiz.name = response.data.data.name;
+        this.createQuiz.description = response.data.data.description;
+        this.createQuiz.level_id = response.data.data.level.id;
+        this.createQuiz.term_id = response.data.data.term.id;
+        this.createQuiz.learning_path_id = response.data.data.learning_path.id;
+        this.createQuiz.type = response.data.data.type;
+        this.question_difficulty = response.data.data.questions_difficulties.map((item) =>
+          Object.assign(item, { numberSelected: item.questions_count })
+        );
+        this.createQuiz.total_question = this.question_difficulty.reduce(
+          (accumulator, currentValue) => accumulator + currentValue.numberSelected,
+          0
+        );
+        this.questionsToSend = this.questionBank.filter((item) =>
+          response.data.data.questions.map((item) => item.id).includes(item.id)
+        );
+      });
     }
   },
 };

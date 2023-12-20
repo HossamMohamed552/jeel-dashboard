@@ -1,6 +1,6 @@
 <template>
-  <div class="add-edit-learning-skill">
-    <div class="container-fluid custom-container">
+  <div class="container-fluid custom-container">
+    <div class="add-edit-learning-skill">
       <div class="add-edit-term-form">
         <h3>{{ $route.params.id ? "تعديل المهارة" : "اضافة نوع مهارة" }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditLearningSkill">
@@ -13,7 +13,7 @@
                     label="نوع المهارة"
                     name="نوع المهارة"
                     placeholder="أدخل نوع المهارة"
-                    :rules="'required|min:3|max:30'"
+                    :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
               </b-col>

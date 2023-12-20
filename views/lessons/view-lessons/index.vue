@@ -4,21 +4,37 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">{{ $t("LESSONS.DETAILS") }}</h2>
+            <h3 class="heading">{{ $t("LESSONS.DETAILS") }}</h3>
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="4" class="mb-3">
-            <ShowItem :title="$t('GLOBAL_NAME')" :subtitle="LessonData.name" />
+          <b-col lg="4">
+            <ShowItem
+              :title="$t('GLOBAL_NAME')"
+              :subtitle="LessonData.name"
+              class="with-border-bottom"
+            />
           </b-col>
           <b-col lg="4" v-if="LessonData.level">
-            <ShowItem :title="$t('MISSIONS.level')" :subtitle="LessonData.level.name" />
+            <ShowItem
+              :title="$t('MISSIONS.level')"
+              :subtitle="LessonData.level.name"
+              class="with-border-bottom"
+            />
           </b-col>
           <b-col lg="4" v-if="LessonData.level">
-            <ShowItem :title="$t('MISSIONS.terms')" :subtitle="LessonData.term.name" />
+            <ShowItem
+              :title="$t('MISSIONS.terms')"
+              :subtitle="LessonData.term.name"
+              class="with-border-bottom"
+            />
           </b-col>
-          <b-col lg="4" v-if="LessonData.learningPath"  class="mt-3">
-            <ShowItem :title="$t('MISSIONS.LEARNING_PATH')" :subtitle="LessonData.learningPath.name" />
+          <b-col lg="4" v-if="LessonData.learningPath">
+            <ShowItem
+              :title="$t('MISSIONS.LEARNING_PATH')"
+              :subtitle="LessonData.learningPath.name"
+              class="with-border-bottom"
+            />
           </b-col>
         </b-row>
       </div>
@@ -27,7 +43,7 @@
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import {getLessonByIdRequest} from "@/api/lessons";
+import { getLessonByIdRequest } from "@/api/lessons";
 export default {
   name: "index",
   components: {

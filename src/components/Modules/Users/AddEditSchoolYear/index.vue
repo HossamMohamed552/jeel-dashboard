@@ -13,7 +13,7 @@
                     label="اسم العام الدراسي"
                     name="اسم العام الدراسي"
                     placeholder="أدخل العام الدراسي"
-                    :rules="'required|min:3|max:30'"
+                    :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
               </b-col>

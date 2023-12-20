@@ -2,10 +2,18 @@
   <section class="container-fluid custom-container">
     <div class="show-term">
       <div class="hold-fields">
-        <b-row> </b-row>
         <b-row>
-          <b-col lg="6">
-            <ShowItem title="الاسم " :subtitle="LearningStyle.name" />
+          <b-col lg="12">
+            <h3 class="heading">تفاصيل اسلوب التعلم</h3>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col cols="12" md="6" lg="4">
+            <ShowItem
+              title="اسلوب التعلم"
+              :subtitle="LearningStyle.name"
+              class="with-border-bottom"
+            />
           </b-col>
         </b-row>
       </div>

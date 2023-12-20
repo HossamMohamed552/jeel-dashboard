@@ -13,7 +13,7 @@
                     label="إسلوب التعلم"
                     name="إسلوب التعلم"
                     placeholder="أدخل اسم إسلوب التعلم"
-                    :rules="'required|min:3|max:30'"
+                    :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
               </b-col>
