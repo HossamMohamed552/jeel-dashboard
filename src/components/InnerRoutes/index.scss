@@ -6,6 +6,8 @@
     color: $color-paragraph-alt;
     display: flex;
     border-bottom: 1px solid #8C8C8C;
+    max-width: 100%;
+    overflow: auto;
     .tap{
       padding: 0 5rem 2rem 5rem;
       cursor: pointer;
