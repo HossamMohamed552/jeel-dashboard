@@ -100,11 +100,11 @@ export default {
   .table.no-responsive-bg-color tr:not(:first-child) td:first-child {
     background-color: #fff;
     color: color(primary);
-    border-top: 2px solid #3dafc8;
+    // border-top: 2px solid #3dafc8;
   }
   .table td:before {
     content: attr(data-th);
-    border-left: 1px solid #dee2e6;
+  /*  border-left: 1px solid #dee2e6;**/
     display: table-cell;
     padding: 10px;
     width: 130px;
@@ -113,7 +113,7 @@ export default {
 
   [dir="ltr"] .table td:before {
     border-left: 0;
-    border-right: 1px solid #dee2e6;
+    /* border-right: 1px solid #dee2e6;**/
   }
 
   .table {
@@ -170,12 +170,12 @@ export default {
     }
 
     td {
-      border-bottom: 1px solid rgba(#8395b7, 0.25);
+      // border-bottom: 1px solid rgba(#8395b7, 0.25);
     }
 
     td:before {
       content: attr(data-th);
-      border-left: 1px solid rgba(#8395b7, 0.25);
+      // border-left: 1px solid rgba(#8395b7, 0.25);
       display: table-cell;
       padding: 10px;
       width: 130px;
@@ -185,7 +185,7 @@ export default {
 
   [dir="ltr"] .table td:before {
     border-left: 0;
-    border-right: 1px solid rgba(#8395b7, 0.25);
+    // border-right: 1px solid rgba(#8395b7, 0.25);
   }
 }
 </style>

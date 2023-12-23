@@ -20,6 +20,7 @@ li {
 .custom-container {
   width: 93%;
   margin: 0 auto;
+  gap: 10px;
   @media (max-width: 1200px) {
     width: auto;
   }

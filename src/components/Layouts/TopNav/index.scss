@@ -182,3 +182,12 @@ header {
     }
   }
 }
+
+::v-deep .nav-item.b-nav-dropdown.dropdown .dropdown-toggle::after {
+  display: none !important;
+}
+
+.collapsed .nav .nav-item {
+  margin: 0 !important;
+  padding: 0 !important;
+}
