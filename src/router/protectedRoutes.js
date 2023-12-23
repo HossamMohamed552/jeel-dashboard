@@ -298,7 +298,7 @@ const protectedRoutes = [
         name: "show-levels",
         component: () => import("../../views/levels/view-level/index.vue"),
         meta: {
-          breadcrumb: "تفاصيل المرحلة الدراسية",
+          breadcrumb: "تفاصيل الصف الدراسي",
           preLabel: "الصفوف الدراسية",
           preLink: "/dashboard/levels",
         },
@@ -555,7 +555,7 @@ const protectedRoutes = [
         name: "paths",
         component: () => import("../../views/paths/index.vue"),
         meta: {
-          breadcrumb: "المسارات",
+          breadcrumb: "المسارات التعليمية",
           preLabel: "",
           preLink: "",
         },
@@ -565,8 +565,8 @@ const protectedRoutes = [
         name: "add-path",
         component: () => import("../../views/paths/add-path/index.vue"),
         meta: {
-          breadcrumb: "إضافة مسار",
-          preLabel: "المسارات",
+          breadcrumb: "إضافة مسار تعليمي",
+          preLabel: "المسارات التعليمية",
           preLink: "/dashboard/path",
         },
       },
@@ -575,8 +575,8 @@ const protectedRoutes = [
         name: "edit-path",
         component: () => import("../../views/paths/edit-path/index.vue"),
         meta: {
-          breadcrumb: "تعديل المسار",
-          preLabel: "المسارات",
+          breadcrumb: "تعديل المسار التعليمي",
+          preLabel: "المسارات التعليمية",
           preLink: "/dashboard/path",
         },
       },
@@ -585,8 +585,8 @@ const protectedRoutes = [
         name: "show-path",
         component: () => import("../../views/paths/view-path/index.vue"),
         meta: {
-          breadcrumb: "تفاصيل المسار",
-          preLabel: "المسارات",
+          breadcrumb: "تفاصيل المسار التعليمي",
+          preLabel: "المسارات التعليمية",
           preLink: "/dashboard/path",
         },
       },

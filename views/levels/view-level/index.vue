@@ -12,10 +12,10 @@
             <ShowItem :title="$t('LEVEL.name')" :subtitle="level.name" />
             <div class="with-border-bottom w-75"></div>
           </b-col>
-          <b-col lg="6">
+          <!-- <b-col lg="6">
             <ShowItem :title="$t('LEVEL.min_levels')" :subtitle="level.min_levels || '0'" />
             <div class="with-border-bottom w-75"></div>
-          </b-col>
+          </b-col> -->
         </b-row>
         <b-row class="mt-5">
           <b-col

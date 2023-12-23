@@ -8,16 +8,25 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="4" class="with-border-bottom">
-            <ShowItem :title="$t('GLOBAL_NAME')" :subtitle="objectiveCategory.name" />
-          </b-col>
-          <b-col lg="4" class="with-border-bottom" v-if="objectiveCategory.level">
-            <ShowItem :title="$t('MISSIONS.level')" :subtitle="objectiveCategory.level.name" />
-          </b-col>
-          <b-col lg="4" class="with-border-bottom" v-if="objectiveCategory.learning_path">
+          <b-col lg="4">
             <ShowItem
-              :title="$t('MISSIONS.LEARNING_PATH')"
-              :subtitle="objectiveCategory.learning_path.name"
+              class="with-border-bottom"
+              :title="$t('OBJECTIVE.NAME')"
+              :subtitle="objectiveCategory.name"
+            />
+          </b-col>
+          <b-col lg="4" v-if="objectiveCategory.learningPath.name">
+            <ShowItem
+              class="with-border-bottom"
+              :title="$t('PATH.Name')"
+              :subtitle="objectiveCategory.learningPath.name"
+            />
+          </b-col>
+          <b-col lg="4" v-if="objectiveCategory.lesson.name">
+            <ShowItem
+              class="with-border-bottom"
+              :title="$t('LESSONS.NAME')"
+              :subtitle="objectiveCategory.lesson.name"
             />
           </b-col>
         </b-row>
@@ -39,7 +48,9 @@ export default {
     };
   },
   mounted() {
-    this.ApiService(getObjectiveCategoryByIdRequest(this.$route.params.id)).then((response) => {
+    this.ApiService(
+      getObjectiveCategoryByIdRequest(this.$route.params.id)
+    ).then((response) => {
       this.objectiveCategory = response.data.data;
     });
   },

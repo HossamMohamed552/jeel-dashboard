@@ -55,7 +55,7 @@ export default {
       totalNumber: 0,
       fieldsList: [
         { key: "id", label: "التسلسل" },
-        { key: "name", label: "اسم المرحلة" },
+        { key: "name", label: "اسم الصف الدراسي" },
         { key: "actions", label: "الإجراء" },
       ],
     };

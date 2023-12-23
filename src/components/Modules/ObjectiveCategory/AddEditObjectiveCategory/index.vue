@@ -132,7 +132,7 @@ export default {
       if (this.objectiveId) {
         this.ApiService(getObjectiveCategoryByIdRequest(this.objectiveId)).then((response) => {
           this.formValues = response.data.data;
-          this.formValues.learning_path_id = response.data.data.learning_path.id;
+          this.formValues.learning_path_id = response.data.data.learningPath.id;
           this.formValues.lesson_id = response.data.data.lesson.id;
         });
       }

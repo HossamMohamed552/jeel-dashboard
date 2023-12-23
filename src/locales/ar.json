@@ -213,7 +213,7 @@
   "PATH": {
     "Name": "اسم المسار",
     "Description": "وصف المسار",
-    "ADD_NEW": "إضافة مسار جديدة",
+    "ADD_NEW": "إضافة مسار تعليمي",
     "EDIT": "تعديل المسار",
     "ShowDetails": "عرض تفاصيل المسار"
   },
@@ -318,14 +318,15 @@
     "showDetails": "عرض تفاصيل الباقة",
     "name": "اسم الباقة",
     "price": "السعر",
-    "classes_count": "عدد الصفوف",
+    "classes_count": "عدد الفصول",
     "description": "الملاحظات",
     "ADD_NEW": "إضافة باقة جديدة",
     "EDIT": "تعديل الباقة",
     "countryName": "الدولة",
     "NAME": "اسم الباقة",
     "CURRENT_PRICE": "السعر الحالى للباقة",
-    "CURRENCY": "العملة"
+    "CURRENCY": "العملة",
+    "DESCRIPTION": "تفاصيل"
   },
   "SCHOOL_TYPE": {
     "ADD_NEW": "إضافة نوع مدرسة جديد",
@@ -337,7 +338,9 @@
     "BLOOM": "بلوم",
     "DETAILS": "تفاصيل بلوم",
     "ADD": "اضافة بلوم",
-    "EDIT": "تعديل بلوم"
+    "EDIT": "تعديل بلوم",
+    "BLOOM_NAME": "اسم بلوم",
+    "BLOOM_NAME_PLACEHOLDER": "ادخل اسم بلوم"
   },
   "OBJECTIVE": {
     "OBJECTIVE": "الأهداف التعليمية",
@@ -517,7 +520,7 @@
     "range": "المدة الزمنية",
     "status": "الحالة",
     "description": "الوصف ",
-    "learningPath": "المسارات"
+    "learningPath": "المسارات التعليمية"
   },
   "GLOBAL_SEND": "إرسال",
   "GLOBAL_EDITAd": "تعديل الإعلان",

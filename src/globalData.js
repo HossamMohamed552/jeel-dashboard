@@ -170,7 +170,7 @@ let routeBasicData = [
     permission: "view-countries",
   },
   {
-    name: "المسارات",
+    name: "المسارات التعليمية",
     path: "/dashboard/path",
     altImage: "learning-path",
     titleImage: "learning-path",

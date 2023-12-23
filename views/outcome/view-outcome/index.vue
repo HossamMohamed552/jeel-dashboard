@@ -8,16 +8,21 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="4" class="with-border-bottom">
-            <ShowItem :title="$t('GLOBAL_NAME')" :subtitle="outcomeCategory.name" />
+          <b-col lg="4" >
+            <ShowItem class="with-border-bottom" :title="$t('OUTCOME.NAME')" :subtitle="outcomeCategory.name" />
           </b-col>
-          <b-col lg="4" class="with-border-bottom" v-if="outcomeCategory.level">
-            <ShowItem :title="$t('MISSIONS.level')" :subtitle="outcomeCategory.level.name" />
-          </b-col>
-          <b-col lg="4" class="with-border-bottom" v-if="outcomeCategory.learning_path">
+          <b-col lg="4" v-if="outcomeCategory.learningPath.name">
             <ShowItem
-              :title="$t('MISSIONS.LEARNING_PATH')"
-              :subtitle="outcomeCategory.learning_path.name"
+              class="with-border-bottom"
+              :title="$t('PATH.Name')"
+              :subtitle="outcomeCategory.learningPath.name"
+            />
+          </b-col>
+          <b-col lg="4" v-if="outcomeCategory.lesson.name">
+            <ShowItem
+              class="with-border-bottom"
+              :title="$t('LESSONS.NAME')"
+              :subtitle="outcomeCategory.lesson.name"
             />
           </b-col>
         </b-row>

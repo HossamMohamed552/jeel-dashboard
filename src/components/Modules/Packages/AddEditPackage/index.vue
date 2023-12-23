@@ -74,6 +74,7 @@
                       :name="$t('PACKAGE.CURRENT_PRICE')"
                       placeholder="أدخل السعر الحالى للباقة"
                       type="number"
+                      min="0"
                       :rules="'required'"
                     />
                   </b-form-group>
@@ -98,15 +99,20 @@
             </b-row>
             <b-row>
               <b-col lg="12" class="mb-3">
-                <!--                :rules="'min:20'"-->
-                <div class="hold-field">
-                  <TextAreaField
-                    v-model="createPackage.description"
-                    :label="$t('PACKAGE.description')"
-                    :name="$t('PACKAGE.description')"
-                    placeholder="تفاصيل الباقة"
-                  ></TextAreaField>
-                </div>
+                <b-form-group
+                  :label="$t('PACKAGE.DESCRIPTION')"
+                  v-slot="{ ariaDescribedby }"
+                  class="description"
+                >
+                  <div class="hold-field">
+                    <TextAreaField
+                      v-model="createPackage.description"
+                      :label="$t('PACKAGE.description')"
+                      :name="$t('PACKAGE.description')"
+                      placeholder="تفاصيل الباقة"
+                    ></TextAreaField>
+                  </div>
+                </b-form-group>
               </b-col>
             </b-row>
             <b-row>
@@ -165,13 +171,8 @@ export default {
         country_id: "",
         roles: [
           {
-            role_id: 2,
-            name: "مديرين المدرسة",
-            number: "",
-          },
-          {
-            role_id: 3,
-            name: "المشرفين",
+            role_id: 5,
+            name: "الطلاب",
             number: "",
           },
           {
@@ -180,15 +181,20 @@ export default {
             number: "",
           },
           {
-            role_id: 5,
-            name: "الطلاب",
+            role_id: 3,
+            name: "المشرفين",
+            number: "",
+          },
+          {
+            role_id: 2,
+            name: "المديرين",
             number: "",
           },
           {
             role_id: 6,
             name: "أولياء الأمور",
             number: "",
-          },
+          }
         ],
       },
       packageId: this.$route.params.id,

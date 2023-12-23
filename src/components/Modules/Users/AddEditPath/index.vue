@@ -6,7 +6,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditPathForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="12" class="mb-3">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="createPath.name"
@@ -16,7 +16,7 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="12" class="mb-3">
+              <!-- <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <b-form-group v-slot="{ ariaDescribedby }" class="description">
                     <TextAreaField
@@ -28,7 +28,7 @@
                     ></TextAreaField>
                   </b-form-group>
                 </div>
-              </b-col>
+              </b-col> -->
             </b-row>
             <b-row>
               <div class="hold-btns-form">
@@ -75,19 +75,19 @@ export default {
     return {
       createPath: {
         name: "",
-        description: "",
+        // description: "",
       },
       defaultValue: {
         name: "",
-        description: "",
+        // description: "",
       },
     };
   },
   computed: {
     canNotSend() {
       return (
-        this.createPath.name === this.defaultValue.name &&
-        this.createPath.description === this.defaultValue.description
+        this.createPath.name === this.defaultValue.name 
+        // this.createPath.description === this.defaultValue.description
       );
     },
   },
@@ -110,8 +110,8 @@ export default {
         this.ApiService(getSingleLearningPathRequest(this.$route.params.id)).then((response) => {
           this.createPath.name = response.data.data.name;
           this.defaultValue.name = response.data.data.name;
-          this.createPath.description = response.data.data.description;
-          this.defaultValue.description = response.data.data.description;
+          // this.createPath.description = response.data.data.description;
+          // this.defaultValue.description = response.data.data.description;
         });
       }
     },

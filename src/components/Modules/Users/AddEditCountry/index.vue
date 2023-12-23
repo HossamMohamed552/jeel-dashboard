@@ -12,6 +12,7 @@
                     v-model="createCountry.name"
                     :label="$t('COUNTRY.countryName')"
                     :name="$t('COUNTRY.countryName')"
+                    placeholder="ادخل اسم الدولة"
                     :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>

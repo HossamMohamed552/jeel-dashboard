@@ -52,7 +52,7 @@ export default{
         {key: "name", label: "الإسم"},
         {key: "level", label: "المرحله الدراسية"},
         {key: "description", label: "الوصف"},
-        {key: "learningpaths", label: "المسارات"},
+        {key: "learningpaths", label: "المسارات التعليمية"},
         {key: "actions", label: "الإجراء"},
       ],
     }

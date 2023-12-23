@@ -56,6 +56,7 @@ export default {
       fieldsList: [
         { key: "id", label: "التسلسل" },
         { key: "name", label: "اسم الترم الدراسي" },
+        { key: "min_missions", label: "الحد الآدنى من المهام" },
         { key: "actions", label: "الإجراء" },
       ],
     };

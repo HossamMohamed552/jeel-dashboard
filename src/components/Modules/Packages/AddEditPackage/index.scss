@@ -76,8 +76,9 @@
 .currency-title {
   font-size: 1rem;
   font-weight: bold;
-  color: $color-primary;
+  // color: $color-primary;
   margin-bottom: 1rem;
+  margin-inline-end: 0.3rem;
   position: relative;
 
   // &::after {

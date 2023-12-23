@@ -11,13 +11,13 @@
           <b-col cols="12" md="4">
             <ShowItem :title="$t('PATH.Name')" :subtitle="path.name" class="with-border-bottom" />
           </b-col>
-          <b-col cols="12" md="4">
+          <!-- <b-col cols="12" md="4">
             <ShowItem
               :title="$t('PATH.Description')"
               :subtitle="path.description"
               class="with-border-bottom"
             />
-          </b-col>
+          </b-col> -->
         </b-row>
       </div>
     </div>

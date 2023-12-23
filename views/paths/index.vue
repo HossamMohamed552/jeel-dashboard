@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة المسارات'" :number-of-item="totalNumber"
+    <ListItems :header-name="'قائمة المسارات التعليمية'" :number-of-item="totalNumber"
                :tableItems="pathsList" :fields-list="fieldsList" :v-search-model="groupSearchWord" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getPaths"
@@ -12,7 +12,7 @@
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddPath()"  v-if="user.permissions.includes(`add-learningpath`)">
           <img src="@/assets/images/icons/plus.svg">
-          <span> إضافة مسار جديد</span>
+          <span> إضافة مسار تعليمي</span>
         </Button>
       </template>
     </ListItems>
@@ -47,7 +47,7 @@ export default {
       fieldsList: [
         {key: "id", label: "التسلسل"},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
-        {key: "description", label: this.$i18n.t('TABLE_FIELDS.description')},
+        // {key: "description", label: this.$i18n.t('TABLE_FIELDS.description')},
         {key: "actions", label: "الإجراء"},
       ],
     }
