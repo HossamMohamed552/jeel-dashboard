@@ -27,7 +27,7 @@ export default {
 
 @font-face {
     font-family: DiodrumArabic ;
-    src: url('~@/assets/fonts/alfont_com_AlFont_com_DiodrumArabic-Regular.ttf');
+    src: url('~@/assets/fonts/NotoNaskhArabicUI-Regular.ttf');
 }
 
 * {

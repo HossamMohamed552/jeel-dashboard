@@ -641,6 +641,48 @@ const protectedRoutes = [
           preLink: "/dashboard/video",
         },
       },
+      //audio recordings
+      {
+        path: "/dashboard/audio-recordings",
+        name: "audio-recordings",
+        component: () => import("../../views/audio-recordings/index.vue"),
+        meta: {
+          breadcrumb: "التسجيلات الصوتية",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/audio-recordings/add",
+        name: "add-audio-recording",
+        component: () => import("../../views/audio-recordings/add-audio-recording/index.vue"),
+        meta: {
+          breadcrumb: "إضافة تسجيل صوتى",
+          preLabel: "التسجيلات الصوتية",
+          preLink: "/dashboard/audio-recordings",
+        },
+      },
+      {
+        path: "/dashboard/audio-recording/edit/:id",
+        name: "edit-audio-recording",
+        component: () => import("../../views/audio-recordings/edit-audio-recording/index.vue"),
+        meta: {
+          breadcrumb: "تعديل التسجيل صوتى",
+          preLabel: "التسجيلات الصوتية",
+          preLink: "/dashboard/audio-recordings",
+        },
+      },
+      {
+        path: "/dashboard/audio-recording/show/:id",
+        name: "show-video",
+        component: () => import("../../views/audio-recordings/view-audio-recording/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل التسجيل صوتى",
+          preLabel: "التسجيلات الصوتية",
+          preLink: "/dashboard/audio-recordings",
+        },
+      },
+
       // questions
       {
         path: "/dashboard/questions",
