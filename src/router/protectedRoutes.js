@@ -641,6 +641,47 @@ const protectedRoutes = [
           preLink: "/dashboard/video",
         },
       },
+      // audio
+      {
+        path: "/dashboard/audio",
+        name: "audios",
+        component: () => import("../../views/audios/index.vue"),
+        meta: {
+          breadcrumb: "التسجيلات الصوتية",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/audios/add",
+        name: "add-audios",
+        component: () => import("../../views/audios/add-audio/index.vue"),
+        meta: {
+          breadcrumb: "إضافة تسجيل صوتى",
+          preLabel: "التسجيلات الصوتية",
+          preLink: "/dashboard/audio",
+        },
+      },
+      {
+        path: "/dashboard/audios/edit/:id",
+        name: "edit-audios",
+        component: () => import("../../views/audios/edit-audio/index.vue"),
+        meta: {
+          breadcrumb: "تعديل التسجيل الصوتى",
+          preLabel: "التسجيلات الصوتية",
+          preLink: "/dashboard/audio",
+        },
+      },
+      {
+        path: "/dashboard/audios/show/:id",
+        name: "show-audio",
+        component: () => import("../../views/audios/view-audio/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل التسجيل الصوتى",
+          preLabel: "التسجيلات الصوتية",
+          preLink: "/dashboard/audio",
+        },
+      },
       // questions
       {
         path: "/dashboard/questions",
