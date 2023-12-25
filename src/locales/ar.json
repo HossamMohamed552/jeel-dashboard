@@ -189,7 +189,13 @@
     "answersCount": "عدد الاختيارات",
     "videoWithMusic": "ملف الفيديو",
     "videoWithoutMusic": "ملف الفيديو بدون موسيقى",
-    "selectPath": "أختر المسار التعليمى"
+    "selectPath": "أختر المسار التعليمى",
+    "bloom": "بلوم",
+    "selectBloom": "أختر البلوم",
+    "languageMethods": "أسلوب التعلم",
+    "selectLanguageMethods": "أختر أسلوب التعلم",
+    "learningSkills": "نوع المهارة",
+    "selectLearningSkills": "أختر نوع المهارة"
   },
   "PAPER_WORK": {
     "NAME": "اسم ورقة العمل",

@@ -17,56 +17,19 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3"> </b-col>
               <b-col lg="6" class="mb-3">
-                <div class="hold-field">
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    :rules="$route.params.id ? '' : 'required'"
-                    name="video_without_music"
-                  >
-                    <span v-if="!$route.params.id" class="video-label"
-                      ><label>{{ $t("VIDEO.videoWithoutMusic") }}</label
-                      ><i class="fa-solid fa-asterisk"></i
-                    ></span>
-                    <b-form-file
-                      @change="checkEditVideoWithOut($event)"
-                      accept="video/mp4,video/x-m4v,video/*"
-                      placeholder="اسم ملف"
-                      v-model="createVideo.video_without_music"
-                      name="video"
-                    >
-                    </b-form-file>
-                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                      {{ error }}
-                    </b-form-invalid-feedback>
-                  </ValidationProvider>
-                </div>
-                <div class="hold-progress">
-                  <b-progress max="100" height="2rem" v-if="progressWithOutMusic">
-                    <b-progress-bar
-                      :value="progressWithOutMusic"
-                      :label="`${progressWithOutMusic}%`"
-                    >
-                    </b-progress-bar>
-                  </b-progress>
-                  <p v-if="errorVideoWithOut" class="error-status">حدث خطأ ما عند رفع الفيديو</p>
-                  <p v-if="successVideoWithOut" class="success-status">تم رفع الفيديو بنجاح</p>
-                </div>
+                <UploadAttachment :type-of-attachment="'video'" :dropIdRef="'VideFile'"
+                                  :accept-files="'.mp4'" @setFileId="setVideoFileId($event)"/>
+              </b-col>
+              <b-col lg="6" class="mb-3">
+                <UploadAttachment :type-of-attachment="'video'" :dropIdRef="'VideoWithout'"
+                                  :accept-files="'.mp4'"
+                                  @setFileId="setVideoWithoutFileId($event)"/>
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field mt-4">
-                  <UploadAttachment :type-of-attachment="'image'" :accept-files="'image/*'" />
-                  <!--                  @vdropzone-file-added="fileAdded($event)"-->
-                  <!--                  <ImageUploader-->
-                  <!--                    :is-required="true"-->
-                  <!--                    v-model="createVideo.img_url"-->
-                  <!--                    :name="'videoThumbnail'"-->
-                  <!--                    :text="$t('VIDEO.UPLOAD_IMAGE')"-->
-                  <!--                    @imageUpload="handleUploadImage"-->
-                  <!--                    :item-image="videoImage"-->
-                  <!--                    @deleteImage="videoImage = null"-->
-                  <!--                  />-->
+                  <UploadAttachment :type-of-attachment="'image'" :dropIdRef="'VideImage'"
+                                    :accept-files="'image/*'" @setFileId="setFileImageId($event)"/>
                 </div>
               </b-col>
             </b-row>
@@ -105,7 +68,56 @@
                   </ValidationProvider>
                 </div>
               </b-col>
-
+              <b-col lg="4" class="mb-3 mt-3">
+                <div class="hold-field">
+                  <ValidationProvider v-slot="{ errors, invalid }">
+                    <SelectSearch
+                      v-model="createVideo.blooms"
+                      :label="$t('VIDEO.bloom')"
+                      :placeholder="$t('VIDEO.selectBloom')"
+                      :name="'bloom'"
+                      :options="bloom"
+                      :get-option-label="(option) => option.name"
+                      :reduce="(option) => option.id"
+                      :rules="'required'"
+                    />
+                  </ValidationProvider>
+                </div>
+              </b-col>
+              <b-col lg="4" class="mb-3 mt-3">
+                <div class="hold-field">
+                  <ValidationProvider v-slot="{ errors, invalid }">
+                    <SelectSearch
+                      v-model="createVideo.learning_styles"
+                      :label="$t('VIDEO.languageMethods')"
+                      :placeholder="$t('VIDEO.selectLanguageMethods')"
+                      :name="'languageMethods'"
+                      :options="languageMethods"
+                      :get-option-label="(option) => option.name"
+                      :reduce="(option) => option.id"
+                      :rules="'required'"
+                      multiple
+                    />
+                  </ValidationProvider>
+                </div>
+              </b-col>
+              <b-col lg="4" class="mb-3 mt-3">
+                <div class="hold-field">
+                  <ValidationProvider v-slot="{ errors, invalid }">
+                    <SelectSearch
+                      v-model="createVideo.language_skills"
+                      :label="$t('VIDEO.learningSkills')"
+                      :placeholder="$t('VIDEO.selectLearningSkills')"
+                      :name="'learningSkills'"
+                      :options="learningSkills"
+                      :get-option-label="(option) => option.name"
+                      :reduce="(option) => option.id"
+                      multiple
+                      :rules="'required'"
+                    />
+                  </ValidationProvider>
+                </div>
+              </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <b-form-group
@@ -152,15 +164,18 @@ import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import SelectField from "@/components/Shared/SelectField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { getSingleVideoRequest } from "@/api/videos";
-import { getAllLearningPathsRequest } from "@/api/learningPath";
-import { getAllLevelsRequest } from "@/api/level";
+import {getSingleVideoRequest} from "@/api/videos";
+import {getAllLearningPathsRequest} from "@/api/learningPath";
+import {getAllLevelsRequest} from "@/api/level";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
-import { getAllTermsRequest } from "@/api/term";
-import { getLessonsRequest } from "@/api/lessons";
+import {getAllTermsRequest} from "@/api/term";
+import {getLessonsRequest} from "@/api/lessons";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import UploadAttachment from "@/components/Shared/UploadAttachment";
-import VueCookies from "vue-cookies";
+import {getBloomCategoriesRequest} from "@/api/bloom";
+import {getAllLearningMethodsRequest} from "@/api/question";
+import {getLearningSkillsRequest} from "@/api/learning-skill";
+
 export default {
   components: {
     SelectSearch,
@@ -184,6 +199,9 @@ export default {
       levels: [],
       terms: [],
       lessons: [],
+      bloom: [],
+      languageMethods: [],
+      learningSkills: [],
       videoImage: null,
       progressWithMusic: 0,
       progressWithOutMusic: 0,
@@ -192,6 +210,9 @@ export default {
       errorVideoWithOut: false,
       successVideoWithOut: false,
       createVideo: {
+        blooms: null,
+        learning_styles: [],
+        language_skills: [],
         name: "",
         description: "",
         video: null,
@@ -221,6 +242,24 @@ export default {
       if (e) {
         this.createVideo.thumbnail = e.target.files[0];
       } else return;
+    },
+    setFileImageId($event) {
+      this.createVideo.thumbnail = $event
+    },
+    setVideoFileId($event) {
+      this.createVideo.video = $event
+    },
+    setVideoWithoutFileId($event) {
+      this.createVideo.video_without_music = $event
+    },
+    getBloomCategories() {
+      this.ApiService(getBloomCategoriesRequest())
+        .then((response) => {
+          this.bloom = response.data.data;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     onSubmit() {
       this.$refs.addEditVideoForm.validate().then((success) => {
@@ -258,13 +297,13 @@ export default {
       this.ApiService(getAllLevelsRequest()).then((response) => {
         const levelsArr = response.data.data;
         this.levels = levelsArr.map((path) => {
-          return { value: path.id, text: path.name };
+          return {value: path.id, text: path.name};
         });
       });
     },
     getAllLessonBasedOnPath() {
       this.ApiService(
-        getLessonsRequest({ learning_path_id: this.createVideo.learning_path_id })
+        getLessonsRequest({learning_path_id: this.createVideo.learning_path_id})
       ).then((response) => {
         this.lessons = response.data.data;
       });
@@ -276,18 +315,30 @@ export default {
       this.ApiService(getAllTermsRequest(params)).then((response) => {
         const termsArr = response.data.data;
         this.terms = termsArr.map((path) => {
-          return { value: path.id, text: path.name };
+          return {value: path.id, text: path.name};
         });
       });
     },
-    sendImage(file, xhr, formData) {
-      formData.append("type", "image");
+    getLanguageMethod() {
+      this.ApiService(getAllLearningMethodsRequest())
+        .then((response) => {
+          this.languageMethods = response.data.data;
+        })
+    },
+    getLearningSkills() {
+      this.ApiService(getLearningSkillsRequest())
+        .then((response) => {
+          this.learningSkills = response.data.data;
+        })
     },
   },
   mounted() {
     this.getVideoToEdit();
     this.getAllLearningPaths();
     this.getAllLevels();
+    this.getBloomCategories();
+    this.getLanguageMethod();
+    this.getLearningSkills();
     if (this.$route.params.id) this.getTerms();
   },
 };

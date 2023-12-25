@@ -1,19 +1,22 @@
 <template>
   <vue2Dropzone :options="dropzoneOptions" :useCustomSlot=true
                 @vdropzone-sending="sendFile"
-                id="videoImage"
-                ref="videoImage">
+                @vdropzone-success="fileSent"
+                @vdropzone-thumbnail="showModal"
+                :id="dropIdRef"
+                :ref="dropIdRef">
     <div class="dropzone-custom-content">
       <h3 class="dropzone-custom-title">
         <p>قم بسحب الملف هنا او<span>تصفح الملفات</span></p>
       </h3>
-      <div class="subtitle"><p>اكبر حجم للملف : 5 مجيابايت</p></div>
+      <div class="subtitle"><p>اكبر حجم للملف : {{ dropzoneOptions.maxFilesize }} مجيابايت</p></div>
     </div>
   </vue2Dropzone>
 </template>
 <script>
 import VueCookies from "vue-cookies";
 import vue2Dropzone from "vue2-dropzone";
+
 export default {
   name: "index",
   components: {vue2Dropzone},
@@ -25,12 +28,16 @@ export default {
     acceptFiles: {
       type: String,
       default: ''
+    },
+    dropIdRef: {
+      type: String,
+      default: ''
     }
   },
   data() {
     return {
       dropzoneOptions: {
-        acceptedFiles: 'image/*',
+        acceptedFiles: '',
         url: '',
         thumbnailWidth: 150,
         maxFilesize: 5,
@@ -38,7 +45,7 @@ export default {
         previewTemplate: `
           <div class="dz-preview dz-file-preview">
            <div class="d-flex justify-content-lg-start align-items-center">
-            <div class="dz-image">
+            <div class="dz-image" id="dz-image">
               <img data-dz-thumbnail />
             </div>
             <div class="dz-details" data-dz-details>
@@ -66,18 +73,36 @@ export default {
         headers: {"Authorization": `Bearer ${VueCookies.get("token")}`},
         paramName: 'attachment'
       },
+      fileUrl: null,
+      fileId: null,
+      fileInfo: null,
     }
   },
   methods: {
     sendFile(file, xhr, formData) {
       formData.append('type', `${this.typeOfAttachment}`);
+    },
+    fileSent(file, response) {
+      this.fileInfo = response.data
+      this.fileUrl = this.fileInfo.original_url
+      this.fileId = this.fileInfo.uuid
+      this.$emit('setFileId', this.fileId)
+    },
+    showModal() {
+      const thumbnail = document.getElementById('dz-image')
+      thumbnail.addEventListener("click", () => {
+        console.log('fire')
+      })
     }
   },
   mounted() {
-    this.dropzoneOptions.acceptedFiles = this.acceptFiles
   },
   created() {
+    this.dropzoneOptions.acceptedFiles = this.acceptFiles
     this.dropzoneOptions.url = `${process.env.VUE_APP_ADMIN_URL}/attachment`
+    if (this.typeOfAttachment === 'video') {
+      this.dropzoneOptions.maxFilesize = 40
+    }
   },
 }
 </script>

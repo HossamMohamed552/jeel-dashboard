@@ -41,18 +41,23 @@ export default {
   },
   methods: {
     handleAddVideo($event) {
+      console.log('$event', $event)
       this.video_name = $event.name;
       const formData = new FormData()
-      formData.append('name', $event.name);
       formData.append('title', $event.name);
-      formData.append('original_name', $event.name);
       formData.append('description', $event.description);
       formData.append('learning_path_id', $event.learning_path_id);
+      formData.append('thumbnail', $event.thumbnail);
       formData.append('video', $event.video);
       formData.append('video_without_music', $event.video_without_music);
-      formData.append('level_id', $event.level_id);
-      formData.append('term_id', $event.term_id);
-      formData.append('thumbnail', $event.thumbnail);
+      formData.append('blooms', $event.blooms);
+      formData.append('lesson_id', $event.lesson_id);
+      formData.append('learning_styles', $event.learning_styles);
+      formData.append('language_skills', $event.language_skills);
+
+      // formData.append('level_id', $event.level_id);
+      // formData.append('term_id', $event.term_id);
+
       this.loading = true;
       let axiosSource = axios.CancelToken.source();
       this.cancelSource = axiosSource;

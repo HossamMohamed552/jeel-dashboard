@@ -4,6 +4,7 @@
     :content-class="contentClass"
     class="success-modal"
     hide-footer
+    :hide-header="hideHeader"
     :size="size"
     centered
     @hide="handleCloseModal()"
@@ -37,6 +38,10 @@ export default {
     title: {
       type: String,
       default: ""
+    },
+    hideHeader:{
+      type: Boolean,
+      default: false
     },
     contentClass: {
       type: String,

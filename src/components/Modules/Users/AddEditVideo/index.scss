@@ -102,11 +102,13 @@
     height: 109px;
     border-radius: 1rem;
     overflow: hidden;
+    cursor: pointer;
     img{
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
+      cursor: pointer;
     }
   }
   .dropzone .dz-preview{
