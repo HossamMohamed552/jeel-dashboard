@@ -13,6 +13,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    position: relative;
     .image,.video{
       width: 200px;
       height: 110px;
@@ -45,8 +46,18 @@
       cursor: pointer;
       border-radius: 1rem;
     }
+    .removeBtn{
+      position: absolute;
+      top: 50%;
+      left: 1rem;
+      transform: translateY(-50%);
+      color: #CC0000;
+      font-weight: 600;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
   }
 }
 .contentImage{
-  border: 1px dashed #8C8C8C;
+  border: 2px dashed #8C8C8C;
 }

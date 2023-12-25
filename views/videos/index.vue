@@ -51,12 +51,9 @@ export default {
       totalNumber: 0,
       fieldsList: [
         {key: "id", label: "التسلسل"},
-        {key: "original_name", label: this.$i18n.t('TABLE_FIELDS.name')},
-        // {key: "year", label: this.$i18n.t('TABLE_FIELDS.year')},
-        // {key: "ques_num", label: this.$i18n.t('TABLE_FIELDS.questions_num')},
+        {key: "title", label: this.$i18n.t('TABLE_FIELDS.videoTitle')},
         {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
-        {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.level')},
-        {key: "description", label: this.$i18n.t('TABLE_FIELDS.description')},
+        {key: "lesson.name", label: this.$i18n.t('TABLE_FIELDS.lesson')},
         {key: "actions", label: "الإجراء"},
       ],
     }

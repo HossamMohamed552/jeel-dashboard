@@ -81,7 +81,9 @@
     "superDescription": "الإعلان",
     "teacherName": "اسم المدرس",
     "superClass": "اسم الصف الدراسى",
-    "countryName": "الدولة"
+    "countryName": "الدولة",
+    "lesson": "اسم الدرس",
+    "videoTitle": "عنوان الفيديو"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",

@@ -13,6 +13,7 @@
           <p>{{ mediaName }}</p>
           <p> <span>حجم الملف </span> <span>{{ fileSize }}</span></p>
         </div>
+        <div class="removeBtn" v-if="showRemoveButton">حذف الملف</div>
       </div>
     </div>
   </div>
@@ -25,6 +26,10 @@ export default {
     GeneralModal
   },
   props: {
+    showRemoveButton:{
+      type: Boolean,
+      default: false
+    },
     header: {
       type: String,
       default: "اسم الملف"

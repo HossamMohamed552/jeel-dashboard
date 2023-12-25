@@ -13,23 +13,33 @@
                     :label="$t('VIDEO.VIDEONAME')"
                     :name="$t('VIDEO.VIDEONAME')"
                     :placeholder="$t('VIDEO.placeVIDEONAME')"
-                    :rules="'required|min:3|max:100'"
+                    :rules="'required|min:3|max:30'"
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3">
+              <b-col lg="6">
                 <UploadAttachment :type-of-attachment="'video'" :dropIdRef="'VideFile'"
-                                  :accept-files="'.mp4'" @setFileId="setVideoFileId($event)"/>
+                                  :accept-files="'.mp4'" :label="'ملف الفيديو'" :name="'VideFile'"
+                                  :rules="'required'" @setFileId="setVideoFileId($event)"/>
               </b-col>
-              <b-col lg="6" class="mb-3">
-                <UploadAttachment :type-of-attachment="'video'" :dropIdRef="'VideoWithout'"
+              <b-col lg="6">
+                <UploadAttachment :type-of-attachment="'video'" :label="'ملف الفيديو بدون موسيقى'"
+                                  :name="'VideoWithout'" :rules="'required'"
+                                  :dropIdRef="'VideoWithout'"
                                   :accept-files="'.mp4'"
                                   @setFileId="setVideoWithoutFileId($event)"/>
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field mt-4">
-                  <UploadAttachment :type-of-attachment="'image'" :dropIdRef="'VideImage'"
+                  <UploadAttachment v-if="!$route.params.id" :type-of-attachment="'image'"
+                                    :label="'صورة الفيديو'"
+                                    :dropImage="true" :name="'image'" :rules="'required'"
+                                    :dropIdRef="'VideImage'"
                                     :accept-files="'image/*'" @setFileId="setFileImageId($event)"/>
+                  <PreviewMedia v-if="$route.params.id" :header="$t('VIDEO.UPLOAD_IMAGE')"
+                                :media-name="createVideo.thumbnail_name"
+                                :file-size="createVideo.thumbnail_size"
+                                :image-url="createVideo.thumbnail" :typeOfMedia="'image'" :showRemoveButton="true"/>
                 </div>
               </b-col>
             </b-row>
@@ -143,13 +153,24 @@
                   {{ $t("GLOBAL_CANCEL") }}
                 </Button>
                 <Button
+                  v-if="!$route.params.id"
+                  type="submit"
+                  :loading="loading"
+                  :disabled="invalid || checkVideosInputs"
+                  custom-class="submit-btn"
+                >
+                  {{ $t("GLOBAL_SAVE") }}
+                </Button>
+                <Button
+                  v-if="$route.params.id"
                   type="submit"
                   :loading="loading"
                   :disabled="invalid"
                   custom-class="submit-btn"
                 >
-                  {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
+                  {{ $t("GLOBAL_EDIT") }}
                 </Button>
+                <!--                $route.params.id ? $t("GLOBAL_EDIT") :-->
               </div>
             </b-row>
           </form>
@@ -175,9 +196,11 @@ import UploadAttachment from "@/components/Shared/UploadAttachment";
 import {getBloomCategoriesRequest} from "@/api/bloom";
 import {getAllLearningMethodsRequest} from "@/api/question";
 import {getLearningSkillsRequest} from "@/api/learning-skill";
+import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 
 export default {
   components: {
+    PreviewMedia,
     SelectSearch,
     Modal,
     TextField,
@@ -281,10 +304,17 @@ export default {
           this.createVideo.description = response.data.data.description;
           this.createVideo.video = response.data.data.url;
           this.createVideo.learning_path_id = response.data.data.learningPath.id;
-          this.createVideo.level_id = response.data.data.level.id;
-          this.createVideo.term_id = response.data.data.term.id;
-          this.createVideo.img_url = response.data.data.thumbnail;
-          this.videoImage = response.data.data.thumbnail;
+          this.createVideo.blooms = response.data.data.blooms.id
+          this.createVideo.lesson_id = response.data.data.lesson.id
+          this.createVideo.learning_styles = response.data.data.learning_styles.map((item) => {
+            return item.id
+          })
+          this.createVideo.language_skills = response.data.data.language_skills.map((item) => {
+            return item.id
+          })
+          this.createVideo.thumbnail = response.data.data.thumbnail;
+          this.createVideo.thumbnail_name = response.data.data.thumbnail_name;
+          this.createVideo.thumbnail_size = response.data.data.thumbnail_size;
         });
       }
     },
@@ -331,6 +361,15 @@ export default {
           this.learningSkills = response.data.data;
         })
     },
+  },
+  computed: {
+    checkVideosInputs() {
+      if (this.createVideo.video === null || this.createVideo.thumbnail === null || this.createVideo.video_without_music === null) {
+        return true
+      } else {
+        return false
+      }
+    }
   },
   mounted() {
     this.getVideoToEdit();
