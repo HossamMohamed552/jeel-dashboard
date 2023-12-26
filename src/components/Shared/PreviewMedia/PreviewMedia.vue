@@ -13,18 +13,15 @@
           <p>{{ mediaName }}</p>
           <p> <span>حجم الملف </span> <span>{{ fileSize }}</span></p>
         </div>
-        <div class="removeBtn" v-if="showRemoveButton">حذف الملف</div>
+        <div class="removeBtn" v-if="showRemoveButton" @click="removeFile">حذف الملف</div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
+
 export default {
   name: "PreviewMedia",
-  components:{
-    GeneralModal
-  },
   props: {
     showRemoveButton:{
       type: Boolean,
@@ -46,10 +43,6 @@ export default {
       type: String,
       default: "imageUrl"
     },
-    vimeoUrl:{
-      type: String,
-      default: "url"
-    },
     typeOfMedia:{
       type: String,
       default: "typeOfMedia"
@@ -58,6 +51,9 @@ export default {
   methods:{
     showModal(){
       this.$emit('showModal')
+    },
+    removeFile(){
+      this.$emit('removeFile')
     }
   }
 }

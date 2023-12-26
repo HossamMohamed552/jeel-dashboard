@@ -18,28 +18,50 @@
                 </div>
               </b-col>
               <b-col lg="6">
-                <UploadAttachment :type-of-attachment="'video'" :dropIdRef="'VideFile'"
+                <UploadAttachment v-if="!$route.params.id || createVideo.videoChangedRequest" :type-of-attachment="'video'"
+                                  :dropIdRef="'VideFile'"
                                   :accept-files="'.mp4'" :label="'ملف الفيديو'" :name="'VideFile'"
                                   :rules="'required'" @setFileId="setVideoFileId($event)"/>
+                <PreviewMedia v-if="$route.params.id && createVideo.videoChanged === false && !createVideo.videoChangedRequest" :header="'ملف الفيديو'"
+                              :media-name="createVideo.videoPreview_name"
+                              :file-size="createVideo.videoPreview_size"
+                              :typeOfMedia="'video'"
+                              :show-remove-button="true"
+                              @removeFile="removeFile('video','videoChanged','videoChangedRequest')"
+                              @showModal="showModal(videoDetail,'withMusic')"/>
+                <p v-if="createVideo.videoChangedRequest" class="invalid-feedback d-block">ملف الفيديو مطلوب</p>
               </b-col>
               <b-col lg="6">
-                <UploadAttachment :type-of-attachment="'video'" :label="'ملف الفيديو بدون موسيقى'"
+                <UploadAttachment v-if="!$route.params.id || createVideo.video_without_musicChangedRequest" :type-of-attachment="'video'" :label="'ملف الفيديو بدون موسيقى'"
                                   :name="'VideoWithout'" :rules="'required'"
                                   :dropIdRef="'VideoWithout'"
                                   :accept-files="'.mp4'"
                                   @setFileId="setVideoWithoutFileId($event)"/>
+                <PreviewMedia v-if="$route.params.id && createVideo.video_without_musicChanged === false && !createVideo.video_without_musicChangedRequest" :header="'ملف الفيديو بدون موسيقى'"
+                              :media-name="createVideo.video_without_musicPreview_name"
+                              :file-size="createVideo.video_without_musicPreview_size"
+                              :typeOfMedia="'video'"
+                              :show-remove-button="true"
+                              @removeFile="removeFile('video_without_music','video_without_musicChanged','video_without_musicChangedRequest')"
+                              @showModal="showModal(videoDetail,'withMusic')"/>
+                <p v-if="createVideo.video_without_musicChangedRequest" class="invalid-feedback d-block">ملف الفيديو بدون موسيقى مطلوب</p>
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field mt-4">
-                  <UploadAttachment v-if="!$route.params.id" :type-of-attachment="'image'"
+                  <UploadAttachment v-if="!$route.params.id || createVideo.thumbnailChangedRequest" :type-of-attachment="'image'"
                                     :label="'صورة الفيديو'"
                                     :dropImage="true" :name="'image'" :rules="'required'"
                                     :dropIdRef="'VideImage'"
                                     :accept-files="'image/*'" @setFileId="setFileImageId($event)"/>
-                  <PreviewMedia v-if="$route.params.id" :header="$t('VIDEO.UPLOAD_IMAGE')"
-                                :media-name="createVideo.thumbnail_name"
-                                :file-size="createVideo.thumbnail_size"
-                                :image-url="createVideo.thumbnail" :typeOfMedia="'image'" :showRemoveButton="true"/>
+                  <PreviewMedia v-if="$route.params.id && createVideo.thumbnailChanged === false && !createVideo.thumbnailChangedRequest" :header="$t('VIDEO.UPLOAD_IMAGE')"
+                                :media-name="createVideo.thumbnailPreview_name"
+                                :file-size="createVideo.thumbnailPreview_size"
+                                :image-url="createVideo.thumbnailPreview"
+                                :typeOfMedia="'image'"
+                                :showRemoveButton="true"
+                                @removeFile="removeFile('thumbnail','thumbnailChanged','thumbnailChangedRequest')"
+                  />
+                  <p v-if="createVideo.thumbnailChangedRequest" class="invalid-feedback d-block">صورة الفيديو مطلوب</p>
                 </div>
               </b-col>
             </b-row>
@@ -165,7 +187,7 @@
                   v-if="$route.params.id"
                   type="submit"
                   :loading="loading"
-                  :disabled="invalid"
+                  :disabled="invalid || checkVideosInputsUpdate"
                   custom-class="submit-btn"
                 >
                   {{ $t("GLOBAL_EDIT") }}
@@ -177,6 +199,29 @@
         </validation-observer>
       </div>
     </div>
+    <GeneralModal :id="'holdContent'" :size="'lg'" :hide-header="true">
+      <template #modalBody>
+        <div class="text-center">
+          <vimeo-player
+            v-if="videoUrl && (videoDetail.vimeo_video_with_music_transcode || videoDetail.vimeo_video_without_music_transcode)"
+            class="vimeo-player my-3"
+            ref="videoPlayer"
+            :video-url="`${videoUrl}`"
+            :options="{'responsive':true}"
+          ></vimeo-player>
+          <video v-else width="90%"
+                 class="my-3"
+                 :src="videoUrl"
+                 ref="player"
+                 autoplay="autoplay"
+                 controls="controls"
+          />
+          <Button @click="hideModal" :custom-class="'rounded-btn transparent-btn'">
+            {{ $t("BACK") }}
+          </Button>
+        </div>
+      </template>
+    </GeneralModal>
   </div>
 </template>
 <script>
@@ -197,6 +242,8 @@ import {getBloomCategoriesRequest} from "@/api/bloom";
 import {getAllLearningMethodsRequest} from "@/api/question";
 import {getLearningSkillsRequest} from "@/api/learning-skill";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
+import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
+import {vueVimeoPlayer} from "vue-vimeo-player";
 
 export default {
   components: {
@@ -209,6 +256,8 @@ export default {
     SelectField,
     ImageUploader,
     UploadAttachment,
+    GeneralModal,
+    VimeoPlayer: vueVimeoPlayer
   },
   props: {
     loading: {
@@ -232,6 +281,8 @@ export default {
       successVideo: false,
       errorVideoWithOut: false,
       successVideoWithOut: false,
+      videoDetail: {},
+      videoUrl: null,
       createVideo: {
         blooms: null,
         learning_styles: [],
@@ -239,26 +290,48 @@ export default {
         name: "",
         description: "",
         video: null,
+        videoChanged: false,
+        videoChangedRequest: false,
+        videoPreview_name: null,
+        videoPreview_size: null,
         video_without_music: null,
+        video_without_musicPreview_name: null,
+        video_without_musicPreview_size: null,
+        video_without_musicChanged: false,
+        video_without_musicChangedRequest: false,
         learning_path_id: "",
         lesson_id: "",
         title: "",
         original_name: "",
         level_id: "",
         term_id: "",
-        img_url: null,
         thumbnail: null,
+        thumbnailChanged: false,
+        thumbnailChangedRequest: false,
+        thumbnailPreview: null,
         uploadVideo: false,
         uploadVideoWithoutMusic: false,
       },
     };
   },
   methods: {
-    checkEditVideo($event) {
-      this.createVideo.uploadVideo = !!$event;
+    showModal(video, typeOfVideo) {
+      this.$bvModal.show('holdContent')
+      if (typeOfVideo === 'withMusic' && video.vimeo_video_with_music_transcode) {
+        this.videoUrl = video.vimeo_video_with_music_url.replace("https", "http")
+      } else if (typeOfVideo === 'withOutMusic' && video.vimeo_video_without_music_transcode) {
+        this.videoUrl = video.vimeo_video_without_music_url.replace("https", "http")
+      } else if (typeOfVideo === 'withMusic' && !video.vimeo_video_with_music_transcode) {
+        this.videoUrl = video.video_with_muisc
+      } else {
+        this.videoUrl = video.video_without_muisc
+      }
     },
-    checkEditVideoWithOut($event) {
-      this.createVideo.uploadVideoWithoutMusic = !!$event;
+    hideModal() {
+      this.$bvModal.hide('holdContent')
+    },
+    async registerPlayerEvents(player) {
+      this.player = player
     },
     handleUploadImage(e) {
       this.videoImage = URL.createObjectURL(e.target.files[0]);
@@ -268,12 +341,23 @@ export default {
     },
     setFileImageId($event) {
       this.createVideo.thumbnail = $event
+      this.createVideo.thumbnailRequest = true
+      this.createVideo.thumbnailChanged = false
     },
     setVideoFileId($event) {
       this.createVideo.video = $event
+      this.createVideo.videoChangedRequest = true
+      this.createVideo.videoChanged = false
     },
     setVideoWithoutFileId($event) {
       this.createVideo.video_without_music = $event
+      this.createVideo.video_without_musicRequest = true
+      this.createVideo.video_without_musicChanged = false
+    },
+    removeFile(fileName,fileChange,fileRequest){
+      this.createVideo[fileChange] = true
+      this.createVideo[fileName] = null
+      this.createVideo[fileRequest] = true
     },
     getBloomCategories() {
       this.ApiService(getBloomCategoriesRequest())
@@ -302,7 +386,6 @@ export default {
         this.ApiService(getSingleVideoRequest(this.$route.params.id)).then((response) => {
           this.createVideo.name = response.data.data.title;
           this.createVideo.description = response.data.data.description;
-          this.createVideo.video = response.data.data.url;
           this.createVideo.learning_path_id = response.data.data.learningPath.id;
           this.createVideo.blooms = response.data.data.blooms.id
           this.createVideo.lesson_id = response.data.data.lesson.id
@@ -312,10 +395,20 @@ export default {
           this.createVideo.language_skills = response.data.data.language_skills.map((item) => {
             return item.id
           })
-          this.createVideo.thumbnail = response.data.data.thumbnail;
-          this.createVideo.thumbnail_name = response.data.data.thumbnail_name;
-          this.createVideo.thumbnail_size = response.data.data.thumbnail_size;
-        });
+          this.createVideo.thumbnailPreview = response.data.data.thumbnail;
+          this.createVideo.thumbnailPreview_name = response.data.data.thumbnail_name;
+          this.createVideo.thumbnailPreview_size = response.data.data.thumbnail_size;
+          this.createVideo.video = response.data.data.video_with_music_uuid
+          this.createVideo.video_without_music = response.data.data.video_without_muisc_uuid
+          this.createVideo.thumbnail = response.data.data.thumbnail_uuid
+          this.videoDetail = response.data.data
+          this.createVideo.videoPreview_name = response.data.data.video_with_music_name
+          this.createVideo.videoPreview_size = response.data.data.video_with_muisc_size
+          this.createVideo.video_without_musicPreview_name = response.data.data.video_without_muisc_name
+          this.createVideo.video_without_musicPreview_size = response.data.data.video_without_muisc_size
+        }).then(()=>{
+          this.registerPlayerEvents()
+        })
       }
     },
     getAllLearningPaths() {
@@ -365,6 +458,13 @@ export default {
   computed: {
     checkVideosInputs() {
       if (this.createVideo.video === null || this.createVideo.thumbnail === null || this.createVideo.video_without_music === null) {
+        return true
+      } else {
+        return false
+      }
+    },
+    checkVideosInputsUpdate(){
+      if (this.createVideo.videoChanged === true || this.createVideo.thumbnailChanged === true || this.createVideo.video_without_musicChanged === true) {
         return true
       } else {
         return false

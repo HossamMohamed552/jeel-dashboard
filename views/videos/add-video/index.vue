@@ -54,10 +54,6 @@ export default {
       formData.append('lesson_id', $event.lesson_id);
       formData.append('learning_styles', $event.learning_styles);
       formData.append('language_skills', $event.language_skills);
-
-      // formData.append('level_id', $event.level_id);
-      // formData.append('term_id', $event.term_id);
-
       this.loading = true;
       let axiosSource = axios.CancelToken.source();
       this.cancelSource = axiosSource;
