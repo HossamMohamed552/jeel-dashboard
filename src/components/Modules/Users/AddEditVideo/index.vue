@@ -29,7 +29,7 @@
                               :show-remove-button="true"
                               @removeFile="removeFile('video','videoChanged','videoChangedRequest')"
                               @showModal="showModal(videoDetail,'withMusic')"/>
-                <p v-if="createVideo.videoChangedRequest" class="invalid-feedback d-block">ملف الفيديو مطلوب</p>
+                <p v-if="$route.params.id && createVideo.videoChangedRequest" class="invalid-feedback d-block">ملف الفيديو مطلوب</p>
               </b-col>
               <b-col lg="6">
                 <UploadAttachment v-if="!$route.params.id || createVideo.video_without_musicChangedRequest" :type-of-attachment="'video'" :label="'ملف الفيديو بدون موسيقى'"
@@ -43,7 +43,7 @@
                               :typeOfMedia="'video'"
                               :show-remove-button="true"
                               @removeFile="removeFile('video_without_music','video_without_musicChanged','video_without_musicChangedRequest')"
-                              @showModal="showModal(videoDetail,'withMusic')"/>
+                              @showModal="showModal(videoDetail,'withOutMusic')"/>
                 <p v-if="createVideo.video_without_musicChangedRequest" class="invalid-feedback d-block">ملف الفيديو بدون موسيقى مطلوب</p>
               </b-col>
               <b-col lg="12" class="mb-3">
