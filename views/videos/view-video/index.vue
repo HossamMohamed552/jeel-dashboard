@@ -18,14 +18,13 @@
             <PreviewMedia :header="$t('VIDEO.videoWithMusic')"
                           :media-name="video.video_with_music_name"
                           :file-size="video.video_with_muisc_size"
-                          :vimeo-url="video.vimeo_video_with_music_url" :typeOfMedia="'video'"
+                          :typeOfMedia="'video'"
                           @showModal="showModal(video,'withMusic')"/>
           </b-col>
           <b-col lg="6">
             <PreviewMedia :header="$t('VIDEO.videoWithoutMusic')"
                           :media-name="video.video_without_muisc_name"
                           :file-size="video.video_without_muisc_size"
-                          :url="video.vimeo_video_with_music_url"
                           :typeOfMedia="'video'"
                           @showModal="showModal(video,'withOutMusic')"
             />
