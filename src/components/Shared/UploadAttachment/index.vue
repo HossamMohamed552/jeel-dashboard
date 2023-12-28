@@ -130,7 +130,6 @@ export default {
       formData.append("type", `${this.typeOfAttachment}`);
     },
     fileSent(file, response) {
-<<<<<<< HEAD
       this.fileInfo = response.data
       this.fileUrl = this.fileInfo.original_url
       this.fileId = this.fileInfo.uuid
@@ -140,15 +139,6 @@ export default {
     removeFile(){
       this.$emit('setFileId', null)
       this.$emit('setFileUrl', null)
-=======
-      this.fileInfo = response.data;
-      this.fileUrl = this.fileInfo.original_url;
-      this.fileId = this.fileInfo.uuid;
-      this.$emit("setFileId", this.fileId);
-    },
-    removeFile() {
-      this.$emit("setFileId", null);
->>>>>>> fc18fe60a0d2e7df6f900c7f42a025a3aafe98b8
     },
     showModal() {
       const thumbnail = document.getElementById("dz-image");
