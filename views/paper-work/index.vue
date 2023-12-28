@@ -49,11 +49,10 @@ export default {
       totalNumber: 0,
       fieldsList: [
         {key: "id", label: "التسلسل"},
-        {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
+        {key: "name", label: this.$i18n.t('TABLE_FIELDS.paperName')},
         {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
-        {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.level')},
-        {key: "type", label: this.$i18n.t('TABLE_FIELDS.type')},
-        {key: "description", label: this.$i18n.t('TABLE_FIELDS.description')},
+        {key: "lesson.name", label: this.$i18n.t('TABLE_FIELDS.lesson')},
+        {key: "paper_work_final_degree", label: this.$i18n.t('TABLE_FIELDS.paper_work_final_degree')},
         {key: "actions", label: "الإجراء"},
       ],
     }
