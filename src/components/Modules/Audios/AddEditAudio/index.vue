@@ -36,14 +36,15 @@
             <b-row>
               <b-col lg="12">
                 <UploadAttachment
-                  :type-of-attachment="'video'"
-                  :dropIdRef="'VideFile'"
-                  :accept-files="'.mp4'"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="'audioFile'"
+                  :accept-files="'audio/*'"
                   :label="'ملف الصوت'"
-                  :name="'VideFile'"
+                  :name="'audioFile'"
                   :rules="'required'"
                   @setFileId="setAudioFileId($event)"
                 />
+                
               </b-col>
             </b-row>
             <b-row>
@@ -88,7 +89,7 @@
               <b-col v-else lg="12" class="mb-3">
                 <div class="hold-field mt-4">
                   <UploadAttachment
-                    v-if="!$route.params.id"
+                    v-if="!$route.params.id || formValues.taskImageChangedRequest"
                     :type-of-attachment="'image'"
                     :label="'صورة السؤال'"
                     :dropImage="true"
@@ -99,14 +100,16 @@
                     @setFileId="setFileImageId($event)"
                   />
                   <PreviewMedia
-                    v-if="$route.params.id"
+                    v-if="$route.params.id && formValues.taskImageChanged === false && !formValues.taskImageChangedRequest"
                     :header="$t('VIDEO.UPLOAD_IMAGE')"
-                    :media-name="formValues.thumbnail_name"
-                    :file-size="formValues.thumbnail_size"
-                    :image-url="formValues.thumbnail"
+                    :media-name="formValues.task_file_name"
+                    :file-size="formValues.task_file_size"
+                    :image-url="formValues.task"
                     :typeOfMedia="'image'"
                     :showRemoveButton="true"
+                    @removeFile="removeFile('task_file_uuid','taskImageChanged','taskImageChangedRequest')"
                   />
+                  <p v-if="formValues.taskImageChangedRequest" class="invalid-feedback d-block">صورة السؤال مطلوبه</p>
                 </div>
               </b-col>
             </b-row>
@@ -208,7 +211,7 @@
                   v-if="!$route.params.id"
                   type="submit"
                   :loading="loading"
-                  :disabled="invalid || checkVideosInputs"
+                  :disabled="invalid || checkAudioInput"
                   custom-class="submit-btn"
                 >
                   {{ $t("GLOBAL_SAVE") }}
@@ -237,11 +240,10 @@ import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import SelectField from "@/components/Shared/SelectField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { getSingleVideoRequest } from "@/api/videos";
+import { getSingleAudioRequest } from "@/api/audios";
 import { getAllLearningPathsRequest } from "@/api/learningPath";
 import { getAllLevelsRequest } from "@/api/level";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
-import { getAllTermsRequest } from "@/api/term";
 import { getLessonsRequest } from "@/api/lessons";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import UploadAttachment from "@/components/Shared/UploadAttachment";
@@ -290,19 +292,27 @@ export default {
         task: "",
         task_image: "",
         learning_path_id: "",
+        blooms:"",
         lesson_id: "",
         learning_styles: [],
         language_skills: [],
+        task_audio_size:"",
+        task_audio_name: "",
+        task_audio_uuid:"",
+        task_file_size: "",
+        task_file_name: "",
+        task_file_uuid: "",
+        taskImageChanged: false,
+        taskImageChangedRequest: false,
       },
       //OLLLD
       paths: [],
       levels: [],
-      terms: [],
       lessons: [],
       bloom: [],
       languageMethods: [],
       learningSkills: [],
-      videoImage: null,
+      audioImage: null,
       progressWithMusic: 0,
       progressWithOutMusic: 0,
       errorVideo: false,
@@ -336,27 +346,27 @@ export default {
     }, 500),
 
     //// ollld
-    checkEditVideo($event) {
-      this.formValues.uploadVideo = !!$event;
-    },
-    checkEditVideoWithOut($event) {
-      this.formValues.uploadVideoWithoutMusic = !!$event;
-    },
+    // checkEditVideo($event) {
+    //   this.formValues.uploadVideo = !!$event;
+    // },
+    // checkEditVideoWithOut($event) {
+    //   this.formValues.uploadVideoWithoutMusic = !!$event;
+    // },
     handleUploadImage(e) {
-      this.videoImage = URL.createObjectURL(e.target.files[0]);
+      this.audioImage = URL.createObjectURL(e.target.files[0]);
       if (e) {
-        this.formValues.thumbnail = e.target.files[0];
+        this.formValues.task_image = e.target.files[0];
       } else return;
     },
     setFileImageId($event) {
-      this.formValues.thumbnail = $event;
+      this.formValues.task_image = $event;
     },
     setAudioFileId($event) {
-      this.formValues.video = $event;
+      this.formValues.task_audio = $event;
     },
-    setVideoWithoutFileId($event) {
-      this.formValues.video_without_music = $event;
-    },
+    // setVideoWithoutFileId($event) {
+    //   this.formValues.video_without_music = $event;
+    // },
     getBloomCategories() {
       this.ApiService(getBloomCategoriesRequest())
         .then((response) => {
@@ -371,21 +381,34 @@ export default {
         if (!success) return;
       });
       if (this.$route.params.id) {
-        this.$emit("handleEditVideo", this.formValues);
+        this.$emit("handleEditAudio", this.formValues);
       } else {
-        this.$emit("handleAddVideo", this.formValues);
+        this.$emit("handleAddAudio", this.formValues);
       }
     },
     handleCancel() {
       this.$emit("handleCancel");
     },
-    getVideoToEdit() {
+    removeFile(fileName,fileChange,fileRequest){
+      this.formValues[fileChange] = true
+      this.formValues[fileName] = null
+      this.formValues[fileRequest] = true
+    },
+    getAudioToEdit() {
       if (this.$route.params.id) {
-        this.ApiService(getSingleVideoRequest(this.$route.params.id)).then(
+        this.ApiService(getSingleAudioRequest(this.$route.params.id)).then(
           (response) => {
-            this.formValues.name = response.data.data.title;
-            this.formValues.description = response.data.data.description;
-            this.formValues.video = response.data.data.url;
+            this.formValues.name = response.data.data.name;
+            this.formValues.task_degree = response.data.data.task_degree;
+            this.formValues.type = response.data.data.type;
+            this.formValues.task = response.data.data.task;
+            this.formValues.task_audio = response.data.data.task_audio;
+            this.formValues.task_audio_size = response.data.data.task_audio_size;
+            this.formValues.task_audio_name = response.data.data.task_audio_name;
+            this.formValues.task_audio_uuid = response.data.data.task_audio_uuid;
+            this.formValues.task_file_size = response.data.data.task_file_size;
+            this.formValues.task_file_name = response.data.data.task_file_name;
+            this.formValues.task_file_uuid = response.data.data.task_file_uuid;
             this.formValues.learning_path_id =
               response.data.data.learningPath.id;
             this.formValues.blooms = response.data.data.blooms.id;
@@ -398,9 +421,6 @@ export default {
               response.data.data.language_skills.map((item) => {
                 return item.id;
               });
-            this.formValues.thumbnail = response.data.data.thumbnail;
-            this.formValues.thumbnail_name = response.data.data.thumbnail_name;
-            this.formValues.thumbnail_size = response.data.data.thumbnail_size;
           }
         );
       }
@@ -427,17 +447,6 @@ export default {
         this.lessons = response.data.data;
       });
     }, 500),
-    getTerms() {
-      const params = {
-        level_id: this.formValues.level_id,
-      };
-      this.ApiService(getAllTermsRequest(params)).then((response) => {
-        const termsArr = response.data.data;
-        this.terms = termsArr.map((path) => {
-          return { value: path.id, text: path.name };
-        });
-      });
-    },
     getLanguageMethod() {
       this.ApiService(getAllLearningMethodsRequest()).then((response) => {
         this.languageMethods = response.data.data;
@@ -450,11 +459,10 @@ export default {
     },
   },
   computed: {
-    checkVideosInputs() {
+    checkAudioInput() {
       if (
-        this.formValues.video === null ||
-        this.formValues.thumbnail === null ||
-        this.formValues.video_without_music === null
+        this.formValues.task_audio === '' ||
+        this.questionType == 'image' &&  this.formValues.task_image === ''
       ) {
         return true;
       } else {
@@ -463,13 +471,12 @@ export default {
     },
   },
   mounted() {
-    this.getVideoToEdit();
+    this.getAudioToEdit();
     this.getAllLearningPaths();
     this.getAllLevels();
     this.getBloomCategories();
     this.getLanguageMethod();
     this.getLearningSkills();
-    if (this.$route.params.id) this.getTerms();
   },
 };
 </script>
