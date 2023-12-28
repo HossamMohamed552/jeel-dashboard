@@ -3,11 +3,14 @@
     <p class="header">{{ header }}</p>
     <div class="preview-content" :class="typeOfMedia === 'image'? 'contentImage': ''">
       <div class="type-media">
-        <div class="image" v-if="typeOfMedia === 'image'">
-          <img :src="imageUrl">
-        </div>
         <div class="video" v-if="typeOfMedia === 'video'"  @click="showModal">
           <div class="skeleton-video"><img src="@/assets/images/icons/play.png"></div>
+        </div>
+        <div class="video" v-if="typeOfMedia === 'audio'"  @click="showModal">
+          <div class="skeleton-video"><img src="@/assets/images/icons/audio.png"></div>
+        </div>
+        <div class="image" v-else @click="showModal">
+          <img :src="imageUrl">
         </div>
         <div class="info-media">
           <p>{{ mediaName }}</p>
@@ -50,7 +53,7 @@ export default {
   },
   methods:{
     showModal(){
-      this.$emit('showModal')
+      this.$emit('showModal',this.typeOfMedia)
     },
     removeFile(){
       this.$emit('removeFile')

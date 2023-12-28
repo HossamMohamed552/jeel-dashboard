@@ -86,7 +86,9 @@
     "countryName": "الدولة",
     "lesson": "اسم الدرس",
     "videoTitle": "عنوان الفيديو",
-    "video_with_music_transcode": "حاله رفع الفيديو"
+    "video_with_music_transcode": "حاله رفع الفيديو",
+    "paperName": "اسم ورقة العمل",
+    "paper_work_final_degree": "الدرجة"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -201,7 +203,7 @@
     "selectLanguageMethods": "أختر أسلوب التعلم",
     "learningSkills": "نوع المهارة",
     "selectLearningSkills": "أختر نوع المهارة",
-    "videoDuration" : "مدة الفيديو"
+    "videoDuration": "مدة الفيديو"
   },
   "PAPER_WORK": {
     "NAME": "اسم ورقة العمل",
@@ -232,7 +234,9 @@
     "LESSON_INPUT_PLACEHOLDER": "اختر الدرس",
     "DESCRIPTION_INPUT_PLACEHOLDER": "أدخل وصف ورقة العمل",
     "PAPER_WORK_NAME": "اسم ورقة العمل",
-    "PAPER_WORK_NAME_PLACEHOLDER": "أدخل اسم ورقة العمل"
+    "PAPER_WORK_NAME_PLACEHOLDER": "أدخل اسم ورقة العمل",
+    "languageMethods": "أسلوب التعلم",
+    "audioFile": "ملف الصوت"
   },
   "PATH": {
     "Name": "اسم المسار",
@@ -293,8 +297,8 @@
     "reset": "إعادة إدخال الإجابات",
     "confirm": "تأكيد",
     "QUESTION_TYPE": "نوع السؤال",
-    "questionLearningPath":"المسار التعليمى",
-    "selectQuestionLearningPath":"أختر المسار التعليمى",
+    "questionLearningPath": "المسار التعليمى",
+    "selectQuestionLearningPath": "أختر المسار التعليمى",
     "headQUESTION": "رأس السؤال",
     "enterHeadQUESTION": "أختر رأس السؤال",
     "headerQuestionAudio": "ملف الصوت لرأس السؤال"

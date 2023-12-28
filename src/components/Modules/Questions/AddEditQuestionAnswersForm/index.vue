@@ -85,12 +85,13 @@
                                 :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
                                 :name="`audioFile${idx}`"
                                 :rules="'required'"
-                                @setFileId="setQuestionAudioId('',$event,true,answersListMcQ,idx,'audio')"
-                                @setFileUrl="setQuestionAudioUrl('',$event,true,answersListMcQ,idx,'answerAudioUser')"/>
+                                @setFileId="setQuestionAudioId('',$event,true,'answersListMcQ',idx,'audio')"
+                                @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListMcQ',idx,'answerAudioUser')"/>
             </b-col>
             <b-col lg="2" class="btn-holder">
               <div class="hold-field">
-                <div class="addAnswer mt-3" v-if="answersListMcQ.length - 1 === idx" @click="addAnswerMcq">
+                <div class="addAnswer mt-3" v-if="answersListMcQ.length - 1 === idx"
+                     @click="addAnswerMcq">
                   <img src="@/assets/images/icons/add_answer.png"> <span>إضافة إجابة</span>
                 </div>
                 <span class="mx-3 danger" v-if="answersListMcQ.length > 1"
@@ -3382,16 +3383,20 @@ export default {
         this.checkOneAnswerDragOne = true;
       }
     },
-    setQuestionAudioId(keyName, $event, isAnswer = false, answerList = [], indexWillChange = 0, answerOrAudio = 'answer') {
+    async setQuestionAudioId(keyName, $event, isAnswer = false, answerList = '', indexWillChange = 0, answerOrAudio = 'answer') {
       if (isAnswer) {
-        answerList[indexWillChange][answerOrAudio] = $event
+        if (answerList === 'answersListMcQ'){
+          console.log('this.answersListMcQ[indexWillChange][answerOrAudio]', this.answersListMcQ[indexWillChange][answerOrAudio])
+          this.answersListMcQ[indexWillChange][answerOrAudio] = $event
+        }
       } else {
         this.formValues[keyName] = $event
       }
     },
-    setQuestionAudioUrl(keyName, $event, isAnswer = false, answerList = [], indexWillChange = 0, answerOrAudio = 'answer') {
+    async setQuestionAudioUrl(keyName, $event, isAnswer = false, answerList = '', indexWillChange = 0, answerOrAudio = 'answer') {
       if (isAnswer) {
-        answerList[indexWillChange][answerOrAudio] = $event
+        if (answerList === 'answersListMcQ')
+          this.answersListMcQ[indexWillChange][answerOrAudio] = $event
       } else {
         this.formValues[keyName] = $event
       }
@@ -3580,6 +3585,7 @@ export default {
     },
     assignAnswersMcq() {
       this.formValues.answers = this.answersListMcQ.filter((answer) => answer.answer);
+      console.log('this.formValues.answers',this.formValues.answers)
     },
     assignAnswersMcqImage() {
       this.formValues.answers = this.answersListMcQImage.filter((answer) => answer.answer);
