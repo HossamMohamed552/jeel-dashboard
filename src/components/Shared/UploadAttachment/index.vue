@@ -1,29 +1,31 @@
 <template>
-  <ValidationProvider
-    v-slot="{ errors, invalid }"
-    :name="name"
-    :rules="rules"
-    class="p-relative text-field"
-  >
+  <ValidationProvider v-slot="{ errors }" :name="name" :rules="rules" class="p-relative text-field">
     <label v-if="label" :class="isRequired && 'required-flag'">
       {{ label }}
     </label>
-    <vue2Dropzone :options="dropzoneOptions" :useCustomSlot=true
-                  @vdropzone-sending="sendFile"
-                  @vdropzone-success="fileSent"
-                  @vdropzone-thumbnail="showModal"
-                  @vdropzone-removed-file="removeFile"
-                  :id="dropIdRef"
-                  :ref="dropIdRef" class="dropZone" :class="dropImage ? 'dropImage' : ''">
+    <vue2Dropzone
+      :options="dropzoneOptions"
+      :useCustomSlot="true"
+      @vdropzone-sending="sendFile"
+      @vdropzone-success="fileSent"
+      @vdropzone-thumbnail="showModal"
+      @vdropzone-removed-file="removeFile"
+      :id="dropIdRef"
+      :ref="dropIdRef"
+      class="dropZone"
+      :class="dropImage ? 'dropImage' : ''"
+    >
       <div class="dropzone-custom-content">
         <h3 class="dropzone-custom-title">
           <p>قم بسحب الملف هنا او<span class="browse">تصفح الملفات</span></p>
         </h3>
-        <div class="subtitle"><p>اكبر حجم للملف : {{ dropzoneOptions.maxFilesize }} مجيابايت</p></div>
         <div class="subtitle">
           <p class="d-inline-block mr-1"> نوع الملفات  </p>
           <p class="d-inline-block m-0" v-if="typeOfAttachment === 'video'"> (mp4.) </p>
           <p class="d-inline-block m-0" v-if="typeOfAttachment === 'audio'"> (mp3.) </p>
+        <div class="subtitle">
+          <p>اكبر حجم للملف : {{ dropzoneOptions.maxFilesize }} مجيابايت</p>
+        </div>
         </div>
       </div>
     </vue2Dropzone>
@@ -38,25 +40,25 @@ import vue2Dropzone from "vue2-dropzone";
 
 export default {
   name: "index",
-  components: {vue2Dropzone},
+  components: { vue2Dropzone },
   computed: {
     isRequired() {
-      if (typeof this.rules === "string") return !!this.rules.includes("required")
-      else return this.rules.hasOwnProperty("required") ? this.rules.required : false
-    }
+      if (typeof this.rules === "string") return !!this.rules.includes("required");
+      else return this.rules.hasOwnProperty("required") ? this.rules.required : false;
+    },
   },
   props: {
-    dropImage:{
+    dropImage: {
       type: Boolean,
-      default: false
+      default: false,
     },
-    label:{
+    label: {
       type: String,
-      default: ''
+      default: "",
     },
     name: {
       type: String,
-      default: 'attachment'
+      default: "attachment",
     },
     rules: {
       type: [Object, String],
@@ -64,26 +66,26 @@ export default {
     },
     header: {
       type: String,
-      default: ''
+      default: "",
     },
     typeOfAttachment: {
       type: String,
-      default: ''
+      default: "",
     },
     acceptFiles: {
       type: String,
-      default: ''
+      default: "",
     },
     dropIdRef: {
       type: String,
-      default: ''
-    }
+      default: "",
+    },
   },
   data() {
     return {
       dropzoneOptions: {
-        acceptedFiles: '',
-        url: '',
+        acceptedFiles: "",
+        url: "",
         thumbnailWidth: 150,
         maxFilesize: 5,
         clickable: true,
@@ -115,19 +117,20 @@ export default {
             </a>
           </div>
         `,
-        headers: {"Authorization": `Bearer ${VueCookies.get("token")}`},
-        paramName: 'attachment'
+        headers: { Authorization: `Bearer ${VueCookies.get("token")}` },
+        paramName: "attachment",
       },
       fileUrl: null,
       fileId: null,
       fileInfo: null,
-    }
+    };
   },
   methods: {
     sendFile(file, xhr, formData) {
-      formData.append('type', `${this.typeOfAttachment}`);
+      formData.append("type", `${this.typeOfAttachment}`);
     },
     fileSent(file, response) {
+<<<<<<< HEAD
       this.fileInfo = response.data
       this.fileUrl = this.fileInfo.original_url
       this.fileId = this.fileInfo.uuid
@@ -137,63 +140,71 @@ export default {
     removeFile(){
       this.$emit('setFileId', null)
       this.$emit('setFileUrl', null)
+=======
+      this.fileInfo = response.data;
+      this.fileUrl = this.fileInfo.original_url;
+      this.fileId = this.fileInfo.uuid;
+      this.$emit("setFileId", this.fileId);
+    },
+    removeFile() {
+      this.$emit("setFileId", null);
+>>>>>>> fc18fe60a0d2e7df6f900c7f42a025a3aafe98b8
     },
     showModal() {
-      const thumbnail = document.getElementById('dz-image')
+      const thumbnail = document.getElementById("dz-image");
       thumbnail.addEventListener("click", () => {
-        console.log('fire')
-      })
-    }
+        console.log("fire");
+      });
+    },
   },
-  mounted() {
-  },
+  mounted() {},
   created() {
-    this.dropzoneOptions.acceptedFiles = this.acceptFiles
-    this.dropzoneOptions.url = `${process.env.VUE_APP_ADMIN_URL}/attachment`
-    if (this.typeOfAttachment === 'video') {
-      this.dropzoneOptions.maxFilesize = 1024
+    this.dropzoneOptions.acceptedFiles = this.acceptFiles;
+    this.dropzoneOptions.url = `${process.env.VUE_APP_ADMIN_URL}/attachment`;
+    if (this.typeOfAttachment === "video") {
+      this.dropzoneOptions.maxFilesize = 1024;
     }
   },
-}
+};
 </script>
 <style scoped lang="scss">
-.dropZone{
+.dropZone {
   border-radius: 1rem;
   height: 200px;
 }
-.dropImage{
-  border: 2px dashed #8C8C8C;
+.dropImage {
+  border: 2px dashed #8c8c8c;
 }
-.browse{
-  color: #76236C;
+.browse {
+  color: #76236c;
   display: inline-block;
-  margin: 0 .5rem;
+  margin: 0 0.5rem;
 }
-::v-deep{
-  .dropzone .dz-preview.dz-image-preview{
+::v-deep {
+  .dropzone .dz-preview.dz-image-preview {
     width: 100%;
     background: transparent !important;
     margin-right: 0;
   }
-  .dropzone .dz-preview{
+  .dropzone .dz-preview {
     width: 100%;
   }
   //.dz-details{
   //  display: none;
   //}
-  .dropzone .dz-preview.dz-error .dz-error-message{
+  .dropzone .dz-preview.dz-error .dz-error-message {
     opacity: 1;
     top: auto;
     bottom: -3.6rem;
     transform: translateY(-50%);
   }
-  .vue-dropzone>.dz-preview .dz-remove{
+  .vue-dropzone > .dz-preview .dz-remove {
     position: absolute;
     z-index: 30;
     top: 40%;
     transform: translateY(-50%);
     bottom: auto;
-    color: #CC0000;
+    color: #cc0000;
     font-weight: 800;
     left: 0;
     opacity: 1;
@@ -202,13 +213,13 @@ export default {
     letter-spacing: 0;
     font-size: 1.5rem;
   }
-  .dropzone .dz-preview .dz-image{
+  .dropzone .dz-preview .dz-image {
     width: 200px;
     height: 109px;
     border-radius: 1rem;
     overflow: hidden;
     cursor: pointer;
-    img{
+    img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -216,19 +227,19 @@ export default {
       cursor: pointer;
     }
   }
-  .dropzone .dz-preview{
-    &:hover{
-      .dz-image{
-        img{
+  .dropzone .dz-preview {
+    &:hover {
+      .dz-image {
+        img {
           transform: scale(1.05, 1.05);
           filter: blur(0);
         }
       }
     }
-    .dz-progress{
+    .dz-progress {
       background: rgba(118, 35, 108, 0.9);
     }
-    .dz-details{
+    .dz-details {
       opacity: 1;
       background-color: transparent;
       text-align: right;
@@ -237,17 +248,17 @@ export default {
       max-width: unset;
       min-width: unset;
       max-height: unset;
-      .dz-filename{
+      .dz-filename {
         margin-bottom: 1rem;
       }
-      .dz-size{
+      .dz-size {
         margin: 0;
       }
     }
   }
   .dz-success-mark,
-  .dz-error-mark{
-    span{
+  .dz-error-mark {
+    span {
       background: purple;
       padding: 0.5rem;
       border-radius: 50%;
@@ -259,18 +270,18 @@ export default {
       align-items: center;
     }
   }
-  .dz-error-mark{
-    span{
-      background: #B22424;
+  .dz-error-mark {
+    span {
+      background: #b22424;
     }
   }
-  .dropzone .dz-preview .dz-progress{
+  .dropzone .dz-preview .dz-progress {
     background: rgba(255, 255, 255, 0.9);
     left: 35%;
     top: 60%;
     width: 120px;
   }
-  .dropzone .dz-preview.dz-complete .dz-progress{
+  .dropzone .dz-preview.dz-complete .dz-progress {
     opacity: 1;
     z-index: 1000;
     pointer-events: none;
@@ -284,9 +295,8 @@ export default {
     border-radius: 8px;
     overflow: hidden;
   }
-  .vue-dropzone>.dz-preview .dz-progress .dz-upload{
-    background: #76236C;
+  .vue-dropzone > .dz-preview .dz-progress .dz-upload {
+    background: #76236c;
   }
 }
-
 </style>
