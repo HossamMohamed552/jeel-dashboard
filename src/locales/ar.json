@@ -41,7 +41,8 @@
     "infoDashBoard": "لوحة المعلومات",
     "reports": "التقارير",
     "system_settings": "اعدادات النظام",
-    "basicData": "البيانات الأساسية"
+    "basicData": "البيانات الأساسية",
+    "routesMissions": "المهام"
   },
   "TABLE_FIELDS": {
     "id": "التسلسل",
@@ -83,7 +84,8 @@
     "superClass": "اسم الصف الدراسى",
     "countryName": "الدولة",
     "lesson": "اسم الدرس",
-    "videoTitle": "عنوان الفيديو"
+    "videoTitle": "عنوان الفيديو",
+    "video_with_music_transcode": "حاله رفع الفيديو"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -197,7 +199,8 @@
     "languageMethods": "أسلوب التعلم",
     "selectLanguageMethods": "أختر أسلوب التعلم",
     "learningSkills": "نوع المهارة",
-    "selectLearningSkills": "أختر نوع المهارة"
+    "selectLearningSkills": "أختر نوع المهارة",
+    "videoDuration" : "مدة الفيديو"
   },
   "PAPER_WORK": {
     "NAME": "اسم ورقة العمل",
@@ -239,29 +242,37 @@
   },
   "QUESTIONS": {
     "QUESTIONS": "الأسئلة",
-    "ADD_NEW": "إضافة سؤال جديد",
+    "ADD_NEW": "إضافة سؤال",
     "CHOOSE_Question_PATTERN": "إختيار نمط السؤال",
     "EDIT_Question_PATTERN": "تعديل نمط السؤال",
     "QUESTION_PATTERN": "نمط السؤال",
+    "selectQUESTION_PATTERN": "أختر نمط السؤال",
     "QUESTION_SUB_PATTERN": "نمط السؤال الفرعي",
-    "STEP_ONE": "تعريف السؤال",
-    "STEP_TWO": "حقول السؤال",
-    "STEP_THREE": "مراجعة السؤال",
+    "selectQUESTION_SUB_PATTERN": "أختر نمط السؤال الفرعي",
+    "STEP_ONE": "البيانات الاساسية",
+    "STEP_TWO": "الآسئلة والإجابات",
+    "STEP_THREE": "معاينة السؤال",
     "ANSWER_TYPE": "نوع الإجابة",
     "ANSWER": "الإجابة",
     "HINT": "التلميح",
     "QUESTION": "السؤال",
+    "enterQUESTION": "أدخل السؤال",
     "LEVELS": "المرحلة الدراسية",
     "TYPE": "نوع السؤال",
     "LEARNING_METHOD": "أسلوب التعلم",
+    "selectLEARNING_METHOD": "أختر أسلوب التعلم",
     "BLOOM_CATEGORIES": "بلوم",
+    "selectBLOOM_CATEGORIES": "أختر بلوم",
     "QUESTIONDIFFICULTIES": "مستوى الصعوبة",
-    "LANGUAGE_SKILLS": "نوع المهارة اللغوية",
+    "selectQUESTIONDIFFICULTIES": "أختر مستوى الصعوبة",
+    "LANGUAGE_SKILLS": "نوع المهارة",
+    "selectLANGUAGE_SKILLS": "أختر نوع المهارة",
     "LEARNING_PATH": "المسار",
     "RIGHT_ANSWER": "الإجابة الصحيحة",
     "ShowDetails": "عرض تفاصيل السؤال",
     "QUESTION_TITLE_AUDIO": "التسجيل الصوتى للسؤال",
-    "HINT_TITLE_AUDIO": "التسجيل الصوتى للتلميح",
+    "enterHINT": "أدخل التلميح",
+    "HINT_TITLE_AUDIO": "ملف صوت التلميح",
     "ANSWERS": "الإجابات",
     "QUESTION_ANSWER_AUDIO": "التسجيل الصوتى للإجابة",
     "ANSWERSFROM": "الإجابة من",
@@ -280,7 +291,12 @@
     "QUESTIONIMAGE": "صورة السؤال",
     "reset": "إعادة إدخال الإجابات",
     "confirm": "تأكيد",
-    "QUESTION_TYPE": "نوع السؤال"
+    "QUESTION_TYPE": "نوع السؤال",
+    "questionLearningPath":"المسار التعليمى",
+    "selectQuestionLearningPath":"أختر المسار التعليمى",
+    "headQUESTION": "رأس السؤال",
+    "enterHeadQUESTION": "أختر رأس السؤال",
+    "headerQuestionAudio": "ملف الصوت لرأس السؤال"
   },
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",
@@ -367,7 +383,8 @@
     "DETAILS": "تفاصيل الهدف التعليمى",
     "ADD": "اضافة هدف تعليمي",
     "EDIT": "تعديل هدف التعليمى",
-    "NAME": "اسم الهدف"
+    "NAME": "اسم الهدف",
+    "selectOBJECTIVE": "أختر هدف التعليمى"
   },
   "OUTCOME": {
     "OUTCOME": "مخرجات التعلم",
@@ -375,7 +392,8 @@
     "ADD": "إضافة مخرج تعليمي",
     "EDIT": "تعديل مخرج التعلم",
     "NAME": "اسم مخرج التعلم",
-    "NAME_2": "اسم المخرج التعليمي"
+    "NAME_2": "اسم المخرج التعليمي",
+    "selectOUTCOME": "اختر المخرج التعليمى "
   },
   "CLASS": {
     "ADD_NEW": "إضافة صف دراسي جديد",
@@ -595,5 +613,6 @@
     "QUESTION_TYPE_PLACEHOLDER": "أختر نوع السؤال",
     "QUESTION_TITLE": "نص السؤال",
     "QUESTION_TITLE_PLACEHOLDER": "نص السؤال"
-  }
+  },
+  "NO_MATCHING": "لا توجد نتائج"
 }

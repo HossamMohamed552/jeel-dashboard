@@ -1,86 +1,83 @@
 <template>
   <section class="inner-routes p-0" :class="isSuperVisor ? 'mt-0':''">
-    <div v-if="!isSuperVisor" class="taps">
-      <div
-        @click="activeTapActive(1)"
-        :class="activeTap === 1 && Array.from(routesUsers).length >= 1 ? 'active' : ''"
-        class="tap"
-        v-if="Array.from(routesUsers).length >= 1"
-      >
-        صلاحيات النظام والمستخدمين
-      </div>
-      <div
-        @click="activeTapActive(2)"
-        :class="activeTap === 2 && Array.from(routesSchool).length >= 1 ? 'active' : ''"
-        class="tap"
-        v-if="Array.from(routesSchool).length >= 1"
-      >
-        المدارس
-      </div>
-      <div
-        @click="activeTapActive(3)"
-        :class="activeTap === 3 && Array.from(routesContent).length >= 1 ? 'active' : ''"
-        class="tap"
-        v-if="Array.from(routesContent).length >= 1"
-      >
-        المحتوي
-      </div>
-      <div
-        @click="activeTapActive(4)"
-        :class="activeTap === 4 && Array.from(routeBasicData).length >= 1 ? 'active' : ''"
-        class="tap"
-        v-if="Array.from(routeBasicData).length >= 1"
-      >
-        البيانات الأساسية
-      </div>
-    </div>
-    <div v-if="!isSuperVisor" class="content">
-      <div class="row">
-        <transition name="fade">
-          <div class="col-12 px-0" v-if="activeTap === 1 && Array.from(routesUsers).length >= 1">
-            <div class="row">
-              <div class="col-lg-6 col-12" v-for="(item, index) in routesUsers" :key="index">
-                <RouteItem :item="item"
-                           v-if="item.permission === 'view-roles' && user.is_super_admin === 1"/>
-                <RouteItem :item="item" v-if="item.permission !== 'view-roles'"/>
+    <div v-if="!isSuperVisor" class="supervisor-section">
+      <b-row>
+        <b-col lg="3">
+          <div class="profile-card item-card">
+            <div>
+              <div class="hold-img-profile">
+                <img :src="user.avatar" alt="avatar" title="avatar" @error="altImage($event)">
+              </div>
+              <div class="hold-info">
+                <p class="name">{{ user.name }}</p>
+                <p class="role">{{ user.roles[0]?.name }}</p>
+                <p class="school-name">{{ user.school.name }}</p>
+                <Button custom-class="cancel-btn profile-btn">
+                  {{ $t("profile-page") }}
+                </Button>
               </div>
             </div>
           </div>
-          <div class="col-12 px-0" v-if="activeTap === 2 && Array.from(routesSchool).length >= 1">
-            <div class="row">
-              <div
-                class="col-lg-3 col-sm-6 col-12"
-                v-for="(item, index) in routesSchool"
-                :key="index"
-              >
-                <RouteItem :item="item"/>
+        </b-col>
+        <b-col lg="9">
+          <b-row>
+            <b-col lg="4" class="mb-5">
+              <div class="item-card route-card">
+                <div class="item-number"></div>
+                <div class="item-name">
+                  <span></span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="col-12 px-0" v-if="activeTap === 3 && Array.from(routesContent).length >= 1">
-            <div class="row">
-              <div
-                class="col-lg-3 col-sm-6 col-12"
-                v-for="(item, index) in routesContent"
-                :key="index"
-              >
-                <RouteItem :item="item"/>
+            </b-col>
+            <b-col lg="4" class="mb-5">
+              <div class="item-card route-card">
+                <div class="item-number"></div>
+                <div class="item-name">
+                  <span></span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="col-12 px-0" v-if="activeTap === 4 && Array.from(routeBasicData).length >= 1">
-            <div class="row">
-              <div
-                class="col-lg-3 col-sm-6 col-12"
-                v-for="(item, index) in routeBasicData"
-                :key="index"
-              >
-                <RouteItem :item="item"/>
+            </b-col>
+            <b-col lg="4" class="mb-5">
+              <div class="item-card route-card">
+                <div class="item-number"></div>
+                <div class="item-name">
+                  <span></span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                </div>
               </div>
-            </div>
-          </div>
-        </transition>
-      </div>
+            </b-col>
+            <b-col lg="4">
+              <div class="item-card route-card">
+                <div class="item-number"></div>
+                <div class="item-name">
+                  <span></span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                </div>
+              </div>
+            </b-col>
+            <b-col lg="4">
+              <div class="item-card route-card">
+                <div class="item-number"></div>
+                <div class="item-name">
+                  <span></span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                </div>
+              </div>
+            </b-col>
+            <b-col lg="4">
+              <div class="item-card route-card">
+                <div class="item-number"></div>
+                <div class="item-name">
+                  <span></span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                </div>
+              </div>
+            </b-col>
+          </b-row>
+        </b-col>
+      </b-row>
     </div>
     <div v-if="isSuperVisor" class="supervisor-section">
       <b-row>

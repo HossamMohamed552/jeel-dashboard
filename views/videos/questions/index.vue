@@ -29,14 +29,17 @@
       </b-col>
       <b-col lg="8">
         <b-row>
-          <b-col lg="12">
-            <ShowItem :title="$t('VIDEO.NAME')" :subtitle="videoDetail.title"/>
+          <b-col lg="8">
+            <ShowItem class="divider-show" :title="$t('VIDEO.NAME')" :subtitle="videoDetail.title"/>
           </b-col>
-          <b-col lg="6" class="mt-5" v-if="videoDetail && videoDetail.level">
-            <ShowItem :title="$t('VIDEO.videoQuestionLevel')" :subtitle="videoDetail.level.name"/>
+          <b-col lg="4">
+            <ShowItem class="divider-show" :title="$t('VIDEO.videoDuration')" :subtitle="`${duration}`"/>
           </b-col>
-          <b-col lg="6" class="mt-5" v-if="videoDetail && videoDetail.term">
-            <ShowItem :title="$t('VIDEO.videoQuestionTerm')" :subtitle="videoDetail.term.name"/>
+          <b-col lg="4" class="mt-5" v-if="videoDetail && videoDetail.learningPath">
+            <ShowItem class="divider-show" :title="$t('VIDEO.learning_path')" :subtitle="videoDetail.learningPath.name"/>
+          </b-col>
+          <b-col lg="6" class="mt-5" v-if="videoDetail && videoDetail.lesson">
+            <ShowItem class="divider-show" :title="$t('LESSONS.NAME')" :subtitle="videoDetail.lesson.name"/>
           </b-col>
         </b-row>
       </b-col>
@@ -171,6 +174,7 @@ export default {
       this.player = player
       this.player.getDuration().then((duration) => {
         console.log('full duration', (duration / 60))
+        this.duration =  (duration / 60)
       })
     },
     async getCurrentDuration($event) {

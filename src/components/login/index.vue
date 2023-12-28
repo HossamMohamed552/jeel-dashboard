@@ -2,7 +2,7 @@
   <div class="content">
     <div class="login-form">
       <div class="login-form__logo">
-        <img src="@/assets/images/logo.svg" />
+        <img src="@/assets/images/logo-white.png" />
       </div>
       <validation-observer v-slot="{ invalid }" ref="loginForm">
         <form @submit.prevent="onSubmit">
@@ -60,9 +60,9 @@
         </form>
       </validation-observer>
     </div>
-    <div class="login-form__help">
-      <span>{{ $t("AUTH.help") }}</span>
-    </div>
+<!--    <div class="login-form__help">-->
+<!--      <span>{{ $t("AUTH.help") }}</span>-->
+<!--    </div>-->
     <CopyRight />
     <ForgetPasswordModal />
   </div>

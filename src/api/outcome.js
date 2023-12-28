@@ -1,3 +1,5 @@
+import {getAllObjectivesRequest} from "@/api/objective";
+
 export const getOutcomeCategoriesRequest = (params) => ({
   method: "get",
   url: `outcome`,
@@ -7,7 +9,7 @@ export const getOutcomeCategoriesRequest = (params) => ({
 });
 export const getAllOutcomesRequest = (params) => ({
   method: 'get',
-  url: `outcome?&learning_path_id=${params.learning_path_id}&level_id=${params.level_id}list_all=ture`,
+  url: `outcome?list_all=true`,
   config: {}
 })
 export const getOutcomeCategoryByIdRequest = (id) => ({

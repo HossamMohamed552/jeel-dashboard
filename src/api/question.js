@@ -37,7 +37,7 @@ export const getAllLearningMethodsRequest = (params) => ({
 
 export const getLaguageSkillsRequest = (params) => ({
   method: 'get',
-  url: `language_skills?page=${params.page}`,
+  url: `language_skills?list_all=true`,
 })
 
 export const getQuestionDifficultiesRequest = (params) => ({

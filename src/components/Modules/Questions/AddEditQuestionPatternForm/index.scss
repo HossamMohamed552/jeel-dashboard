@@ -20,7 +20,6 @@
 ::v-deep {
   .hold-field{
     label{
-      color: $color-primary;
       display: block;
       margin: 0 0.7rem 0.7rem 0;
     }
@@ -29,10 +28,15 @@
       padding: 0 1.3rem;
       border-radius: 3.125rem;
       border: 1px solid #BEBEBE;
-      color: $color-primary;
     }
   }
   .vs__dropdown-toggle {
     overflow: hidden;
   }
+}
+.cover{
+  background: #fff;
+  box-shadow: 0 3px 16px #82828229;
+  border-radius: 1rem;
+  padding: 1.5rem 0;
 }

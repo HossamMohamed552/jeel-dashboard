@@ -52,22 +52,6 @@ let routesSchool = [
     permission: "view-schoolTypes",
   },
   {
-    name: "قائمة الصفوف الدراسية",
-    path: "/dashboard/levels",
-    altImage: "levels",
-    titleImage: "levels",
-    icon: require("@/assets/images/icons/list-steps.svg"),
-    permission: "view-levels",
-  },
-  {
-    name: "الترم الدراسي",
-    path: "/dashboard/terms",
-    altImage: "terms",
-    titleImage: "terms",
-    icon: require("@/assets/images/icons/school-section.svg"),
-    permission: "view-terms",
-  },
-  {
     name: "العام الدراسي",
     path: "/dashboard/school-year",
     altImage: "school-year",
@@ -95,7 +79,7 @@ let routesContent = [
     permission: "view-video",
   },
   {
-    name: "بنك الاسئلة",
+    name: "الاسئلة",
     path: "/dashboard/questions",
     altImage: "questions",
     titleImage: "questions",
@@ -119,12 +103,32 @@ let routesContent = [
     icon: require("@/assets/images/icons/paper-work.svg"),
     permission: "view-paperWork",
   },
-  // {
-  //   name: 'المهام',
-  //   path: '/dashboard/tasks',
-  //   icon: require('@/assets/images/icons/mission.svg'),
-
-  // },
+];
+let routesMissions = [
+  {
+    name: "الدول",
+    path: "/dashboard/country",
+    altImage: "countries",
+    titleImage: "countries",
+    icon: require("@/assets/images/icons/country.svg"),
+    permission: "view-countries",
+  },
+  {
+    name: "قائمة الصفوف الدراسية",
+    path: "/dashboard/levels",
+    altImage: "levels",
+    titleImage: "levels",
+    icon: require("@/assets/images/icons/list-steps.svg"),
+    permission: "view-levels",
+  },
+  {
+    name: "الترم الدراسي",
+    path: "/dashboard/terms",
+    altImage: "terms",
+    titleImage: "terms",
+    icon: require("@/assets/images/icons/school-section.svg"),
+    permission: "view-terms",
+  },
   {
     name: "المهام",
     path: "/dashboard/missions",
@@ -170,12 +174,30 @@ let routeSettings = [
 ];
 let routeBasicData = [
   {
-    name: "الدول",
-    path: "/dashboard/country",
-    altImage: "countries",
-    titleImage: "countries",
-    icon: require("@/assets/images/icons/country.svg"),
-    permission: "view-countries",
+    name: "بلوم",
+    path: "/dashboard/bloom",
+    altImage: "bloom",
+    titleImage: "bloom",
+    icon: require("@/assets/images/icons/question.svg"),
+    permission: "view-bloomCategory",
+  },
+  {
+    name: "أنواع المهارات",
+    path: "/dashboard/learning-skill",
+    altImage: "learning-skill",
+    titleImage: "learning-skill",
+    icon: require("@/assets/images/icons/school-section.svg"),
+    // todo to change the permission
+    permission: "view-outcome",
+  },
+  {
+    name: "أساليب التعلم",
+    path: "/dashboard/learning-style",
+    altImage: "learning-style",
+    titleImage: "learning-style",
+    icon: require("@/assets/images/icons/school-section.svg"),
+    // todo to change the permission
+    permission: "view-outcome",
   },
   {
     name: "المسارات التعليمية",
@@ -186,12 +208,12 @@ let routeBasicData = [
     permission: "view-learningpath",
   },
   {
-    name: "بلوم",
-    path: "/dashboard/bloom",
-    altImage: "bloom",
-    titleImage: "bloom",
+    name: "الدروس",
+    path: "/dashboard/lessons",
+    altImage: "lessons",
+    titleImage: "lessons",
     icon: require("@/assets/images/icons/question.svg"),
-    permission: "view-bloomCategory",
+    permission: "view-outcome",
   },
   {
     name: "أهداف التعلم",
@@ -210,36 +232,10 @@ let routeBasicData = [
     permission: "view-outcome",
   },
   {
-    name: "الدروس",
-    path: "/dashboard/lessons",
-    altImage: "lessons",
-    titleImage: "lessons",
-    icon: require("@/assets/images/icons/question.svg"),
-    permission: "view-outcome",
-  },
-  {
     name: "العملات",
     path: "/dashboard/currency",
     altImage: "currency",
     titleImage: "currency",
-    icon: require("@/assets/images/icons/school-section.svg"),
-    // todo to change the permission
-    permission: "view-outcome",
-  },
-  {
-    name: "أساليب التعلم",
-    path: "/dashboard/learning-style",
-    altImage: "learning-style",
-    titleImage: "learning-style",
-    icon: require("@/assets/images/icons/school-section.svg"),
-    // todo to change the permission
-    permission: "view-outcome",
-  },
-  {
-    name: "أنواع المهارات",
-    path: "/dashboard/learning-skill",
-    altImage: "learning-skill",
-    titleImage: "learning-skill",
     icon: require("@/assets/images/icons/school-section.svg"),
     // todo to change the permission
     permission: "view-outcome",
@@ -295,4 +291,4 @@ let routeSuperVisor = [
     permission: "view-announcements",
   },
 ];
-export { routesUsers, routesSchool, routesContent, routeSettings, routeBasicData, routeSuperVisor };
+export { routesUsers, routesSchool, routesContent, routeSettings, routeBasicData, routesMissions,routeSuperVisor };
