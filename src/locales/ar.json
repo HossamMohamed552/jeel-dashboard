@@ -604,5 +604,20 @@
     "LEARNING_PATH": "المسار التعليمي",
     "CHOOSE_LEARNING_PATH": "اختر المسار التعليمي"
   },
+  "AUDIOS": {
+    "AUDIO_NAME": "اسم التسجيل",
+    "LEARNING_PATH": "المسار التعليمي",
+    "LESSION_NAME": "اسم الدرس",
+    "DEGREE": "الدرجة",
+    "ADD_NEW": "إضافة تسجيل صوتي",
+    "EDIT": "تعديل التسجيل الصوتى",
+    "AUDIO_TITLE": "عنوان التسجيل الصوتي",
+    "AUDIO_TITLE_PLACEHOLDER": "أدخل عنوان التسجيل الصوتي",
+    "DEGREE_PLACEHOLDER": "أدخل درجة السؤال",
+    "QUESTION_TYPE": "نوع السؤال",
+    "QUESTION_TYPE_PLACEHOLDER": "أختر نوع السؤال",
+    "QUESTION_TITLE": "نص السؤال",
+    "QUESTION_TITLE_PLACEHOLDER": "نص السؤال"
+  },
   "NO_MATCHING": "لا توجد نتائج"
 }
