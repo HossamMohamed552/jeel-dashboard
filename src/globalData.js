@@ -17,14 +17,6 @@ let routesUsers = [
     icon: require("@/assets/images/icons/list.svg"),
     permission: "view-users",
   },
-  {
-    name: "الباقات",
-    path: "/dashboard/package",
-    altImage: "packages",
-    titleImage: "packages",
-    icon: require("@/assets/images/icons/packages.svg"),
-    permission: "view-packages",
-  },
 ];
 let routesSchool = [
   {
@@ -50,15 +42,6 @@ let routesSchool = [
     titleImage: "schoolTypes",
     icon: require("@/assets/images/icons/school-list.svg"),
     permission: "view-schoolTypes",
-  },
-  {
-    name: "العام الدراسي",
-    path: "/dashboard/school-year",
-    altImage: "school-year",
-    titleImage: "school-year",
-    icon: require("@/assets/images/icons/school-section.svg"),
-    // todo to change the permission
-    permission: "view-terms",
   },
 ];
 let routesContent = [
@@ -86,6 +69,14 @@ let routesContent = [
     titleImage: "practices",
     icon: require("@/assets/images/icons/exercises.svg"),
     permission: "view-quizzes",
+  },
+  {
+    name: "التسجيلات الصوتية",
+    path: "/dashboard/audio",
+    altImage: "audio",
+    titleImage: "audio",
+    icon: require("@/assets/images/icons/video.svg"),
+    permission: "view-video",
   },
   {
     name: "أوراق العمل",
@@ -223,6 +214,9 @@ let routeBasicData = [
     icon: require("@/assets/images/icons/question.svg"),
     permission: "view-outcome",
   },
+
+];
+let routesSubscribes = [
   {
     name: "العملات",
     path: "/dashboard/currency",
@@ -231,6 +225,23 @@ let routeBasicData = [
     icon: require("@/assets/images/icons/school-section.svg"),
     // todo to change the permission
     permission: "view-outcome",
+  },
+  {
+    name: "الباقات",
+    path: "/dashboard/package",
+    altImage: "packages",
+    titleImage: "packages",
+    icon: require("@/assets/images/icons/packages.svg"),
+    permission: "view-packages",
+  },
+  {
+    name: "العام الدراسي",
+    path: "/dashboard/school-year",
+    altImage: "school-year",
+    titleImage: "school-year",
+    icon: require("@/assets/images/icons/school-section.svg"),
+    // todo to change the permission
+    permission: "view-terms",
   },
 ];
 let routeSuperVisor = [
@@ -283,4 +294,4 @@ let routeSuperVisor = [
     permission: "view-announcements",
   },
 ];
-export { routesUsers, routesSchool, routesContent, routeSettings, routeBasicData, routesMissions,routeSuperVisor };
+export { routesUsers, routesSchool, routesContent, routeSettings, routeBasicData, routesMissions, routesSubscribes,routeSuperVisor };

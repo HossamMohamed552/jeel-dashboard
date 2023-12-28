@@ -35,14 +35,15 @@
   },
   "MENU": {
     "main": "الرئيسية",
-    "permissionsSystemUsers": "صلاحيات النظام والمستخدمين",
+    "permissionsSystemUsers": "صلاحيات النظام",
     "schools": "المدارس",
     "content": "المحتوى",
     "infoDashBoard": "لوحة المعلومات",
     "reports": "التقارير",
     "system_settings": "اعدادات النظام",
     "basicData": "البيانات الأساسية",
-    "routesMissions": "المهام"
+    "routesMissions": "المهام",
+    "routesSubscribes": "الإشتراكات"
   },
   "TABLE_FIELDS": {
     "id": "التسلسل",

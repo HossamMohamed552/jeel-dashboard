@@ -3,7 +3,7 @@
     <div class="container-fluid custom-container">
       <div class="row collapsed" v-if="collapseMode">
         <div class="col-12">
-          <div class="top" :class="isSuperVisor && $route.name === 'main' ? 'top-supervisor': ''">
+          <div class="top" :class="(isSuperVisor || !isSuperVisor) && $route.name === 'main' ? 'top-supervisor': ''">
             <router-link to="/dashboard/home" tag="div" class="logo">
               <img src="@/assets/images/logo-white.png" alt="logo" title="geel logo" />
             </router-link>
@@ -170,7 +170,7 @@
       </div>
       <div class="row" v-else>
         <div class="col-12">
-          <div class="top" :class="'top-supervisor'">
+          <div class="top " :class="(isSuperVisor || !isSuperVisor) && $route.name === 'main' ? 'top-supervisor': ''">
             <router-link to="/dashboard/home" tag="div" class="logo">
               <img src="@/assets/images/logo-white.png" alt="logo" title="geel logo" />
             </router-link>
@@ -204,7 +204,7 @@
               </div>
             </div>
           </div>
-          <div class="nav nav-supervisor" v-if="!isSuperVisor">
+          <div class="nav " v-if="!isSuperVisor" :class="(isSuperVisor || !isSuperVisor) && $route.name === 'main' ? 'nav-supervisor': ''">
             <router-link tag="div" to="/dashboard/home" class="nav-item"
               >{{ $t("MENU.main") }}
             </router-link>
@@ -262,18 +262,6 @@
                 </ul>
               </div>
             </div>
-            <div class="nav-item" v-if="Array.from(routesUsers).length >= 1">
-              <p>
-                <span>{{ $t("MENU.permissionsSystemUsers") }}</span
-                ><img src="@/assets/images/icons/arrow.svg" />
-              </p>
-              <div class="dropdown-item-list">
-                <ul>
-                  <router-link tag="li" v-if="routeUser.permission === 'view-roles' && user.is_super_admin === 1" :to="routeUser.path" v-for="(routeUser, index) in routesUsers" :key="index">{{ routeUser.name }}</router-link>
-                  <router-link tag="li" v-if="routeUser.permission !== 'view-roles'" :to="routeUser.path" v-for="(routeUser, index) in routesUsers" :key="index">{{ routeUser.name }}</router-link>
-                </ul>
-              </div>
-            </div>
             <div class="nav-item" v-if="Array.from(routesSchool).length >= 1">
               <p>
                 <span>{{ $t("MENU.schools") }}</span
@@ -289,6 +277,36 @@
                   >
                     {{ routeSchool.name }}</router-link
                   >
+                </ul>
+              </div>
+            </div>
+            <div class="nav-item" v-if="Array.from(routesSubscribes).length >= 1">
+              <p>
+                <span>{{ $t("MENU.routesSubscribes") }}</span
+                ><img src="@/assets/images/icons/arrow.svg" />
+              </p>
+              <div class="dropdown-item-list">
+                <ul >
+                  <router-link
+                    tag="li"
+                    :to="routesSubscribe.path"
+                    v-for="(routesSubscribe, index) in routesSubscribes"
+                    :key="index"
+                  >
+                    {{ routesSubscribe.name }}</router-link
+                  >
+                </ul>
+              </div>
+            </div>
+            <div class="nav-item" v-if="Array.from(routesUsers).length >= 1">
+              <p>
+                <span>{{ $t("MENU.permissionsSystemUsers") }}</span
+                ><img src="@/assets/images/icons/arrow.svg" />
+              </p>
+              <div class="dropdown-item-list">
+                <ul>
+                  <router-link tag="li" v-if="routeUser.permission === 'view-roles' && user.is_super_admin === 1" :to="routeUser.path" v-for="(routeUser, index) in routesUsers" :key="index">{{ routeUser.name }}</router-link>
+                  <router-link tag="li" v-if="routeUser.permission !== 'view-roles'" :to="routeUser.path" v-for="(routeUser, index) in routesUsers" :key="index">{{ routeUser.name }}</router-link>
                 </ul>
               </div>
             </div>
@@ -310,9 +328,9 @@
                 </ul>
               </div>
             </div>
-            <div class="nav-item" v-if="user.is_super_admin === 1">
-              <router-link tag="p" to="/dashboard/home">{{ $t("MENU.infoDashBoard") }}</router-link>
-            </div>
+<!--            <div class="nav-item" v-if="user.is_super_admin === 1">-->
+<!--              <router-link tag="p" to="/dashboard/home">{{ $t("MENU.infoDashBoard") }}</router-link>-->
+<!--            </div>-->
             <div class="nav-item" v-if="user.is_super_admin === 1">
               <router-link tag="p" to="/dashboard/home">{{ $t("MENU.reports") }}</router-link>
             </div>
@@ -341,7 +359,7 @@
   </header>
 </template>
 <script>
-import { routesUsers, routesSchool, routesContent, routeSettings, routeBasicData, routesMissions, routeSuperVisor } from "@/globalData";
+import { routesUsers, routesSchool, routesContent, routeSettings, routeBasicData, routesMissions, routesSubscribes,routeSuperVisor } from "@/globalData";
 import { mapActions } from "vuex";
 
 export default {
@@ -355,6 +373,7 @@ export default {
     routeSettings: [],
     routeBasicData: [],
     routesMissions: [],
+    routesSubscribes: [],
     routeSuperVisor: [],
     collapseMode:false
   }),
@@ -370,6 +389,7 @@ export default {
         this.routeSettings = this.getRoutes(routeSettings);
         this.routeBasicData = this.getRoutes(routeBasicData);
         this.routesMissions = this.getRoutes(routesMissions);
+        this.routesSubscribes = this.getRoutes(routesSubscribes);
         this.routeSuperVisor = this.getRoutes(routeSuperVisor);
       },
       immediate: true,
