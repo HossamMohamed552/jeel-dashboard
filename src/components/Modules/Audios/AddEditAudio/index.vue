@@ -67,16 +67,19 @@
               <b-col v-if="questionType == 'text'" lg="12" class="mb-3">
                 <div class="hold-field">
                   <b-form-group
-                    :label="$t('AUDIOS.QUESTION_TITLE')"
                     v-slot="{ ariaDescribedby }"
                     class="description"
                   >
+                    <label
+                      >{{ $t("AUDIOS.QUESTION_TITLE") }}
+                      <span><i class="fa-solid fa-asterisk"></i></span
+                    ></label>
                     <TextAreaField
                       v-model="formValues.task"
                       rows="5"
                       :name="$t('AUDIOS.QUESTION_TITLE')"
                       :placeholder="$t('AUDIOS.QUESTION_TITLE_PLACEHOLDER')"
-                      :rules="'max:250'"
+                      :rules="'required|min:3|max:250'"
                     >
                     </TextAreaField>
                   </b-form-group>
@@ -283,6 +286,13 @@ export default {
         name: "",
         task_degree: "",
         type: "text",
+        task_audio: "",
+        task: "",
+        task_image: "",
+        learning_path_id: "",
+        lesson_id: "",
+        learning_styles: [],
+        language_skills: [],
       },
       //OLLLD
       paths: [],
