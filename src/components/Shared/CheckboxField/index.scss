@@ -9,10 +9,11 @@
       font-size: .8rem;
     }
     &:lang(ar) {
+      font-family: "DiodrumArabic", sans-serif;
       padding-right: 1.5rem;
     }
   }
-  :lang(ar) {
+  &:lang(ar) {
     .custom-control-label {
       color: $color-light-gray;
       font-weight: bold;

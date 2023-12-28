@@ -8,7 +8,7 @@ export const getObjectiveCategoriesRequest = (params) => ({
 
 export const getAllObjectivesRequest = (params) => ({
   method: 'get',
-  url: `objective?&learning_path_id=${params.learning_path_id}&level_id=${params.level_id}list_all=ture`,
+  url: `objective?list_all=true`,
   config: {}
 })
 export const getObjectiveCategoryByIdRequest = (id) => ({

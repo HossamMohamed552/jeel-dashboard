@@ -1,24 +1,13 @@
 <template>
   <div class="stepper">
-    <div class="stepper-progress">
-      <div class="progress-bar" :style="{ width: progressWidth }" />
-    </div>
     <div class="stepper-steps">
-      <div class="step-item" v-for="(step, index) in steps" :key="index">
-        <div
-          class="stepper-step"
-          :class="{ active: index === currentStep, completed: index < currentStep }"
-        >
-          <div class="stepper-step-img">
-            <!-- <img :src="require(`@/assets/images/icons/${step.icon}.svg`)" alt="" /> -->
-          <span>{{step.icon}}</span>
+      <div class="step-item align-steps" v-for="(step, index) in steps" :key="index">
+        <div class="">
+          <div class="d-flex justify-content-start align-items-center">
+            <span class="stepper-step-img stepper-step" :class="{ active: index === currentStep, completed: index < currentStep }">{{ step.icon }}</span>
+            <div class="progress" :class="{ active: index === currentStep, completed: index < currentStep }"></div>
           </div>
-        </div>
-        <div
-          class="stepper-step-title fs-14 text-center mt-2"
-          :class="{ active: index === currentStep, completed: index < currentStep }"
-        >
-          {{ step.title }}
+          <div class="stepper-step-title fs-14 mt-2" :class="{ active: index === currentStep, completed: index < currentStep }">{{ step.title }}</div>
         </div>
       </div>
     </div>

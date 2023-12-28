@@ -41,7 +41,6 @@
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
             <b-collapse id="nav-collapse" is-nav>
               <b-navbar-nav>
-
                 <b-nav-item>
                   <router-link tag="div" to="/dashboard/home" class="nav-item">{{ $t("MENU.main") }}</router-link>
                 </b-nav-item>
@@ -53,14 +52,14 @@
                         <span style="color: #fff;">{{$t("MENU.permissionsSystemUsers")}}</span>
                       <img src="@/assets/images/icons/arrow.svg" @click="">
                     </template>
-                    <b-dropdown-item 
-                      v-if="routeUser.permission === 'view-roles' && user.is_super_admin === 1" 
-                      v-for="(routeUser, index) in routesUsers" :key="index" 
+                    <b-dropdown-item
+                      v-if="routeUser.permission === 'view-roles' && user.is_super_admin === 1"
+                      v-for="(routeUser, index) in routesUsers" :key="index"
                     >
                       <router-link :to="routeUser.path">{{ routeUser.name }}</router-link>
                     </b-dropdown-item>
-                    <b-dropdown-item 
-                      v-if="routeUser.permission !== 'view-roles'" 
+                    <b-dropdown-item
+                      v-if="routeUser.permission !== 'view-roles'"
                       v-for="(routeUser, index) in routesUsers" :key="index" :href="routeUser.path">
                       <router-link :to="routeUser.path">
                         {{ routeUser.name }}
@@ -77,12 +76,12 @@
                       <span style="color: #fff;">{{ $t("MENU.schools") }}</span>
                       <img src="@/assets/images/icons/arrow.svg" />
                     </template>
-                    <b-dropdown-item 
-                    v-for="(routeSchool, index) in routesSchool" :key="index" 
+                    <b-dropdown-item
+                    v-for="(routeSchool, index) in routesSchool" :key="index"
                     >
                       <router-link :to="routeSchool.path">{{ routeSchool.name }}</router-link>
                     </b-dropdown-item>
-                   
+
                   </b-nav-item-dropdown>
 
                 </b-nav-item>
@@ -94,12 +93,12 @@
                       <span style="color: #fff;">{{ $t("MENU.content") }}</span>
                       <img src="@/assets/images/icons/arrow.svg" />
                     </template>
-                    <b-dropdown-item 
-                    v-for="(routeContent, index) in routesContent" :key="index" 
+                    <b-dropdown-item
+                    v-for="(routeContent, index) in routesContent" :key="index"
                     >
                       <router-link :to="routeContent.path">{{ routeContent.name }}</router-link>
                     </b-dropdown-item>
-                   
+
                   </b-nav-item-dropdown>
                 </b-nav-item>
 
@@ -110,12 +109,12 @@
                       <span style="color: #fff;">{{ $t("MENU.basicData") }}</span>
                       <img src="@/assets/images/icons/arrow.svg" />
                     </template>
-                    <b-dropdown-item 
-                    v-for="(routeBasic, index) in routeBasicData" :key="index" 
+                    <b-dropdown-item
+                    v-for="(routeBasic, index) in routeBasicData" :key="index"
                     >
                       <router-link :to="routeBasic.path">{{ routeBasic.name }}</router-link>
                     </b-dropdown-item>
-                   
+
                   </b-nav-item-dropdown>
 
                 </b-nav-item>
@@ -127,12 +126,12 @@
                       <span style="color: #fff;">{{ $t("MENU.system_settings") }}</span>
                       <img src="@/assets/images/icons/arrow.svg" />
                     </template>
-                    <b-dropdown-item 
-                    v-for="(route, index) in routeSettings" :key="index" 
+                    <b-dropdown-item
+                    v-for="(route, index) in routeSettings" :key="index"
                     >
                       <router-link :to="route.path">{{ route.name }}</router-link>
                     </b-dropdown-item>
-                   
+
                   </b-nav-item-dropdown>
                 </b-nav-item>
 
@@ -171,7 +170,7 @@
       </div>
       <div class="row" v-else>
         <div class="col-12">
-          <div class="top" :class="isSuperVisor && $route.name === 'main' ? 'top-supervisor': ''">
+          <div class="top" :class="'top-supervisor'">
             <router-link to="/dashboard/home" tag="div" class="logo">
               <img src="@/assets/images/logo-white.png" alt="logo" title="geel logo" />
             </router-link>
@@ -205,36 +204,24 @@
               </div>
             </div>
           </div>
-          <div class="nav" v-if="showNavigationBar &&  !isSuperVisor">
+          <div class="nav nav-supervisor" v-if="!isSuperVisor">
             <router-link tag="div" to="/dashboard/home" class="nav-item"
               >{{ $t("MENU.main") }}
             </router-link>
-            <div class="nav-item" v-if="Array.from(routesUsers).length >= 1">
+            <div class="nav-item" v-if="Array.from(routeBasicData).length >= 1">
               <p>
-                <span>{{ $t("MENU.permissionsSystemUsers") }}</span
-                ><img src="@/assets/images/icons/arrow.svg" />
-              </p>
-              <div class="dropdown-item-list">
-                <ul >
-                  <router-link tag="li" v-if="routeUser.permission === 'view-roles' && user.is_super_admin === 1" :to="routeUser.path" v-for="(routeUser, index) in routesUsers" :key="index">{{ routeUser.name }}</router-link>
-                  <router-link tag="li" v-if="routeUser.permission !== 'view-roles'" :to="routeUser.path" v-for="(routeUser, index) in routesUsers" :key="index">{{ routeUser.name }}</router-link>
-                </ul>
-              </div>
-            </div>
-            <div class="nav-item" v-if="Array.from(routesSchool).length >= 1">
-              <p>
-                <span>{{ $t("MENU.schools") }}</span
+                <span>{{ $t("MENU.basicData") }}</span
                 ><img src="@/assets/images/icons/arrow.svg" />
               </p>
               <div class="dropdown-item-list">
                 <ul >
                   <router-link
                     tag="li"
-                    :to="routeSchool.path"
-                    v-for="(routeSchool, index) in routesSchool"
+                    :to="routeBasic.path"
+                    v-for="(routeBasic, index) in routeBasicData"
                     :key="index"
                   >
-                    {{ routeSchool.name }}</router-link
+                    {{ routeBasic.name }}</router-link
                   >
                 </ul>
               </div>
@@ -257,20 +244,50 @@
                 </ul>
               </div>
             </div>
-            <div class="nav-item" v-if="Array.from(routeBasicData).length >= 1">
+            <div class="nav-item" v-if="Array.from(routesMissions).length >= 1">
               <p>
-                <span>{{ $t("MENU.basicData") }}</span
+                <span>{{ $t("MENU.routesMissions") }}</span
                 ><img src="@/assets/images/icons/arrow.svg" />
               </p>
               <div class="dropdown-item-list">
                 <ul >
                   <router-link
                     tag="li"
-                    :to="routeBasic.path"
-                    v-for="(routeBasic, index) in routeBasicData"
+                    :to="routesMission.path"
+                    v-for="(routesMission, index) in routesMissions"
                     :key="index"
                   >
-                    {{ routeBasic.name }}</router-link
+                    {{ routesMission.name }}</router-link
+                  >
+                </ul>
+              </div>
+            </div>
+            <div class="nav-item" v-if="Array.from(routesUsers).length >= 1">
+              <p>
+                <span>{{ $t("MENU.permissionsSystemUsers") }}</span
+                ><img src="@/assets/images/icons/arrow.svg" />
+              </p>
+              <div class="dropdown-item-list">
+                <ul>
+                  <router-link tag="li" v-if="routeUser.permission === 'view-roles' && user.is_super_admin === 1" :to="routeUser.path" v-for="(routeUser, index) in routesUsers" :key="index">{{ routeUser.name }}</router-link>
+                  <router-link tag="li" v-if="routeUser.permission !== 'view-roles'" :to="routeUser.path" v-for="(routeUser, index) in routesUsers" :key="index">{{ routeUser.name }}</router-link>
+                </ul>
+              </div>
+            </div>
+            <div class="nav-item" v-if="Array.from(routesSchool).length >= 1">
+              <p>
+                <span>{{ $t("MENU.schools") }}</span
+                ><img src="@/assets/images/icons/arrow.svg" />
+              </p>
+              <div class="dropdown-item-list">
+                <ul >
+                  <router-link
+                    tag="li"
+                    :to="routeSchool.path"
+                    v-for="(routeSchool, index) in routesSchool"
+                    :key="index"
+                  >
+                    {{ routeSchool.name }}</router-link
                   >
                 </ul>
               </div>
@@ -324,7 +341,7 @@
   </header>
 </template>
 <script>
-import { routesUsers, routesSchool, routesContent, routeSettings, routeBasicData, routeSuperVisor } from "@/globalData";
+import { routesUsers, routesSchool, routesContent, routeSettings, routeBasicData, routesMissions, routeSuperVisor } from "@/globalData";
 import { mapActions } from "vuex";
 
 export default {
@@ -337,6 +354,7 @@ export default {
     routesContent: [],
     routeSettings: [],
     routeBasicData: [],
+    routesMissions: [],
     routeSuperVisor: [],
     collapseMode:false
   }),
@@ -351,6 +369,7 @@ export default {
         this.routesContent = this.getRoutes(routesContent);
         this.routeSettings = this.getRoutes(routeSettings);
         this.routeBasicData = this.getRoutes(routeBasicData);
+        this.routesMissions = this.getRoutes(routesMissions);
         this.routeSuperVisor = this.getRoutes(routeSuperVisor);
       },
       immediate: true,
@@ -393,7 +412,7 @@ export default {
     window.addEventListener('resize', function(event) {
       this.checkNavCollapseMode(screen.width)
     }, true);
-   
+
   },
 };
 </script>

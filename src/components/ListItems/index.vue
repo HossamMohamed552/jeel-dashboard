@@ -116,6 +116,9 @@
         <template #cell(term)="data">
           <span v-if="data.item.term">{{ data.item.term.name | cutString }}</span>
         </template>
+        <template #cell(video_with_music_transcode)="data">
+          <span>{{data.item.video_with_music_transcode ? "تم رفع الفيديو" : "لم يتم رفع الفيديو بعد"}}</span>
+        </template>
         <template #cell(learningpaths)="data">
           <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{
             path.name | cutString
@@ -204,8 +207,8 @@
             >
               {{ $t("CONTROLS.ManageClasses") }}
             </b-dropdown-item>
-            <b-dropdown-divider v-if="checkAddVideo() === 'show'"></b-dropdown-divider>
-            <b-dropdown-item v-if="checkAddVideo() === 'show'" @click="goToAddVideo(data.item.id)">
+            <b-dropdown-divider v-if="checkAddQuestionVideo() === 'show'"></b-dropdown-divider>
+            <b-dropdown-item v-if="checkAddQuestionVideo() === 'show'" @click="addVideoQuestion(data.item.id)" :disabled="!data.item.video_with_music_transcode" :class="!data.item.video_with_music_transcode ? 'disableButton' : ''">
               {{ $t("CONTROLS.AddVideo") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkDelete(data) === 'show'"></b-dropdown-divider>
@@ -219,9 +222,9 @@
             >
               {{ $t("CONTROLS.addAd") }}
             </b-dropdown-item>
-            <b-dropdown-item v-if="videoList" @click="addVideoQuestion(data.item.id)"
-              >{{ $t("CONTROLS.addVideoQuestion") }}
-            </b-dropdown-item>
+<!--            <b-dropdown-item v-if="videoList" @click="addVideoQuestion(data.item.id)"-->
+<!--              >{{ $t("CONTROLS.addVideoQuestion") }}-->
+<!--            </b-dropdown-item>-->
           </b-dropdown>
         </template>
         <template #cell(edit_action)="data">
@@ -429,8 +432,8 @@ export default {
     deleteItem(id) {
       this.$emit("deleteItem", id);
     },
-    addVideoQuestion(id) {
-      this.$emit("addVideoQuestion", id);
+    addVideoQuestion(videoId) {
+      this.$router.push(`/dashboard/video/${videoId}/questions`);
     },
     managePath(item) {
       axios
@@ -475,7 +478,7 @@ export default {
         return "hide";
       }
     },
-    checkAddVideo() {
+    checkAddQuestionVideo() {
       if (this.$route.name === "videos") {
         return "show";
       } else {
@@ -548,9 +551,9 @@ export default {
       //   console.error('Error downloading image', error);
       // }
     },
-    goToAddVideo(videoId) {
-      this.$router.push(`/dashboard/video/${videoId}/questions`);
-    },
+    // goToAddVideo(videoId) {
+    //   this.$router.push(`/dashboard/video/${videoId}/questions`);
+    // },
     sortBy(key) {
       this.formValues.order_by = key;
       this.formValues.order = this.switchSort;

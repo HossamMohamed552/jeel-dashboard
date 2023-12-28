@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="breadcrumb py-0" :class="isSuperVisor && currentRoute.name === 'main' ? 'hideBreadCrumbSuperVisorHome': ''">
+    <nav class="breadcrumb py-0" :class="( isSuperVisor || ! isSuperVisor ) && currentRoute.name === 'main' ? 'hideBreadCrumbSuperVisorHome': ''">
       <div class="container-fluid custom-container d-flex justify-content-between align-items-center px-0">
         <div class="navigation-section d-flex justify-content-between align-items-center">
           <img src="@/assets/images/icons/home.png" class="icon"

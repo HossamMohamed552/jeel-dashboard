@@ -24,18 +24,9 @@ export default {
 
 <style lang="scss">
 @import "@/assets/style/scss/__variables";
-
-@font-face {
-    font-family: DiodrumArabic ;
-    src: url('~@/assets/fonts/NotoNaskhArabicUI-Regular.ttf');
+*{
+  font-family: "DiodrumArabic", sans-serif !important;
 }
-
-* {
-  &:lang(ar) {
-    font-family: "DiodrumArabic", sans-serif;
-  }
-}
-
 
 // style scroll bar general
 ::-webkit-scrollbar {

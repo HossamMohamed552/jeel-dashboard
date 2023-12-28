@@ -5,11 +5,10 @@ export const getLessonsRequest = (params) => ({
     params
   },
 });
-// export const getAllLessonsRequest = (params) => ({
-//   method: 'get',
-//   url: `outcome?&learning_path_id=${params.learning_path_id}&level_id=${params.level_id}list_all=ture`,
-//   config: {}
-// })
+export const getAllLessonsRequest = (params) => ({
+  method: "get",
+  url: `lesson?list_all=true`,
+})
 export const getLessonByIdRequest = (id) => ({
   method: "get",
   url: `lesson/${id}`,

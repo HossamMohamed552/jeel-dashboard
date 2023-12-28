@@ -54,6 +54,7 @@ export default {
         {key: "title", label: this.$i18n.t('TABLE_FIELDS.videoTitle')},
         {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
         {key: "lesson.name", label: this.$i18n.t('TABLE_FIELDS.lesson')},
+        {key: "video_with_music_transcode", label: this.$i18n.t('TABLE_FIELDS.video_with_music_transcode')},
         {key: "actions", label: "الإجراء"},
       ],
     }
