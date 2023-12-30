@@ -117,7 +117,9 @@
           <span v-if="data.item.term">{{ data.item.term.name | cutString }}</span>
         </template>
         <template #cell(video_with_music_transcode)="data">
-          <span>{{data.item.video_with_music_transcode ? "تم رفع الفيديو" : "لم يتم رفع الفيديو بعد"}}</span>
+          <span>{{
+            data.item.video_with_music_transcode ? "تم رفع الفيديو" : "لم يتم رفع الفيديو بعد"
+          }}</span>
         </template>
         <template #cell(learningpaths)="data">
           <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{
@@ -208,7 +210,12 @@
               {{ $t("CONTROLS.ManageClasses") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkAddQuestionVideo() === 'show'"></b-dropdown-divider>
-            <b-dropdown-item v-if="checkAddQuestionVideo() === 'show'" @click="addVideoQuestion(data.item.id)" :disabled="!data.item.video_with_music_transcode" :class="!data.item.video_with_music_transcode ? 'disableButton' : ''">
+            <b-dropdown-item
+              v-if="checkAddQuestionVideo() === 'show'"
+              @click="addVideoQuestion(data.item.id)"
+              :disabled="!data.item.video_with_music_transcode"
+              :class="!data.item.video_with_music_transcode ? 'disableButton' : ''"
+            >
               {{ $t("CONTROLS.AddVideo") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkDelete(data) === 'show'"></b-dropdown-divider>
@@ -222,9 +229,9 @@
             >
               {{ $t("CONTROLS.addAd") }}
             </b-dropdown-item>
-<!--            <b-dropdown-item v-if="videoList" @click="addVideoQuestion(data.item.id)"-->
-<!--              >{{ $t("CONTROLS.addVideoQuestion") }}-->
-<!--            </b-dropdown-item>-->
+            <!--            <b-dropdown-item v-if="videoList" @click="addVideoQuestion(data.item.id)"-->
+            <!--              >{{ $t("CONTROLS.addVideoQuestion") }}-->
+            <!--            </b-dropdown-item>-->
           </b-dropdown>
         </template>
         <template #cell(edit_action)="data">
@@ -565,32 +572,32 @@ export default {
       }
     },
   },
-  updated(){
+  updated() {
     // To ADD TH TEXT INSIDE TD ATTR
-    const htmlDoc = document.documentElement
-    htmlDoc.setAttribute("lang", this.$i18n.locale === "ar" ? "ar" : "en")
-    htmlDoc.setAttribute("dir", this.$i18n.locale === "ar" ? "rtl" : "ltr")
-    const tables = document.querySelectorAll('.table');
-    tables.forEach(table => {
+    const htmlDoc = document.documentElement;
+    htmlDoc.setAttribute("lang", this.$i18n.locale === "ar" ? "ar" : "en");
+    htmlDoc.setAttribute("dir", this.$i18n.locale === "ar" ? "rtl" : "ltr");
+    const tables = document.querySelectorAll(".table");
+    tables.forEach((table) => {
       var headertext = [],
-        headers = table.querySelectorAll('table th'),
-        tablerows = table.querySelectorAll('table th'),
-        tablebody = table.querySelector('table tbody');
+        headers = table.querySelectorAll("table th"),
+        tablerows = table.querySelectorAll("table th"),
+        tablebody = table.querySelector("table tbody");
       for (var i = 0; i < headers.length; i++) {
         var current = headers[i];
-        headertext.push(current.textContent.replace(/\r?\n|\r/, ''));
+        headertext.push(current.textContent.replace(/\r?\n|\r/, ""));
       }
       if (tablebody !== null) {
-        for (var i = 0, row; row = tablebody.rows[i]; i++) {
-          for (var j = 0, col; col = row.cells[j]; j++) {
+        for (var i = 0, row; (row = tablebody.rows[i]); i++) {
+          for (var j = 0, col; (col = row.cells[j]); j++) {
             if (headertext[j] != undefined) {
-              col.setAttribute('data-th', headertext[j]);
+              col.setAttribute("data-th", headertext[j]);
             }
           }
         }
       }
     });
-  }
+  },
 };
 </script>
 <style scoped lang="scss">

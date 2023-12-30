@@ -88,7 +88,9 @@
     "videoTitle": "عنوان الفيديو",
     "video_with_music_transcode": "حاله رفع الفيديو",
     "paperName": "اسم ورقة العمل",
-    "paper_work_final_degree": "الدرجة"
+    "paper_work_final_degree": "الدرجة",
+    "bloom": "بلوم",
+    "learning_path_name": "اسم المسار"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -240,10 +242,11 @@
   },
   "PATH": {
     "Name": "اسم المسار",
+    "Name_PLACEHOLDER": "أدخل اسم المسار",
     "Description": "وصف المسار",
     "ADD_NEW": "إضافة مسار تعليمي",
     "EDIT": "تعديل المسار",
-    "ShowDetails": "عرض تفاصيل المسار"
+    "ShowDetails": "تفاصيل المسار التعليمي"
   },
   "QUESTIONS": {
     "QUESTIONS": "الأسئلة",
