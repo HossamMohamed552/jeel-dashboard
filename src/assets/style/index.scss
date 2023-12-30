@@ -314,6 +314,11 @@ label {
 
   .vs__dropdown-toggle {
     overflow: hidden;
+    padding-right: 0.7rem !important; 
+  }
+
+  .vs__selected {
+    margin: 7px 2px 5px !important;
   }
 }
 .hold-progress {

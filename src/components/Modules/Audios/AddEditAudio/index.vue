@@ -36,6 +36,7 @@
             <b-row>
               <b-col lg="12">
                 <UploadAttachment
+                  v-if="!$route.params.id || formValues.taskAudioChangedRequest"
                   :type-of-attachment="'audio'"
                   :dropIdRef="'audioFile'"
                   :accept-files="'audio/*'"
@@ -44,7 +45,33 @@
                   :rules="'required'"
                   @setFileId="setAudioFileId($event)"
                 />
-                
+                <PreviewMedia
+                  v-if="
+                    $route.params.id &&
+                    formValues.taskAudioChanged === false &&
+                    !formValues.taskAudioChangedRequest
+                  "
+                  :header="$t('ملف الصوت')"
+                  :media-name="formValues.task_audio_name"
+                  :file-size="formValues.task_audio_size"
+                  :image-url="formValues.task_audio"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @playAudio="playAudio(formValues.task_audio)"
+                  @removeFile.stop="
+                    removeFile(
+                      'task_audio_uuid',
+                      'taskAudioChanged',
+                      'taskAudioChangedRequest'
+                    )
+                  "
+                />
+                <p
+                  v-if="formValues.taskAudioChangedRequest"
+                  class="invalid-feedback d-block"
+                >
+                  ملف الصوت مطلوب
+                </p>
               </b-col>
             </b-row>
             <b-row>
@@ -89,7 +116,9 @@
               <b-col v-else lg="12" class="mb-3">
                 <div class="hold-field mt-4">
                   <UploadAttachment
-                    v-if="!$route.params.id || formValues.taskImageChangedRequest"
+                    v-if="
+                      !$route.params.id || formValues.taskImageChangedRequest
+                    "
                     :type-of-attachment="'image'"
                     :label="'صورة السؤال'"
                     :dropImage="true"
@@ -100,16 +129,31 @@
                     @setFileId="setFileImageId($event)"
                   />
                   <PreviewMedia
-                    v-if="$route.params.id && formValues.taskImageChanged === false && !formValues.taskImageChangedRequest"
-                    :header="$t('VIDEO.UPLOAD_IMAGE')"
+                    v-if="
+                      $route.params.id &&
+                      formValues.taskImageChanged === false &&
+                      !formValues.taskImageChangedRequest
+                    "
+                    :header="$t('صورة السؤال')"
                     :media-name="formValues.task_file_name"
                     :file-size="formValues.task_file_size"
                     :image-url="formValues.task"
                     :typeOfMedia="'image'"
                     :showRemoveButton="true"
-                    @removeFile="removeFile('task_file_uuid','taskImageChanged','taskImageChangedRequest')"
+                    @removeFile="
+                      removeFile(
+                        'task_file_uuid',
+                        'taskImageChanged',
+                        'taskImageChangedRequest'
+                      )
+                    "
                   />
-                  <p v-if="formValues.taskImageChangedRequest" class="invalid-feedback d-block">صورة السؤال مطلوبه</p>
+                  <p
+                    v-if="formValues.taskImageChangedRequest"
+                    class="invalid-feedback d-block"
+                  >
+                    صورة السؤال مطلوبه
+                  </p>
                 </div>
               </b-col>
             </b-row>
@@ -292,18 +336,20 @@ export default {
         task: "",
         task_image: "",
         learning_path_id: "",
-        blooms:"",
+        blooms: "",
         lesson_id: "",
         learning_styles: [],
         language_skills: [],
-        task_audio_size:"",
+        task_audio_size: "",
         task_audio_name: "",
-        task_audio_uuid:"",
+        task_audio_uuid: "",
         task_file_size: "",
         task_file_name: "",
         task_file_uuid: "",
         taskImageChanged: false,
         taskImageChangedRequest: false,
+        taskAudioChanged: false,
+        taskAudioChangedRequest: false,
       },
       //OLLLD
       paths: [],
@@ -313,34 +359,22 @@ export default {
       languageMethods: [],
       learningSkills: [],
       audioImage: null,
-      progressWithMusic: 0,
-      progressWithOutMusic: 0,
-      errorVideo: false,
-      successVideo: false,
-      errorVideoWithOut: false,
-      successVideoWithOut: false,
-      // formValues: {
-      //   blooms: null,
-      //   learning_styles: [],
-      //   language_skills: [],
-      //   name: "",
-      //   description: "",
-      //   video: null,
-      //   video_without_music: null,
-      //   learning_path_id: "",
-      //   lesson_id: "",
-      //   title: "",
-      //   original_name: "",
-      //   level_id: "",
-      //   term_id: "",
-      //   img_url: null,
-      //   thumbnail: null,
-      //   uploadVideo: false,
-      //   uploadVideoWithoutMusic: false,
-      // },
+      isPlaying: false,
+      audioValue: null,
     };
   },
   methods: {
+    playAudio(link) {
+      if (this.audioValue) {
+        this.audioValue.pause();
+        this.audioValue = null;
+        this.isPlaying = false;
+        return;
+      }
+      this.audioValue = new Audio(link);
+      this.audioValue.play();
+      this.isPlaying = true;
+    },
     setQuestionType: debounce(function (type) {
       this.questionType = type;
     }, 500),
@@ -389,10 +423,10 @@ export default {
     handleCancel() {
       this.$emit("handleCancel");
     },
-    removeFile(fileName,fileChange,fileRequest){
-      this.formValues[fileChange] = true
-      this.formValues[fileName] = null
-      this.formValues[fileRequest] = true
+    removeFile(fileName, fileChange, fileRequest) {
+      this.formValues[fileChange] = true;
+      this.formValues[fileName] = null;
+      this.formValues[fileRequest] = true;
     },
     getAudioToEdit() {
       if (this.$route.params.id) {
@@ -403,9 +437,12 @@ export default {
             this.formValues.type = response.data.data.type;
             this.formValues.task = response.data.data.task;
             this.formValues.task_audio = response.data.data.task_audio;
-            this.formValues.task_audio_size = response.data.data.task_audio_size;
-            this.formValues.task_audio_name = response.data.data.task_audio_name;
-            this.formValues.task_audio_uuid = response.data.data.task_audio_uuid;
+            this.formValues.task_audio_size =
+              response.data.data.task_audio_size;
+            this.formValues.task_audio_name =
+              response.data.data.task_audio_name;
+            this.formValues.task_audio_uuid =
+              response.data.data.task_audio_uuid;
             this.formValues.task_file_size = response.data.data.task_file_size;
             this.formValues.task_file_name = response.data.data.task_file_name;
             this.formValues.task_file_uuid = response.data.data.task_file_uuid;
@@ -461,8 +498,8 @@ export default {
   computed: {
     checkAudioInput() {
       if (
-        this.formValues.task_audio === '' ||
-        this.questionType == 'image' &&  this.formValues.task_image === ''
+        this.formValues.task_audio === "" ||
+        (this.questionType == "image" && this.formValues.task_image === "")
       ) {
         return true;
       } else {

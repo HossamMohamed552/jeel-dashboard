@@ -617,7 +617,8 @@
     "QUESTION_TYPE": "نوع السؤال",
     "QUESTION_TYPE_PLACEHOLDER": "أختر نوع السؤال",
     "QUESTION_TITLE": "نص السؤال",
-    "QUESTION_TITLE_PLACEHOLDER": "نص السؤال"
+    "QUESTION_TITLE_PLACEHOLDER": "نص السؤال",
+    "SHOW_DETAILS":"تفاصيل التسجيل الصوتى"
   },
   "NO_MATCHING": "لا توجد نتائج"
 }
