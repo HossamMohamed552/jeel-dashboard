@@ -42,7 +42,7 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import { getBloomCategoriesRequest, deleteBloomRequest } from "@/api/bloom.js";
 import Modal from "@/components/Shared/Modal/index.vue";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 export default {
   components: { Modal, ListItems, Button },
   data() {
@@ -59,7 +59,7 @@ export default {
         },
         {
           key: "name",
-          label: this.$i18n.t("TABLE_FIELDS.name"),
+          label: this.$i18n.t("TABLE_FIELDS.bloom"),
         },
         {
           key: "actions",
@@ -69,8 +69,8 @@ export default {
       itemId: 0,
     };
   },
-  computed:{
-    ...mapGetters(['user'])
+  computed: {
+    ...mapGetters(["user"]),
   },
   methods: {
     goToAddBloomCategoryRequest() {

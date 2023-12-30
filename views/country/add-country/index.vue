@@ -1,10 +1,6 @@
 <template>
   <div class="add-country">
-    <Modal
-      :content-message="'تمت الإضافة بنجاح'"
-      :showModal="showModal"
-      :is-success="true"
-    />
+    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
     <AddEditCountry
       :loading="loading"
       @handleAddCountry="handleAddCountry($event)"
@@ -34,10 +30,8 @@ export default {
           this.loading = false;
           setTimeout(() => {
             this.showModal = false;
+            this.$router.push("/dashboard/country");
           }, 3000);
-        })
-        .then(() => {
-          this.$router.push("/dashboard/country");
         })
         .finally(() => {
           this.loading = false;

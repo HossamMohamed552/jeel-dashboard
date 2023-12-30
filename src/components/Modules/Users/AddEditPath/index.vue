@@ -12,6 +12,7 @@
                     v-model="createPath.name"
                     :label="$t('PATH.Name')"
                     :name="$t('PATH.Name')"
+                    :placeholder="$t('PATH.Name_PLACEHOLDER')"
                     :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
@@ -86,7 +87,7 @@ export default {
   computed: {
     canNotSend() {
       return (
-        this.createPath.name === this.defaultValue.name 
+        this.createPath.name === this.defaultValue.name
         // this.createPath.description === this.defaultValue.description
       );
     },

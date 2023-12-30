@@ -1,41 +1,53 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة المسارات التعليمية'" :number-of-item="totalNumber"
-               :tableItems="pathsList" :fields-list="fieldsList" :v-search-model="groupSearchWord" @detailItem="detailItem($event)"
-               @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-               @refetch="getPaths"
-               :loading="loading"
-               :permission_delete="'delete-learningpath'"
-               :permission_edit="'edit-learningpath'"
-               :permission_view="'show-learningpath'"
-               >
+    <ListItems
+      :header-name="'قائمة المسارات التعليمية'"
+      :number-of-item="totalNumber"
+      :tableItems="pathsList"
+      :fields-list="fieldsList"
+      :v-search-model="groupSearchWord"
+      @detailItem="detailItem($event)"
+      @editItem="editItem($event)"
+      @deleteItem="deleteItem($event)"
+      @refetch="getPaths"
+      :loading="loading"
+      :permission_delete="'delete-learningpath'"
+      :permission_edit="'edit-learningpath'"
+      :permission_view="'show-learningpath'"
+    >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddPath()"  v-if="user.permissions.includes(`add-learningpath`)">
-          <img src="@/assets/images/icons/plus.svg">
+        <Button
+          :custom-class="'btn-add rounded-btn big-padding'"
+          @click="goToAddPath()"
+          v-if="user.permissions.includes(`add-learningpath`)"
+        >
+          <img src="@/assets/images/icons/plus.svg" />
           <span> إضافة مسار تعليمي</span>
         </Button>
       </template>
     </ListItems>
-    <Modal :content-message="'حذف المسار'"
-           :content-message-question="'هل انت متأكد من حذف المسار'"
-           :showModal="showModal"
-           @cancel="cancel($event)"
-           :is-warning="true"
-           @cancelWithConfirm="cancelWithConfirm($event)"/>
+    <Modal
+      :content-message="'حذف المسار'"
+      :content-message-question="'هل انت متأكد من حذف المسار'"
+      :showModal="showModal"
+      @cancel="cancel($event)"
+      :is-warning="true"
+      @cancelWithConfirm="cancelWithConfirm($event)"
+    />
   </section>
 </template>
 
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import {deleteLearningPathRequest, getLearningPathsRequest} from "@/api/learningPath";
+import { deleteLearningPathRequest, getLearningPathsRequest } from "@/api/learningPath";
 import Modal from "@/components/Shared/Modal/index.vue";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
-  components: {Modal, ListItems, Button},
-  computed:{
-    ...mapGetters(['user'])
+  components: { Modal, ListItems, Button },
+  computed: {
+    ...mapGetters(["user"]),
   },
   data() {
     return {
@@ -45,54 +57,53 @@ export default {
       pathsList: [],
       totalNumber: null,
       fieldsList: [
-        {key: "id", label: "التسلسل"},
-        {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
+        { key: "id", label: "التسلسل" },
+        { key: "name", label: this.$i18n.t("TABLE_FIELDS.learning_path_name") },
         // {key: "description", label: this.$i18n.t('TABLE_FIELDS.description')},
-        {key: "actions", label: "الإجراء"},
+        { key: "actions", label: "الإجراء" },
       ],
-    }
+    };
   },
   methods: {
     goToAddPath() {
-      this.$router.push('/dashboard/path/add')
+      this.$router.push("/dashboard/path/add");
     },
     getPaths(event) {
-      this.loading = true
+      this.loading = true;
       const params = !event ? { per_page: 10 } : event;
-      this.ApiService(getLearningPathsRequest(params)).then((response) => {
-        this.pathsList = response.data.data
-        this.totalNumber = response.data.meta.total
-      }) .finally(() => {
+      this.ApiService(getLearningPathsRequest(params))
+        .then((response) => {
+          this.pathsList = response.data.data;
+          this.totalNumber = response.data.meta.total;
+        })
+        .finally(() => {
           this.loading = false;
         });
     },
     detailItem($event) {
-      this.$router.push(`/dashboard/path/show/${$event}`)
-
+      this.$router.push(`/dashboard/path/show/${$event}`);
     },
     editItem($event) {
-      this.$router.push(`/dashboard/path/edit/${$event}`)
-
+      this.$router.push(`/dashboard/path/edit/${$event}`);
     },
     deleteItem($event) {
-      this.itemId = $event
-      this.showModal = true
+      this.itemId = $event;
+      this.showModal = true;
     },
     cancel($event) {
-      this.showModal = $event
+      this.showModal = $event;
     },
     cancelWithConfirm() {
       this.ApiService(deleteLearningPathRequest(this.itemId)).then(() => {
-        this.getPaths()
-      })
-      this.cancel()
-    }
+        this.getPaths();
+      });
+      this.cancel();
+    },
   },
   mounted() {
-    this.getPaths()
-  }
-
-}
+    this.getPaths();
+  },
+};
 </script>
 
 <style scoped lang="scss">
