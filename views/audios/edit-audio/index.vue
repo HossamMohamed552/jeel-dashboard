@@ -44,7 +44,7 @@ export default {
       this.audio_name = $event.name;
       const formData = new FormData()
       formData.append('name', $event.name);
-      formData.append('title', $event.name);
+      formData.append('task_degree', $event.task_degree);
       formData.append('original_name', $event.name);
       formData.append('description', $event.description);
       formData.append('learning_path_id', $event.learning_path_id);
