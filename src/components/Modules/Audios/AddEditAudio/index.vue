@@ -44,7 +44,7 @@
                   :rules="'required'"
                   @setFileId="setAudioFileId($event)"
                 />
-                
+
               </b-col>
             </b-row>
             <b-row>
@@ -101,7 +101,7 @@
                   />
                   <PreviewMedia
                     v-if="$route.params.id && formValues.taskImageChanged === false && !formValues.taskImageChangedRequest"
-                    :header="$t('VIDEO.UPLOAD_IMAGE')"
+                    :header="$t('صورة السؤال')"
                     :media-name="formValues.task_file_name"
                     :file-size="formValues.task_file_size"
                     :image-url="formValues.task"

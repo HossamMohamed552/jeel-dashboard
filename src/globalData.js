@@ -54,14 +54,6 @@ let routesContent = [
     permission: "view-video",
   },
   {
-    name: "التسجيلات الصوتية",
-    path: "/dashboard/audio",
-    altImage: "audio",
-    titleImage: "audio",
-    icon: require("@/assets/images/icons/video.svg"),
-    permission: "view-video",
-  },
-  {
     name: "الاسئلة",
     path: "/dashboard/questions",
     altImage: "questions",
