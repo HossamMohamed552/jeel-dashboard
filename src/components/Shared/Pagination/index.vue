@@ -11,7 +11,7 @@
         next-class="next-btn"
         prev-class="prev-btn"
       />
-      <div class="mb-2 number-of-data-shown">عرض {{ loadedCount }} من أصل {{ totalItems }}</div>
+      <div class="number-of-data-shown">عرض {{ loadedCount }} من أصل {{ totalItems }}</div>
     </div>
     <b-form-select
       class="per-page-select"

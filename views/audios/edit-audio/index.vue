@@ -44,23 +44,28 @@ export default {
       this.audio_name = $event.name;
       const formData = new FormData()
       formData.append('name', $event.name);
-      formData.append('title', $event.name);
-      formData.append('original_name', $event.name);
-      formData.append('description', $event.description);
-      formData.append('learning_path_id', $event.learning_path_id);
-      formData.append('level_id', $event.level_id);
-      formData.append('term_id', $event.term_id);
+      formData.append('task_degree', $event.task_degree);
+      formData.append('type', $event.type);
+      if ($event.type == "text") formData.append("task", $event.task);
+      if ($event.taskAudioChangedRequest) formData.append('task_audio', $event.task_audio);
+      if ($event.taskImageChangedRequest) formData.append('task_image', $event.task_image);
       formData.append("_method", 'PUT');
-      if ($event.thumbnail)
-        formData.append('thumbnail', $event.thumbnail);
-      if ($event.uploadVideo)
-        formData.append('video', $event.video);
-      if ($event.uploadVideoWithoutMusic)
-        formData.append('video_without_music', $event.video_without_music);
+      formData.append("learning_path_id", $event.learning_path_id);
+      formData.append("blooms", $event.blooms);
+      formData.append("lesson_id", $event.lesson_id);
+
+      for (let learning_style = 0; learning_style < $event.learning_styles.length; learning_style++) {
+        formData.append(`learning_styles[${learning_style}]`, $event.learning_styles[learning_style]);
+      }
+
+      for (let language_skill = 0; language_skill < $event.language_skills.length; language_skill++) {
+        formData.append(`language_skills[${language_skill}]`, $event.language_skills[language_skill]);
+      }
+
       this.loading = true;
       let axiosSource = axios.CancelToken.source();
       this.cancelSource = axiosSource;
-      axios.post(`/videos/${this.$route.params.id}`, formData, {
+      axios.post(`/tasks/${this.$route.params.id}`, formData, {
         cancelToken: axiosSource.token,
         onUploadProgress: ({loaded, total}) => {
           this.progress = Math.floor((loaded / total) * 100)

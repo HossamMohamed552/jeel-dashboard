@@ -1,15 +1,121 @@
 <template>
   <section class="container-fluid custom-container">
-    Audio Details
+    <section class="container-fluid custom-container" v-if="audio">
+      <div class="show-group">
+        <div class="hold-fields">
+          <b-row>
+            <b-col lg="12">
+              <h2 class="heading">{{ $t("AUDIOS.SHOW_DETAILS") }}</h2>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col lg="4">
+              <ShowItem
+                class="divider-show"
+                title="اسم التسجيل صوتي"
+                :subtitle="audio.name"
+              />
+            </b-col>
+            <b-col lg="4">
+              <ShowItem
+                class="divider-show"
+                title="نوع السؤال"
+                :subtitle="audio.task == 'text' ? 'نص' : 'صورة'"
+              />
+            </b-col>
+            <b-col v-if="audio.task_degree" lg="4">
+              <ShowItem
+                class="divider-show"
+                title="الدرجة"
+                :subtitle="audio.task_degree"
+              />
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col>
+              <PreviewMedia
+                header="ملف الصوت"
+                :media-name="audio.task_audio_name"
+                :file-size="audio.task_audio_size"
+                :typeOfMedia="'audio'"
+                @playAudio="playAudio(audio.task_audio)"
+              />
+            </b-col>
+          </b-row>
+          <b-row v-if="audio.type == 'image'">
+            <b-col>
+              <PreviewMedia
+                header="صورة السؤال"
+                :media-name="audio.task_file_name"
+                :file-size="audio.task_file_size"
+                :image-url="audio.task"
+                :typeOfMedia="'image'"
+              />
+            </b-col>
+          </b-row>
+          <b-row v-if="audio.type == 'text'">
+            <b-col>
+              <ShowItem
+                class="divider-show"
+                title="نص السؤال"
+                :subtitle="audio.task"
+              />
+            </b-col>
+          </b-row>
+
+          <b-row>
+            <b-col class="my-4" lg="6">
+              <ShowItem
+                v-if="audio && audio.learningPath"
+                class="divider-show"
+                title="المسار التعليمي"
+                :subtitle="audio.learningPath.name"
+              />
+            </b-col>
+            <b-col class="my-4" lg="6">
+              <ShowItem
+                v-if="audio && audio.lesson"
+                class="divider-show"
+                title="الدرس"
+                :subtitle="audio.lesson.name"
+              />
+            </b-col>
+            <b-col lg="4">
+              <ShowItem
+                v-if="audio && audio.blooms"
+                class="divider-show"
+                title="بلوم"
+                :subtitle="audio.blooms.name"
+              />
+            </b-col>
+            <b-col lg="4">
+              <ShowItem
+                class="divider-show"
+                title="أسلوب التعلم"
+                :with-out-background="true"
+                :listItems="audio.learning_styles"
+              />
+            </b-col>
+            <b-col lg="4">
+              <ShowItem
+                class="divider-show"
+                title="نوع المهارة"
+                :with-out-background="true"
+                :listItems="audio.language_skills"
+              />
+            </b-col>
+          </b-row>
+        </div>
+      </div>
+    </section>
   </section>
 </template>
 <script>
-import { getSingleVideoRequest } from "@/api/videos";
+import { getSingleAudioRequest } from "@/api/audios";
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import { vueVimeoPlayer } from "vue-vimeo-player";
 
 export default {
   name: "index",
@@ -18,57 +124,33 @@ export default {
     ShowItem,
     PreviewMedia,
     Button,
-    VimeoPlayer: vueVimeoPlayer,
   },
   data() {
     return {
-      videoUrl: null,
-      video: {},
+      audio: {},
+      isPlaying: false,
+      audioValue: null
     };
   },
   methods: {
-    showModal(video, typeOfVideo) {
-      this.$bvModal.show("holdContent");
-      if (
-        typeOfVideo === "withMusic" &&
-        video.vimeo_video_with_music_transcode
-      ) {
-        this.videoUrl = video.vimeo_video_with_music_url.replace(
-          "https",
-          "http"
-        );
-      } else if (
-        typeOfVideo === "withOutMusic" &&
-        video.vimeo_video_without_music_transcode
-      ) {
-        this.videoUrl = video.vimeo_video_without_music_url.replace(
-          "https",
-          "http"
-        );
-      } else if (
-        typeOfVideo === "withMusic" &&
-        !video.vimeo_video_with_music_transcode
-      ) {
-        this.videoUrl = video.video_with_muisc;
-      } else {
-        this.videoUrl = video.video_without_muisc;
+    playAudio(link) {
+      if (this.audioValue) {
+        this.audioValue.pause();
+        this.audioValue = null;
+        this.isPlaying = false;
+        return;
       }
-    },
-    hideModal() {
-      this.$bvModal.hide("holdContent");
-    },
-    async registerPlayerEvents(player) {
-      this.player = player;
+      this.audioValue = new Audio(link);
+      this.audioValue.play();
+      this.isPlaying = true;
     },
   },
   mounted() {
-    this.ApiService(getSingleVideoRequest(this.$route.params.id))
-      .then((response) => {
-        this.video = response.data.data;
-      })
-      .then(() => {
-        this.registerPlayerEvents();
-      });
+    this.ApiService(getSingleAudioRequest(this.$route.params.id)).then(
+      (response) => {
+        this.audio = response.data.data;
+      }
+    );
   },
 };
 </script>

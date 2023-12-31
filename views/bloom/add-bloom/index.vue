@@ -30,10 +30,11 @@ export default {
           this.showModal = true;
           setTimeout(() => {
             this.showModal = false;
+            this.$router.push("/dashboard/bloom");
           }, 3000);
         })
-        .then(() => {
-          this.$router.push("/dashboard/bloom");
+        .finally(() => {
+          this.loading = false;
         });
     },
     handleCancel() {

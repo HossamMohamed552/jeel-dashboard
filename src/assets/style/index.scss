@@ -3,8 +3,8 @@
 @import "./scss/__global";
 @import "./scss/_mixin";
 @font-face {
-  font-family: DiodrumArabic ;
-  src: url('~@/assets/fonts/NotoNaskhArabic-VariableFont_wght.ttf');
+  font-family: DiodrumArabic;
+  src: url("~@/assets/fonts/NotoNaskhArabic-VariableFont_wght.ttf");
 }
 
 .content {
@@ -29,7 +29,7 @@
     overflow: hidden;
 
     .dropdown-menu {
-      transform: translate3d(147px, 31px, 0px) !important;
+      // transform: translate3d(147px, 31px, 0px) !important;
     }
   }
 
@@ -314,6 +314,11 @@ label {
 
   .vs__dropdown-toggle {
     overflow: hidden;
+    padding-right: 0.7rem !important; 
+  }
+
+  .vs__selected {
+    margin: 7px 2px 5px !important;
   }
 }
 .hold-progress {
