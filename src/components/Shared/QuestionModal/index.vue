@@ -1,67 +1,80 @@
 <template>
   <div>
-    <b-modal v-model="innerModal" class="custom-rounded" @hide="cancel()" size="lg"
+    <b-modal v-model="innerModal" class="custom-rounded" @hide="cancel()" size="xl"
              title="BootstrapVue" hide-footer hide-header>
       <div class="all-content">
         <div class="flexContent">
-          <p class="text-right add-title">إضافة سؤال</p>
           <div class="add-question">
-            <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
-              <form @submit.prevent="addQuestion" class="mt-5">
+            <validation-observer v-slot="{ invalid }" immediate ref="addEditUserForm">
+              <form @submit.prevent="addQuestion">
                 <b-row>
-                  <b-col lg="3">
+                  <b-col lg="12">
+                    <p class="text-right add-title">إضافة سؤال</p>
+                  </b-col>
+                  <b-col lg="6">
                     <TextField
                       v-model="questionVideo.question_time"
                       :label="$t('VIDEO.duration')"
+                      :placeholder="$t('VIDEO.duration')"
                       :name="$t('VIDEO.duration')"
+                      :rules="'required'"
+                    >
+                      <div class="hold-icon"><img src="@/assets/images/icons/clock.png"/></div>
+                    </TextField>
+                  </b-col>
+                  <b-col lg="6" class="fix-margin">
+                    <SelectSearch
+                      v-model="questionVideo.question_slug"
+                      :label="$t('نوع السؤال')"
+                      :placeholder="$t('نوع السؤال')"
+                      :name="$t('نوع السؤال')"
+                      :options="questionType"
+                      :reduce="(option) => option.id"
+                      :get-option-label="(option) => option.type"
+                      :rules="'required'"
+                      @input="changeQuestionType($event)"
+                    ></SelectSearch>
+                  </b-col>
+                  <b-col lg="12">
+                    <TextField
+                      v-model="questionVideo.head_question"
+                      :label="$t('QUESTIONS.headQUESTION')"
+                      :placeholder="$t('QUESTIONS.headQUESTION')"
+                      :name="$t('QUESTIONS.headQUESTION')"
                       :rules="'required'"
                     ></TextField>
                   </b-col>
-                  <b-col lg="9">
-                    <ValidationProvider v-slot="{errors, invalid}" rules="'required'">
-                      <b-form-group :label="$t('نوع السؤال')" class="group-type">
-                        <b-form-radio v-model="questionVideo.question_slug" value="true_false"
-                                      name="group-music_type" @input="changeQuestionType($event)">صح وخطأ
-                        </b-form-radio>
-                        <b-form-radio v-model="questionVideo.question_slug" value="mcq"
-                                      name="group-music_type" @input="changeQuestionType($event)">
-                          إختيارات
-                        </b-form-radio>
-                      </b-form-group>
-                    </ValidationProvider>
+                  <b-col lg="12">
+                    <UploadAttachment :type-of-attachment="'audio'"
+                                      :label="$t('QUESTIONS.QUESTION_header_AUDIO')"
+                                      :name="'QUESTION_header_AUDIO'" :rules="'required'"
+                                      :dropIdRef="'questionHeaderAUDIO'"
+                                      :accept-files="'audio/*'"
+                                      @setFileId="setQuestionAudioFileId($event,'head_question_audio','headerQuestionAudioNotChange')"/>
+                    <p v-if="fileType.headerQuestionAudioNotChange"
+                       class="invalid-feedback d-block">مطلوب
+                      {{ $t('QUESTIONS.QUESTION_header_AUDIO') }}</p>
                   </b-col>
                   <b-col lg="12">
                     <TextField
                       v-model="questionVideo.question"
-                      :label="$t('VIDEO.question')"
-                      :name="$t('VIDEO.duration')"
+                      :label="$t('QUESTIONS.videoQUESTION')"
+                      :placeholder="$t('QUESTIONS.videoQUESTION')"
+                      :name="$t('QUESTIONS.videoQUESTION')"
                       :rules="'required'"
                     ></TextField>
                   </b-col>
-                  <b-col lg="6">
-                    <div class="hold-field question-label">
-                      <label><span><i class="fa-solid fa-asterisk"></i></span>{{
-                          $t("QUESTIONS.QUESTION_TITLE_AUDIO")
-                        }}</label>
-                      <ValidationProvider
-                        v-slot="{ errors }"
-                        :rules="'required|audio'"
-                        name="questionAudio"
-                      >
-                        <b-form-file
-                          accept="audio/*"
-                          :placeholder="questionVideo.question_audio ? questionVideo.question_audio : 'اختر ملف'"
-                          v-model="questionVideo.question_audio"
-                          name="audio"
-                        >
-                        </b-form-file>
-                        <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                          {{ error }}
-                        </b-form-invalid-feedback>
-                      </ValidationProvider>
-                    </div>
+                  <b-col lg="12">
+                    <UploadAttachment :type-of-attachment="'audio'"
+                                      :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                                      :name="'QUESTION_TITLE_AUDIO'" :rules="'required'"
+                                      :dropIdRef="'questionHeaderAUDIO'"
+                                      :accept-files="'audio/*'"
+                                      @setFileId="setQuestionAudioFileId($event,'video_question_audio','questionAudioNotChange')"/>
+                    <p v-if="fileType.questionAudioNotChange" class="invalid-feedback d-block">مطلوب
+                      {{ $t('QUESTIONS.QUESTION_TITLE_AUDIO') }}</p>
                   </b-col>
-                  <b-col lg="6">
+                  <b-col lg="6" class="mt-3">
                     <SelectSearch
                       v-model="questionVideo.question_difficulty_id"
                       :label="$t('QUESTIONS.QUESTIONDIFFICULTIES')"
@@ -72,7 +85,7 @@
                       :rules="'required'"
                     ></SelectSearch>
                   </b-col>
-                  <b-col lg="4" v-if="questionVideo.question_slug === 'mcq'">
+                  <b-col lg="6" class="mt-3" v-if="questionVideo.question_slug === 'mcq'">
                     <SelectSearch
                       v-model="answersCountSelected"
                       :label="$t('VIDEO.answersCount')"
@@ -85,41 +98,32 @@
                     ></SelectSearch>
                   </b-col>
                   <b-col lg="12" v-if="questionVideo.question_slug === 'mcq'">
-                    <b-row v-if="questionVideo.question_slug === 'mcq'" v-for="(answer,index) in questionVideo.answers" :key="answer.id">
-                      <b-col lg="6">
-                        <TextField
-                          v-model="answer.answer"
-                          :rules="'required'"
-                          :label="$t('VIDEO.answerSort',{ index:`${index + 1 }`})"
-                          :name="$t('VIDEO.answerSort',{ index:`${index + 1 }`})"
-                        ></TextField>
-                      </b-col>
-                      <b-col lg="6">
-                        <div class="hold-field question-label">
-                          <label><span><i class="fa-solid fa-asterisk"></i></span>{{
-                              $t("QUESTIONS.QUESTION_TITLE_AUDIO")
-                            }}</label>
-                          <ValidationProvider
-                            v-slot="{ errors }"
-                            :rules="'required|audio'"
-                            :name="`answerAudio${index}`"
-                          >
-                            <b-form-file
-                              accept="audio/*"
-                              :placeholder="answer.audio ? answer.audio : 'اختر ملف'"
-                              v-model="answer.audio"
-                              name="audio"
-                            >
-                            </b-form-file>
-                            <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                              {{ error }}
-                            </b-form-invalid-feedback>
-                          </ValidationProvider>
-                        </div>
-                      </b-col>
-                    </b-row>
+                    <div class="hold-answers" v-if="questionVideo.answers.length >=1">
+                      <b-row v-for="(answer,index) in questionVideo.answers" :key="answer.id">
+                        <b-col lg="6">
+                          <TextField
+                            v-model="answer.answer"
+                            :rules="'required'"
+                            :label="$t('VIDEO.answerSort',{ index:`${index + 1 }`})"
+                            :placeholder="$t('VIDEO.answerSort',{ index:`${index + 1 }`})"
+                            :name="$t('VIDEO.answerSort',{ index:`${index + 1 }`})"
+                          ></TextField>
+                        </b-col>
+                        <b-col lg="12">
+                          <UploadAttachment :type-of-attachment="'audio'"
+                                            :label="$t('VIDEO.answerSortAudio',{ index:`${index + 1 }`})"
+                                            :name="`answerAudio${index}`" :rules="'required'"
+                                            :dropIdRef="`answerAudio${index}`"
+                                            :accept-files="'audio/*'"
+                                            @setFileId="setAnswersAudioId($event,index)"
+                          />
+                          <p class="invalid-feedback d-block" v-if="answer.audioNotChanged">
+                            {{ $t('VIDEO.answerSortAudioRequired', {index: `${index + 1}`}) }}</p>
+                        </b-col>
+                      </b-row>
+                    </div>
                   </b-col>
-                  <b-col lg="6" v-if="questionVideo.question_slug === 'true_false'">
+                  <b-col lg="6" class="mt-3" v-if="questionVideo.question_slug === 'true_false'">
                     <SelectSearch
                       :rules="'required'"
                       v-model="questionVideo.answers_id"
@@ -131,7 +135,7 @@
                       @input="assignCorrectAnswer($event)"
                     ></SelectSearch>
                   </b-col>
-                  <b-col lg="6" v-if="questionVideo.question_slug === 'mcq'">
+                  <b-col lg="6" class="mt-3" v-if="questionVideo.question_slug === 'mcq'">
                     <SelectSearch
                       v-model="answerSelected"
                       :label="$t('VIDEO.correctAnswer')"
@@ -151,7 +155,14 @@
                       <Button :custom-class="'cancel-btn margin'" @click="cancel">
                         {{ $t("GLOBAL_CANCEL") }}
                       </Button>
-                      <Button :custom-class="'submit-btn'" @click="addQuestion" :disabled="invalid">
+                      <Button :custom-class="'submit-btn'" @click="addQuestion"
+                              :disabled="invalid || fileType.headerQuestionAudioNotChange || fileType.questionAudioNotChange"
+                              v-if="answerSelected === 1">
+                        {{ $t("GLOBAL_SAVE") }}
+                      </Button>
+                      <Button :custom-class="'submit-btn'" @click="addQuestion"
+                              :disabled="invalid || answerHasNotAudio ||fileType.headerQuestionAudioNotChange || fileType.questionAudioNotChange"
+                              v-if="answerSelected === 2">
                         {{ $t("GLOBAL_SAVE") }}
                       </Button>
                     </div>
@@ -173,10 +184,12 @@ import 'vue2-datepicker/locale/en'
 import "vue2-datepicker/index.css";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import {getAllQuestionDifficultiesRequest} from "@/api/question";
+import UploadAttachment from "@/components/Shared/UploadAttachment/index.vue";
 
 export default {
-  name: "index",
+  name: "questionModal",
   components: {
+    UploadAttachment,
     SelectSearch,
     Button,
     DatePicker,
@@ -185,6 +198,11 @@ export default {
   data() {
     return {
       innerModal: false,
+      answerHasNotAudio: false,
+      fileType: {
+        headerQuestionAudioNotChange: true,
+        questionAudioNotChange: true,
+      },
       // question_time: '',
       // questionTypeSlug: 'true_false',
       // // questionTypeSlug: 'mcq',
@@ -208,9 +226,19 @@ export default {
       //     order: 2
       //   },
       // ],
+      questionType: [
+        {
+          id: 'true_false',
+          type: "صح و خطأ",
+        },
+        {
+          id: 'mcq',
+          type: "إختيارات",
+        }
+      ],
       questionDifficulties: [],
       answersCountSelected: null,
-      answerSelected: null,
+      answerSelected: 1,
       answersCount: [
         {
           id: 2,
@@ -228,7 +256,9 @@ export default {
       questionVideo: {
         video_id: "",
         question: "",
-        question_audio: null,
+        head_question: "",
+        video_question_audio: null,
+        head_question_audio: null,
         question_slug: "true_false",
         question_type_id: 2,
         question_type_sub_id: 13,
@@ -261,9 +291,21 @@ export default {
     "questionVideo.answers": {
       handler(newVal) {
         let empty = newVal.filter((item) => item.answer.length === 0)
+        let audioNotChanged = newVal.filter((item) => item.audioNotChanged === true)
         this.answerHasEmpty = empty.length !== 0
+        this.answerHasNotAudio = audioNotChanged.length !== 0
       },
       deep: true
+    },
+    currentTime: {
+      handler(newVal) {
+        console.log('newVal', newVal)
+        let min = Math.floor(newVal / 60)
+        let second = Math.floor(newVal - (min * 60))
+        let minute =  min < 10 ? `0${min}` : `${min}`;
+        let minSecond = second < 10 ? `0${second}`: `${second}`;
+        this.questionVideo.question_time = `${minute}:${minSecond}`
+      }
     }
   },
   props: {
@@ -299,12 +341,34 @@ export default {
       type: String,
       default: ""
     },
-    duration: {
+    totalDuration: {
+      type: Number,
+      default: 0
+    },
+    currentTime: {
       type: Number,
       default: 0
     }
   },
   methods: {
+    setQuestionAudioFileId($event, fileName, fileChange) {
+      if ($event) {
+        this.questionVideo[fileName] = $event
+        this.fileType[fileChange] = false
+      } else {
+        this.questionVideo[fileName] = null
+        this.fileType[fileChange] = true
+      }
+    },
+    async setAnswersAudioId($event, indexWillChange = 0) {
+      if ($event) {
+        this.questionVideo.answers[indexWillChange]['audio'] = $event
+        this.questionVideo.answers[indexWillChange]['audioNotChanged'] = false
+      } else {
+        this.questionVideo.answers[indexWillChange]['audio'] = null
+        this.questionVideo.answers[indexWillChange]['audioNotChanged'] = true
+      }
+    },
     cancel() {
       this.$emit('cancelQuestion', false)
     },
@@ -314,6 +378,7 @@ export default {
       });
     },
     assignCorrectAnswer($event) {
+      console.log('answer selected', $event)
       if (this.questionVideo.answers) {
         this.questionVideo.answers = this.questionVideo.answers.map((item) => {
           return {...item, correct: 0}
@@ -380,6 +445,7 @@ export default {
           id: answer + 1,
           answer: "",
           audio: "",
+          audioNotChanged: true,
           correct: 0,
           order: answer + 1
         })

@@ -33,13 +33,16 @@
             <ShowItem class="divider-show" :title="$t('VIDEO.NAME')" :subtitle="videoDetail.title"/>
           </b-col>
           <b-col lg="4">
-            <ShowItem class="divider-show" :title="$t('VIDEO.videoDuration')" :subtitle="`${duration}`"/>
+            <ShowItem class="divider-show" :title="$t('VIDEO.videoDuration')"
+                      :subtitle="`${totalDuration}`"/>
           </b-col>
           <b-col lg="4" class="mt-5" v-if="videoDetail && videoDetail.learningPath">
-            <ShowItem class="divider-show" :title="$t('VIDEO.learning_path')" :subtitle="videoDetail.learningPath.name"/>
+            <ShowItem class="divider-show" :title="$t('VIDEO.learning_path')"
+                      :subtitle="videoDetail.learningPath.name"/>
           </b-col>
-          <b-col lg="6" class="mt-5" v-if="videoDetail && videoDetail.lesson">
-            <ShowItem class="divider-show" :title="$t('LESSONS.NAME')" :subtitle="videoDetail.lesson.name"/>
+          <b-col lg="4" class="mt-5" v-if="videoDetail && videoDetail.lesson">
+            <ShowItem class="divider-show" :title="$t('LESSONS.NAME')"
+                      :subtitle="videoDetail.lesson.name"/>
           </b-col>
         </b-row>
       </b-col>
@@ -59,7 +62,7 @@
                    :permission_delete="'delete-video'"
                    :permission_edit="'edit-video'"
                    :permission_view="'show-video'"
-        >
+                   class="px-0"        >
           <template #buttons>
             <Button :custom-class="'btn-add rounded-btn big-padding'"
                     @click="showModalQuestion=true">
@@ -77,7 +80,7 @@
            :is-warning="true"
            @cancelWithConfirm="cancelWithConfirm($event)"/>
     <QuestionModal :showModal="showModalQuestion" @addQuestion="addQuestion($event)"
-                   @cancelQuestion="cancelQuestion($event)" :duration="duration"/>
+                   @cancelQuestion="cancelQuestion($event)" :totalDuration="totalDuration" :currentTime="currentTime"/>
   </section>
 </template>
 <script>
@@ -116,7 +119,8 @@ export default {
       videoUrl: null,
       videoId: null,
       player: null,
-      duration: null,
+      totalDuration: null,
+      currentTime: null,
     }
   },
   methods: {
@@ -173,15 +177,11 @@ export default {
     async registerPlayerEvents(player) {
       this.player = player
       this.player.getDuration().then((duration) => {
-        console.log('full duration', (duration / 60))
-        this.duration =  (duration / 60)
+        this.totalDuration = (duration / 60)
       })
     },
     async getCurrentDuration($event) {
-      console.log("event", $event.seconds)
-      console.log("event", Math.floor($event.seconds))
-      let time = Math.floor($event.seconds)
-      // if ()
+      this.currentTime = $event.seconds
     }
   },
   mounted() {

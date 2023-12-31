@@ -205,7 +205,9 @@
     "selectLanguageMethods": "أختر أسلوب التعلم",
     "learningSkills": "نوع المهارة",
     "selectLearningSkills": "أختر نوع المهارة",
-    "videoDuration": "مدة الفيديو"
+    "videoDuration": "مدة الفيديو",
+    "answerSortAudio": " صوت الاجابة {index}",
+    "answerSortAudioRequired": "مطلوب صوت الاجابة {index}"
   },
   "PAPER_WORK": {
     "NAME": "اسم ورقة العمل",
@@ -264,6 +266,7 @@
     "ANSWER": "الإجابة",
     "HINT": "التلميح",
     "QUESTION": "السؤال",
+    "videoQUESTION": "نص السؤال",
     "enterQUESTION": "أدخل السؤال",
     "LEVELS": "المرحلة الدراسية",
     "TYPE": "نوع السؤال",
@@ -278,7 +281,8 @@
     "LEARNING_PATH": "المسار",
     "RIGHT_ANSWER": "الإجابة الصحيحة",
     "ShowDetails": "عرض تفاصيل السؤال",
-    "QUESTION_TITLE_AUDIO": "التسجيل الصوتى للسؤال",
+    "QUESTION_TITLE_AUDIO": "صوت نص السؤال",
+    "QUESTION_header_AUDIO": "صوت رأس السؤال",
     "enterHINT": "أدخل التلميح",
     "HINT_TITLE_AUDIO": "ملف صوت التلميح",
     "ANSWERS": "الإجابات",
