@@ -19,7 +19,8 @@
       height: 30px;
       font-size: 1rem;
       font-weight: 700;
-      padding: 0 0 0.5rem;
+      padding: 0;
+      line-height: 1rem;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -36,7 +37,7 @@
   color: $color-primary;
   border: none;
   // height: 30px;
-  padding: 0px 30px 8px !important;
+  padding: 0px 30px !important;
   font-weight: bold;
 }
 .number-of-data-shown {
