@@ -308,7 +308,8 @@
     "selectQuestionLearningPath": "أختر المسار التعليمى",
     "headQUESTION": "رأس السؤال",
     "enterHeadQUESTION": "أختر رأس السؤال",
-    "headerQuestionAudio": "ملف الصوت لرأس السؤال"
+    "headerQuestionAudio": "ملف الصوت لرأس السؤال",
+    "questionDetails": "تفاصيل السؤال"
   },
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",

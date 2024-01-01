@@ -45,9 +45,6 @@
                   :rules="'required'"
                   @setFileId="setAudioFileId($event)"
                 />
-<<<<<<< HEAD
-
-=======
                 <PreviewMedia
                   v-if="
                     $route.params.id &&
@@ -57,11 +54,10 @@
                   :header="$t('ملف الصوت')"
                   :media-name="formValues.task_audio_name"
                   :file-size="formValues.task_audio_size"
-                  :image-url="formValues.task_audio"
                   :typeOfMedia="'audio'"
                   :showRemoveButton="true"
-                  @playAudio="playAudio(formValues.task_audio)"
-                  @removeFile.stop="
+                  @showModal="showModal(formValues,$event)"
+                  @removeFile="
                     removeFile(
                       'task_audio_uuid',
                       'taskAudioChanged',
@@ -69,13 +65,6 @@
                     )
                   "
                 />
-                <p
-                  v-if="formValues.taskAudioChangedRequest"
-                  class="invalid-feedback d-block"
-                >
-                  ملف الصوت مطلوب
-                </p>
->>>>>>> c206d87629064ab27c8720dbcd2bcab781bec48d
               </b-col>
             </b-row>
             <b-row>
@@ -96,16 +85,16 @@
               </b-col>
             </b-row>
             <b-row>
-              <b-col v-if="questionType == 'text'" lg="12" class="mb-3">
+              <b-col v-if="questionType === 'text'" lg="12" class="mb-3">
                 <div class="hold-field">
                   <b-form-group
                     v-slot="{ ariaDescribedby }"
                     class="description"
                   >
                     <label
-                      >{{ $t("AUDIOS.QUESTION_TITLE") }}
+                    >{{ $t("AUDIOS.QUESTION_TITLE") }}
                       <span><i class="fa-solid fa-asterisk"></i></span
-                    ></label>
+                      ></label>
                     <TextAreaField
                       v-model="formValues.task"
                       rows="5"
@@ -146,18 +135,12 @@
                     :showRemoveButton="true"
                     @removeFile="
                       removeFile(
-                        'task_file_uuid',
+                        'task_image',
                         'taskImageChanged',
                         'taskImageChangedRequest'
                       )
                     "
                   />
-                  <p
-                    v-if="formValues.taskImageChangedRequest"
-                    class="invalid-feedback d-block"
-                  >
-                    صورة السؤال مطلوبه
-                  </p>
                 </div>
               </b-col>
             </b-row>
@@ -268,18 +251,36 @@
                   v-if="$route.params.id"
                   type="submit"
                   :loading="loading"
-                  :disabled="invalid"
+                  :disabled="invalid || checkAudioInputsUpdate"
                   custom-class="submit-btn"
                 >
                   {{ $t("GLOBAL_EDIT") }}
                 </Button>
-                <!--                $route.params.id ? $t("GLOBAL_EDIT") :-->
+
               </div>
             </b-row>
           </form>
         </validation-observer>
       </div>
     </div>
+    <GeneralModal :id="'holdContent'" :size="'lg'" :hide-header="true">
+      <template #modalBody>
+        <div class="text-center">
+          <div v-if="mediaType === 'audio'">
+            <audio :src="url"
+                   ref="player"
+                   autoplay="autoplay"
+                   controls="controls"></audio>
+          </div>
+          <div v-else>
+            <img :src="url">
+          </div>
+          <Button @click="hideModal" :custom-class="'rounded-btn transparent-btn'">
+            {{ $t("BACK") }}
+          </Button>
+        </div>
+      </template>
+    </GeneralModal>
   </div>
 </template>
 <script>
@@ -288,21 +289,23 @@ import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import SelectField from "@/components/Shared/SelectField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { getSingleAudioRequest } from "@/api/audios";
-import { getAllLearningPathsRequest } from "@/api/learningPath";
-import { getAllLevelsRequest } from "@/api/level";
+import {getSingleAudioRequest} from "@/api/audios";
+import {getAllLearningPathsRequest} from "@/api/learningPath";
+import {getAllLevelsRequest} from "@/api/level";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
-import { getLessonsRequest } from "@/api/lessons";
+import {getLessonsRequest} from "@/api/lessons";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import UploadAttachment from "@/components/Shared/UploadAttachment";
-import { getBloomCategoriesRequest } from "@/api/bloom";
-import { getAllLearningMethodsRequest } from "@/api/question";
-import { getLearningSkillsRequest } from "@/api/learning-skill";
+import {getBloomCategoriesRequest} from "@/api/bloom";
+import {getAllLearningMethodsRequest} from "@/api/question";
+import {getLearningSkillsRequest} from "@/api/learning-skill";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
-import { debounce } from "lodash";
+import {debounce} from "lodash";
+import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
 
 export default {
   components: {
+    GeneralModal,
     PreviewMedia,
     SelectSearch,
     Modal,
@@ -321,6 +324,8 @@ export default {
   },
   data() {
     return {
+      url: null,
+      mediaType: null,
       qustionTypes: [
         {
           name: "صورة",
@@ -381,6 +386,8 @@ export default {
     },
     setQuestionType: debounce(function (type) {
       this.questionType = type;
+      if (this.$route.params.id && this.questionType === "image")
+      this.formValues.task = null
     }, 500),
 
     //// ollld
@@ -398,9 +405,13 @@ export default {
     },
     setFileImageId($event) {
       this.formValues.task_image = $event;
+      this.formValues.taskImageChangedRequest = true
+      this.formValues.taskImageChanged = false
     },
     setAudioFileId($event) {
       this.formValues.task_audio = $event;
+      this.formValues.taskAudioChangedRequest = true
+      this.formValues.taskAudioChanged = false
     },
     // setVideoWithoutFileId($event) {
     //   this.formValues.video_without_music = $event;
@@ -426,6 +437,16 @@ export default {
     },
     handleCancel() {
       this.$emit("handleCancel");
+    },
+    showModal(audio, $event) {
+      this.$bvModal.show('holdContent')
+      this.mediaType = $event
+      if (this.mediaType === 'audio') {
+        this.url = audio.task_audio
+      }
+    },
+    hideModal() {
+      this.$bvModal.hide('holdContent')
     },
     removeFile(fileName, fileChange, fileRequest) {
       this.formValues[fileChange] = true;
@@ -475,7 +496,7 @@ export default {
       this.ApiService(getAllLevelsRequest()).then((response) => {
         const levelsArr = response.data.data;
         this.levels = levelsArr.map((path) => {
-          return { value: path.id, text: path.name };
+          return {value: path.id, text: path.name};
         });
       });
     },
@@ -501,15 +522,20 @@ export default {
   },
   computed: {
     checkAudioInput() {
-      if (
-        this.formValues.task_audio === "" ||
-        (this.questionType == "image" && this.formValues.task_image === "")
+      if (this.formValues.task_audio === "" || (this.questionType === "image" && this.formValues.task_image === "")
       ) {
         return true;
       } else {
         return false;
       }
     },
+    checkAudioInputsUpdate() {
+      if (this.formValues.taskAudioChanged === true || (this.questionType === "image" && this.formValues.taskImageChanged === true)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
   mounted() {
     this.getAudioToEdit();

@@ -62,7 +62,7 @@
                    :permission_delete="'delete-video'"
                    :permission_edit="'edit-video'"
                    :permission_view="'show-video'"
-                   class="px-0"        >
+                   class="px-0">
           <template #buttons>
             <Button :custom-class="'btn-add rounded-btn big-padding'"
                     @click="showModalQuestion=true">
@@ -80,15 +80,77 @@
            :is-warning="true"
            @cancelWithConfirm="cancelWithConfirm($event)"/>
     <QuestionModal :showModal="showModalQuestion" @addQuestion="addQuestion($event)"
-                   @cancelQuestion="cancelQuestion($event)" :totalDuration="totalDuration" :currentTime="currentTime"/>
+                   @cancelQuestion="cancelQuestion($event)" :totalDuration="totalDuration"
+                   :currentTime="currentTime"/>
+    <GeneralModal id="questionContent" :size="'lg'" :hide-header="true">
+      <template #modalBody>
+        <div>
+          <b-row>
+            <b-col lg="12">
+              <h2 class="heading">{{ $t('QUESTIONS.questionDetails') }}</h2>
+            </b-col>
+            <b-col lg="6">
+              <ShowItem class="divider-show" :title="$t('VIDEO.duration')"
+                        :subtitle="questionContent.question_time"/>
+            </b-col>
+            <b-col lg="6">
+              <ShowItem class="divider-show" :title="$t('QUESTIONS.QUESTION_TYPE')"
+                        :subtitle="questionContent.question_type.name"/>
+            </b-col>
+            <b-col lg="12" class="mt-3">
+              <ShowItem class="divider-show" :title="$t('QUESTIONS.headQUESTION')"
+                        :subtitle="questionContent.head_question"/>
+            </b-col>
+            <b-col lg="12">
+              <PreviewMedia
+                :header="`${$t('QUESTIONS.QUESTION_header_AUDIO')}`"
+                :media-name="questionContent.video_head_question_audio_name"
+                :file-size="questionContent.video_head_question_audio_size"
+                :typeOfMedia="'audio'"
+                @showModal="showPreviewModal(questionContent.video_head_question_audio)"/>
+            </b-col>
+            <b-col lg="12" class="mt-3">
+              <ShowItem class="divider-show" :title="$t('QUESTIONS.videoQUESTION')"
+                        :subtitle="questionContent.question"/>
+            </b-col>
+            <b-col lg="12">
+              <PreviewMedia
+                :header="`${$t('QUESTIONS.QUESTION_TITLE_AUDIO')}`"
+                :media-name="questionContent.video_question_audio_name"
+                :file-size="questionContent.video_question_audio_size"
+                :typeOfMedia="'audio'"
+                @showModal="showPreviewModal(questionContent.video_question_audio)"/>
+            </b-col>
+          </b-row>
+          <Button @click="hideModal" :custom-class="'rounded-btn transparent-btn'">
+            {{ $t("BACK") }}
+          </Button>
+        </div>
+      </template>
+    </GeneralModal>
+    <GeneralModal :id="'holdContent'" :size="'lg'" :hide-header="true">
+      <template #modalBody>
+        <div class="text-center">
+          <div>
+            <audio :src="url"
+                   ref="player"
+                   autoplay="autoplay"
+                   controls="controls"></audio>
+          </div>
+          <Button @click="hidePreviewModal" :custom-class="'rounded-btn transparent-btn'">
+            {{ $t("BACK") }}
+          </Button>
+        </div>
+      </template>
+    </GeneralModal>
   </section>
 </template>
 <script>
 import {
   addQuestionOnVideo,
   deleteQuestionOfVideo,
-  deleteVideoRequest,
   getQuestionOfVideo,
+  getSingleQuestionOnVideo,
   getSingleVideoRequest
 } from "@/api/videos";
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
@@ -97,10 +159,14 @@ import Modal from "@/components/Shared/Modal/index.vue";
 import QuestionModal from "@/components/Shared/QuestionModal/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import {vueVimeoPlayer} from 'vue-vimeo-player'
+import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
+import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 
 export default {
   name: "index",
-  components: {Button, Modal, ListItems, ShowItem, QuestionModal, VimeoPlayer: vueVimeoPlayer},
+  components: {
+    PreviewMedia,
+    GeneralModal, Button, Modal, ListItems, ShowItem, QuestionModal, VimeoPlayer: vueVimeoPlayer},
   data() {
     return {
       loading: false,
@@ -108,6 +174,7 @@ export default {
       totalNumber: 0,
       showModal: false,
       showModalQuestion: false,
+      url: null,
       fieldsList: [
         {key: "id", label: "التسلسل"},
         {key: "questionName", label: "نص السؤال"},
@@ -121,6 +188,7 @@ export default {
       player: null,
       totalDuration: null,
       currentTime: null,
+      questionContent:{}
     }
   },
   methods: {
@@ -144,10 +212,25 @@ export default {
       });
     },
     detailItem($event) {
-      this.$router.push(`/dashboard/videos/show/${$event}`)
+      this.ApiService(getSingleQuestionOnVideo($event)).then((response) => {
+        this.questionContent = response.data.data
+      }).then(()=>this.showQuestionModal())
     },
     editItem($event) {
-      this.$router.push(`/dashboard/videos/edit/${$event}`)
+
+    },
+    showQuestionModal() {
+      this.$bvModal.show('questionContent')
+    },
+    hideModal() {
+      this.$bvModal.hide('questionContent')
+    },
+    showPreviewModal(audio) {
+      this.$bvModal.show('holdContent')
+      this.url = audio
+    },
+    hidePreviewModal(){
+      this.$bvModal.hide('holdContent')
     },
     deleteItem($event) {
       this.itemId = $event

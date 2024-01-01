@@ -25,9 +25,9 @@
                   <b-col lg="6" class="fix-margin">
                     <SelectSearch
                       v-model="questionVideo.question_slug"
-                      :label="$t('نوع السؤال')"
-                      :placeholder="$t('نوع السؤال')"
-                      :name="$t('نوع السؤال')"
+                      :label="$t('QUESTIONS.QUESTION_TYPE')"
+                      :placeholder="$t('QUESTIONS.QUESTION_TYPE')"
+                      :name="$t('QUESTIONS.QUESTION_TYPE')"
                       :options="questionType"
                       :reduce="(option) => option.id"
                       :get-option-label="(option) => option.type"
