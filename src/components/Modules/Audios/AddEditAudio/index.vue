@@ -377,17 +377,20 @@ export default {
     },
     setQuestionType: debounce(function (type) {
       this.questionType = type;
-      // if (this.$route.params.id) {
-      //   if (type == 'text') {
-      //     this.formValues.task_file_name = ""
-      //     this.formValues.task_file_size = ""
-      //     this.formValues.task_file_uuid = ""
-      //     this.formValues.taskImageChanged = false
-      //     this.formValues.taskAudioChangedRequest = false
-      //   } else {
-      //     this.formValues.task = ""
-      //   }
-      // }
+      if (this.$route.params.id) {
+        if (type == "text") {
+          // this.formValues.task_file_name = ""
+          // this.formValues.task_file_size = ""
+          // this.formValues.taskImageChanged = false
+          this.formValues.taskImageChangedRequest = false;
+        } else {
+          if (this.formValues.task_file_uuid)
+            this.formValues.taskImageChangedRequest = false;
+          else this.formValues.taskImageChangedRequest = true;
+          this.formValues.task = "";
+          // this.formValues.task = ""
+        }
+      }
     }, 500),
 
     //// ollld
