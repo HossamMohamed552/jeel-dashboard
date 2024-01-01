@@ -31,6 +31,10 @@ export const addQuestionOnVideo = (data)=>({
     data
   }
 })
+export const getSingleQuestionOnVideo = (params)=>({
+  method: 'get',
+  url:`/videos/quesiton/${params}`,
+})
 export const putVideoRequest = (params, data) => ({
   method: 'put',
   url: `videos/${params}`,

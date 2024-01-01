@@ -29,18 +29,17 @@ export default {
       const formData = new FormData();
       formData.append("name", $event.name);
       formData.append("audio", $event.audio);
-      formData.append("type", $event.type);
-      formData.append("learning_path_id", $event.learning_path_id);
       formData.append("file", $event.file);
       formData.append("paper_work_without_color", $event.paper_work_without_color);
+      formData.append("thumbnail", $event.thumbnail);
+      formData.append("type", $event.type);
+      formData.append("learning_path_id", $event.learning_path_id);
       formData.append("level_id", $event.level_id);
       formData.append("term_id", $event.term_id);
       formData.append("description", $event.description);
-      formData.append("thumbnail", $event.thumbnail);
       formData.append("paper_work_final_degree", $event.paper_work_final_degree);
       formData.append("blooms", $event.blooms);
       formData.append("lesson_id", $event.lesson_id);
-
       $event.language_skills.forEach((e) => {
         formData.append("language_skills[]", e);
       });

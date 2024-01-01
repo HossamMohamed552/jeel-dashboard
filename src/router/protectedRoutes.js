@@ -1170,7 +1170,7 @@ const protectedRoutes = [
       },
       {
         path: "/dashboard/question-difficulty/edit/:id",
-        name: "edit-question-difficulty",
+        name: "view-question-difficulty",
         component: () =>
           import("../../views/question-difficulty/edit-question-difficulty/index.vue"),
         meta: {
