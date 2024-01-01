@@ -201,8 +201,8 @@
     "selectPath": "أختر المسار التعليمى",
     "bloom": "بلوم",
     "selectBloom": "أختر البلوم",
-    "languageMethods": "أسلوب التعلم",
-    "selectLanguageMethods": "أختر أسلوب التعلم",
+    "languageMethods": "إسلوب التعلم",
+    "selectLanguageMethods": "أختر إسلوب التعلم",
     "learningSkills": "نوع المهارة",
     "selectLearningSkills": "أختر نوع المهارة",
     "videoDuration": "مدة الفيديو",
@@ -239,7 +239,7 @@
     "DESCRIPTION_INPUT_PLACEHOLDER": "أدخل وصف ورقة العمل",
     "PAPER_WORK_NAME": "اسم ورقة العمل",
     "PAPER_WORK_NAME_PLACEHOLDER": "أدخل اسم ورقة العمل",
-    "languageMethods": "أسلوب التعلم",
+    "languageMethods": "إسلوب التعلم",
     "audioFile": "ملف الصوت"
   },
   "PATH": {
@@ -270,8 +270,8 @@
     "enterQUESTION": "أدخل السؤال",
     "LEVELS": "المرحلة الدراسية",
     "TYPE": "نوع السؤال",
-    "LEARNING_METHOD": "أسلوب التعلم",
-    "selectLEARNING_METHOD": "أختر أسلوب التعلم",
+    "LEARNING_METHOD": "إسلوب التعلم",
+    "selectLEARNING_METHOD": "أختر إسلوب التعلم",
     "BLOOM_CATEGORIES": "بلوم",
     "selectBLOOM_CATEGORIES": "أختر بلوم",
     "QUESTIONDIFFICULTIES": "مستوى الصعوبة",
@@ -332,7 +332,7 @@
   },
   "LESSONS": {
     "LESSONS": "الدروس",
-    "DETAILS": "تفاصيل الدرس",
+    "DETAILS": "تفاصيل درس تعليمي",
     "ADD": "إضافة درس تعليمي",
     "EDIT": "تعديل الدرس",
     "NAME": "اسم الدرس",
@@ -400,10 +400,10 @@
   },
   "OUTCOME": {
     "OUTCOME": "مخرجات التعلم",
-    "DETAILS": "تفاصيل مخرج التعلم",
+    "DETAILS": "تفاصيل مخرج تعليمي",
     "ADD": "إضافة مخرج تعليمي",
-    "EDIT": "تعديل مخرج التعلم",
-    "NAME": "اسم مخرج التعلم",
+    "EDIT": "تعديل مخرج تعليمي",
+    "NAME": "اسم المخرج التعليمي",
     "NAME_2": "اسم المخرج التعليمي",
     "selectOUTCOME": "اختر المخرج التعليمى "
   },

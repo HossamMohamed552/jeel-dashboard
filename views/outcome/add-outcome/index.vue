@@ -1,6 +1,10 @@
 <template>
   <div class="add-country">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal
+      :content-message="'تمت الإضافة بنجاح'"
+      :showModal="showModal"
+      :is-success="true"
+    />
     <AddEditOutcomeCategory
       :loading="loading"
       @addOutcomeCategory="handleAddOutcomeCategory($event)"
@@ -11,7 +15,7 @@
 <script>
 import AddEditOutcomeCategory from "@/components/Modules/OutcomeCategory/AddEditOutcomeCategory/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import {postAddOutcomeCategoriesRequest} from "@/api/outcome";
+import { postAddOutcomeCategoriesRequest } from "@/api/outcome";
 export default {
   name: "index",
   components: { Modal, AddEditOutcomeCategory },
@@ -30,13 +34,12 @@ export default {
           this.showModal = true;
           setTimeout(() => {
             this.showModal = false;
+            this.$router.push("/dashboard/outcome");
           }, 3000);
         })
-        .then(() => {
-          this.$router.push("/dashboard/outcome");
-        }).catch(()=>{
-        this.loading = false;
-      })
+        .catch(() => {
+          this.loading = false;
+        });
     },
     handleCancel() {
       this.$router.push("/dashboard/outcome");

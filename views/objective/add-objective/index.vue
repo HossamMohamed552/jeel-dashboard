@@ -1,6 +1,10 @@
 <template>
   <div class="add-country">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal
+      :content-message="'تمت الإضافة بنجاح'"
+      :showModal="showModal"
+      :is-success="true"
+    />
     <AddEditObjectiveCategory
       :loading="loading"
       @addObjectiveCategory="handleAddObjectiveCategory($event)"
@@ -11,7 +15,7 @@
 <script>
 import AddEditObjectiveCategory from "@/components/Modules/ObjectiveCategory/AddEditObjectiveCategory/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import {postAddObjectiveCategoriesRequest} from "@/api/objective";
+import { postAddObjectiveCategoriesRequest } from "@/api/objective";
 export default {
   name: "index",
   components: { Modal, AddEditObjectiveCategory },
@@ -30,11 +34,10 @@ export default {
           this.showModal = true;
           setTimeout(() => {
             this.showModal = false;
+            this.$router.push("/dashboard/objective");
           }, 3000);
         })
-        .then(() => {
-          this.$router.push("/dashboard/objective");
-        }).catch(()=>this.loading = false)
+        .catch(() => (this.loading = false));
     },
     handleCancel() {
       this.$router.push("/dashboard/objective");

@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة التسجيلات الصوتية'" :number-of-item="totalNumber"
+    <ListItems :header-name="'التسجيلات الصوتية'" :number-of-item="totalNumber"
                :tableItems="audiosList" :fields-list="fieldsList" :v-search-model="groupSearchWord"
                @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"

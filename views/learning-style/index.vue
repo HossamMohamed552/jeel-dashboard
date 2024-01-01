@@ -22,13 +22,13 @@
           v-if="user.permissions.includes(`add-languageMethod`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة أسلوب التعلم </span>
+          <span>إضافة إسلوب التعلم </span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف أسلوب التعلم'"
-      :content-message-question="'هل انت متأكد من حذف أسلوب التعلم'"
+      :content-message="'حذف إسلوب التعلم'"
+      :content-message-question="'هل انت متأكد من حذف إسلوب التعلم'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -55,7 +55,7 @@ export default {
       totalNumber: null,
       fieldsList: [
         { key: "id", label: "التسلسل" },
-        { key: "name", label: "اسم أسلوب التعلم" },
+        { key: "name", label: "اسم إسلوب التعلم" },
         { key: "actions", label: "الإجراء" },
       ],
     };

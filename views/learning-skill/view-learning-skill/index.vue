@@ -2,10 +2,18 @@
   <section class="container-fluid custom-container">
     <div class="show-term">
       <div class="hold-fields">
-        <b-row> </b-row>
+        <b-row>
+          <b-col lg="12">
+            <h3 class="heading">تفاصيل نوع مهارة</h3>
+          </b-col>
+        </b-row>
         <b-row>
           <b-col cols="12" md="6" lg="4">
-            <ShowItem title="الاسم " :subtitle="LearningSkill.name" class="with-border-bottom" />
+            <ShowItem
+              title="نوع المهارة"
+              :subtitle="LearningSkill.name"
+              class="with-border-bottom"
+            />
           </b-col>
         </b-row>
       </div>
@@ -26,9 +34,11 @@ export default {
     };
   },
   mounted() {
-    this.ApiService(getLearningSkillByIdRequest(this.$route.params.id)).then((response) => {
-      this.LearningSkill = response.data.data;
-    });
+    this.ApiService(getLearningSkillByIdRequest(this.$route.params.id)).then(
+      (response) => {
+        this.LearningSkill = response.data.data;
+      }
+    );
   },
 };
 </script>

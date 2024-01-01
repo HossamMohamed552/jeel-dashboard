@@ -503,7 +503,7 @@ const protectedRoutes = [
         name: "show-learning-skill",
         component: () => import("../../views/learning-skill/view-learning-skill/index.vue"),
         meta: {
-          breadcrumb: "تفاصيل مهارة التعلم",
+          breadcrumb: " تفاصيل نوع مهارة",
           preLabel: "مهارة التعلم",
           preLink: "/dashboard/learning-skill",
         },
@@ -841,7 +841,7 @@ const protectedRoutes = [
         name: "show-outcome",
         component: () => import("../../views/outcome/view-outcome/index.vue"),
         meta: {
-          breadcrumb: "تفاصيل مخرج التعلم",
+          breadcrumb: "تفاصيل مخرج تعليمي",
           preLabel: "مخرجات التعلم",
           preLink: "/dashboard/outcome",
         },
@@ -882,7 +882,7 @@ const protectedRoutes = [
         name: "show-lessons",
         component: () => import("../../views/lessons/view-lessons/index.vue"),
         meta: {
-          breadcrumb: "تفاصيل الدرس",
+          breadcrumb: "تفاصيل درس تعليمي",
           preLabel: "الدروس",
           preLink: "/dashboard/lessons",
         },

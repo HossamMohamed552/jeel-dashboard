@@ -20,7 +20,7 @@
               <ShowItem
                 class="divider-show"
                 title="نوع السؤال"
-                :subtitle="audio.task == 'text' ? 'نص' : 'صورة'"
+                :subtitle="audio.type == 'text' ? 'نص' : 'صورة'"
               />
             </b-col>
             <b-col v-if="audio.task_degree" lg="4">
@@ -91,7 +91,7 @@
             <b-col lg="4">
               <ShowItem
                 class="divider-show"
-                title="أسلوب التعلم"
+                title="إسلوب التعلم"
                 :with-out-background="true"
                 :listItems="audio.learning_styles"
               />

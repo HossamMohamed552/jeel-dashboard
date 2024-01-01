@@ -1,6 +1,10 @@
 <template>
   <div class="add-country">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal
+      :content-message="'تمت الإضافة بنجاح'"
+      :showModal="showModal"
+      :is-success="true"
+    />
     <AddEditLesson
       :loading="loading"
       @addLessons="handleAddLessons($event)"
@@ -11,7 +15,7 @@
 <script>
 import AddEditLesson from "@/components/Modules/Lessons/AddEditLesson/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import {postAddLessonRequest} from "@/api/lessons";
+import { postAddLessonRequest } from "@/api/lessons";
 export default {
   name: "index",
   components: { Modal, AddEditLesson },
@@ -30,13 +34,12 @@ export default {
           this.showModal = true;
           setTimeout(() => {
             this.showModal = false;
+            this.$router.push("/dashboard/lessons");
           }, 3000);
         })
-        .then(() => {
-          this.$router.push("/dashboard/lessons");
-        }).catch(()=>{
-        this.loading = false;
-      })
+        .catch(() => {
+          this.loading = false;
+        });
     },
     handleCancel() {
       this.$router.push("/dashboard/lessons");

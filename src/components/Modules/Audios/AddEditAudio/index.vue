@@ -45,9 +45,6 @@
                   :rules="'required'"
                   @setFileId="setAudioFileId($event)"
                 />
-<<<<<<< HEAD
-
-=======
                 <PreviewMedia
                   v-if="
                     $route.params.id &&
@@ -75,7 +72,6 @@
                 >
                   ملف الصوت مطلوب
                 </p>
->>>>>>> c206d87629064ab27c8720dbcd2bcab781bec48d
               </b-col>
             </b-row>
             <b-row>
@@ -162,7 +158,7 @@
               </b-col>
             </b-row>
             <b-row>
-              <b-col lg="6" class="mb-3 mt-3">
+              <b-col lg="4" class="mb-3 mt-3">
                 <div class="hold-field">
                   <ValidationProvider v-slot="{ errors, invalid }">
                     <SelectSearch
@@ -179,7 +175,7 @@
                   </ValidationProvider>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3 mt-3">
+              <b-col lg="8" class="mb-3 mt-3">
                 <div class="hold-field">
                   <ValidationProvider
                     v-slot="{ errors, invalid }"
@@ -381,6 +377,17 @@ export default {
     },
     setQuestionType: debounce(function (type) {
       this.questionType = type;
+      // if (this.$route.params.id) {
+      //   if (type == 'text') {
+      //     this.formValues.task_file_name = ""
+      //     this.formValues.task_file_size = ""
+      //     this.formValues.task_file_uuid = ""
+      //     this.formValues.taskImageChanged = false
+      //     this.formValues.taskAudioChangedRequest = false
+      //   } else {
+      //     this.formValues.task = ""
+      //   }
+      // }
     }, 500),
 
     //// ollld
