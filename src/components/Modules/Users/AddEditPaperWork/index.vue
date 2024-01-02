@@ -63,8 +63,8 @@
                     v-model="createPaperWork.type"
                     name="type"
                     :options="paperWorkTypes"
-                    :get-option-label="(option) => option.text"
-                    :reduce="(option) => option.value"
+                    :get-option-label="(option) => option.name"
+                    :reduce="(option) => option.id"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -291,6 +291,7 @@ import {getBloomCategoriesRequest} from "@/api/bloom";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
+import {getPaperWorkTypeRequest} from "@/api/system";
 
 export default {
   components: {
@@ -473,7 +474,7 @@ export default {
 
 
 
-          this.createPaperWork.type = response.data.data.type;
+          this.createPaperWork.type = response.data.data.type.id;
           this.createPaperWork.description = response.data.data.description;
 
 
@@ -544,6 +545,11 @@ export default {
         this.learningSkills = response.data.data;
       });
     },
+    getPaperWorkTypes(){
+      this.ApiService(getPaperWorkTypeRequest()).then((response)=>{
+        this.paperWorkTypes = response.data.data
+      })
+    }
   },
   mounted() {
     this.getBloomCategories();
@@ -552,6 +558,7 @@ export default {
     this.getPaperWorkToEdit();
     this.getAllLearningPaths();
     this.getAllLevels();
+    this.getPaperWorkTypes();
     if (this.$route.params.id) this.getTerms();
   },
 };

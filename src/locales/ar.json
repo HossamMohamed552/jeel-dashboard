@@ -207,6 +207,7 @@
     "selectLearningSkills": "أختر نوع المهارة",
     "videoDuration": "مدة الفيديو",
     "answerSortAudio": " صوت الاجابة {index}",
+    "rightAnswerAudio": " صوت الاجابة الصحيحة",
     "answerSortAudioRequired": "مطلوب صوت الاجابة {index}"
   },
   "PAPER_WORK": {

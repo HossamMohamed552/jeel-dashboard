@@ -11,12 +11,11 @@
             :current-step="currentStep"
           />
           <AddEditQuestionPatternForm
-            v-if="currentStep === 0"
+            v-show="currentStep === 0"
             :loading="loading"
             :question-types="questionTypes"
             :question-sub-types="questionSubTypes"
             :learning-paths="learningPaths"
-            :lessons="lessons"
             :bloom-categories="bloomCategories"
             :learning-methods="learningMethods"
             :language-skills="languageSkills"
@@ -28,14 +27,14 @@
             @onSubmit="getQuestionPatternData"
           />
           <AddEditQuestionAnswersForm
-            v-if="currentStep === 1"
+            v-show="currentStep === 1"
             :questionSlug="collectData.question_slug"
             :question-pattern="questionPattern"
             @handleBack="goToQuestionFieldsForm"
             @handleCancel="handleCancel"
             @onSubmit="getSecondStepData"
           />
-          <div v-if="currentStep === 2" class="qustion-review">
+          <div v-show="currentStep === 2" class="qustion-review">
             <b-container>
               <b-row>
                 <b-col lg="3">
@@ -260,7 +259,6 @@ export default {
     this.getLearningMethods();
     this.getObjectivesRequest();
     this.getOutcomesRequest();
-    this.getAllLessons();
   },
   methods: {
     getQuestionTypes() {
@@ -360,6 +358,7 @@ export default {
       }
     },
     saveQuestion() {
+      console.log('final collectData',this.collectData)
       this.loading = true
       const formData = new FormData();
       formData.append("question_type_id", this.collectData.question_type_id);
@@ -367,15 +366,21 @@ export default {
       formData.append("question_type_sub_id", this.collectData.question_type_sub_id);
       formData.append("question_sub_type_slug", this.collectData.question_slug.slug);
       formData.append("learning_path_id", this.collectData.learning_path_id);
-      formData.append("language_skill_id", this.collectData.language_skill_id);
       formData.append("question_difficulty_id", this.collectData.question_difficulty_id);
-      formData.append("bloom_category_id", this.collectData.bloom_category_id);
-      formData.append("language_method_id", this.collectData.language_method_id);
+      // formData.append("language_method_id", this.collectData.language_method_id);
       formData.append("question_objective_id", this.collectData.question_objective_id);
       formData.append("question_outcome_id", this.collectData.question_outcome_id);
       formData.append("question_pattern", this.collectData.question_pattern);
-      formData.append("header_question", this.collectData.header_question);
-      formData.append("header_question_audio", this.collectData.header_question_audio);
+      formData.append("head_question", this.collectData.head_question);
+      formData.append("head_question_audio", this.collectData.head_question_audio);
+      formData.append('blooms', this.collectData.bloom_category_id);
+      formData.append('lesson_id', this.collectData.lesson_id);
+      for (let language_method = 0; language_method < this.collectData.language_method_id.length; language_method++) {
+        formData.append(`learning_styles[${language_method}]`, this.collectData.language_method_id[language_method]);
+      }
+      for (let language_skill = 0; language_skill < this.collectData.language_skill_id.length; language_skill++) {
+        formData.append(`language_skills[${language_skill}]`, this.collectData.language_skill_id[language_skill]);
+      }
       if (this.collectData.question !== null) {
         formData.append("question", this.collectData.question);
       }
@@ -487,11 +492,6 @@ export default {
         this.outcomes = response.data.data
       })
     },
-    getAllLessons(){
-      this.ApiService(getAllLessonsRequest()).then((response) => {
-        this.lessons = response.data.data
-      })
-    }
   }
 };
 </script>

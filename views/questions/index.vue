@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة بنك الأسئلة'" :number-of-item="totalNumber"
+    <ListItems :header-name="'قائمة الأسئلة'" :number-of-item="totalNumber"
                :tableItems="questionsList" :fieldsList="fieldsList"
                :v-search-model="groupSearchWord"
                @detailItem="detailItem($event)"
@@ -52,12 +52,10 @@ export default {
       refreshIt: false,
       fieldsList: [
         {key: "id", label: "التسلسل"},
-        {key: "question_type", label: "نوع السؤال"},
-        {key: "question", label: "السؤال"},
-        {key: "question_difficulty", label: "مستوى الصعوبة"},
-        {key: "question_pattern", label: "نمط السؤال"},
-        {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
-        {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.level')},
+        {key: "question", label: "نص السؤال"},
+        {key: "questionType.name", label: "نوع السؤال"},
+        {key: "subQuestionType.name", label: "نوع السؤال الفرعى"},
+        {key: "questionDifficulty", label: "مستوى الصعوبة"},
         {key: "actions", label: "الإجراء"},
       ],
     }

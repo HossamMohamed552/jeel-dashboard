@@ -33,6 +33,7 @@
                       :get-option-label="(option) => option.type"
                       :rules="'required'"
                       @input="changeQuestionType($event)"
+                      :disabled="isEdit"
                     ></SelectSearch>
                   </b-col>
                   <b-col lg="12">
@@ -299,11 +300,10 @@ export default {
     },
     currentTime: {
       handler(newVal) {
-        console.log('newVal', newVal)
         let min = Math.floor(newVal / 60)
         let second = Math.floor(newVal - (min * 60))
-        let minute =  min < 10 ? `0${min}` : `${min}`;
-        let minSecond = second < 10 ? `0${second}`: `${second}`;
+        let minute = min < 10 ? `0${min}` : `${min}`;
+        let minSecond = second < 10 ? `0${second}` : `${second}`;
         this.questionVideo.question_time = `${minute}:${minSecond}`
       }
     }
@@ -348,6 +348,13 @@ export default {
     currentTime: {
       type: Number,
       default: 0
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
+    },
+    questionEdit: {
+      default: null
     }
   },
   methods: {
@@ -362,10 +369,10 @@ export default {
     },
     async setAnswersAudioId($event, indexWillChange = 0) {
       if ($event) {
-        this.questionVideo.answers[indexWillChange]['audio'] = $event
+        this.questionVideo.answers[indexWillChange]['video_question_answer_audio'] = $event
         this.questionVideo.answers[indexWillChange]['audioNotChanged'] = false
       } else {
-        this.questionVideo.answers[indexWillChange]['audio'] = null
+        this.questionVideo.answers[indexWillChange]['video_question_answer_audio'] = null
         this.questionVideo.answers[indexWillChange]['audioNotChanged'] = true
       }
     },
@@ -378,7 +385,6 @@ export default {
       });
     },
     assignCorrectAnswer($event) {
-      console.log('answer selected', $event)
       if (this.questionVideo.answers) {
         this.questionVideo.answers = this.questionVideo.answers.map((item) => {
           return {...item, correct: 0}
@@ -444,7 +450,7 @@ export default {
         this.questionVideo.answers.push({
           id: answer + 1,
           answer: "",
-          audio: "",
+          video_question_answer_audio: "",
           audioNotChanged: true,
           correct: 0,
           order: answer + 1
@@ -455,6 +461,21 @@ export default {
       this.answerSelected = $event
       this.assignCorrectAnswer(this.answerSelected)
     },
+  },
+  updated() {
+    if (this.isEdit) {
+      this.questionVideo.question_time = this.questionEdit.question_time
+      if (this.questionEdit?.question_type && this.questionEdit?.question_type?.id === 1) {
+        this.questionVideo.question_slug = 'mcq'
+        this.questionVideo.question_type_id = 1;
+        this.questionVideo.question_type_sub_id = 14;
+      }
+      else if (this.questionEdit?.question_type && this.questionEdit?.question_type?.id === 2) {
+        this.questionVideo.question_slug = 'true_false'
+        this.questionVideo.question_type_id = 2;
+        this.questionVideo.question_type_sub_id = 13;
+      }
+    }
   },
   mounted() {
     this.questionVideo.video_id = Number(this.$route.params.id)

@@ -21,7 +21,7 @@ export const getQuestionOfVideo = (params)=>({
 })
 
 export const deleteQuestionOfVideo = (params)=>({
-  method: 'get',
+  method: 'delete',
   url: `videos/question/${params}`,
 })
 export const addQuestionOnVideo = (data)=>({

@@ -213,6 +213,25 @@
     }
   }
 }
+.questionDifficulty{
+  display: block;
+  width: 60%;
+  text-align: center;
+  border-radius: 18px;
+  padding: .3rem 0;
+}
+.easy{
+  background: #D4EDDA;
+  color: #155724;
+}
+.medium{
+  background: #FFF3CD;
+  color: #856404;
+}
+.hard{
+  background: #F8D7DA;
+  color: #721C24;
+}
 .disableButton {
   cursor: not-allowed;
   background: #ececec;

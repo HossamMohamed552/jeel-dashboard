@@ -42,23 +42,23 @@
       <b-row>
         <b-col lg="12" class="mb-3">
           <TextField
-            v-model="formValues.header_question"
+            v-model="formValues.head_question"
             :label="$t('QUESTIONS.headQUESTION')"
             :name="$t('QUESTIONS.headQUESTION')"
             :placeholder="$t('QUESTIONS.enterHeadQUESTION')"
             :rules="'required|max:100'"
           ></TextField>
         </b-col>
-        <b-col lg="12">
+        <b-col lg="12" class="mb-3">
           <UploadAttachment :type-of-attachment="'audio'"
                             :dropIdRef="'headerQuestionFile'"
                             :accept-files="'audio/*'" :label="$t('QUESTIONS.headerQuestionAudio')"
                             :name="'headerQuestionFile'"
                             :rules="'required'"
-                            @setFileId="setQuestionAudioId('header_question_audio',$event)"
-                            @setFileUrl="setQuestionAudioUrl('header_question_audioUser',$event)"/>
+                            @setFileId="setQuestionAudioId('head_question_audio',$event)"
+                            @setFileUrl="setQuestionAudioUrl('head_question_audioUser',$event)"/>
         </b-col>
-        <b-col lg="3" class="mb-3">
+        <b-col lg="4" class="mb-3">
           <div class="hold-field">
             <SelectSearch
               v-model="formValues.learning_path_id"
@@ -69,10 +69,11 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
+              @input="setLessonsBasedLearningPathId($event)"
             ></SelectSearch>
           </div>
         </b-col>
-        <b-col lg="9" class="mb-3">
+        <b-col lg="8" class="mb-3">
           <div class="hold-field">
             <SelectSearch
               v-model="formValues.lesson_id"
@@ -83,6 +84,7 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
+              :disabled="!formValues.learning_path_id"
             ></SelectSearch>
           </div>
         </b-col>
@@ -111,6 +113,7 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
+              multiple="multiple"
             ></SelectSearch>
           </div>
         </b-col>
@@ -125,6 +128,7 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
+              multiple="multiple"
             ></SelectSearch>
           </div>
         </b-col>
@@ -199,6 +203,7 @@ import {debounce} from "lodash";
 import getData from "@/mixins/getData/getData";
 import TextField from "@/components/Shared/TextField/index.vue";
 import UploadAttachment from "@/components/Shared/UploadAttachment/index.vue";
+import {getAllLessonsRequest, getLessonsRequest} from "@/api/lessons";
 
 export default {
   mixins: [getData('question')],
@@ -218,10 +223,6 @@ export default {
       default: () => [],
     },
     learningPaths: {
-      type: Array,
-      default: () => [],
-    },
-    lessons:{
       type: Array,
       default: () => [],
     },
@@ -256,6 +257,7 @@ export default {
   },
   data() {
     return {
+      lessons:[],
       formValues: {
         question_type_id: null,
         question_type_sub_id: null,
@@ -265,12 +267,13 @@ export default {
         language_skill_id: null,
         question_difficulty_id: null,
         bloom_category_id: null,
+        lesson_id: null,
         language_method_id: null,
         question_objective_id: null,
         question_outcome_id: null,
         question_pattern: "text",
-        header_question:"",
-        header_question_audio:"",
+        head_question:"",
+        head_question_audio:"",
         header_question_audioUser:"",
       },
     };
@@ -315,6 +318,12 @@ export default {
     },
     setQuestionAudioUrl(keyName, $event) {
       this.formValues[keyName] = $event
+    },
+    setLessonsBasedLearningPathId($event){
+      this.ApiService(getLessonsRequest({learning_path_id: $event})).then((response) => {
+        this.lessons = response.data.data
+        this.formValues.lesson_id = null
+      })
     }
   },
 };

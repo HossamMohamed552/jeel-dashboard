@@ -81,10 +81,10 @@
            @cancelWithConfirm="cancelWithConfirm($event)"/>
     <QuestionModal :showModal="showModalQuestion" @addQuestion="addQuestion($event)"
                    @cancelQuestion="cancelQuestion($event)" :totalDuration="totalDuration"
-                   :currentTime="currentTime"/>
-    <GeneralModal id="questionContent" :size="'lg'" :hide-header="true">
+                   :currentTime="currentTime" :questionEdit="questionContent" :isEdit="isEdit"/>
+    <GeneralModal id="questionContent" :size="'xl'" :hide-header="true">
       <template #modalBody>
-        <div>
+        <div class="questionContent">
           <b-row>
             <b-col lg="12">
               <h2 class="heading">{{ $t('QUESTIONS.questionDetails') }}</h2>
@@ -94,7 +94,7 @@
                         :subtitle="questionContent.question_time"/>
             </b-col>
             <b-col lg="6">
-              <ShowItem class="divider-show" :title="$t('QUESTIONS.QUESTION_TYPE')"
+              <ShowItem v-if="questionContent && questionContent.question_type" class="divider-show" :title="$t('QUESTIONS.QUESTION_TYPE')"
                         :subtitle="questionContent.question_type.name"/>
             </b-col>
             <b-col lg="12" class="mt-3">
@@ -121,10 +121,71 @@
                 :typeOfMedia="'audio'"
                 @showModal="showPreviewModal(questionContent.video_question_audio)"/>
             </b-col>
+            <b-col lg="12" class="mt-3">
+              <ShowItem class="divider-show" :title="$t('QUESTIONS.QUESTIONDIFFICULTIES')"
+                        :subtitle="questionContent.question"/>
+            </b-col>
+            <b-col lg="12">
+              <b-row v-if="questionContent.question_type && questionContent.question_type.name === 'ضع علامة صح او خطاء'">
+                <b-col lg="6" class="mt-3">
+                  <ShowItem :title="$t('QUESTIONS.ANSWERS')" />
+                  <b-row>
+                    <b-col v-for="answer in questionContent.answers" :key="answer.id">
+                      <ShowItem :subtitle="answer.answer" />
+                    </b-col>
+                  </b-row>
+                </b-col>
+                <b-col lg="6" class="mt-3">
+                  <ShowItem :title="$t('QUESTIONS.RIGHT_ANSWER')" />
+                  <b-row>
+                    <b-col v-for="answer in questionContent.answers" :key="answer.id">
+                      <ShowItem :subtitle="answer.answer" v-if="answer.correct === 1"/>
+                    </b-col>
+                  </b-row>
+                </b-col>
+              </b-row>
+              <b-row v-if="questionContent.question_type && questionContent.question_type.name === 'اختر الإجابة الصحيحة'">
+                <b-col lg="12" class="mt-3">
+                  <ShowItem :title="$t('QUESTIONS.ANSWERS')" />
+                  <b-row>
+                    <b-col lg="12" v-for="(answer,index) in questionContent.answers" :key="answer.id" class="hold-answers mt-0 mb-3">
+                      <div class="answer">
+                        <p class="font-weight-bold">{{$t('VIDEO.answerSort',{ index:`${index + 1 }`})}}</p>
+                        <p>{{answer.answer}}</p>
+                      </div>
+                      <PreviewMedia
+                        :header="`${$t('VIDEO.answerSortAudio',{ index:`${index + 1 }`})}`"
+                        :media-name="answer.video_question_answer_audio_name"
+                        :file-size="answer.video_question_answer_audio_size"
+                        :typeOfMedia="'audio'"
+                        @showModal="showPreviewModal(answer.video_question_answer_audio)"/>
+                    </b-col>
+                  </b-row>
+                </b-col>
+                <b-col lg="12" class="mt-3">
+                  <ShowItem :title="$t('QUESTIONS.RIGHT_ANSWER')" />
+                  <b-row>
+                    <b-col lg="12" v-for="answer in questionContent.answers" :key="answer.id" class="hold-answers mt-0" v-if="answer.correct === 1">
+                      <div class="answer">
+                        <p>{{answer.answer}}</p>
+                      </div>
+                      <PreviewMedia
+                        :header="`${$t('VIDEO.rightAnswerAudio')}`"
+                        :media-name="answer.video_question_answer_audio_name"
+                        :file-size="answer.video_question_answer_audio_size"
+                        :typeOfMedia="'audio'"
+                        @showModal="showPreviewModal(answer.video_question_answer_audio)"/>
+                    </b-col>
+                  </b-row>
+                </b-col>
+              </b-row>
+            </b-col>
           </b-row>
-          <Button @click="hideModal" :custom-class="'rounded-btn transparent-btn'">
-            {{ $t("BACK") }}
-          </Button>
+          <div class="w-100">
+            <Button @click="hideModal" class="w-100" :d-block="true" :custom-class="'rounded-btn transparent-btn back-modal'">
+              {{ $t("BACK") }}
+            </Button>
+          </div>
         </div>
       </template>
     </GeneralModal>
@@ -188,7 +249,8 @@ export default {
       player: null,
       totalDuration: null,
       currentTime: null,
-      questionContent:{}
+      questionContent:{},
+      isEdit: false,
     }
   },
   methods: {
@@ -217,7 +279,12 @@ export default {
       }).then(()=>this.showQuestionModal())
     },
     editItem($event) {
-
+      this.ApiService(getSingleQuestionOnVideo($event)).then((response) => {
+        this.questionContent = response.data.data
+      }).then(()=>{
+        this.showModalQuestion = true
+        this.isEdit = true
+      })
     },
     showQuestionModal() {
       this.$bvModal.show('questionContent')
@@ -241,6 +308,8 @@ export default {
     },
     cancelQuestion($event) {
       this.showModalQuestion = $event
+      this.questionContent = null
+      this.isEdit = false
     },
     cancelWithConfirm() {
       this.ApiService(deleteQuestionOfVideo(this.itemId)).then(() => {
@@ -249,7 +318,6 @@ export default {
       this.cancel()
     },
     addQuestion($event) {
-      console.log('$event', $event)
       delete $event['answers_id']
       // $event.question_time = Number($event.question_time)
       this.ApiService(addQuestionOnVideo($event)).then((response) => {

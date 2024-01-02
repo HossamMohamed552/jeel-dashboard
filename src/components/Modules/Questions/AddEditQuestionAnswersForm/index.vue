@@ -3584,7 +3584,7 @@ export default {
       this.formValues.answers = this.answersListSelectAudio.filter((answer) => answer.answer);
     },
     assignAnswersMcq() {
-      this.formValues.answers = this.answersListMcQ.filter((answer) => answer.answer);
+      this.formValues.answers = this.answersListMcQ;
       console.log('this.formValues.answers',this.formValues.answers)
     },
     assignAnswersMcqImage() {
@@ -3722,6 +3722,7 @@ export default {
       this.formValues.hint = questionEdit.hint;
       this.formValues.answers = questionEdit.answers;
       this.answersListMcQ = this.formValues.answers;
+      console.log('watch answersListMcQ',this.answersListMcQ)
       this.answersListMatchOneToOne = this.formValues.answers;
     },
   },

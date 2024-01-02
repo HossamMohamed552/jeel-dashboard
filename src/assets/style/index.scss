@@ -342,6 +342,13 @@ label {
   object-fit: contain;
   margin-bottom: 1rem;
 }
+.hold-answers{
+  background: #F1E8F0;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
 * {
   &:lang(ar) {
     font-family: "DiodrumArabic", sans-serif;

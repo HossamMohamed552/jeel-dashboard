@@ -25,7 +25,7 @@
             />
           </b-col>
           <b-col lg="6" class="mt-4">
-            <ShowItem class="divider-show" :title="$t('PAPER_WORK.type')" :subtitle="paperwork.type"/>
+            <ShowItem class="divider-show" :title="$t('PAPER_WORK.type')" :subtitle="paperwork.type.name"/>
           </b-col>
         </b-row>
         <b-row>
