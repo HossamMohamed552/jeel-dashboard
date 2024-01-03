@@ -353,7 +353,7 @@
     "country": "الدولة",
     "description": "الوصف",
     "ShowDetails": "عرض تفاصيل التمرين",
-    "type": "إسم النوع",
+    "type": "نوع التمرين",
     "sort": "الترتيب",
     "systemQuestion": "النظام الافتراضى للاسئلة",
     "totalNumberOfQuestions": "إجمالى {number} سؤال",
