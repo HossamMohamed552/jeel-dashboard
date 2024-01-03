@@ -37,6 +37,8 @@
               <b-col lg="12" class="mb-3">
                 <div class="hold-field mt-4">
                   <UploadAttachment
+                    :rules="'required'"
+                    :label="'ملف الصوت'"
                     v-if="!$route.params.id || createPaperWork.audioChangedRequest"
                     @setFileId="setAudioId"
                     :type-of-attachment="'audio'"
@@ -71,6 +73,8 @@
               <b-col lg="6" class="mb-3 mt-1"></b-col>
               <b-col lg="6" class="mb-3 mt-4">
                 <UploadAttachment
+                  :rules="'required'"
+                  :label="$t('PAPER_WORK.color')"
                   v-if="!$route.params.id || createPaperWork.fileChangedRequest"
                   @setFileId="setColoredFileId"
                   :type-of-attachment="'image'"
@@ -89,6 +93,8 @@
               </b-col>
               <b-col lg="6" class="mb-3 mt-4">
                 <UploadAttachment
+                  :rules="'required'"
+                  :label="$t('PAPER_WORK.print')"
                   v-if="!$route.params.id || createPaperWork.paper_work_without_colorChangedRequest"
                   @setFileId="setPrintFileId"
                   :type-of-attachment="'image'"
