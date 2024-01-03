@@ -10,6 +10,7 @@
       @vdropzone-success="fileSent"
       @vdropzone-thumbnail="showModal"
       @vdropzone-removed-file="removeFile"
+      @vdropzone-max-files-exceeded="showErrorFile"
       :id="dropIdRef"
       :ref="dropIdRef"
       class="dropZone"
@@ -24,11 +25,12 @@
           <p class="d-inline-block m-0" v-if="typeOfAttachment === 'video'"> (mp4.) </p>
           <p class="d-inline-block m-0" v-if="typeOfAttachment === 'audio'"> (mp3.) </p>
           <div class="subtitle">
-            <p>اكبر حجم للملف : {{ dropzoneOptions.maxFilesize }} مجيابايت</p>
+            <p>اكبر حجم للملف : {{ dropzoneOptions.maxFilesize }} ميجابايت</p>
           </div>
         </div>
       </div>
     </vue2Dropzone>
+    <p v-if="ShowError" class="invalid-feedback d-block">يجب إضافة ملف واحد فقط</p>
     <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
       {{ error }}
     </b-form-invalid-feedback>
@@ -86,6 +88,7 @@ export default {
       dropzoneOptions: {
         acceptedFiles: "",
         url: "",
+        maxFiles: 1,
         thumbnailWidth: 150,
         maxFilesize: 5,
         clickable: true,
@@ -120,6 +123,7 @@ export default {
         headers: {Authorization: `Bearer ${VueCookies.get("token")}`},
         paramName: "attachment",
       },
+      ShowError: false,
       fileUrl: null,
       fileId: null,
       fileInfo: null,
@@ -128,6 +132,9 @@ export default {
   methods: {
     sendFile(file, xhr, formData) {
       formData.append("type", `${this.typeOfAttachment}`);
+    },
+    showErrorFile(){
+      this.ShowError = true
     },
     async fileSent(file, response) {
       this.fileInfo = response.data
@@ -139,6 +146,7 @@ export default {
     removeFile() {
       this.$emit('setFileId', null)
       this.$emit('setFileUrl', null)
+      this.ShowError = false
     },
     showModal() {
       const thumbnail = document.getElementById("dz-image");
@@ -161,7 +169,9 @@ export default {
 <style scoped lang="scss">
 .dropZone {
   border-radius: 1rem;
-  height: 200px;
+  height: 175px;
+  overflow: hidden;
+  padding: 0;
 }
 
 .dropImage {
@@ -183,6 +193,12 @@ export default {
 
   .dropzone .dz-preview {
     width: 100%;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 1rem;
   }
 
   //.dz-details{

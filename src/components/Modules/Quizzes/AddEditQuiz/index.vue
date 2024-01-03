@@ -18,35 +18,35 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3">
-                <div class="hold-field">
-                  <SelectSearch
-                    v-model="createQuiz.level_id"
-                    :label="$t('QUIZZES.level')"
-                    :name="$t('QUIZZES.level')"
-                    :options="levels"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                    :rules="'required'"
-                    @input="getTerms"
-                  ></SelectSearch>
-                </div>
-              </b-col>
-              <b-col lg="6" class="mb-3">
-                <div class="hold-field">
-                  <SelectSearch
-                    v-model="createQuiz.term_id"
-                    :label="$t('MISSIONS.terms')"
-                    :name="$t('MISSIONS.terms')"
-                    :options="terms"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                    :rules="'required'"
-                    :disabled="!createQuiz.level_id"
-                  ></SelectSearch>
-                </div>
-              </b-col>
-              <b-col lg="6" class="mb-3">
+<!--              <b-col lg="6" class="mb-3">-->
+<!--                <div class="hold-field">-->
+<!--                  <SelectSearch-->
+<!--                    v-model="createQuiz.level_id"-->
+<!--                    :label="$t('QUIZZES.level')"-->
+<!--                    :name="$t('QUIZZES.level')"-->
+<!--                    :options="levels"-->
+<!--                    :reduce="(option) => option.id"-->
+<!--                    :get-option-label="(option) => option.name"-->
+<!--                    :rules="'required'"-->
+<!--                    @input="getTerms"-->
+<!--                  ></SelectSearch>-->
+<!--                </div>-->
+<!--              </b-col>-->
+<!--              <b-col lg="6" class="mb-3">-->
+<!--                <div class="hold-field">-->
+<!--                  <SelectSearch-->
+<!--                    v-model="createQuiz.term_id"-->
+<!--                    :label="$t('MISSIONS.terms')"-->
+<!--                    :name="$t('MISSIONS.terms')"-->
+<!--                    :options="terms"-->
+<!--                    :reduce="(option) => option.id"-->
+<!--                    :get-option-label="(option) => option.name"-->
+<!--                    :rules="'required'"-->
+<!--                    :disabled="!createQuiz.level_id"-->
+<!--                  ></SelectSearch>-->
+<!--                </div>-->
+<!--              </b-col>-->
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
                     v-model="createQuiz.learning_path_id"
@@ -56,6 +56,66 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
+                    @input="setLessonsBasedLearningPathId($event)"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="8" class="mb-3">
+                <div class="hold-field">
+                  <SelectSearch
+                    v-model="createQuiz.lesson_id"
+                    :label="$t('LESSONS.videoNAME')"
+                    :name="$t('LESSONS.videoNAME')"
+                    :placeholder="$t('LESSONS.selectLesson')"
+                    :options="lessons"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                    :disabled="!createQuiz.learning_path_id"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="4" class="mb-3">
+                <div class="hold-field">
+                  <SelectSearch
+                    v-model="createQuiz.bloom_category_id"
+                    :label="$t('QUESTIONS.BLOOM_CATEGORIES')"
+                    :name="$t('QUESTIONS.BLOOM_CATEGORIES')"
+                    :placeholder="$t('QUESTIONS.selectBLOOM_CATEGORIES')"
+                    :options="bloomCategories"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="4" class="mb-3">
+                <div class="hold-field">
+                  <SelectSearch
+                    v-model="createQuiz.language_method_id"
+                    :label="$t('QUESTIONS.LEARNING_METHOD')"
+                    :name="$t('QUESTIONS.LEARNING_METHOD')"
+                    :placeholder="$t('QUESTIONS.selectLEARNING_METHOD')"
+                    :options="learningMethods"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                    multiple="multiple"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="4" class="mb-3">
+                <div class="hold-field">
+                  <SelectSearch
+                    v-model="createQuiz.language_skill_id"
+                    :label="$t('QUESTIONS.LANGUAGE_SKILLS')"
+                    :name="$t('QUESTIONS.LANGUAGE_SKILLS')"
+                    :placeholder="$t('QUESTIONS.selectLANGUAGE_SKILLS')"
+                    :options="languageSkills"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                    multiple="multiple"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -261,7 +321,11 @@ import Modal from "@/components/Shared/Modal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import SelectField from "@/components/Shared/SelectField/index.vue";
 import { getAllLevelsRequest } from "@/api/level";
-import { getAllLearningPathsRequest, getQuestionRequest } from "@/api/question";
+import {
+  getAllBloomCategoriesRequest, getAllLearningMethodsRequest,
+  getAllLearningPathsRequest, getLaguageSkillsRequest,
+  getQuestionRequest
+} from "@/api/question";
 import {
   getGeneralQuestionRequest,
   getQuestionDifficultyLevelLearnRequest,
@@ -271,6 +335,7 @@ import {
 import draggable from "vuedraggable";
 import { getAllTermsRequest } from "@/api/term";
 import QuestionDetailsModal from "@/components/Shared/QuestionDetailsModal/index.vue";
+import {getLessonsRequest} from "@/api/lessons";
 
 export default {
   components: {
@@ -295,6 +360,9 @@ export default {
       levels: [],
       terms: [],
       learningPaths: [],
+      learningMethods: [],
+      bloomCategories: [],
+      languageSkills: [],
       typeList: [
         {
           id: 1,
@@ -317,12 +385,15 @@ export default {
         level_id: null,
         term_id: null,
         learning_path_id: null,
+        bloom_category_id: null,
+        language_method_id: null,
         total_question: null,
         description: "",
         type: "default",
         sort: "",
         questions: [],
       },
+      lessons:[],
       question_difficulty: [],
       questionBank: [],
       questions: [],
@@ -406,6 +477,12 @@ export default {
     },
     editOnQuestions() {
       this.isEditable = true;
+    },
+    setLessonsBasedLearningPathId($event){
+      this.ApiService(getLessonsRequest({learning_path_id: $event})).then((response) => {
+        this.lessons = response.data.data
+        this.formValues.lesson_id = null
+      })
     },
     onSubmit() {
       this.$refs.addEditQuizForm.validate().then((success) => {
@@ -491,11 +568,29 @@ export default {
         this.terms = response.data.data;
       });
     },
+    getBloomCategories() {
+      this.ApiService(getAllBloomCategoriesRequest()).then((response) => {
+        this.bloomCategories = response.data.data;
+      });
+    },
+    getLearningMethods() {
+      this.ApiService(getAllLearningMethodsRequest()).then((response) => {
+        this.learningMethods = response.data.data;
+      });
+    },
+    getLanguageSkills() {
+      this.ApiService(getLaguageSkillsRequest()).then((response) => {
+        this.languageSkills = response.data.data;
+      });
+    },
   },
   mounted() {
     if (this.$route.params.id) this.getTerms();
     this.getAllLevels();
     this.getLearningPaths();
+    this.getBloomCategories();
+    this.getLearningMethods();
+    this.getLanguageSkills();
     // this.ApiService(getQuestionRequest()).then((response) => {
     //   this.questionBank = response.data.data
     // })

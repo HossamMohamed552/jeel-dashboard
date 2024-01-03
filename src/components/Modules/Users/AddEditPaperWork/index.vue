@@ -467,17 +467,11 @@ export default {
           this.createPaperWork.paper_work_without_color_size = response.data.data.paper_work_without_color_size;
           this.createPaperWork.paper_work_without_color_name = response.data.data.paper_work_without_color_name;
           //thumbnail
-
           this.createPaperWork.thumbnail = response.data.data.thumbnail;
           this.createPaperWork.thumbnail_size = response.data.data.thumbnail_size;
           this.createPaperWork.thumbnail_name = response.data.data.thumbnail_name;
-
-
-
           this.createPaperWork.type = response.data.data.type.id;
           this.createPaperWork.description = response.data.data.description;
-
-
           this.createPaperWork.learning_path_id = response.data.data.learningPath.id;
           this.createPaperWork.paper_work_final_degree = response.data.data.paper_work_final_degree;
           this.createPaperWork.blooms = response.data.data.blooms.id
