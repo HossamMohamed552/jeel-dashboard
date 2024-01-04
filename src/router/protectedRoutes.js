@@ -138,6 +138,47 @@ const protectedRoutes = [
           preLink: "/dashboard/package",
         },
       },
+      // subscription
+      {
+        path: "/dashboard/subscription",
+        name: "subscription",
+        component: () => import("../../views/subscription/index.vue"),
+        meta: {
+          breadcrumb: "الإشتراكات",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/subscription/add",
+        name: "add-subscription",
+        component: () => import("../../views/subscription/add-subscription/index.vue"),
+        meta: {
+          breadcrumb: "تسجيل إشتراك",
+          preLabel: "الإشتراكات",
+          preLink: "/dashboard/subscription",
+        },
+      },
+      {
+        path: "/dashboard/subscription/edit/:id",
+        name: "edit-subscription",
+        component: () => import("../../views/subscription/edit-subscription/index.vue"),
+        meta: {
+          breadcrumb: "تعديل الإشتراك",
+          preLabel: "الإشتراكات",
+          preLink: "/dashboard/subscription",
+        },
+      },
+      {
+        path: "/dashboard/subscription/show/:id",
+        name: "show-subscription",
+        component: () => import("../../views/subscription/view-subscription/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل الإشتراك",
+          preLabel: "الإشتراكات",
+          preLink: "/dashboard/subscription",
+        },
+      },
       // school group
       {
         path: "/dashboard/school-group",

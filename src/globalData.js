@@ -214,7 +214,6 @@ let routeBasicData = [
     icon: require("@/assets/images/icons/question.svg"),
     permission: "view-outcome",
   },
-
 ];
 let routesSubscribes = [
   {
@@ -242,6 +241,14 @@ let routesSubscribes = [
     icon: require("@/assets/images/icons/school-section.svg"),
     // todo to change the permission
     permission: "view-terms",
+  },
+  {
+    name: "الإشتراكات",
+    path: "/dashboard/subscription",
+    altImage: "packages",
+    titleImage: "packages",
+    icon: require("@/assets/images/icons/packages.svg"),
+    permission: "view-packages",
   },
 ];
 let routeSuperVisor = [
@@ -294,4 +301,13 @@ let routeSuperVisor = [
     permission: "view-announcements",
   },
 ];
-export { routesUsers, routesSchool, routesContent, routeSettings, routeBasicData, routesMissions, routesSubscribes,routeSuperVisor };
+export {
+  routesUsers,
+  routesSchool,
+  routesContent,
+  routeSettings,
+  routeBasicData,
+  routesMissions,
+  routesSubscribes,
+  routeSuperVisor,
+};
