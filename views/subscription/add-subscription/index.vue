@@ -3,21 +3,21 @@
     <Modal :content-message="'تمت الإضافة بنجاح'"
            :showModal="showModal"
            :is-success="true"/>
-    <AddEditPackage
+    <AddEditSubscribtion
       :loading="loading"
-      @handleAddPackage="handleAddPackage($event)"
+      @handleAddSubscribtion="handleAddSubscribtion($event)"
       @handleCancel="handleCancel"
     />
   </div>
 </template>
 <script>
 
-import AddEditPackage from "@/components/Modules/Packages/AddEditPackage/index.vue";
+import AddEditSubscribtion from "@/components/Modules/Subscribtions/AddEditSubscribtion/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import {postPackagesRequest} from "@/api/packages.js";
+import {postSubscribtionsRequest} from "@/api/subscription.js";
 export default {
   name: "index",
-  components:{Modal, AddEditPackage},
+  components:{Modal, AddEditSubscribtion},
   data(){
     return{
       loading: false,
@@ -25,14 +25,14 @@ export default {
     }
   },
   methods:{
-    handleAddPackage($event) {
+    handleAddSubscribtion($event) {
       this.loading = true
-      this.ApiService(postPackagesRequest($event)).then((response) => {
+      this.ApiService(postSubscribtionsRequest($event)).then((response) => {
         this.loading = false
         this.showModal = true
         setTimeout(() => {
           this.showModal = false
-          this.$router.push("/dashboard/package");
+          this.$router.push("/dashboard/subscription");
         }, 3000)
       }).catch(()=>{
         this.loading = false
@@ -40,7 +40,7 @@ export default {
       })
     },
     handleCancel() {
-      this.$router.push("/dashboard/package");
+      this.$router.push("/dashboard/subscribtion");
     },
   }
 }

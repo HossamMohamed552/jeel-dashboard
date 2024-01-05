@@ -4,38 +4,92 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">{{ $t("PACKAGE.showDetails") }}</h2>
+            <h2 class="heading">تفاصيل الإشتراك</h2>
           </b-col>
         </b-row>
         <b-row>
           <b-col lg="4" class="mb-5">
-            <ShowItem :title="$t('PACKAGE.name')" :subtitle="singlePackage.name" />
-          </b-col>
-          <b-col lg="4" class="mb-5">
-            <ShowItem :title="$t('PACKAGE.price')" :subtitle="singlePackage.price" />
-          </b-col>
-          <b-col lg="4" class="mb-5">
             <ShowItem
-              :title="$t('PACKAGE.countryName')"
-              :subtitle="singlePackage.country.name"
+              class="divider-show"
+              title="مجموعة المدارس"
+              :subtitle="singleSubscribtion.school_group.name"
             />
           </b-col>
           <b-col lg="4" class="mb-5">
             <ShowItem
-              :title="$t('PACKAGE.classes_count')"
-              :subtitle="singlePackage.classes_count"
+              class="divider-show"
+              title="الدولة"
+              :subtitle="singleSubscribtion.country.name"
             />
           </b-col>
-          <b-col lg="4" class="mb-5" v-for="singlePackageRole in roles" :key="singlePackageRole.id">
+          <b-col lg="4" class="mb-5">
             <ShowItem
-              :title="` عدد ${singlePackageRole.name}`"
-              :subtitle="singlePackageRole.number"
+              class="divider-show"
+              title="المدرسة"
+              :subtitle="singleSubscribtion.school.name"
             />
           </b-col>
-          <b-col lg="12">
+          <b-col lg="4" class="mb-5">
             <ShowItem
-              :title="$t('PACKAGE.description')"
-              :subtitle="singlePackage.description"
+              class="divider-show"
+              title="العام الدراسي"
+              :subtitle="singleSubscribtion.study_year.name"
+            />
+          </b-col>
+          <b-col lg="4" class="mb-5">
+            <ShowItem
+              class="divider-show"
+              title="الصف الدراسي"
+              :with-out-background="true"
+              :listItems="singleSubscribtion.levels"
+            />
+          </b-col>
+          <b-col lg="4" class="mb-5">
+            <ShowItem
+              class="divider-show"
+              title="الترم الدراسي"
+              :with-out-background="true"
+              :listItems="singleSubscribtion.terms"
+            />
+          </b-col>
+          <b-col lg="4" class="mb-5">
+            <ShowItem
+              class="divider-show"
+              title="تاريخ بدء الإشتراك"
+              :subtitle="singleSubscribtion.start_subscription"
+            />
+          </b-col>
+          <b-col lg="4" class="mb-5">
+            <ShowItem
+              class="divider-show"
+              title="تاريخ نهاية الإشتراك"
+              :subtitle="singleSubscribtion.end_subscription"
+            />
+          </b-col>
+        </b-row>
+        <b-row>
+          <h4 class="subscription-price">سعر الإشتراك</h4>
+        </b-row>
+        <b-row>
+          <b-col lg="4" class="mb-5">
+            <ShowItem
+              class="divider-show"
+              title="الباقة"
+              :subtitle="singleSubscribtion.package.name"
+            />
+          </b-col>
+          <b-col lg="4" class="mb-5">
+            <ShowItem
+              class="divider-show"
+              title="قيمة الخصم"
+              :subtitle="singleSubscribtion.package_discount || 0"
+            />
+          </b-col>
+          <b-col lg="4" class="mb-5">
+            <ShowItem
+              class="divider-show"
+              title="القيمة النهائية"
+              :subtitle="`${singleSubscribtion.price_after_discount}  ${singleSubscribtion.package.currency.name}`"
             />
           </b-col>
         </b-row>
@@ -45,7 +99,7 @@
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import { getSinglePackagesRequest } from "@/api/packages.js";
+import { getSingleSubscriptionsRequest } from "@/api/subscription.js";
 export default {
   name: "index",
   components: {
@@ -53,46 +107,13 @@ export default {
   },
   data() {
     return {
-      singlePackage: {},
-      roles: [
-        {
-          role_id: 2,
-          name: "مديرين المدرسة",
-          number: "",
-        },
-        {
-          role_id: 3,
-          name: "المشرفين",
-          number: "",
-        },
-        {
-          role_id: 4,
-          name: "المدرسين",
-          number: "",
-        },
-        {
-          role_id: 5,
-          name: "الطلاب",
-          number: "",
-        },
-        {
-          role_id: 6,
-          name: "أولياء الأمور",
-          number: "",
-        }
-
-      ]
+      singleSubscribtion: {},
     };
   },
   mounted() {
-    this.ApiService(getSinglePackagesRequest(this.$route.params.id)).then(
+    this.ApiService(getSingleSubscriptionsRequest(this.$route.params.id)).then(
       (response) => {
-        this.singlePackage = response.data.data;
-        this.roles[0].number = response.data.data.number_users_roles[0].number
-        this.roles[1].number = response.data.data.number_users_roles[1].number
-        this.roles[2].number = response.data.data.number_users_roles[2].number
-        this.roles[3].number = response.data.data.number_users_roles[3].number
-        this.roles[4].number = response.data.data.number_users_roles[4].number
+        this.singleSubscribtion = response.data.data;
       }
     );
   },

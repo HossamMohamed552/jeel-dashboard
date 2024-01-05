@@ -1,44 +1,50 @@
 <template>
   <div class="add-country">
     <Modal
-      :content-message="'تمت الإضافة بنجاح'"
+      :content-message="'تم التعديل بنجاح'"
       :showModal="showModal"
       :is-success="true"
     />
-    <AddEditPackage
+    <AddEditSubscribtion
       :loading="loading"
-      @handleEditPackage="handleEditPackage($event)"
+      @handleEditSubscribtion="handleEditSubscribtion($event)"
       @handleCancel="handleCancel"
     />
   </div>
 </template>
 <script>
-import AddEditPackage from "@/components/Modules/Packages/AddEditPackage/index.vue";
+import AddEditSubscribtion from "@/components/Modules/Subscribtions/AddEditSubscribtion/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { putPackagesRequest } from "@/api/packages.js";
+import { putSubscriptionsRequest } from "@/api/subscription.js";
 export default {
   name: "index",
-  components: { Modal, AddEditPackage },
+  components: { Modal, AddEditSubscribtion },
   data() {
     return {
       loading: false,
       showModal: false,
-      packageId: this.$route.params.id,
+      subscribtionId: this.$route.params.id,
     };
   },
   methods: {
-    handleEditPackage($event) {
+    handleEditSubscribtion($event) {
       this.loading = true;
-      this.ApiService(putPackagesRequest(this.packageId, $event))
+      this.ApiService(putSubscriptionsRequest(this.subscribtionId, $event))
         .then(() => {
           this.loading = false;
+          this.showModal = true;
+          setTimeout(() => {
+            this.showModal = false;
+            this.$router.push("/dashboard/subscription");
+          }, 3000);
         })
-        .then(() => {
-          this.$router.push("/dashboard/package");
+        .catch(() => {
+          this.loading = false;
+          this.showModal = false;
         });
     },
     handleCancel() {
-      this.$router.push("/dashboard/package");
+      this.$router.push("/dashboard/subscription");
     },
   },
 };
