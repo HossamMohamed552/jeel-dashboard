@@ -21,6 +21,7 @@
       :learningPathSelected="learningPathSelected"
       :level="level"
       :term="term"
+      :lessonsSelected="lessonsSelected"
       @handleBack="goToMissionDataForm"
       @handleCancel="handleCancel"
       @goToFinalStep="goToFinalStep"/>
@@ -149,6 +150,7 @@ export default {
       levels: [],
       level: null,
       term: null,
+      lessonsSelected:null,
       collectData: {},
       steps: [
         {
@@ -181,6 +183,7 @@ export default {
       );
       this.level = this.collectData.level_id;
       this.term = this.collectData.term_id;
+      this.lessonsSelected = data.lessons_ids
     },
     goToMissionDataForm() {
       this.handleNavigation(0);
