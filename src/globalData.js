@@ -20,6 +20,33 @@ let routesUsers = [
 ];
 let routesSchool = [
   {
+    name: "نوع الادارة",
+    path: "/dashboard/school-department-types",
+    altImage: "schoolGroups",
+    titleImage: "schoolGroups",
+    icon: require("@/assets/images/icons/school-group.svg"),
+    // todo tooo change the permission acc to backend
+    permission: "view-schoolGroups",
+  },
+  {
+    name: "نوع الشهادة",
+    path: "/dashboard/school-degree-types",
+    altImage: "schoolGroups",
+    titleImage: "schoolGroups",
+    icon: require("@/assets/images/icons/school-group.svg"),
+    // todo tooo change the permission acc to backend
+    permission: "view-schoolGroups",
+  },
+  {
+    name: "اللغات",
+    path: "/dashboard/school-languages",
+    altImage: "schoolGroups",
+    titleImage: "schoolGroups",
+    icon: require("@/assets/images/icons/school-group.svg"),
+    // todo tooo change the permission acc to backend
+    permission: "view-schoolGroups",
+  },
+  {
     name: "مجموعات المدارس",
     path: "/dashboard/school-group",
     altImage: "schoolGroups",
