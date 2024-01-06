@@ -76,16 +76,16 @@
       @deleteItem="deleteItem($event)"
       @refetch="getSubscriptions"
       :loading="loading"
-      :permission_delete="'delete-packages'"
-      :permission_edit="'edit-packages'"
-      :permission_view="'show-packages'"
+      :permission_delete="'delete-subscription'"
+      :permission_edit="'edit-subscription'"
+      :permission_view="'show-subscription'"
       :showSortControls="false"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddSubscription"
-          v-if="user.permissions.includes(`add-packages`)"
+          v-if="user.permissions.includes(`add-subscription`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
           <span>تسجيل إشتراك</span>

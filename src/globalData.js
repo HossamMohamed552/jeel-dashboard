@@ -275,7 +275,7 @@ let routesSubscribes = [
     altImage: "packages",
     titleImage: "packages",
     icon: require("@/assets/images/icons/packages.svg"),
-    permission: "view-packages",
+    permission: "view-subscription",
   },
 ];
 let routeSuperVisor = [
