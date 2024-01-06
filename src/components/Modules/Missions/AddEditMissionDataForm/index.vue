@@ -260,6 +260,11 @@ export default {
       this.ApiService(getLessonsByLearningPathRequest(learningPathIds)).then(res => { 
         // set lessons options
         this.lessons = res.data.data;
+        if (Object.keys(learningPathIds).length == 0) {
+          this.lessons = [];
+        } else { 
+          this.lessons = res.data.data;
+        }
         if (!this.$route.params.id) { 
           this.mission.lessons_ids = [];
         }
