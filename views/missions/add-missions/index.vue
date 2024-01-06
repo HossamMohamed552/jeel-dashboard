@@ -21,6 +21,7 @@
       :learningPathSelected="learningPathSelected"
       :level="level"
       :term="term"
+      :lessonsSelected="lessonsSelected"
       @handleBack="goToMissionDataForm"
       @handleCancel="handleCancel"
       @goToFinalStep="goToFinalStep"/>
@@ -149,6 +150,7 @@ export default {
       levels: [],
       level: null,
       term: null,
+      lessonsSelected:null,
       collectData: {},
       steps: [
         {
@@ -181,6 +183,7 @@ export default {
       );
       this.level = this.collectData.level_id;
       this.term = this.collectData.term_id;
+      this.lessonsSelected = data.lessons_ids
     },
     goToMissionDataForm() {
       this.handleNavigation(0);
@@ -201,6 +204,11 @@ export default {
       formData.append("data_range", this.collectData.duration);
       formData.append("description", this.collectData.description);
       formData.append("term_id", this.collectData.term_id);
+      
+      for (let index = 0; index < this.collectData.lessons_ids.length; index++) {
+        const lesson = this.collectData.lessons_ids[index];
+        formData.append(`lesson_id[${index}]`, lesson);  
+      }
       if (this.collectData.mission_image)
         formData.append("mission_image", this.collectData.mission_image);
 

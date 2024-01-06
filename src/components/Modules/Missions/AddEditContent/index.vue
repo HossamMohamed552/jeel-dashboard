@@ -9,20 +9,20 @@
               <b-col lg="12" class="mb-3">
                 <h3>{{ learnPath.name }}</h3>
               </b-col>
-              <b-col lg="4">
+              <b-col lg="6">
                 <SelectSearch
                   v-model="learnPath.videoIds"
                   :label="$t('MISSIONS.videos')"
                   :name="$t('MISSIONS.videos')"
                   :options="learnPath.videos"
                   :reduce="(option) => option.id"
-                  :get-option-label="(option) => option.original_name"
+                  :get-option-label="(option) => option.title"
                   :rules="'required'"
                   :deselectFromDropdown="true"
                   multiple
                 ></SelectSearch>
               </b-col>
-              <b-col lg="4">
+              <b-col lg="6">
                 <SelectSearch
                   v-model="learnPath.paperWorkIds"
                   :label="$t('MISSIONS.paperWork')"
@@ -35,12 +35,25 @@
                   multiple
                 ></SelectSearch>
               </b-col>
-              <b-col lg="4">
+              <b-col class="mt-3" lg="6">
                 <SelectSearch
                   v-model="learnPath.quizzesIds"
                   :label="$t('MISSIONS.quizzes')"
                   :name="$t('MISSIONS.quizzes')"
                   :options="learnPath.quizzes"
+                  :reduce="(option) => option.id"
+                  :get-option-label="(option) => option.name"
+                  :rules="'required'"
+                  :deselectFromDropdown="true"
+                  multiple
+                ></SelectSearch>
+              </b-col>
+              <b-col class="mt-3" lg="6">
+                <SelectSearch
+                  v-model="learnPath.audiosIds"
+                  :label="$t('MISSIONS.audios')"
+                  :name="$t('MISSIONS.audios')"
+                  :options="learnPath.audios"
                   :reduce="(option) => option.id"
                   :get-option-label="(option) => option.name"
                   :rules="'required'"
@@ -84,6 +97,7 @@ import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import {getVideoPerLevelPathRequest} from "@/api/videos";
 import {getPaperWorkPerLevelPathRequest} from "@/api/paperWork";
 import {getQuizLevelPathRequest} from "@/api/quiz";
+import {getAudioPerLevelPathRequest} from "@/api/audios";
 import Button from "@/components/Shared/Button/index.vue";
 import {getSingleMissionsRequest} from "@/api/missios";
 
@@ -107,6 +121,12 @@ export default {
     term: {
       type: Number,
       default: 0
+    },
+    lessonsSelected: {
+      type: Array,
+      default() {
+        return []
+      }
     }
   },
   data() {
@@ -143,8 +163,8 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              videos: response.data.data,
-              videoIds: [...item.videos.map(item => item.id)]
+              videos: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)),
+              videoIds: [...item.videos.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
             })
           })
           this.ApiService(getPaperWorkPerLevelPathRequest({
@@ -153,8 +173,8 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              paperWorks: response.data.data,
-              paperWorkIds: [...item.papersWork.map(item => item.id)]
+              paperWorks: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)),
+              paperWorkIds: [...item.papersWork.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
             })
           })
           this.ApiService(getQuizLevelPathRequest({
@@ -163,8 +183,18 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              quizzes: response.data.data,
-              quizzesIds: [...item.quizzes.map(item => item.id)]
+              quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)),
+              quizzesIds: [...item.quizzes.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
+            })
+          })
+          this.ApiService(getAudioPerLevelPathRequest({
+            // levelId: this.levelMission.id,
+            learnPathId: item.id,
+            // termId: this.term
+          })).then((response) => {
+            Object.assign(item, {
+              audio: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)),
+              audiosIds: [...item.quizzes.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
             })
           })
         })
@@ -175,7 +205,7 @@ export default {
             learnPathId: item.id,
             // termId: this.term
           })).then((response) => {
-            Object.assign(item, {videos: response.data.data, videoIds: []})
+            Object.assign(item, {videos: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), videoIds: []})
           })
           this.ApiService(getPaperWorkPerLevelPathRequest({
             // levelId: this.level,
@@ -183,7 +213,7 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              paperWorks: response.data.data,
+              paperWorks: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)),
               paperWorkIds: []
             })
           })
@@ -192,7 +222,14 @@ export default {
             learnPathId: item.id,
             // termId: this.term
           })).then((response) => {
-            Object.assign(item, {quizzes: response.data.data, quizzesIds: []})
+            Object.assign(item, {quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), quizzesIds: []})
+          })
+          this.ApiService(getAudioPerLevelPathRequest({
+            // levelId: this.level,
+            learnPathId: item.id,
+            // termId: this.term
+          })).then((response) => {
+            Object.assign(item, {quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), audiosIds: []})
           })
         })
         this.learnPathsVideoPaperWokQuiz = [...learnPathsVideoPaperWokQuizWithFilter, ...learnPathsVideoPaperWokQuizWithOutFilter]
@@ -206,21 +243,28 @@ export default {
           learnPathId: item.id,
           // termId: this.term
         })).then((response) => {
-          Object.assign(item, {videos: response.data.data, videoIds: []})
+          Object.assign(item, {videos: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), videoIds: []})
         })
         this.ApiService(getPaperWorkPerLevelPathRequest({
           // levelId: this.level,
           learnPathId: item.id,
           // termId: this.term
         })).then((response) => {
-          Object.assign(item, {paperWorks: response.data.data, paperWorkIds: []})
+          Object.assign(item, {paperWorks: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), paperWorkIds: []})
         })
         this.ApiService(getQuizLevelPathRequest({
           // levelId: this.level,
           learnPathId: item.id,
           // termId: this.term
         })).then((response) => {
-          Object.assign(item, {quizzes: response.data.data, quizzesIds: []})
+          Object.assign(item, {quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), quizzesIds: []})
+        })
+        this.ApiService(getAudioPerLevelPathRequest({
+          // levelId: this.level,
+          learnPathId: item.id,
+          // termId: this.term
+        })).then((response) => {
+          Object.assign(item, {audios: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), audiosIds: []})
         })
         collectArray.push(item)
       })

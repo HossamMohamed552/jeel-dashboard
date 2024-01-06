@@ -261,6 +261,132 @@ const protectedRoutes = [
           preLink: "/dashboard/schools",
         },
       },
+      // school department type
+      {
+        path: "/dashboard/school-department-types",
+        name: "school-department-type",
+        component: () => import("../../views/school-department-type/index.vue"),
+        meta: {
+          breadcrumb: "نوع الادارة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-department-types/add",
+        name: "add-school-department-type",
+        component: () =>
+          import("../../views/school-department-type/add-school-department-type/index.vue"),
+        meta: {
+          breadcrumb: "إضافة نوع ادارة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-department-types/edit/:id",
+        name: "edit-schools",
+        component: () =>
+          import("../../views/school-department-type/edit-school-department-type/index.vue"),
+        meta: {
+          breadcrumb: "تعديل نوع الادارة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-department-types/show/:id",
+        name: "view-school-department-type",
+        component: () =>
+          import("../../views/school-department-type/view-school-department-type/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل نوع الادارة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      // school degree type
+      {
+        path: "/dashboard/school-degree-types",
+        name: "school-degree-type",
+        component: () => import("../../views/school-degree-type/index.vue"),
+        meta: {
+          breadcrumb: "نوع الشهادة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-degree-types/add",
+        name: "add-school-degree-type",
+        component: () => import("../../views/school-degree-type/add-school-degree-type/index.vue"),
+        meta: {
+          breadcrumb: "إضافة نوع شهادة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-degree-types/edit/:id",
+        name: "edit-schools",
+        component: () => import("../../views/school-degree-type/edit-school-degree-type/index.vue"),
+        meta: {
+          breadcrumb: "تعديل نوع الشهادة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-degree-types/show/:id",
+        name: "view-school-degree-type",
+        component: () => import("../../views/school-degree-type/view-school-degree-type/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل نوع الشهادة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      // school languages
+      {
+        path: "/dashboard/school-languages",
+        name: "school-language",
+        component: () => import("../../views/school-languages/index.vue"),
+        meta: {
+          breadcrumb: "اللغات",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-languages/add",
+        name: "add-school-language",
+        component: () => import("../../views/school-languages/add-school-language/index.vue"),
+        meta: {
+          breadcrumb: "إضافة لغة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-languages/edit/:id",
+        name: "edit-schools",
+        component: () => import("../../views/school-languages/edit-school-language/index.vue"),
+        meta: {
+          breadcrumb: "تعديل لغة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-languages/show/:id",
+        name: "view-school-language",
+        component: () => import("../../views/school-languages/view-school-language/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل اللغة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
       // school type
       {
         path: "/dashboard/school-type",
