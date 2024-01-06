@@ -62,7 +62,7 @@
                   </b-col>
                   <b-col lg="4">
                     <div>
-                      <h6>الفيديوهات</h6>
+                      <h6>المهمات</h6>
                       <span
                         v-for="(video, index) in Array.from(path.videos).filter((item) =>
                           path.videoIds.includes(item.id)
@@ -201,6 +201,10 @@ export default {
       formData.append("data_range", this.collectData.duration);
       formData.append("description", this.collectData.description);
       formData.append("term_id", this.collectData.term_id);
+      for (let index = 0; index < this.collectData.lessons_ids.length; index++) {
+        const lesson = this.collectData.lessons_ids[index];
+        formData.append(`lesson_id[${index}]`, lesson);  
+      }
       if (this.collectData.mission_image)
         formData.append("mission_image", this.collectData.mission_image);
 

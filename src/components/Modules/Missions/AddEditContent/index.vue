@@ -9,7 +9,7 @@
               <b-col lg="12" class="mb-3">
                 <h3>{{ learnPath.name }}</h3>
               </b-col>
-              <b-col lg="4">
+              <b-col lg="6">
                 <SelectSearch
                   v-model="learnPath.videoIds"
                   :label="$t('MISSIONS.videos')"
@@ -22,7 +22,7 @@
                   multiple
                 ></SelectSearch>
               </b-col>
-              <b-col lg="4">
+              <b-col lg="6">
                 <SelectSearch
                   v-model="learnPath.paperWorkIds"
                   :label="$t('MISSIONS.paperWork')"
@@ -35,12 +35,25 @@
                   multiple
                 ></SelectSearch>
               </b-col>
-              <b-col lg="4">
+              <b-col class="mt-3" lg="6">
                 <SelectSearch
                   v-model="learnPath.quizzesIds"
                   :label="$t('MISSIONS.quizzes')"
                   :name="$t('MISSIONS.quizzes')"
                   :options="learnPath.quizzes"
+                  :reduce="(option) => option.id"
+                  :get-option-label="(option) => option.name"
+                  :rules="'required'"
+                  :deselectFromDropdown="true"
+                  multiple
+                ></SelectSearch>
+              </b-col>
+              <b-col class="mt-3" lg="6">
+                <SelectSearch
+                  v-model="learnPath.audiosIds"
+                  :label="$t('MISSIONS.audios')"
+                  :name="$t('MISSIONS.audios')"
+                  :options="learnPath.audios"
                   :reduce="(option) => option.id"
                   :get-option-label="(option) => option.name"
                   :rules="'required'"
@@ -84,6 +97,7 @@ import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import {getVideoPerLevelPathRequest} from "@/api/videos";
 import {getPaperWorkPerLevelPathRequest} from "@/api/paperWork";
 import {getQuizLevelPathRequest} from "@/api/quiz";
+import {getAudioPerLevelPathRequest} from "@/api/audios";
 import Button from "@/components/Shared/Button/index.vue";
 import {getSingleMissionsRequest} from "@/api/missios";
 
@@ -167,6 +181,16 @@ export default {
               quizzesIds: [...item.quizzes.map(item => item.id)]
             })
           })
+          this.ApiService(getAudioPerLevelPathRequest({
+            // levelId: this.levelMission.id,
+            learnPathId: item.id,
+            // termId: this.term
+          })).then((response) => {
+            Object.assign(item, {
+              audio: response.data.data,
+              audiosIds: [...item.quizzes.map(item => item.id)]
+            })
+          })
         })
         let learnPathsVideoPaperWokQuizWithOutFilter = this.watchLearningPathSelected.filter(item => !this.learnPathsVideoPaperWokQuiz.map(itemMap => itemMap.id).includes(item.id))
         learnPathsVideoPaperWokQuizWithOutFilter.forEach((item) => {
@@ -193,6 +217,13 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {quizzes: response.data.data, quizzesIds: []})
+          })
+          this.ApiService(getAudioPerLevelPathRequest({
+            // levelId: this.level,
+            learnPathId: item.id,
+            // termId: this.term
+          })).then((response) => {
+            Object.assign(item, {quizzes: response.data.data, audiosIds: []})
           })
         })
         this.learnPathsVideoPaperWokQuiz = [...learnPathsVideoPaperWokQuizWithFilter, ...learnPathsVideoPaperWokQuizWithOutFilter]
@@ -221,6 +252,13 @@ export default {
           // termId: this.term
         })).then((response) => {
           Object.assign(item, {quizzes: response.data.data, quizzesIds: []})
+        })
+        this.ApiService(getAudioPerLevelPathRequest({
+          // levelId: this.level,
+          learnPathId: item.id,
+          // termId: this.term
+        })).then((response) => {
+          Object.assign(item, {audios: response.data.data, audiosIds: []})
         })
         collectArray.push(item)
       })

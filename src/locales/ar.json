@@ -320,6 +320,7 @@
     "ADD_NEW": "إضافة مهمة جديدة",
     "name": "إسم المهمة",
     "level": "السنة الدراسية",
+    "lesson": "الدرس",
     "LEARNING_PATH": "المسار",
     "terms": "الترم الدراسي",
     "country": "الدولة",
@@ -327,6 +328,7 @@
     "videos": "الفيديوهات",
     "paperWork": "اوراق العمل",
     "quizzes": "التمارين",
+    "audios": "التسجيلات الصوتيه",
     "description": "الوصف",
     "content": "المحتوى",
     "ShowDetails": "عرض تفاصيل المهمة",
@@ -627,7 +629,7 @@
     "QUESTION_TYPE_PLACEHOLDER": "أختر نوع السؤال",
     "QUESTION_TITLE": "نص السؤال",
     "QUESTION_TITLE_PLACEHOLDER": "نص السؤال",
-    "SHOW_DETAILS":"تفاصيل التسجيل الصوتى"
+    "SHOW_DETAILS": "تفاصيل التسجيل الصوتى"
   },
   "NO_MATCHING": "لا توجد نتائج"
 }
