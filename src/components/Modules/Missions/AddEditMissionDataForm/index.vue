@@ -75,7 +75,7 @@
                   ></SelectSearch>
                 </div>
               </b-col>
-              <b-col lg="4" class="mb-3">
+              <b-col lg="8" class="mb-3">
                 <!-- depend on learning path  -->
                 <div class="hold-field">
                   <SelectSearch
