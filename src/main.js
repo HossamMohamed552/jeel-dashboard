@@ -5,10 +5,14 @@ import store from "./store";
 import i18n from "./plugins/i18n"
 import "./plugins";
 import "./helpers/formValidation";
+import 'video.js/dist/video-js.css'
 import ApiService from "./api/ApiService";
 import dayjs from 'dayjs';
 Vue.config.productionTip = false;
-
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+Vue.use(ElementUI)
 new Vue({
   router,
   store,

@@ -5,17 +5,17 @@
   @include styleViewList;
   min-height: 70vh;
 }
-.hold-field{
-  label{
-    color: $color-primary;
+.hold-field {
+  label {
+    //color: $color-primary;
     display: block;
     margin: 0 0.7rem 0.7rem 0;
   }
-  .custom-selectBox{
+  .custom-selectBox {
     display: block;
     padding: 0 1.3rem;
     border-radius: 3.125rem;
-    border: 1px solid #BEBEBE;
+    border: 1px solid #bebebe;
     color: $color-primary;
   }
 }
@@ -36,7 +36,6 @@
     font-weight: bold;
   }
   label {
-    color: purple;
     font-size: 18px;
     font-weight: bold;
   }

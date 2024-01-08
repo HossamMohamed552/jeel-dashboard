@@ -8,12 +8,12 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="6">
-            <ShowItem :title="$t('GLOBAL_NAME')" :subtitle="bloomCategory.name" />
+          <b-col lg="4">
+            <ShowItem class="divider-show" :title="$t('BLOOM.BLOOM_NAME')" :subtitle="bloomCategory.name" />
           </b-col>
-          <b-col lg="6">
+          <!-- <b-col lg="6">
             <ShowItem :title="$t('slug')" :subtitle="bloomCategory.slug" />
-          </b-col>
+          </b-col> -->
         </b-row>
       </div>
     </div>

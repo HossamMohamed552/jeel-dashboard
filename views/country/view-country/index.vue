@@ -4,16 +4,20 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">{{$t('COUNTRY.showDetails')}}</h2>
+            <h2 class="heading">{{ $t("COUNTRY.showDetails") }}</h2>
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="6">
-            <ShowItem :title="$t('COUNTRY.name')" :subtitle="country.name"/>
+          <b-col cols="12" md="6" lg="4">
+            <ShowItem
+              :title="$t('COUNTRY.name')"
+              :subtitle="country.name"
+              class="with-border-bottom"
+            />
           </b-col>
-          <b-col lg="6">
-            <ShowItem :title="$t('COUNTRY.countryCode')" :subtitle="country.code"/>
-          </b-col>
+          <!--          <b-col lg="6">-->
+          <!--            <ShowItem :title="$t('COUNTRY.countryCode')" :subtitle="country.code"/>-->
+          <!--          </b-col>-->
         </b-row>
       </div>
     </div>
@@ -21,23 +25,23 @@
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import {getSingleCountryRequest} from "@/api/country";
+import { getSingleCountryRequest } from "@/api/country";
 export default {
   name: "index",
-  components:{
-    ShowItem
+  components: {
+    ShowItem,
   },
-  data(){
-    return{
-      country: {}
-    }
+  data() {
+    return {
+      country: {},
+    };
   },
   mounted() {
-    this.ApiService(getSingleCountryRequest(this.$route.params.id)).then((response)=>{
-      this.country = response.data.data
-    })
-  }
-}
+    this.ApiService(getSingleCountryRequest(this.$route.params.id)).then((response) => {
+      this.country = response.data.data;
+    });
+  },
+};
 </script>
 <style scoped lang="scss">
 @import "./index";

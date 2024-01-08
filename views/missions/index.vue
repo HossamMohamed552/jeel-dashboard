@@ -1,22 +1,25 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة المراحل'" :number-of-item="totalNumber"
+    <ListItems :header-name="'قائمة المهام'" :number-of-item="totalNumber"
                :tableItems="missionsList" :fieldsList="fieldsList"
                :v-search-model="missionSearchWord"
                @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getMissions"
                :loading="loading"
+               :permission_delete="'delete-missions'"
+               :permission_edit="'edit-missions'"
+               :permission_view="'show-missions'"
                >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddMissions">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddMissions" v-if="user.permissions.includes(`add-missions`)">
           <img src="@/assets/images/icons/plus.svg">
-          <span>إضافة مرحلة جديد</span>
+          <span>إضافة مهمة جديد</span>
         </Button>
       </template>
     </ListItems>
-    <Modal :content-message="'حذف المرحلة'"
-           :content-message-question="'هل انت متأكد من حذف المرحلة'"
+    <Modal :content-message="'حذف المهمة'"
+           :content-message-question="'هل انت متأكد من حذف المهمة'"
            :showModal="showModal"
            @cancel="cancel($event)"
            :is-warning="true"
@@ -29,23 +32,27 @@ import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {deleteMissionsRequest, getMissionsRequest} from "@/api/missios";
 import {getLevelsRequest} from "@/api/level";
+import {mapGetters} from "vuex";
 
 export default{
   name: "index",
   components: {Modal, ListItems, Button},
+  computed:{
+    ...mapGetters(['user'])
+  },
   data(){
     return {
       loading: false,
       showModal: false,
       missionSearchWord: "",
       missionsList: [],
-      totalNumber: null,
+      totalNumber: 0,
       fieldsList: [
         {key: "id", label: "التسلسل"},
         {key: "name", label: "الإسم"},
         {key: "level", label: "المرحله الدراسية"},
         {key: "description", label: "الوصف"},
-        {key: "learningpaths", label: "المسارات"},
+        {key: "learningpaths", label: "المسارات التعليمية"},
         {key: "actions", label: "الإجراء"},
       ],
     }
@@ -65,7 +72,7 @@ export default{
         });
     },
     searchBy($event) {
-      console.log('$event', $event)
+
     },
     detailItem($event) {
       this.$router.push(`/dashboard/missions/show/${$event}`)

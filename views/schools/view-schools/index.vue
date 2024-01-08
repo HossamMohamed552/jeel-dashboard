@@ -40,6 +40,30 @@
             </b-row>
             <b-dd-divider class="my-4"/>
             <b-row class="row-data">
+              <b-col lg="6">
+                <ShowItem
+                  :title="$t('SCHOOL.email')"
+                  :subtitle="singleSchool.email"
+                />
+              </b-col>
+            </b-row>
+            <b-dd-divider class="my-4"/>
+            <b-row class="row-data">
+              <b-col lg="6">
+                <ShowItem
+                  :title="$t('SCHOOL.address')"
+                  :subtitle="singleSchool.address"
+                />
+              </b-col>
+              <b-col lg="6">
+                <ShowItem
+                  :title="$t('SCHOOL.contact')"
+                  :subtitle="singleSchool.contact"
+                />
+              </b-col>
+            </b-row>
+            <b-dd-divider class="my-4"/>
+            <b-row class="row-data">
               <b-col lg="6" v-if="singleSchool && singleSchool.admin">
                 <ShowItem
                   :title="$t('SCHOOL.email')"
@@ -57,12 +81,12 @@
             </b-row>
             <b-dd-divider class="my-4"/>
             <b-row class="row-data">
-              <b-col lg="6" v-if="singleSchool && singleSchool.admin">
-                <ShowItem
-                  :title="$t('SCHOOL.phone')"
-                  :subtitle="singleSchool.admin.mobile"
-                />
-              </b-col>
+<!--              <b-col lg="6" v-if="singleSchool && singleSchool.admin">-->
+<!--                <ShowItem-->
+<!--                  :title="$t('SCHOOL.phone')"-->
+<!--                  :subtitle="singleSchool.admin.mobile"-->
+<!--                />-->
+<!--              </b-col>-->
               <b-col lg="6" v-if="singleSchool && singleSchool.package">
                 <ShowItem
                   :title="$t('SCHOOL.package')"
@@ -107,6 +131,9 @@
               <template v-slot:student-enroll>
                 <StudentEnrollList :schoolId="currentSchoolId"/>
               </template>
+              <template v-slot:school-admin-enroll>
+                <SchoolAdminList :schoolId="currentSchoolId"/>
+              </template>
             </SchoolTabs>
           </b-col>
         </b-row>
@@ -120,6 +147,7 @@ import SchoolTabs from "@/components/Modules/SchoolDetails/SchoolTabs/index.vue"
 import ClassesList from "@/components/Modules/Classes/ClassesList/index.vue";
 import StaffEnrollList from "@/components/Modules/StaffEnroll/StaffEnrollList/index.vue";
 import StudentEnrollList from "@/components/Modules/StudentEnroll/StudentEnrollList/index.vue";
+import SchoolAdminList from "@/components/Modules/SchoolAdmin/SchoolAdminList/index.vue";
 import {getSingleSchoolsRequest} from "@/api/school.js";
 
 export default {
@@ -129,7 +157,8 @@ export default {
     SchoolTabs,
     ClassesList,
     StaffEnrollList,
-    StudentEnrollList
+    StudentEnrollList,
+    SchoolAdminList
   },
   data() {
     return {
@@ -142,6 +171,7 @@ export default {
       (response) => {
         this.singleSchool = response.data.data;
         this.currentSchoolId = response.data.data.id
+        localStorage.setItem('currentSchoolId',this.currentSchoolId)
       }
     );
   },

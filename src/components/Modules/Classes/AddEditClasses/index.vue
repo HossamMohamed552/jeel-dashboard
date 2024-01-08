@@ -20,9 +20,9 @@
               </b-col>
               <b-col v-if="!classId" lg="6" class="mb-3">
                 <div class="hold-field">
+                  <label>{{$t('CLASS.levelTerms')}}</label>
                   <SelectSearch
                   v-model="classData.level_term_id"
-                  :label="$t('CLASS.levelTerms')"
                   :name="$t('CLASS.levelTerms')"
                   :options="levelTerms"
                   :reduce="(option) => option.id"
@@ -94,7 +94,7 @@ export default {
       classData: {
         name: "",
         level_term_id: null,
-        school_id: this.schoolId
+        school_id: localStorage.getItem('currentSchoolId')
       },
       classId: this.$route.params.id,
     };

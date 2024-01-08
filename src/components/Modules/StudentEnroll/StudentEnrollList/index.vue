@@ -11,11 +11,16 @@
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
       @refetch="getStudentEnrolls"
+      :permission_delete="'delete-enrollment'"
+      :permission_edit="'edit-enrollment'"
+      :permission_view="'show-enrollment'"
+      class="p-0"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddStudentEnroll"
+          v-if="user.permissions.includes(`add-enrollment`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
           <span>إضافة طالب</span>
@@ -41,6 +46,7 @@ import {
   getStudentEnrollRequest,
 } from "@/api/studentEnroll.js";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
 export default {
   props: {
     schoolId: {
@@ -100,7 +106,7 @@ export default {
         });
     },
     searchBy($event) {
-      console.log("$event", $event);
+
     },
     detailItem($event) {
       this.$router.push(`/dashboard/student-enroll/show/${$event}`);
@@ -125,6 +131,9 @@ export default {
       });
       this.cancel();
     },
+  },
+  computed:{
+    ...mapGetters(['user'])
   },
   mounted() {
     this.getStudentEnrolls();

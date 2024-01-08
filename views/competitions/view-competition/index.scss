@@ -1,0 +1,46 @@
+@import "src/assets/style/scss/_mixin";
+@import "src/assets/style/scss/_variables";
+.show-level{
+  @include styleViewList;
+  min-height: 70vh;
+  .heading{
+    margin-bottom: 3.125rem;
+  }
+  .hold-fields{
+    margin-bottom: 4rem;
+  }
+}
+.list-group {
+  min-height: 100px;
+  max-height: 300px;
+  padding: .5rem 1rem;
+  background: #fff;
+  overflow: auto;
+  margin-top: 1.5rem;
+  .list-group-item {
+    border: none;
+    padding: .5rem 0;
+  }
+}
+
+.mission-title{
+  font-size: 1.3rem;
+  color: $color-heading;
+  font-weight: 400;
+  margin-bottom: 1.2rem;
+}
+.mission-item{
+  font-size: 1.3rem;
+  color: $color-primary;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.mission-content{
+  color: $color-heading;
+  text-decoration: none;
+  margin-right: 2rem;
+  transition: all ease-in-out .3s;
+  &:hover{
+    color: rgb(98, 98, 98);
+  }
+}

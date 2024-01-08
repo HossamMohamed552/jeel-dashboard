@@ -21,7 +21,8 @@ export const getQuestionSubTypsRequest = (params) => ({
 
 export const getLearningPathsRequest = (params) => ({
   method: 'get',
-  url: `learningpaths?page=${params.page}`,
+  url: `learningpaths`,
+  config: {params}
 })
 export const getAllLearningPathsRequest = (params) => ({
   method: 'get',
@@ -36,7 +37,7 @@ export const getAllLearningMethodsRequest = (params) => ({
 
 export const getLaguageSkillsRequest = (params) => ({
   method: 'get',
-  url: `language_skills?page=${params.page}`,
+  url: `language_skills?list_all=true`,
 })
 
 export const getQuestionDifficultiesRequest = (params) => ({

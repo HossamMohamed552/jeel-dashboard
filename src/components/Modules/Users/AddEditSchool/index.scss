@@ -8,7 +8,9 @@
 
 .hold-field {
   position: relative;
-
+  label{
+    margin: 0.7rem 0.7rem 1rem;
+  }
   .show-date {
     margin: 0;
     position: absolute;
@@ -24,7 +26,15 @@
 }
 
 ::v-deep {
+  .hold-field {
+    position: relative;
+
+    label {
+      margin: 0.7rem 0.7rem 1rem;
+    }
+  }
   .group-type {
+    margin-right: .2rem;
     .col-form-label {
       color: $color-primary !important;
     }
@@ -32,7 +42,6 @@
 
   .custom-radio {
     display: inline-block;
-    margin-top: 1.5rem;
   }
 
   .mx-datepicker {

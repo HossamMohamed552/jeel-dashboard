@@ -3,6 +3,11 @@ export const getTermsRequest = (params) => ({
   url: 'terms',
   config: {params}
 })
+export const getAllTermsRequest = (params) => ({
+  method: 'get',
+  url: 'terms?list_all=true',
+  config: {params}
+})
 export const getSingleTermsRequest = (params) => ({
   method: 'get',
   url: `terms/${params}`,

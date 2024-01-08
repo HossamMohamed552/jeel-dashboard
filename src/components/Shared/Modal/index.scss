@@ -23,6 +23,9 @@
     font-weight: 500;
   }
 }
+.fa-envelope-circle-check{
+  color: $color-primary
+}
 .controls{
   @include flexCenter(space-between)
 }

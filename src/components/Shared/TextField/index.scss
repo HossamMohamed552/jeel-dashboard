@@ -1,6 +1,6 @@
 @import "src/assets/style/scss/_variables";
 .text-field{
-  color: $color-primary;
+  //color: $color-primary;
   margin: 0 0 .7rem 0;
   display: block;
   @media (max-width: 1024px) and (min-width: 768px){
@@ -10,7 +10,8 @@
     margin: 0 0 .2rem 0;
   }
   label{
-    margin: 0 .7rem .7rem 0;
+    margin: 0.7rem .7rem 1rem;
+    font-weight: bold;
     @media (max-width: 1024px) and (min-width: 768px){
       margin: 0 .4rem .4rem 0;
     }
@@ -20,9 +21,11 @@
     }
   }
   input{
-    padding: 1.3rem;
+    padding: 1.3rem 1rem 2rem;
     border-radius: 3.125rem;
     border: 1px solid #BEBEBE;
+    color: $color-primary;
+    font-weight: bold;
     @media (max-width: 1024px) and (min-width: 768px){
       padding: 1rem;
       border-radius: 2.125rem;

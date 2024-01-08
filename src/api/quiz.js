@@ -1,18 +1,19 @@
-export const getQuizzesRequest = () => ({
+export const getQuizzesRequest = (params) => ({
   method: 'get',
-  url: `quizzes?per_page=200`,
-  config: {}
+  url: `quizzes`,
+  config: {params}
 })
 
 
 export const getQuizLevelPathRequest = (params) => ({
   method: 'get',
-  url: `quizzes?per_page=200&level_id=${params.levelId}&learning_path_id=${params.learnPathId}`,
+  url: `quizzes?&learning_path_id=${params.learnPathId}list_all=ture`,
   config: {}
+  // per_page=200&level_id=${params.levelId}&learning_path_id=${params.learnPathId}&term_id=${params.termId}
 })
 export const getGeneralQuestionRequest = (params) => ({
   method: 'get',
-  url: `questions?level_id=${params.levelId}&learning_path_id=${params.learnPathId}`,
+  url: `questions?list_all=true&level_id=${params.levelId}&learning_path_id=${params.learnPathId}`,
   config: {}
 })
 export const getQuestionDifficultyLevelLearnRequest = (params) => ({

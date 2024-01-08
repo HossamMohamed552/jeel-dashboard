@@ -1,12 +1,35 @@
 @import "src/assets/style/scss/_mixin";
 @import "src/assets/style/scss/_variables";
-.show-question{
+
+.show-question {
   @include styleViewList;
   min-height: 70vh;
 }
-.divider{
+
+.divider {
   padding-top: 2.5rem;
 }
-.divider-bottom{
+
+.divider-bottom {
   padding: 2.5rem 0;
 }
+
+.title {
+  font-size: 1.3rem;
+  color: $color-heading;
+  font-weight: 400;
+  margin-bottom: 1.2rem;
+}
+
+.sub-title {
+  font-size: 1.3rem;
+  color: $color-primary;
+  font-weight: 700;
+}
+
+.the-right-answer {
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: $color-heading;
+}
+

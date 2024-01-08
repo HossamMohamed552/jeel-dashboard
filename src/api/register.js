@@ -5,7 +5,13 @@ export const postLoginRequest = (data) => ({
     data,
   },
 });
-
+export const postVerifyRequest = (data) => ({
+  method: "post",
+  url: `${process.env.VUE_APP_AUTH_URL}/verify-email/send`,
+  config: {
+    data,
+  },
+});
 export const postRegisterRequest = (data) => ({
   method: "post",
   url: "register",
@@ -33,4 +39,20 @@ export const postChangePasswordRequest = (data) => ({
 export const getLogoutRequest = () => ({
   method: "get",
   url: "logout",
+});
+
+export const postForgetPasswordRequest = (data) => ({
+  method: "post",
+  url: `${process.env.VUE_APP_AUTH_URL}/forget-password/send`,
+  config: {
+    data,
+  },
+});
+
+export const postCheckForgetPasswordStatusRequest = (data) => ({
+  method: "post",
+  url: `${process.env.VUE_APP_AUTH_URL}/check/forget-password/token`,
+  config: {
+    data,
+  },
 });

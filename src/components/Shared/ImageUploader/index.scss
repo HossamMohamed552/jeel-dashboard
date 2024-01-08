@@ -11,7 +11,7 @@
   overflow: hidden;
   position: relative;
   text-align: center;
-
+  flex-direction: column;
   .file-title {
     font-weight: 400;
     font-size: 18px;
@@ -41,7 +41,33 @@
   @include flexCenter(center)
 }
 .hold-img{
+  position: relative;
   img{
     @include image
+  }
+
+  span {
+    position: absolute;
+    top:-5px;
+    left: -5px;
+    background: $color-danger;
+    color: #FFFFFF;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-bottom: 0;
+    line-height: 0.6;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 1000;
+  }
+}
+.invalid-feedback{
+  display: block;
+}
+::v-deep{
+  .custom-file-label,.custom-file-input{
+    height: 100% !important;
   }
 }

@@ -1,8 +1,8 @@
 <template>
   <ValidationProvider v-slot="{ errors, invalid }" :name="name" :rules="rules">
-    <label v-if="label">{{ label }}</label>
-
+    <label v-if="label" :class="isRequired && 'required-flag'"> {{ label }}</label>
     <v-select
+      :disabled="disabled"
       v-model="innerValue"
       v-bind="$attrs"
       v-on="$listeners"
@@ -27,13 +27,17 @@
 </template>
 
 <script>
-import { FieldMixin } from "@/mixins/FieldMixin";
+import {FieldMixin} from "@/mixins/FieldMixin";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 
 export default {
   mixins: [FieldMixin],
   props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     options: {
       type: Array,
       default: () => [],
@@ -51,4 +55,5 @@ export default {
 
 <style lang="scss" scoped>
 @import "./index.scss";
+
 </style>

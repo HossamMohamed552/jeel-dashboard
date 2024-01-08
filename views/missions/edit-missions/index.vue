@@ -1,6 +1,6 @@
 <template>
   <div class="add-mission">
-    <Modal :content-message="'تمت التعديل بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="'تمت التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
     <Stepper
       v-show="currentStep === 0 || currentStep === 1 || currentStep === 2"
       class="mt-5 mb-3"
@@ -8,7 +8,7 @@
       :current-step="currentStep"
     />
     <AddEditMissionDataForm
-      v-show="currentStep === 0"
+      v-if="currentStep === 0"
       :levels="levels"
       :learning-paths="learningPaths"
       :terms="terms"
@@ -17,9 +17,10 @@
       @handleCancel="handleCancel"
     />
     <AddEditContent
-      v-show="currentStep === 1"
+      v-if="currentStep === 1"
       :learningPathSelected="learningPathSelected"
       :level="level"
+      :term="term"
       @handleCancel="handleCancel"
       @handleBack="goToMissionDataForm"
       @goToFinalStep="goToFinalStep"/>
@@ -31,7 +32,7 @@
             <p>{{ levels.find((item) => item.id === collectData.level_id).name }}</p>
           </b-col>
           <b-col lg="4">
-            <h6>إسم المرحلة</h6>
+            <h6>إسم المهمة</h6>
             <p>{{ collectData.name }}</p>
           </b-col>
           <b-col lg="4">
@@ -61,13 +62,13 @@
                   </b-col>
                   <b-col lg="4">
                     <div>
-                      <h6>الفيديوهات</h6>
+                      <h6>المهمات</h6>
                       <span
                         v-for="(video, index) in Array.from(path.videos).filter((item) =>
                           path.videoIds.includes(item.id)
                         )"
                         :key="`${video.id} ${index}`"
-                        >{{ video.title }}</span
+                      >{{ video.title }}</span
                       >
                     </div>
                   </b-col>
@@ -79,7 +80,7 @@
                           path.paperWorkIds.includes(item.id)
                         )"
                         :key="`${paperWork.id} ${index}`"
-                        >{{ paperWork.name }}</span
+                      >{{ paperWork.name }}</span
                       >
                     </div>
                   </b-col>
@@ -91,7 +92,7 @@
                           path.quizzesIds.includes(item.id)
                         )"
                         :key="`${quiz.id} ${index}`"
-                        >{{ quiz.name }}</span
+                      >{{ quiz.name }}</span
                       >
                     </div>
                   </b-col>
@@ -148,6 +149,7 @@ export default {
       levels: [],
       level: null,
       collectData: {},
+      term: null,
       steps: [
         {
           icon: "1",
@@ -178,6 +180,7 @@ export default {
         learningPath.includes(item.id)
       );
       this.level = this.collectData.level_id;
+      this.term = this.collectData.term_id;
     },
     goToMissionDataForm() {
       this.handleNavigation(0);
@@ -186,7 +189,7 @@ export default {
       this.handleNavigation(1);
     },
     goToFinalStep(data) {
-      Object.assign(this.collectData, { paths: [...data] });
+      Object.assign(this.collectData, {paths: [...data]});
       this.handleSaveCollectedData(data);
       this.handleNavigation(2);
     },
@@ -198,14 +201,18 @@ export default {
       formData.append("data_range", this.collectData.duration);
       formData.append("description", this.collectData.description);
       formData.append("term_id", this.collectData.term_id);
+      for (let index = 0; index < this.collectData.lessons_ids.length; index++) {
+        const lesson = this.collectData.lessons_ids[index];
+        formData.append(`lesson_id[${index}]`, lesson);  
+      }
       if (this.collectData.mission_image)
         formData.append("mission_image", this.collectData.mission_image);
 
       formData.append("_method", "PUT");
       // for to get learnPaths
-      for (let learnPath = 0; learnPath < this.collectData.paths.length; ) {
+      for (let learnPath = 0; learnPath < this.collectData.paths.length;) {
         formData.append(`learningpaths[${learnPath}][id]`, this.collectData.paths[learnPath].id);
-        for (let video = 0; video < this.collectData.paths[learnPath].videoIds.length; ) {
+        for (let video = 0; video < this.collectData.paths[learnPath].videoIds.length;) {
           formData.append(
             `learningpaths[${learnPath}][videos][${video}][id]`,
             this.collectData.paths[learnPath].videoIds[video]
@@ -217,7 +224,6 @@ export default {
         for (
           let paperWork = 0;
           paperWork < this.collectData.paths[learnPath].paperWorkIds.length;
-
         ) {
           formData.append(
             `learningpaths[${learnPath}][papersworks][${paperWork}][id]`,
@@ -230,7 +236,7 @@ export default {
           formData.append(`learningpaths[${learnPath}][papersworks][${paperWork}][is_selected]`, 1);
           paperWork++;
         }
-        for (let quiz = 0; quiz < this.collectData.paths[learnPath].quizzesIds.length; ) {
+        for (let quiz = 0; quiz < this.collectData.paths[learnPath].quizzesIds.length;) {
           formData.append(
             `learningpaths[${learnPath}][quizzes][${quiz}][id]`,
             this.collectData.paths[learnPath].quizzesIds[quiz]
@@ -260,7 +266,7 @@ export default {
         });
     },
     handleAssignObject(data) {
-      Object.assign(this.collectData, { ...data });
+      Object.assign(this.collectData, {...data});
       this.handleSaveCollectedData(data);
     },
     handleSaveCollectedData(data) {

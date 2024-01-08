@@ -20,6 +20,12 @@
               :subtitle="singleUser.last_name"
             />
           </b-col>
+          <b-col v-if="singleUser.user_name" lg="6" class="mb-5">
+            <ShowItem
+              :title="$t('USERS.USER_NAME')"
+              :subtitle="singleUser.user_name"
+            />
+          </b-col>
           <b-col lg="6" class="mb-5">
             <ShowItem :title="$t('USER.name')" :subtitle="singleUser.name" />
           </b-col>
@@ -41,7 +47,7 @@
           <b-col lg="6" class="mb-5" v-if="singleUser && singleUser.roles">
             <ShowItem
               :title="$t('USER.role')"
-              :subtitle="singleUser.roles[0].name"
+              :listItems="singleUser.roles"
             />
           </b-col>
           <b-col lg="6" class="mb-5 img-container">

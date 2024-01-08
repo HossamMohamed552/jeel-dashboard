@@ -1,4 +1,7 @@
 @import "src/assets/style/scss/_mixin";
+.hide-view-rule{
+  display: none !important;
+}
 .route-item{
   height: 350px;
   border: 1px solid #DADADA;
@@ -19,5 +22,6 @@
   }
   .name{
     font-size: 1.6rem;
+    font-weight: bold;
   }
 }

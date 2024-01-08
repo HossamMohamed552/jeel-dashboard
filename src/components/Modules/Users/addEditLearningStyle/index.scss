@@ -1,0 +1,21 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+
+.add-edit-learning-style {
+  @include styleViewList;
+  min-height: 70vh;
+}
+::v-deep {
+  .hold-field {
+    label {
+      color: $color-primary;
+      margin: 0.7rem 0.7rem 1rem;
+    }
+  }
+  .vs__dropdown-toggle {
+    padding: 0 1.3rem;
+  }
+  .vs__selected-options {
+    height: 44px;
+  }
+}

@@ -20,6 +20,7 @@
       v-if="currentStep === 1"
       :learningPathSelected="learningPathSelected"
       :level="level"
+      :term="term"
       @handleBack="goToMissionDataForm"
       @handleCancel="handleCancel"
       @goToFinalStep="goToFinalStep"/>
@@ -31,7 +32,7 @@
             <p>{{ levels.find((item) => item.id === collectData.level_id).name }}</p>
           </b-col>
           <b-col lg="4">
-            <h6>إسم المرحلة</h6>
+            <h6>إسم المهمة</h6>
             <p>{{ collectData.name }}</p>
           </b-col>
           <b-col lg="4">
@@ -147,6 +148,7 @@ export default {
       languageSkills: [],
       levels: [],
       level: null,
+      term: null,
       collectData: {},
       steps: [
         {
@@ -178,6 +180,7 @@ export default {
         learningPath.includes(item.id)
       );
       this.level = this.collectData.level_id;
+      this.term = this.collectData.term_id;
     },
     goToMissionDataForm() {
       this.handleNavigation(0);
@@ -198,6 +201,11 @@ export default {
       formData.append("data_range", this.collectData.duration);
       formData.append("description", this.collectData.description);
       formData.append("term_id", this.collectData.term_id);
+      
+      for (let index = 0; index < this.collectData.lessons_ids.length; index++) {
+        const lesson = this.collectData.lessons_ids[index];
+        formData.append(`lesson_id[${index}]`, lesson);  
+      }
       if (this.collectData.mission_image)
         formData.append("mission_image", this.collectData.mission_image);
 

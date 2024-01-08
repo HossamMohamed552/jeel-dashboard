@@ -12,15 +12,15 @@
       @deleteItem="deleteItem($event)"
       @refetch="getAllUsers"
       :is-user-page="true"
+      :permission_delete="'delete-users'"
+      :permission_edit="'edit-users'"
+      :permission_view="'show-users'"
     >
-      <!--      <template #buttons>-->
-      <!--        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="handleAddUser">-->
-      <!--          <img src="@/assets/images/icons/plus.svg"/>-->
-
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="handleAddUser"
+          v-if="user.permissions.includes(`add-users`)"
         >
           <img src="@/assets/images/icons/plus.svg"/>
           <span>إضافة مستخدم جديد</span>
@@ -42,6 +42,7 @@ import ListItems from "@/components/ListItems/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import {deleteUserRequest, getAllUsersRequest} from "@/api/user";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
 
 export default {
   name: "index",
@@ -64,7 +65,7 @@ export default {
         },
         {
           key: "avatar",
-          label: this.$i18n.t("avatar"),
+          label: this.$i18n.t("TABLE_FIELDS.avatar"),
         },
         {
           key: "name",
@@ -124,6 +125,9 @@ export default {
       });
       this.cancel();
     },
+  },
+  computed:{
+    ...mapGetters(['user'])
   },
   mounted() {
     this.getAllUsers();

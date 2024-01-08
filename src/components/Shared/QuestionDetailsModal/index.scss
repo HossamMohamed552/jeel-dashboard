@@ -1,0 +1,28 @@
+@import "../../../assets/style/scss/_variables";
+::v-deep {
+  .modal-content {
+    height: calc(100vh - 100px);
+  }
+
+  .modal-header {
+    span {
+      font-weight: bold;
+      color: $color-primary;
+      font-size: 1.2rem;
+    }
+  }
+
+  .modal-body {
+    height: 100%;
+    overflow-y: auto;
+  }
+}
+
+.sub-title {
+  color: $color-primary;
+  font-weight: bold;
+  margin-bottom: .5rem;
+}
+.the-right-answer,.bi-volume-up{
+  margin-bottom: .5rem;
+}

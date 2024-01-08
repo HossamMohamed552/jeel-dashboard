@@ -1,0 +1,60 @@
+// deep search
+.deep-search {
+  border-radius: 25px;
+  padding: 2.5rem;
+  background: #f9f9f9;
+  transition: all ease-in-out .5s;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all ease-in-out .5s;
+
+
+  h4 {
+    color: #022930;
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+
+  .collapse-btn {
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
+    border: 1px solid var(--unnamed-color-76236c);
+    background: transparent linear-gradient(90deg, #e25199 0%, #76236c 100%) 0%
+      0% no-repeat padding-box;
+    border: 1px solid #76236c;
+    border-radius: 50px;
+    opacity: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
+
+        color: #FFFFFF;
+        font-size: 2.5rem;
+        margin-top: 0.6rem;
+    }
+
+  }
+}
+
+.search-content {
+    margin-top: 1.5rem;
+    transition: all ease-in-out .5s;
+
+    .actions {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        gap: 1.25rem;
+        margin-top: 3.125rem;
+    }
+}
+}
+

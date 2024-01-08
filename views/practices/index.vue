@@ -1,13 +1,17 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems :header-name="'قائمة التمارين'" :number-of-item="totalNumber"
-               :tableItems="quizzesList" :fieldsList="fieldsList" :v-search-model="quizzesSearchWord" @detailItem="detailItem($event)"
+               :tableItems="quizzesList" :fieldsList="fieldsList"
+               :v-search-model="quizzesSearchWord" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getQuizzes"
                :loading="loading"
-               >
+               :permission_delete="'delete-quizzes'"
+               :permission_edit="'edit-quizzes'"
+               :permission_view="'show-quizzes'"
+    >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddQuiz">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddQuiz" v-if="user.permissions.includes(`add-quizzes`)">
           <img src="@/assets/images/icons/plus.svg">
           <span>إضافة تمرين جديد </span>
         </Button>
@@ -26,10 +30,14 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {deleteQuizRequest, getQuizzesRequest} from "@/api/quiz";
+import {mapGetters} from "vuex";
 
 export default {
   name: "index",
   components: {Modal, ListItems, Button},
+  computed:{
+    ...mapGetters(['user'])
+  },
   data() {
     return {
       loading: false,
@@ -38,18 +46,19 @@ export default {
       quizzesList: [],
       totalNumber: null,
       fieldsList: [
-        { key: "id", label: "التسلسل" },
-        { key: "name", label: "اسم التمرين" },
-        { key: "type", label: "النوع" },
-        { key: "total_question", label: "إجمالى الإسئلة" },
-        { key: "level", label: "المرحله الدراسية" },
-        { key: "description", label: "الوصف" },
-        { key: "actions",label:"الإجراء" },
+        {key: "id", label: "التسلسل"},
+        {key: "name", label: "اسم التمرين"},
+        {key: "type", label: "النوع"},
+        {key: "total_question", label: "إجمالى الإسئلة"},
+        {key: "level", label: "المرحله الدراسية"},
+        {key: "learning_path", label: "المسار"},
+        {key: "description", label: "الوصف"},
+        {key: "actions", label: "الإجراء"},
       ],
     }
   },
   methods: {
-    goToAddQuiz(){
+    goToAddQuiz() {
       this.$router.push('/dashboard/practice/add')
     },
     getQuizzes(event) {
@@ -58,9 +67,9 @@ export default {
       this.ApiService(getQuizzesRequest(params)).then((response) => {
         this.quizzesList = response.data.data
         this.totalNumber = response.data.meta.total
-      }) .finally(() => {
-          this.loading = false;
-        });
+      }).finally(() => {
+        this.loading = false;
+      });
     },
     detailItem($event) {
       this.$router.push(`/dashboard/practices/show/${$event}`)
@@ -76,7 +85,7 @@ export default {
       this.showModal = $event
     },
     cancelWithConfirm() {
-      this.ApiService(deleteQuizRequest(this.itemId)).then(()=>{
+      this.ApiService(deleteQuizRequest(this.itemId)).then(() => {
         this.getQuizzes()
       })
       this.cancel()

@@ -11,7 +11,6 @@
       @deleteItem="deleteItem($event)"
       @refetch="getQuestionDifficulty"
       :loading="loading"
-      :is-delete="false"
     />
   </section>
 </template>

@@ -29,9 +29,24 @@ export default {
       formData.append('name', $event.name);
       formData.append('type', $event.type);
       formData.append('learning_path_id', $event.learning_path_id);
-      formData.append('file', $event.file);
-      formData.append('level_id', $event.level_id);
       formData.append('description', $event.description);
+      formData.append('paper_work_final_degree', $event.paper_work_final_degree);
+      formData.append('blooms', $event.blooms);
+      formData.append('lesson_id', $event.lesson_id);
+      formData.append('learning_styles', $event.learning_styles);
+      formData.append('language_skills', $event.language_skills);
+      if ($event.audioChangedRequest) {
+        formData.append('audio', $event.audio);
+      }
+      if ($event.fileChangedRequest) {
+        formData.append('file', $event.file);
+      }
+      if ($event.paper_work_without_colorChangedRequest) {
+        formData.append('paper_work_without_color', $event.paper_work_without_color);
+      }
+      if ($event.thumbnailChangedRequest) {
+        formData.append('thumbnail', $event.thumbnail);
+      }
       formData.append('_method', 'PUT');
       this.loading = true;
       axios.post(`/peper_works/${this.$route.params.id}`, formData, {

@@ -1,4 +1,7 @@
 module.exports = {
+  devServer:{
+    proxy: "https://jeeladmin.suredemos.com/"
+  },
   css: {
     loaderOptions: {
       sass: {
@@ -6,4 +9,5 @@ module.exports = {
       },
     },
   },
+
 };

@@ -8,6 +8,8 @@ import Button from "@/components/Shared/Button";
 import Confirmation from "@/components/Shared/Confirmation";
 import Pagination from "@/components/Shared/Pagination";
 import Toast from "@/components/Shared/Toast/index.vue";
+import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
+import VideoPlayer from "@/components/Shared/VideoPlayer/VideoPlayer";
 const components = {
   ValidationProvider,
   ValidationObserver,
@@ -18,7 +20,9 @@ const components = {
   Button,
   Confirmation,
   Pagination,
-  Toast
+  Toast,
+  GeneralModal,
+  VideoPlayer,
 };
 
 Object.entries(components).forEach(([name, component]) => {

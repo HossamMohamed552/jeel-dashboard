@@ -28,11 +28,21 @@ export default {
     getSystemRoles() {
       this.ApiService(getAllRolesRequest()).then((response) => {
         this.systemRoles = response.data.data;
+        this.systemRoles.push(
+          {
+            name: "صلاحيات المدرسة",
+            id: "",
+          },
+          {
+            name: "الطالب",
+            id: "5",
+          }
+        );
       });
     },
     handleAddEditUser(userFormData) {
       this.ApiService(postAddUserRequest(userFormData)).then((response) => {
-        this.$router.push("/dashboard/users")
+        this.$router.push("/dashboard/users");
       });
     },
     handleCancel() {

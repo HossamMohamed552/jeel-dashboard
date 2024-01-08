@@ -12,11 +12,21 @@
                     v-model="createTerm.name"
                     :label="$t('TERM.name')"
                     :name="$t('TERM.name')"
-                    :rules="'required|min:3'"
+                    :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
               </b-col>
               <b-col lg="6" class="mb-3">
+                <div class="hold-field">
+                  <TextField
+                    v-model="createTerm.min_missions"
+                    :label="$t('LEVEL.min_levels')"
+                    :name="$t('LEVEL.min_levels')"
+                    :rules="'required|numeric|max_value:20'"
+                  ></TextField>
+                </div>
+              </b-col>
+              <!-- <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
                     v-model="createTerm.levels"
@@ -29,7 +39,7 @@
                     multiple
                   ></SelectSearch>
                 </div>
-              </b-col>
+              </b-col> -->
             </b-row>
             <b-row>
               <div class="hold-btns-form">
@@ -56,16 +66,16 @@
 import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import SelectSearch from "@/components/Shared/SelectSearch/index.vue"
-import {getSingleTermsRequest} from "@/api/term";
-import {getAllLevelsRequest} from "@/api/level";
+import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
+import { getSingleTermsRequest } from "@/api/term";
+import { getAllLevelsRequest } from "@/api/level";
 
 export default {
   components: {
     Modal,
     TextField,
     Button,
-    SelectSearch
+    SelectSearch,
   },
   props: {
     loading: {
@@ -77,8 +87,10 @@ export default {
     return {
       levels: [],
       createTerm: {
+        min_missions: null,
         name: "",
-        levels: []
+        levels: [],
+        school_id: null,
       },
     };
   },
@@ -88,9 +100,9 @@ export default {
         if (!success) return;
       });
       if (this.$route.params.id) {
-        this.$emit('handleEditTerm', this.createTerm)
+        this.$emit("handleEditTerm", { ...this.createTerm, levels: [1] });
       } else {
-        this.$emit('handleAddTerm', this.createTerm)
+        this.$emit("handleAddTerm", { ...this.createTerm, levels: [1] });
       }
     },
     handleCancel() {
@@ -99,20 +111,22 @@ export default {
     getTermToEdit() {
       if (this.$route.params.id) {
         this.ApiService(getSingleTermsRequest(this.$route.params.id)).then((response) => {
-          this.createTerm = response.data.data
-        })
+          this.createTerm.name = response.data.data.name;
+          this.createTerm.min_missions = response.data.data.min_missions;
+          this.createTerm.levels = response.data.data.levels.map((item) => item.id);
+        });
       }
     },
     getAllLevels() {
       this.ApiService(getAllLevelsRequest()).then((response) => {
-        this.levels = response.data.data
-      })
-    }
+        this.levels = response.data.data;
+      });
+    },
   },
   mounted() {
-    this.getTermToEdit()
-    this.getAllLevels()
-  }
+    this.getTermToEdit();
+    this.getAllLevels();
+  },
 };
 </script>
 <style scoped lang="scss">

@@ -1,19 +1,26 @@
-import { extend } from "vee-validate";
-import { required, email, numeric, image, size, max, max_value } from "vee-validate/dist/rules";
+import {extend} from "vee-validate";
+import {
+  required,
+  email,
+  numeric,
+  image,
+  size,
+  max,
+  max_value,
+  regex
+} from "vee-validate/dist/rules";
 
 extend("required", {
   ...required,
-  message: "Required",
 });
 
 extend("email", {
   ...email,
-  message: "Please enter a valid email",
+  message: "يرجى إدخال البريد الإلكتروني الصحيح",
 });
 
 extend("numeric", {
   ...numeric,
-  message: "Please enter a valid number",
 });
 
 extend("image", {
@@ -24,13 +31,24 @@ extend("image", {
 extend("max", {
   ...max,
 });
-
+extend("regex", {
+  ...regex,
+});
 extend("max_value", {
   ...max_value,
-  message: "Seconds must be less than 60",
 });
 
 extend("size", {
   ...size,
   message: (_, value) => `File size must be below ${value.size / 1000} Mb`,
 });
+extend('audio', {
+  validate(value) {
+    const extension = value.name.split('.').pop().toLowerCase();
+    const audioExtensions = ['mp3', 'wav', 'ogg']
+    if (audioExtensions.includes(extension)) {
+      return true
+    }
+    return 'التسجيل الصوتى يجب ان يكون صوت';
+  }
+})

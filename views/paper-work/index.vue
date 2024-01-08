@@ -4,10 +4,15 @@
                :tableItems="paperWorkList" :fields-list="fieldsList" :v-search-model="groupSearchWord" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getPaperWorks"
+               @resetRefresh="refreshIt=false"
+               :isRefresh="refreshIt"
                :loading="loading"
+               :permission_delete="'delete-paperWork'"
+               :permission_edit="'edit-paperWork'"
+               :permission_view="'show-paperWork'"
                >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddPaperWorks">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddPaperWorks" v-if="user.permissions.includes(`add-paperWork`)">
           <img src="@/assets/images/icons/plus.svg">
           <span> إضافة ورقة عمل جديده</span>
         </Button>
@@ -27,23 +32,27 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import {deletePaperWorkRequest, getPaperWorksRequest} from "@/api/paperWork";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
 
 export default {
   components: {Modal, ListItems, Button},
+  computed:{
+    ...mapGetters(['user'])
+  },
   data() {
     return {
       loading: false,
       showModal: false,
+      refreshIt: false,
       groupSearchWord: "",
       paperWorkList: [],
       totalNumber: 0,
       fieldsList: [
         {key: "id", label: "التسلسل"},
-        {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
+        {key: "name", label: this.$i18n.t('TABLE_FIELDS.paperName')},
         {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
-        {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.level')},
-        {key: "type", label: this.$i18n.t('TABLE_FIELDS.type')},
-        {key: "description", label: this.$i18n.t('TABLE_FIELDS.description')},
+        {key: "lesson.name", label: this.$i18n.t('TABLE_FIELDS.lesson')},
+        {key: "paper_work_final_degree", label: this.$i18n.t('TABLE_FIELDS.paper_work_final_degree')},
         {key: "actions", label: "الإجراء"},
       ],
     }
@@ -64,11 +73,11 @@ export default {
     },
     detailItem($event) {
       this.$router.push(`/dashboard/paper-work/show/${$event}`)
-      console.log('detailItem', $event)
+
     },
     editItem($event) {
       this.$router.push(`/dashboard/paper-work/edit/${$event}`)
-      console.log('editItem', $event)
+
     },
     deleteItem($event) {
       this.itemId = $event
@@ -79,7 +88,8 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deletePaperWorkRequest(this.itemId)).then(() => {
-        this.getVideos()
+        this.getPaperWorks()
+        this.refreshIt = true
       })
       this.cancel()
     }

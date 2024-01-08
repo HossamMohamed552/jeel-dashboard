@@ -7,7 +7,7 @@
 
 .hold-field{
   label{
-    color: $color-primary;
+    //color: $color-primary;
     display: block;
     margin: 0 0.7rem 0.7rem 0;
   }
@@ -32,26 +32,27 @@
     font-weight: bold;
   }
   .col-form-label {
-    color: purple;
     font-size: 18px;
     font-weight: bold;
   }
-  label {
-    color: purple;
+  label,.custom-label{
     font-size: 18px;
     font-weight: bold;
+    margin-bottom: 1rem;
+    display: block;
   }
   .custom-file-label {
     border-radius: 15px;
     font-size: 14px;
     height: 50px;
+    margin: 0;
   }
   .custom-file-label::after {
     content: "اضافه" !important;
     background-color: purple;
     color: #fff;
     height: 80%;
-    width: 7%;
+    // width: 7%;
     border-radius: 50% 50% 50% 50% / 100% 100% 100% 100%;
     margin-top: 5px;
     margin-left: 3px;
@@ -63,5 +64,8 @@
   .custom-select {
     height: 50px;
     border-radius: 15px;
+  }
+  .invalid-feedback{
+    display: block;
   }
 }

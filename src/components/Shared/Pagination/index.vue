@@ -1,15 +1,18 @@
 <template>
   <div class="d-flex justify-content-between align-items-center mt-4">
-    <b-pagination
-      :value="currentPage"
-      :total-rows="totalItems"
-      :per-page="perPage"
-      @input="onPageChange"
-      class="custom-pagination"
-      :hide-goto-end-buttons="true"
-      next-class="next-btn"
-      prev-class="prev-btn"
-    />
+    <div class="d-flex align-items-center">
+      <b-pagination
+        :value="currentPage"
+        :total-rows="totalItems"
+        :per-page="perPage"
+        @input="onPageChange"
+        class="custom-pagination"
+        :hide-goto-end-buttons="true"
+        next-class="next-btn"
+        prev-class="prev-btn"
+      />
+      <div class="number-of-data-shown">عرض {{ loadedCount }} من أصل {{ totalItems }}</div>
+    </div>
     <b-form-select
       class="per-page-select"
       :value="selected"
@@ -32,7 +35,11 @@ export default {
     },
     totalItems: {
       type: Number,
-      required: true,
+      required: false,
+    },
+    loadedCount: {
+      type: Number,
+      required: 0,
     },
   },
   data() {

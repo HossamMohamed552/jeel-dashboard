@@ -9,7 +9,8 @@
     padding: 2rem;
     background: $color-question-system;
 
-    .question-type, .numberOfQuestions {
+    .question-type,
+    .numberOfQuestions {
       color: $color-primary;
       font-size: 1.2rem;
       font-weight: 500;
@@ -23,20 +24,20 @@
   }
 
   .hold-btn {
-    @include flexCenter(flex-end)
+    @include flexCenter(flex-end);
   }
 }
 
 .list-group {
   min-height: 100px;
   max-height: 300px;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   background: #fff;
   overflow: auto;
   margin-top: 1.5rem;
   .list-group-item {
     border: none;
-    padding: .5rem 0;
+    padding: 0.5rem 0;
   }
 }
 
@@ -63,7 +64,6 @@
 
   .custom-radio {
     display: inline-block;
-    margin-top: 1.5rem;
   }
 
   .mx-datepicker {

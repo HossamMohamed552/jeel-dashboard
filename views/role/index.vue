@@ -2,12 +2,12 @@
   <section class="container-fluid custom-container">
     <ListItems :header-name="'صلاحيات النظام'" :fieldsList="fieldsList" :table-items="rolesList"
                :v-search-model="roleSearchWord" @detailItem="detailItem($event)"
-                :number-of-item="totalNumber"
+               :number-of-item="totalNumber"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-               :loading="loading" @refetch="getRoles">
+               :loading="loading" @refetch="getRoles" :permission_delete="'delete-roles'" :permission_edit="'edit-roles'" :permission_view="'show-roles'">
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddRole">
-          <img src="@/assets/images/icons/plus.svg">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddRole" v-if="user.permissions.includes(`add-roles`)">
+          <img src="../../src/assets/images/icons/plus.svg">
           <span>إضافة صلاحية جديدة</span>
         </Button>
       </template>
@@ -23,10 +23,10 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import Modal from "@/components/Shared/Modal"
+import Modal from "@/components/Shared/Modal/index.vue"
 import {getRolesRequest} from "@/api/role";
 import {deleteRoleRequest} from "@/api/role";
-import router from "@/router";
+import {mapGetters} from "vuex";
 
 export default {
   name: "index",
@@ -60,7 +60,7 @@ export default {
     }
   },
   methods: {
-    goToAddRole(){
+    goToAddRole() {
       this.$router.push('/dashboard/role/add')
     },
     getRoles(event) {
@@ -69,9 +69,9 @@ export default {
       this.ApiService(getRolesRequest(params)).then((response) => {
         this.rolesList = response.data.data
         this.totalNumber = response.data.meta.total
-      }) .finally(() => {
-          this.loading = false;
-        });
+      }).finally(() => {
+        this.loading = false;
+      });
     },
 
     detailItem($event) {
@@ -88,11 +88,14 @@ export default {
       this.showModal = $event
     },
     cancelWithConfirm() {
-      this.ApiService(deleteRoleRequest(this.itemId)).then(()=>{
+      this.ApiService(deleteRoleRequest(this.itemId)).then(() => {
         this.getRoles()
       })
       this.cancel()
     }
+  },
+  computed: {
+    ...mapGetters(['user'])
   },
   mounted() {
     this.getRoles()
@@ -100,5 +103,5 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-@import "./index";
+@import "index";
 </style>

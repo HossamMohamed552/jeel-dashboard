@@ -22,12 +22,21 @@
 
 ::v-deep {
   .group-type{
+    margin-right: .2rem;
     .col-form-label{
       color: $color-primary !important;
     }
   }
   .custom-radio{
     display: inline-block;
-    margin-top: 1.5rem;
+  }
+
+  .col-form-label {
+    margin-bottom: 1.5rem;
+  }
+
+  .radio-item {
+    display: flex;
+    justify-content: flex-start;
   }
 }

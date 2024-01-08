@@ -2,7 +2,7 @@
   <div class="add-edit-user">
     <div class="container-fluid custom-container">
       <div class="add-edit-user-form">
-        <h3>{{ $t("USERS.ADD_NEW") }}</h3>
+        <h3>{{ $route.params.id ? $t("USERS.EDIT") : $t("USERS.ADD_NEW") }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -12,7 +12,7 @@
                     v-model="formValues.first_name"
                     :label="$t('USERS.FIRST_NAME')"
                     :name="$t('USERS.FIRST_NAME')"
-                    :rules="'required'"
+                    :rules="'required|min:2'"
                   ></TextField>
                 </div>
               </b-col>
@@ -22,27 +22,91 @@
                     v-model="formValues.last_name"
                     :label="$t('USERS.LAST_NAME')"
                     :name="$t('USERS.LAST_NAME')"
-                    :rules="'required'"
+                    :rules="'required|min:2'"
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3" v-if="!$route.params.id">
+              <b-col lg="4" class="mb-3">
+                <div class="hold-field">
+                  <label>
+                    {{ $t('MISSIONS.country') }}</label>
+                  <SelectSearch
+                    v-model="formValues.country_id"
+                    :name="`country`"
+                    :options="countries"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="4" class="mb-3">
+                <div class="hold-field">
+                  <label>
+                    {{ $t('USERS.religion') }}</label>
+                  <SelectSearch
+                    v-model="formValues.religion_id"
+                    :name="`religion`"
+                    :options="religions"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="4">
+                <div class="hold-field">
+                  <ValidationProvider rules="required" class="d-flex justify-content-start align-items-start">
+                    <label for="gender" class="group-type">{{ $t('USERS.gender') }}</label>
+                    <span><i class="fa-solid fa-asterisk"></i></span>
+                    <b-form-group id="gender" class="mt-4">
+                      <b-form-radio
+                        v-model="formValues.gender"
+                        value="male"
+                        name="group-status"
+                      >ذكر
+                      </b-form-radio>
+                      <b-form-radio
+                        v-model="formValues.gender"
+                        value="female"
+                        name="group-status"
+                      >انثى
+                      </b-form-radio>
+                    </b-form-group>
+                  </ValidationProvider>
+                </div>
+              </b-col>
+              <b-col
+                lg="6"
+                class="mb-3"
+                :class="isStudent && 'd-none'"
+                v-if="!$route.params.id"
+              >
                 <div class="hold-field">
                   <TextField
                     v-model="formValues.email"
                     :label="$t('USERS.EMAIL')"
                     :name="$t('USERS.EMAIL')"
-                    :rules="'required'"
+                    :rules="formValues.roles != '5' ? 'required|email' : ''"
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="6" class="mb-3" v-if="!$route.params.id">
+              <b-col v-if="formValues.user_name" lg="6" class="mb-3">
                 <div class="hold-field">
                   <TextField
+                    v-model="formValues.user_name"
+                    :label="$t('USERS.USER_NAME')"
+                    :name="$t('USERS.USER_NAME')"
+                    disabled="true"
+                  ></TextField>
+                </div>
+              </b-col>
+              <b-col lg="6" class="mb-3">
+                <div class="hold-field">
+                  <TextField
+                    type="password"
                     v-model="formValues.password"
                     :label="$t('USERS.PASSWORD')"
                     :name="$t('USERS.PASSWORD')"
-                    :rules="'required|min:6'"
+                    :rules="$route.params.id ? '' : 'required|min:6'"
                   ></TextField>
                 </div>
               </b-col>
@@ -52,7 +116,7 @@
                     v-model="formValues.mobile"
                     :label="$t('USERS.PHONE_NUMBER')"
                     :name="$t('USERS.PHONE_NUMBER')"
-                    :rules="'required'"
+                    :rules="{ regex: /^01[0125][0-9]{8}$/,required:true }"
                   ></TextField>
                 </div>
               </b-col>
@@ -62,21 +126,25 @@
                     v-model="formValues.social_media"
                     :label="$t('USERS.SOCIAL_MEDIA')"
                     :name="$t('USERS.SOCIAL_MEDIA')"
-                    :rules="'required'"
+                    :rules="{
+                      regex:
+                        /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/gi,
+                    }"
                   ></TextField>
                 </div>
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
+                    :rules="'required'"
                     v-model="formValues.roles"
                     :label="$t('USERS.ROLES')"
                     :name="$t('USERS.ROLES')"
                     :options="systemRoles"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
-                    :rules="'required'"
-                    multiple
+                    :disabled="$route.params.id"
+                    @input="checkIsStudent($event)"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -85,10 +153,12 @@
               <b-col lg="12" class="mb-3">
                 <div class="hold-field mt-4">
                   <ImageUploader
+                    v-model="image"
                     :name="'logoSchool'"
                     :text="$t('USERS.UPLOAD_IMAGE')"
-                    @imageUpload="handleUploadImage"
                     :item-image="itemImage"
+                    @imageUpload="handleUploadImage"
+                    @deleteImage="deleteImage"
                   />
                 </div>
               </b-col>
@@ -121,7 +191,8 @@ import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
-import {getSingleUserRequest} from "@/api/user";
+import {getReligionsRequest, getSingleUserRequest} from "@/api/user";
+import {getAllCountryRequest} from "@/api/country";
 
 export default {
   components: {
@@ -142,21 +213,38 @@ export default {
   },
   data() {
     return {
+      isStudent: false,
       formValues: {
         first_name: "",
         last_name: "",
+        user_name: "",
         email: "",
         password: "",
         mobile: "",
         social_media: "",
         roles: [],
+        country_id:"",
+        gender:"",
+        religion_id:""
       },
       editImage: false,
       itemImage: null,
       image: null,
+      countries:[],
+      religions:[]
     };
   },
   methods: {
+    checkIsStudent(id) {
+      if (id === 5) {
+        this.isStudent = true;
+        this.formValues.email = "";
+      } else this.isStudent = false;
+    },
+    deleteImage() {
+      this.image = "";
+      this.itemImage = null;
+    },
     onSubmit() {
       if (this.$route.params.id) {
         this.$refs.addEditUserForm.validate().then((success) => {
@@ -167,22 +255,39 @@ export default {
           formData.append("email", this.formValues.email);
           formData.append("password", this.formValues.password);
           formData.append("mobile", this.formValues.mobile);
-          formData.append("social_media", this.formValues.social_media);
-          formData.append("_method", 'PUT');
-          for (let user = 0; user < this.formValues.roles.length; user++) {
-            formData.append(`roles[${user}]`, this.formValues.roles[user]);
+          formData.append("country_id", this.formValues.country_id);
+          formData.append("gender", this.formValues.gender);
+          formData.append("religion_id", this.formValues.religion_id);
+          if (this.formValues.social_media) {
+            formData.append("social_media", this.formValues.social_media);
           }
-          if (this.image && this.editImage) formData.append("image", this.image);
-          axios.post(`/users/${this.$route.params.id}`, formData, {
-            headers: {
-              Authorization: `Bearer ${VueCookies.get("token")}`,
-              locale: 'ar',
-              'Content-Type': 'multipart/form-data'
-            }
-          }).then((response) => {
-          }).then(() => {
-            this.$router.push('/dashboard/users')
-          })
+          if (this.formValues.roles && this.formValues.roles !== 10) {
+            formData.append("roles[0]", this.formValues.roles);
+          }
+          if(this.formValues.roles && this.formValues.roles === 10)
+          {
+            formData.append("roles[0]", "");
+          }
+
+          formData.append("_method", "PUT");
+          // for (let user = 0; user < this.formValues.roles.length; user++) {
+          //   formData.append(`roles[${user}]`, this.formValues.roles[user]);
+          // }
+
+          formData.append("image", this.image);
+          axios
+            .post(`/users/${this.$route.params.id}`, formData, {
+              headers: {
+                Authorization: `Bearer ${VueCookies.get("token")}`,
+                locale: "ar",
+                "Content-Type": "multipart/form-data",
+              },
+            })
+            .then((response) => {
+            })
+            .then(() => {
+              this.$router.push("/dashboard/users");
+            });
         });
       } else {
         this.$refs.addEditUserForm.validate().then((success) => {
@@ -192,22 +297,44 @@ export default {
           formData.append("last_name", this.formValues.last_name);
           formData.append("email", this.formValues.email);
           formData.append("password", this.formValues.password);
-          formData.append("mobile", this.formValues.mobile);
-          formData.append("social_media", this.formValues.social_media);
-          for (let user = 0; user < this.formValues.roles.length; user++) {
-            formData.append(`roles[${user}]`, this.formValues.roles[user]);
+          formData.append("country_id", this.formValues.country_id);
+          formData.append("gender", this.formValues.gender);
+          formData.append("religion_id", this.formValues.religion_id);
+          if (this.formValues.mobile) {
+            formData.append("mobile", this.formValues.mobile);
           }
-          if (this.image && this.editImage) formData.append("image", this.image);
-          axios.post('/users', formData, {
-            headers: {
-              Authorization: `Bearer ${VueCookies.get("token")}`,
-              locale: 'ar',
-              'Content-Type': 'multipart/form-data'
-            }
-          }).then((response) => {
-          }).then(() => {
-            this.$router.push('/dashboard/users')
-          })
+          if (this.formValues.social_media) {
+            formData.append("social_media", this.formValues.social_media);
+          }
+          // if (this.formValues.roles) {
+          //   formData.append("roles[0]", this.formValues.roles);
+          // }
+          if (this.formValues.roles && this.formValues.roles !== 10) {
+            formData.append("roles[0]", this.formValues.roles);
+          }
+          // if(this.formValues.roles && this.formValues.roles === 10)
+          // {
+          //   formData.append("roles[0]", "");
+          // }
+          // for (let user = 0; user < this.formValues.roles.length; user++) {
+          //   formData.append(`roles[${user}]`, this.formValues.roles[user]);
+          // }
+
+          if (this.image && this.editImage)
+            formData.append("image", this.image);
+          axios
+            .post("/users", formData, {
+              headers: {
+                Authorization: `Bearer ${VueCookies.get("token")}`,
+                locale: "ar",
+                "Content-Type": "multipart/form-data",
+              },
+            })
+            .then((response) => {
+            })
+            .then(() => {
+              this.$router.push("/dashboard/users");
+            });
           // this.$emit("handleAddEditUser", formData);
         });
       }
@@ -216,26 +343,45 @@ export default {
       this.$emit("handleCancel");
     },
     handleUploadImage(e) {
-      this.editImage = true
-      this.itemImage = URL.createObjectURL(e.target.files[0])
+      this.editImage = true;
+      this.itemImage = URL.createObjectURL(e.target.files[0]);
       if (e) this.image = e.target.files[0];
       else return;
     },
+    getAllCountries() {
+      this.ApiService(getAllCountryRequest()).then((response) => {
+        this.countries = response.data.data
+      })
+    },
+    getAllReligions() {
+      this.ApiService(getReligionsRequest()).then((response) => {
+        this.religions = response.data.data
+      })
+    }
   },
   mounted() {
     if (this.$route.params.id) {
-      this.ApiService(getSingleUserRequest(this.$route.params.id)).then((response) => {
-        this.formValues.first_name = response.data.data.first_name
-        this.formValues.last_name = response.data.data.last_name
-        this.formValues.email = response.data.data.email
-        this.formValues.mobile = response.data.data.mobile
-        this.formValues.social_media = response.data.data.social_media
-        this.formValues.roles = response.data.data.roles.map((item) => item.id)
-        this.itemImage = response.data.data.avatar
-        this.image = response.data.data.avatar
-      })
+      this.ApiService(getSingleUserRequest(this.$route.params.id)).then(
+        (response) => {
+          this.formValues.first_name = response.data.data.first_name;
+          this.formValues.last_name = response.data.data.last_name;
+          this.formValues.user_name = response.data.data.user_name;
+          this.formValues.email = response.data.data.email;
+          this.formValues.mobile = response.data.data.mobile;
+          this.formValues.social_media = response.data.data.social_media;
+          // this.formValues.roles = response.data.data.roles.map((item) => item.id)
+          this.formValues.roles = response.data.data.roles;
+          this.itemImage = response.data.data.avatar;
+          this.image = response.data.data.avatar;
+          this.formValues.country_id = response.data.data.user_country.id;
+          this.formValues.religion_id = response.data.data.user_religion.id;
+          this.formValues.gender = response.data.data.gender;
+        }
+      );
     }
-  }
+    this.getAllCountries();
+    this.getAllReligions();
+  },
 };
 </script>
 <style scoped lang="scss">

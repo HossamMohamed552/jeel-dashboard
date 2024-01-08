@@ -5,9 +5,12 @@
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getCountries"
                :loading="loading"
+               :permission_delete="'delete-countries'"
+               :permission_edit="'edit-countries'"
+               :permission_view="'show-countries'"
                >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'"  @click="goToAddCountry">
+        <Button :custom-class="'btn-add rounded-btn big-padding'"  @click="goToAddCountry" v-if="user.permissions.includes(`add-countries`)">
           <img src="@/assets/images/icons/plus.svg">
           <span>إضافة دولة</span>
         </Button>
@@ -27,15 +30,19 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import {deleteCountryRequest, getCountryRequest} from "@/api/country";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
 export default {
   components: {Modal, ListItems, Button},
+  computed:{
+    ...mapGetters(['user'])
+  },
   data() {
     return {
       loading: false,
       showModal: false,
       countrySearchWord: "",
       countriesList: [],
-      totalNumber: null,
+      totalNumber: 0,
       fieldsList: [
         {
           key: "id",
@@ -43,12 +50,12 @@ export default {
         },
         {
           key: "name",
-          label: this.$i18n.t("TABLE_FIELDS.name")
+          label: this.$i18n.t("COUNTRY.name")
         },
-        {
-          key: "code",
-          label: this.$i18n.t("TABLE_FIELDS.code")
-        },
+        // {
+        //   key: "code",
+        //   label: this.$i18n.t("TABLE_FIELDS.code")
+        // },
         {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions")
@@ -73,11 +80,9 @@ export default {
     },
     detailItem($event) {
       this.$router.push(`/dashboard/country/show/${$event}`)
-      console.log('detailItem', $event)
     },
     editItem($event) {
       this.$router.push(`/dashboard/country/edit/${$event}`)
-      console.log('editItem', $event)
     },
     deleteItem($event) {
       this.itemId = $event

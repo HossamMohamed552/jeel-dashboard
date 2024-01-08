@@ -11,13 +11,18 @@
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
       @refetch="getStaffEnrolls"
+      :permission_delete="'delete-enrollment'"
+      :permission_edit="'edit-enrollment'"
+      :permission_view="'show-enrollment'"
+      class="p-0"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddStaffEnroll"
+          v-if="user.permissions.includes(`add-enrollment`)"
         >
-          <img src="@/assets/images/icons/plus.svg" />
+          <img src="@/assets/images/icons/plus.svg"/>
           <span>إضافة موظف</span>
         </Button>
       </template>
@@ -41,6 +46,8 @@ import {
   getStaffEnrollRequest,
 } from "@/api/staffEnroll.js";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
+
 export default {
   props: {
     schoolId: {
@@ -48,7 +55,10 @@ export default {
       default: null,
     },
   },
-  components: { Modal, ListItems, Button },
+  computed: {
+    ...mapGetters(['user'])
+  },
+  components: {Modal, ListItems, Button},
   data() {
     return {
       loading: false,
@@ -98,12 +108,12 @@ export default {
       // this.$router.push("/dashboard/class/add");
       this.$router.push({
         name: "add-staff-enroll",
-        params: { schoolId: this.schoolId },
+        params: {schoolId: this.schoolId},
       });
     },
     getStaffEnrolls(event) {
       this.loading = true;
-      const params = { ...event, school_id: this.schoolId };
+      const params = {...event, school_id: this.schoolId};
       this.ApiService(getStaffEnrollRequest(params))
         .then((response) => {
           this.staffEnrollList = response.data.data;
@@ -114,7 +124,7 @@ export default {
         });
     },
     searchBy($event) {
-      console.log("$event", $event);
+
     },
     detailItem($event) {
       this.$router.push(`/dashboard/staff-enroll/show/${$event}`);
@@ -123,7 +133,7 @@ export default {
       // this.$router.push(`/dashboard/class/edit/${$event}`);
       this.$router.push({
         name: "edit-staff-enroll",
-        params: { id: $event, schoolId: this.schoolId },
+        params: {id: $event, schoolId: this.schoolId},
       });
     },
     deleteItem($event) {

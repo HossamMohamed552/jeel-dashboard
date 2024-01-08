@@ -1,0 +1,22 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+
+.add-edit-country-form {
+  @include styleViewList;
+  min-height: 70vh;
+}
+.subject{
+  position: relative;
+  top: -10px;
+}
+::v-deep{
+  .vs__selected{
+    background: $color-primary;
+    color: #fff;
+    border-radius: 3.125rem;
+    padding: .3rem .3rem .8rem .3rem;
+  }
+  .vs__deselect{
+    fill: #fff;
+  }
+}

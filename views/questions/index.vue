@@ -1,15 +1,21 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة بنك الأسئلة'" :number-of-item="totalNumber"
+    <ListItems :header-name="'قائمة الأسئلة'" :number-of-item="totalNumber"
                :tableItems="questionsList" :fieldsList="fieldsList"
                :v-search-model="groupSearchWord"
                @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getQuestions"
+               @resetRefresh="refreshIt=false"
+               :isRefresh="refreshIt"
                :loading="loading"
-               >
+               :permission_delete="'delete-questions'"
+               :permission_edit="'edit-questions'"
+               :permission_view="'view-questions'"
+    >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddQuestions">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddQuestions"
+                v-if="user.permissions.includes(`add-questions`)">
           <img src="@/assets/images/icons/plus.svg">
           <span>إضافة سؤال جديد</span>
         </Button>
@@ -29,22 +35,27 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {deleteQuestionRequest, getQuestionRequest} from "@/api/question";
+import {mapGetters} from "vuex";
 
 export default {
   components: {Modal, ListItems, Button},
+  computed: {
+    ...mapGetters(['user'])
+  },
   data() {
     return {
-      loading:false,
+      loading: false,
       showModal: false,
       groupSearchWord: "",
       questionsList: [],
       totalNumber: 0,
+      refreshIt: false,
       fieldsList: [
         {key: "id", label: "التسلسل"},
-        {key: "question_type", label: "نوع السؤال"},
-        {key: "question", label: "السؤال"},
-        {key: "question_difficulty", label: "مستوى الصعوبة"},
-        {key: "question_pattern", label: "نمط السؤال"},
+        {key: "question", label: "نص السؤال"},
+        {key: "questionType.name", label: "نوع السؤال"},
+        {key: "subQuestionType.name", label: "نوع السؤال الفرعى"},
+        {key: "questionDifficulty", label: "مستوى الصعوبة"},
         {key: "actions", label: "الإجراء"},
       ],
     }
@@ -59,9 +70,9 @@ export default {
       this.ApiService(getQuestionRequest(params)).then((response) => {
         this.questionsList = response.data.data
         this.totalNumber = response.data.meta.total
-      }) .finally(() => {
-          this.loading = false;
-        });
+      }).finally(() => {
+        this.loading = false;
+      });
     },
     detailItem($event) {
       this.$router.push(`/dashboard/questions/show/${$event}`)
@@ -79,6 +90,7 @@ export default {
     cancelWithConfirm() {
       this.ApiService(deleteQuestionRequest(this.itemId)).then(() => {
         this.getQuestions()
+        this.refreshIt = true
       })
       this.cancel()
     }

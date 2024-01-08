@@ -11,11 +11,16 @@
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
       @refetch="getClasses"
+      :permission_delete="'delete-classes'"
+      :permission_edit="'edit-classes'"
+      :permission_view="'show-classes'"
+      class="p-0"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddClass"
+          v-if="user.permissions.includes(`add-classes`)"
         >
           <img src="@/assets/images/icons/plus.svg"/>
           <span>إضافة صف دراسي</span>
@@ -38,11 +43,12 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import {deleteClassRequest, getClassRequest} from "@/api/class.js";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {mapGetters} from "vuex";
 
 export default {
   props: {
     schoolId: {
-      type: Number,
+      type: String,
       default: null,
     },
   },
@@ -122,6 +128,9 @@ export default {
       });
       this.cancel();
     },
+  },
+  computed:{
+    ...mapGetters(['user']),
   },
   mounted() {
     this.getClasses();

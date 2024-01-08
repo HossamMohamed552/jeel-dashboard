@@ -5,12 +5,35 @@ export const getVideosRequest = (params) => ({
 })
 export const getVideoPerLevelPathRequest = (params) => ({
   method: 'get',
-  url: `videos?level_id=${params.levelId}&learning_path_id=${params.learnPathId}`,
+  url: `videos?&learning_path_id=${params.learnPathId}&list_all=ture`,
   config: {}
+  // level_id=${params.levelId}&learning_path_id=${params.learnPathId}&term_id=${params.termId}
 })
 export const getSingleVideoRequest = (params) => ({
   method: 'get',
   url: `videos/${params}`,
+})
+
+
+export const getQuestionOfVideo = (params)=>({
+  method: 'get',
+  url: `videos/${params}/quesitons`,
+})
+
+export const deleteQuestionOfVideo = (params)=>({
+  method: 'delete',
+  url: `videos/question/${params}`,
+})
+export const addQuestionOnVideo = (data)=>({
+  method: 'post',
+  url:'/videos/quesitons',
+  config: {
+    data
+  }
+})
+export const getSingleQuestionOnVideo = (params)=>({
+  method: 'get',
+  url:`/videos/quesiton/${params}`,
 })
 export const putVideoRequest = (params, data) => ({
   method: 'put',
@@ -29,6 +52,7 @@ export const postVideoRequest = (data) => ({
     'Content-Type': 'multipart/form-data'
   }
 })
+
 export const deleteVideoRequest = (params) => ({
   method: 'delete',
   url: `videos/${params}`,

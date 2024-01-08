@@ -1,5 +1,5 @@
 <template>
-  <b-container class="p-5">
+  <section class="holder custom-container student-levels">
     <div v-if="loading" class="text-center text-danger my-5 my-5">
       <b-spinner class="align-middle"></b-spinner>
     </div>
@@ -20,7 +20,7 @@
         }}</Button>
       </b-col>
     </b-row>
-  </b-container>
+  </section>
 </template>
 
 <script>
@@ -52,7 +52,7 @@ export default {
       this.updateLoading = true;
       this.ApiService(putLevelXPRequest(id, { xp: quantity }))
         .then((response) => {
-          console.log("response", response);
+
         })
         .finally(() => {
           this.updateLoading = false;

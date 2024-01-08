@@ -21,7 +21,9 @@
     "content": "content",
     "infoDashBoard": "infoDashBoard",
     "reports": "reports",
-    "system_settings": "System settings"
+    "system_settings": "System settings",
+    "routesPrizes": "Prizes"
+
   },
   "TABLE_FIELDS": {
     "id": "id",
@@ -79,7 +81,12 @@
     "ADD_NEW": "Add new qustion",
     "CHOOSE_Question_PATTERN": "Choose question pattern",
     "QUESTION_PATTERN": "Question pattern",
-    "QUESTION_SUB_PATTERN": "Question sub pattern"
+    "QUESTION_SUB_PATTERN": "Question sub pattern",
+    "LANGUAGE_METHOD": "Language method",
+    "TYPE_NAME": "Sub-question",
+    "LANGUAGE_SKILL": "Language skill",
+    "LEVEL": "Grade",
+    "THE_RIGHT_ANSWER": "The right answer"
   },
   "PACKAGE": {
     "showDetails": "show package details",
@@ -111,5 +118,15 @@
   "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الامن {year}",
   "GLOBAL_NEXT": "Next",
   "GLOBAL_BACK": "Back",
-  "GLOBAL_LOGOUT": "Logout"
+  "GLOBAL_LOGOUT": "Logout",
+  "VERIFICATION": {
+    "EXPIRED": "This code is expired. type your email to resend",
+    "USED": "This code is already used. You will be redirected to login page",
+    "SUCCESS": "Thank your for email verification, you will be redirected to home page",
+    "SOMETHING_WRONG": "Something went wrong",
+    "EMAIL": "Email",
+    "RESEND": "Resend",
+    "RESEND_SUCCESS": "Verification code has been sent successfully, Please check your email"
+  },
+  "WELCOME": "Welcome"
 }

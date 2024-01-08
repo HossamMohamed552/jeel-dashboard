@@ -1,52 +1,111 @@
 @import "_variables";
 @import "_mixin";
-*{
+
+@media screen and (max-width: 600px) {
+  html {
+    font-size: 12px;
+  }
+}
+* {
   //padding: 0;
   //margin: 0;
   box-sizing: border-box;
 }
-ul,li{
+ul,
+li {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.custom-container{
-  width: 90%;
+.custom-container {
+  width: 93%;
   margin: 0 auto;
+  gap: 10px;
   @media (max-width: 1200px) {
     width: auto;
   }
 }
-.btn-add{
-  img{
+.btn-add {
+  img {
     margin-left: 1rem;
   }
 }
-.show-details{
+.show-details {
   font-size: 1.6rem;
   font-weight: 700;
   color: $color-show-heading;
 }
-.hold-btns-form{
+.hold-btns-form {
   width: 100%;
   margin-top: 3rem;
-  @include flexCenter(flex-end)
+  @include flexCenter(flex-end);
 }
-.hold-field{
-  label{
-    color: $color-primary;
+.hold-field {
+  label {
+    //color: $color-primary;
     display: block;
     margin: 0 0.7rem 0.7rem 0;
   }
-  .custom-selectBox{
+  .custom-selectBox {
     display: block;
     padding: 0 1.3rem;
     border-radius: 3.125rem;
-    border: 1px solid #BEBEBE;
+    border: 1px solid #bebebe;
     color: $color-primary;
   }
+  textarea {
+    color: #76236c !important;
+    font-weight: bold !important;
+  }
 }
-.divider{
+.divider {
   padding-bottom: 2.5rem;
-  border-bottom: 1px solid #D1D1D1;
+  border-bottom: 1px solid #d1d1d1;
+}
+.divider-show {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #d1d1d1;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.icon-password {
+  position: absolute;
+  top: 58px;
+  z-index: 10;
+  right: 24px;
+  display: flex !important;
+  align-items: center;
+  color: $color-gray-dark;
+  height: 42px;
+  width: 36px;
+  padding: 8px;
+  cursor: pointer;
+
+  &:lang(ar) {
+    left: 24px;
+    right: unset;
+  }
+}
+
+legend {
+  font-weight: bold;
+}
+
+.required-flag {
+  position: relative;
+  &::after {
+    content: " * ";
+    font-size: 1.2rem;
+    position: absolute;
+    top: -5px;
+    // left: -10px;
+    color: #ff1e1e;
+  }
+}
+
+.with-border-bottom {
+  border-bottom: 2px solid #eae9e9;
+  padding-bottom: 1.75rem;
 }

@@ -3,18 +3,20 @@
 header {
   background-image: url("../../../assets/images/bg/header-bg.png");
   min-height: 20vh;
-  background-size: cover;
+  background-size: 130% 105%;
+  background-repeat: no-repeat;
   .top {
     padding: 2.125rem 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     .logo {
-      width: 120px;
-      height: 139px;
+      width: 148px;
+      height: 148px;
       cursor: pointer;
       img {
         @include image;
+        object-position: right;
       }
     }
     .notification-info-admin {
@@ -64,6 +66,7 @@ header {
           .name {
             margin-bottom: 0.5rem;
             color: #fff;
+            font-weight: bold;
           }
           .role {
             color: $color-admin-role;
@@ -86,11 +89,18 @@ header {
       }
     }
   }
+  .top-supervisor{
+    padding: 2.125rem 0 5rem 0;
+  }
   .nav {
+    position: relative;
+    top: -.8rem;
     .nav-item {
       padding: 1.875rem 0;
-      margin-left: 5rem;
-      color: #fff;
+      margin-left: 2.5rem;
+      color: #FFFFFF;
+      font-size: 1.1rem;
+      font-weight: bold;
       cursor: pointer;
       position: relative;
       img {
@@ -102,40 +112,39 @@ header {
         z-index: 2;
         right: 0;
         left: 0;
-        bottom: 0;
+        bottom: 1.5rem;
         transform: translateY(100%);
         color: $color-primary;
-        background-image: linear-gradient(
-          to bottom,
-          rgba(118, 35, 108, 0.15),
-          rgba(255, 255, 255, 1),
-          rgba(255, 255, 255, 1),
-          rgba(255, 255, 255, 1),
-          #fff
-        );
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        background: rgba(255, 255, 255, 0.57);
         border-radius: 1.56rem;
+        border: 1px solid #EAEAEA;
         min-width: 300px;
         display: none;
         opacity: 0;
         transition: all ease-in-out 0.3s;
+        max-height: 400px;
         overflow: hidden;
+        ul{
+          max-height: 320px;
+          overflow-y: auto;
+          width: 90%;
+          margin: 1rem auto;
+
+        }
         li {
-          padding: 1.5rem;
+          padding: 1rem 0 1rem 0;
           position: relative;
           z-index: 2;
-          border-bottom: 1px solid rgba(233, 233, 233, 0.74);
+          border-bottom: 1px solid #EAEAEA;
           transition: all ease-in-out 0.3s;
-          &:hover {
-            background: rgba(118, 35, 108, 0.76);
-            color: #fff;
+          &:last-of-type{
+            border-bottom: none;
           }
-          //&:first-of-type{
-          //  padding-top: 0;
-          //}
-          //&:last-of-type{
-          //  border-bottom: none;
-          //  padding-bottom: 0;
-          //}
+          &:hover{
+            color: rgba(118, 35, 108, 0.85);
+          }
         }
       }
       &:hover {
@@ -148,6 +157,10 @@ header {
         }
       }
     }
+  }
+  .nav-supervisor{
+    position: relative;
+    top: -4.5rem;
   }
   ::v-deep .btn.dropdown-toggle {
     background: transparent;
@@ -167,4 +180,27 @@ header {
       box-shadow: none;
     }
   }
+}
+
+::v-deep .nav-item.b-nav-dropdown.dropdown .dropdown-toggle::after {
+  display: none !important;
+}
+
+.collapsed .nav .nav-item {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+  border: 1px solid #EAEAEA;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $color-primary;
+  border-radius: 10px;
 }

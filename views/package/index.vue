@@ -11,11 +11,15 @@
       @deleteItem="deleteItem($event)"
       @refetch="getPackages"
       :loading="loading"
+      :permission_delete="'delete-packages'"
+      :permission_edit="'edit-packages'"
+      :permission_view="'show-packages'"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddPackage"
+          v-if="user.permissions.includes(`add-packages`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
           <span>إضافة باقة</span>
@@ -38,8 +42,13 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import { deletePackagesRequest, getPackagesRequest } from "@/api/packages.js";
 import Modal from "@/components/Shared/Modal/index.vue";
+import { mapGetters } from "vuex";
+
 export default {
   components: { Modal, ListItems, Button },
+  computed: {
+    ...mapGetters(["user"]),
+  },
   data() {
     return {
       loading: false,
@@ -54,20 +63,45 @@ export default {
         },
         {
           key: "name",
-          label: this.$i18n.t("TABLE_FIELDS.name"),
+          label: this.$i18n.t("PACKAGE.NAME"),
         },
         {
-          key: "price",
-          label: this.$i18n.t("TABLE_FIELDS.price"),
+          key: "country.name",
+          label: this.$i18n.t("TABLE_FIELDS.countryName"),
         },
         {
           key: "classes_count",
           label: this.$i18n.t("TABLE_FIELDS.classes_count"),
         },
         {
-          key: "description",
-          label: this.$i18n.t("TABLE_FIELDS.description"),
+          key: "price",
+          label: this.$i18n.t("PACKAGE.CURRENT_PRICE"),
         },
+        {
+          key: "currency.name",
+          label: this.$i18n.t("PACKAGE.CURRENCY"),
+        },
+        // {
+        //   key: "number_users_roles[3]",
+        //   label: "عدد الطلاب",
+        // },
+
+        // {
+        //   key: "number_users_roles[0]",
+        //   label: "عدد مديرين المدرسة",
+        // },
+        // {
+        //   key: "number_users_roles[1]",
+        //   label: "عدد المشرفين",
+        // },
+        // {
+        //   key: "number_users_roles[2]",
+        //   label: "عدد المدرسين",
+        // },
+        // {
+        //   key: "number_users_roles[4]",
+        //   label: "عدد أولياء الامور",
+        // },
         {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
@@ -81,23 +115,22 @@ export default {
       this.$router.push("/dashboard/package/add");
     },
     getPackages(event) {
-      this.loading = true
-      const params = event
-      this.ApiService(getPackagesRequest(params)).then((response) => {
-        this.packagesList = response.data.data;
-        this.totalNumber = response.data.meta.total;
-      }) .finally(() => {
+      this.loading = true;
+      this.ApiService(getPackagesRequest(event))
+        .then((response) => {
+          this.packagesList = response.data.data;
+          this.totalNumber = response.data.meta.total;
+        })
+        .finally(() => {
           this.loading = false;
-        });;
+        });
     },
 
     detailItem($event) {
       this.$router.push(`/dashboard/package/show/${$event}`);
-      console.log("detailItem", $event);
     },
     editItem($event) {
       this.$router.push(`/dashboard/package/edit/${$event}`);
-      console.log("editItem", $event);
     },
     deleteItem($event) {
       this.itemId = $event;

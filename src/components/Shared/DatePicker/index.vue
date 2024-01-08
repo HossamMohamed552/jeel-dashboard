@@ -11,6 +11,7 @@
       v-bind="$attrs"
       v-on="$listeners"
       :format="customFormat"
+      :lang="en"
       :class="{
         'input-disabled': $attrs.disabled,
         'is-invalid': invalid & errors.length,
@@ -25,10 +26,16 @@
 <script>
 import { FieldMixin } from "@/mixins/FieldMixin";
 import DatePicker from "vue2-datepicker";
+import 'vue2-datepicker/locale/en'
 import "vue2-datepicker/index.css";
 
 export default {
   mixins: [FieldMixin],
+  data(){
+    return{
+      en:'en'
+    }
+  },
   components: {
     DatePicker,
   },
