@@ -1,66 +1,73 @@
 <template>
-  <b-container fluid class="holder px-5">
-    <div v-if="loading" class="text-center text-danger my-5 my-5">
-      <b-spinner class="align-middle"></b-spinner>
-    </div>
-    <b-row v-else class="mb-4 align-items-bottom">
-      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">
-        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.NAME") }}</label>
-        <TextField v-model="action.action_name" type="text"/>
-      </b-col>
-      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">
-        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.DESC") }}</label>
-        <TextField v-model="action.action_desc" type="text"/>
-      </b-col>
-      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">
-        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.MAX_TRIAL") }}</label>
-        <TextField v-model="action.max_trail" type="number"/>
-      </b-col>
-      <b-col cols="12" md="6" lg="6" class="mb-1 mb-md-4">
-        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.COINS") }}</label>
-        <TextField v-model="action.jeel_coins" type="number"/>
-      </b-col>
-      <!--      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">-->
-      <!--        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.SECOND_COINS") }}</label>-->
-      <!--        <TextField v-model="action.second_jeel_coins" type="number" />-->
-      <!--      </b-col>-->
-      <!--      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">-->
-      <!--        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.NEXT_COINS") }}</label>-->
-      <!--        <TextField v-model="action.next_jeel_coins" type="number" />-->
-      <!--      </b-col>-->
-      <b-col cols="12" md="6" lg="6" class="mb-1 mb-md-4">
-        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.JEEl_EXPERIENCE") }}</label>
-        <TextField v-model="action.jeel_xp" type="number"/>
-      </b-col>
-      <!--      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">-->
-      <!--        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.SECOND_EXPERIENCE") }}</label>-->
-      <!--        <TextField v-model="action.second_jeel_xp" type="number" />-->
-      <!--      </b-col>-->
-      <!--      <b-col cols="12" md="6" lg="4" class="mb-1 mb-md-4">-->
-      <!--        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.NEXT_EXPERIENCE") }}</label>-->
-      <!--        <TextField v-model="action.next_jeel_xp" type="number" />-->
-      <!--      </b-col>-->
-    </b-row>
-    <b-row class="justify-content-end">
-      <b-col
-        cols="4"
-        md="6"
-        lg="4"
-        class="d-flex align-items-end justify-content-end mt-4 mt-lg-0"
-      >
-        <Button @click="handleCancel" custom-class="cancel-btn margin">
-          {{ $t("GLOBAL_CANCEL") }}
-        </Button>
-        <Button
-          :loading="updateLoading"
-          @click="updateAction()"
-          custom-class="submit-btn"
+  <div class="add-edit-school">
+    <Modal
+      :content-message="'تم التعديل بنجاح'"
+      :showModal="showModal"
+      :is-success="true"
+    />
+    <div class="container-fluid custom-container">
+      <div class="add-edit-school-form">
+        <h3>تعديل جائزة تفاعل</h3>
+        <validation-observer
+          v-slot="{ invalid }"
+          ref="addEditQuestionDifficultyPointsForm"
         >
-          {{ $t("SYSTEM_SETTINGS.UPDATE") }}
-        </Button>
-      </b-col>
-    </b-row>
-  </b-container>
+          <form @submit.prevent="onSubmit" class="mt-2">
+            <b-row>
+              <b-col lg="4" class="mt-3">
+                <div class="hold-field">
+                  <TextField
+                    v-model="action.action_name"
+                    label="اسم جائزة التفاعل"
+                    name="اسم جائزة التفاعل"
+                    placeholder="ادخل اسم جائزة التفاعل"
+                    :rules="'required'"
+                  ></TextField>
+                </div>
+              </b-col>
+              <b-col lg="4" class="mt-3">
+                <div class="hold-field">
+                  <TextField
+                    v-model="action.jeel_xp"
+                    label="عدد النقاط"
+                    name="عدد النقاط"
+                    placeholder="ادخل عدد النقاط"
+                    :rules="'required'"
+                  ></TextField>
+                </div>
+              </b-col>
+              <b-col lg="4" class="mt-3">
+                <div class="hold-field">
+                  <TextField
+                    v-model="action.jeel_coins"
+                    label="عدد عملات جيل"
+                    name="عدد عملات جيل"
+                    placeholder="ادخل عدد عملات جيل"
+                    :rules="'required'"
+                  ></TextField>
+                </div>
+              </b-col>
+            </b-row>
+            <b-row>
+              <div class="hold-btns-form">
+                <Button @click="handleCancel" custom-class="cancel-btn margin">
+                  {{ $t("GLOBAL_CANCEL") }}
+                </Button>
+                <Button
+                  type="submit"
+                  :loading="loading"
+                  :disabled="invalid"
+                  custom-class="submit-btn"
+                >
+                  {{ $t("GLOBAL_EDIT") }}
+                </Button>
+              </div>
+            </b-row>
+          </form>
+        </validation-observer>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -69,23 +76,19 @@ import {
   putRewardingActionsRequest,
 } from "@/api/system-settings.js";
 import Button from "@/components/Shared/Button/index.vue";
+import Modal from "@/components/Shared/Modal/index.vue";
+import TextField from "@/components/Shared/TextField/index.vue";
 
 export default {
-  components: {Button},
+  components: {Button, Modal, TextField},
   data() {
     return {
       loading: false,
-      updateLoading: false,
+      showModal: false,
       action: {
         action_name: "",
-        action_desc: "",
-        max_trail: 1,
-        jeel_coins: 0,
-        // second_jeel_coins: 0,
-        // next_jeel_coins: 0,
-        // first_jeel_xp: 0,
-        // second_jeel_xp: 0,
-        jeel_xp: 0,
+        jeel_xp: "",
+        jeel_coins: ""
       },
       id: this.$route.params.id,
     };
@@ -107,15 +110,19 @@ export default {
           this.loading = false;
         });
     },
-    updateAction() {
-      this.updateLoading = true;
+    onSubmit() {
+      this.loading = true;
 
       this.ApiService(putRewardingActionsRequest(this.id, this.action))
         .then((response) => {
-
+          this.showModal = true;
+          setTimeout(() => {
+            this.showModal = false;
+            this.$router.push("/dashboard/rewarding-actions");
+          }, 3000);
         })
         .finally(() => {
-          this.updateLoading = false;
+          this.loading = false;
         });
     },
   },

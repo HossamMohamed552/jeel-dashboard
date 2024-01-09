@@ -1298,7 +1298,7 @@ const protectedRoutes = [
         name: "rewarding-actions",
         component: () => import("../../views/rewarding-actions/index.vue"),
         meta: {
-          breadcrumb: "نظام المكافآت",
+          breadcrumb: "جوائز التفاعل",
           preLabel: "",
           preLink: "",
         },
@@ -1308,7 +1308,18 @@ const protectedRoutes = [
         name: "rewarding-actions-edit",
         component: () => import("../../views/rewarding-actions/edit/index.vue"),
         meta: {
-          breadcrumb: "تعديل نظام المكافآت",
+          breadcrumb: "تعديل جائزة تفاعل",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/rewarding-actions/show/:id",
+        name: "show-rewarding-actions",
+        component: () =>
+          import("../../views/rewarding-actions/view-rewarding-actions/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل جائزة تفاعل",
           preLabel: "",
           preLink: "",
         },

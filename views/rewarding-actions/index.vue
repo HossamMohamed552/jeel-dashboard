@@ -1,14 +1,18 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="''"
+      :header-name="'قائمة جوائز التفاعل'"
       :fieldsList="fieldsList"
       :table-items="actions"
       :v-search-model="roleSearchWord"
       :number-of-item="totalNumber"
+      @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       :loading="loading"
       @refetch="getRewardingActions"
+      :showSortControls="false"
+      :permission_edit="'edit-questionDifficulty'"
+      :permission_view="'show-questionDifficulty'"
     >
     </ListItems>
   </section>
@@ -33,14 +37,18 @@ export default {
         },
         {
           key: "action_name",
-          label: this.$i18n.t("TABLE_FIELDS.name"),
+          label: 'إسم جائزة التفاعل',
         },
         {
-          key: "action_desc",
-          label: this.$i18n.t("TABLE_FIELDS.description"),
+          key: "jeel_xp",
+          label: "عدد النقاط",
         },
         {
-          key: "edit_action",
+          key: "jeel_coins",
+          label: "عدد العملات",
+        },
+        {
+          key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
       ],
@@ -59,6 +67,9 @@ export default {
     },
     editItem($event) {
       this.$router.push(`/dashboard/rewarding-actions/${$event}`);
+    },
+    detailItem($event) {
+      this.$router.push(`/dashboard/rewarding-actions/show/${$event}`);
     },
   },
   mounted() {
