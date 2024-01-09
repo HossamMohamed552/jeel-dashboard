@@ -1,47 +1,36 @@
 <template>
   <section class="edit-role">
-    <AddEditRole
+    <AddEditBadge
       :loading="loading"
-      :permission="permission"
-      @handleEditRole="handleEditRole($event)"
+      @handleEditBadge="handleEditBadge($event)"
       @handleCancel="handleCancel"
     />
   </section>
 </template>
 <script>
-import AddEditRole from "@/components/Modules/Users/AddEditRole/index.vue";
-import {putRoleRequest} from "@/api/role";
-import {getPermissionRequest} from "@/api/permission";
+import AddEditBadge from "@/components/Modules/Badges/AddEditBadge/index.vue";
+import { putEditBadgeRequest } from "@/api/badge";
 
 export default {
   name: "index",
-  components: {AddEditRole},
+  components: { AddEditBadge },
   data() {
     return {
-      permission: [],
       loading: false,
     };
   },
-  mounted() {
-    this.getAllPermissions();
-  },
   methods: {
-    getAllPermissions() {
-      this.ApiService(getPermissionRequest()).then((response) => {
-        this.permission = response.data.data;
-      });
-    },
-    handleEditRole($event) {
-      this.ApiService(putRoleRequest(this.$route.params.id, $event)).then((response) => {
-        this.$router.push("/dashboard/role");
-      })
+    handleEditBadge($event) {
+      this.ApiService(putEditBadgeRequest(this.$route.params.id, $event)).then(
+        (response) => {
+          this.$router.push("/dashboard/jeel-badge");
+        }
+      );
     },
     handleCancel() {
-      this.$router.push("/dashboard/role");
+      this.$router.push("/dashboard/jeel-badge");
     },
   },
-}
+};
 </script>
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

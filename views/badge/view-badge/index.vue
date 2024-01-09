@@ -1,29 +1,44 @@
 <template>
-  <section class="container-fluid custom-container">
-    <div class="show-role">
+  <section class="container-fluid custom-container" v-if="badges">
+    <div class="show-group">
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">{{$t('ROLES.showDetails')}}</h2>
+            <h2 class="heading">{{ $t("BADGE.bade_details") }}</h2>
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="6">
-            <ShowItem :title="$t('ROLES.name')" :subtitle="role.name"/>
+          <b-col md="4" sm="12">
+            <ShowItem
+              class="divider-show"
+              :title="$t('BADGE.NAME')"
+              :subtitle="badges.name"
+            />
           </b-col>
-          <b-col lg="6">
-            <ShowItem :title="$t('ROLES.description')" :subtitle="role.description"/>
+          <b-col md="4" sm="12">
+            <ShowItem
+              class="divider-show"
+              :title="$t('BADGE.main_percentage')"
+              :subtitle="badges.main_percentage"
+            />
+          </b-col>
+          <b-col md="4" sm="12">
+            <ShowItem
+              class="divider-show"
+              :title="$t('BADGE.max_percentage')"
+              :subtitle="badges.max_percentage"
+            />
           </b-col>
         </b-row>
-      </div>
-      <div class="permissions">
-        <h2 class="heading">{{$t('permissions')}} </h2>
         <b-row>
-          <b-col lg="3" v-for="permission in role.permissions" :key="permission.id">
-            <div class="permission-item">
-              <img src="@/assets/images/icons/verify.svg">
-              <span>{{permission.name}}</span>
-            </div>
+          <b-col lg="12" class="mb-5 mt-4">
+            <PreviewMedia
+              :header="$t('BADGE.bade_logo')"
+              :media-name="badges.logo_name"
+              :file-size="badges.logo_size"
+              :image-url="badges.logo"
+              :typeOfMedia="'image'"
+            />
           </b-col>
         </b-row>
       </div>
@@ -31,24 +46,28 @@
   </section>
 </template>
 <script>
+import { getBadgeByIdRequest } from "@/api/badge";
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import {getSingleRoleRequest} from "@/api/role";
+import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
+
 export default {
   name: "index",
-  components:{
-    ShowItem
+  components: {
+    ShowItem,
+    PreviewMedia,
   },
-  data(){
-    return{
-      role: {}
-    }
+  data() {
+    return {
+      badges: {},
+    };
   },
   mounted() {
-    this.ApiService(getSingleRoleRequest(this.$route.params.id)).then((response)=>{
-      this.role = response.data.data
-    })
-  }
-}
+    this.ApiService(getBadgeByIdRequest(this.$route.params.id))
+      .then((response) => {
+        this.badges = response.data.data;
+      })
+  },
+};
 </script>
 <style scoped lang="scss">
 @import "./index";

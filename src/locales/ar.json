@@ -112,6 +112,18 @@
     "description": "الوصف",
     "showDetails": "عرض تفاصيل صلاحية المستخدم"
   },
+  "BADGE": {
+    "ADD_NEW": "إضافة شارة جديدة",
+    "EDIT": "تعديل شارة",
+    "name": "إسم الشارة",
+    "NAME": "إسم الشارة",
+    "main_percentage": "نسبة من ",
+    "max_percentage": "نسبة الى",
+    "description": "الوصف",
+    "showDetails": "عرض تفاصيل الشاره",
+    "bade_logo": "لوجو الشارة",
+    "bade_details": "تفاصيل شارة جيل"
+  },
   "COUNTRY": {
     "ADD_NEW": "إضافة دولة جديدة",
     "EDIT": "تعديل الدولة",
