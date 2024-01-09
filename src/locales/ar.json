@@ -117,19 +117,27 @@
     "showDetails": "عرض تفاصيل الدولة"
   },
   "GROUP": {
-    "ADD_NEW": "إضافة مجموعة جديدة",
-    "EDIT": "تعديل المجموعة المدرسية",
-    "name": "اسم المجموعة",
+    "ADD_NEW": "إضافة مجموعة المدارس",
+    "EDIT": "تعديل مجموعة المدارس",
+    "name": "اسم مجموعة المدارس",
+    "name_placeholder": "أدخل اسم مجموعة المدارس",
     "type": "نوع المجموعة",
     "music": "الصوت",
+    "music_placeholder": "اختر نوع الصوت",
     "email": "البريد الإلكترونى",
     "status": "الحالة",
-    "owner": "إسم المالك",
-    "country": "إسم الدولة",
-    "selectUser": "إختر إسم المالك",
-    "selectCountry": "إختر إسم الدولة",
+    "status_placeholder": "اختر الحالة",
+    "owner_placeholder": "أدخل إسم مالك المجموعة",
+    "owner": "إسم مالك المجموعة",
+    "country": "دولة ادارة المجموعة",
+    "country_placeholder": "دولة ادارة المجموعة",
+    "selectUser": "إختر إسم مالك المجموعة",
+    "selectCountry": "إختر الدولة",
+    "selectCountry_placeholder": "إختر الدولة",
     "showDetails": "عرض تفاصيل المجموعة",
-    "missions": "المراحل"
+    "missions": "المراحل",
+    "Description": "ملاحظات",
+    "DESCRIPTION_INPUT_PLACEHOLDER": "أدخل ملاحظات"
   },
   "SCHOOL": {
     "ADD_NEW": "إضافة مدرسة جديدة",
@@ -627,7 +635,7 @@
     "QUESTION_TYPE_PLACEHOLDER": "أختر نوع السؤال",
     "QUESTION_TITLE": "نص السؤال",
     "QUESTION_TITLE_PLACEHOLDER": "نص السؤال",
-    "SHOW_DETAILS":"تفاصيل التسجيل الصوتى"
+    "SHOW_DETAILS": "تفاصيل التسجيل الصوتى"
   },
   "NO_MATCHING": "لا توجد نتائج"
 }
