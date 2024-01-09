@@ -2,13 +2,13 @@ export const getLessonsRequest = (params) => ({
   method: "get",
   url: `lesson`,
   config: {
-    params
+    params,
   },
 });
 export const getAllLessonsRequest = (params) => ({
   method: "get",
   url: `lesson?list_all=true`,
-})
+});
 export const getLessonByIdRequest = (id) => ({
   method: "get",
   url: `lesson/${id}`,
@@ -30,4 +30,11 @@ export const postAddLessonRequest = (data) => ({
 export const deleteLessonRequest = (id) => ({
   method: "delete",
   url: `lesson/${id}`,
+});
+export const getLessonsByLearningPathRequest = (params) => ({
+  method: "get",
+  url: `lesson`,
+  config: {
+    params,
+  },
 });

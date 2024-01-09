@@ -80,3 +80,19 @@
     font-weight: bold;
   }
 }
+
+
+.discount-percentage {
+
+    position: relative;
+
+    &::after {
+      content: "%";
+      position: absolute;
+      left: 5%;
+      bottom: 20%;
+      color: #8C8C8C;
+      font-size: 1.25rem;
+    }
+  
+}

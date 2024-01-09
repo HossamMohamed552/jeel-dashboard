@@ -81,8 +81,8 @@
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="قيمة الخصم"
-              :subtitle="singleSubscribtion.package_discount || 0"
+              title="نسبة الخصم"
+              :subtitle="`${singleSubscribtion.package_discount} %` || `0 %`"
             />
           </b-col>
           <b-col lg="4" class="mb-5">

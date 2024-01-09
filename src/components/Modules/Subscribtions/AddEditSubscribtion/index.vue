@@ -160,12 +160,12 @@
                     </div>
                   </b-col>
                   <b-col lg="4" class="mt-3">
-                    <div class="hold-field">
+                    <div class="hold-field discount-percentage">
                       <TextField
                         v-model="formValues.package_discount"
-                        label="قيمة الخصم %"
-                        name="قيمة الخصم"
-                        placeholder="أدخل قيمة الخصم"
+                        label="نسبة الخصم"
+                        name="نسبة الخصم"
+                        placeholder="أدخل نسبة الخصم"
                         type="number"
                         min="0"
                         :disabled="!formValues.package_id"
