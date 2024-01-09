@@ -118,7 +118,7 @@
           <span v-if="data.item.level">{{ data.item.level.name | cutString }}</span>
         </template>
         <template #cell(chracter_type)="data">
-          <span v-if="data.item.chracter_type">{{ data.item.chracter_type[0].name | cutString }}</span>
+          <span v-if="data.item.chracter_type">{{ data.item.chracter_type[0].key | cutString }}</span>
         </template>
         <template #cell(term)="data">
           <span v-if="data.item.term">{{ data.item.term.name | cutString }}</span>

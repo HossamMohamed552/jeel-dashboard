@@ -34,13 +34,13 @@
               <b-col lg="4" class="mt-3">
                 <div class="hold-field" v-if="characters">
                   <SelectSearch
-                    v-model="createCharacter.character_type"
+                    v-model="characterSelected"
                     :label="$t('CHARACTER.type')"
                     :name="$t('CHARACTER.type')"
                     placeholder="اختر نوع الشخصية"
                     :options="characters"
-                    :reduce="(option) => option.key"
-                    :get-option-label="(option) => option.name"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.key"
                     :rules="'required'"
                   ></SelectSearch>
                 </div>
@@ -151,32 +151,32 @@ export default {
       characters: [
         {
           id: 1,
-          key: "male",
-          name: "ذكر",
+          name: "male",
+          key: "ذكر",
         },
         {
           id: 2,
-          key: "female",
-          name: "أنثي",
+          name: "female",
+          key: "أنثي",
         },
       ],
       createCharacter: {
         name: "",
         country_id: "",
-        logo: null,
-        character_type: "",
+        image: null,
+        character_type: [],
         //  thumbnail
         thumbnail: null,
         thumbnailChanged: false,
         thumbnailChangedRequest: false,
       },
-      finalSelected: [],
+      characterSelected: null,
     };
   },
   methods: {
     setImageId(id) {
       this.createCharacter.thumbnail = id;
-      this.createCharacter.logo = id;
+      this.createCharacter.image = id;
       this.createCharacter.thumbnailChanged = false;
       this.createCharacter.thumbnailChangedRequest = true;
     },
@@ -204,10 +204,10 @@ export default {
         if (!success) return;
       });
       if (this.$route.params.id) {
-        if (this.createCharacter.logo != null) {
+        if (this.createCharacter.image != null) {
           this.$emit("handleEditCharacter", this.createCharacter);
         } else {
-          delete this.createCharacter.logo;
+          delete this.createCharacter.image;
 
           this.$emit("handleEditCharacter", this.createCharacter);
         }
@@ -225,8 +225,8 @@ export default {
           (response) => {
             this.createCharacter.name = response.data.data.name;
             this.createCharacter.country_id = response.data.data.country.id;
-            this.createCharacter.character_type = response.data.data.chracter_type[0].name;
-            this.createCharacter.logo = response.data.data.image_uuid;
+            this.characterSelected = response.data.data.chracter_type;
+            this.createCharacter.image = response.data.data.image_uuid;
             this.createCharacter.thumbnail_name = response.data.data.image_name;
             this.createCharacter.thumbnail_size = response.data.data.image_size;
             this.createCharacter.thumbnail = response.data.data.image;
@@ -238,6 +238,16 @@ export default {
       this.ApiService(getAllCountryRequest()).then((response) => {
         this.countries = response.data.data;
       });
+    },
+  },
+  watch: {
+    characterSelected(val) {
+      this.createCharacter.character_type = []
+      if(isNaN(val)){
+        this.createCharacter.character_type.push(val[0].id)
+      }else{
+        this.createCharacter.character_type.push(val)
+      }
     },
   },
   mounted() {
