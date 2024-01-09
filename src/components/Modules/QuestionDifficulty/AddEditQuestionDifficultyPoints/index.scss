@@ -7,9 +7,8 @@
 }
 .hold-field{
   label{
-    color: $color-primary;
-    display: block;
-    margin: 0 0.7rem 0.7rem 0;
+    // color: $color-primary;
+    margin: 0.7rem 0.7rem 1rem;
   }
   .custom-selectBox{
     display: block;
@@ -31,13 +30,13 @@
     font-weight: bold;
   }
   .col-form-label {
-    color: purple;
-    font-size: 18px;
+    // color: purple;
+    font-size: 1rem;
     font-weight: bold;
   }
   label {
-    color: purple;
-    font-size: 18px;
+    // color: purple;
+    font-size: 1rem;
     font-weight: bold;
   }
 }
