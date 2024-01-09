@@ -1330,7 +1330,7 @@ const protectedRoutes = [
         name: "question-difficulty",
         component: () => import("../../views/question-difficulty/index.vue"),
         meta: {
-          breadcrumb: "صعوبات السؤال",
+          breadcrumb: "مستوى السؤال",
           preLabel: "",
           preLink: "",
         },
@@ -1341,7 +1341,7 @@ const protectedRoutes = [
         component: () =>
           import("../../views/question-difficulty/edit-question-difficulty/index.vue"),
         meta: {
-          breadcrumb: "تعديل  صعوبة السؤال",
+          breadcrumb: "تعديل  مستوى السؤال",
           preLabel: "",
           preLink: "",
         },
@@ -1352,7 +1352,7 @@ const protectedRoutes = [
         component: () =>
           import("../../views/question-difficulty/view-question-difficulty/index.vue"),
         meta: {
-          breadcrumb: "تفاصيل  صعوبة السؤال",
+          breadcrumb: "تفاصيل  مستوى السؤال",
           preLabel: "",
           preLink: "",
         },

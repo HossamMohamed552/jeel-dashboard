@@ -8,18 +8,17 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="6" class="mb-5">
-            <ShowItem :title="$t('NAME')" :subtitle="singleQuestionDifficulty.name" />
-          </b-col>
-          <b-col lg="6" class="mb-5">
+          <b-col lg="4" class="mb-5">
             <ShowItem
-              :title="$t('SLUG')"
-              :subtitle="singleQuestionDifficulty.slug"
+              class="divider-show"
+              title="اسم مستوى السؤال"
+              :subtitle="singleQuestionDifficulty.name"
             />
           </b-col>
-          <b-col lg="6" class="mb-5">
+          <b-col lg="4" class="mb-5">
             <ShowItem
-              :title="$t('GRADE_POINTS')"
+              class="divider-show"
+              title="عدد النقاط"
               :subtitle="singleQuestionDifficulty.grade_points"
             />
           </b-col>
@@ -42,11 +41,11 @@ export default {
     };
   },
   mounted() {
-    this.ApiService(getSingleQuestionDifficltyRequest(this.$route.params.id)).then(
-      (response) => {
-        this.singleQuestionDifficulty = response.data.data;
-      }
-    );
+    this.ApiService(
+      getSingleQuestionDifficltyRequest(this.$route.params.id)
+    ).then((response) => {
+      this.singleQuestionDifficulty = response.data.data;
+    });
   },
 };
 </script>

@@ -150,6 +150,14 @@ let routesMissions = [
 ];
 let routeSettings = [
   {
+    name: "مستوى السؤال",
+    path: "/dashboard/question-difficulty",
+    altImage: "questionDifficulty",
+    titleImage: "questionDifficulty",
+    icon: require("@/assets/images/icons/question.svg"),
+    permission: "view-questionDifficulty",
+  },
+  {
     name: "جيمز",
     path: "/dashboard/jems",
     altImage: "jems",
@@ -172,14 +180,6 @@ let routeSettings = [
     titleImage: "student-levels",
     icon: require("@/assets/images/icons/country.svg"),
     permission: "view-countries",
-  },
-  {
-    name: "صعوبة السؤال",
-    path: "/dashboard/question-difficulty",
-    altImage: "questionDifficulty",
-    titleImage: "questionDifficulty",
-    icon: require("@/assets/images/icons/question.svg"),
-    permission: "view-questionDifficulty",
   },
 ];
 let routeBasicData = [
