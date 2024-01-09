@@ -76,6 +76,11 @@
             <img class="image-school-in-table" :src="data.item.logo"/>
           </div>
         </template>
+        <template #cell(image)="data">
+          <div class="hold-image-school">
+            <img class="image-school-in-table" :src="data.item.image"/>
+          </div>
+        </template>
         <template #cell(school_type)="data">
           <span>{{ data.item.school_type.name | cutString }}</span>
         </template>
@@ -112,8 +117,8 @@
         <template #cell(level)="data">
           <span v-if="data.item.level">{{ data.item.level.name | cutString }}</span>
         </template>
-        <template #cell(level)="data">
-          <span v-if="data.item.level">{{ data.item.level.name | cutString }}</span>
+        <template #cell(chracter_type)="data">
+          <span v-if="data.item.chracter_type">{{ data.item.chracter_type[0].name | cutString }}</span>
         </template>
         <template #cell(term)="data">
           <span v-if="data.item.term">{{ data.item.term.name | cutString }}</span>

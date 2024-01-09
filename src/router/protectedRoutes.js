@@ -1,4 +1,5 @@
-import prizes from './modules/prizes'
+import badges from './modules/badges'
+import characters from './modules/characters'
 
 const protectedRoutes = [
   {
@@ -1714,7 +1715,8 @@ const protectedRoutes = [
         },
       },
       // prizes
-      ...prizes
+      ...badges,
+      ...characters
     ],
   },
 ];

@@ -94,7 +94,10 @@
     "badge_name": "اسم الشارة",
     "percentage_of": "نسبة من",
     "percentage_to": "نسبة إلي",
-    "learning_path_name": "اسم المسار"
+    "learning_path_name": "اسم المسار",
+    "character_name": "اسم الشخصية",
+    "character_logo": "صورة الشخصية",
+    "character_type": "نوع الشخصية"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -123,6 +126,18 @@
     "showDetails": "عرض تفاصيل الشاره",
     "bade_logo": "لوجو الشارة",
     "bade_details": "تفاصيل شارة جيل"
+  },
+  "CHARACTER": {
+    "ADD_NEW": "إضافة شخصية جديدة",
+    "EDIT": "تعديل الشخصية",
+    "name": "إسم الشخصية",
+    "NAME": "إسم الشخصية",
+    "description": "الوصف",
+    "showDetails": "عرض تفاصيل الشخصية",
+    "character_logo": "لوجو الشخصية",
+    "character_details": "تفاصيل الشخصية",
+    "country": "الدولة",
+    "type": "النوع"
   },
   "COUNTRY": {
     "ADD_NEW": "إضافة دولة جديدة",
