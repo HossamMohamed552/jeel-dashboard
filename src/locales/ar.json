@@ -91,10 +91,10 @@
     "paperName": "اسم ورقة العمل",
     "paper_work_final_degree": "الدرجة",
     "bloom": "بلوم",
-    "learning_path_name": "اسم المسار",
     "badge_name": "اسم الشارة",
     "percentage_of": "نسبة من",
-    "percentage_to": "نسبة إلي"
+    "percentage_to": "نسبة إلي",
+    "learning_path_name": "اسم المسار"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",

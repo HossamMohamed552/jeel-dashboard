@@ -1536,6 +1536,183 @@ const protectedRoutes = [
           preLink: "/dashboard/competitions",
         },
       },
+
+      // all but level class not done
+      {
+        path: "/dashboard/level-classes/:levelId",
+        name: "level-classes",
+        component: () => import("../../views/levels/level-classes/index.vue"),
+        meta: {
+          breadcrumb: "الصفوف الدراسية",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      // path content // if supervisor or teacher
+      {
+        path: "/dashboard/path-content/:id",
+        name: "path-content",
+        component: () => import("../../views/path-content/index.vue"),
+        meta: {
+          breadcrumb: "مسارات الصف الدراسى",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/path-content/:pathId/mission/:missionId",
+        name: "path-content-mission",
+        component: () => import("../../views/path-content/mission-content/index.vue"),
+        meta: {
+          breadcrumb: "تعديل محتوى المسار",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/profile",
+        name: "profile",
+        component: () => import("../../views/profile/index.vue"),
+        meta: {
+          breadcrumb: "حسابي",
+        },
+      },
+      {
+        path: "/dashboard/super-class",
+        name: "super-class",
+        component: () => import("../../views/super-class/index.vue"),
+        meta: {
+          breadcrumb: "الفصول",
+        },
+      },
+      {
+        path: "/dashboard/super-class/show/:id",
+        name: "show-super-class",
+        component: () => import("../../views/super-class/view-super-class/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل  الفصل",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/advertisements",
+        name: "advertisements",
+        component: () => import("../../views/advertisement/index.vue"),
+        meta: {
+          breadcrumb: "الإعلانات",
+        },
+      },
+      {
+        path: "/dashboard/advertisements/add",
+        name: "add-advertisements",
+        component: () => import("../../views/advertisement/add-advertisement/index.vue"),
+        meta: {
+          breadcrumb: "إعلان جديد",
+          preLabel: "قائمة الإعلانات",
+          preLink: "/dashboard/advertisements",
+        },
+      },
+      {
+        path: "/dashboard/advertisements/:id",
+        name: "edit-advertisements",
+        component: () => import("../../views/advertisement/edit-advertisement/index.vue"),
+        meta: {
+          breadcrumb: "تعديل الإعلان",
+          preLabel: "قائمة الإعلانات",
+          preLink: "/dashboard/advertisements",
+        },
+      },
+      {
+        path: "/dashboard/advertisements/show/:id",
+        name: "show-advertisements",
+        component: () => import("../../views/advertisement/view-advertisement/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل الاعلان",
+          preLabel: "قائمة الإعلانات",
+          preLink: "/dashboard/advertisements",
+        },
+      },
+      {
+        path: "/dashboard/teachers",
+        name: "view-teachers",
+        component: () => import("../../views/teachers/index.vue"),
+        meta: {
+          breadcrumb: "الإعلانات",
+        },
+      },
+      {
+        path: "/dashboard/teachers/show/:id",
+        name: "show-teacher",
+        component: () => import("../../views/teachers/view-teacher/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل المدرس",
+          preLabel: "قائمة المدرسين",
+          preLink: "/dashboard/teachers",
+        },
+      },
+      {
+        path: "/dashboard/super-mission",
+        name: "super-mission",
+        component: () => import("../../views/super-mission/index.vue"),
+        meta: {
+          breadcrumb: " تعديل المهام الدراسية",
+          preLabel: "المهام",
+          preLink: "/dashboard/super-mission",
+        },
+      },
+      {
+        path: "/dashboard/mission-detail/:id",
+        name: "mission-detail",
+        component: () => import("../../views/super-mission/mission-detail/index.vue"),
+        meta: {
+          breadcrumb: " تفاصبل المهام الدراسية",
+          preLabel: "المهام",
+          preLink: "/dashboard/super-mission",
+        },
+      },
+      //competitions
+      {
+        path: "/dashboard/competitions",
+        name: "competitions",
+        component: () => import("../../views/competitions/index.vue"),
+        meta: {
+          breadcrumb: "المسابقات",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+
+      {
+        path: "/dashboard/competitions/add",
+        name: "add-competitions",
+        component: () => import("../../views/competitions/add-competition/index.vue"),
+        meta: {
+          breadcrumb: "إضافة مسابقة",
+          preLabel: "المسابقات",
+          preLink: "/dashboard/competitions",
+        },
+      },
+      {
+        path: "/dashboard/competitions/edit/:id",
+        name: "edit-competitions",
+        component: () => import("../../views/competitions/edit-competition/index.vue"),
+        meta: {
+          breadcrumb: "تعديل المسابقة",
+          preLabel: "المسابقات",
+          preLink: "/dashboard/competitions",
+        },
+      },
+      {
+        path: "/dashboard/competitions/show/:id",
+        name: "show-competitions",
+        component: () => import("../../views/competitions/view-competition/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل المسابقة",
+          preLabel: "المسابقات",
+          preLink: "/dashboard/competitions",
+        },
+      },
       // prizes
       ...prizes
     ],

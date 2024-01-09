@@ -16,7 +16,7 @@
                   :name="$t('MISSIONS.videos')"
                   :options="learnPath.videos"
                   :reduce="(option) => option.id"
-                  :get-option-label="(option) => option.original_name"
+                  :get-option-label="(option) => option.title"
                   :rules="'required'"
                   :deselectFromDropdown="true"
                   multiple
@@ -121,6 +121,12 @@ export default {
     term: {
       type: Number,
       default: 0
+    },
+    lessonsSelected: {
+      type: Array,
+      default() {
+        return []
+      }
     }
   },
   data() {
@@ -157,8 +163,8 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              videos: response.data.data,
-              videoIds: [...item.videos.map(item => item.id)]
+              videos: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)),
+              videoIds: [...item.videos.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
             })
           })
           this.ApiService(getPaperWorkPerLevelPathRequest({
@@ -167,8 +173,8 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              paperWorks: response.data.data,
-              paperWorkIds: [...item.papersWork.map(item => item.id)]
+              paperWorks: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)),
+              paperWorkIds: [...item.papersWork.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
             })
           })
           this.ApiService(getQuizLevelPathRequest({
@@ -177,8 +183,18 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              quizzes: response.data.data,
-              quizzesIds: [...item.quizzes.map(item => item.id)]
+              quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)),
+              quizzesIds: [...item.quizzes.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
+            })
+          })
+          this.ApiService(getAudioPerLevelPathRequest({
+            // levelId: this.levelMission.id,
+            learnPathId: item.id,
+            // termId: this.term
+          })).then((response) => {
+            Object.assign(item, {
+              audio: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)),
+              audiosIds: [...item.quizzes.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
             })
           })
           this.ApiService(getAudioPerLevelPathRequest({
@@ -199,7 +215,7 @@ export default {
             learnPathId: item.id,
             // termId: this.term
           })).then((response) => {
-            Object.assign(item, {videos: response.data.data, videoIds: []})
+            Object.assign(item, {videos: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), videoIds: []})
           })
           this.ApiService(getPaperWorkPerLevelPathRequest({
             // levelId: this.level,
@@ -207,7 +223,7 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              paperWorks: response.data.data,
+              paperWorks: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)),
               paperWorkIds: []
             })
           })
@@ -216,7 +232,14 @@ export default {
             learnPathId: item.id,
             // termId: this.term
           })).then((response) => {
-            Object.assign(item, {quizzes: response.data.data, quizzesIds: []})
+            Object.assign(item, {quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), quizzesIds: []})
+          })
+          this.ApiService(getAudioPerLevelPathRequest({
+            // levelId: this.level,
+            learnPathId: item.id,
+            // termId: this.term
+          })).then((response) => {
+            Object.assign(item, {quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), audiosIds: []})
           })
           this.ApiService(getAudioPerLevelPathRequest({
             // levelId: this.level,
@@ -237,21 +260,28 @@ export default {
           learnPathId: item.id,
           // termId: this.term
         })).then((response) => {
-          Object.assign(item, {videos: response.data.data, videoIds: []})
+          Object.assign(item, {videos: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), videoIds: []})
         })
         this.ApiService(getPaperWorkPerLevelPathRequest({
           // levelId: this.level,
           learnPathId: item.id,
           // termId: this.term
         })).then((response) => {
-          Object.assign(item, {paperWorks: response.data.data, paperWorkIds: []})
+          Object.assign(item, {paperWorks: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), paperWorkIds: []})
         })
         this.ApiService(getQuizLevelPathRequest({
           // levelId: this.level,
           learnPathId: item.id,
           // termId: this.term
         })).then((response) => {
-          Object.assign(item, {quizzes: response.data.data, quizzesIds: []})
+          Object.assign(item, {quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), quizzesIds: []})
+        })
+        this.ApiService(getAudioPerLevelPathRequest({
+          // levelId: this.level,
+          learnPathId: item.id,
+          // termId: this.term
+        })).then((response) => {
+          Object.assign(item, {audios: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), audiosIds: []})
         })
         this.ApiService(getAudioPerLevelPathRequest({
           // levelId: this.level,
