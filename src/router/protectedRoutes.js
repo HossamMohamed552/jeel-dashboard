@@ -1330,7 +1330,7 @@ const protectedRoutes = [
         name: "student-levels",
         component: () => import("../../views/student-levels/index.vue"),
         meta: {
-          breadcrumb: "المستويات",
+          breadcrumb: "نقاط المستوى",
           preLabel: "",
           preLink: "",
         },
