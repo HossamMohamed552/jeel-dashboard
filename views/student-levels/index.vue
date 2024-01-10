@@ -1,37 +1,85 @@
 <template>
-  <section class="holder custom-container student-levels">
-    <div v-if="loading" class="text-center text-danger my-5 my-5">
-      <b-spinner class="align-middle"></b-spinner>
+  <div class="add-edit-school">
+    <Modal
+      :content-message="'تم التعديل بنجاح'"
+      :showModal="showModal"
+      :is-success="true"
+    />
+    <div class="container-fluid custom-container">
+      <div class="add-edit-school-form">
+        <h3>نقاط المستوى</h3>
+        <validation-observer
+          v-slot="{ invalid }"
+          ref="addEditQuestionDifficultyPointsForm"
+        >
+          <form @submit.prevent="onSubmit" class="mt-2">
+            <b-row>
+              <b-col lg="4" class="mt-3">
+                <div class="hold-field">
+                  <TextField
+                    v-model="xp"
+                    label="عدد نقاط المستوى"
+                    name="عدد نقاط المستوى"
+                    placeholder="ادخل عدد نقاط المستوى"
+                    type="number"
+                    min="0"
+                    :rules="'required'"
+                    :disabled="!edit"
+                  ></TextField>
+                </div>
+              </b-col>
+              <b-col v-if="!edit" lg="4" class="hold-btns-form-xp">
+                <div>
+                  <Button custom-class="submit-btn" @click="edit = true">
+                    {{ $t("GLOBAL_EDIT") }}
+                  </Button>
+                </div>
+              </b-col>
+              <b-col v-else lg="4" class="hold-btns-form-xp">
+                <div>
+                  <Button
+                    @click="handleCancel"
+                    custom-class="cancel-btn margin"
+                  >
+                    {{ $t("GLOBAL_CANCEL") }}
+                  </Button>
+                  <Button
+                    type="submit"
+                    :loading="loading"
+                    :disabled="invalid"
+                    custom-class="submit-btn"
+                  >
+                    {{ $t("GLOBAL_SAVE") }}
+                  </Button>
+                </div>
+              </b-col>
+            </b-row>
+          </form>
+        </validation-observer>
+      </div>
     </div>
-    <b-row v-else v-for="(item, ind) in jems" :key="ind" class="mb-4 align-items-bottom">
-      <b-col cols="2">
-        <span class="label">{{ $t("SYSTEM_SETTINGS.LEVEL") }}</span>
-        <div class="quantity">
-          {{ item.level }}
-        </div>
-      </b-col>
-      <b-col>
-        <label for="" class="label">{{ $t("SYSTEM_SETTINGS.EXPERIENCE") }}</label>
-        <TextField v-model="item.xp" type="number" />
-      </b-col>
-      <b-col cols="2" class="d-flex align-items-end">
-        <Button variant="primary" :loading="updateLoading" @click="updateLevel(item.id, item.xp)">{{
-          $t("SYSTEM_SETTINGS.UPDATE")
-        }}</Button>
-      </b-col>
-    </b-row>
-  </section>
+  </div>
 </template>
 
 <script>
 import { getLevelXPRequest, putLevelXPRequest } from "@/api/system-settings.js";
+import Modal from "@/components/Shared/Modal/index.vue";
+import TextField from "@/components/Shared/TextField/index.vue";
+import Button from "@/components/Shared/Button/index.vue";
 
 export default {
+  components: {
+    TextField,
+    Button,
+    Modal,
+  },
   data() {
     return {
       loading: false,
-      updateLoading: false,
-      jems: [],
+      xpItem: {},
+      xp: 0,
+      edit: false,
+      showModal: false,
     };
   },
   mounted() {
@@ -42,21 +90,33 @@ export default {
       this.loading = true;
       this.ApiService(getLevelXPRequest())
         .then((response) => {
-          if (response.data) this.jems = response.data.data;
+          if (response.data) {
+            this.xpItem = response.data.data[0];
+            this.xp = this.xpItem.xp;
+          }
         })
         .finally(() => {
           this.loading = false;
         });
     },
-    updateLevel(id, quantity) {
-      this.updateLoading = true;
-      this.ApiService(putLevelXPRequest(id, { xp: quantity }))
+    onSubmit() {
+      this.loading = true;
+      this.ApiService(putLevelXPRequest(this.xpItem.id, { xp: this.xp }))
         .then((response) => {
-
+          this.showModal = true;
+          this.edit = false
+          this.getLevels();
+          setTimeout(() => {
+            this.showModal = false;
+          }, 3000);
         })
         .finally(() => {
-          this.updateLoading = false;
+          this.loading = false;
         });
+    },
+    handleCancel() {
+      this.getLevels();
+      this.edit = false;
     },
   },
 };
