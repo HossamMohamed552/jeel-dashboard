@@ -150,23 +150,15 @@ let routesMissions = [
 ];
 let routeSettings = [
   {
-    name: "جيمز",
-    path: "/dashboard/jems",
-    altImage: "jems",
-    titleImage: "jems",
-    icon: require("@/assets/images/icons/country.svg"),
-    permission: "view-countries",
+    name: "مستوى السؤال",
+    path: "/dashboard/question-difficulty",
+    altImage: "questionDifficulty",
+    titleImage: "questionDifficulty",
+    icon: require("@/assets/images/icons/question.svg"),
+    permission: "view-questionDifficulty",
   },
   {
-    name: "نظام المكافآت",
-    path: "/dashboard/rewarding-actions",
-    altImage: "rewarding-actions",
-    titleImage: "rewarding-actions",
-    icon: require("@/assets/images/icons/country.svg"),
-    permission: "view-countries",
-  },
-  {
-    name: "المستويات",
+    name: "نقاط المستوى",
     path: "/dashboard/student-levels",
     altImage: "student-levels",
     titleImage: "student-levels",
@@ -174,12 +166,20 @@ let routeSettings = [
     permission: "view-countries",
   },
   {
-    name: "صعوبة السؤال",
-    path: "/dashboard/question-difficulty",
-    altImage: "questionDifficulty",
-    titleImage: "questionDifficulty",
-    icon: require("@/assets/images/icons/question.svg"),
-    permission: "view-questionDifficulty",
+    name: "جوائز التفاعل",
+    path: "/dashboard/rewarding-actions",
+    altImage: "rewarding-actions",
+    titleImage: "rewarding-actions",
+    icon: require("@/assets/images/icons/country.svg"),
+    permission: "view-countries",
+  },
+  {
+    name: "جيمز",
+    path: "/dashboard/jems",
+    altImage: "jems",
+    titleImage: "jems",
+    icon: require("@/assets/images/icons/country.svg"),
+    permission: "view-countries",
   },
 ];
 let routeBasicData = [

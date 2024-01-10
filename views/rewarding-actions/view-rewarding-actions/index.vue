@@ -4,22 +4,29 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">{{ $t("QUESTION_DIFFICULTY") }}</h2>
+            <h2 class="heading">تفاصيل جائزة تفاعل</h2>
           </b-col>
         </b-row>
         <b-row>
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="اسم مستوى السؤال"
-              :subtitle="singleQuestionDifficulty.name"
+              title="اسم جائزة التفاعل"
+              :subtitle="singleReward.action_name"
             />
           </b-col>
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
               title="عدد النقاط"
-              :subtitle="singleQuestionDifficulty.grade_points"
+              :subtitle="singleReward.jeel_xp"
+            />
+          </b-col>
+          <b-col lg="4" class="mb-5">
+            <ShowItem
+              class="divider-show"
+              title="عدد عملات جيل"
+              :subtitle="singleReward.jeel_coins"
             />
           </b-col>
         </b-row>
@@ -29,7 +36,7 @@
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import { getSingleQuestionDifficltyRequest } from "@/api/question-difficulty.js";
+import { getRewardingActionByIdRequest } from "@/api/system-settings.js";
 export default {
   name: "index",
   components: {
@@ -37,14 +44,14 @@ export default {
   },
   data() {
     return {
-      singleQuestionDifficulty: {},
+      singleReward: {},
     };
   },
   mounted() {
     this.ApiService(
-      getSingleQuestionDifficltyRequest(this.$route.params.id)
+      getRewardingActionByIdRequest(this.$route.params.id)
     ).then((response) => {
-      this.singleQuestionDifficulty = response.data.data;
+      this.singleReward = response.data.data;
     });
   },
 };
