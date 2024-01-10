@@ -81,12 +81,22 @@
                   {{ $t("GLOBAL_CANCEL") }}
                 </Button>
                 <Button
+                  v-if="!$route.params.id"
                   type="submit"
                   :loading="loading"
-                  :disabled="invalid"
+                  :disabled="invalid || checkLogo"
                   custom-class="submit-btn"
                 >
-                  {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
+                  {{ $t("GLOBAL_SAVE") }}
+                </Button>
+                <Button
+                  v-if="$route.params.id"
+                  type="submit"
+                  :loading="loading"
+                  :disabled="invalid || checkLogo"
+                  custom-class="submit-btn"
+                >
+                  {{ $t("GLOBAL_EDIT") }}
                 </Button>
               </div>
             </b-row>
@@ -204,6 +214,7 @@ export default {
         if (!success) return;
       });
       if (this.$route.params.id) {
+
         if (this.createCharacter.image != null) {
           this.$emit("handleEditCharacter", this.createCharacter);
         } else {
@@ -226,7 +237,6 @@ export default {
             this.createCharacter.name = response.data.data.name;
             this.createCharacter.country_id = response.data.data.country.id;
             this.characterSelected = response.data.data.chracter_type;
-            this.createCharacter.image = response.data.data.image_uuid;
             this.createCharacter.thumbnail_name = response.data.data.image_name;
             this.createCharacter.thumbnail_size = response.data.data.image_size;
             this.createCharacter.thumbnail = response.data.data.image;
@@ -238,6 +248,15 @@ export default {
       this.ApiService(getAllCountryRequest()).then((response) => {
         this.countries = response.data.data;
       });
+    },
+  },
+  computed: {
+    checkLogo() {
+      if (this.createCharacter.thumbnail === null ) {
+        return true
+      } else {
+        return false
+      }
     },
   },
   watch: {

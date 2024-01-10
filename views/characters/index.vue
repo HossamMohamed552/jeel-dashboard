@@ -11,15 +11,15 @@
       @deleteItem="deleteItem($event)"
       :loading="loading"
       @refetch="getcharacters"
-      :permission_delete="'delete-badge'"
-      :permission_edit="'edit-badge'"
-      :permission_view="'show-badge'"
+      :permission_delete="'delete-characters'"
+      :permission_edit="'edit-characters'"
+      :permission_view="'show-characters'"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
-          @click="goToAddBadge"
-          v-if="user.permissions.includes(`add-badge`)"
+          @click="goToAddCharacter"
+          v-if="user.permissions.includes(`add-characters`)"
         >
           <img src="../../src/assets/images/icons/plus.svg" />
           <span>إضافة شخصية جديدة </span>
@@ -83,7 +83,7 @@ export default {
     };
   },
   methods: {
-    goToAddBadge() {
+    goToAddCharacter() {
       this.$router.push("/dashboard/characters/add");
     },
     getcharacters(event) {

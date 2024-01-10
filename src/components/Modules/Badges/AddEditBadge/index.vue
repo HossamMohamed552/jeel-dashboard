@@ -76,12 +76,22 @@
                     </Button>
 
                     <Button
+                      v-if="!$route.params.id"
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid"
+                      :disabled="invalid || checkLogo"
                       custom-class="submit-btn"
                     >
-                      {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
+                      {{ $t("GLOBAL_SAVE") }}
+                    </Button>
+                    <Button
+                      v-if="$route.params.id"
+                      type="submit"
+                      :loading="loading"
+                      :disabled="invalid || checkLogo"
+                      custom-class="submit-btn"
+                    >
+                      {{ $t("GLOBAL_EDIT") }}
                     </Button>
                   </div>
                 </b-row>
@@ -213,6 +223,15 @@ export default {
           this.createBadge.thumbnail = response.data.data.logo;
           this.isDefault = this.createBadge.is_default;
         });
+      }
+    },
+  },
+  computed: {
+    checkLogo() {
+      if (this.createBadge.thumbnail === null) {
+        return true;
+      } else {
+        return false;
       }
     },
   },
