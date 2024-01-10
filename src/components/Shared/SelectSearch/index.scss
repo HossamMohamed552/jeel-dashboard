@@ -1,4 +1,4 @@
-label{
+label {
   //color: #76236C;
   display: block;
 }
@@ -16,11 +16,17 @@ label{
 
   .vs__dropdown-toggle {
     min-height: 50px;
+    height: 55px;
+
     border-radius: 3.125rem;
   }
-
+  .vs__actions {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 18px;
+  }
 }
-
 
 .required-flag {
   position: relative;
@@ -33,5 +39,3 @@ label{
     color: #dc3545;
   }
 }
-
-

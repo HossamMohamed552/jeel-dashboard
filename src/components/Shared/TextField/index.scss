@@ -1,41 +1,45 @@
 @import "src/assets/style/scss/_variables";
-.text-field{
+.text-field {
   //color: $color-primary;
-  margin: 0 0 .7rem 0;
+  margin: 0 0 0.7rem 0;
   display: block;
-  @media (max-width: 1024px) and (min-width: 768px){
-    margin: 0 0 .4rem 0;
+  @media (max-width: 1024px) and (min-width: 768px) {
+    margin: 0 0 0.4rem 0;
   }
   @media (max-width: 768px) {
-    margin: 0 0 .2rem 0;
+    margin: 0 0 0.2rem 0;
   }
-  label{
-    margin: 0.7rem .7rem 1rem;
+  label {
+    margin: 0.7rem 0.7rem 1rem;
     font-weight: bold;
-    @media (max-width: 1024px) and (min-width: 768px){
-      margin: 0 .4rem .4rem 0;
+    @media (max-width: 1024px) and (min-width: 768px) {
+      margin: 0 0.4rem 0.4rem 0;
     }
     @media (max-width: 768px) {
-      margin: 0 .2rem .2rem 0;
-      font-size: .8rem;
+      margin: 0 0.2rem 0.2rem 0;
+      font-size: 0.8rem;
     }
   }
-  input{
+  .form-control {
+    padding: 11px 24px !important;
+    height: 55px;
+  }
+  input {
     padding: 1.3rem 1rem 2rem;
     border-radius: 3.125rem;
-    border: 1px solid #BEBEBE;
+    border: 1px solid #bebebe;
     color: $color-primary;
     font-weight: bold;
-    @media (max-width: 1024px) and (min-width: 768px){
+    @media (max-width: 1024px) and (min-width: 768px) {
       padding: 1rem;
       border-radius: 2.125rem;
     }
     @media (max-width: 768px) {
-      padding: .7rem;
+      padding: 0.7rem;
       border-radius: 1.125rem;
     }
   }
-  .form-control.is-invalid{
+  .form-control.is-invalid {
     padding-right: 2rem !important;
   }
 }
