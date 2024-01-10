@@ -1,4 +1,4 @@
-<template v-if="group">
+<template>
   <section class="container-fluid custom-container">
     <div class="show-group">
       <div class="hold-fields">
@@ -22,15 +22,7 @@
             <ShowItem
               class="with-border-bottom"
               :title="$t('GROUP.owner')"
-              :subtitle="group?.owner"
-            />
-          </b-col>
-
-          <b-col lg="4" class="mb-4">
-            <ShowItem
-              class="with-border-bottom"
-              :title="$t('GROUP.music')"
-              :subtitle="group.music_status === 0 ? 'أكابيلا' : 'بموسيقى'"
+              :subtitle="group.owner"
             />
           </b-col>
 
@@ -38,15 +30,36 @@
             <ShowItem
               class="with-border-bottom"
               :title="$t('GROUP.status')"
-              :subtitle="group.status === 1 ? 'مفعل' : 'غير مفعل'"
+              :subtitle="group.status.name"
+            />
+          </b-col>
+          <b-col lg="4" class="mb-4">
+            <ShowItem
+              class="with-border-bottom"
+              :title="$t('GROUP.music_type')"
+              :subtitle="group.music_status.name"
             />
           </b-col>
           <b-col cols="12" lg="12" class="mb-4" v-if="group.description">
             <ShowItem
               class="with-border-bottom"
-              :title="$t('GROUP.description')"
+              :title="$t('GROUP.Description')"
               :subtitle="group.description"
             />
+          </b-col>
+        </b-row>
+        <b-row class="mt-5" v-if="group.schools && group.schools.length">
+          <b-col cols="12">
+            <h4>المدارس</h4>
+            <ListItems
+              class="p-0 m-0 custom-schools-table"
+              :number-of-item="group.schools.length"
+              :table-items="group.schools"
+              :fieldsList="fieldsList"
+              @detailItem="detailItem($event)"
+              :permission_view="'show-schoolGroups'"
+            >
+            </ListItems>
           </b-col>
         </b-row>
       </div>
@@ -62,6 +75,7 @@ import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import { getSingleSchoolGroupRequest } from "@/api/schoolGroup";
 import Button from "@/components/Shared/Button/index.vue";
 import MissionDetailsModal from "@/components/Shared/MissionDetailsModal/index.vue";
+import ListItems from "@/components/ListItems/index.vue";
 
 export default {
   name: "index",
@@ -69,11 +83,34 @@ export default {
     MissionDetailsModal,
     Button,
     ShowItem,
+    ListItems,
   },
   data() {
     return {
       group: {},
       selectedMission: null,
+      fieldsList: [
+        {
+          key: "id",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "name",
+          label: "اسم المدرسة",
+        },
+        {
+          key: "country.name",
+          label: "الدولة",
+        },
+        {
+          key: "status.name",
+          label: "الحالة",
+        },
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ],
     };
   },
   methods: {
@@ -84,6 +121,9 @@ export default {
     handleCloseMissionDetailsModal() {
       this.$bvModal.hide("mission-details-modal");
       this.selectedMission = null;
+    },
+    detailItem(id) {
+      this.$router.push(`/dashboard/schools/show/${id}`);
     },
   },
   mounted() {
