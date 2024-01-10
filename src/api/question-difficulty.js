@@ -15,7 +15,7 @@ export const getSingleQuestionDifficltyRequest = (params) => ({
 
 export const putQuestionDifficultyPointsRequest = (params,data) => ({
   method: 'put',
-  url: `question_difficulties/${params}/points`,
+  url: `question_difficulties/${params}`,
   config: {
     data
   }

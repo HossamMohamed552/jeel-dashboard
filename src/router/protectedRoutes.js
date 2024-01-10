@@ -1298,7 +1298,7 @@ const protectedRoutes = [
         name: "rewarding-actions",
         component: () => import("../../views/rewarding-actions/index.vue"),
         meta: {
-          breadcrumb: "نظام المكافآت",
+          breadcrumb: "جوائز التفاعل",
           preLabel: "",
           preLink: "",
         },
@@ -1308,7 +1308,18 @@ const protectedRoutes = [
         name: "rewarding-actions-edit",
         component: () => import("../../views/rewarding-actions/edit/index.vue"),
         meta: {
-          breadcrumb: "تعديل نظام المكافآت",
+          breadcrumb: "تعديل جائزة تفاعل",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/rewarding-actions/show/:id",
+        name: "show-rewarding-actions",
+        component: () =>
+          import("../../views/rewarding-actions/view-rewarding-actions/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل جائزة تفاعل",
           preLabel: "",
           preLink: "",
         },
@@ -1319,7 +1330,7 @@ const protectedRoutes = [
         name: "student-levels",
         component: () => import("../../views/student-levels/index.vue"),
         meta: {
-          breadcrumb: "المستويات",
+          breadcrumb: "نقاط المستوى",
           preLabel: "",
           preLink: "",
         },
@@ -1330,7 +1341,7 @@ const protectedRoutes = [
         name: "question-difficulty",
         component: () => import("../../views/question-difficulty/index.vue"),
         meta: {
-          breadcrumb: "صعوبات السؤال",
+          breadcrumb: "مستوى السؤال",
           preLabel: "",
           preLink: "",
         },
@@ -1341,7 +1352,7 @@ const protectedRoutes = [
         component: () =>
           import("../../views/question-difficulty/edit-question-difficulty/index.vue"),
         meta: {
-          breadcrumb: "تعديل  صعوبة السؤال",
+          breadcrumb: "تعديل  مستوى السؤال",
           preLabel: "",
           preLink: "",
         },
@@ -1352,7 +1363,7 @@ const protectedRoutes = [
         component: () =>
           import("../../views/question-difficulty/view-question-difficulty/index.vue"),
         meta: {
-          breadcrumb: "تفاصيل  صعوبة السؤال",
+          breadcrumb: "تفاصيل  مستوى السؤال",
           preLabel: "",
           preLink: "",
         },
