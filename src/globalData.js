@@ -328,6 +328,40 @@ let routeSuperVisor = [
     permission: "view-announcements",
   },
 ];
+let routesPrizes = [
+  {
+    name: "شارات جيل",
+    path: "/dashboard/jeel-badge",
+    altImage: "jeel-badge",
+    titleImage: "jeel-badge",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-classes",
+  },
+  {
+    name: "الشخصيات",
+    path: "/dashboard/characters",
+    altImage: "characters",
+    titleImage: "characters",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-classes",
+  },
+  {
+    name: "مكتبة جيل",
+    path: "/dashboard/jeel-library",
+    altImage: "jeel-library",
+    titleImage: "jeel-library",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-classes",
+  },
+  {
+    name: "صناديق الطاقة",
+    path: "/dashboard/energy-boxes",
+    altImage: "energy-boxes",
+    titleImage: "energy-boxes",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-classes",
+  },
+];
 export {
   routesUsers,
   routesSchool,
@@ -337,4 +371,5 @@ export {
   routesMissions,
   routesSubscribes,
   routeSuperVisor,
+  routesPrizes,
 };

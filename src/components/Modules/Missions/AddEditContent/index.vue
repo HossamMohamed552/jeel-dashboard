@@ -197,6 +197,16 @@ export default {
               audiosIds: [...item.quizzes.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
             })
           })
+          this.ApiService(getAudioPerLevelPathRequest({
+            // levelId: this.levelMission.id,
+            learnPathId: item.id,
+            // termId: this.term
+          })).then((response) => {
+            Object.assign(item, {
+              audio: response.data.data,
+              audiosIds: [...item.quizzes.map(item => item.id)]
+            })
+          })
         })
         let learnPathsVideoPaperWokQuizWithOutFilter = this.watchLearningPathSelected.filter(item => !this.learnPathsVideoPaperWokQuiz.map(itemMap => itemMap.id).includes(item.id))
         learnPathsVideoPaperWokQuizWithOutFilter.forEach((item) => {
@@ -230,6 +240,13 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), audiosIds: []})
+          })
+          this.ApiService(getAudioPerLevelPathRequest({
+            // levelId: this.level,
+            learnPathId: item.id,
+            // termId: this.term
+          })).then((response) => {
+            Object.assign(item, {quizzes: response.data.data, audiosIds: []})
           })
         })
         this.learnPathsVideoPaperWokQuiz = [...learnPathsVideoPaperWokQuizWithFilter, ...learnPathsVideoPaperWokQuizWithOutFilter]
@@ -265,6 +282,13 @@ export default {
           // termId: this.term
         })).then((response) => {
           Object.assign(item, {audios: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), audiosIds: []})
+        })
+        this.ApiService(getAudioPerLevelPathRequest({
+          // levelId: this.level,
+          learnPathId: item.id,
+          // termId: this.term
+        })).then((response) => {
+          Object.assign(item, {audios: response.data.data, audiosIds: []})
         })
         collectArray.push(item)
       })
