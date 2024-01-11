@@ -199,7 +199,8 @@
               checkDelete(data) === 'show' ||
               checkDetail() === 'show' ||
               checkEdit() === 'show' ||
-              checkAdd() === 'show'
+              checkAdd() === 'show' ||
+              checkUsersAdd() === 'show'
             "
           >
             <template #button-content>
@@ -215,6 +216,10 @@
             <b-dropdown-divider v-if="checkEdit() === 'show'"></b-dropdown-divider>
             <b-dropdown-item @click="editItem(data.item.id)" v-if="checkEdit() === 'show'">
               {{ $t("CONTROLS.editBtn") }}
+            </b-dropdown-item>
+            <b-dropdown-divider v-if="checkUsersAdd() === 'show'"></b-dropdown-divider>
+            <b-dropdown-item @click="editItem(data.item.id)" v-if="checkUsersAdd() === 'show'">
+              {{ $t("CONTROLS.users") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkEditClass() === 'show'"></b-dropdown-divider>
             <b-dropdown-item
@@ -335,6 +340,10 @@ export default {
       default: "",
     },
     permission_add: {
+      type: String,
+      default: "",
+    },
+    users_add: {
       type: String,
       default: "",
     },
@@ -542,6 +551,20 @@ export default {
       } else if (this.activePage === "schoolAdmin") {
         return "hide";
       } else if (this.user.permissions.includes(`${this.permission_add}`)) {
+        return "show";
+      } else {
+        return "hide";
+      }
+    },
+    checkUsersAdd() {
+      if (
+        !this.user.permissions.includes("manage-learningpath") &&
+        !this.activePage === "schoolAdmin"
+      ) {
+        return "show";
+      } else if (this.activePage === "schoolAdmin") {
+        return "hide";
+      } else if (this.user.permissions.includes(`${this.users_add}`)) {
         return "show";
       } else {
         return "hide";
