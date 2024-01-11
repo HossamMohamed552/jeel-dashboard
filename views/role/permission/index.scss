@@ -32,25 +32,13 @@
   .table td {
     font-weight: bold;
   }
-}
-
-.mark {
-  display: flex;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-  svg {
-    fill: #fff;
-    width: 24px;
-    height: 24px;
+  .b-custom-control-lg .custom-control-label::after {
+    left: unset !important;
+    right: 1.65rem !important;
   }
-  &.checked {
-    background: #00bc37 0% 0% no-repeat padding-box;
-  }
-
-  &.unchecked {
-    background: #cc0000 0% 0% no-repeat padding-box;
+  .btn {
+    height: 55px;
+    min-width: 195px;
+    padding: 0 !important;
   }
 }

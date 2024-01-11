@@ -2,16 +2,31 @@
   <div class="add-edit-role">
     <div class="container-fluid custom-container">
       <div class="add-edit-role-form">
-        <h3>{{ $route.params.id ? $t("ROLES.EDIT") : $t("ROLES.ADD_NEW") }}</h3>
+        <h3>{{ $route.params.id ? $t("ROLES.EDIT_DEPARTMENT") : $t("ROLES.ADD_DEPARTMENT") }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditRoleForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="12" class="mb-3">
+              <b-col lg="6" class="mb-3">
+                <div class="hold-field">
+                  <SelectSearch
+                    v-model="createRole.type"
+                    :label="$t('ROLES.CATEGORIES')"
+                    :name="$t('ROLES.CATEGORIES')"
+                    :options="roleTypes"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                    :deselectFromDropdown="true"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <TextField
                     v-model="createRole.name"
-                    :label="$t('USERS.FIRST_NAME')"
-                    :name="$t('USERS.FIRST_NAME')"
+                    :label="$t('ROLES.DEPARTMENT')"
+                    :name="$t('ROLES.DEPARTMENT')"
+                    :placeholder="$t('ROLES.ENTER_DEPARTMENT')"
                     :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
@@ -23,68 +38,12 @@
                     v-model="createRole.description"
                     :label="$t('ROLES.description')"
                     :name="$t('ROLES.description')"
+                    :placeholder="$t('ROLES.ENTER_DESCRIPTION')"
+                    :isRequiredField="false"
                   />
                 </div>
               </b-col>
               <b-col lg="12">
-                <p class="heading-permission">
-                  <span>الصلاحيات</span> <span><i class="fa-solid fa-asterisk"></i></span>
-                </p>
-              </b-col>
-              <b-col lg="12">
-                <b-row>
-                  <b-col lg="5">
-                    <div class="hold-permissions">
-                      <label v-for="permissionItem in permission" class="permission-item">
-                        <b-form-checkbox
-                          v-model="permissionSelected"
-                          :value="permissionItem.id"
-                          @change="showPermissionItemsSelected()"
-                          :disabled="isDefault === 1"
-                        >
-                          {{ permissionItem.name }}
-                        </b-form-checkbox>
-                      </label>
-                    </div>
-                  </b-col>
-                  <b-col lg="2">
-                    <div class="buttons">
-                      <div>
-                        <Button
-                          custom-class="transparent-btn rounded-btn all-add"
-                          @click="addAllPermission"
-                          :disabled="isDefault === 1"
-                        >
-                          {{ $t("GLOBALAddAll") }}
-                        </Button>
-                        <Button
-                          custom-class="transparent-btn rounded-btn all-add"
-                          @click="removeAllPermission"
-                          :disabled="isDefault === 1"
-                        >
-                          {{ $t("GLOBALRemoveAll") }}
-                        </Button>
-                      </div>
-                    </div>
-                  </b-col>
-                  <b-col lg="5">
-                    <div
-                      class="hold-permissions"
-                      v-if="finalSelected && Array.from(finalSelected).length > 0"
-                    >
-                      <label v-for="permissionItem in finalSelected" class="permission-item">
-                        <b-form-checkbox
-                          v-model="permissionSelected"
-                          :value="permissionItem.id"
-                          @change="showPermissionItemsSelected()"
-                          :disabled="isDefault === 1"
-                        >
-                          {{ permissionItem.name }}
-                        </b-form-checkbox>
-                      </label>
-                    </div>
-                  </b-col>
-                </b-row>
                 <b-row>
                   <div class="hold-btns-form">
                     <Button @click="handleCancel" custom-class="cancel-btn margin">
@@ -93,7 +52,7 @@
                     <Button
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || Array.from(permissionSelected).length <= 0"
+                      :disabled="invalid"
                       custom-class="submit-btn"
                     >
                       {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
@@ -113,8 +72,10 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import CheckboxField from "@/components/Shared/CheckboxField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import { getSingleRoleRequest } from "@/api/role";
+import { getSingleRoleRequest, getRolesTypesRequest } from "@/api/role";
 import Modal from "@/components/Shared/Modal/index.vue";
+
+import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 
 export default {
   components: {
@@ -123,6 +84,7 @@ export default {
     TextAreaField,
     CheckboxField,
     Button,
+    SelectSearch,
   },
   props: {
     permission: {
@@ -140,9 +102,9 @@ export default {
       createRole: {
         name: "",
         description: "",
-        permissions: [],
-        code: "",
+        type: "",
       },
+      roleTypes: [],
       finalSelected: [],
       isDefault: 0,
     };
@@ -181,6 +143,8 @@ export default {
       } else {
         this.$emit("handleAddRole", this.createRole);
       }
+
+      console.log(this.createRole);
     },
     handleCancel() {
       this.$emit("handleCancel");
@@ -190,7 +154,7 @@ export default {
         this.ApiService(getSingleRoleRequest(this.$route.params.id))
           .then((response) => {
             this.createRole = response.data.data;
-            this.permissionSelected = this.createRole.permissions.map((item) => item.id);
+            this.createRole.type = response.data.data.type.id;
             this.isDefault = this.createRole.is_default;
           })
           .then(() => {
@@ -198,9 +162,16 @@ export default {
           });
       }
     },
+
+    getAllRolesTypes() {
+      this.ApiService(getRolesTypesRequest()).then((response) => {
+        this.roleTypes = response.data.data;
+      });
+    },
   },
   mounted() {
-    this.getRoleToEdit();
+    if (this.$route.params.id) this.getRoleToEdit();
+    this.getAllRolesTypes();
   },
 };
 </script>
