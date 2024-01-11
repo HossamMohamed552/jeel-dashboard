@@ -102,6 +102,8 @@
   "CONTROLS": {
     "detailBtn": "تفاصيل",
     "editBtn": "تعديل",
+    "permissions": "الصلاحيات",
+    "users": "المستخدمين",
     "deleteBtn": "حذف",
     "addVideoQuestion": "اضافة اسئله الفيديو",
     "ManageClasses": "إداره الصفوف",
@@ -113,7 +115,13 @@
     "EDIT": "تعديل الصلاحية",
     "name": "إسم الصلاحية",
     "description": "الوصف",
-    "showDetails": "عرض تفاصيل صلاحية المستخدم"
+    "CATEGORIES": "التصنيف",
+    "DEPARTMENT": "اسم الدور الوظيفي",
+    "ADD_DEPARTMENT": "إضافة دور وظيفي",
+    "EDIT_DEPARTMENT": "تعديل دور وظيفي",
+    "ENTER_DEPARTMENT": "أدخل اسم الدور الوظيفي",
+    "ENTER_DESCRIPTION": "أدخل الوصف",
+    "showDetails": "تفاصيل دور وظيفي"
   },
   "BADGE": {
     "ADD_NEW": "إضافة شارة جديدة",
@@ -172,6 +180,11 @@
     "DESCRIPTION_INPUT_PLACEHOLDER": "أدخل ملاحظات"
   },
   "SCHOOL": {
+    "SCHOOL_INFO": "بيانات المدرسة",
+    "SCHOOL_MANAGER_INFO": "بيانات مسؤل المدرسة",
+    "MANAGER_NAME": "اسم المسؤل",
+    "MANAGER_TYPE": "صفة المسؤل",
+    "MANAGER_MOBILE": "رقم هاتف المسؤل",
     "ADD_NEW": "إضافة مدرسة جديدة",
     "EDIT": "تعديل مدرسة جديدة",
     "name": "اسم المدرسة",
@@ -196,6 +209,17 @@
     "dateTo": "نهاية التعاقد",
     "user_name": "اسم المستخدم",
     "contact": "رقم الهاتف",
+    "COUNTRY": "الدولة",
+    "SCHOOL_COLLECTION": "مجموعة المدارس",
+    "SCHOOL_LOGO": "شعار المدرسة",
+    "SCHOOL_TYPE": "نوع إدارة المدرسة",
+    "SCHOOL_CERTIFICATE_TYPE": "نوع شهادة المدرسة",
+    "LEARNING_LANGAUAGE": "لغة التدريس",
+    "STUDENT_TYPE": "نوع الطلبة",
+    "MOBILE": "رقم هاتف المدرسة",
+    "VOICE": "الصوت",
+    "SCHOOL_ADDRESS": "عنوان المدرسة",
+    "NOTES": "ملاحظات",
     "address": "العنوان"
   },
   "LEVEL": {

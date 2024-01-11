@@ -201,7 +201,11 @@
             no-caret
             class="hold-controls"
             v-if="
-              checkDelete(data) === 'show' || checkDetail() === 'show' || checkEdit() === 'show'
+              checkDelete(data) === 'show' ||
+              checkDetail() === 'show' ||
+              checkEdit() === 'show' ||
+              checkAdd() === 'show' ||
+              checkUsersAdd() === 'show'
             "
           >
             <template #button-content>
@@ -210,9 +214,17 @@
             <b-dropdown-item @click="detailItem(data.item)" v-if="checkDetail() === 'show'">
               {{ $t("CONTROLS.detailBtn") }}
             </b-dropdown-item>
+            <b-dropdown-divider v-if="checkAdd() === 'show'"></b-dropdown-divider>
+            <b-dropdown-item @click="permissionItem(data.item.id)" v-if="checkAdd() === 'show'">
+              {{ $t("CONTROLS.permissions") }}
+            </b-dropdown-item>
             <b-dropdown-divider v-if="checkEdit() === 'show'"></b-dropdown-divider>
             <b-dropdown-item @click="editItem(data.item.id)" v-if="checkEdit() === 'show'">
               {{ $t("CONTROLS.editBtn") }}
+            </b-dropdown-item>
+            <b-dropdown-divider v-if="checkUsersAdd() === 'show'"></b-dropdown-divider>
+            <b-dropdown-item @click="editItem(data.item.id)" v-if="checkUsersAdd() === 'show'">
+              {{ $t("CONTROLS.users") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkEditClass() === 'show'"></b-dropdown-divider>
             <b-dropdown-item
@@ -329,6 +341,14 @@ export default {
       default: "",
     },
     permission_edit: {
+      type: String,
+      default: "",
+    },
+    permission_add: {
+      type: String,
+      default: "",
+    },
+    users_add: {
       type: String,
       default: "",
     },
@@ -451,6 +471,9 @@ export default {
     editItem(id) {
       this.$emit("editItem", id);
     },
+    permissionItem(id) {
+      this.$emit("permissionItem", id);
+    },
     deleteItem(id) {
       this.$emit("deleteItem", id);
     },
@@ -525,6 +548,34 @@ export default {
       } else if (this.activePage === "schoolAdmin") {
         return "hide";
       } else if (this.user.permissions.includes(`${this.permission_edit}`)) {
+        return "show";
+      } else {
+        return "hide";
+      }
+    },
+    checkAdd() {
+      if (
+        !this.user.permissions.includes("manage-learningpath") &&
+        !this.activePage === "schoolAdmin"
+      ) {
+        return "show";
+      } else if (this.activePage === "schoolAdmin") {
+        return "hide";
+      } else if (this.user.permissions.includes(`${this.permission_add}`)) {
+        return "show";
+      } else {
+        return "hide";
+      }
+    },
+    checkUsersAdd() {
+      if (
+        !this.user.permissions.includes("manage-learningpath") &&
+        !this.activePage === "schoolAdmin"
+      ) {
+        return "show";
+      } else if (this.activePage === "schoolAdmin") {
+        return "hide";
+      } else if (this.user.permissions.includes(`${this.users_add}`)) {
         return "show";
       } else {
         return "hide";
