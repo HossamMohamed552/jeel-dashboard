@@ -1,0 +1,98 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+
+.add-edit-school-form {
+  @include styleViewList;
+  min-height: 70vh;
+}
+
+.hold-field {
+  position: relative;
+  label{
+    margin: 0.7rem 0.7rem 1rem;
+  }
+  .show-date {
+    margin: 0;
+    position: absolute;
+    bottom: 1rem;
+    right: 2rem;
+    width: 20%;
+    background: transparent;
+    transform: translateY(20%);
+    font-size: 14px;
+    line-height: 1.4;
+    color: #555;
+  }
+}
+
+::v-deep {
+  .hold-field {
+    position: relative;
+
+    label {
+      margin: 0.7rem 0.7rem 1rem;
+    }
+  }
+  .group-type {
+    margin-right: .2rem;
+    .col-form-label {
+      color: $color-primary !important;
+    }
+  }
+
+  .custom-radio {
+    display: inline-block;
+  }
+
+  .mx-datepicker {
+    width: 100%;
+    border-radius: 3.125rem;
+  }
+
+  .mx-input {
+    padding: 1.3rem 2rem;
+    border-radius: 3.125rem;
+    background: transparent;
+    z-index: 2;
+    position: relative;
+  }
+
+  input {
+    &::placeholder {
+      color: #8C8C8C !important;
+      font-size: 1rem !important;
+      font-weight: normal !important;
+    }
+  }
+}
+
+
+.package-calc {
+  width: 100%;
+  border-radius: 1.25rem;
+  padding: 1.875rem;
+  background: #DDF4FD;
+
+  h4 {
+    margin-bottom: 0;
+    color: #022930;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+}
+
+
+.discount-percentage {
+
+    position: relative;
+
+    &::after {
+      content: "%";
+      position: absolute;
+      left: 5%;
+      bottom: 20%;
+      color: #8C8C8C;
+      font-size: 1.25rem;
+    }
+  
+}

@@ -1,6 +1,6 @@
 @import "src/assets/style/scss/_mixin";
 @import "src/assets/style/scss/_variables";
-.show-role{
+.show-group{
   @include styleViewList;
   .heading{
     margin-bottom: 3.125rem;
@@ -8,19 +8,36 @@
   .hold-fields{
     margin-bottom: 4rem;
   }
-  .permissions{
-    padding: 4rem 0;
-    border-top: 1px solid #8C8C8C;
-    .permission-item{
-      margin-bottom: 3.125rem;
-      img{
-        margin-left: 1rem;
-      }
-      span{
-        font-size: 1.2rem;
-        color: $color-primary;
-        font-weight: 600;
-      }
-    }
-  }
+}
+.divider{
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid #D1D1D1;
+}
+.bottom{
+  margin-top: 3.125rem;
+}
+.title{
+  font-size: 1.3rem;
+  color: $color-heading;
+  font-weight: 400;
+  margin-bottom: 1.2rem;
+}
+.video-img{
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+  object-position: center;
+}
+.show-video{
+  height: 300px;
+  width: 100%;
+  object-position: center;
+}
+
+
+h4.subscription-price {
+color: #022930;
+font-size: 1.5rem;
+font-weight: bold;
+margin-bottom: 1.5rem;
 }

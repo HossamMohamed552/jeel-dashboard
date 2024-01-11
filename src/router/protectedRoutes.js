@@ -138,6 +138,47 @@ const protectedRoutes = [
           preLink: "/dashboard/package",
         },
       },
+      // subscription
+      {
+        path: "/dashboard/subscription",
+        name: "subscription",
+        component: () => import("../../views/subscription/index.vue"),
+        meta: {
+          breadcrumb: "الإشتراكات",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/subscription/add",
+        name: "add-subscription",
+        component: () => import("../../views/subscription/add-subscription/index.vue"),
+        meta: {
+          breadcrumb: "تسجيل إشتراك",
+          preLabel: "الإشتراكات",
+          preLink: "/dashboard/subscription",
+        },
+      },
+      {
+        path: "/dashboard/subscription/edit/:id",
+        name: "edit-subscription",
+        component: () => import("../../views/subscription/edit-subscription/index.vue"),
+        meta: {
+          breadcrumb: "تعديل الإشتراك",
+          preLabel: "الإشتراكات",
+          preLink: "/dashboard/subscription",
+        },
+      },
+      {
+        path: "/dashboard/subscription/show/:id",
+        name: "show-subscription",
+        component: () => import("../../views/subscription/view-subscription/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل الإشتراك",
+          preLabel: "الإشتراكات",
+          preLink: "/dashboard/subscription",
+        },
+      },
       // school group
       {
         path: "/dashboard/school-group",
@@ -218,6 +259,132 @@ const protectedRoutes = [
           breadcrumb: "تفاصيل المدرسة",
           preLabel: "المدارس",
           preLink: "/dashboard/schools",
+        },
+      },
+      // school department type
+      {
+        path: "/dashboard/school-department-types",
+        name: "school-department-type",
+        component: () => import("../../views/school-department-type/index.vue"),
+        meta: {
+          breadcrumb: "نوع الادارة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-department-types/add",
+        name: "add-school-department-type",
+        component: () =>
+          import("../../views/school-department-type/add-school-department-type/index.vue"),
+        meta: {
+          breadcrumb: "إضافة نوع ادارة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-department-types/edit/:id",
+        name: "edit-schools",
+        component: () =>
+          import("../../views/school-department-type/edit-school-department-type/index.vue"),
+        meta: {
+          breadcrumb: "تعديل نوع الادارة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-department-types/show/:id",
+        name: "view-school-department-type",
+        component: () =>
+          import("../../views/school-department-type/view-school-department-type/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل نوع الادارة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      // school degree type
+      {
+        path: "/dashboard/school-degree-types",
+        name: "school-degree-type",
+        component: () => import("../../views/school-degree-type/index.vue"),
+        meta: {
+          breadcrumb: "نوع الشهادة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-degree-types/add",
+        name: "add-school-degree-type",
+        component: () => import("../../views/school-degree-type/add-school-degree-type/index.vue"),
+        meta: {
+          breadcrumb: "إضافة نوع شهادة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-degree-types/edit/:id",
+        name: "edit-schools",
+        component: () => import("../../views/school-degree-type/edit-school-degree-type/index.vue"),
+        meta: {
+          breadcrumb: "تعديل نوع الشهادة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-degree-types/show/:id",
+        name: "view-school-degree-type",
+        component: () => import("../../views/school-degree-type/view-school-degree-type/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل نوع الشهادة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      // school languages
+      {
+        path: "/dashboard/school-languages",
+        name: "school-language",
+        component: () => import("../../views/school-languages/index.vue"),
+        meta: {
+          breadcrumb: "اللغات",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-languages/add",
+        name: "add-school-language",
+        component: () => import("../../views/school-languages/add-school-language/index.vue"),
+        meta: {
+          breadcrumb: "إضافة لغة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-languages/edit/:id",
+        name: "edit-schools",
+        component: () => import("../../views/school-languages/edit-school-language/index.vue"),
+        meta: {
+          breadcrumb: "تعديل لغة",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/school-languages/show/:id",
+        name: "view-school-language",
+        component: () => import("../../views/school-languages/view-school-language/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل اللغة",
+          preLabel: "",
+          preLink: "",
         },
       },
       // school type
@@ -1131,7 +1298,7 @@ const protectedRoutes = [
         name: "rewarding-actions",
         component: () => import("../../views/rewarding-actions/index.vue"),
         meta: {
-          breadcrumb: "نظام المكافآت",
+          breadcrumb: "جوائز التفاعل",
           preLabel: "",
           preLink: "",
         },
@@ -1141,7 +1308,18 @@ const protectedRoutes = [
         name: "rewarding-actions-edit",
         component: () => import("../../views/rewarding-actions/edit/index.vue"),
         meta: {
-          breadcrumb: "تعديل نظام المكافآت",
+          breadcrumb: "تعديل جائزة تفاعل",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/rewarding-actions/show/:id",
+        name: "show-rewarding-actions",
+        component: () =>
+          import("../../views/rewarding-actions/view-rewarding-actions/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل جائزة تفاعل",
           preLabel: "",
           preLink: "",
         },
@@ -1152,7 +1330,7 @@ const protectedRoutes = [
         name: "student-levels",
         component: () => import("../../views/student-levels/index.vue"),
         meta: {
-          breadcrumb: "المستويات",
+          breadcrumb: "نقاط المستوى",
           preLabel: "",
           preLink: "",
         },
@@ -1163,7 +1341,7 @@ const protectedRoutes = [
         name: "question-difficulty",
         component: () => import("../../views/question-difficulty/index.vue"),
         meta: {
-          breadcrumb: "صعوبات السؤال",
+          breadcrumb: "مستوى السؤال",
           preLabel: "",
           preLink: "",
         },
@@ -1174,7 +1352,7 @@ const protectedRoutes = [
         component: () =>
           import("../../views/question-difficulty/edit-question-difficulty/index.vue"),
         meta: {
-          breadcrumb: "تعديل  صعوبة السؤال",
+          breadcrumb: "تعديل  مستوى السؤال",
           preLabel: "",
           preLink: "",
         },
@@ -1185,7 +1363,7 @@ const protectedRoutes = [
         component: () =>
           import("../../views/question-difficulty/view-question-difficulty/index.vue"),
         meta: {
-          breadcrumb: "تفاصيل  صعوبة السؤال",
+          breadcrumb: "تفاصيل  مستوى السؤال",
           preLabel: "",
           preLink: "",
         },

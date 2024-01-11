@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة صعوبة السؤال'"
+      :header-name="'قائمة مستوى السؤال'"
       :number-of-item="totalNumber"
       :tableItems="questionDifficultyList"
       :fieldsList="fieldsList"
@@ -11,6 +11,9 @@
       @deleteItem="deleteItem($event)"
       @refetch="getQuestionDifficulty"
       :loading="loading"
+      :permission_edit="'edit-questionDifficulty'"
+      :permission_view="'show-questionDifficulty'"
+      :showSortControls="false"
     />
   </section>
 </template>
@@ -30,9 +33,8 @@ export default {
       totalNumber: 3,
       fieldsList: [
         { key: "id", label: "التسلسل" },
-        { key: "name", label: "اسم الصعوبة" },
-        { key: "slug", label: "الرمز" },
-        { key: "grade_points", label: "النقاط" },
+        { key: "name", label: "اسم مستوى السؤال" },
+        { key: "grade_points", label: "عدد النقاط" },
         { key: "actions", label: "الإجراء" },
       ],
     };

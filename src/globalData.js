@@ -20,6 +20,33 @@ let routesUsers = [
 ];
 let routesSchool = [
   {
+    name: "نوع الادارة",
+    path: "/dashboard/school-department-types",
+    altImage: "schoolGroups",
+    titleImage: "schoolGroups",
+    icon: require("@/assets/images/icons/school-group.svg"),
+    // todo tooo change the permission acc to backend
+    permission: "view-schoolGroups",
+  },
+  {
+    name: "نوع الشهادة",
+    path: "/dashboard/school-degree-types",
+    altImage: "schoolGroups",
+    titleImage: "schoolGroups",
+    icon: require("@/assets/images/icons/school-group.svg"),
+    // todo tooo change the permission acc to backend
+    permission: "view-schoolGroups",
+  },
+  {
+    name: "اللغات",
+    path: "/dashboard/school-languages",
+    altImage: "schoolGroups",
+    titleImage: "schoolGroups",
+    icon: require("@/assets/images/icons/school-group.svg"),
+    // todo tooo change the permission acc to backend
+    permission: "view-schoolGroups",
+  },
+  {
     name: "مجموعات المدارس",
     path: "/dashboard/school-group",
     altImage: "schoolGroups",
@@ -123,23 +150,15 @@ let routesMissions = [
 ];
 let routeSettings = [
   {
-    name: "جيمز",
-    path: "/dashboard/jems",
-    altImage: "jems",
-    titleImage: "jems",
-    icon: require("@/assets/images/icons/country.svg"),
-    permission: "view-countries",
+    name: "مستوى السؤال",
+    path: "/dashboard/question-difficulty",
+    altImage: "questionDifficulty",
+    titleImage: "questionDifficulty",
+    icon: require("@/assets/images/icons/question.svg"),
+    permission: "view-questionDifficulty",
   },
   {
-    name: "نظام المكافآت",
-    path: "/dashboard/rewarding-actions",
-    altImage: "rewarding-actions",
-    titleImage: "rewarding-actions",
-    icon: require("@/assets/images/icons/country.svg"),
-    permission: "view-countries",
-  },
-  {
-    name: "المستويات",
+    name: "نقاط المستوى",
     path: "/dashboard/student-levels",
     altImage: "student-levels",
     titleImage: "student-levels",
@@ -147,12 +166,20 @@ let routeSettings = [
     permission: "view-countries",
   },
   {
-    name: "صعوبة السؤال",
-    path: "/dashboard/question-difficulty",
-    altImage: "questionDifficulty",
-    titleImage: "questionDifficulty",
-    icon: require("@/assets/images/icons/question.svg"),
-    permission: "view-questionDifficulty",
+    name: "جوائز التفاعل",
+    path: "/dashboard/rewarding-actions",
+    altImage: "rewarding-actions",
+    titleImage: "rewarding-actions",
+    icon: require("@/assets/images/icons/country.svg"),
+    permission: "view-countries",
+  },
+  {
+    name: "جيمز",
+    path: "/dashboard/jems",
+    altImage: "jems",
+    titleImage: "jems",
+    icon: require("@/assets/images/icons/country.svg"),
+    permission: "view-countries",
   },
 ];
 let routeBasicData = [
@@ -214,7 +241,6 @@ let routeBasicData = [
     icon: require("@/assets/images/icons/question.svg"),
     permission: "view-outcome",
   },
-
 ];
 let routesSubscribes = [
   {
@@ -242,6 +268,14 @@ let routesSubscribes = [
     icon: require("@/assets/images/icons/school-section.svg"),
     // todo to change the permission
     permission: "view-terms",
+  },
+  {
+    name: "الإشتراكات",
+    path: "/dashboard/subscription",
+    altImage: "packages",
+    titleImage: "packages",
+    icon: require("@/assets/images/icons/packages.svg"),
+    permission: "view-subscription",
   },
 ];
 let routeSuperVisor = [
@@ -294,4 +328,13 @@ let routeSuperVisor = [
     permission: "view-announcements",
   },
 ];
-export { routesUsers, routesSchool, routesContent, routeSettings, routeBasicData, routesMissions, routesSubscribes,routeSuperVisor };
+export {
+  routesUsers,
+  routesSchool,
+  routesContent,
+  routeSettings,
+  routeBasicData,
+  routesMissions,
+  routesSubscribes,
+  routeSuperVisor,
+};

@@ -1,0 +1,98 @@
+<template>
+  <div class="container-fluid custom-container">
+    <div class="add-edit-learning-skill">
+      <div class="add-edit-term-form">
+        <h3>{{ $route.params.id ? "تعديل ادارة" : "اضافة نوع ادارة" }}</h3>
+        <validation-observer v-slot="{ invalid }" ref="addEditSchoolDepartmentType">
+          <form @submit.prevent="onSubmit" class="mt-5">
+            <b-row>
+              <b-col lg="4" md="6" cols="12" class="mb-3">
+                <div class="hold-field">
+                  <TextField
+                    v-model="name"
+                    label="اسم نوع ادارة"
+                    name="نوع ادارة"
+                    placeholder="أدخل اسم نوع ادارة"
+                    :rules="'required|min:3|max:100'"
+                  ></TextField>
+                </div>
+              </b-col>
+            </b-row>
+            <b-row>
+              <div class="hold-btns-form">
+                <Button @click="handleCancel" custom-class="cancel-btn margin">
+                  {{ $t("GLOBAL_CANCEL") }}
+                </Button>
+                <Button
+                  type="submit"
+                  :loading="loading"
+                  :disabled="invalid"
+                  custom-class="submit-btn"
+                >
+                  {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
+                </Button>
+              </div>
+            </b-row>
+          </form>
+        </validation-observer>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import TextField from "@/components/Shared/TextField/index.vue";
+import Button from "@/components/Shared/Button/index.vue";
+import Modal from "@/components/Shared/Modal/index.vue";
+import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
+import { getSchoolDepartmentTypeByIdRequest } from "@/api/school-department-type";
+
+export default {
+  components: {
+    Modal,
+    TextField,
+    Button,
+    SelectSearch,
+  },
+  props: {
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      name: "",
+    };
+  },
+  methods: {
+    onSubmit() {
+      this.$refs.addEditSchoolDepartmentType.validate().then((success) => {
+        if (!success) return;
+      });
+      if (this.$route.params.id) {
+        this.$emit("handleEditSchoolDepartmentType", this.name);
+      } else {
+        this.$emit("handleAddSchoolDepartmentType", this.name);
+      }
+    },
+    handleCancel() {
+      this.$emit("handleCancel");
+    },
+    getSchoolDepartmentType() {
+      if (this.$route.params.id) {
+        this.ApiService(getSchoolDepartmentTypeByIdRequest(this.$route.params.id)).then(
+          (response) => {
+            this.name = response.data.data.name;
+          }
+        );
+      }
+    },
+  },
+  mounted() {
+    this.getSchoolDepartmentType();
+  },
+};
+</script>
+<style scoped lang="scss">
+@import "./index";
+</style>
