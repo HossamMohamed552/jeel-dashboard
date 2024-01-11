@@ -43,7 +43,8 @@
     "system_settings": "اعدادات النظام",
     "basicData": "البيانات الأساسية",
     "routesMissions": "المهام",
-    "routesSubscribes": "الإشتراكات"
+    "routesSubscribes": "الإشتراكات",
+    "routesPrizes": "الجوائز"
   },
   "TABLE_FIELDS": {
     "id": "التسلسل",
@@ -90,7 +91,13 @@
     "paperName": "اسم ورقة العمل",
     "paper_work_final_degree": "الدرجة",
     "bloom": "بلوم",
-    "learning_path_name": "اسم المسار"
+    "badge_name": "اسم الشارة",
+    "percentage_of": "نسبة من",
+    "percentage_to": "نسبة إلي",
+    "learning_path_name": "اسم المسار",
+    "character_name": "اسم الشخصية",
+    "character_logo": "صورة الشخصية",
+    "character_type": "نوع الشخصية"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -115,6 +122,30 @@
     "ENTER_DEPARTMENT": "أدخل اسم الدور الوظيفي",
     "ENTER_DESCRIPTION": "أدخل الوصف",
     "showDetails": "تفاصيل دور وظيفي"
+  },
+  "BADGE": {
+    "ADD_NEW": "إضافة شارة جديدة",
+    "EDIT": "تعديل شارة",
+    "name": "إسم الشارة",
+    "NAME": "إسم الشارة",
+    "main_percentage": "نسبة من ",
+    "max_percentage": "نسبة الى",
+    "description": "الوصف",
+    "showDetails": "عرض تفاصيل الشاره",
+    "bade_logo": "لوجو الشارة",
+    "bade_details": "تفاصيل شارة جيل"
+  },
+  "CHARACTER": {
+    "ADD_NEW": "إضافة شخصية جديدة",
+    "EDIT": "تعديل الشخصية",
+    "name": "إسم الشخصية",
+    "NAME": "إسم الشخصية",
+    "description": "الوصف",
+    "showDetails": "عرض تفاصيل الشخصية",
+    "character_logo": "لوجو الشخصية",
+    "character_details": "تفاصيل الشخصية",
+    "country": "الدولة",
+    "type": "النوع"
   },
   "COUNTRY": {
     "ADD_NEW": "إضافة دولة جديدة",

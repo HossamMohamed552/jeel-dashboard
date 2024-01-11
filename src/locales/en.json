@@ -21,7 +21,9 @@
     "content": "content",
     "infoDashBoard": "infoDashBoard",
     "reports": "reports",
-    "system_settings": "System settings"
+    "system_settings": "System settings",
+    "routesPrizes": "Prizes"
+
   },
   "TABLE_FIELDS": {
     "id": "id",
