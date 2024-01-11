@@ -43,14 +43,27 @@
             <div class="mt-5 pt-5 text-center">لا توجد بيانات</div>
           </template>
           <template #cell(is_active)="data">
-            <span v-if="data.value" class="mark checked">
-              <b-icon icon="check" variant="success"></b-icon>
-            </span>
-            <span v-else class="mark unchecked">
-              <b-icon icon="x" variant="danger"></b-icon>
-            </span>
+            <b-form-checkbox
+              size="lg"
+              v-model="data.value"
+              switch
+              @change="toggleIsActive(data.item)"
+            ></b-form-checkbox>
           </template>
         </b-table>
+        <div class="hold-btns-form">
+          <Button @click="handleCancel" custom-class="cancel-btn margin">
+            {{ $t("GLOBAL_CANCEL") }}
+          </Button>
+          <Button
+            :disabled="disabledBtn"
+            @click="updateRolePermissions"
+            :loading="loading"
+            custom-class="submit-btn"
+          >
+            {{ $t("GLOBAL_SAVE") }}
+          </Button>
+        </div>
       </div>
     </div>
   </section>
@@ -58,7 +71,11 @@
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 
-import { getSingleRoleRequest, getRolePermissionsRequest } from "@/api/role";
+import {
+  getSingleRoleRequest,
+  getRolePermissionsRequest,
+  putRolePermissionsRequest,
+} from "@/api/role";
 export default {
   name: "index",
   components: {
@@ -85,13 +102,37 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
       ],
+      loading: false,
       items: [],
-      data: [],
+      cloneItems: [],
+      active_permissions: [],
+      inactive_permissions: [],
       roleID: this.$route.params.id,
       categoryID: 0,
+      disabledBtn: true,
     };
   },
+  computed: {
+    activeItems() {
+      return this.items.filter((item) => item.is_active);
+    },
+    inactiveItems() {
+      return this.items.filter((item) => !item.is_active);
+    },
+  },
   methods: {
+    handleCancel() {
+      this.$router.push("/dashboard/role");
+    },
+    toggleIsActive(item) {
+      // Update the 'is_active' property of the clicked item
+      item.is_active = !item.is_active;
+      this.updateActiveInactiveIDs();
+    },
+    updateActiveInactiveIDs() {
+      this.active_permissions = this.activeItems.map((item) => item.id);
+      this.inactive_permissions = this.inactiveItems.map((item) => item.id);
+    },
     getAllRolePermissions() {
       let params = {
         role_id: this.$route.params.id,
@@ -107,6 +148,38 @@ export default {
         items.map((item) => ({ ...item, role }))
       );
       this.items = flattenedData;
+      this.cloneItems = JSON.parse(JSON.stringify(this.items));
+    },
+    updateRolePermissions() {
+      let params = {
+        role_id: this.$route.params.id,
+        category_id: this.categoryID,
+        active_permissions: this.active_permissions,
+        inactive_permissions: this.inactive_permissions,
+      };
+      this.loading = true;
+      this.ApiService(putRolePermissionsRequest(params))
+        .then(() => {
+          this.$router.push("/dashboard/role");
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    isPermissionsChange(newItems) {
+      this.disabledBtn = !newItems.some(
+        (newItem, index) => newItem.is_active !== this.cloneItems[index].is_active
+      );
+    },
+  },
+
+  watch: {
+    items: {
+      handler(newItems) {
+        this.isPermissionsChange(newItems);
+      },
+      deep: true,
+      immediate: true,
     },
   },
 

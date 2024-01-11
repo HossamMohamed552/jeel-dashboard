@@ -210,7 +210,7 @@
               {{ $t("CONTROLS.detailBtn") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkAdd() === 'show'"></b-dropdown-divider>
-            <b-dropdown-item @click="editItem(data.item.id)" v-if="checkAdd() === 'show'">
+            <b-dropdown-item @click="permissionItem(data.item.id)" v-if="checkAdd() === 'show'">
               {{ $t("CONTROLS.permissions") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkEdit() === 'show'"></b-dropdown-divider>
@@ -465,6 +465,9 @@ export default {
     },
     editItem(id) {
       this.$emit("editItem", id);
+    },
+    permissionItem(id) {
+      this.$emit("permissionItem", id);
     },
     deleteItem(id) {
       this.$emit("deleteItem", id);

@@ -8,6 +8,7 @@
       @detailItem="detailItem($event)"
       :number-of-item="totalNumber"
       @editItem="editItem($event)"
+      @permissionItem="permissionItem($event)"
       @deleteItem="deleteItem($event)"
       :loading="loading"
       @refetch="getRoles"
@@ -99,6 +100,9 @@ export default {
     },
     editItem($event) {
       this.$router.push(`/dashboard/role/edit/${$event}`);
+    },
+    permissionItem($event) {
+      this.$router.push(`/dashboard/role/permission/${$event}`);
     },
     deleteItem($event) {
       this.itemId = $event;

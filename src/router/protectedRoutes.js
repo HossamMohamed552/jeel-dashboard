@@ -37,6 +37,16 @@ const protectedRoutes = [
         },
       },
       {
+        path: "/dashboard/role/permission/:id",
+        name: "permission",
+        component: () => import("../../views/role/permission/index.vue"),
+        meta: {
+          breadcrumb: "الصلاحيات",
+          preLabel: "صلاحيات النظام",
+          preLink: "/dashboard/role",
+        },
+      },
+      {
         path: "/dashboard/role/show/:id",
         name: "show-role",
         component: () => import("../../views/role/view-role/index.vue"),
@@ -1316,8 +1326,7 @@ const protectedRoutes = [
       {
         path: "/dashboard/rewarding-actions/show/:id",
         name: "show-rewarding-actions",
-        component: () =>
-          import("../../views/rewarding-actions/view-rewarding-actions/index.vue"),
+        component: () => import("../../views/rewarding-actions/view-rewarding-actions/index.vue"),
         meta: {
           breadcrumb: "تفاصيل جائزة تفاعل",
           preLabel: "",
