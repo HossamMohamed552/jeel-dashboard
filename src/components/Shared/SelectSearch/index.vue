@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { FieldMixin } from "@/mixins/FieldMixin";
+import {FieldMixin} from "@/mixins/FieldMixin";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 
@@ -36,13 +36,12 @@ export default {
   props: {
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     options: {
       type: Array,
       default: () => [],
     },
-
     placeholder: {
       type: String,
       default: "",
@@ -56,4 +55,5 @@ export default {
 
 <style lang="scss" scoped>
 @import "./index.scss";
+
 </style>

@@ -5,7 +5,7 @@
       :showModal="showModal"
       :is-success="true"
     />
-    <AddEditBadge
+    <AddEditPowerUpBox
       :loading="loading"
       @handleAddBadge="handleAddBadge($event)"
       @handleCancel="handleCancel"
@@ -13,14 +13,14 @@
   </div>
 </template>
 <script>
-import AddEditBadge from "@/components/Modules/Badges/AddEditBadge/index.vue";
-import { postAddBadgeRequest } from "@/api/badge";
+import AddEditPowerUpBox from "@/components/Modules/PowerUpBox/AddEditPowerUpBox/index.vue";
+import { postAddPowerUpBoxRequest } from "@/api/power-up-boxes";
 import Modal from "@/components/Shared/Modal/index.vue";
 
 export default {
   components: {
     Modal,
-    AddEditBadge,
+    AddEditPowerUpBox,
   },
   data() {
     return {
@@ -33,7 +33,7 @@ export default {
     handleAddBadge($event) {
       this.loading = true;
       this.showModal = true;
-      this.ApiService(postAddBadgeRequest($event))
+      this.ApiService(postAddPowerUpBoxRequest($event))
         .then((response) => {
           this.loading = false;
           setTimeout(() => {
@@ -41,11 +41,11 @@ export default {
           }, 3000);
         })
         .then(() => {
-          this.$router.push("/dashboard/jeel-badge");
+          this.$router.push("/dashboard/power-up-boxes");
         });
     },
     handleCancel() {
-      this.$router.push("/dashboard/jeel-badge");
+      this.$router.push("/dashboard/power-up-boxes");
     },
   },
 };

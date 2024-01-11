@@ -355,9 +355,9 @@ let routesPrizes = [
   },
   {
     name: "صناديق الطاقة",
-    path: "/dashboard/energy-boxes",
-    altImage: "energy-boxes",
-    titleImage: "energy-boxes",
+    path: "/dashboard/power-up-boxes",
+    altImage: "power-up-boxes",
+    titleImage: "power-up-boxes",
     icon: require("@/assets/images/icons/steps.svg"),
     permission: "view-classes",
   },
