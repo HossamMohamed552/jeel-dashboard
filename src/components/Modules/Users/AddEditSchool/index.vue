@@ -36,7 +36,7 @@
                 <b-col lg="12">
                   <div class="hold-field mt-4">
                     <UploadAttachment
-                      v-if="!$route.params.id || createSchool.taskImageChangedRequest"
+                      v-if="!$route.params.id || createSchool?.logoChangedRequest"
                       :type-of-attachment="'image'"
                       :label="$t('SCHOOL.SCHOOL_LOGO')"
                       :dropImage="true"
@@ -49,18 +49,16 @@
                     <PreviewMedia
                       v-if="
                         $route.params.id &&
-                        createSchool.taskImageChanged === false &&
-                        !createSchool.taskImageChangedRequest
+                        !createSchool?.logoChanged &&
+                        !createSchool?.logoChangedRequest
                       "
-                      :header="$t('صورة السؤال')"
-                      :media-name="createSchool.task_file_name"
-                      :file-size="createSchool.task_file_size"
-                      :image-url="createSchool.task"
+                      :header="$t('SCHOOL.SCHOOL_LOGO')"
+                      :media-name="createSchool.logo_file_name"
+                      :file-size="createSchool.logo_file_size"
+                      :image-url="createSchool.logo"
                       :typeOfMedia="'image'"
                       :showRemoveButton="true"
-                      @removeFile="
-                        removeFile('task_image', 'taskImageChanged', 'taskImageChangedRequest')
-                      "
+                      @removeFile="removeFile('logo', 'logoChanged', 'logoChangedRequest')"
                     />
                   </div>
                 </b-col>
@@ -156,11 +154,13 @@
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import TextField from "@/components/Shared/TextField/index.vue";
 import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
-import UploadAttachment from "@/components/Shared/UploadAttachment";
 import Button from "@/components/Shared/Button/index.vue";
-import { getSchoolOwnerRequest, getSingleSchoolsRequest } from "@/api/school";
+import { getSingleSchoolsRequest } from "@/api/school";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { getAllPackagesRequest } from "@/api/packages";
+
+import UploadAttachment from "@/components/Shared/UploadAttachment";
+import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
+
 // Dropdown List
 import { getAllSchoolGroupRequest } from "@/api/schoolGroup";
 import { getSchoolDepartmentTypesRequest } from "@/api/school-department-type";
@@ -187,6 +187,7 @@ export default {
     TextField,
     TextAreaField,
     UploadAttachment,
+    PreviewMedia,
     ImageUploader,
     Modal,
     Button,
@@ -236,7 +237,7 @@ export default {
           rules: "required",
         },
         {
-          key: "schooltest",
+          key: "school_group_id",
           col: "4",
           type: "select",
           label: this.$t("SCHOOL.SCHOOL_COLLECTION"),
@@ -291,7 +292,7 @@ export default {
           type: "text",
           label: this.$t("SCHOOL.MOBILE"),
           value: "",
-          rules: "required",
+          rules: { regex: /^01[0125][0-9]{8}$/, required: true },
         },
         {
           key: "music_status",
@@ -337,7 +338,7 @@ export default {
           type: "text",
           label: this.$t("SCHOOL.MANAGER_MOBILE"),
           value: "",
-          rules: "required|min:3|max:100",
+          rules: { regex: /^01[0125][0-9]{8}$/, required: true },
         },
       ],
       addressFields: [
@@ -359,7 +360,10 @@ export default {
         },
       ],
 
-      createSchool: {},
+      createSchool: {
+        logoChanged: false,
+        logoChangedRequest: false,
+      },
     };
   },
   methods: {
@@ -371,6 +375,12 @@ export default {
       allFields.forEach((fieldArray) => {
         this.updateFields(fieldArray);
       });
+    },
+
+    removeFile(fileName, fileChange, fileRequest) {
+      this.createSchool[fileName] = null;
+      this.createSchool[fileChange] = true;
+      this.createSchool[fileRequest] = true;
     },
 
     updateFields(fieldArray) {
@@ -392,10 +402,12 @@ export default {
     sendDataNewSchool() {
       this.handleInputValue();
       const formData = new FormData();
+      const keysToSkip = ["logoChangedRequest", "logoChanged", "logo_file_size", "logo_file_name"];
+      if (this.createSchool.logo.startsWith("http")) keysToSkip.push("logo");
 
       // Append form data using a loop
       Object.entries(this.createSchool).forEach(([key, value]) => {
-        if (value !== null && value !== undefined) {
+        if (!keysToSkip.includes(key) && value !== null && value !== undefined) {
           // Handle special cases or custom conditions if needed
           if (key === "logo" && typeof value !== "string") {
             formData.append(key, value);
@@ -414,12 +426,12 @@ export default {
       };
 
       const endpoint = this.$route.params.id ? `/schools/${this.$route.params.id}` : "/schools";
-      const httpMethod = this.$route.params.id ? "PUT" : "POST";
-
+      // const httpMethod = this.$route.params.id ? "PUT" : "POST";
+      if (this.$route.params.id) formData.append("_method", "PUT");
       axios
         .request({
           url: endpoint,
-          method: httpMethod,
+          method: "POST",
           data: formData,
           ...requestConfig,
         })
@@ -455,9 +467,10 @@ export default {
           name: data.name,
           country_id: data.country.id,
           management_type_id: data.management_type.id,
+          school_group_id: data.school_group.id,
           certificate_id: data.certificate.id,
           teaching_language_id: data.teaching_language.id,
-          students_type: data.teaching_language.id,
+          students_type: data.students_type.id,
           music_status: data.music_status.id,
           status: data.status.id,
           phone: data.phone,
@@ -466,35 +479,14 @@ export default {
           owner_phone: data.owner_phone,
           address: data.address,
           notes: data.notes,
+          logo_file_name: data.logo_name,
+          logo_file_size: data.logo_size,
+          logo: data.logo,
         };
 
         this.setValuesInArray(this.schoolInfoFields, this.createSchool);
         this.setValuesInArray(this.schoolManangerFields, this.createSchool);
         this.setValuesInArray(this.addressFields, this.createSchool);
-
-        this.itemImage = logo;
-
-        console.log(this.createSchool);
-
-        // this.ApiService(getSingleSchoolsRequest(this.$route.params.id)).then((response) => {
-        //   // console.log('response.data.data.music_status',response.data.data.music_status)
-        //   // console.log('response.data.data.status',response.data.data.status)
-        //   this.createSchool.name = response.data.data.name;
-        //   // this.createSchool.username = response.data.data.username;
-        //   this.createSchool.address = response.data.data.address;
-        //   this.createSchool.contact = response.data.data.contact;
-        //   this.createSchool.email = response.data.data.email;
-        //   this.createSchool.admin_id = response.data.data.admin.id;
-        //   this.createSchool.school_group_id = response.data.data.school_group.id;
-        //   this.createSchool.school_type_id = response.data.data.school_type.id;
-        //   this.createSchool.package_id = response.data.data.package.id;
-        //   this.createSchool.music_status = response.data.data.music_status;
-        //   this.createSchool.status = response.data.data.status;
-        //   this.createSchool.startDate = response.data.data.subscription_start_date;
-        //   this.createSchool.endDate = response.data.data.subscription_end_date;
-        //   this.itemImage = response.data.data.logo;
-        //   this.createSchool.logo = response.data.data.logo;
-        // });
       }
     },
 
