@@ -30,3 +30,20 @@ export const deleteSchoolGroupRequest = (params) => ({
   method: "delete",
   url: `school-groups/${params}`,
 });
+
+export const getSchoolGroupMusicStatusEnum = () => ({
+  method: "get",
+  url: "system_codes/school_group/music_status",
+});
+export const getSchoolGroupTypesEnum = () => ({
+  method: "get",
+  url: "system_codes/school_group/type",
+});
+export const getSchoolGroupStatusEnum = () => ({
+  method: "get",
+  url: "system_codes/school_group/status",
+});
+export const getSchoolGroupById = (id) => ({
+  method: "get",
+  url: `school-groups/${id}`,
+});

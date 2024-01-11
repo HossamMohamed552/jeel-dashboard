@@ -131,6 +131,7 @@
     "name_placeholder": "أدخل اسم مجموعة المدارس",
     "type": "نوع المجموعة",
     "music": "الصوت",
+    "music_type": "نوع الصوت",
     "music_placeholder": "اختر نوع الصوت",
     "email": "البريد الإلكترونى",
     "status": "الحالة",
@@ -142,7 +143,7 @@
     "selectUser": "إختر إسم مالك المجموعة",
     "selectCountry": "إختر الدولة",
     "selectCountry_placeholder": "إختر الدولة",
-    "showDetails": "عرض تفاصيل المجموعة",
+    "showDetails": " تفاصيل مجموعة المدارس",
     "missions": "المراحل",
     "Description": "ملاحظات",
     "DESCRIPTION_INPUT_PLACEHOLDER": "أدخل ملاحظات"

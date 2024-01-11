@@ -49,10 +49,7 @@
                     :label="$t('GROUP.music')"
                     :placeholder="$t('GROUP.music_placeholder')"
                     :name="$t('GROUP.music')"
-                    :options="[
-                      { name: 'أكابيلا', id: 0 },
-                      { name: 'بموسيقى', id: 1 },
-                    ]"
+                    :options="schoolGroupMusicStatus"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
@@ -66,10 +63,7 @@
                     :label="$t('GROUP.status')"
                     :placeholder="$t('GROUP.status_placeholder')"
                     :name="$t('GROUP.status')"
-                    :options="[
-                      { name: 'غير مفعل', id: 0 },
-                      { name: 'مفعل', id: 1 },
-                    ]"
+                    :options="schoolGroupStatus"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
@@ -117,7 +111,12 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import RadioButton from "@/components/Shared/RadioButton/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { getSingleSchoolGroupRequest } from "@/api/schoolGroup";
+import {
+  getSingleSchoolGroupRequest,
+  getSchoolGroupById,
+  getSchoolGroupMusicStatusEnum,
+  getSchoolGroupStatusEnum,
+} from "@/api/schoolGroup";
 import { getAllSearchUsersRequest } from "@/api/user";
 import { getAllCountryRequest } from "@/api/country";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
@@ -139,6 +138,8 @@ export default {
   data() {
     return {
       countries: null,
+      schoolGroupMusicStatus: [],
+      schoolGroupStatus: [],
       createGroup: {
         name: "",
         // type: '',
@@ -185,19 +186,29 @@ export default {
     handleCancel() {
       this.$emit("handleCancel");
     },
+    getSchoolStatus() {
+      this.ApiService(getSchoolGroupStatusEnum()).then((response) => {
+        this.schoolGroupStatus = response.data.data;
+      });
+    },
+    getSchoolMusicStatus() {
+      this.ApiService(getSchoolGroupMusicStatusEnum()).then((response) => {
+        this.schoolGroupMusicStatus = response.data.data;
+      });
+    },
     getGroupToEdit() {
       if (this.$route.params.id) {
-        this.ApiService(getSingleSchoolGroupRequest(this.$route.params.id)).then((response) => {
+        this.ApiService(getSchoolGroupById(this.$route.params.id)).then((response) => {
           this.createGroup.name = response.data.data.name;
           this.defaultGroup.name = response.data.data.name;
           this.createGroup.type = response.data.data.type;
           this.defaultGroup.type = response.data.data.type;
-          this.createGroup.music_status = response.data.data.music_status;
-          this.defaultGroup.music_status = response.data.data.music_status;
-          this.createGroup.status = response.data.data.status;
-          this.defaultGroup.status = response.data.data.status;
-          this.createGroup.owner_name = response.data.data.owner.id;
-          this.defaultGroup.owner_name = response.data.data.owner.id;
+          this.createGroup.music_status = response.data.data.music_status.id;
+          this.defaultGroup.music_status = response.data.data.music_status.id;
+          this.createGroup.status = response.data.data.status.id;
+          this.defaultGroup.status = response.data.data.status.id;
+          this.createGroup.owner_name = response.data.data.owner_name;
+          this.defaultGroup.owner_name = response.data.data.owner_name;
           this.createGroup.country_id = response.data.data.country.id;
           this.defaultGroup.country_id = response.data.data.country.id;
           this.createGroup.description = response.data.data.description;
@@ -215,6 +226,8 @@ export default {
   mounted() {
     this.getGroupToEdit();
     this.getAllCountries();
+    this.getSchoolStatus();
+    this.getSchoolMusicStatus();
   },
 };
 </script>

@@ -428,8 +428,11 @@ export default {
     inputValue(newVal) {
       this.searchBy(newVal);
     },
-    tableItems(newVal) {
-      this.items = newVal;
+    tableItems: {
+      handler(newVal) {
+        this.items = newVal;
+      },
+      immediate: true,
     },
   },
   methods: {
