@@ -46,15 +46,7 @@
 .hidden-text {
   opacity: 0;
 }
-.delete-answer{
-  background: #FF5252;
-  color: #fff !important;
-  padding: .5rem 1rem;
-  border-radius: .7rem;
-  margin-top: 1rem;
-  width: 100px;
-  text-align: center;
-}
+
 ::v-deep {
   .text-field input {
     height: 50px;
@@ -120,12 +112,7 @@
   font-size: 1.3rem;
   font-weight: 500;
 }
-.hold-field{
-  width: 100%;
-}
-.add-deleteBtn{
 
-}
 //.space{
 //  display: inline-block;
 //  width: 100px;

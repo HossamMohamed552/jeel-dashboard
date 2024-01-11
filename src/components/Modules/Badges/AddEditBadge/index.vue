@@ -139,6 +139,10 @@ export default {
     Button,
   },
   props: {
+    permission: {
+      type: Array,
+      default: () => [],
+    },
     loading: {
       type: Boolean,
       default: false,

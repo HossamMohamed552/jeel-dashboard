@@ -1,9 +1,9 @@
 <template>
   <ValidationProvider v-slot="{ errors, invalid }" :name="name" :rules="rules">
-    <label v-if="label" :class="isRequiredField && 'required-flag'">
+    <label v-if="label" :class="isRequired && 'required-flag'">
       <!-- <span v-if="typeof rules === 'string' && rules.includes('required')"><i class="fa-solid fa-asterisk"></i></span>
       <span v-else-if="typeof rules === 'object' && rules.required"><i class="fa-solid fa-asterisk"></i></span>{{ label }} -->
-      {{ label }}
+      {{label}}
     </label>
     <b-form-textarea
       v-model="innerValue"
@@ -11,13 +11,12 @@
       v-on="$listeners"
       class="custom-text-area"
       :placeholder="placeholder"
-      :required="isRequiredField"
       :class="{
         'input-disabled': $attrs.disabled,
         'is-invalid': invalid & errors.length,
       }"
     />
-    <slot />
+    <slot/>
 
     <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
       {{ error }}
@@ -26,20 +25,16 @@
 </template>
 
 <script>
-import { FieldMixin } from "@/mixins/FieldMixin";
+import {FieldMixin} from "@/mixins/FieldMixin";
 
 export default {
   mixins: [FieldMixin],
   props: {
     placeholder: {
       type: String,
-      default: "",
-    },
-    isRequiredField: {
-      type: Boolean,
-      default: true,
-    },
-  },
+      default: ""
+    }
+  }
 };
 </script>
 

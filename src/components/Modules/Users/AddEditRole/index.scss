@@ -3,9 +3,7 @@
 
 .add-edit-role-form {
   @include styleViewList;
-  min-height: unset;
-  padding: 38px;
-  h3 {
+  h3{
     font-weight: bold;
   }
 }
@@ -18,14 +16,14 @@
 .heading-permission {
   color: $color-primary;
 }
-.hold-permissions {
+.hold-permissions{
   display: block;
   max-height: 275px;
   overflow: auto;
   background: #fff;
   padding: 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid #bebebe;
+  border-radius: .5rem;
+  border: 1px solid #BEBEBE;
 }
 
 .permission-item {
@@ -33,27 +31,7 @@
   cursor: pointer;
 }
 ::v-deep {
-  // Handle over All
-  .required-flag {
-    margin: 0 !important;
-    padding-bottom: 7px;
-  }
-
-  .invalid-feedback {
-    position: absolute;
-  }
-  .submit-btn {
-    padding: 11px !important;
-    min-width: 195px;
-  }
-
-  .btn {
-    min-width: 195px;
-  }
-
-  //
-
-  .custom-control-input:checked ~ .custom-control-label::before {
+  .custom-control-input:checked~.custom-control-label::before {
     background: $color-primary;
     border-color: $color-primary;
     box-shadow: none;
@@ -61,7 +39,7 @@
   .custom-control {
     cursor: pointer;
     @media (max-width: 768px) {
-      font-size: 0.8rem;
+      font-size: .8rem;
     }
     &:lang(ar) {
       padding-right: 1.5rem;
@@ -82,7 +60,7 @@
     }
   }
 }
-.buttons {
+.buttons{
   height: 100%;
-  @include flexCenter(center);
+  @include flexCenter(center)
 }
