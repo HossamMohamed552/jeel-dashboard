@@ -315,7 +315,8 @@
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",
     "STEP_TWO": "محتوى المهمة",
-    "STEP_THREE": "مراجعة المحتوى المهمة",
+    "STEP_THREE": "محتوى انجاز المهمه",
+    "STEP_FOUR": "مراجعة المحتوى المهمة",
     "EDIT": "تعديل المهمة",
     "ADD_NEW": "إضافة مهمة جديدة",
     "name": "إسم المهمة",
@@ -332,7 +333,10 @@
     "description": "الوصف",
     "content": "المحتوى",
     "ShowDetails": "عرض تفاصيل المهمة",
-    "UPLOAD_IMAGE": "صورة المهمة"
+    "UPLOAD_IMAGE": "صورة المهمة",
+    "BadgeContentType": "نوع المحتوى",
+    "BadgeContent": "المحتوى",
+    "BadgeAdd": "اضافة"
   },
   "LESSONS": {
     "LESSONS": "الدروس",

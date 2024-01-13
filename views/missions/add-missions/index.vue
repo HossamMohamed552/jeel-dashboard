@@ -25,7 +25,10 @@
       @handleBack="goToMissionDataForm"
       @handleCancel="handleCancel"
       @goToFinalStep="goToFinalStep"/>
-    <div class="container-fluid custom-container" v-if="currentStep === 2">
+      <AddEditCompleteTaskContent  v-if="currentStep === 2">
+
+      </AddEditCompleteTaskContent>
+    <div class="container-fluid custom-container" v-if="currentStep === 3">
       <div class="mission-review ">
         <b-row>
           <b-col lg="4">
@@ -124,6 +127,7 @@
 <script>
 import AddEditMissionDataForm from "@/components/Modules/Missions/AddEditMissionDataForm/index.vue";
 import AddEditContent from "@/components/Modules/Missions/AddEditContent/index.vue";
+import AddEditCompleteTaskContent from "@/components/Modules/Missions/AddEditCompleteTaskContent/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import Stepper from "@/components/Shared/Stepper/index.vue";
@@ -140,6 +144,7 @@ export default {
     Stepper,
     AddEditMissionDataForm,
     AddEditContent,
+    AddEditCompleteTaskContent
   },
   data() {
     return {
@@ -165,6 +170,10 @@ export default {
           icon: "3",
           title: this.$t("MISSIONS.STEP_THREE"),
         },
+        {
+          icon: "4",
+          title: this.$t("MISSIONS.STEP_FOUR"),
+        }
       ],
       currentStep: 0,
       learningPathSelected: [],
