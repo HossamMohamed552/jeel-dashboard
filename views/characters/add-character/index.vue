@@ -32,15 +32,16 @@ export default {
   methods: {
     handleAddCharacter($event) {
       this.loading = true;
-      this.ApiService(postAddCharacterRequest({ name: $event }))
+      this.showModal = true;
+      this.ApiService(postAddCharacterRequest($event))
         .then((response) => {
-          this.showModal = true;
+          this.loading = false;
           setTimeout(() => {
-            this.$router.push("/dashboard/characters");
+            this.showModal = false;
           }, 3000);
         })
-        .finally(() => {
-          this.loading = false;
+        .then(() => {
+          this.$router.push("/dashboard/characters");
         });
     },
     handleCancel() {

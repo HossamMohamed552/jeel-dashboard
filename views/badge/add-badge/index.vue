@@ -32,15 +32,16 @@ export default {
   methods: {
     handleAddBadge($event) {
       this.loading = true;
-      this.ApiService(postAddBadgeRequest({ name: $event }))
+      this.showModal = true;
+      this.ApiService(postAddBadgeRequest($event))
         .then((response) => {
-          this.showModal = true;
+          this.loading = false;
           setTimeout(() => {
-            this.$router.push("/dashboard/jeel-badge");
+            this.showModal = false;
           }, 3000);
         })
-        .finally(() => {
-          this.loading = false;
+        .then(() => {
+          this.$router.push("/dashboard/jeel-badge");
         });
     },
     handleCancel() {

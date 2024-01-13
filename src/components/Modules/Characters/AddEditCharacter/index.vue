@@ -134,7 +134,6 @@ import UploadAttachment from "@/components/Shared/UploadAttachment/index.vue";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
 import {getCharacterTypeRequest} from "@/api/system";
 
-
 export default {
   components: {
     GeneralModal,
@@ -148,6 +147,10 @@ export default {
     Button,
   },
   props: {
+    permission: {
+      type: Array,
+      default: () => [],
+    },
     loading: {
       type: Boolean,
       default: false,
@@ -183,11 +186,11 @@ export default {
       this.createCharacter[fileChange] = true;
       this.createCharacter[fileRequest] = true;
     },
-    showModal(createCharacter, $event, fileUrl = "") {
+    showModal(paperWork, $event, fileUrl = "") {
       this.$bvModal.show("holdContent");
       this.mediaType = $event;
       if (this.mediaType === "audio") {
-        this.url = createCharacter.audio;
+        this.url = paperWork.audio;
       } else {
         this.url = fileUrl;
       }

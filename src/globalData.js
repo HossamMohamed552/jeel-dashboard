@@ -147,6 +147,14 @@ let routesMissions = [
     icon: require("@/assets/images/icons/steps.svg"),
     permission: "view-missions",
   },
+  {
+    name: "مجموعة المهام الموسمية",
+    path: "/dashboard/seasonal-mission-group",
+    altImage: "seasonal-mission-group",
+    titleImage: "seasonal-mission-group",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-missions",
+  },
 ];
 let routeSettings = [
   {
@@ -355,9 +363,9 @@ let routesPrizes = [
   },
   {
     name: "صناديق الطاقة",
-    path: "/dashboard/energy-boxes",
-    altImage: "energy-boxes",
-    titleImage: "energy-boxes",
+    path: "/dashboard/power-up-boxes",
+    altImage: "power-up-boxes",
+    titleImage: "power-up-boxes",
     icon: require("@/assets/images/icons/steps.svg"),
     permission: "view-classes",
   },

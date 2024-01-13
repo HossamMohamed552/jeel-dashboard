@@ -1,42 +1,16 @@
 @import "src/assets/style/scss/_variables";
-label {
+label{
   color: $color-primary;
-  margin: 0.7rem 0 !important;
+  margin: .7rem 0 !important;
 }
-.custom-text-area {
+.custom-text-area{
   color: $color-primary;
-  border: 1px solid #bebebe;
+  border: 1px solid #BEBEBE;
   resize: none;
-  border-radius: 1.875rem;
+  border-radius:1.875rem;
   min-height: 90px;
   padding: 1.3rem;
-  transition: padding 0.4s;
-  &.is-invalid {
-    padding-right: 2rem !important;
-  }
 }
-.fa-asterisk {
-  margin-left: 0.5rem;
-}
-
-::v-deep {
-  .required-flag {
-    margin: 0 !important;
-    padding-bottom: 7px;
-  }
-  .form-control {
-    padding: 11px 24px !important;
-    height: 55px;
-  }
-  .invalid-feedback {
-    position: absolute;
-  }
-  .vs__dropdown-toggle {
-  }
-  .vs__actions {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 18px;
-  }
+.fa-asterisk{
+  margin-left: .5rem;
 }

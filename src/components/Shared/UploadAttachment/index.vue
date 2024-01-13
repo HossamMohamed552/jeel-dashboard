@@ -207,11 +207,7 @@ export default {
   .dropzone .dz-preview.dz-error .dz-error-message {
     opacity: 1;
     top: auto;
-    bottom: 0;
-    width: 98%;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
+    bottom: -3.6rem;
     transform: translateY(-50%);
   }
 
