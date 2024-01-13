@@ -1,42 +1,53 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة المجموعات'" :number-of-item="totalNumber"
-               :table-items="schoolGroupList" :v-search-model="groupSearchWord"
-               :fieldsList="fieldsList" @detailItem="detailItem($event)"
-               @editItem="editItem($event)" @deleteItem="deleteItem($event)"
-               @refetch="getSchoolGroups"
-               :loading="loading"
-               :permission_delete="'delete-schoolGroups'"
-               :permission_edit="'edit-schoolGroups'"
-               :permission_view="'show-schoolGroups'"
-               >
+    <ListItems
+      :header-name="'قائمة مجموعة المدارس'"
+      :number-of-item="totalNumber"
+      :table-items="schoolGroupList"
+      :v-search-model="groupSearchWord"
+      :fieldsList="fieldsList"
+      @detailItem="detailItem($event)"
+      @editItem="editItem($event)"
+      @deleteItem="deleteItem($event)"
+      @refetch="getSchoolGroups"
+      :loading="loading"
+      :permission_delete="'delete-schoolGroups'"
+      :permission_edit="'edit-schoolGroups'"
+      :permission_view="'show-schoolGroups'"
+    >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToSchoolGroup"  v-if="user.permissions.includes(`add-schoolGroups`)">
-          <img src="@/assets/images/icons/plus.svg">
-          <span>إضافة مجموعه</span>
+        <Button
+          :custom-class="'btn-add rounded-btn big-padding'"
+          @click="goToSchoolGroup"
+          v-if="user.permissions.includes(`add-schoolGroups`)"
+        >
+          <img src="@/assets/images/icons/plus.svg" />
+          <span>إضافة مجموعه المدارس</span>
         </Button>
       </template>
     </ListItems>
-    <Modal :content-message="'حذف المجموعة المدرسية'"
-           :content-message-question="'هل انت متأكد من حذف المجموعة المدرسية'"
-           :showModal="showModal"
-           @cancel="cancel($event)"
-           :is-warning="true"
-           @cancelWithConfirm="cancelWithConfirm($event)"/>
+    <Modal
+      :content-message="'حذف المجموعة المدرسية'"
+      :content-message-question="'هل انت متأكد من حذف المجموعة المدرسية'"
+      :showModal="showModal"
+      @cancel="cancel($event)"
+      :is-warning="true"
+      @cancelWithConfirm="cancelWithConfirm($event)"
+    />
   </section>
 </template>
 
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import {deleteSchoolGroupRequest, getSchoolGroupRequest} from "@/api/schoolGroup";
+import { deleteSchoolGroupRequest, getSchoolGroupRequest } from "@/api/schoolGroup";
 import Modal from "@/components/Shared/Modal/index.vue";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
-  components: {Modal, ListItems, Button},
-  computed:{
-    ...mapGetters(['user']),
+  components: { Modal, ListItems, Button },
+  computed: {
+    ...mapGetters(["user"]),
   },
   data() {
     return {
@@ -48,75 +59,68 @@ export default {
       fieldsList: [
         {
           key: "id",
-          label: this.$i18n.t("TABLE_FIELDS.id")
+          label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
           key: "name",
-          label: this.$i18n.t("TABLE_FIELDS.name")
-        },
-        // {
-        //   key: "type",
-        //   label: this.$i18n.t("TABLE_FIELDS.type")
-        // },
-        {
-          key: "status",
-          label: this.$i18n.t("TABLE_FIELDS.status")
-        },
-        {
-          key: "email.owner",
-          label: this.$i18n.t("TABLE_FIELDS.email")
+          label: "اسم مجموعة المدارس",
         },
         {
           key: "country.name",
-          label: this.$i18n.t("TABLE_FIELDS.country")
+          label: "دولة ادارة المجموعة",
+        },
+        {
+          key: "status",
+          label: "الحالة",
         },
         {
           key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions")
-        }
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
       ],
       itemId: 0,
-    }
+    };
   },
   methods: {
-    goToSchoolGroup(){
-      this.$router.push('/dashboard/school-group/add')
+    goToSchoolGroup() {
+      this.$router.push("/dashboard/school-group/add");
     },
     getSchoolGroups(event) {
-      this.loading = true
-      const params = event
-      this.ApiService(getSchoolGroupRequest(params)).then((response) => {
-        this.schoolGroupList = response.data.data
-        this.totalNumber = response.data.meta.total
-      }) .finally(() => {
+      this.loading = true;
+      const params = event;
+      this.ApiService(getSchoolGroupRequest(params))
+        .then((response) => {
+          this.schoolGroupList = response.data.data;
+          this.totalNumber = response.data.meta.total;
+        })
+        .finally(() => {
           this.loading = false;
         });
     },
     detailItem($event) {
-      this.$router.push(`/dashboard/school-group/show/${$event}`)
+      this.$router.push(`/dashboard/school-group/show/${$event}`);
     },
     editItem($event) {
-      this.$router.push(`/dashboard/school-group/edit/${$event}`)
+      this.$router.push(`/dashboard/school-group/edit/${$event}`);
     },
     deleteItem($event) {
-      this.itemId = $event
-      this.showModal = true
+      this.itemId = $event;
+      this.showModal = true;
     },
     cancel($event) {
-      this.showModal = $event
+      this.showModal = $event;
     },
     cancelWithConfirm() {
-      this.ApiService(deleteSchoolGroupRequest(this.itemId)).then(()=>{
-        this.getSchoolGroups()
-      })
-      this.cancel()
-    }
+      this.ApiService(deleteSchoolGroupRequest(this.itemId)).then(() => {
+        this.getSchoolGroups();
+      });
+      this.cancel();
+    },
   },
   mounted() {
-    this.getSchoolGroups()
-  }
-
-}
+    this.getSchoolGroups();
+  },
+};
 </script>
 
 <style scoped lang="scss">

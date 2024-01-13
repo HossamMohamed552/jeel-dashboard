@@ -43,7 +43,8 @@
     "system_settings": "اعدادات النظام",
     "basicData": "البيانات الأساسية",
     "routesMissions": "المهام",
-    "routesSubscribes": "الإشتراكات"
+    "routesSubscribes": "الإشتراكات",
+    "routesPrizes": "الجوائز"
   },
   "TABLE_FIELDS": {
     "id": "التسلسل",
@@ -90,7 +91,20 @@
     "paperName": "اسم ورقة العمل",
     "paper_work_final_degree": "الدرجة",
     "bloom": "بلوم",
-    "learning_path_name": "اسم المسار"
+
+    "badge_name": "اسم الشارة",
+    "percentage_of": "نسبة من",
+    "percentage_to": "نسبة إلي",
+    "learning_path_name": "اسم المسار",
+
+    "character_name": "اسم الشخصية",
+    "character_logo": "صورة الشخصية",
+
+    "power_up_box_name": "اسم الصندوق",
+    "power_up_box_level": "الصف الدراسى",
+    "power_up_box_country": "الدولة",
+    "power_up_box_type": "النوع",
+    "power_up_box_appear_after_missions": "ظهور بعد"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -108,6 +122,30 @@
     "description": "الوصف",
     "showDetails": "عرض تفاصيل صلاحية المستخدم"
   },
+  "BADGE": {
+    "ADD_NEW": "إضافة شارة جديدة",
+    "EDIT": "تعديل شارة",
+    "name": "إسم الشارة",
+    "NAME": "إسم الشارة",
+    "main_percentage": "نسبة من ",
+    "max_percentage": "نسبة الى",
+    "description": "الوصف",
+    "showDetails": "عرض تفاصيل الشاره",
+    "bade_logo": "لوجو الشارة",
+    "bade_details": "تفاصيل شارة جيل"
+  },
+  "CHARACTER": {
+    "ADD_NEW": "إضافة شخصية جديدة",
+    "EDIT": "تعديل الشخصية",
+    "name": "إسم الشخصية",
+    "NAME": "إسم الشخصية",
+    "description": "الوصف",
+    "showDetails": "عرض تفاصيل الشخصية",
+    "character_logo": "لوجو الشخصية",
+    "character_details": "تفاصيل الشخصية",
+    "country": "الدولة",
+    "type": "النوع"
+  },
   "COUNTRY": {
     "ADD_NEW": "إضافة دولة جديدة",
     "EDIT": "تعديل الدولة",
@@ -117,19 +155,28 @@
     "showDetails": "عرض تفاصيل الدولة"
   },
   "GROUP": {
-    "ADD_NEW": "إضافة مجموعة جديدة",
-    "EDIT": "تعديل المجموعة المدرسية",
-    "name": "اسم المجموعة",
+    "ADD_NEW": "إضافة مجموعة المدارس",
+    "EDIT": "تعديل مجموعة المدارس",
+    "name": "اسم مجموعة المدارس",
+    "name_placeholder": "أدخل اسم مجموعة المدارس",
     "type": "نوع المجموعة",
     "music": "الصوت",
+    "music_type": "نوع الصوت",
+    "music_placeholder": "اختر نوع الصوت",
     "email": "البريد الإلكترونى",
     "status": "الحالة",
-    "owner": "إسم المالك",
-    "country": "إسم الدولة",
-    "selectUser": "إختر إسم المالك",
-    "selectCountry": "إختر إسم الدولة",
-    "showDetails": "عرض تفاصيل المجموعة",
-    "missions": "المراحل"
+    "status_placeholder": "اختر الحالة",
+    "owner_placeholder": "أدخل إسم مالك المجموعة",
+    "owner": "إسم مالك المجموعة",
+    "country": "دولة ادارة المجموعة",
+    "country_placeholder": "دولة ادارة المجموعة",
+    "selectUser": "إختر إسم مالك المجموعة",
+    "selectCountry": "إختر الدولة",
+    "selectCountry_placeholder": "إختر الدولة",
+    "showDetails": " تفاصيل مجموعة المدارس",
+    "missions": "المراحل",
+    "Description": "ملاحظات",
+    "DESCRIPTION_INPUT_PLACEHOLDER": "أدخل ملاحظات"
   },
   "SCHOOL": {
     "ADD_NEW": "إضافة مدرسة جديدة",
@@ -510,10 +557,10 @@
   "GLOBAL_NAME": "الاسم",
   "SLUG": "الرمز",
   "GLOBAL_LOGOUT": "تسجيل الخروج",
-  "QUESTION_DIFFICULTY": "تفاصيل صعوبة السؤال",
+  "QUESTION_DIFFICULTY": "تفاصيل مستوى السؤال",
   "NAME": "الإسم",
   "GRADE_POINTS": "النقاط",
-  "QUESTION_DIFFICULTY_POINTS_EDIT": "تعديل نقاط صعوبة السؤال",
+  "QUESTION_DIFFICULTY_POINTS_EDIT": "تعديل مستوى السؤال",
   "GLOBAL_LOADING": "جارى التحميل...",
   "QUESTION_DETAILS": "تفاصيل السؤال",
   "GLOBAL_DETAILS": "التفاصيل",

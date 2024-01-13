@@ -6,115 +6,23 @@
         <validation-observer v-slot="{ invalid }" ref="addEditGroupForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="6" class="mb-3">
-                <div class="hold-field">
+              <b-col lg="4" class="mb-3">
+                <div class="hold-field custom-text-field">
                   <TextField
                     v-model="createGroup.name"
                     :label="$t('GROUP.name')"
+                    :placeholder="$t('GROUP.name_placeholder')"
                     :name="$t('GROUP.name')"
                     :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
               </b-col>
-              <!--              <b-col lg="3" class="mb-3 radio-item">-->
-              <!--                <div class="hold-field">-->
-              <!--                  <ValidationProvider rules="required" v-slot="{ errors }" class="d-flex justify-content-start align-items-start">-->
-              <!--                    <span><i class="fa-solid fa-asterisk"></i></span> <b-form-group :label="$t('GROUP.type')" class="group-type">-->
-              <!--                      <b-form-radio v-model="createGroup.type" value="national" name="group-type">-->
-              <!--                        محلى-->
-              <!--                      </b-form-radio>-->
-              <!--                      <b-form-radio v-model="createGroup.type" value="international"-->
-              <!--                                    name="group-type">دولى-->
-              <!--                      </b-form-radio>-->
-              <!--                    </b-form-group>-->
-              <!--                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">-->
-              <!--                      {{ error }}-->
-              <!--                    </b-form-invalid-feedback>-->
-              <!--                  </ValidationProvider>-->
-              <!--                </div>-->
-              <!--              </b-col>-->
-              <b-col lg="3" class="mb-3 radio-item">
-                <div class="hold-field">
-                  <ValidationProvider rules="required" v-slot="{ errors }">
-                    <label for="music" class="group-type d-inline-block">{{
-                      $t("GROUP.music")
-                    }}</label>
-                    <span><i class="fa-solid fa-asterisk"></i></span>
-                    <b-form-group
-                      id="music"
-                      class="d-flex justify-content-start align-items-start mt-3"
-                    >
-                      <b-form-radio
-                        v-model="createGroup.music_status"
-                        value="0"
-                        name="group-music_type"
-                        >أكابيلا
-                      </b-form-radio>
-                      <b-form-radio
-                        v-model="createGroup.music_status"
-                        value="1"
-                        name="group-music_type"
-                        >بموسيقى
-                      </b-form-radio>
-                    </b-form-group>
-                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                      {{ error }}
-                    </b-form-invalid-feedback>
-                  </ValidationProvider>
-                </div>
-              </b-col>
-              <b-col lg="3" class="mb-3 radio-item">
-                <div class="hold-field">
-                  <ValidationProvider rules="required" v-slot="{ errors }">
-                    <label for="active" class="group-type d-inline-block">{{
-                      $t("GROUP.status")
-                    }}</label>
-                    <span><i class="fa-solid fa-asterisk"></i></span>
-                    <b-form-group
-                      id="active"
-                      class="d-flex justify-content-start align-items-start mt-3"
-                    >
-                      <b-form-radio v-model="createGroup.status" value="0" name="group-status"
-                        >غير مفعل
-                      </b-form-radio>
-                      <b-form-radio v-model="createGroup.status" value="1" name="group-status"
-                        >مفعل
-                      </b-form-radio>
-                    </b-form-group>
-                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                      {{ error }}
-                    </b-form-invalid-feedback>
-                  </ValidationProvider>
-                </div>
-              </b-col>
-              <!--              <b-col lg="4" class="mt-5">-->
-              <!--                <div class="hold-field">-->
-              <!--                  <TextField-->
-              <!--                    v-model="createGroup.email"-->
-              <!--                    :label="$t('GROUP.email')"-->
-              <!--                    :name="$t('GROUP.email')"-->
-              <!--                    :rules="'email'"-->
-              <!--                  ></TextField>-->
-              <!--                </div>-->
-              <!--              </b-col>-->
-              <b-col lg="6" class="mt-5">
-                <div class="hold-field" v-if="users">
-                  <SelectSearch
-                    v-model="createGroup.owner_id"
-                    :label="$t('GROUP.owner')"
-                    :name="$t('GROUP.owner')"
-                    :options="users"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                    :rules="'required'"
-                  ></SelectSearch>
-                </div>
-              </b-col>
-              <b-col lg="6" class="mt-5">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field" v-if="countries">
                   <SelectSearch
                     v-model="createGroup.country_id"
                     :label="$t('GROUP.country')"
+                    :placeholder="$t('GROUP.country_placeholder')"
                     :name="$t('GROUP.country')"
                     :options="countries"
                     :reduce="(option) => option.id"
@@ -123,6 +31,57 @@
                   ></SelectSearch>
                 </div>
               </b-col>
+              <b-col lg="4" class="mb-3">
+                <div class="hold-field">
+                  <TextField
+                    v-model="createGroup.owner_name"
+                    :label="$t('GROUP.owner')"
+                    :placeholder="$t('GROUP.owner_placeholder')"
+                    :name="$t('GROUP.owner')"
+                    :rules="'required|min:3|max:100'"
+                  ></TextField>
+                </div>
+              </b-col>
+              <b-col lg="4" class="mb-3">
+                <div class="hold-field">
+                  <SelectSearch
+                    v-model="createGroup.music_status"
+                    :label="$t('GROUP.music')"
+                    :placeholder="$t('GROUP.music_placeholder')"
+                    :name="$t('GROUP.music')"
+                    :options="schoolGroupMusicStatus"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="4" class="mb-3">
+                <div class="hold-field">
+                  <SelectSearch
+                    v-model="createGroup.status"
+                    :label="$t('GROUP.status')"
+                    :placeholder="$t('GROUP.status_placeholder')"
+                    :name="$t('GROUP.status')"
+                    :options="schoolGroupStatus"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="12" class="mb-3">
+                <span class="custom-label">{{ $t("GROUP.Description") }} </span>
+                <TextAreaField
+                  v-model="createGroup.description"
+                  :rules="'min:5|max:250'"
+                  rows="5"
+                  :name="$t('GROUP.Description')"
+                  :placeholder="$t('GROUP.DESCRIPTION_INPUT_PLACEHOLDER')"
+                >
+                </TextAreaField>
+              </b-col>
+
               <b-col lg="12">
                 <b-row>
                   <div class="hold-btns-form">
@@ -152,7 +111,12 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import RadioButton from "@/components/Shared/RadioButton/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { getSingleSchoolGroupRequest } from "@/api/schoolGroup";
+import {
+  getSingleSchoolGroupRequest,
+  getSchoolGroupById,
+  getSchoolGroupMusicStatusEnum,
+  getSchoolGroupStatusEnum,
+} from "@/api/schoolGroup";
 import { getAllSearchUsersRequest } from "@/api/user";
 import { getAllCountryRequest } from "@/api/country";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
@@ -173,23 +137,26 @@ export default {
   },
   data() {
     return {
-      users: null,
       countries: null,
+      schoolGroupMusicStatus: [],
+      schoolGroupStatus: [],
       createGroup: {
         name: "",
         // type: '',
         music_status: "",
         status: "",
-        owner_id: "",
+        owner_name: "",
         country_id: "",
+        description: "",
       },
       defaultGroup: {
         name: "",
         // type: '',
         music_status: "",
         status: "",
-        owner_id: "",
+        owner_name: "",
         country_id: "",
+        description: "",
       },
     };
   },
@@ -200,7 +167,7 @@ export default {
         this.createGroup.name === this.defaultGroup.name &&
         this.createGroup.music_status === this.defaultGroup.music_status &&
         this.createGroup.status === this.defaultGroup.status &&
-        this.createGroup.owner_id === this.defaultGroup.owner_id &&
+        this.createGroup.owner_name === this.defaultGroup.owner_name &&
         this.createGroup.country_id === this.defaultGroup.country_id
       );
     },
@@ -219,29 +186,37 @@ export default {
     handleCancel() {
       this.$emit("handleCancel");
     },
+    getSchoolStatus() {
+      this.ApiService(getSchoolGroupStatusEnum()).then((response) => {
+        this.schoolGroupStatus = response.data.data;
+      });
+    },
+    getSchoolMusicStatus() {
+      this.ApiService(getSchoolGroupMusicStatusEnum()).then((response) => {
+        this.schoolGroupMusicStatus = response.data.data;
+      });
+    },
     getGroupToEdit() {
       if (this.$route.params.id) {
-        this.ApiService(getSingleSchoolGroupRequest(this.$route.params.id)).then((response) => {
+        this.ApiService(getSchoolGroupById(this.$route.params.id)).then((response) => {
           this.createGroup.name = response.data.data.name;
           this.defaultGroup.name = response.data.data.name;
           this.createGroup.type = response.data.data.type;
           this.defaultGroup.type = response.data.data.type;
-          this.createGroup.music_status = response.data.data.music_status;
-          this.defaultGroup.music_status = response.data.data.music_status;
-          this.createGroup.status = response.data.data.status;
-          this.defaultGroup.status = response.data.data.status;
-          this.createGroup.owner_id = response.data.data.owner.id;
-          this.defaultGroup.owner_id = response.data.data.owner.id;
+          this.createGroup.music_status = response.data.data.music_status.id;
+          this.defaultGroup.music_status = response.data.data.music_status.id;
+          this.createGroup.status = response.data.data.status.id;
+          this.defaultGroup.status = response.data.data.status.id;
+          this.createGroup.owner_name = response.data.data.owner_name;
+          this.defaultGroup.owner_name = response.data.data.owner_name;
           this.createGroup.country_id = response.data.data.country.id;
           this.defaultGroup.country_id = response.data.data.country.id;
+          this.createGroup.description = response.data.data.description;
+          this.defaultGroup.description = response.data.data.description;
         });
       }
     },
-    getAllUsers() {
-      this.ApiService(getAllSearchUsersRequest()).then((response) => {
-        this.users = response.data.data;
-      });
-    },
+
     getAllCountries() {
       this.ApiService(getAllCountryRequest()).then((response) => {
         this.countries = response.data.data;
@@ -250,8 +225,9 @@ export default {
   },
   mounted() {
     this.getGroupToEdit();
-    this.getAllUsers();
     this.getAllCountries();
+    this.getSchoolStatus();
+    this.getSchoolMusicStatus();
   },
 };
 </script>

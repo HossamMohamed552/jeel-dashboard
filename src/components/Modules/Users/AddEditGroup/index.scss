@@ -5,29 +5,45 @@
   @include styleViewList;
 }
 
-.hold-field{
-  label{
-    color: $color-primary;
-    display: block;
-    margin: 0 0.7rem 0.7rem 0;
+::v-deep .custom-text-field {
+  .text-field {
+    margin-bottom: 0;
+    input {
+      padding: 1.3rem 1rem 1.75rem !important;
+    }
   }
-  .custom-selectBox{
+}
+
+.custom-label {
+  color: black;
+  display: block;
+  font-weight: bold;
+  margin: 0.7rem 0.7rem 1rem;
+}
+
+::v-deep .hold-field {
+  label {
+    color: black;
+    display: block;
+    margin: 0.7rem 0.7rem 1rem;
+  }
+  .custom-selectBox {
     display: block;
     padding: 0 1.3rem;
     border-radius: 3.125rem;
-    border: 1px solid #BEBEBE;
+    border: 1px solid #bebebe;
     color: $color-primary;
   }
 }
 
 ::v-deep {
-  .group-type{
-    margin-right: .2rem;
-    .col-form-label{
+  .group-type {
+    margin-right: 0.2rem;
+    .col-form-label {
       color: $color-primary !important;
     }
   }
-  .custom-radio{
+  .custom-radio {
     display: inline-block;
   }
 

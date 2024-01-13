@@ -1,0 +1,44 @@
+@import "src/assets/style/scss/_mixin";
+@import "src/assets/style/scss/_variables";
+.show-role {
+  @include styleViewList;
+  .heading {
+    margin-bottom: 3.125rem;
+  }
+  .hold-fields {
+    margin-bottom: 2rem;
+  }
+  .permissions {
+    padding: 0rem 0 !important;
+    border-top: none;
+    .permission-item {
+      margin-bottom: 3.125rem;
+      img {
+        margin-left: 1rem;
+      }
+      span {
+        font-size: 1.2rem;
+        color: $color-primary;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+::v-deep {
+  .divider-show {
+    margin-bottom: 1.5rem;
+  }
+  .table td {
+    font-weight: bold;
+  }
+  .b-custom-control-lg .custom-control-label::after {
+    left: unset !important;
+    right: 1.65rem !important;
+  }
+  .btn {
+    height: 55px;
+    min-width: 195px;
+    padding: 0 !important;
+  }
+}

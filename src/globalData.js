@@ -150,23 +150,15 @@ let routesMissions = [
 ];
 let routeSettings = [
   {
-    name: "جيمز",
-    path: "/dashboard/jems",
-    altImage: "jems",
-    titleImage: "jems",
-    icon: require("@/assets/images/icons/country.svg"),
-    permission: "view-countries",
+    name: "مستوى السؤال",
+    path: "/dashboard/question-difficulty",
+    altImage: "questionDifficulty",
+    titleImage: "questionDifficulty",
+    icon: require("@/assets/images/icons/question.svg"),
+    permission: "view-questionDifficulty",
   },
   {
-    name: "نظام المكافآت",
-    path: "/dashboard/rewarding-actions",
-    altImage: "rewarding-actions",
-    titleImage: "rewarding-actions",
-    icon: require("@/assets/images/icons/country.svg"),
-    permission: "view-countries",
-  },
-  {
-    name: "المستويات",
+    name: "نقاط المستوى",
     path: "/dashboard/student-levels",
     altImage: "student-levels",
     titleImage: "student-levels",
@@ -174,12 +166,20 @@ let routeSettings = [
     permission: "view-countries",
   },
   {
-    name: "صعوبة السؤال",
-    path: "/dashboard/question-difficulty",
-    altImage: "questionDifficulty",
-    titleImage: "questionDifficulty",
-    icon: require("@/assets/images/icons/question.svg"),
-    permission: "view-questionDifficulty",
+    name: "جوائز التفاعل",
+    path: "/dashboard/rewarding-actions",
+    altImage: "rewarding-actions",
+    titleImage: "rewarding-actions",
+    icon: require("@/assets/images/icons/country.svg"),
+    permission: "view-countries",
+  },
+  {
+    name: "جيمز",
+    path: "/dashboard/jems",
+    altImage: "jems",
+    titleImage: "jems",
+    icon: require("@/assets/images/icons/country.svg"),
+    permission: "view-countries",
   },
 ];
 let routeBasicData = [
@@ -275,7 +275,7 @@ let routesSubscribes = [
     altImage: "packages",
     titleImage: "packages",
     icon: require("@/assets/images/icons/packages.svg"),
-    permission: "view-packages",
+    permission: "view-subscription",
   },
 ];
 let routeSuperVisor = [
@@ -328,6 +328,40 @@ let routeSuperVisor = [
     permission: "view-announcements",
   },
 ];
+let routesPrizes = [
+  {
+    name: "شارات جيل",
+    path: "/dashboard/jeel-badge",
+    altImage: "jeel-badge",
+    titleImage: "jeel-badge",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-classes",
+  },
+  {
+    name: "الشخصيات",
+    path: "/dashboard/characters",
+    altImage: "characters",
+    titleImage: "characters",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-classes",
+  },
+  {
+    name: "مكتبة جيل",
+    path: "/dashboard/jeel-library",
+    altImage: "jeel-library",
+    titleImage: "jeel-library",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-classes",
+  },
+  {
+    name: "صناديق الطاقة",
+    path: "/dashboard/power-up-boxes",
+    altImage: "power-up-boxes",
+    titleImage: "power-up-boxes",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-classes",
+  },
+];
 export {
   routesUsers,
   routesSchool,
@@ -337,4 +371,5 @@ export {
   routesMissions,
   routesSubscribes,
   routeSuperVisor,
+  routesPrizes,
 };
