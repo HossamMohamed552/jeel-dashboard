@@ -1,6 +1,6 @@
-import badges from './modules/badges'
-import characters from './modules/characters'
-import powerUpBoxes from './modules/powerUpBoxes'
+import badges from "./modules/badges";
+import characters from "./modules/characters";
+import powerUpBoxes from "./modules/powerUpBoxes";
 
 const protectedRoutes = [
   {
@@ -1181,6 +1181,50 @@ const protectedRoutes = [
           preLink: "/dashboard/missions",
         },
       },
+      // seasonal mission groups
+      {
+        path: "/dashboard/seasonal-mission-group",
+        name: "seasonal-mission-groups",
+        component: () => import("../../views/seasonal-mission-group/index.vue"),
+        meta: {
+          breadcrumb: "مجموعة المهام المدرسية",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/seasonal-mission-group/add",
+        name: "add-seasonal-mission-group",
+        component: () =>
+          import("../../views/seasonal-mission-group/add-seasonal-mission-group/index.vue"),
+        meta: {
+          breadcrumb: "إضافة مجموعة جديدة",
+          preLabel: "مجموعة المهام المدرسية",
+          preLink: "/dashboard/seasonal-mission-group",
+        },
+      },
+      {
+        path: "/dashboard/seasonal-mission-group/edit/:id",
+        name: "edit-seasonal-mission-group",
+        component: () =>
+          import("../../views/seasonal-mission-group/edit-seasonal-mission-group/index.vue"),
+        meta: {
+          breadcrumb: "تعديل المجموعة",
+          preLabel: "مجموعة المهام المدرسية",
+          preLink: "/dashboard/seasonal-mission-group",
+        },
+      },
+      {
+        path: "/dashboard/seasonal-mission-group/show/:id",
+        name: "show-seasonal-mission-group",
+        component: () =>
+          import("../../views/seasonal-mission-group/view-seasonal-mission-group/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل المجموعة",
+          preLabel: "مجموعة المهام المدرسية",
+          preLink: "/dashboard/seasonal-mission-group",
+        },
+      },
       // class
       {
         path: "/dashboard/class/add",
@@ -1320,8 +1364,7 @@ const protectedRoutes = [
       {
         path: "/dashboard/rewarding-actions/show/:id",
         name: "show-rewarding-actions",
-        component: () =>
-          import("../../views/rewarding-actions/view-rewarding-actions/index.vue"),
+        component: () => import("../../views/rewarding-actions/view-rewarding-actions/index.vue"),
         meta: {
           breadcrumb: "تفاصيل جائزة تفاعل",
           preLabel: "",
@@ -1729,7 +1772,7 @@ const protectedRoutes = [
       // prizes
       ...badges,
       ...characters,
-      ...powerUpBoxes
+      ...powerUpBoxes,
     ],
   },
 ];
