@@ -126,7 +126,6 @@
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <!-- @input="changeQuestionType" -->
-                  {{createQuiz.type}}
                   <SelectSearch
                     v-model="createQuiz.type"
                     :label="$t('QUIZZES.type')"
@@ -136,13 +135,14 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
+                    @input="setQuizType"
                   ></SelectSearch>
                 </div>
               </b-col>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
-                    v-model="createQuiz.sort"
+                    v-model="createQuiz.order_type"
                     :label="$t('QUIZZES.sort')"
                     :name="$t('QUIZZES.sort')"
                     placeholder="أختر الترتيب"
@@ -249,7 +249,10 @@
                         >
                           إستعادة
                         </Button>
-                        <Button v-if="isGetQuestions" custom-class="submit-btn" @click="resetGettingQuestion"
+                        <Button
+                          v-if="isGetQuestions"
+                          custom-class="submit-btn"
+                          @click="resetGettingQuestion"
                           >إعادة ضبط</Button
                         >
                         <Button
@@ -274,13 +277,13 @@
                   :items="actions"
                   :fields="fieldsList"
                 >
-                <template #cell(#)="data">
-                  <b-form-checkbox
+                  <template v-if="quizType == 92" #cell(#)="data">
+                    <b-form-checkbox
                       v-model="selectedQestions"
                       :value="data.item.id"
                       class="permission-item item"
                     />
-                </template>
+                  </template>
                   <template #cell(question_difficulty.name)="data">
                     <div
                       v-if="data.item.question_difficulty.id == 1"
@@ -475,7 +478,7 @@
                 <Button
                   type="submit"
                   :loading="loading"
-                  :disabled="invalid || !enableToSendData"
+                  :disabled="invalid"
                   custom-class="submit-btn"
                 >
                   {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
@@ -568,10 +571,11 @@ export default {
       isGetQuestions: false,
       actions: [],
       selectedQestions: [],
+      quizType: "",
       fieldsList: [
         {
           key: "#",
-          label: ''
+          label: "",
         },
         {
           key: "id",
@@ -602,6 +606,8 @@ export default {
         name: "",
         // level_id: null,
         // term_id: null,
+        total_question: 0,
+        questions: [],
         learning_path_id: null,
         blooms: [],
         learning_styles: [],
@@ -609,9 +615,7 @@ export default {
         lessons: [],
         description: "",
         type: "",
-        order_type: "",
-        questions: [],
-        total_question: "",
+        order_type: ""
       },
       lessons: [],
       question_difficulty: [],
@@ -647,9 +651,14 @@ export default {
     },
   },
   methods: {
+    setQuizType: debounce(function () {
+      this.quizType = this.createQuiz.type;
+      this.isGetQuestions = false;
+      this.actions = [];
+    }, 200),
     resetGettingQuestion() {
-      this.isGetQuestions = false
-      this.actions = []
+      this.isGetQuestions = false;
+      this.actions = [];
     },
     getStatistics: debounce(function () {
       if (this.createQuiz.lessons && this.createQuiz.lessons > 0) {
@@ -684,8 +693,8 @@ export default {
             this.mediumCount = data[1].questions_count;
             this.hardCount = data[2].questions_count;
             this.createTotalsLists();
-            this.actions = []
-            this.isGetQuestions = false
+            this.actions = [];
+            this.isGetQuestions = false;
           }
         );
       } else return;
@@ -714,7 +723,8 @@ export default {
 
       this.ApiService(postRandomQuizRequest(data)).then((response) => {
         this.actions = response.data.data;
-        this.isGetQuestions = true
+        this.isGetQuestions = true;
+        this.selectedQestions = this.actions.map((obj) => obj.id);
       });
     },
     createTotalsLists() {
@@ -816,6 +826,8 @@ export default {
       this.$refs.addEditQuizForm.validate().then((success) => {
         if (!success) return;
       });
+      this.createQuiz.total_question = this.selectedQestions.length
+      this.createQuiz.questions = this.selectedQestions
       if (this.$route.params.id) {
         this.$emit("handleEditQuiz", this.createQuiz);
       } else {
