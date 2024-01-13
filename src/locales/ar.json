@@ -335,7 +335,7 @@
     "enterQUESTION": "أدخل السؤال",
     "LEVELS": "المرحلة الدراسية",
     "TYPE": "نوع السؤال",
-    "LEARNING_METHOD": "إسلوب التعلم",
+    "LEARNING_METHOD": "اسلوب التعلم",
     "selectLEARNING_METHOD": "أختر إسلوب التعلم",
     "BLOOM_CATEGORIES": "بلوم",
     "selectBLOOM_CATEGORIES": "أختر بلوم",
@@ -411,7 +411,7 @@
   },
   "QUIZZES": {
     "EDIT": "تعديل التمرين",
-    "ADD_NEW": "إضافة تمرين جديد",
+    "ADD_NEW": "إضافة تمرين",
     "name": "إسم التمرين",
     "level": "السنة الدراسية",
     "LEARNING_PATH": "المسار",
