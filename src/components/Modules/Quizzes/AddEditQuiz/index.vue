@@ -86,7 +86,6 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
-                    multiple="multiple"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -136,15 +135,17 @@
               </b-col>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
-                  <SelectSearch
-                    v-model="createQuiz.sort"
-                    :label="$t('QUIZZES.sort')"
-                    :name="$t('QUIZZES.sort')"
-                    :options="sort"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                    :rules="'required'"
-                  ></SelectSearch>
+                  <ValidationProvider v-slot="{ errors, invalid }">
+                    <label>{{ $t("QUIZZES.sort") }}</label>
+                    <b-form-group v-slot="{ ariaDescribedby }" class="group-type">
+                      <b-form-radio v-model="createQuiz.sort" value="0" name="sort_type"
+                        >مرتب
+                      </b-form-radio>
+                      <b-form-radio v-model="createQuiz.sort" value="1" name="sort_type">
+                        عشوائى
+                      </b-form-radio>
+                    </b-form-group>
+                  </ValidationProvider>
                 </div>
               </b-col>
               <b-col
@@ -335,7 +336,6 @@ import draggable from "vuedraggable";
 import { getAllTermsRequest } from "@/api/term";
 import QuestionDetailsModal from "@/components/Shared/QuestionDetailsModal/index.vue";
 import {getLessonsRequest} from "@/api/lessons";
-import {getSortQuizTypeRequest} from "@/api/system";
 
 export default {
   components: {
@@ -380,30 +380,17 @@ export default {
           value: "manual",
         },
       ],
-      sort:[
-        {
-          id: 1,
-          name: "مرتب",
-          value: "مرتب",
-        },
-        {
-          id: 2,
-          name: "عشوائى",
-          value: "عشوائى",
-        },
-      ],
       createQuiz: {
         name: "",
         level_id: null,
         term_id: null,
         learning_path_id: null,
-        bloom_category_id: [],
-        language_method_id: [],
-        lesson_id:[],
+        bloom_category_id: null,
+        language_method_id: null,
         total_question: null,
         description: "",
         type: "default",
-        sort: 1,
+        sort: "",
         questions: [],
       },
       lessons:[],
@@ -596,11 +583,6 @@ export default {
         this.languageSkills = response.data.data;
       });
     },
-    getSortQuizType(){
-      this.ApiService(getSortQuizTypeRequest()).then((response) => {
-        this.sort = response.data.data;
-      });
-    }
   },
   mounted() {
     if (this.$route.params.id) this.getTerms();
