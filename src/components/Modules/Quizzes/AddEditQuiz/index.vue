@@ -314,10 +314,10 @@
                   </template>
                   <template #cell(random_question_action)="data">
                     <div class="random-question-actions">
-                      {{ data.item.id }}
                       <img
                         class="cursor-pointer"
                         src="@/assets/images/icons/view-random-question.svg"
+                        @click="handleShowQuestionDetails(data.item.id)"
                       />
                     </div>
                   </template>
