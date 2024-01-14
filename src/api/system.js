@@ -4,6 +4,11 @@ export const getPaperWorkTypeRequest = (params) => ({
   config: { params },
 });
 
+export const getQuizTypeListRequest = () => ({
+  method: 'get',
+  url: 'system_codes/quiz/type'
+})
+
 export const getSortQuizTypeRequest = (params) => ({
   method: "get",
   url: "system_codes/quiz/order_type",

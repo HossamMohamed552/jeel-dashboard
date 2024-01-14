@@ -116,13 +116,15 @@
     "learning_path_name": "اسم المسار",
     "character_name": "اسم الشخصية",
     "character_logo": "صورة الشخصية",
-    "character_type": "نوع الشخصية"
+    "power_up_box_name": "اسم الصندوق",
+    "power_up_box_level": "الصف الدراسى",
+    "power_up_box_country": "الدولة",
+    "power_up_box_type": "النوع",
+    "power_up_box_appear_after_missions": "ظهور بعد"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
     "editBtn": "تعديل",
-    "permissions": "الصلاحيات",
-    "users": "المستخدمين",
     "deleteBtn": "حذف",
     "addVideoQuestion": "اضافة اسئله الفيديو",
     "ManageClasses": "إداره الصفوف",
@@ -134,13 +136,7 @@
     "EDIT": "تعديل الصلاحية",
     "name": "إسم الصلاحية",
     "description": "الوصف",
-    "CATEGORIES": "التصنيف",
-    "DEPARTMENT": "اسم الدور الوظيفي",
-    "ADD_DEPARTMENT": "إضافة دور وظيفي",
-    "EDIT_DEPARTMENT": "تعديل دور وظيفي",
-    "ENTER_DEPARTMENT": "أدخل اسم الدور الوظيفي",
-    "ENTER_DESCRIPTION": "أدخل الوصف",
-    "showDetails": "تفاصيل دور وظيفي"
+    "showDetails": "عرض تفاصيل صلاحية المستخدم"
   },
   "BADGE": {
     "ADD_NEW": "إضافة شارة جديدة",
@@ -199,11 +195,6 @@
     "DESCRIPTION_INPUT_PLACEHOLDER": "أدخل ملاحظات"
   },
   "SCHOOL": {
-    "SCHOOL_INFO": "بيانات المدرسة",
-    "SCHOOL_MANAGER_INFO": "بيانات مسؤل المدرسة",
-    "MANAGER_NAME": "اسم المسؤل",
-    "MANAGER_TYPE": "صفة المسؤل",
-    "MANAGER_MOBILE": "رقم هاتف المسؤل",
     "ADD_NEW": "إضافة مدرسة جديدة",
     "EDIT": "تعديل مدرسة جديدة",
     "name": "اسم المدرسة",
@@ -228,17 +219,6 @@
     "dateTo": "نهاية التعاقد",
     "user_name": "اسم المستخدم",
     "contact": "رقم الهاتف",
-    "COUNTRY": "الدولة",
-    "SCHOOL_COLLECTION": "مجموعة المدارس",
-    "SCHOOL_LOGO": "شعار المدرسة",
-    "SCHOOL_TYPE": "نوع إدارة المدرسة",
-    "SCHOOL_CERTIFICATE_TYPE": "نوع شهادة المدرسة",
-    "LEARNING_LANGAUAGE": "لغة التدريس",
-    "STUDENT_TYPE": "نوع الطلبة",
-    "MOBILE": "رقم هاتف المدرسة",
-    "VOICE": "الصوت",
-    "SCHOOL_ADDRESS": "عنوان المدرسة",
-    "NOTES": "ملاحظات",
     "address": "العنوان"
   },
   "LEVEL": {
@@ -354,7 +334,7 @@
     "enterQUESTION": "أدخل السؤال",
     "LEVELS": "المرحلة الدراسية",
     "TYPE": "نوع السؤال",
-    "LEARNING_METHOD": "إسلوب التعلم",
+    "LEARNING_METHOD": "اسلوب التعلم",
     "selectLEARNING_METHOD": "أختر إسلوب التعلم",
     "BLOOM_CATEGORIES": "بلوم",
     "selectBLOOM_CATEGORIES": "أختر بلوم",
@@ -398,7 +378,8 @@
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",
     "STEP_TWO": "محتوى المهمة",
-    "STEP_THREE": "مراجعة المحتوى المهمة",
+    "STEP_THREE": "محتوى انجاز المهمه",
+    "STEP_FOUR": "مراجعة المحتوى المهمة",
     "EDIT": "تعديل المهمة",
     "ADD_NEW": "إضافة مهمة جديدة",
     "name": "إسم المهمة",
@@ -411,11 +392,15 @@
     "videos": "الفيديوهات",
     "paperWork": "اوراق العمل",
     "quizzes": "التمارين",
-    "audios": "التسجيلات الصوتيه",
+    "tasks": "التسجيلات الصوتيه",
     "description": "الوصف",
     "content": "المحتوى",
     "ShowDetails": "عرض تفاصيل المهمة",
-    "UPLOAD_IMAGE": "صورة المهمة"
+    "UPLOAD_IMAGE": "صورة المهمة",
+    "BadgeContentType": "نوع المحتوى",
+    "BadgeContent": "المحتوى",
+    "BadgeAdd": "اضافة",
+    "UPLOAD_AUDIO": "صوت المهمه"
   },
   "LESSONS": {
     "LESSONS": "الدروس",
@@ -430,7 +415,7 @@
   },
   "QUIZZES": {
     "EDIT": "تعديل التمرين",
-    "ADD_NEW": "إضافة تمرين جديد",
+    "ADD_NEW": "إضافة تمرين",
     "name": "إسم التمرين",
     "level": "السنة الدراسية",
     "LEARNING_PATH": "المسار",
@@ -438,7 +423,7 @@
     "country": "الدولة",
     "description": "الوصف",
     "ShowDetails": "عرض تفاصيل التمرين",
-    "type": "نوع التمرين",
+    "type": "إسم النوع",
     "sort": "الترتيب",
     "systemQuestion": "النظام الافتراضى للاسئلة",
     "totalNumberOfQuestions": "إجمالى {number} سؤال",

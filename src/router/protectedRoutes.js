@@ -1,5 +1,6 @@
 import badges from "./modules/badges";
 import characters from "./modules/characters";
+import powerUpBoxes from "./modules/powerUpBoxes";
 
 const protectedRoutes = [
   {
@@ -34,17 +35,7 @@ const protectedRoutes = [
         name: "add-role",
         component: () => import("../../views/role/add-role/index.vue"),
         meta: {
-          breadcrumb: "إضافة دور وظيفي",
-          preLabel: "صلاحيات النظام",
-          preLink: "/dashboard/role",
-        },
-      },
-      {
-        path: "/dashboard/role/permission/:id",
-        name: "permission",
-        component: () => import("../../views/role/permission/index.vue"),
-        meta: {
-          breadcrumb: "الصلاحيات",
+          breadcrumb: "إضافة صلاحية",
           preLabel: "صلاحيات النظام",
           preLink: "/dashboard/role",
         },
@@ -64,7 +55,7 @@ const protectedRoutes = [
         name: "edit-role",
         component: () => import("../../views/role/edit-role/index.vue"),
         meta: {
-          breadcrumb: "تعديل دور وظيفي",
+          breadcrumb: "تعديل الصلاحية",
           preLabel: "صلاحيات النظام",
           preLink: "/dashboard/role",
         },
@@ -1200,6 +1191,50 @@ const protectedRoutes = [
           preLink: "/dashboard/missions",
         },
       },
+      // seasonal mission groups
+      {
+        path: "/dashboard/seasonal-mission-group",
+        name: "seasonal-mission-groups",
+        component: () => import("../../views/seasonal-mission-group/index.vue"),
+        meta: {
+          breadcrumb: "مجموعة المهام المدرسية",
+          preLabel: "",
+          preLink: "",
+        },
+      },
+      {
+        path: "/dashboard/seasonal-mission-group/add",
+        name: "add-seasonal-mission-group",
+        component: () =>
+          import("../../views/seasonal-mission-group/add-seasonal-mission-group/index.vue"),
+        meta: {
+          breadcrumb: "إضافة مجموعة جديدة",
+          preLabel: "مجموعة المهام المدرسية",
+          preLink: "/dashboard/seasonal-mission-group",
+        },
+      },
+      {
+        path: "/dashboard/seasonal-mission-group/edit/:id",
+        name: "edit-seasonal-mission-group",
+        component: () =>
+          import("../../views/seasonal-mission-group/edit-seasonal-mission-group/index.vue"),
+        meta: {
+          breadcrumb: "تعديل المجموعة",
+          preLabel: "مجموعة المهام المدرسية",
+          preLink: "/dashboard/seasonal-mission-group",
+        },
+      },
+      {
+        path: "/dashboard/seasonal-mission-group/show/:id",
+        name: "show-seasonal-mission-group",
+        component: () =>
+          import("../../views/seasonal-mission-group/view-seasonal-mission-group/index.vue"),
+        meta: {
+          breadcrumb: "تفاصيل المجموعة",
+          preLabel: "مجموعة المهام المدرسية",
+          preLink: "/dashboard/seasonal-mission-group",
+        },
+      },
       // class
       {
         path: "/dashboard/class/add",
@@ -1747,6 +1782,7 @@ const protectedRoutes = [
       // prizes
       ...badges,
       ...characters,
+      ...powerUpBoxes,
     ],
   },
 ];

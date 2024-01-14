@@ -3,7 +3,7 @@
     <div class="container-fluid custom-container">
       <div class="add-edit-mission-form">
         <validation-observer v-slot="{ invalid }" ref="addEditContentForm">
-          <form @submit.prevent="goToFinalStep" class="mt-5">
+          <form @submit.prevent="goToMissionContentStep" class="mt-5">
             <b-row v-for="learnPath in learnPathsVideoPaperWokQuiz" :key="learnPath.id"
                    class="hold-path">
               <b-col lg="12" class="mb-3">
@@ -50,10 +50,10 @@
               </b-col>
               <b-col class="mt-3" lg="6">
                 <SelectSearch
-                  v-model="learnPath.audiosIds"
-                  :label="$t('MISSIONS.audios')"
-                  :name="$t('MISSIONS.audios')"
-                  :options="learnPath.audios"
+                  v-model="learnPath.tasksIds"
+                  :label="$t('MISSIONS.tasks')"
+                  :name="$t('MISSIONS.tasks')"
+                  :options="learnPath.tasks"
                   :reduce="(option) => option.id"
                   :get-option-label="(option) => option.name"
                   :rules="'required'"
@@ -138,8 +138,8 @@ export default {
     }
   },
   methods: {
-    goToFinalStep() {
-      this.$emit("goToFinalStep", this.learnPathsVideoPaperWokQuiz)
+    goToMissionContentStep() {
+      this.$emit("goToMissionContentStep", this.learnPathsVideoPaperWokQuiz)
     },
     handleCancel() {
       this.$emit("handleCancel");
@@ -183,8 +183,8 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)),
-              quizzesIds: [...item.quizzes.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
+              quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData?.lesson?.id)),
+              quizzesIds: [...item.quizzes.filter(itemData=>this.lessonsSelected.includes(itemData?.lesson?.id)).map(item => item.id)]
             })
           })
           this.ApiService(getAudioPerLevelPathRequest({
@@ -193,20 +193,20 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              audio: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)),
-              audiosIds: [...item.quizzes.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
+              tasks: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData?.lesson?.id)),
+              tasksIds: [...item.tasks.filter(itemData=>this.lessonsSelected.includes(itemData?.lesson?.id)).map(item => item.id)]
             })
           })
-          this.ApiService(getAudioPerLevelPathRequest({
-            // levelId: this.levelMission.id,
-            learnPathId: item.id,
-            // termId: this.term
-          })).then((response) => {
-            Object.assign(item, {
-              audio: response.data.data,
-              audiosIds: [...item.quizzes.map(item => item.id)]
-            })
-          })
+          // this.ApiService(getAudioPerLevelPathRequest({
+          //   // levelId: this.levelMission.id,
+          //   learnPathId: item.id,
+          //   // termId: this.term
+          // })).then((response) => {
+          //   Object.assign(item, {
+          //     audio: response.data.data,
+          //     tasksIds: [...item.quizzes.map(item => item.id)]
+          //   })
+          // })
         })
         let learnPathsVideoPaperWokQuizWithOutFilter = this.watchLearningPathSelected.filter(item => !this.learnPathsVideoPaperWokQuiz.map(itemMap => itemMap.id).includes(item.id))
         learnPathsVideoPaperWokQuizWithOutFilter.forEach((item) => {
@@ -232,21 +232,21 @@ export default {
             learnPathId: item.id,
             // termId: this.term
           })).then((response) => {
-            Object.assign(item, {quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), quizzesIds: []})
+            Object.assign(item, {quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData?.lesson?.id)), quizzesIds: []})
           })
           this.ApiService(getAudioPerLevelPathRequest({
             // levelId: this.level,
             learnPathId: item.id,
             // termId: this.term
           })).then((response) => {
-            Object.assign(item, {quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), audiosIds: []})
+            Object.assign(item, {quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData?.lesson?.id)), tasksIds: []})
           })
           this.ApiService(getAudioPerLevelPathRequest({
             // levelId: this.level,
             learnPathId: item.id,
             // termId: this.term
           })).then((response) => {
-            Object.assign(item, {quizzes: response.data.data, audiosIds: []})
+            Object.assign(item, {quizzes: response.data.data, tasksIds: []})
           })
         })
         this.learnPathsVideoPaperWokQuiz = [...learnPathsVideoPaperWokQuizWithFilter, ...learnPathsVideoPaperWokQuizWithOutFilter]
@@ -274,21 +274,21 @@ export default {
           learnPathId: item.id,
           // termId: this.term
         })).then((response) => {
-          Object.assign(item, {quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), quizzesIds: []})
+          Object.assign(item, {quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData?.lesson?.id)), quizzesIds: []})
         })
         this.ApiService(getAudioPerLevelPathRequest({
           // levelId: this.level,
           learnPathId: item.id,
           // termId: this.term
         })).then((response) => {
-          Object.assign(item, {audios: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), audiosIds: []})
+          Object.assign(item, {tasks: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), tasksIds: []})
         })
         this.ApiService(getAudioPerLevelPathRequest({
           // levelId: this.level,
           learnPathId: item.id,
           // termId: this.term
         })).then((response) => {
-          Object.assign(item, {audios: response.data.data, audiosIds: []})
+          Object.assign(item, {tasks: response.data.data, tasksIds: []})
         })
         collectArray.push(item)
       })

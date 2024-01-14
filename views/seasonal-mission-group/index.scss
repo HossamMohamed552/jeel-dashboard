@@ -1,0 +1,12 @@
+::v-deep {
+  .seasonal-mission-custom-list-item {
+    .hold-image-school {
+      width: 35px;
+      height: 35px;
+      border: 1px solid $color-primary;
+      border-radius: 50%;
+      .img {
+      }
+    }
+  }
+}

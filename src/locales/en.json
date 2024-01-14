@@ -36,7 +36,21 @@
     "level": "Level",
     "type": "Type",
     "price": "price",
-    "classes_count": "classes count"
+    "classes_count": "classes count",
+
+    "badge_name": "badge name",
+    "percentage_of": "percentage of",
+    "percentage_to": "percentage to",
+    "learning_path_name": "learning path name",
+
+    "character_name": "character name",
+    "character_logo": "character logo",
+
+    "power_up_box_name": "power up box name",
+    "power_up_box_level": "power up box level",
+    "power_up_box_country": "power up box country",
+    "power_up_box_type": "power up box type",
+    "power_up_box_appear_after_missions": "power up box appear after missions"
   },
   "CONTROLS": {
     "detailBtn": "detailBtn",
