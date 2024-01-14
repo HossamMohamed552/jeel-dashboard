@@ -78,7 +78,7 @@
         </template>
         <template #cell(image)="data">
           <div class="hold-image-school">
-            <img class="image-school-in-table" :src="data.item.image"/>
+            <img class="image-school-in-table" :src="data.item.image" />
           </div>
         </template>
         <template #cell(school_type)="data">
@@ -123,7 +123,9 @@
           <span v-if="data.item.level">{{ data.item.level.name | cutString }}</span>
         </template>
         <template #cell(chracter_type)="data">
-          <span v-if="data.item.chracter_type">{{ data.item.chracter_type[0].key | cutString }}</span>
+          <span v-if="data.item.chracter_type">{{
+            data.item.chracter_type[0].key | cutString
+          }}</span>
         </template>
         <template #cell(term)="data">
           <span v-if="data.item.term">{{ data.item.term.name | cutString }}</span>
@@ -148,9 +150,7 @@
         </template>
         <template #cell(roles)="data">
           <div class="d-flex justify-content-start align-items-center">
-            <span v-for="(role, index) in data.item.roles" :key="index" class="role">{{
-              role.name
-            }}</span>
+            <span v-for="(role, index) in data.item.roles" :key="index">{{ role.name }}</span>
           </div>
         </template>
         <template #cell(number_users_roles[0])="data">
@@ -185,6 +185,7 @@
             @change="managePath(data.item)"
           ></b-form-checkbox>
         </template>
+
         <template #cell(edit)="data">
           <Button
             :custom-class="'transparent-btn rounded-btn'"
@@ -192,6 +193,18 @@
             :disabled="data.item.is_selected === false"
             >تعديل المحتوى
           </Button>
+        </template>
+        <template #cell(status.key)="data">
+          <b-form-checkbox
+            v-model="data.value"
+            name="checkbox-1"
+            value="active"
+            unchecked-value="deactivated"
+            switch
+            size="lg"
+            @change="changeStatus(data.item)"
+          >
+          </b-form-checkbox>
         </template>
         <template #cell(actions)="data">
           <b-dropdown
@@ -205,7 +218,9 @@
               checkDetail() === 'show' ||
               checkEdit() === 'show' ||
               checkAdd() === 'show' ||
-              checkUsersAdd() === 'show'
+              checkUsersAdd() === 'show' ||
+              checkBlockUser() === 'show' ||
+              checkChangePassword() === 'show'
             "
           >
             <template #button-content>
@@ -218,10 +233,27 @@
             <b-dropdown-item @click="permissionItem(data.item.id)" v-if="checkAdd() === 'show'">
               {{ $t("CONTROLS.permissions") }}
             </b-dropdown-item>
+            <!-- Edit Item -->
             <b-dropdown-divider v-if="checkEdit() === 'show'"></b-dropdown-divider>
             <b-dropdown-item @click="editItem(data.item.id)" v-if="checkEdit() === 'show'">
               {{ $t("CONTROLS.editBtn") }}
             </b-dropdown-item>
+
+            <!-- Block User -->
+            <b-dropdown-divider v-if="checkBlockUser() === 'show'"></b-dropdown-divider>
+            <b-dropdown-item @click="cancelBlock(data.item.id)" v-if="checkBlockUser() === 'show'">
+              {{ $t("TABLE_FIELDS.not_block") }}
+            </b-dropdown-item>
+
+            <!-- change Password User -->
+            <b-dropdown-divider v-if="checkChangePassword() === 'show'"></b-dropdown-divider>
+            <b-dropdown-item
+              @click="changePassword(data.item.id)"
+              v-if="checkChangePassword() === 'show'"
+            >
+              {{ $t("CHANGE_PASSWORD") }}
+            </b-dropdown-item>
+            <!-- Add User -->
             <b-dropdown-divider v-if="checkUsersAdd() === 'show'"></b-dropdown-divider>
             <b-dropdown-item @click="editItem(data.item.id)" v-if="checkUsersAdd() === 'show'">
               {{ $t("CONTROLS.users") }}
@@ -352,6 +384,15 @@ export default {
       type: String,
       default: "",
     },
+    cancel_block: {
+      type: String,
+      default: "",
+    },
+    change_password: {
+      type: String,
+      default: "",
+    },
+
     permission_view: {
       type: String,
       default: "",
@@ -471,6 +512,16 @@ export default {
     editItem(id) {
       this.$emit("editItem", id);
     },
+
+    changePassword(id) {
+      this.$emit("changePassword", id);
+    },
+    cancelBlock(id) {
+      this.$emit("cancelBlock", id);
+    },
+    changeStatus(id) {
+      this.$emit("changeStatus", id);
+    },
     permissionItem(id) {
       this.$emit("permissionItem", id);
     },
@@ -548,6 +599,37 @@ export default {
       } else if (this.activePage === "schoolAdmin") {
         return "hide";
       } else if (this.user.permissions.includes(`${this.permission_edit}`)) {
+        return "show";
+      } else {
+        return "hide";
+      }
+    },
+    checkBlockUser() {
+      return "show";
+      if (
+        !this.user.permissions.includes("manage-learningpath") &&
+        !this.activePage === "schoolAdmin"
+      ) {
+        return "show";
+      } else if (this.activePage === "schoolAdmin") {
+        return "hide";
+      } else if (this.user.permissions.includes(`${this.cancel_block}`)) {
+        return "show";
+      } else {
+        return "hide";
+      }
+    },
+    checkChangePassword() {
+      return "show";
+
+      if (
+        !this.user.permissions.includes("manage-learningpath") &&
+        !this.activePage === "schoolAdmin"
+      ) {
+        return "show";
+      } else if (this.activePage === "schoolAdmin") {
+        return "hide";
+      } else if (this.user.permissions.includes(`${this.change_password}`)) {
         return "show";
       } else {
         return "hide";

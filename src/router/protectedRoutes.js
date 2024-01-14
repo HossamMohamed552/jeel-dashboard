@@ -1,5 +1,5 @@
-import badges from './modules/badges'
-import characters from './modules/characters'
+import badges from "./modules/badges";
+import characters from "./modules/characters";
 
 const protectedRoutes = [
   {
@@ -75,7 +75,7 @@ const protectedRoutes = [
         name: "users",
         component: () => import("../../views/users/index.vue"),
         meta: {
-          breadcrumb: "قائمة المستخدمين",
+          breadcrumb: "مستخدمي إدارة المنظومة",
           preLabel: "",
           preLink: "",
         },
@@ -96,6 +96,16 @@ const protectedRoutes = [
         component: () => import("../../views/users/edit-user/index.vue"),
         meta: {
           breadcrumb: "تعديل بيانات المستخدم",
+          preLabel: "قائمة المستخدمين",
+          preLink: "/dashboard/users",
+        },
+      },
+      {
+        path: "/dashboard/users/change-password/:id",
+        name: "change-password",
+        component: () => import("../../views/users/change-password/index.vue"),
+        meta: {
+          breadcrumb: "تغيير كلمة المرور",
           preLabel: "قائمة المستخدمين",
           preLink: "/dashboard/users",
         },
@@ -1736,7 +1746,7 @@ const protectedRoutes = [
       },
       // prizes
       ...badges,
-      ...characters
+      ...characters,
     ],
   },
 ];
