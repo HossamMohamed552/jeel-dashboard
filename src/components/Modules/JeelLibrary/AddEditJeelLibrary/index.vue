@@ -218,22 +218,8 @@
                     v-if="createItem.type==116"
                     :label="'اكتب ملحوظة'"
                     :rules="'required|min:3|max:250'"
-                    v-model="createItem.description"
+                    v-model="createItem.note"
                   />
-
-<!--                  <label>الوصف</label>-->
-<!--                  <b-form-textarea-->
-
-<!--                    id="textarea"-->
-<!--                    v-model="createItem.description"-->
-<!--                    placeholder="اكتب ملحوظة"-->
-<!--                    rows="3"-->
-<!--                    max-rows="6"-->
-<!--                  ></b-form-textarea>-->
-
-
-
-
                 </div>
               </b-col>
 
@@ -375,7 +361,7 @@ export default {
         level_id: "",
         file_name: "",
         link: "",
-        type: null,
+        note: "",
         image: "",
         logo: "",
         video_with_muisc: "",
@@ -519,12 +505,12 @@ export default {
       if (this.$route.params.id) {
         this.ApiService(getJeelLibraryByIdRequest(this.$route.params.id)).then((response) => {
 
-          this.createItem= response.data.data;
-          // this.createItem.name= response.data.data.name;
+          this.createItem = response.data.data;
+          this.createItem.level_id = response.data.data.level.id;
 
           //
           // logo: null,
-          // this.createItem.logo = response.data.data.logo_uuid;
+          this.createItem.logo = response.data.data.file;
           this.attachment.thumbnail_name = response.data.data.logo_name;
           this.attachment.thumbnail_size = response.data.data.logo_size;
           this.attachment.thumbnail = response.data.data.logo;

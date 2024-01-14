@@ -36,24 +36,15 @@ export default {
       this.ApiService(postAddJeelLibraryRequest($event))
         .then((response) => {
           this.loading = false;
-
           this.showModal = true;
           setTimeout(() => {
             this.showModal = false;
+            this.$router.push("/dashboard/jeel-library");
           }, 3000);
         })
-        .then(() => {
-          this.$router.push("/dashboard/jeel-library");
-        })
-        .catch((error)=>{
-        this.loading = false
-        this.showModal = false
-          store.dispatch("showToast", {
-            type: "danger",
-            message: "server error",
-            time:5000
-          });
-      })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     handleCancel() {
       this.$router.push("/dashboard/jeel-library");

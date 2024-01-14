@@ -1,29 +1,29 @@
 export const getJeelStoreGamesRequest = (params) => ({
     method: "get",
-    url: `power_up_boxes`,
+    url: `gems`,
     config: {
       params,
     },
   });
   export const getJeelStoreGamesByIdRequest = (id) => ({
     method: "get",
-    url: `power_up_boxes/${id}`,
+    url: `gems/${id}`,
   });
   export const putEditJeelStoreGamesRequest = (id, data) => ({
     method: "put",
-    url: `power_up_boxes/${id}`,
+    url: `gems/${id}`,
     config: {
       data,
     },
   });
   export const postAddJeelStoreGamesRequest = (data) => ({
     method: "post",
-    url: `power_up_boxes`,
+    url: `gems`,
     config: {
       data,
     },
   });
   export const deleteJeelStoreGamesRequest = (id) => ({
     method: "delete",
-    url: `power_up_boxes/${id}`,
+    url: `gems/${id}`,
   });

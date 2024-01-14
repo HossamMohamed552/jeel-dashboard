@@ -114,7 +114,7 @@
             <b-col lg="4">
               <ShowItem
                 :title="$t('QUESTIONS.BLOOM_CATEGORIES')"
-                :subtitle="question.bloom_category.name"
+                :subtitle="question.blooms.name"
               />
             </b-col>
             <b-col lg="4">

@@ -73,11 +73,11 @@ export default {
           label: "الصف الدراسى",
         },
         {
-          key: "country",
+          key: "gems",
           label: "عدد الجيمز",
         },
         {
-          key: "type",
+          key: "jeel_coins",
           label: "عدد العملات",
         },
 
@@ -109,9 +109,8 @@ export default {
                     id: item.id,
                     name: item.name,
                     level: item.level,
-                    country: item.country,
-                    term: item.term,
-                    type: powerUpBoxType,
+                    gems: item.gems,
+                    jeel_coins: item.jeel_coins,
                     appear_after_missions: item.appear_after_missions+" مهام ",
                   };
 

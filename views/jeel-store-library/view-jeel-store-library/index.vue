@@ -11,7 +11,7 @@
           <b-col md="4" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'اسم المجموعة'"
+                :title="'اسم المحتوي'"
                 :subtitle="jeelStoreLibrary.name"
             />
           </b-col>
@@ -26,7 +26,7 @@
             <ShowItem
                 class="divider-show"
                 :title="'عدد الجيمز'"
-                :subtitle="jeelStoreLibrary.term.name"
+                :subtitle="jeelStoreLibrary.gems"
             />
           </b-col>
         </b-row>
@@ -35,15 +35,15 @@
           <b-col lg="6" class="mb-5 mt-4">
             <PreviewMedia
               :header="'لوجو المحتوى'"
-              :media-name="jeelStoreLibrary.logo_name"
-              :file-size="jeelStoreLibrary.logo_size"
-              :image-url="jeelStoreLibrary.logo"
+              :media-name="jeelStoreLibrary.file_name"
+              :file-size="jeelStoreLibrary.file_size"
+              :image-url="jeelStoreLibrary.file"
               :typeOfMedia="'image'"
             />
           </b-col>
         </b-row>
 
-        <b-row class="mt-5 mb-5">
+        <!-- <b-row class="mt-5 mb-5">
           <b-col md="12" sm="12">
             <ShowItem
                 class="divider-show"
@@ -83,7 +83,7 @@
                 :subtitle="jeelStoreLibrary.jeel_xp"
             />
           </b-col>
-        </b-row>
+        </b-row> -->
 
 
       </div>

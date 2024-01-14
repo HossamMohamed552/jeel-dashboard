@@ -38,11 +38,10 @@ export default {
           this.showModal = true;
           setTimeout(() => {
             this.showModal = false;
+            this.$router.push("/dashboard/jeel-store-games");
           }, 3000);
         })
-        .then(() => {
-          this.$router.push("/dashboard/jeel-store-games");
-        }).catch((error) => {
+        .finally(() => {
           this.loading = false;
         });
     },

@@ -14,44 +14,46 @@
                     v-model="createQuiz.name"
                     :label="$t('QUIZZES.name')"
                     :name="$t('QUIZZES.name')"
+                    placeholder="أدخل اسم التمرين"
                     :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
               </b-col>
-<!--              <b-col lg="6" class="mb-3">-->
-<!--                <div class="hold-field">-->
-<!--                  <SelectSearch-->
-<!--                    v-model="createQuiz.level_id"-->
-<!--                    :label="$t('QUIZZES.level')"-->
-<!--                    :name="$t('QUIZZES.level')"-->
-<!--                    :options="levels"-->
-<!--                    :reduce="(option) => option.id"-->
-<!--                    :get-option-label="(option) => option.name"-->
-<!--                    :rules="'required'"-->
-<!--                    @input="getTerms"-->
-<!--                  ></SelectSearch>-->
-<!--                </div>-->
-<!--              </b-col>-->
-<!--              <b-col lg="6" class="mb-3">-->
-<!--                <div class="hold-field">-->
-<!--                  <SelectSearch-->
-<!--                    v-model="createQuiz.term_id"-->
-<!--                    :label="$t('MISSIONS.terms')"-->
-<!--                    :name="$t('MISSIONS.terms')"-->
-<!--                    :options="terms"-->
-<!--                    :reduce="(option) => option.id"-->
-<!--                    :get-option-label="(option) => option.name"-->
-<!--                    :rules="'required'"-->
-<!--                    :disabled="!createQuiz.level_id"-->
-<!--                  ></SelectSearch>-->
-<!--                </div>-->
-<!--              </b-col>-->
+              <!--              <b-col lg="6" class="mb-3">-->
+              <!--                <div class="hold-field">-->
+              <!--                  <SelectSearch-->
+              <!--                    v-model="createQuiz.level_id"-->
+              <!--                    :label="$t('QUIZZES.level')"-->
+              <!--                    :name="$t('QUIZZES.level')"-->
+              <!--                    :options="levels"-->
+              <!--                    :reduce="(option) => option.id"-->
+              <!--                    :get-option-label="(option) => option.name"-->
+              <!--                    :rules="'required'"-->
+              <!--                    @input="getTerms"-->
+              <!--                  ></SelectSearch>-->
+              <!--                </div>-->
+              <!--              </b-col>-->
+              <!--              <b-col lg="6" class="mb-3">-->
+              <!--                <div class="hold-field">-->
+              <!--                  <SelectSearch-->
+              <!--                    v-model="createQuiz.term_id"-->
+              <!--                    :label="$t('MISSIONS.terms')"-->
+              <!--                    :name="$t('MISSIONS.terms')"-->
+              <!--                    :options="terms"-->
+              <!--                    :reduce="(option) => option.id"-->
+              <!--                    :get-option-label="(option) => option.name"-->
+              <!--                    :rules="'required'"-->
+              <!--                    :disabled="!createQuiz.level_id"-->
+              <!--                  ></SelectSearch>-->
+              <!--                </div>-->
+              <!--              </b-col>-->
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
                     v-model="createQuiz.learning_path_id"
-                    :label="$t('QUIZZES.LEARNING_PATH')"
-                    :name="$t('QUIZZES.LEARNING_PATH')"
+                    label="المسار التعليمي"
+                    name="المسار التعليمي"
+                    placeholder="أختر المسار التعليمي"
                     :options="learningPaths"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -63,7 +65,7 @@
               <b-col lg="8" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
-                    v-model="createQuiz.lesson_id"
+                    v-model="createQuiz.lessons"
                     :label="$t('LESSONS.videoNAME')"
                     :name="$t('LESSONS.videoNAME')"
                     :placeholder="$t('LESSONS.selectLesson')"
@@ -72,34 +74,36 @@
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
                     :disabled="!createQuiz.learning_path_id"
+                    multiple="multiple"
                   ></SelectSearch>
                 </div>
               </b-col>
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
-                    v-model="createQuiz.bloom_category_id"
+                    v-model="createQuiz.blooms"
                     :label="$t('QUESTIONS.BLOOM_CATEGORIES')"
                     :name="$t('QUESTIONS.BLOOM_CATEGORIES')"
                     :placeholder="$t('QUESTIONS.selectBLOOM_CATEGORIES')"
                     :options="bloomCategories"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
-                    :rules="'required'"
+                    :disabled="!createQuiz.learning_path_id"
+                    multiple="multiple"
                   ></SelectSearch>
                 </div>
               </b-col>
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
-                    v-model="createQuiz.language_method_id"
+                    v-model="createQuiz.learning_styles"
                     :label="$t('QUESTIONS.LEARNING_METHOD')"
                     :name="$t('QUESTIONS.LEARNING_METHOD')"
                     :placeholder="$t('QUESTIONS.selectLEARNING_METHOD')"
                     :options="learningMethods"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
-                    :rules="'required'"
+                    :disabled="!createQuiz.learning_path_id"
                     multiple="multiple"
                   ></SelectSearch>
                 </div>
@@ -107,48 +111,235 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
-                    v-model="createQuiz.language_skill_id"
+                    v-model="createQuiz.language_skills"
                     :label="$t('QUESTIONS.LANGUAGE_SKILLS')"
                     :name="$t('QUESTIONS.LANGUAGE_SKILLS')"
                     :placeholder="$t('QUESTIONS.selectLANGUAGE_SKILLS')"
                     :options="languageSkills"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
-                    :rules="'required'"
+                    :disabled="!createQuiz.learning_path_id"
                     multiple="multiple"
                   ></SelectSearch>
                 </div>
               </b-col>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
+                  <!-- @input="changeQuestionType" -->
                   <SelectSearch
-                    @input="changeQuestionType"
                     v-model="createQuiz.type"
                     :label="$t('QUIZZES.type')"
                     :name="$t('QUIZZES.type')"
+                    placeholder="أختر نوع التمرين"
                     :options="typeList"
-                    :reduce="(option) => option.value"
+                    :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
+                    @input="setQuizType"
                   ></SelectSearch>
                 </div>
               </b-col>
               <b-col lg="6" class="mb-3">
                 <div class="hold-field">
-                  <ValidationProvider v-slot="{ errors, invalid }">
-                    <label>{{ $t("QUIZZES.sort") }}</label>
-                    <b-form-group v-slot="{ ariaDescribedby }" class="group-type">
-                      <b-form-radio v-model="createQuiz.sort" value="0" name="sort_type"
-                        >مرتب
-                      </b-form-radio>
-                      <b-form-radio v-model="createQuiz.sort" value="1" name="sort_type">
-                        عشوائى
-                      </b-form-radio>
-                    </b-form-group>
-                  </ValidationProvider>
+                  <SelectSearch
+                    v-model="createQuiz.order_type"
+                    :label="$t('QUIZZES.sort')"
+                    :name="$t('QUIZZES.sort')"
+                    placeholder="أختر الترتيب"
+                    :options="sortList"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
+                  ></SelectSearch>
                 </div>
               </b-col>
-              <b-col
+              <b-col lg="12" class="mb-3">
+                <div class="hold-field">
+                  <b-form-group
+                    :label="$t('QUIZZES.description')"
+                    v-slot="{ ariaDescribedby }"
+                    class="description"
+                  >
+                    <TextAreaField
+                      :name="$t('QUIZZES.description')"
+                      placeholder="وصف التمرين"
+                      :rules="'required|min:3|max:250'"
+                      v-model="createQuiz.description"
+                    />
+                  </b-form-group>
+                </div>
+              </b-col>
+              <div class="question-bank-holder">
+                <div class="header">
+                  <h4 class="mb-0">بنك الأسئلة</h4>
+                  <div
+                    v-if="easyCount || mediumCount || hardCount"
+                    class="question-statistics"
+                  >
+                    <p class="mb-0">
+                      الاسئلة السهلة <span>{{ easyCount }}</span>
+                    </p>
+                    <p class="mb-0">
+                      الاسئلة المتوسطة <span>{{ mediumCount }}</span>
+                    </p>
+                    <p class="mb-0">
+                      الاسئلة الصعبة <span>{{ hardCount }}</span>
+                    </p>
+                  </div>
+                </div>
+                <div class="statistics-content">
+                  <b-row>
+                    <b-col lg="2">
+                      <div class="hold-field">
+                        <SelectSearch
+                          v-model="easyCount"
+                          label="الاسئلة السهلة"
+                          name="الاسئلة السهلة"
+                          placeholder="أختر العدد"
+                          :options="easyCountList"
+                          :reduce="(option) => option"
+                          :get-option-label="(option) => option"
+                          :rules="'required'"
+                          :disabled="
+                            easyCountList.length == 0 || isGetQuestions
+                          "
+                        ></SelectSearch>
+                      </div>
+                    </b-col>
+                    <b-col lg="2">
+                      <div class="hold-field">
+                        <SelectSearch
+                          v-model="mediumCount"
+                          label="الاسئلة المتوسطة"
+                          name="الاسئلة المتوسطة"
+                          placeholder="أختر العدد"
+                          :options="mediumCountList"
+                          :reduce="(option) => option"
+                          :get-option-label="(option) => option"
+                          :rules="'required'"
+                          :disabled="
+                            mediumCountList.length == 0 || isGetQuestions
+                          "
+                        ></SelectSearch>
+                      </div>
+                    </b-col>
+                    <b-col lg="2">
+                      <div class="hold-field">
+                        <SelectSearch
+                          v-model="hardCount"
+                          label="الاسئلة الصعبة"
+                          name="الاسئلة الصعبة"
+                          placeholder="أختر العدد"
+                          :options="hardCountList"
+                          :reduce="(option) => option"
+                          :get-option-label="(option) => option"
+                          :rules="'required'"
+                          :disabled="
+                            hardCountList.length == 0 || isGetQuestions
+                          "
+                        ></SelectSearch>
+                      </div>
+                    </b-col>
+                    <b-col lg="6">
+                      <div class="mt-4">
+                        <Button
+                          custom-class="cancel-btn margin"
+                          :disabled="isGetQuestions"
+                          @click="getStatistics"
+                        >
+                          إستعادة
+                        </Button>
+                        <Button
+                          v-if="isGetQuestions"
+                          custom-class="submit-btn"
+                          @click="resetGettingQuestion"
+                          >إعادة ضبط</Button
+                        >
+                        <Button
+                          v-else
+                          custom-class="submit-btn"
+                          @click="getQuestionsList"
+                          :disabled="!easyCount && !mediumCount && !hardCount"
+                          >عرض الأسئلة</Button
+                        >
+                      </div>
+                    </b-col>
+                  </b-row>
+                </div>
+              </div>
+
+              <!--generated question table -->
+              <div class="hold-table">
+                <b-table
+                  striped
+                  :head-variant="'gradient'"
+                  :tbody-class="'custom-body'"
+                  :items="actions"
+                  :fields="fieldsList"
+                >
+                  <template v-if="quizType == 92" #cell(#)="data">
+                    <b-form-checkbox
+                      v-model="selectedQestions"
+                      :value="data.item.id"
+                      class="permission-item item"
+                    />
+                  </template>
+                  <template #cell(question_difficulty.name)="data">
+                    <div
+                      v-if="data.item.question_difficulty.id == 1"
+                      class="easy"
+                    >
+                      {{ data.item.question_difficulty.name }}
+                    </div>
+                    <div
+                      v-else-if="data.item.question_difficulty.id == 2"
+                      class="medium"
+                    >
+                      {{ data.item.question_difficulty.name }}
+                    </div>
+                    <div
+                      v-else-if="data.item.question_difficulty.id == 3"
+                      class="hard"
+                    >
+                      {{ data.item.question_difficulty.name }}
+                    </div>
+                  </template>
+                  <template #empty>
+                    <div class="text-center p-5">لا يوجد اسئلة لعرضها</div>
+                  </template>
+                  <template #cell(id)="data">
+                    <div>
+                      {{ data.index + 1 }}
+                    </div>
+                  </template>
+                  <template #cell(random_question_action)="data">
+                    <div class="random-question-actions">
+                      <img
+                        class="cursor-pointer"
+                        src="@/assets/images/icons/view-random-question.svg"
+                        @click="handleShowQuestionDetails(data.item.id)"
+                      />
+                    </div>
+                  </template>
+                  <template #cell(question_type)="data">
+                    <span v-if="data.item.question_pattern === 'text'">{{
+                      data.item.question | cutString
+                    }}</span>
+                    <img
+                      v-else-if="data.item.question_pattern === 'image'"
+                      :src="data.item.question"
+                      class="question-image-show"
+                    />
+                    <audio
+                      v-else-if="data.item.question_pattern === 'audio'"
+                      controls
+                    >
+                      <source :src="data.item.question" />
+                    </audio>
+                  </template>
+                </b-table>
+              </div>
+              <!-- <b-col
                 v-if="createQuiz.level_id !== null && createQuiz.learning_path_id !== null"
                 lg="12"
                 class="mt-3 mb-4"
@@ -277,16 +468,7 @@
                     </b-col>
                   </b-row>
                 </div>
-              </b-col>
-              <b-col lg="12" class="mb-3">
-                <div class="hold-field">
-                  <TextAreaField
-                    :label="$t('QUIZZES.description')"
-                    :rules="'required|min:3|max:250'"
-                    v-model="createQuiz.description"
-                  />
-                </div>
-              </b-col>
+              </b-col> -->
             </b-row>
             <b-row>
               <div class="hold-btns-form">
@@ -296,7 +478,7 @@
                 <Button
                   type="submit"
                   :loading="loading"
-                  :disabled="invalid || !enableToSendData"
+                  :disabled="invalid"
                   custom-class="submit-btn"
                 >
                   {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
@@ -320,24 +502,38 @@ import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import SelectField from "@/components/Shared/SelectField/index.vue";
-import { getAllLevelsRequest } from "@/api/level";
+// import { getAllLevelsRequest } from "@/api/level";
 import {
-  getAllBloomCategoriesRequest, getAllLearningMethodsRequest,
-  getAllLearningPathsRequest, getLaguageSkillsRequest,
-  getQuestionRequest
+  getAllBloomCategoriesRequest,
+  getAllLearningMethodsRequest,
+  getAllLearningPathsRequest,
+  getLaguageSkillsRequest,
+  getQuestionRequest,
 } from "@/api/question";
 import {
   getGeneralQuestionRequest,
   getQuestionDifficultyLevelLearnRequest,
   getSingleQuizRequest,
   postRandomQuizRequest,
+  getQuizQuestionStatisticsRequest,
 } from "@/api/quiz";
 import draggable from "vuedraggable";
-import { getAllTermsRequest } from "@/api/term";
+// import { getAllTermsRequest } from "@/api/term";
 import QuestionDetailsModal from "@/components/Shared/QuestionDetailsModal/index.vue";
-import {getLessonsRequest} from "@/api/lessons";
+import { getLessonsRequest } from "@/api/lessons";
+import { getQuizTypeListRequest, getSortQuizTypeRequest } from "@/api/system";
+import { debounce } from "lodash";
 
 export default {
+  filters: {
+    cutString(value) {
+      if (value.length > 40) {
+        return `${value.slice(0, 40)}...`;
+      } else {
+        return value;
+      }
+    },
+  },
   components: {
     Modal,
     TextField,
@@ -356,44 +552,72 @@ export default {
   },
   data() {
     return {
+      quizId: this.$route.params.id,
       selectedQuestion: null,
-      levels: [],
-      terms: [],
+      // levels: [],
+      // terms: [],
       learningPaths: [],
       learningMethods: [],
       bloomCategories: [],
       languageSkills: [],
-      typeList: [
+      typeList: [],
+      sortList: [],
+      easyCount: null,
+      mediumCount: null,
+      hardCount: null,
+      easyCountList: [],
+      mediumCountList: [],
+      hardCountList: [],
+      isGetQuestions: false,
+      actions: [],
+      selectedQestions: [],
+      quizType: "",
+      fieldsList: [
         {
-          id: 1,
-          name: "افتراضى",
-          value: "default",
+          key: "#",
+          label: "",
         },
         {
-          id: 2,
-          name: "اوتوماك",
-          value: "automatic",
+          key: "id",
+          label: "التسلسل",
         },
         {
-          id: 3,
-          name: "يدوى",
-          value: "manual",
+          key: "question",
+          label: "نص السؤال",
+        },
+        {
+          key: "question_type.name",
+          label: "نوع السؤال",
+        },
+        {
+          key: "sub_question_type.name",
+          label: "نوع السؤال الفرعى",
+        },
+        {
+          key: "question_difficulty.name",
+          label: "مستوى السؤال",
+        },
+        {
+          key: "random_question_action",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
       ],
       createQuiz: {
         name: "",
-        level_id: null,
-        term_id: null,
-        learning_path_id: null,
-        bloom_category_id: null,
-        language_method_id: null,
-        total_question: null,
-        description: "",
-        type: "default",
-        sort: "",
+        // level_id: null,
+        // term_id: null,
+        total_question: 0,
         questions: [],
+        learning_path_id: null,
+        blooms: [],
+        learning_styles: [],
+        language_skills: [],
+        lessons: [],
+        description: "",
+        type: "",
+        order_type: ""
       },
-      lessons:[],
+      lessons: [],
       question_difficulty: [],
       questionBank: [],
       questions: [],
@@ -405,16 +629,121 @@ export default {
     };
   },
   watch: {
-    "createQuiz.level_id"() {
-      this.showSystem();
-      this.getGeneralQuestions();
+    // "createQuiz.level_id"() {
+    //   this.showSystem();
+    //   this.getGeneralQuestions();
+    // },
+    // "createQuiz.learning_path_id"() {
+    //   this.showSystem();
+    //   this.getGeneralQuestions();
+    // },
+    "createQuiz.lessons"() {
+      this.getStatistics();
     },
-    "createQuiz.learning_path_id"() {
-      this.showSystem();
-      this.getGeneralQuestions();
+    "createQuiz.blooms"() {
+      this.getStatistics();
+    },
+    "createQuiz.learning_styles"() {
+      this.getStatistics();
+    },
+    "createQuiz.language_skills"() {
+      this.getStatistics();
     },
   },
   methods: {
+    setQuizType: debounce(function () {
+      this.quizType = this.createQuiz.type;
+      this.isGetQuestions = false;
+      this.actions = [];
+    }, 200),
+    resetGettingQuestion() {
+      this.isGetQuestions = false;
+      this.actions = [];
+    },
+    getStatistics: debounce(function () {
+      if (this.createQuiz.lessons && this.createQuiz.lessons > 0) {
+        let params = {
+          learning_path_id: this.createQuiz.learning_path_id,
+          lessons: [],
+          blooms: [],
+          learning_styles: [],
+          language_skills: [],
+        };
+        let lessons = this.createQuiz.lessons;
+        let blooms = this.createQuiz.blooms;
+        let learning_styles = this.createQuiz.learning_styles;
+        let language_skills = this.createQuiz.language_skills;
+
+        if (lessons && lessons.length > 0) params.lessons = lessons;
+        // else this.params.lessons = ''
+        if (blooms && blooms.length > 0) params.blooms = blooms;
+        // else this.params.blooms = ''
+        if (learning_styles && learning_styles.length > 0)
+          params.learning_styles = learning_styles;
+        // else this.params.learning_styles = ''
+        if (language_skills && language_skills.length > 0)
+          params.language_skills = language_skills;
+        // else this.params.language_skills = ''
+
+        this.ApiService(getQuizQuestionStatisticsRequest(params)).then(
+          (response) => {
+            console.log("response.data.data");
+            const data = response.data.data;
+            this.easyCount = data[0].questions_count;
+            this.mediumCount = data[1].questions_count;
+            this.hardCount = data[2].questions_count;
+            this.createTotalsLists();
+            this.actions = [];
+            this.isGetQuestions = false;
+          }
+        );
+      } else return;
+    }, 500),
+    getQuestionsList() {
+      const data = {
+        learning_path_id: this.createQuiz.learning_path_id,
+        lessons: this.createQuiz.lessons,
+        learning_styles: this.createQuiz.learning_styles,
+        language_skills: this.createQuiz.language_skills,
+        question_difficuly: [
+          {
+            question_difficulty_id: 1,
+            questions_count: this.easyCount,
+          },
+          {
+            question_difficulty_id: 2,
+            questions_count: this.mediumCount,
+          },
+          {
+            question_difficulty_id: 3,
+            questions_count: this.hardCount,
+          },
+        ],
+      };
+
+      this.ApiService(postRandomQuizRequest(data)).then((response) => {
+        this.actions = response.data.data;
+        this.isGetQuestions = true;
+        this.selectedQestions = this.actions.map((obj) => obj.id);
+      });
+    },
+    createTotalsLists() {
+      this.easyCountList = [];
+      this.mediumCountList = [];
+      this.hardCountList = [];
+
+      for (let i = 0; i <= this.easyCount; i++) {
+        this.easyCountList.push(i);
+      }
+
+      for (let i = 0; i <= this.mediumCount; i++) {
+        this.mediumCountList.push(i);
+      }
+
+      for (let i = 0; i <= this.hardCount; i++) {
+        this.hardCountList.push(i);
+      }
+    },
     handleShowQuestionDetails(questionId) {
       this.selectedQuestion = questionId;
       this.$bvModal.show("question-details-modal");
@@ -424,7 +753,10 @@ export default {
       this.selectedQuestion = null;
     },
     getGeneralQuestions() {
-      if (this.createQuiz.level_id !== null && this.createQuiz.learning_path_id !== null) {
+      if (
+        this.createQuiz.level_id !== null &&
+        this.createQuiz.learning_path_id !== null
+      ) {
         this.ApiService(
           getGeneralQuestionRequest({
             levelId: this.createQuiz.level_id,
@@ -452,12 +784,16 @@ export default {
     },
     getNumberQuestionDifficulty() {
       this.createQuiz.total_question = this.question_difficulty.reduce(
-        (accumulator, currentValue) => accumulator + currentValue.numberSelected,
+        (accumulator, currentValue) =>
+          accumulator + currentValue.numberSelected,
         0
       );
     },
     showSystem() {
-      if (this.createQuiz.level_id !== null && this.createQuiz.learning_path_id !== null) {
+      if (
+        this.createQuiz.level_id !== null &&
+        this.createQuiz.learning_path_id !== null
+      ) {
         this.getQuestionsDifficultyLevelLearn();
       }
     },
@@ -478,16 +814,20 @@ export default {
     editOnQuestions() {
       this.isEditable = true;
     },
-    setLessonsBasedLearningPathId($event){
-      this.ApiService(getLessonsRequest({learning_path_id: $event})).then((response) => {
-        this.lessons = response.data.data
-        this.formValues.lesson_id = null
-      })
-    },
+    setLessonsBasedLearningPathId: debounce(function ($event) {
+      this.ApiService(getLessonsRequest({ learning_path_id: $event })).then(
+        (response) => {
+          this.lessons = response.data.data;
+          this.createQuiz.lessons = null;
+        }
+      );
+    }, 500),
     onSubmit() {
       this.$refs.addEditQuizForm.validate().then((success) => {
         if (!success) return;
       });
+      this.createQuiz.total_question = this.selectedQestions.length
+      this.createQuiz.questions = this.selectedQestions
       if (this.$route.params.id) {
         this.$emit("handleEditQuiz", this.createQuiz);
       } else {
@@ -497,58 +837,59 @@ export default {
     handleCancel() {
       this.$emit("handleCancel");
     },
-    getAllLevels() {
-      this.ApiService(getAllLevelsRequest()).then((response) => {
-        this.levels = response.data.data;
-      });
-    },
+    // getAllLevels() {
+    //   this.ApiService(getAllLevelsRequest()).then((response) => {
+    //     this.levels = response.data.data;
+    //   });
+    // },
     getLearningPaths() {
       // const params = {page: 1};
       this.ApiService(getAllLearningPathsRequest()).then((response) => {
         this.learningPaths = response.data.data;
       });
     },
-    getQuestions() {
-      let defaultQuiz = {
-        level_id: this.createQuiz.level_id,
-        learning_path_id: this.createQuiz.learning_path_id,
-        question_difficuly: this.createQuiz.question_difficulty,
-      };
-      this.ApiService(
-        getGeneralQuestionRequest({
-          levelId: this.createQuiz.level_id,
-          learnPathId: this.createQuiz.learning_path_id,
-        })
-      )
-        .then((response) => {
-          this.questionBank = response.data.data;
-        })
-        .then(
-          () =>
-            (this.questionBank = this.questionBank.map((item) => {
-              return { id: item.id, name: item.question, fixed: false };
-            }))
-        )
-        .finally(() => {
-          this.ApiService(postRandomQuizRequest(defaultQuiz))
-            .then((response) => {
-              this.questions = response.data.data;
-            })
-            .then(() => {
-              this.questions = this.questions.map((item) => {
-                return { ...item, fixed: false };
-              });
-              this.questionsToSend = this.questionBank.filter((item) =>
-                this.questions.map((item) => item.id).includes(item.id)
-              );
-              this.questionBank = this.questionBank.filter(
-                (item) => !this.questions.map((item) => item.id).includes(item.id)
-              );
-              this.createQuiz.questions = this.questionsToSend;
-              this.enableToSendData = true;
-            });
-        });
-    },
+    // getQuestions() {
+    //   let defaultQuiz = {
+    //     level_id: this.createQuiz.level_id,
+    //     learning_path_id: this.createQuiz.learning_path_id,
+    //     question_difficuly: this.createQuiz.question_difficulty,
+    //   };
+    //   this.ApiService(
+    //     getGeneralQuestionRequest({
+    //       levelId: this.createQuiz.level_id,
+    //       learnPathId: this.createQuiz.learning_path_id,
+    //     })
+    //   )
+    //     .then((response) => {
+    //       this.questionBank = response.data.data;
+    //     })
+    //     .then(
+    //       () =>
+    //         (this.questionBank = this.questionBank.map((item) => {
+    //           return { id: item.id, name: item.question, fixed: false };
+    //         }))
+    //     )
+    //     .finally(() => {
+    //       this.ApiService(postRandomQuizRequest(defaultQuiz))
+    //         .then((response) => {
+    //           this.questions = response.data.data;
+    //         })
+    //         .then(() => {
+    //           this.questions = this.questions.map((item) => {
+    //             return { ...item, fixed: false };
+    //           });
+    //           this.questionsToSend = this.questionBank.filter((item) =>
+    //             this.questions.map((item) => item.id).includes(item.id)
+    //           );
+    //           this.questionBank = this.questionBank.filter(
+    //             (item) =>
+    //               !this.questions.map((item) => item.id).includes(item.id)
+    //           );
+    //           this.createQuiz.questions = this.questionsToSend;
+    //           this.enableToSendData = true;
+    //         });
+    //     });
+    // },
     showQuestions() {
       let questionDifficultyMapped = [];
       questionDifficultyMapped = this.question_difficulty.map((item) => {
@@ -560,14 +901,14 @@ export default {
       this.createQuiz.question_difficulty = [...questionDifficultyMapped];
       this.getQuestions();
     },
-    getTerms() {
-      const params = {
-        level_id: this.createQuiz.level_id,
-      };
-      this.ApiService(getAllTermsRequest(params)).then((response) => {
-        this.terms = response.data.data;
-      });
-    },
+    // getTerms() {
+    //   const params = {
+    //     level_id: this.createQuiz.level_id,
+    //   };
+    //   this.ApiService(getAllTermsRequest(params)).then((response) => {
+    //     this.terms = response.data.data;
+    //   });
+    // },
     getBloomCategories() {
       this.ApiService(getAllBloomCategoriesRequest()).then((response) => {
         this.bloomCategories = response.data.data;
@@ -583,36 +924,57 @@ export default {
         this.languageSkills = response.data.data;
       });
     },
+    getQuizTypeList() {
+      this.ApiService(getQuizTypeListRequest()).then((response) => {
+        this.typeList = response.data.data;
+      });
+    },
+    getSortQuizType() {
+      this.ApiService(getSortQuizTypeRequest()).then((response) => {
+        this.sortList = response.data.data;
+      });
+    },
   },
   mounted() {
-    if (this.$route.params.id) this.getTerms();
-    this.getAllLevels();
+    // if (this.$route.params.id) this.getTerms();
+    // this.getAllLevels();
+    if (this.createQuiz.learning_path_id && this.quizId)
+      this.setLessonsBasedLearningPathId();
     this.getLearningPaths();
     this.getBloomCategories();
     this.getLearningMethods();
     this.getLanguageSkills();
+    this.getQuizTypeList();
+    this.getSortQuizType();
     // this.ApiService(getQuestionRequest()).then((response) => {
     //   this.questionBank = response.data.data
     // })
     if (this.$route.params.id) {
-      this.ApiService(getSingleQuizRequest(this.$route.params.id)).then((response) => {
-        this.createQuiz.name = response.data.data.name;
-        this.createQuiz.description = response.data.data.description;
-        this.createQuiz.level_id = response.data.data.level.id;
-        this.createQuiz.term_id = response.data.data.term.id;
-        this.createQuiz.learning_path_id = response.data.data.learning_path.id;
-        this.createQuiz.type = response.data.data.type;
-        this.question_difficulty = response.data.data.questions_difficulties.map((item) =>
-          Object.assign(item, { numberSelected: item.questions_count })
-        );
-        this.createQuiz.total_question = this.question_difficulty.reduce(
-          (accumulator, currentValue) => accumulator + currentValue.numberSelected,
-          0
-        );
-        this.questionsToSend = this.questionBank.filter((item) =>
-          response.data.data.questions.map((item) => item.id).includes(item.id)
-        );
-      });
+      this.ApiService(getSingleQuizRequest(this.$route.params.id)).then(
+        (response) => {
+          this.createQuiz.name = response.data.data.name;
+          this.createQuiz.description = response.data.data.description;
+          this.createQuiz.level_id = response.data.data.level.id;
+          this.createQuiz.term_id = response.data.data.term.id;
+          this.createQuiz.learning_path_id =
+            response.data.data.learning_path.id;
+          this.createQuiz.type = response.data.data.type;
+          this.question_difficulty =
+            response.data.data.questions_difficulties.map((item) =>
+              Object.assign(item, { numberSelected: item.questions_count })
+            );
+          this.createQuiz.total_question = this.question_difficulty.reduce(
+            (accumulator, currentValue) =>
+              accumulator + currentValue.numberSelected,
+            0
+          );
+          this.questionsToSend = this.questionBank.filter((item) =>
+            response.data.data.questions
+              .map((item) => item.id)
+              .includes(item.id)
+          );
+        }
+      );
     }
   },
 };

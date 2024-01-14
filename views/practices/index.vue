@@ -13,7 +13,7 @@
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddQuiz" v-if="user.permissions.includes(`add-quizzes`)">
           <img src="@/assets/images/icons/plus.svg">
-          <span>إضافة تمرين جديد </span>
+          <span>إضافة تمرين</span>
         </Button>
       </template>
     </ListItems>
@@ -48,11 +48,9 @@ export default {
       fieldsList: [
         {key: "id", label: "التسلسل"},
         {key: "name", label: "اسم التمرين"},
-        {key: "type", label: "النوع"},
-        {key: "total_question", label: "إجمالى الإسئلة"},
-        {key: "level", label: "المرحله الدراسية"},
-        {key: "learning_path", label: "المسار"},
-        {key: "description", label: "الوصف"},
+        {key: "type.name", label: "نوع التمرين"},
+        {key: "learning_path.name", label: "المسار التعليمي"},
+        {key: "lesson.name", label: "اسم الدرس"},
         {key: "actions", label: "الإجراء"},
       ],
     }

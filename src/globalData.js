@@ -147,6 +147,14 @@ let routesMissions = [
     icon: require("@/assets/images/icons/steps.svg"),
     permission: "view-missions",
   },
+  {
+    name: "مجموعة المهام الموسمية",
+    path: "/dashboard/seasonal-mission-group",
+    altImage: "seasonal-mission-group",
+    titleImage: "seasonal-mission-group",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-missions",
+  },
 ];
 let routeSettings = [
   {

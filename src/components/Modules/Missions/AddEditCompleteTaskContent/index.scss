@@ -1,0 +1,29 @@
+@import "src/assets/style/scss/_mixin";
+.add-edit-complete-task-content{
+  @include styleViewList;
+  .prize-section {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 1rem;
+    .content-row {
+      .badge-col {
+        .badge-title {
+          color: #76236C;
+          font-weight: bold;
+          font-size: larger;
+        }
+      }
+    }
+    ::v-deep .table-row {
+      table {
+        min-height: 15vh !important;
+      }
+    }
+  }
+}
+.hold-path{
+  margin-bottom: 2.5rem;
+}
+.action-holder {
+  width: 100%;
+  @include flexCenter(space-between);
+}

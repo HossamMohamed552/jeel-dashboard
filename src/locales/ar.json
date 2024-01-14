@@ -11,18 +11,31 @@
     "rememberMe": "تذكرنى",
     "forgetPassword": "نسيت كلمة المرور ؟"
   },
+  "SOCIAL_MEDIA": {
+    "FACEBOOK": "فيس بوك",
+    "TWITTER": "تويتر",
+    "LINKEDIN": "لينكدان"
+  },
+  "BUTTONS": {
+    "EDIT": "تغيير",
+    "DELETE": "حذف"
+  },
   "USERS": {
-    "ADD_NEW": "إضافة مستخدم جديد",
+    "ADD_NEW": "إضافة مستخدم إدارة منظومة",
+    "ACTIVE": "فعال",
     "EDIT": "تعديل بيانات المستخدم",
     "USER_NAME": "إسم المستخدم",
     "FIRST_NAME": "الإسم الأول",
+    "SECOND_NAME": "الاسم الثاني",
     "LAST_NAME": "إسم العائلة",
     "EMAIL": "البريد الإلكترونى",
     "PASSWORD": "كلمة المرور",
+    "CONFIRM_PASSWORD": "تأكيد كلمة المرور",
     "PHONE_NUMBER": "رقم الهاتف",
     "SOCIAL_MEDIA": "رابط وسائل التواصل الإجتماعى",
     "ROLES": "الصلاحيات",
     "UPLOAD_IMAGE": "صورة المستخدم",
+    "NATIONALITY": "الجنسية",
     "showDetails": "تفاصيل المستخدم",
     "name": "اسم المستخدم",
     "first_name": "الاسم الاول",
@@ -31,6 +44,9 @@
     "mobile": "الهاتف",
     "email": "البريد الإلكترونى",
     "gender": "النوع",
+    "DEPARTMENT": "الدور الوظيفي",
+    "ENTER": "أدخل",
+    "ENTER_LINK": "ادخل الرابط",
     "religion": "الديانة"
   },
   "MENU": {
@@ -49,7 +65,10 @@
   },
   "TABLE_FIELDS": {
     "id": "التسلسل",
+    "email_username": "البريد الإلكتروني (اسم المستخدم)",
     "name": "الإسم",
+    "block": "الحظر",
+    "not_block": "إلغاء الحظر",
     "avatar": "الصورة",
     "school_group": "اسم المجموعة",
     "email": "البريد الإلكترونى",
@@ -92,15 +111,12 @@
     "paperName": "اسم ورقة العمل",
     "paper_work_final_degree": "الدرجة",
     "bloom": "بلوم",
-
     "badge_name": "اسم الشارة",
     "percentage_of": "نسبة من",
     "percentage_to": "نسبة إلي",
     "learning_path_name": "اسم المسار",
-
     "character_name": "اسم الشخصية",
     "character_logo": "صورة الشخصية",
-
     "power_up_box_name": "اسم الصندوق",
     "power_up_box_level": "الصف الدراسى",
     "power_up_box_country": "الدولة",
@@ -323,7 +339,7 @@
     "enterQUESTION": "أدخل السؤال",
     "LEVELS": "المرحلة الدراسية",
     "TYPE": "نوع السؤال",
-    "LEARNING_METHOD": "إسلوب التعلم",
+    "LEARNING_METHOD": "اسلوب التعلم",
     "selectLEARNING_METHOD": "أختر إسلوب التعلم",
     "BLOOM_CATEGORIES": "بلوم",
     "selectBLOOM_CATEGORIES": "أختر بلوم",
@@ -367,7 +383,8 @@
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",
     "STEP_TWO": "محتوى المهمة",
-    "STEP_THREE": "مراجعة المحتوى المهمة",
+    "STEP_THREE": "محتوى انجاز المهمه",
+    "STEP_FOUR": "مراجعة المحتوى المهمة",
     "EDIT": "تعديل المهمة",
     "ADD_NEW": "إضافة مهمة جديدة",
     "name": "إسم المهمة",
@@ -380,11 +397,15 @@
     "videos": "الفيديوهات",
     "paperWork": "اوراق العمل",
     "quizzes": "التمارين",
-    "audios": "التسجيلات الصوتيه",
+    "tasks": "التسجيلات الصوتيه",
     "description": "الوصف",
     "content": "المحتوى",
     "ShowDetails": "عرض تفاصيل المهمة",
-    "UPLOAD_IMAGE": "صورة المهمة"
+    "UPLOAD_IMAGE": "صورة المهمة",
+    "BadgeContentType": "نوع المحتوى",
+    "BadgeContent": "المحتوى",
+    "BadgeAdd": "اضافة",
+    "UPLOAD_AUDIO": "صوت المهمه"
   },
   "LESSONS": {
     "LESSONS": "الدروس",
@@ -399,7 +420,7 @@
   },
   "QUIZZES": {
     "EDIT": "تعديل التمرين",
-    "ADD_NEW": "إضافة تمرين جديد",
+    "ADD_NEW": "إضافة تمرين",
     "name": "إسم التمرين",
     "level": "السنة الدراسية",
     "LEARNING_PATH": "المسار",
@@ -520,6 +541,7 @@
   "USER": {
     "showDetails": "عرض تفاصيل المستخدم",
     "first_name": "الاسم الأول",
+    "second_name": "الاسم الثانى",
     "last_name": "الاسم الثانى",
     "name": "الاسم",
     "email": "البريد الإلكترونى",

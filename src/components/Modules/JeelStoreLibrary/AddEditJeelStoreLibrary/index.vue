@@ -107,9 +107,6 @@
                 </div>
               </b-col>
 
-
-
-
               <!------------------- start file audio --------------------------------->
               <b-col lg="6" v-if="createItem.type==111" class="mb-3 mt-4">
                 <UploadAttachment
@@ -141,7 +138,6 @@
 
               </b-col>
               <!------------------- end  file audio --------------------------------->
-
               <!------------------- start file image --------------------------------->
               <b-col lg="6" v-if="createItem.type==112" class="mb-3 mt-4">
                 <UploadAttachment
@@ -541,7 +537,7 @@ export default {
       if (this.$route.params.id) {
         this.ApiService(getJeelStoreLibraryByIdRequest(this.$route.params.id)).then((response) => {
 
-          this.createItem= response.data.data;
+          this.createItem = response.data.data;
           // this.createItem.name= response.data.data.name;
 
           //

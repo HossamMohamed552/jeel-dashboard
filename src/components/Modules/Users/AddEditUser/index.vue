@@ -6,161 +6,232 @@
         <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="6" class="mb-3">
-                <div class="hold-field">
-                  <TextField
-                    v-model="formValues.first_name"
-                    :label="$t('USERS.FIRST_NAME')"
-                    :name="$t('USERS.FIRST_NAME')"
-                    :rules="'required|min:2'"
-                  ></TextField>
-                </div>
-              </b-col>
-              <b-col lg="6" class="mb-3">
-                <div class="hold-field">
-                  <TextField
-                    v-model="formValues.last_name"
-                    :label="$t('USERS.LAST_NAME')"
-                    :name="$t('USERS.LAST_NAME')"
-                    :rules="'required|min:2'"
-                  ></TextField>
-                </div>
-              </b-col>
-              <b-col lg="4" class="mb-3">
-                <div class="hold-field">
-                  <label>
-                    {{ $t('MISSIONS.country') }}</label>
-                  <SelectSearch
-                    v-model="formValues.country_id"
-                    :name="`country`"
-                    :options="countries"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                  ></SelectSearch>
-                </div>
-              </b-col>
-              <b-col lg="4" class="mb-3">
-                <div class="hold-field">
-                  <label>
-                    {{ $t('USERS.religion') }}</label>
-                  <SelectSearch
-                    v-model="formValues.religion_id"
-                    :name="`religion`"
-                    :options="religions"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                  ></SelectSearch>
-                </div>
-              </b-col>
               <b-col lg="4">
-                <div class="hold-field">
-                  <ValidationProvider rules="required" class="d-flex justify-content-start align-items-start">
-                    <label for="gender" class="group-type">{{ $t('USERS.gender') }}</label>
-                    <span><i class="fa-solid fa-asterisk"></i></span>
-                    <b-form-group id="gender" class="mt-4">
-                      <b-form-radio
-                        v-model="formValues.gender"
-                        value="male"
-                        name="group-status"
-                      >ذكر
-                      </b-form-radio>
-                      <b-form-radio
-                        v-model="formValues.gender"
-                        value="female"
-                        name="group-status"
-                      >انثى
-                      </b-form-radio>
-                    </b-form-group>
-                  </ValidationProvider>
-                </div>
-              </b-col>
-              <b-col
-                lg="6"
-                class="mb-3"
-                :class="isStudent && 'd-none'"
-                v-if="!$route.params.id"
-              >
-                <div class="hold-field">
-                  <TextField
-                    v-model="formValues.email"
-                    :label="$t('USERS.EMAIL')"
-                    :name="$t('USERS.EMAIL')"
-                    :rules="formValues.roles != '5' ? 'required|email' : ''"
-                  ></TextField>
-                </div>
-              </b-col>
-              <b-col v-if="formValues.user_name" lg="6" class="mb-3">
-                <div class="hold-field">
-                  <TextField
-                    v-model="formValues.user_name"
-                    :label="$t('USERS.USER_NAME')"
-                    :name="$t('USERS.USER_NAME')"
-                    disabled="true"
-                  ></TextField>
-                </div>
-              </b-col>
-              <b-col lg="6" class="mb-3">
-                <div class="hold-field">
-                  <TextField
-                    type="password"
-                    v-model="formValues.password"
-                    :label="$t('USERS.PASSWORD')"
-                    :name="$t('USERS.PASSWORD')"
-                    :rules="$route.params.id ? '' : 'required|min:6'"
-                  ></TextField>
-                </div>
-              </b-col>
-              <b-col lg="6" class="mb-3">
-                <div class="hold-field">
-                  <TextField
-                    v-model="formValues.mobile"
-                    :label="$t('USERS.PHONE_NUMBER')"
-                    :name="$t('USERS.PHONE_NUMBER')"
-                    :rules="{ regex: /^01[0125][0-9]{8}$/,required:true }"
-                  ></TextField>
-                </div>
-              </b-col>
-              <b-col lg="6" class="mb-3">
-                <div class="hold-field">
-                  <TextField
-                    v-model="formValues.social_media"
-                    :label="$t('USERS.SOCIAL_MEDIA')"
-                    :name="$t('USERS.SOCIAL_MEDIA')"
-                    :rules="{
-                      regex:
-                        /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/gi,
-                    }"
-                  ></TextField>
-                </div>
-              </b-col>
-              <b-col lg="12" class="mb-3">
-                <div class="hold-field">
-                  <SelectSearch
-                    :rules="'required'"
-                    v-model="formValues.roles"
-                    :label="$t('USERS.ROLES')"
-                    :name="$t('USERS.ROLES')"
-                    :options="systemRoles"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                    :disabled="$route.params.id"
-                    @input="checkIsStudent($event)"
-                  ></SelectSearch>
-                </div>
-              </b-col>
-            </b-row>
-            <b-row>
-              <b-col lg="12" class="mb-3">
-                <div class="hold-field mt-4">
-                  <ImageUploader
-                    v-model="image"
-                    :name="'logoSchool'"
-                    :text="$t('USERS.UPLOAD_IMAGE')"
-                    :item-image="itemImage"
-                    @imageUpload="handleUploadImage"
-                    @deleteImage="deleteImage"
+                <div class="img-container">
+                  <span>
+                    <img v-if="imageUrl" :src="imageUrl" alt="Person Image" />
+                    <i v-else class="far fa-user"></i>
+                  </span>
+                  <input
+                    type="file"
+                    ref="fileInput"
+                    style="display: none"
+                    @change="handleImageChange"
                   />
+
+                  <div>
+                    <Button type="button" @click="openFileInput" :custom-class="'submit-btn'">
+                      {{ $t("BUTTONS.EDIT") }}
+                    </Button>
+                    <Button @click="clearImage" custom-class="cancel-btn">
+                      {{ $t("BUTTONS.DELETE") }}
+                    </Button>
+                  </div>
                 </div>
+                <div v-if="$route.params.id" class="user-active">
+                  <label for="">الحالة</label>
+                  <div>
+                    <label for="">{{ $t("USERS.ACTIVE") }}</label>
+                    <b-form-checkbox
+                      v-model="user.is_active"
+                      value="active"
+                      unchecked-value="deactivated"
+                      @change="changeStatus()"
+                      class="large-checkbox"
+                      size="lg"
+                      switch
+                    >
+                    </b-form-checkbox>
+                  </div>
+                </div>
+              </b-col>
+              <b-col lg="8">
+                <b-row>
+                  <b-col lg="4">
+                    <div class="hold-field">
+                      <TextField
+                        v-model="user.first_name"
+                        :label="$t('USERS.FIRST_NAME')"
+                        :name="$t('USERS.FIRST_NAME')"
+                        :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.FIRST_NAME')"
+                        :rules="'required|min:2'"
+                      ></TextField>
+                    </div>
+                  </b-col>
+                  <b-col lg="4">
+                    <div class="hold-field">
+                      <TextField
+                        v-model="user.middle_name"
+                        :label="$t('USERS.SECOND_NAME')"
+                        :name="$t('USERS.SECOND_NAME')"
+                        :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.SECOND_NAME')"
+                        :rules="'required|min:2'"
+                      ></TextField>
+                    </div>
+                  </b-col>
+                  <b-col lg="4">
+                    <div class="hold-field">
+                      <TextField
+                        v-model="user.last_name"
+                        :label="$t('USERS.LAST_NAME')"
+                        :name="$t('USERS.LAST_NAME')"
+                        :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.LAST_NAME')"
+                        :rules="'required|min:2'"
+                      ></TextField>
+                    </div>
+                  </b-col>
+                  <b-col lg="8" :class="isStudent && 'd-none'" v-if="!$route.params.id">
+                    <div class="hold-field">
+                      <TextField
+                        v-model="user.email"
+                        :label="$t('USERS.EMAIL')"
+                        :name="$t('USERS.EMAIL')"
+                        :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.EMAIL')"
+                        :rules="'required|email'"
+                      ></TextField>
+                    </div>
+                  </b-col>
+                  <b-col lg="4">
+                    <div class="hold-field">
+                      <TextField
+                        v-model="user.mobile"
+                        :label="$t('USERS.PHONE_NUMBER')"
+                        :name="$t('USERS.PHONE_NUMBER')"
+                        :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.PHONE_NUMBER')"
+                        :rules="{ regex: /^01[0125][0-9]{8}$/, required: true }"
+                      ></TextField>
+                    </div>
+                  </b-col>
+                  <b-col lg="4">
+                    <div class="hold-field">
+                      <SelectSearch
+                        v-model="user.country_id"
+                        :label="$t('USERS.NATIONALITY')"
+                        :name="$t('USERS.NATIONALITY')"
+                        :options="countries"
+                        :reduce="(option) => option.id"
+                        :get-option-label="(option) => option.name"
+                        :rules="'required'"
+                        :deselectFromDropdown="true"
+                      ></SelectSearch>
+                    </div>
+                  </b-col>
+                  <b-col lg="4">
+                    <div class="hold-field">
+                      <SelectSearch
+                        v-model="user.religion_id"
+                        :label="$t('USERS.religion')"
+                        :name="$t('USERS.religion')"
+                        :options="religions"
+                        :reduce="(option) => option.id"
+                        :get-option-label="(option) => option.name"
+                        :rules="'required'"
+                        :deselectFromDropdown="true"
+                      ></SelectSearch>
+                    </div>
+                  </b-col>
+                  <b-col lg="4">
+                    <div class="hold-field">
+                      <SelectSearch
+                        v-model="user.gender"
+                        :label="$t('USERS.gender')"
+                        :name="$t('USERS.gender')"
+                        :options="genderList"
+                        :reduce="(option) => option.id"
+                        :get-option-label="(option) => option.name"
+                        :rules="'required'"
+                        :deselectFromDropdown="true"
+                      ></SelectSearch>
+                    </div>
+                  </b-col>
+                  <b-col lg="4" v-if="!$route.params.id">
+                    <b-form-group class="mb-3">
+                      <TextField
+                        v-model="user.password"
+                        rules="required"
+                        :type="passwordType"
+                        :label="$t('USERS.PASSWORD')"
+                        :name="$t('USERS.PASSWORD')"
+                        :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.PASSWORD')"
+                        class="p-relative d-block"
+                        ref="password"
+                      >
+                        <b-icon
+                          :icon="passwordIcon"
+                          @click="hideShowPassword"
+                          class="icon-password"
+                        />
+                      </TextField>
+                    </b-form-group>
+                  </b-col>
+                  <b-col lg="4" v-if="!$route.params.id">
+                    <b-form-group class="mb-3">
+                      <TextField
+                        v-model="user.password_confirmation"
+                        :rules="`required|confirmed:${$t('USERS.PASSWORD')}`"
+                        :type="confirmPasswordType"
+                        :label="$t('USERS.CONFIRM_PASSWORD')"
+                        :name="$t('USERS.CONFIRM_PASSWORD')"
+                        :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.CONFIRM_PASSWORD')"
+                        class="p-relative d-block"
+                      >
+                        <b-icon
+                          :icon="confirmPasswordIcon"
+                          @click="hideShowPassword('confirm')"
+                          class="icon-password"
+                        />
+                      </TextField>
+                    </b-form-group>
+                  </b-col>
+                  <b-col lg="4">
+                    <div class="hold-field">
+                      <SelectSearch
+                        v-model="user.roles"
+                        :label="$t('USERS.DEPARTMENT')"
+                        :name="$t('USERS.DEPARTMENT')"
+                        :options="departmentsList"
+                        :reduce="(option) => option.id"
+                        :get-option-label="(option) => option.name"
+                        :rules="'required'"
+                        :deselectFromDropdown="true"
+                        multiple
+                      ></SelectSearch>
+                    </div>
+                  </b-col>
+                  <b-col lg="12">
+                    <h3 class="mt-2">روابط التواصل الإجتماعي</h3>
+                  </b-col>
+                  <b-col lg="4">
+                    <div class="hold-field">
+                      <TextField
+                        v-model="user.facebook"
+                        :label="$t('SOCIAL_MEDIA.FACEBOOK')"
+                        :name="$t('SOCIAL_MEDIA.FACEBOOK')"
+                        :placeholder="$t('USERS.ENTER_LINK')"
+                      ></TextField>
+                    </div>
+                  </b-col>
+                  <b-col lg="4">
+                    <div class="hold-field">
+                      <TextField
+                        v-model="user.twitter"
+                        :label="$t('SOCIAL_MEDIA.TWITTER')"
+                        :name="$t('SOCIAL_MEDIA.TWITTER')"
+                        :placeholder="$t('USERS.ENTER_LINK')"
+                      ></TextField>
+                    </div>
+                  </b-col>
+                  <b-col lg="4">
+                    <div class="hold-field">
+                      <TextField
+                        v-model="user.linkedin"
+                        :label="$t('SOCIAL_MEDIA.LINKEDIN')"
+                        :name="$t('SOCIAL_MEDIA.LINKEDIN')"
+                        :placeholder="$t('USERS.ENTER_LINK')"
+                      ></TextField>
+                    </div>
+                  </b-col>
+                </b-row>
               </b-col>
             </b-row>
             <b-row>
@@ -191,8 +262,19 @@ import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
-import {getReligionsRequest, getSingleUserRequest} from "@/api/user";
-import {getAllCountryRequest} from "@/api/country";
+
+import { TogglePasswordMixins } from "@/mixins/TogglePasswordMixins";
+// Dropdown
+import {
+  getSingleUserRequest,
+  getAllRolesRequest,
+  addEditUserRequest,
+  deleteProfileImageRequest,
+  postChangeStatusRequest,
+} from "@/api/user";
+
+import { getAllNationaltyRequest } from "@/api/country";
+import { getAllGenderRequest, getAllReligionRequest } from "@/api/system";
 
 export default {
   components: {
@@ -201,6 +283,8 @@ export default {
     SelectSearch,
     ImageUploader,
   },
+  mixins: [TogglePasswordMixins],
+
   props: {
     systemRoles: {
       type: Array,
@@ -213,174 +297,151 @@ export default {
   },
   data() {
     return {
+      imageUrl: null,
       isStudent: false,
-      formValues: {
+      user: {
+        image: null,
         first_name: "",
+        middle_name: "",
         last_name: "",
-        user_name: "",
         email: "",
         password: "",
+        password_confirmation: "",
         mobile: "",
-        social_media: "",
+        gender: "",
+        religion_id: "",
         roles: [],
-        country_id:"",
-        gender:"",
-        religion_id:""
+        country_id: "",
+        facebook: "",
+        linkedin: "",
+        twitter: "",
       },
       editImage: false,
       itemImage: null,
       image: null,
-      countries:[],
-      religions:[]
+      //
+      countries: [],
+      genderList: [],
+      departmentsList: [],
+      religions: [],
     };
   },
   methods: {
+    openFileInput() {
+      this.$refs.fileInput.click();
+    },
+    handleImageChange(event) {
+      const file = event.target.files[0];
+      console.log(file);
+      if (file) this.imageUrl = URL.createObjectURL(file);
+      this.uploadImage(file);
+    },
+    uploadImage(file) {
+      const formData = new FormData();
+      formData.append("attachment", file);
+      formData.append("type", "image");
+
+      axios
+        .post("https://jeeladmin.suredemos.com/api/attachment", formData, {
+          headers: {
+            Authorization: `Bearer ${VueCookies.get("token")}`,
+            locale: "ar",
+          },
+        })
+        .then((res) => {
+          this.user.image = res.data.data.uuid;
+        })
+        .catch((error) => {
+          console.error("Error uploading image:", error);
+        });
+    },
+    clearImage() {
+      if (this.$route.params.id) {
+        this.ApiService(deleteProfileImageRequest({ user_id: this.$route.params.id })).then(() => {
+          this.user.image = null;
+        });
+      }
+
+      this.imageUrl = null;
+      this.user.image;
+    },
     checkIsStudent(id) {
       if (id === 5) {
         this.isStudent = true;
         this.formValues.email = "";
       } else this.isStudent = false;
     },
-    deleteImage() {
-      this.image = "";
-      this.itemImage = null;
+    changeStatus() {
+      let userStatus = {
+        user_id: this.$route.params.id,
+      };
+
+      if (this.user.is_active == "deactivated" || this.user.is_active == "unverified")
+        userStatus.is_active = 0;
+      else userStatus.is_active = 1;
+
+      this.ApiService(postChangeStatusRequest(userStatus)).then(() => {});
     },
+
     onSubmit() {
-      if (this.$route.params.id) {
-        this.$refs.addEditUserForm.validate().then((success) => {
-          if (!success) return;
-          const formData = new FormData();
-          formData.append("first_name", this.formValues.first_name);
-          formData.append("last_name", this.formValues.last_name);
-          formData.append("email", this.formValues.email);
-          formData.append("password", this.formValues.password);
-          formData.append("mobile", this.formValues.mobile);
-          formData.append("country_id", this.formValues.country_id);
-          formData.append("gender", this.formValues.gender);
-          formData.append("religion_id", this.formValues.religion_id);
-          if (this.formValues.social_media) {
-            formData.append("social_media", this.formValues.social_media);
-          }
-          if (this.formValues.roles && this.formValues.roles !== 10) {
-            formData.append("roles[0]", this.formValues.roles);
-          }
-          if(this.formValues.roles && this.formValues.roles === 10)
-          {
-            formData.append("roles[0]", "");
-          }
-
-          formData.append("_method", "PUT");
-          // for (let user = 0; user < this.formValues.roles.length; user++) {
-          //   formData.append(`roles[${user}]`, this.formValues.roles[user]);
-          // }
-
-          formData.append("image", this.image);
-          axios
-            .post(`/users/${this.$route.params.id}`, formData, {
-              headers: {
-                Authorization: `Bearer ${VueCookies.get("token")}`,
-                locale: "ar",
-                "Content-Type": "multipart/form-data",
-              },
-            })
-            .then((response) => {
-            })
-            .then(() => {
-              this.$router.push("/dashboard/users");
-            });
+      console.log(this.user);
+      this.$refs.addEditUserForm.validate().then((success) => {
+        if (!success) return;
+        let endpoint;
+        if (this.$route.params.id) {
+          this.user["_method"] = "PUT";
+          endpoint = `/users/${this.$route.params.id}`;
+        } else {
+          endpoint = `/users`;
+        }
+        this.ApiService(addEditUserRequest(endpoint, this.user)).then(() => {
+          this.$router.push(`/dashboard/users`);
         });
-      } else {
-        this.$refs.addEditUserForm.validate().then((success) => {
-          if (!success) return;
-          const formData = new FormData();
-          formData.append("first_name", this.formValues.first_name);
-          formData.append("last_name", this.formValues.last_name);
-          formData.append("email", this.formValues.email);
-          formData.append("password", this.formValues.password);
-          formData.append("country_id", this.formValues.country_id);
-          formData.append("gender", this.formValues.gender);
-          formData.append("religion_id", this.formValues.religion_id);
-          if (this.formValues.mobile) {
-            formData.append("mobile", this.formValues.mobile);
-          }
-          if (this.formValues.social_media) {
-            formData.append("social_media", this.formValues.social_media);
-          }
-          // if (this.formValues.roles) {
-          //   formData.append("roles[0]", this.formValues.roles);
-          // }
-          if (this.formValues.roles && this.formValues.roles !== 10) {
-            formData.append("roles[0]", this.formValues.roles);
-          }
-          // if(this.formValues.roles && this.formValues.roles === 10)
-          // {
-          //   formData.append("roles[0]", "");
-          // }
-          // for (let user = 0; user < this.formValues.roles.length; user++) {
-          //   formData.append(`roles[${user}]`, this.formValues.roles[user]);
-          // }
-
-          if (this.image && this.editImage)
-            formData.append("image", this.image);
-          axios
-            .post("/users", formData, {
-              headers: {
-                Authorization: `Bearer ${VueCookies.get("token")}`,
-                locale: "ar",
-                "Content-Type": "multipart/form-data",
-              },
-            })
-            .then((response) => {
-            })
-            .then(() => {
-              this.$router.push("/dashboard/users");
-            });
-          // this.$emit("handleAddEditUser", formData);
-        });
-      }
+      });
     },
+
     handleCancel() {
       this.$emit("handleCancel");
     },
-    handleUploadImage(e) {
-      this.editImage = true;
-      this.itemImage = URL.createObjectURL(e.target.files[0]);
-      if (e) this.image = e.target.files[0];
-      else return;
-    },
+
+    // All Dropdown
     getAllCountries() {
-      this.ApiService(getAllCountryRequest()).then((response) => {
-        this.countries = response.data.data
-      })
+      this.ApiService(getAllNationaltyRequest()).then((response) => {
+        this.countries = response.data.data;
+      });
+    },
+    getAllGenders() {
+      this.ApiService(getAllGenderRequest()).then((response) => {
+        this.genderList = response.data.data;
+      });
     },
     getAllReligions() {
-      this.ApiService(getReligionsRequest()).then((response) => {
-        this.religions = response.data.data
-      })
-    }
+      this.ApiService(getAllReligionRequest()).then((response) => {
+        this.religions = response.data.data;
+      });
+    },
+    getAllDepartments() {
+      this.ApiService(getAllRolesRequest()).then((response) => {
+        this.departmentsList = response.data.data;
+      });
+    },
   },
   mounted() {
     if (this.$route.params.id) {
-      this.ApiService(getSingleUserRequest(this.$route.params.id)).then(
-        (response) => {
-          this.formValues.first_name = response.data.data.first_name;
-          this.formValues.last_name = response.data.data.last_name;
-          this.formValues.user_name = response.data.data.user_name;
-          this.formValues.email = response.data.data.email;
-          this.formValues.mobile = response.data.data.mobile;
-          this.formValues.social_media = response.data.data.social_media;
-          // this.formValues.roles = response.data.data.roles.map((item) => item.id)
-          this.formValues.roles = response.data.data.roles;
-          this.itemImage = response.data.data.avatar;
-          this.image = response.data.data.avatar;
-          this.formValues.country_id = response.data.data.user_country.id;
-          this.formValues.religion_id = response.data.data.user_religion.id;
-          this.formValues.gender = response.data.data.gender;
-        }
-      );
+      this.ApiService(getSingleUserRequest(this.$route.params.id)).then((response) => {
+        this.user = response.data.data;
+        this.user.gender = response.data.data.gender.id;
+        this.user.country_id = response.data.data.user_country.id;
+        this.user.religion_id = response.data.data.user_religion.id;
+        this.user.roles = response.data.data.roles.map((role) => role.id);
+        this.user.is_active = response.data.data.status.key;
+        this.imageUrl = response.data.data.image;
+      });
     }
     this.getAllCountries();
+    this.getAllGenders();
     this.getAllReligions();
+    this.getAllDepartments();
   },
 };
 </script>

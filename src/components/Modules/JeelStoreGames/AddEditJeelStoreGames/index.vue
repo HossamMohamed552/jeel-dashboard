@@ -38,22 +38,22 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
-                    v-model="createJeelStoreGames.gems_count"
+                    v-model="createJeelStoreGames.gems"
                     :label="'عدد الجيمز'"
                     :name="'عدد الجيمز'"
                     placeholder="أختر عدد الجيمز"
-                    :rules="'required|min:3|max:100'"
+                    :rules="'required'"
                   ></TextField>
                 </div>
               </b-col>
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
-                    v-model="createJeelStoreGames.coins_count"
+                    v-model="createJeelStoreGames.jeel_coins"
                     :label="'عدد العملات'"
                     :name="'عدد العملات'"
                     placeholder="أختر عدد العملات"
-                    :rules="'required|min:3|max:100'"
+                    :rules="'required'"
                   ></TextField>
                 </div>
               </b-col>
@@ -151,16 +151,14 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import CheckboxField from "@/components/Shared/CheckboxField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import { getBadgeByIdRequest } from "@/api/badge";
 import Modal from "@/components/Shared/Modal/index.vue";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import UploadAttachment from "@/components/Shared/UploadAttachment/index.vue";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
-import {getAllCountryRequest} from "@/api/country";
 import {getAllLevelsRequest} from "@/api/level";
 import {getAllTermsRequest} from "@/api/term";
-import {getPowerUpBoxByIdRequest} from "@/api/power-up-boxes";
+import {getJeelStoreGamesByIdRequest} from "@/api/jeel-store-games";
 
 export default {
   components: {
@@ -186,7 +184,6 @@ export default {
   },
   data() {
     return {
-      countries: [],
       levels: [],
       terms: [],
       jeelCoinsStatus:false,
@@ -194,10 +191,9 @@ export default {
       createJeelStoreGames: {
         name: "",
         level_id: "",
-        gems_count: 0,
-        coins_count: 0,
+        gems: 0,
+        jeel_coins: 0,
         description: "",
-
         logo: null,
 
         //  thumbnail
@@ -206,7 +202,6 @@ export default {
         thumbnailChangedRequest: false,
       },
       finalSelected: [],
-      isDefault: 0,
     };
   },
   methods: {
@@ -257,40 +252,21 @@ export default {
 
     getPowerUpBoxToEdit() {
       if (this.$route.params.id) {
-        this.ApiService(getPowerUpBoxByIdRequest(this.$route.params.id)).then((response) => {
+        this.ApiService(getJeelStoreGamesByIdRequest(this.$route.params.id)).then((response) => {
 
           this.createJeelStoreGames.name= response.data.data.name;
           this.createJeelStoreGames.level_id= response.data.data.level.id;
-          this.createJeelStoreGames.term_id= response.data.data.term.id;
-          this.createJeelStoreGames.country_id= response.data.data.country.id;
-          this.createJeelStoreGames.appear_after_missions= response.data.data.appear_after_missions;
-          if (response.data.data.jeel_coins > 0){
-            this.jeelCoinsStatus = true;
-            this.createJeelStoreGames.jeel_coins= response.data.data.jeel_coins;
+          this.createJeelStoreGames.gems= response.data.data.gems;
+          this.createJeelStoreGames.jeel_coins= response.data.data.jeel_coins;
+          this.createJeelStoreGames.description= response.data.data.description;
 
-          }
-          if (response.data.data.jeel_xp > 0){
-            this.jeelXpStatus = true;
-            this.createJeelStoreGames.jeel_xp = response.data.data.jeel_xp;
-
-          }
-          //
           // logo: null,
           // this.createJeelStoreGames.logo = response.data.data.logo_uuid;
           this.createJeelStoreGames.thumbnail_name = response.data.data.logo_name;
           this.createJeelStoreGames.thumbnail_size = response.data.data.logo_size;
           this.createJeelStoreGames.thumbnail = response.data.data.logo;
-
-          this.isDefault = this.createJeelStoreGames.is_default;
         });
       }
-    },
-
-
-    getAllCountries() {
-      this.ApiService(getAllCountryRequest()).then((response) => {
-        this.countries = response.data.data;
-      });
     },
     getAllLevels() {
       this.ApiService(getAllLevelsRequest()).then((response) => {
@@ -315,7 +291,6 @@ export default {
   },
   mounted() {
     this.getPowerUpBoxToEdit();
-    this.getAllCountries();
     this.getAllLevels();
     this.getAllTerms();
   },

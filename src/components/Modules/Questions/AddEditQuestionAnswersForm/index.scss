@@ -122,11 +122,11 @@
 //  border: 1px solid;
 //}
 .list-group {
-  margin-top: 2rem;
+  margin: 2rem auto;
   min-height: 200px;
   background: #eee;
+  width: 98%;
   padding: 0;
-  width: 95%
 }
 
 .answer-name {
@@ -178,8 +178,16 @@ button:disabled{
   display: block;
 }
 .addAnswer{
+  cursor: pointer;
   span{
     color: #58C6F2 !important;
   }
 }
 
+.delete-answer{
+  cursor: pointer;
+  background: #FF1E1E;
+  color: #fff;
+  border-radius: .5rem;
+  padding: .5rem 1rem;
+}

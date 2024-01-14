@@ -26,7 +26,7 @@
             <ShowItem
                 class="divider-show"
                 :title="'عدد الجيمز'"
-                :subtitle="jeelStoreGames.term.name"
+                :subtitle="jeelStoreGames.gems"
             />
           </b-col>
         </b-row>
@@ -36,7 +36,7 @@
             <ShowItem
                 class="divider-show"
                 :title="'عدد العملات'"
-                :subtitle="jeelStoreGames.appear_after_missions"
+                :subtitle="jeelStoreGames.jeel_coins"
             />
             <b-col md="8" sm="12">
 
@@ -60,7 +60,7 @@
             <ShowItem
                 class="divider-show"
                 :title="'الوصف'"
-                :subtitle="jeelStoreGames.jeel_xp"
+                :subtitle="jeelStoreGames.description"
             />
           </b-col>
         </b-row>

@@ -111,14 +111,14 @@
                   ></TextAreaField>
                 </div>
               </b-col>
-              <b-col lg="12" class="mb-3">
+              <b-col lg="6" class="mb-3">
                 <div class="hold-field mt-4">
                   <UploadAttachment v-if="!$route.params.id || mission?.thumbnailChangedRequest" :type-of-attachment="'image'"
                                     :label="$t('MISSIONS.UPLOAD_IMAGE')"
                                     :dropImage="true" :name="'logoMission'" :rules="'required'"
                                     :dropIdRef="'missionImgRef'"
                                     :accept-files="'image/*'" @setFileId="setFileImageId($event)"/>
-                  <PreviewMedia v-if="$route.params.id && mission.thumbnailChanged === false && !mission.thumbnailChangedRequest" :header="$t('VIDEO.UPLOAD_IMAGE')"
+                  <PreviewMedia v-if="$route.params.id && mission.thumbnailChanged === false && !mission.thumbnailChangedRequest" :header="$t('MISSIONS.UPLOAD_IMAGE')"
                                 :media-name="mission.thumbnailPreview_name"
                                 :file-size="mission.thumbnailPreview_size"
                                 :image-url="mission.thumbnailPreview"
@@ -127,6 +127,16 @@
                                 @removeFile="removeFile('thumbnail','thumbnailChanged','thumbnailChangedRequest')"
                   />
                   <p v-if="mission.thumbnailChangedRequest" class="invalid-feedback d-block">صورة المهمة مطلوب</p>
+                </div>
+              </b-col>
+              <b-col lg="6" class="mb-3">
+                <div class="hold-field mt-4">
+                  <UploadAttachment v-if="!$route.params.id" :type-of-attachment="'audio'"
+                                    :label="$t('MISSIONS.UPLOAD_AUDIO')"
+                                    :dropImage="true" :name="'audioMission'" 
+                                    :rules="'required'"
+                                    :dropIdRef="'missionAudioRef'"
+                                    :accept-files="'audio/*'" @setFileId="setFileAudioId($event)"/>
                 </div>
               </b-col>
             </b-row>
@@ -223,6 +233,7 @@ export default {
         thumbnailChanged: false,
         thumbnailChangedRequest: false,
         thumbnailPreview: null,
+        missionAudio:null
       },
       lessons:[]
     };
@@ -241,20 +252,29 @@ export default {
     handleBack() {
       this.$emit("handleBack");
     },
+    //SHOULD DELETE
     handleUploadImage(e) {
       this.mission.itemImage = URL.createObjectURL(e.target.files[0]);
       if (e) this.mission.mission_image = e.target.files[0];
       else return;
     },
     setFileImageId($event) {
-      this.mission.thumbnail = $event
-      this.mission.thumbnailRequest = true
-      this.mission.thumbnailChanged = false
+      if ($event) { 
+        this.mission.thumbnail = $event
+        this.mission.thumbnailRequest = true
+        this.mission.thumbnailChanged = false
+      }
+    },
+    setFileAudioId($event) { 
+      this.mission.missionAudio = $event
     },
     removeFile(fileName,fileChange,fileRequest){
       this.mission[fileChange] = true
       this.mission[fileName] = null
       this.mission[fileRequest] = true
+    },
+    removeAudioId() { 
+      this.mission.missionAudio = null
     },
     getLessonsByLearningPathIdsRequest(learningPathIds) { 
       this.ApiService(getLessonsByLearningPathRequest(learningPathIds)).then(res => { 
@@ -280,7 +300,7 @@ export default {
   },
   computed: {
     checkInputs() {
-      if (this.mission.thumbnail === null) {
+      if (this.mission.thumbnail === null || this.mission.missionAudio === null) {
         return true
       } else {
         return false

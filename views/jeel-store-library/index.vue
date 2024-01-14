@@ -77,7 +77,7 @@ export default {
           label: "نوع المحتوى",
         },
         {
-          key: "country",
+          key: "gems",
           label: "عدد الجيمز",
         },
 
@@ -95,24 +95,14 @@ export default {
       const params = event;
       this.ApiService(getJeelStoreLibraryRequest(params))
           .then((response) => {
-            // this.jeelStoreLibraryList = response.data.data;
             this.jeelStoreLibraryList = response.data.data.map(
                 (item) => {
-                  let powerUpBoxType = "";
-                  if (item.jeel_coins > 0 && item.jeel_xp > 0 ){
-                    powerUpBoxType = "نقاط وعملات جيل";
-                  }
-                  else if (item.jeel_xp > 0 ){powerUpBoxType = "نقاط";}
-                  else if (item.jeel_coins >0){ powerUpBoxType = "عملات جيل";}
-
                   return {
                     id: item.id,
                     name: item.name,
                     level: item.level,
-                    country: item.country,
-                    term: item.term,
-                    type: powerUpBoxType,
-                    appear_after_missions: item.appear_after_missions+" مهام ",
+                    gems: item.gems,
+                    type: item.type.name,
                   };
 
                 }
