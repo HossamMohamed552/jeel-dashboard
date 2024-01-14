@@ -24,10 +24,13 @@
       :lessonsSelected="lessonsSelected"
       @handleBack="goToMissionDataForm"
       @handleCancel="handleCancel"
-      @goToFinalStep="goToFinalStep"/>
-      <AddEditCompleteTaskContent  v-if="currentStep === 2">
-
-      </AddEditCompleteTaskContent>
+      @goToMissionContentStep="goToMissionContentStep"/>
+      <AddEditCompleteTaskContent 
+        v-if="currentStep === 2"
+        @goToFinalStep="goToFinalStep"
+        @handleBack="backToMissionContentStep"
+        @handleCancel="handleCancel"  
+      />
     <div class="container-fluid custom-container" v-if="currentStep === 3">
       <div class="mission-review ">
         <b-row>
@@ -111,7 +114,7 @@
               <Button :loading="loading" custom-class="submit-btn" @click="createMission">
                 {{ $t("GLOBAL_SAVE") }}
               </Button>
-              <Button class="mx-3" @click="backToFillContent" custom-class="submit-btn back-btn">
+              <Button class="mx-3" @click="backToMissionContentStep" custom-class="submit-btn back-btn">
                 {{ $t("GLOBAL_BACK") }}
               </Button>
             </div>
@@ -200,10 +203,18 @@ export default {
     backToFillContent() {
       this.handleNavigation(1);
     },
-    goToFinalStep(data) {
+    backToMissionContentStep() { 
+      this.handleNavigation(2);
+    },
+    goToMissionContentStep(data) { 
       Object.assign(this.collectData, { paths: [...data] });
       this.handleSaveCollectedData(data);
       this.handleNavigation(2);
+    },
+    goToFinalStep(completeTaskContent) {
+      Object.assign(this.collectData, { completeTaskContent: [...completeTaskContent] });
+      this.handleSaveCollectedData(this.collectData);
+      this.handleNavigation(3);
     },
     createMission() {
       const formData = new FormData();
@@ -216,11 +227,12 @@ export default {
       
       for (let index = 0; index < this.collectData.lessons_ids.length; index++) {
         const lesson = this.collectData.lessons_ids[index];
-        formData.append(`lesson_id[${index}]`, lesson);  
+        formData.append(`lessons[${index}]`, lesson);  
       }
-      if (this.collectData.mission_image)
-        formData.append("mission_image", this.collectData.mission_image);
-
+      if (this.collectData.thumbnail)
+        formData.append("mission_image", this.collectData.thumbnail);
+      if (this.collectData.missionAudio)
+      formData.append("mission_audio", this.collectData.missionAudio);
       // for to get learnPaths
       for (let learnPath = 0; learnPath < this.collectData.paths.length; ) {
         formData.append(`learningpaths[${learnPath}][id]`, this.collectData.paths[learnPath].id);
@@ -258,8 +270,25 @@ export default {
           formData.append(`learningpaths[${learnPath}][quizzes][${quiz}][is_selected]`, 1);
           quiz++;
         }
+        // formData.append(`learningpaths[0][quizzes][0][id]`,1);
+        // formData.append(`learningpaths[0][quizzes][0][order]`,1);
+        // formData.append(`learningpaths[0][quizzes][0][is_selected]`, 1);
+        for (let task = 0; task < this.collectData.paths[learnPath].tasksIds.length; ) {
+          formData.append(
+            `learningpaths[${learnPath}][tasks][${task}][id]`,
+            this.collectData.paths[learnPath].tasksIds[task]
+          );
+          formData.append(`learningpaths[${learnPath}][tasks][${task}][order]`, task + 1);
+          formData.append(`learningpaths[${learnPath}][tasks][${task}][is_selected]`, 1);
+          task++;
+        }
         learnPath++;
       }
+      this.collectData.completeTaskContent.forEach((content,index) => {
+        formData.append(`badge_rewards[${index}][badge_id]`, content.badgeId);
+        formData.append(`badge_rewards[${index}][library_id]`, content.badgeRewardId);
+      });
+      console.log(this.collectData);
       this.loading = true;
       this.showModal = true;
       axios

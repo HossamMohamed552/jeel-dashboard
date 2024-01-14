@@ -7,17 +7,17 @@
             <p class="badge-title">
               {{badge.name}}
             </p>
-            <img :src="require('@/assets/gold-badge.jpg')" alt="" class="badge-img w-75">
+            <img :src="badge.logo" alt="" class="badge-img w-75">
           </div>
           <div class="col-4 badge-content-type">
             <SelectSearch
-              @input="badge.selectedBadgeContent = null"
+              @input="badge.selectedBadgeContent = null;badgeSelectedContentTypeChanged($event,index)"
               v-model="badge.selectedBadgeContentType"
               :label="$t('MISSIONS.BadgeContentType')"
               :name="$t('MISSIONS.BadgeContentType')"
               :placeholder="'اختر' + $t('MISSIONS.BadgeContentType')"
               :options="badge.badgeContentTypes"
-              :get-option-label="(option) => option.title"
+              :get-option-label="(option) => option.name"
               :deselectFromDropdown="true"
             ></SelectSearch>
           </div>
@@ -27,8 +27,8 @@
               :label="$t('MISSIONS.BadgeContent')"
               :name="$t('MISSIONS.BadgeContent')"
               :placeholder="'اختر' + $t('MISSIONS.BadgeContent')"
-              :options="badge.selectedBadgeContentType?.badgeContent"
-              :get-option-label="(option) => option.title"
+              :options="badge.badgeContent"
+              :get-option-label="(option) => option.file_name"
               :deselectFromDropdown="true"
               :selectable="option => option.selectable"
             ></SelectSearch>
@@ -71,7 +71,7 @@
       <section class="action-holder mt-5">
         <div>
           <Button
-            @click="goToOverviewStep()"
+            @click="goToFinalStep"
             :custom-class="'submit-btn'"
           >
             {{ $t("GLOBAL_NEXT") }}
@@ -94,6 +94,10 @@
 <script>
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
+import { getAllBadgesRequest } from "@/api/badge"
+import { getLibraryTypesRequest } from "@/api/badge"
+import { getLibraryContentRequest } from "@/api/badge"
+import { debounce } from "lodash";
 
 
 export default {
@@ -113,23 +117,77 @@ export default {
         {key: "badgeContentType", label: "نوع المحتوى"},
         {key: "badgeContent", label: "المحتوى"},
         {key: "actions", label: "الإجراء"},
-      ]
+      ],
+      badgeContentTypes: [],
+      listOfAllContent: [],
+      preparedToApi: null
     }
   },
   methods: {
+    getAllBadges() { 
+      this.ApiService(getAllBadgesRequest()).then(res => { 
+        this.badges = res.data.data;
+        this.badges = this.badges.map(badge => { 
+          return { 
+              ...badge,
+              selectedBadgeContentType: null,
+              badgeContentTypes: this.badgeContentTypes,
+              selectedBadgeContent : null,
+              badgeContent: [],
+              tableItems : [],
+            }
+        })
+      })
+    },
+    getLibraryTypesRequest() { 
+      this.ApiService(getLibraryTypesRequest()).then(res => { 
+        this.badgeContentTypes = res.data.data;
+        this.getLibraryContentRequest();
+      })
+    },
+    getLibraryContentRequest() { 
+      let obj = {
+        list_all:true
+      };
+      this.badgeContentTypes.forEach((contentType,index) => { 
+        obj[`type[${index}]`] = contentType.id;
+      })
+      this.ApiService(getLibraryContentRequest(obj)).then(res => { 
+        this.listOfAllContent = res.data.data.map(content => { 
+          return { 
+           ...content,
+           selectable: true,
+          }
+        })
+      })
+    },
+    badgeSelectedContentTypeChanged: debounce(function (selectedBadgeContentType, index) {
+      const filteredContent = this.listOfAllContent.filter(content => {
+          return content.type.id === selectedBadgeContentType.id
+      })
+      this.badges[index].badgeContent = JSON.parse(JSON.stringify(filteredContent)).map(content => {
+        const filtered = this.badges[index].tableItems.filter(tableItem => tableItem.id === content.id)
+        if (filtered.length > 0) {
+          content.selectable = false;
+        } else { 
+          content.selectable = true;
+        }
+        return content;
+      });
+    }, 500),
     addBadgeContent(badgeIndex) { 
       /*
         Update the badge table items
       */ 
       this.badges[badgeIndex].tableItems.push({
         id: this.badges[badgeIndex].selectedBadgeContent.id,
-        badgeContentType:this.badges[badgeIndex].selectedBadgeContentType.title,
-        badgeContent: this.badges[badgeIndex].selectedBadgeContent.title,
+        badgeContent: this.badges[badgeIndex].selectedBadgeContent.file_name,
+        badgeContentType: this.badges[badgeIndex].selectedBadgeContentType.name
       });
       /*
         Disable Item from @BadgeContentSelect 
       */ 
-      this.badges[badgeIndex].selectedBadgeContentType.badgeContent.map(badgeContent => { 
+      this.badges[badgeIndex].badgeContent.map(badgeContent => { 
         if (badgeContent.id === this.badges[badgeIndex].selectedBadgeContent.id) { 
           badgeContent.selectable = false;
         }
@@ -138,21 +196,33 @@ export default {
        Reset Selected Item
       */ 
       this.badges[badgeIndex].selectedBadgeContent = null;
-      this.badges[badgeIndex].selectedBadgeContentType = null;
     },
     deleteBadgeContent(badgeRow,badgeIndex) { 
       this.badges[badgeIndex].tableItems = this.badges[badgeIndex].tableItems.filter(tableItem => tableItem.id != badgeRow.item.id);
       /*
         Enable Item from @BadgeContentSelect 
       */
-      this.badges[badgeIndex].badgeContentTypes.find(badgeContentType => badgeContentType.title === badgeRow.item.badgeContentType).badgeContent.map(badgeContent => { 
-        if (badgeContent.title === badgeRow.item.badgeContent) { 
+      this.badges[badgeIndex].badgeContent.map(badgeContent => { 
+        if (badgeContent.id === badgeRow.item.id) { 
           badgeContent.selectable = true;
         }
       });
     },
-    goToOverViewStep() {
-      this.$emit("goToOverViewStep",'')
+    createBadgeRowForApi() { 
+      const badgesRows = []
+      this.badges.forEach(badge => {
+        badge.tableItems.forEach(tableItem => {
+          badgesRows.push({
+            badgeId: badge.id,
+            badgeRewardId: tableItem.id,
+          })
+        })
+      });
+      this.preparedToApi = badgesRows;
+    },
+    goToFinalStep() {
+      this.createBadgeRowForApi();
+      this.$emit("goToFinalStep",this.preparedToApi)
     },
     handleCancel() {
       this.$emit("handleCancel");
@@ -162,92 +232,8 @@ export default {
     },
   },
   mounted() {
-    this.badges = [
-      {
-        "id":1,
-        "name": "GOLD",
-        "img": "img/gold",
-        "selectedBadgeContentType": null,
-        "selectedBadgeContent": null,
-        "tableItems":[],
-        "badgeContentTypes":[
-          {
-              "id":1,
-              "title": "Audio",
-              "badgeContent": [
-                  {
-                      "id":1,
-                      "title": "Content Audio 1",
-                      "selectable": true
-                  },
-                  {
-                      "id":2,
-                      "title": "Content Audio 2",
-                      "selectable": true
-                  }
-              ]
-          },
-          {
-              "id":2,
-              "title": "Video",
-              "badgeContent": [
-                  {
-                      "id":3,
-                      "title": "Content Video 1",
-                      "selectable": true
-                  },
-                  {
-                      "id":4,
-                      "title": "Content Video 2",
-                      "selectable": true
-                  }
-              ]
-          }
-        ]
-      },
-      {
-        "id":2,
-        "name": "Silver",
-        "img": "img/Silver",
-        "selectedBadgeContentType": null,
-        "selectedBadgeContent": null,
-        "tableItems":[],
-        "badgeContentTypes":[
-          {
-            "id":3,
-            "title": "Audio",
-            "badgeContent": [
-                {
-                    "id":5,
-                    "title": "Content Audio 1",
-                    "selectable": true
-                },
-                {
-                    "id":6,
-                    "title": "Content Audio 2",
-                    "selectable": true
-                }
-            ]
-          },
-          {
-              "id":4,
-              "title": "Video",
-              "badgeContent": [
-                  {
-                      "id":7,
-                      "title": "Content Video 1",
-                      "selectable": true
-                  },
-                  {
-                      "id":8,
-                      "title": "Content Video 2",
-                      "selectable": true
-                  }
-              ]
-          }
-        ]
-      }
-    ]
+    this.getLibraryTypesRequest();
+    this.getAllBadges();
   }
 }
 </script>

@@ -91,15 +91,12 @@
     "paperName": "اسم ورقة العمل",
     "paper_work_final_degree": "الدرجة",
     "bloom": "بلوم",
-
     "badge_name": "اسم الشارة",
     "percentage_of": "نسبة من",
     "percentage_to": "نسبة إلي",
     "learning_path_name": "اسم المسار",
-
     "character_name": "اسم الشخصية",
     "character_logo": "صورة الشخصية",
-
     "power_up_box_name": "اسم الصندوق",
     "power_up_box_level": "الصف الدراسى",
     "power_up_box_country": "الدولة",
@@ -376,14 +373,15 @@
     "videos": "الفيديوهات",
     "paperWork": "اوراق العمل",
     "quizzes": "التمارين",
-    "audios": "التسجيلات الصوتيه",
+    "tasks": "التسجيلات الصوتيه",
     "description": "الوصف",
     "content": "المحتوى",
     "ShowDetails": "عرض تفاصيل المهمة",
     "UPLOAD_IMAGE": "صورة المهمة",
     "BadgeContentType": "نوع المحتوى",
     "BadgeContent": "المحتوى",
-    "BadgeAdd": "اضافة"
+    "BadgeAdd": "اضافة",
+    "UPLOAD_AUDIO": "صوت المهمه"
   },
   "LESSONS": {
     "LESSONS": "الدروس",
