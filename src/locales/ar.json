@@ -11,31 +11,18 @@
     "rememberMe": "تذكرنى",
     "forgetPassword": "نسيت كلمة المرور ؟"
   },
-  "SOCIAL_MEDIA": {
-    "FACEBOOK": "فيس بوك",
-    "TWITTER": "تويتر",
-    "LINKEDIN": "لينكدان"
-  },
-  "BUTTONS": {
-    "EDIT": "تغيير",
-    "DELETE": "حذف"
-  },
   "USERS": {
-    "ADD_NEW": "إضافة مستخدم إدارة منظومة",
-    "ACTIVE": "فعال",
+    "ADD_NEW": "إضافة مستخدم جديد",
     "EDIT": "تعديل بيانات المستخدم",
     "USER_NAME": "إسم المستخدم",
     "FIRST_NAME": "الإسم الأول",
-    "SECOND_NAME": "الاسم الثاني",
     "LAST_NAME": "إسم العائلة",
     "EMAIL": "البريد الإلكترونى",
     "PASSWORD": "كلمة المرور",
-    "CONFIRM_PASSWORD": "تأكيد كلمة المرور",
     "PHONE_NUMBER": "رقم الهاتف",
     "SOCIAL_MEDIA": "رابط وسائل التواصل الإجتماعى",
     "ROLES": "الصلاحيات",
     "UPLOAD_IMAGE": "صورة المستخدم",
-    "NATIONALITY": "الجنسية",
     "showDetails": "تفاصيل المستخدم",
     "name": "اسم المستخدم",
     "first_name": "الاسم الاول",
@@ -44,9 +31,6 @@
     "mobile": "الهاتف",
     "email": "البريد الإلكترونى",
     "gender": "النوع",
-    "DEPARTMENT": "الدور الوظيفي",
-    "ENTER": "أدخل",
-    "ENTER_LINK": "ادخل الرابط",
     "religion": "الديانة"
   },
   "MENU": {
@@ -65,10 +49,7 @@
   },
   "TABLE_FIELDS": {
     "id": "التسلسل",
-    "email_username": "البريد الإلكتروني (اسم المستخدم)",
     "name": "الإسم",
-    "block": "الحظر",
-    "not_block": "إلغاء الحظر",
     "avatar": "الصورة",
     "school_group": "اسم المجموعة",
     "email": "البريد الإلكترونى",
@@ -111,25 +92,13 @@
     "paperName": "اسم ورقة العمل",
     "paper_work_final_degree": "الدرجة",
     "bloom": "بلوم",
-    "badge_name": "اسم الشارة",
-    "percentage_of": "نسبة من",
-    "percentage_to": "نسبة إلي",
-    "learning_path_name": "اسم المسار",
-    "character_name": "اسم الشخصية",
-    "character_logo": "صورة الشخصية",
-    "power_up_box_name": "اسم الصندوق",
-    "power_up_box_level": "الصف الدراسى",
-    "power_up_box_country": "الدولة",
-    "power_up_box_type": "النوع",
-    "power_up_box_appear_after_missions": "ظهور بعد",
-
-    "jeel_library_name": "الأسم",
-    "jeel_library_level": "الصف الدراسى",
-    "jeel_library_type": "النوع"
+    "learning_path_name": "اسم المسار"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
     "editBtn": "تعديل",
+    "permissions": "الصلاحيات",
+    "users": "المستخدمين",
     "deleteBtn": "حذف",
     "addVideoQuestion": "اضافة اسئله الفيديو",
     "ManageClasses": "إداره الصفوف",
@@ -141,31 +110,13 @@
     "EDIT": "تعديل الصلاحية",
     "name": "إسم الصلاحية",
     "description": "الوصف",
-    "showDetails": "عرض تفاصيل صلاحية المستخدم"
-  },
-  "BADGE": {
-    "ADD_NEW": "إضافة شارة جديدة",
-    "EDIT": "تعديل شارة",
-    "name": "إسم الشارة",
-    "NAME": "إسم الشارة",
-    "main_percentage": "نسبة من ",
-    "max_percentage": "نسبة الى",
-    "description": "الوصف",
-    "showDetails": "عرض تفاصيل الشاره",
-    "bade_logo": "لوجو الشارة",
-    "bade_details": "تفاصيل شارة جيل"
-  },
-  "CHARACTER": {
-    "ADD_NEW": "إضافة شخصية جديدة",
-    "EDIT": "تعديل الشخصية",
-    "name": "إسم الشخصية",
-    "NAME": "إسم الشخصية",
-    "description": "الوصف",
-    "showDetails": "عرض تفاصيل الشخصية",
-    "character_logo": "لوجو الشخصية",
-    "character_details": "تفاصيل الشخصية",
-    "country": "الدولة",
-    "type": "النوع"
+    "CATEGORIES": "التصنيف",
+    "DEPARTMENT": "اسم الدور الوظيفي",
+    "ADD_DEPARTMENT": "إضافة دور وظيفي",
+    "EDIT_DEPARTMENT": "تعديل دور وظيفي",
+    "ENTER_DEPARTMENT": "أدخل اسم الدور الوظيفي",
+    "ENTER_DESCRIPTION": "أدخل الوصف",
+    "showDetails": "تفاصيل دور وظيفي"
   },
   "COUNTRY": {
     "ADD_NEW": "إضافة دولة جديدة",
@@ -200,6 +151,11 @@
     "DESCRIPTION_INPUT_PLACEHOLDER": "أدخل ملاحظات"
   },
   "SCHOOL": {
+    "SCHOOL_INFO": "بيانات المدرسة",
+    "SCHOOL_MANAGER_INFO": "بيانات مسؤل المدرسة",
+    "MANAGER_NAME": "اسم المسؤل",
+    "MANAGER_TYPE": "صفة المسؤل",
+    "MANAGER_MOBILE": "رقم هاتف المسؤل",
     "ADD_NEW": "إضافة مدرسة جديدة",
     "EDIT": "تعديل مدرسة جديدة",
     "name": "اسم المدرسة",
@@ -224,6 +180,17 @@
     "dateTo": "نهاية التعاقد",
     "user_name": "اسم المستخدم",
     "contact": "رقم الهاتف",
+    "COUNTRY": "الدولة",
+    "SCHOOL_COLLECTION": "مجموعة المدارس",
+    "SCHOOL_LOGO": "شعار المدرسة",
+    "SCHOOL_TYPE": "نوع إدارة المدرسة",
+    "SCHOOL_CERTIFICATE_TYPE": "نوع شهادة المدرسة",
+    "LEARNING_LANGAUAGE": "لغة التدريس",
+    "STUDENT_TYPE": "نوع الطلبة",
+    "MOBILE": "رقم هاتف المدرسة",
+    "VOICE": "الصوت",
+    "SCHOOL_ADDRESS": "عنوان المدرسة",
+    "NOTES": "ملاحظات",
     "address": "العنوان"
   },
   "LEVEL": {
@@ -339,7 +306,7 @@
     "enterQUESTION": "أدخل السؤال",
     "LEVELS": "المرحلة الدراسية",
     "TYPE": "نوع السؤال",
-    "LEARNING_METHOD": "اسلوب التعلم",
+    "LEARNING_METHOD": "إسلوب التعلم",
     "selectLEARNING_METHOD": "أختر إسلوب التعلم",
     "BLOOM_CATEGORIES": "بلوم",
     "selectBLOOM_CATEGORIES": "أختر بلوم",
@@ -383,8 +350,7 @@
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",
     "STEP_TWO": "محتوى المهمة",
-    "STEP_THREE": "محتوى انجاز المهمه",
-    "STEP_FOUR": "مراجعة المحتوى المهمة",
+    "STEP_THREE": "مراجعة المحتوى المهمة",
     "EDIT": "تعديل المهمة",
     "ADD_NEW": "إضافة مهمة جديدة",
     "name": "إسم المهمة",
@@ -397,15 +363,11 @@
     "videos": "الفيديوهات",
     "paperWork": "اوراق العمل",
     "quizzes": "التمارين",
-    "tasks": "التسجيلات الصوتيه",
+    "audios": "التسجيلات الصوتيه",
     "description": "الوصف",
     "content": "المحتوى",
     "ShowDetails": "عرض تفاصيل المهمة",
-    "UPLOAD_IMAGE": "صورة المهمة",
-    "BadgeContentType": "نوع المحتوى",
-    "BadgeContent": "المحتوى",
-    "BadgeAdd": "اضافة",
-    "UPLOAD_AUDIO": "صوت المهمه"
+    "UPLOAD_IMAGE": "صورة المهمة"
   },
   "LESSONS": {
     "LESSONS": "الدروس",
@@ -420,7 +382,7 @@
   },
   "QUIZZES": {
     "EDIT": "تعديل التمرين",
-    "ADD_NEW": "إضافة تمرين",
+    "ADD_NEW": "إضافة تمرين جديد",
     "name": "إسم التمرين",
     "level": "السنة الدراسية",
     "LEARNING_PATH": "المسار",
@@ -541,7 +503,6 @@
   "USER": {
     "showDetails": "عرض تفاصيل المستخدم",
     "first_name": "الاسم الأول",
-    "second_name": "الاسم الثانى",
     "last_name": "الاسم الثانى",
     "name": "الاسم",
     "email": "البريد الإلكترونى",
