@@ -70,6 +70,12 @@ li {
   cursor: pointer;
 }
 
+.rtl {
+  .icon-password {
+    left: 24px;
+    right: unset;
+  }
+}
 .icon-password {
   position: absolute;
   top: 58px;
@@ -82,7 +88,6 @@ li {
   width: 36px;
   padding: 8px;
   cursor: pointer;
-
   &:lang(ar) {
     left: 24px;
     right: unset;
