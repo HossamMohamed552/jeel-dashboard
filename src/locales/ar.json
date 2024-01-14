@@ -44,7 +44,8 @@
     "basicData": "البيانات الأساسية",
     "routesMissions": "المهام",
     "routesSubscribes": "الإشتراكات",
-    "routesPrizes": "الجوائز"
+    "routesPrizes": "الجوائز",
+    "routesJeelStore": "جيل ستور"
   },
   "TABLE_FIELDS": {
     "id": "التسلسل",
@@ -104,7 +105,11 @@
     "power_up_box_level": "الصف الدراسى",
     "power_up_box_country": "الدولة",
     "power_up_box_type": "النوع",
-    "power_up_box_appear_after_missions": "ظهور بعد"
+    "power_up_box_appear_after_missions": "ظهور بعد",
+
+    "jeel_library_name": "الأسم",
+    "jeel_library_level": "الصف الدراسى",
+    "jeel_library_type": "النوع"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",

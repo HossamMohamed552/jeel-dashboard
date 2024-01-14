@@ -4,24 +4,8 @@ export const getPaperWorkTypeRequest = (params) => ({
   config: {params}
 })
 
-export const getCharacterTypeRequest = (params) => ({
+export const getLibraryTypeRequest = (params) => ({
   method: 'get',
-  url: 'system_codes/prize_character/chracter_type',
+  url: 'system_codes/library/type',
   config: {params}
 })
-
-export const getAllStatusRequest = (params) => ({
-  method: "get",
-  url: "system_codes/school/status",
-  config: { params },
-});
-export const getAllMusicStatusRequest = (params) => ({
-  method: "get",
-  url: "system_codes/school/music_status",
-  config: { params },
-});
-export const getAllStudentsTypeRequest = (params) => ({
-  method: "get",
-  url: "system_codes/school/students_type",
-  config: { params },
-});

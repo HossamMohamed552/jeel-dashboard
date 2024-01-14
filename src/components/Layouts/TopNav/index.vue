@@ -310,6 +310,7 @@
                 </ul>
               </div>
             </div>
+            <!------------- start routesPrizes section ---------------->
             <div class="nav-item" v-if="Array.from(routesPrizes).length >= 1">
               <p>
                 <span>{{ $t("MENU.routesPrizes") }}</span
@@ -328,6 +329,28 @@
                 </ul>
               </div>
             </div>
+            <!------------- end routesPrizes section ---------------->
+            <!------------- start routesJeelStore section ---------------->
+            <div class="nav-item" v-if="Array.from(routesJeelStores).length >= 1">
+              <p>
+                <span>{{ $t("MENU.routesJeelStore") }}</span
+                ><img src="@/assets/images/icons/arrow.svg" />
+              </p>
+              <div class="dropdown-item-list">
+                <ul >
+                  <router-link
+                    tag="li"
+                    :to="routesJeelStore.path"
+                    v-for="(routesJeelStore, index) in routesJeelStores"
+                    :key="index"
+                  >
+                    {{ routesJeelStore.name }}</router-link
+                  >
+                </ul>
+              </div>
+            </div>
+            <!------------- end routesPrizes section ---------------->
+
             <div class="nav-item" v-if="user.is_super_admin === 1">
               <p>
                 <span>{{ $t("MENU.system_settings") }}</span
@@ -353,7 +376,7 @@
               <router-link tag="p" to="/dashboard/home">{{ $t("MENU.reports") }}</router-link>
             </div>
           </div>
-          
+
           <div class="nav" v-if="isSuperVisor" :class="isSuperVisor && $route.name === 'main' ? 'nav-supervisor': ''">
             <router-link tag="div" to="/dashboard/home" class="nav-item">{{ $t("MENU.main") }}</router-link>
             <div class="nav-item" v-if="Array.from(routesUsers).length >= 1" v-for="(routeUser, index) in routesUsers" :key="index">
@@ -378,7 +401,8 @@
   </header>
 </template>
 <script>
-import { routesUsers, routesSchool, routesContent, routeSettings, routeBasicData, routesMissions, routesSubscribes,routeSuperVisor, routesPrizes } from "@/globalData";
+import { routesUsers, routesSchool, routesContent, routeSettings, routeBasicData, routesMissions, routesSubscribes,routeSuperVisor,
+  routesPrizes,routesJeelStores } from "@/globalData";
 import { mapActions } from "vuex";
 
 export default {
@@ -395,6 +419,7 @@ export default {
     routesSubscribes: [],
     routeSuperVisor: [],
     routesPrizes: [],
+    routesJeelStores: [],
     collapseMode:false
   }),
   watch: {
@@ -411,6 +436,7 @@ export default {
         this.routesMissions = this.getRoutes(routesMissions);
         this.routesSubscribes = this.getRoutes(routesSubscribes);
         this.routesPrizes = this.getRoutes(routesPrizes);
+        this.routesJeelStores = this.getRoutes(routesJeelStores);
         this.routeSuperVisor = this.getRoutes(routeSuperVisor);
       },
       immediate: true,

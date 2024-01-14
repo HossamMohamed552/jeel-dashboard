@@ -12,7 +12,7 @@ export default [
     {
         path: "/dashboard/power-up-boxes/add",
         name: "add-power-up-box",
-        component: () => import("../../../views/power-up-boxes/add-power-up-box/index.vue"),
+        component: () => import("../../../views/power-up-boxes/add-power-up-boxes/index.vue"),
         meta: {
           breadcrumb: "إضافة صندوق الطاقة",
           preLabel: "صناديق الطاقة",
