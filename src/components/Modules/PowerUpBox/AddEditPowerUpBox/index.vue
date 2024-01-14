@@ -159,7 +159,7 @@
                       v-if="!$route.params.id"
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || checkLogo"
+                      :disabled="invalid || checkLogo || checkType"
                       custom-class="submit-btn"
                     >
                       {{ $t("GLOBAL_SAVE") }}
@@ -168,7 +168,7 @@
                       v-if="$route.params.id"
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || checkLogo"
+                      :disabled="invalid || checkLogo || checkType"
                       custom-class="submit-btn"
                     >
                       {{ $t("GLOBAL_EDIT") }}
@@ -201,7 +201,6 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import CheckboxField from "@/components/Shared/CheckboxField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import { getBadgeByIdRequest } from "@/api/badge";
 import Modal from "@/components/Shared/Modal/index.vue";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import UploadAttachment from "@/components/Shared/UploadAttachment/index.vue";
@@ -356,9 +355,28 @@ export default {
     },
 
   },
+  watch:{
+    jeelXpStatus(val) {
+      if(val == false) {
+        this.createPowerUpBox.jeel_xp = 0
+      }
+    },
+    jeelCoinsStatus(val) {
+      if(val == false) {
+        this.createPowerUpBox.jeel_coins = 0
+      }
+    },
+  },
   computed: {
     checkLogo() {
       if (this.createPowerUpBox.thumbnail === null) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    checkType() {
+      if (this.createPowerUpBox.jeel_xp == 0 && this.createPowerUpBox.jeel_coins == 0) {
         return true;
       } else {
         return false;

@@ -132,7 +132,6 @@ import Modal from "@/components/Shared/Modal/index.vue";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import UploadAttachment from "@/components/Shared/UploadAttachment/index.vue";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
-import {getCharacterTypeRequest} from "@/api/system";
 
 export default {
   components: {
@@ -159,7 +158,18 @@ export default {
   data() {
     return {
       countries: [],
-      characters: [],
+      characters: [
+        {
+          id: 1,
+          name: "male",
+          key: "ذكر",
+        },
+        {
+          id: 2,
+          name: "female",
+          key: "أنثي",
+        },
+      ],
       createCharacter: {
         name: "",
         country_id: "",
@@ -239,11 +249,6 @@ export default {
         this.countries = response.data.data;
       });
     },
-    getCharcterType() {
-      this.ApiService(getCharacterTypeRequest()).then((response) => {
-        this.characters = response.data.data;
-      });
-    },
   },
   computed: {
     checkLogo() {
@@ -267,7 +272,6 @@ export default {
   mounted() {
     this.getBadgeToEdit();
     this.getAllCountries();
-    this.getCharcterType()
   },
 };
 </script>

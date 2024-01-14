@@ -1,6 +1,10 @@
-import badges from "./modules/badges";
-import characters from "./modules/characters";
-import powerUpBoxes from "./modules/powerUpBoxes";
+import badges from './modules/badges'
+import characters from './modules/characters'
+import powerUpBoxes from './modules/powerUpBoxes'
+import jeelLibrary from './modules/jeelLibrary'
+import jeelStoreGames from './modules/jeelStoreGames'
+import jeelStoreLibrary from './modules/jeelStoreLibrary'
+import jeelStoreCharacters from "./modules/jeelStoreCharacters";
 
 const protectedRoutes = [
   {
@@ -1783,6 +1787,10 @@ const protectedRoutes = [
       ...badges,
       ...characters,
       ...powerUpBoxes,
+      ...jeelLibrary,
+      ...jeelStoreGames,
+      ...jeelStoreCharacters,
+      ...jeelStoreLibrary,
     ],
   },
 ];

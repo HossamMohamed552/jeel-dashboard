@@ -50,7 +50,11 @@
     "power_up_box_level": "power up box level",
     "power_up_box_country": "power up box country",
     "power_up_box_type": "power up box type",
-    "power_up_box_appear_after_missions": "power up box appear after missions"
+    "power_up_box_appear_after_missions": "power up box appear after missions",
+
+    "jeel_library_name": "power up box name",
+    "jeel_library_level": "power up box level",
+    "jeel_library_type": "power up box type"
   },
   "CONTROLS": {
     "detailBtn": "detailBtn",
