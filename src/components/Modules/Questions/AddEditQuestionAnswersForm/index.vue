@@ -90,7 +90,7 @@
             </b-col>
             <b-col lg="2" class="btn-holder">
               <div class="hold-field">
-                <span class="danger delete-answer" v-if="answersListMcQ.length > 1"
+                <span class="add-deleteBtn delete-answer" v-if="answersListMcQ.length > 1"
                       @click="deleteAnswer(idx)">حذف</span>
                 <div class="addAnswer" v-if="answersListMcQ.length - 1 === idx"
                      @click="addAnswerMcq">
@@ -215,7 +215,7 @@
               </div>
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
-              <span class="mx-3 add-deleteBtn delete-answer" v-if="answersListMcQImage.length > 1"
+              <span class="add-deleteBtn delete-answer" v-if="answersListMcQImage.length > 1"
                     @click="answersListMcQImage.splice(idx, 1)">حذف</span>
             </b-col>
             <b-col lg="12" class="mb-3">
@@ -338,7 +338,7 @@
               </div>
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
-              <span class="mx-3 add-deleteBtn delete-answer" v-if="answersListMcQImage.length > 1"
+              <span class="add-deleteBtn delete-answer" v-if="answersListMcQImage.length > 1"
                     @click="answersListMcQImage.splice(idx, 1)">حذف</span>
             </b-col>
             <b-col lg="12" class="mb-3">
@@ -449,7 +449,7 @@
                 ></TextField>
               </div>
             </b-col>
-            <b-col lg="2" class="mb-3">
+            <b-col lg="3" class="mb-3">
               <div class="hold-field">
                 <label>{{ $t("QUESTIONS.ANSWER_TYPE") }}</label>
                 <SelectSearch
@@ -465,7 +465,7 @@
               </div>
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
-              <span class="mx-3 danger delete-answer" v-if="answersListMcQ.length > 1"
+              <span class="add-deleteBtn delete-answer" v-if="answersListMcQ.length > 1"
                     @click="answersListMcQ.splice(idx, 1)">حذف</span>
             </b-col>
             <b-col lg="12" class="mb-3">
@@ -597,7 +597,7 @@
               </div>
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
-              <span class="mx-3 danger delete-answer" v-if="answersListSelect.length > 1"
+              <span class="add-deleteBtn delete-answer" v-if="answersListSelect.length > 1"
                     @click="answersListSelect.splice(idx, 1)">حذف</span>
             </b-col>
             <b-col lg="12" class="mb-3">
@@ -725,7 +725,7 @@
               </div>
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
-              <span class="mx-3 add-deleteBtn delete-answer"
+              <span class="add-deleteBtn delete-answer"
                     v-if="answersListSelectImage.length > 1"
                     @click="answersListSelectImage.splice(idx, 1)">حذف</span>
             </b-col>
@@ -741,7 +741,7 @@
                                   @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListSelectImage',idx,'answerAudioUser')"/>
               </div>
             </b-col>
-            <b-col lg="2" class="btn-holder">
+            <b-col lg="12" class="btn-holder">
               <span class="addAnswer" v-if="answersListSelectImage.length - 1 === idx"
                     @click="addAnswerSelectImage"><img
                 src="@/assets/images/icons/add_answer.png"> <span>إضافة إجابة</span></span>
@@ -858,7 +858,7 @@
               </div>
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
-              <span class="mx-3 delete-answer" v-if="answersListSelectAudio.length > 1"
+              <span class="add-deleteBtn delete-answer" v-if="answersListSelectAudio.length > 1"
                     @click="deleteAnswerSelectAudio(idx)">حذف</span>
             </b-col>
             <b-col lg="12">
@@ -1243,7 +1243,7 @@
               </div>
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
-              <span class="mx-3 danger delete-answer" v-if="answersListDragOne.length > 1"
+              <span class="add-deleteBtn delete-answer" v-if="answersListDragOne.length > 1"
                     @click="answersListDragOne.splice(idx, 1)">حذف</span>
             </b-col>
             <b-col lg="12" class="mb-3">
@@ -1414,7 +1414,7 @@
               </div>
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
-              <span class="mx-3 danger delete-answer" v-if="answersListDragOne.length > 1"
+              <span class="add-deleteBtn delete-answer" v-if="answersListDragOne.length > 1"
                     @click="answersListDragOne.splice(idx, 1)">حذف</span>
             </b-col>
             <b-col lg="12" class="mb-3">
@@ -1551,7 +1551,7 @@
                 </div>
               </b-col>
               <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-start">
-              <span class="mx-3 danger delete-answer" v-if="answersListDragSort.length > 1"
+              <span class="add-deleteBtn delete-answer" v-if="answersListDragSort.length > 1"
                     @click="answersListDragSort.splice(idx, 1)">حذف</span>
               </b-col>
               <b-col lg="12" class="btn-holder">
@@ -1561,20 +1561,20 @@
               </b-col>
             </slot>
             <b-col lg="12" class="mb-3">
-              <div class="hold-field" v-if="answersListDragSort.length >= 1">
+              <div class="hold-field" v-if="answersListDragSort.length >= 2">
                 <label class="mx-0">{{ $t("QUESTIONS.sortAnswers") }}:</label>
               </div>
             </b-col>
             <draggable
-              v-model="answersListDragSort"
+              v-model="answersListDragSortDragged"
               group="items"
               :animation="150"
               class="list-group"
               :sort="true"
-              v-if="answersListDragSort.length >= 2"
+              v-if="answersListDragSortDragged.length >= 2"
             >
               <div
-                v-for="(item, index) in answersListDragSort"
+                v-for="(item, index) in answersListDragSortDragged"
                 :key="item.id"
                 class="list-group-item"
               >
@@ -1614,7 +1614,7 @@
       <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
         <form @submit.prevent="onSubmit" class="mt-5">
           <b-row>
-            <b-col lg="8" class="mb-3">
+            <b-col lg="12" class="mb-3">
               <div class="hold-field">
                 <TextField
                   v-model="formValues.question"
@@ -1624,33 +1624,19 @@
                 ></TextField>
               </div>
             </b-col>
-            <b-col lg="4" class="mb-3">
+            <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <label
-                ><span><i class="fa-solid fa-asterisk"></i></span
-                >{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label
-                >
-                <ValidationProvider
-                  v-slot="{ errors }"
-                  :rules="'required|audio'"
-                  name="questionAudio"
-                >
-                  <b-form-file
-                    accept="audio/*"
-                    :placeholder="
-                          formValues.question_audio ? formValues.question_audio.name : 'اختر ملف'
-                        "
-                    v-model="formValues.question_audio"
-                    name="audio"
-                  >
-                  </b-form-file>
-                  <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                    {{ error }}
-                  </b-form-invalid-feedback>
-                </ValidationProvider>
+                <UploadAttachment :type-of-attachment="'audio'"
+                                  :dropIdRef="'questionAudio'"
+                                  :accept-files="'audio/*'"
+                                  :label='$t("QUESTIONS.QUESTION_TITLE_AUDIO")'
+                                  :name="'questionAudio'"
+                                  :rules="'required'"
+                                  @setFileId="setQuestionAudioId('question_audio',$event)"
+                                  @setFileUrl="setQuestionAudioUrl('question_audioUser',$event)"/>
               </div>
             </b-col>
-            <b-col lg="8" class="mb-3">
+            <b-col lg="12" class="mb-3">
               <div class="hold-field">
                 <TextField
                   v-model="formValues.hint"
@@ -1660,110 +1646,58 @@
                 ></TextField>
               </div>
             </b-col>
-            <b-col lg="4" class="mb-3">
-              <div class="hold-field">
-                <label
-                ><span><i class="fa-solid fa-asterisk"></i></span
-                >{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label
-                >
-                <ValidationProvider
-                  v-slot="{ errors }"
-                  :rules="'required|audio'"
-                  name="hintAudio"
-                >
-                  <b-form-file
-                    accept="audio/*"
-                    :placeholder="
-                          formValues.hint_audio ? formValues.hint_audio.name : 'اختر ملف'
-                        "
-                    v-model="formValues.hint_audio"
-                    name="audio"
-                  >
-                  </b-form-file>
-                  <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                    {{ error }}
-                  </b-form-invalid-feedback>
-                </ValidationProvider>
-              </div>
+            <b-col lg="12" class="mb-3">
+              <UploadAttachment :type-of-attachment="'audio'"
+                                :dropIdRef="'audioHintFile'"
+                                :accept-files="'audio/*'" :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                                :name="'audioHintFile'"
+                                :rules="'required'"
+                                @setFileId="setQuestionAudioId('hint_audio',$event)"
+                                @setFileUrl="setQuestionAudioUrl('hint_audioUser',$event)"/>
             </b-col>
           </b-row>
           <b-row>
-            <b-col lg="7">
-              <b-row>
-                <b-col lg="12" class="mb-3">
-                  <div class="hold-field">
-                    <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
-                  </div>
-                </b-col>
-                <slot v-for="(answer, idx) in answersListDragSortAudio">
-                  <b-col lg="10" class="mb-3">
-                    <div class="hold-field">
-                      <label
-                      ><span><i class="fa-solid fa-asterisk"></i></span
-                      >{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label
-                      >
-                      <ValidationProvider
-                        v-slot="{ errors }"
-                        :rules="'required|audio'"
-                        :name="`answerAudio ${idx + 1}`"
-                      >
-                        <b-form-file
-                          accept="audio/*"
-                          :placeholder="answer.answer ? answer.answer.name : 'اختر ملف'"
-                          v-model="answer.answer"
-                          name="audio"
-                          @input="answer.audioName = answer.answer.name"
-                        ></b-form-file>
-                        <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                          {{ error }}
-                        </b-form-invalid-feedback>
-                      </ValidationProvider>
-                    </div>
-                  </b-col>
-                  <b-col lg="2" class="btn-holder">
-                    <div class="hold-field">
-                          <span
-                            class="success"
-                            v-if="answersListDragSortAudio.length - 1 === idx"
-                            @click="addAnswersListDragSortAudio"
-                          >إضافة</span
-                          >
-                      <span
-                        class="mx-3 danger"
-                        v-if="answersListDragSortAudio.length > 1"
-                        @click="answersListDragSortAudio.splice(idx, 1)"
-                      >حذف</span
-                      >
-                    </div>
-                  </b-col>
-                </slot>
-              </b-row>
+            <b-col lg="12" class="mb-3">
+              <div class="hold-field">
+                <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
+              </div>
             </b-col>
-            <b-col lg="5">
-              <b-row>
-                <b-col lg="12" class="mb-3">
-                  <div class="hold-field">
-                    <label class="mx-0">{{ $t("QUESTIONS.sortAnswers") }}:</label>
-                  </div>
-                </b-col>
-                <draggable
-                  v-model="answersListDragSortAudio"
-                  group="items"
-                  :animation="150"
-                  class="list-group"
-                  :sort="true"
-                  v-if="answersListDragSortAudio.length >= 2"
-                >
-                  <div
-                    v-for="(item, index) in answersListDragSortAudio"
-                    :key="item.id"
-                    class="list-group-item"
-                  >
-                    <p>{{ index + 1 }} - {{ item.audioName }}</p>
-                  </div>
-                </draggable>
-              </b-row>
+            <slot v-for="(answer, idx) in answersListDragSortAudio">
+              <b-col lg="10" class="mb-3">
+                <div class="hold-field">
+                  <UploadAttachment :type-of-attachment="'audio'"
+                                    :dropIdRef="`answerAudio ${idx + 1}`"
+                                    :accept-files="'audio/*'"
+                                    :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                                    :name="`answerAudio ${idx + 1}`"
+                                    :rules="'required'"
+                                    @setFileId="setQuestionAudioId('',$event,true,'answersListDragSortAudio',idx,'answer')"
+                                    @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListDragSortAudio',idx,'answerAudioUser')"/>
+                </div>
+              </b-col>
+              <b-col lg="2" class="mb-3 d-flex justify-content-center align-items-center">
+                <span class="add-deleteBtn delete-answer" v-if="answersListDragSortAudio.length > 1"
+                      @click="answersListDragSortAudio.splice(idx, 1)">حذف</span>
+              </b-col>
+              <b-col lg="12">
+                <span class="addAnswer" v-if="answersListDragSortAudio.length - 1 === idx"
+                      @click="addAnswersListDragSortAudio"><img
+                  src="@/assets/images/icons/add_answer.png"> <span>إضافة إجابة</span></span>
+              </b-col>
+            </slot>
+            <b-col lg="12" class="mb-3">
+              <div class="hold-field" v-if="answersListDragSortAudio.length >= 2">
+                <label class="mx-0">{{ $t("QUESTIONS.sortAnswers") }}:</label>
+              </div>
             </b-col>
+            <draggable v-model="answersListDragSortAudioDragged" group="items" :animation="150"
+                       class="list-group" :sort="true"
+                       v-if="answersListDragSortAudioDragged.length >= 2">
+              <div v-for="(item, index) in answersListDragSortAudioDragged" :key="item.id"
+                   class="list-group-item">
+                <p>{{ index + 1 }} - {{ item.answerAudioUser }}</p>
+              </div>
+            </draggable>
           </b-row>
           <b-row v-if="answersListDragSortAudio.length > 8">
             <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
@@ -1799,7 +1733,7 @@
       <validation-observer v-slot="{ invalid }" ref="addEditUserForm">
         <form @submit.prevent="onSubmit" class="mt-5">
           <b-row>
-            <b-col lg="8" class="mb-3">
+            <b-col lg="12" class="mb-3">
               <div class="hold-field">
                 <TextField
                   v-model="formValues.question"
@@ -1809,33 +1743,19 @@
                 ></TextField>
               </div>
             </b-col>
-            <b-col lg="4" class="mb-3">
+            <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <label
-                ><span><i class="fa-solid fa-asterisk"></i></span
-                >{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label
-                >
-                <ValidationProvider
-                  v-slot="{ errors }"
-                  :rules="'required|audio'"
-                  name="questionAudio"
-                >
-                  <b-form-file
-                    accept="audio/*"
-                    :placeholder="
-                          formValues.question_audio ? formValues.question_audio.name : 'اختر ملف'
-                        "
-                    v-model="formValues.question_audio"
-                    name="audio"
-                  >
-                  </b-form-file>
-                  <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                    {{ error }}
-                  </b-form-invalid-feedback>
-                </ValidationProvider>
+                <UploadAttachment :type-of-attachment="'audio'"
+                                  :dropIdRef="'questionAudio'"
+                                  :accept-files="'audio/*'"
+                                  :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                                  :name="'questionAudio'"
+                                  :rules="'required'"
+                                  @setFileId="setQuestionAudioId('question_audio',$event)"
+                                  @setFileUrl="setQuestionAudioUrl('questionAudioUser',$event)"/>
               </div>
             </b-col>
-            <b-col lg="8" class="mb-3">
+            <b-col lg="12" class="mb-3">
               <div class="hold-field">
                 <TextField
                   v-model="formValues.hint"
@@ -1845,129 +1765,83 @@
                 ></TextField>
               </div>
             </b-col>
-            <b-col lg="4" class="mb-3">
+            <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <label
-                ><span><i class="fa-solid fa-asterisk"></i></span
-                >{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label
-                >
-                <ValidationProvider
-                  v-slot="{ errors }"
-                  :rules="'required|audio'"
-                  name="hintAudio"
-                >
-                  <b-form-file
-                    accept="audio/*"
-                    :placeholder="
-                          formValues.hint_audio ? formValues.hint_audio.name : 'اختر ملف'
-                        "
-                    v-model="formValues.hint_audio"
-                    name="audio"
-                  >
-                  </b-form-file>
-                  <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                    {{ error }}
-                  </b-form-invalid-feedback>
-                </ValidationProvider>
+                <UploadAttachment :type-of-attachment="'audio'"
+                                  :dropIdRef="'hintAudio'"
+                                  :accept-files="'audio/*'"
+                                  :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                                  :name="'hintAudio'"
+                                  :rules="'required'"
+                                  @setFileId="setQuestionAudioId('hint_audio',$event)"
+                                  @setFileUrl="setQuestionAudioUrl('hintAudioUser',$event)"/>
               </div>
             </b-col>
           </b-row>
           <b-row>
-            <b-col lg="7">
-              <b-row>
-                <b-col lg="12" class="mb-3">
-                  <div class="hold-field">
-                    <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
-                  </div>
-                </b-col>
-                <slot v-for="(answer, idx) in answersListDragSortImage">
-                  <b-col lg="6" class="mb-3" :key="idx + 1">
-                    <div class="hold-field">
-                      <ImageUploader
-                        :is-required="true"
-                        v-model="answer.answer"
-                        :name="'questionImage'"
-                        :text="$t('QUESTIONS.UPLOAD_IMAGE_ANSWER')"
-                        @imageUpload="handleUploadImageOnAnswers(answer, $event)"
-                        @deleteImage="answer.answer = answer.answerImage = null"
-                        :item-image="answer.answerImage"
-                      />
-                    </div>
-                  </b-col>
-                  <b-col lg="4" class="mb-3">
-                    <div class="hold-field">
-                      <label
-                      ><span><i class="fa-solid fa-asterisk"></i></span
-                      >{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label
-                      >
-                      <ValidationProvider
-                        v-slot="{ errors }"
-                        :rules="'required|audio'"
-                        :name="`answerAudio ${idx + 1}`"
-                      >
-                        <b-form-file
-                          accept="audio/*"
-                          :placeholder="answer.audio ? answer.audioName : 'اختر ملف'"
-                          v-model="answer.audio"
-                          @input="answer.audioName = answer.audio.name"
-                          name="audio"
-                        ></b-form-file>
-                        <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                          {{ error }}
-                        </b-form-invalid-feedback>
-                      </ValidationProvider>
-                    </div>
-                  </b-col>
-                  <b-col lg="2" class="btn-holder">
-                    <div class="hold-field">
-                          <span
-                            class="success"
-                            v-if="answersListDragSortImage.length - 1 === idx"
-                            @click="addAnswerDragSortImage"
-                          >إضافة</span
-                          >
-                      <span
-                        class="mx-3 danger"
-                        v-if="answersListDragSortImage.length > 1"
-                        @click="answersListDragSortImage.splice(idx, 1)"
-                      >حذف</span
-                      >
-                    </div>
-                  </b-col>
-                </slot>
-              </b-row>
+            <b-col lg="12" class="mb-3">
+              <div class="hold-field">
+                <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
+              </div>
             </b-col>
-            <b-col lg="5">
-              <b-row>
-                <b-col lg="12" class="mb-3">
-                  <div class="hold-field">
-                    <label class="mx-0">{{ $t("QUESTIONS.sortAnswers") }}:</label>
-                  </div>
-                </b-col>
-                <draggable
-                  v-model="answersListDragSortImage"
-                  group="items"
-                  :animation="150"
-                  class="list-group"
-                  :sort="true"
-                  v-if="answersListDragSortImage.length >= 2"
-                >
-                  <div
-                    v-for="(item, index) in answersListDragSortImage"
-                    :key="item.id"
-                    class="list-group-item"
-                  >
-                    <p>{{ index + 1 }} -</p>
-                    <div
-                      class="d-flex justify-content-center align-items-center"
-                      v-if="item.answerImage"
-                    >
-                      <img class="answer-img" :src="item.answerImage"/>
-                    </div>
-                  </div>
-                </draggable>
-              </b-row>
+            <slot v-for="(answer, idx) in answersListDragSortImage">
+              <b-col lg="10" class="mb-3" :key="idx + 1">
+                <div class="hold-field">
+                  <UploadAttachment :type-of-attachment="'image'"
+                                    :dropIdRef="`answerImage ${idx + 1}`"
+                                    :accept-files="'image/*'"
+                                    :label="$t('QUESTIONS.UPLOAD_IMAGE_ANSWER')"
+                                    :name="`answerImage ${idx + 1}`"
+                                    :rules="'required'"
+                                    @setFileId="setQuestionAudioId('',$event,true,'answersListDragSortImage',idx,'answer')"
+                                    @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListDragSortImage',idx,'answerImage')"/>
+                </div>
+              </b-col>
+              <b-col lg="2" class="mb-3 d-flex justify-content-center align-items-center">
+              <span class="add-deleteBtn delete-answer"
+                    v-if="answersListDragSortImage.length > 1"
+                    @click="answersListDragSortImage.splice(idx, 1)">حذف</span>
+              </b-col>
+              <b-col lg="12" class="mb-3">
+                <div class="hold-field">
+                  <UploadAttachment :type-of-attachment="'audio'"
+                                    :dropIdRef="`answerAudio ${idx + 1}`"
+                                    :accept-files="'audio/*'"
+                                    :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                                    :name="`answerAudio ${idx + 1}`"
+                                    :rules="'required'"
+                                    @setFileId="setQuestionAudioId('',$event,true,'answersListDragSortImage',idx,'audio')"
+                                    @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListDragSortImage',idx,'answerAudioUser')"/>
+                </div>
+              </b-col>
+              <b-col lg="12" class="btn-holder">
+              <span class="addAnswer" v-if="answersListDragSortImage.length - 1 === idx"
+                    @click="addAnswerDragSortImage"><img
+                src="@/assets/images/icons/add_answer.png"> <span>إضافة إجابة</span></span>
+              </b-col>
+            </slot>
+            <b-col lg="12" class="mb-3">
+              <div class="hold-field" v-if="answersListDragSortImageDragged.length >= 2">
+                <label class="mx-0">{{ $t("QUESTIONS.sortAnswers") }}:</label>
+              </div>
             </b-col>
+            <draggable
+              v-model="answersListDragSortImageDragged"
+              group="items"
+              :animation="150"
+              class="list-group"
+              :sort="true"
+              v-if="answersListDragSortImageDragged.length >= 2"
+            >
+              <div v-for="(item, index) in answersListDragSortImageDragged" :key="item.id"
+                   class="list-group-item">
+                <p>{{ index + 1 }} -</p>
+                <div class="d-flex justify-content-center align-items-center"
+                     v-if="item.answerImage">
+                  <img class="answer-img" :src="item.answerImage"/>
+                </div>
+              </div>
+            </draggable>
           </b-row>
           <b-row v-if="answersListDragSortImage.length > 8">
             <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
@@ -2003,7 +1877,7 @@
       <validation-observer v-slot="{ invalid }" ref="addAnswer">
         <form @submit.prevent="onSubmit" class="mt-5">
           <b-row>
-            <b-col lg="8" class="mb-3">
+            <b-col lg="12" class="mb-3">
               <div class="hold-field">
                 <TextField
                   v-model="formValues.question"
@@ -2013,33 +1887,19 @@
                 ></TextField>
               </div>
             </b-col>
-            <b-col lg="4" class="mb-3">
+            <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <label
-                ><span><i class="fa-solid fa-asterisk"></i></span
-                >{{ $t("QUESTIONS.QUESTION_TITLE_AUDIO") }}</label
-                >
-                <ValidationProvider
-                  v-slot="{ errors }"
-                  :rules="'required|audio'"
-                  name="questionAudio"
-                >
-                  <b-form-file
-                    accept="audio/*"
-                    :placeholder="
-                          formValues.question_audio ? formValues.question_audio.name : 'اختر ملف'
-                        "
-                    v-model="formValues.question_audio"
-                    name="audio"
-                  >
-                  </b-form-file>
-                  <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                    {{ error }}
-                  </b-form-invalid-feedback>
-                </ValidationProvider>
+                <UploadAttachment :type-of-attachment="'audio'"
+                                  :dropIdRef="'questionAudio'"
+                                  :accept-files="'audio/*'"
+                                  :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                                  :name="'questionAudio'"
+                                  :rules="'required'"
+                                  @setFileId="setQuestionAudioId('question_audio',$event)"
+                                  @setFileUrl="setQuestionAudioUrl('questionAudioUser',$event)"/>
               </div>
             </b-col>
-            <b-col lg="8" class="mb-3">
+            <b-col lg="12" class="mb-3">
               <div class="hold-field">
                 <TextField
                   v-model="formValues.hint"
@@ -2049,30 +1909,16 @@
                 ></TextField>
               </div>
             </b-col>
-            <b-col lg="4" class="mb-3">
+            <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <label
-                ><span><i class="fa-solid fa-asterisk"></i></span
-                >{{ $t("QUESTIONS.HINT_TITLE_AUDIO") }}</label
-                >
-                <ValidationProvider
-                  v-slot="{ errors }"
-                  :rules="'required|audio'"
-                  name="hintAudio"
-                >
-                  <b-form-file
-                    accept="audio/*"
-                    :placeholder="
-                          formValues.hint_audio ? formValues.hint_audio.name : 'اختر ملف'
-                        "
-                    v-model="formValues.hint_audio"
-                    name="audio"
-                  >
-                  </b-form-file>
-                  <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                    {{ error }}
-                  </b-form-invalid-feedback>
-                </ValidationProvider>
+                <UploadAttachment :type-of-attachment="'audio'"
+                                  :dropIdRef="'hintAudio'"
+                                  :accept-files="'audio/*'"
+                                  :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                                  :name="'hintAudio'"
+                                  :rules="'required'"
+                                  @setFileId="setQuestionAudioId('hint_audio',$event)"
+                                  @setFileUrl="setQuestionAudioUrl('hintAudioUser',$event)"/>
               </div>
             </b-col>
           </b-row>
@@ -2083,103 +1929,80 @@
             </div>
             <!-- add answer from with type based on answer patter -->
             <b-row v-if="!confirmAnswersFrom">
-              <validation-observer
-                v-slot="{ invalid }"
-                ref="addAnswerFromForm"
-                class="row w-100"
-              >
-                <b-col lg="6" class="mb-3 px-0" v-if="answerMatch.answer_pattern === 'text'">
-                  <div class="hold-field">
-                    <label>{{ $t("QUESTIONS.ANSWER") }}</label>
-                    <TextField
+              <b-col lg="12" class="mb-3" v-if="answerMatch.answer_pattern === 'text'">
+                <div class="hold-field">
+                  <label>{{ $t("QUESTIONS.ANSWER") }}</label>
+                  <TextField
+                    v-model="answerMatch.answer"
+                    :name="$t('QUESTIONS.ANSWERSFROM')"
+                    :id="`ANSWER`"
+                    :rules="'required|max:100'"
+                  ></TextField>
+                </div>
+              </b-col>
+              <b-col lg="12" class="mb-3 px-0" v-if="answerMatch.answer_pattern === 'image'">
+                <div class="hold-field">
+                  <ImageUploader
+                    v-model="answerMatch.answer"
+                    :is-required="true"
+                    :name="`answerMatchImage`"
+                    :text="'صوره الإجابة'"
+                    @imageUpload="handleUploadImageOnAnswers(answerMatch, $event)"
+                    @deleteImage="answerMatch.answer = answerMatch.answerImage = null"
+                    :item-image="answerMatch.answerImage"
+                  />
+                </div>
+              </b-col>
+              <b-col lg="12" class="mb-3"
+                     v-if=" answerMatch.answer_pattern === 'text' ||answerMatch.answer_pattern === 'image'">
+                <div class="hold-field">
+                  <UploadAttachment :type-of-attachment="'audio'"
+                                    :dropIdRef="`answerMatchAudio`"
+                                    :accept-files="'audio/*'"
+                                    :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                                    :name="'answerMatchAudio'"
+                                    :rules="'required'"
+                                    ref="answerMatchAudio"
+                                    @setFileId="setAnswerMatchId('audio',$event,'answerMatch')"
+                                    @setFileUrl="setAnswerMatchUrl('audioUrl',$event,'answerMatch')"
+                  />
+                </div>
+                <!--                  setQuestionAudioId('question_audio',$event)-->
+              </b-col>
+              <b-col lg="4" class="mb-3" v-if="answerMatch.answer_pattern === 'audio'">
+                <div class="hold-field">
+                  <label
+                  ><span><i class="fa-solid fa-asterisk"></i></span
+                  >{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label
+                  >
+                  <ValidationProvider
+                    v-slot="{ errors }"
+                    :rules="'required|audio'"
+                    name="audio"
+                  >
+                    <b-form-file
+                      accept="audio/*"
+                      :placeholder="answerMatch.answer ? answerMatch.answer.name : 'اختر ملف'"
                       v-model="answerMatch.answer"
-                      :name="$t('QUESTIONS.ANSWERSFROM')"
-                      :id="`ANSWER`"
-                      :rules="'required|max:100'"
-                    ></TextField>
-                  </div>
-                </b-col>
-                <b-col lg="6" class="mb-3 px-0" v-if="answerMatch.answer_pattern === 'image'">
-                  <div class="hold-field">
-                    <ImageUploader
-                      v-model="answerMatch.answer"
-                      :is-required="true"
-                      :name="`answerMatchImage`"
-                      :text="'صوره الإجابة'"
-                      @imageUpload="handleUploadImageOnAnswers(answerMatch, $event)"
-                      @deleteImage="answerMatch.answer = answerMatch.answerImage = null"
-                      :item-image="answerMatch.answerImage"
-                    />
-                  </div>
-                </b-col>
-                <b-col
-                  lg="4"
-                  class="mb-3"
-                  v-if="
-                        answerMatch.answer_pattern === 'text' ||
-                        answerMatch.answer_pattern === 'image'
-                      "
-                >
-                  <div class="hold-field">
-                    <label
-                    ><span><i class="fa-solid fa-asterisk"></i></span
-                    >{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label
+                      name="answerMatchAudioAnswer"
                     >
-                    <ValidationProvider
-                      v-slot="{ errors }"
-                      :rules="'required|audio'"
-                      :name="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
-                    >
-                      <b-form-file
-                        accept="audio/*"
-                        :placeholder="answerMatch.audio ? answerMatch.audio.name : 'اختر ملف'"
-                        v-model="answerMatch.audio"
-                        name="answerMatchAudio"
-                      >
-                      </b-form-file>
-                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                        {{ error }}
-                      </b-form-invalid-feedback>
-                    </ValidationProvider>
-                  </div>
-                </b-col>
-                <b-col lg="4" class="mb-3" v-if="answerMatch.answer_pattern === 'audio'">
-                  <div class="hold-field">
-                    <label
-                    ><span><i class="fa-solid fa-asterisk"></i></span
-                    >{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label
-                    >
-                    <ValidationProvider
-                      v-slot="{ errors }"
-                      :rules="'required|audio'"
-                      name="audio"
-                    >
-                      <b-form-file
-                        accept="audio/*"
-                        :placeholder="answerMatch.answer ? answerMatch.answer.name : 'اختر ملف'"
-                        v-model="answerMatch.answer"
-                        name="answerMatchAudioAnswer"
-                      >
-                      </b-form-file>
-                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                        {{ error }}
-                      </b-form-invalid-feedback>
-                    </ValidationProvider>
-                  </div>
-                </b-col>
-                <b-col lg="2" class="px-0">
-                  <div class="hold-field">
-                    <label class="mx-0 hidden-text">{{ $t("QUESTIONS.ANSWERSFROM") }}:</label>
-                    <button
-                      class="add-btn"
-                      @click.prevent="addAnswerMatch()"
-                      :disabled="invalid"
-                    >
-                      {{ $t("ADD_ANSWER") }}
-                    </button>
-                  </div>
-                </b-col>
-              </validation-observer>
+                    </b-form-file>
+                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
+                      {{ error }}
+                    </b-form-invalid-feedback>
+                  </ValidationProvider>
+                </div>
+              </b-col>
+              <b-col lg="12" class="mb-3">
+                <div class="hold-field">
+                  <button class="add-btn" @click.prevent="addAnswerMatch()" :disabled="answerMatch.answer === null || answerMatch.audio === null">
+                    {{ $t("ADD_ANSWER") }}
+                  </button>
+                </div>
+              </b-col>
+<!--              <validation-observer v-slot="{ invalid }" ref="addAnswerFromForm" class="row w-100">-->
+<!--              -->
+<!--              </validation-observer>-->
             </b-row>
             <!-- show answer based on answer patter -->
             <slot v-if="answersListMatch.length > 0">
@@ -2203,9 +2026,11 @@
                   {{ answer.answer.name }}
                 </b-col>
                 <b-col lg="3" class="answer-item" v-if="answer.answer_pattern !== 'audio'">
-                  {{ answer.audio.name }}
+                  <audio controls>
+                    <source :src="answer.audioUrl">
+                  </audio>
                 </b-col>
-                <b-col lg="2">
+                <b-col lg="4">
                   <button
                     class="remove-btn"
                     @click.prevent="removeAnswerMatch(index)"
@@ -2253,18 +2078,13 @@
             <!-- add answer to with type based on answer patter -->
             <b-row>
               <validation-observer v-slot="{ invalid }" ref="addAnswerToForm" class="row w-100">
-                <b-col lg="6" class="mb-3 px-0" v-if="answerMatchTo.answer_pattern === 'text'">
+                <b-col lg="12" class="mb-3 px-0" v-if="answerMatchTo.answer_pattern === 'text'">
                   <div class="hold-field">
                     <label>{{ $t("QUESTIONS.ANSWER") }}</label>
-                    <TextField
-                      :rules="'required|max:100'"
-                      v-model="answerMatchTo.answer"
-                      :name="`${$t('QUESTIONS.ANSWER')}`"
-                      :id="`ANSWER`"
-                    ></TextField>
+                    <TextField :rules="'required|max:100'" v-model="answerMatchTo.answer" :name="`${$t('QUESTIONS.ANSWER')}`" :id="`ANSWER`"></TextField>
                   </div>
                 </b-col>
-                <b-col lg="6" class="mb-3 px-0" v-if="answerMatchTo.answer_pattern === 'image'">
+                <b-col lg="12" class="mb-3 px-0" v-if="answerMatchTo.answer_pattern === 'image'">
                   <div class="hold-field">
                     <ImageUploader
                       v-model="answerMatchTo.answer"
@@ -2277,38 +2097,17 @@
                     />
                   </div>
                 </b-col>
-                <b-col
-                  lg="4"
-                  class="mb-3"
-                  v-if="
-                        answerMatchTo.answer_pattern === 'text' ||
-                        answerMatchTo.answer_pattern === 'image'
-                      "
-                >
-                  <div class="hold-field">
-                    <label
-                    ><span><i class="fa-solid fa-asterisk"></i></span
-                    >{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label
-                    >
-                    <ValidationProvider
-                      v-slot="{ errors }"
-                      :rules="'required|audio'"
-                      name="answerMatchToAudio"
-                    >
-                      <b-form-file
-                        accept="audio/*"
-                        :placeholder="
-                              answerMatchTo.audio ? answerMatchTo.audio.name : 'اختر ملف'
-                            "
-                        v-model="answerMatchTo.audio"
-                        name="answerMatchToAudio"
-                      >
-                      </b-form-file>
-                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                        {{ error }}
-                      </b-form-invalid-feedback>
-                    </ValidationProvider>
-                  </div>
+                <b-col lg="12" class="mb-3" v-if="answerMatchTo.answer_pattern === 'text' || answerMatchTo.answer_pattern === 'image' ">
+                  <UploadAttachment :type-of-attachment="'audio'"
+                                    :dropIdRef="`answerMatchToAudio`"
+                                    :accept-files="'audio/*'"
+                                    :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                                    :name="'answerMatchToAudio'"
+                                    :rules="'required'"
+                                    ref="answerMatchToAudio"
+                                    @setFileId="setAnswerMatchId('audio',$event,'answerMatchTo')"
+                                    @setFileUrl="setAnswerMatchUrl('audioUrl',$event,'answerMatchTo')"
+                  />
                 </b-col>
                 <b-col lg="4" class="mb-3" v-if="answerMatchTo.answer_pattern === 'audio'">
                   <div class="hold-field">
@@ -2336,7 +2135,7 @@
                     </ValidationProvider>
                   </div>
                 </b-col>
-                <b-col lg="2" class="px-0">
+                <b-col lg="12" class="px-0">
                   <div class="hold-field">
                     <label class="mx-0 hidden-text">{{ $t("QUESTIONS.ANSWERSTO") }}:</label>
                     <button
@@ -2373,7 +2172,7 @@
             </b-row>
             <!-- show answer to based on answer patter -->
             <slot v-if="answersListMatchTo.length > 0">
-              <b-row>
+              <b-row class="mt-3">
                 <b-col lg="2" class="answer-item">الترتيب</b-col>
                 <b-col lg="3" class="answer-item">الإجابة</b-col>
                 <b-col
@@ -2398,7 +2197,9 @@
                     {{ answer.answer.name }}
                   </b-col>
                   <b-col lg="3" class="answer-item" v-if="answer.answer_pattern !== 'audio'">
-                    {{ answer.audio.name }}
+                    <audio controls>
+                      <source :src="answer.audioUrl">
+                    </audio>
                   </b-col>
                   <b-col lg="2" class="answer-item select">
                     <validation-provider
@@ -2612,9 +2413,30 @@ export default {
           answerAudioUser: null,
           correct: 0,
           answerImage: null,
+        }
+      ],
+      answersListDragSortDragged: [
+        {
+          answer: "",
+          order: 0,
+          audio: null,
+          answerAudioUser: null,
+          correct: 0,
+          answerImage: null,
         },
       ],
       answersListDragSortImage: [
+        {
+          answer: null,
+          order: 0,
+          audio: null,
+          answerAudioUser: null,
+          correct: 0,
+          answerImage: null,
+          audioName: "",
+        },
+      ],
+      answersListDragSortImageDragged: [
         {
           answer: null,
           order: 0,
@@ -2631,7 +2453,16 @@ export default {
           order: 0,
           correct: 0,
           answer_pattern: "audio",
-          audioName: "",
+          answerAudioUser: "",
+        },
+      ],
+      answersListDragSortAudioDragged: [
+        {
+          answer: null,
+          order: 0,
+          correct: 0,
+          answer_pattern: "audio",
+          answerAudioUser: "",
         },
       ],
       answersListMcQ: [
@@ -2713,6 +2544,7 @@ export default {
         answer: null,
         match_from: 1,
         audio: null,
+        audioUrl: null,
         answers_to: [],
         answer_pattern: "text",
         answerImage: null,
@@ -2723,6 +2555,7 @@ export default {
         answer: null,
         match_to: 1,
         audio: null,
+        audioUrl: null,
         answer_pattern: "text",
         answerImage: null,
         answerToId: "",
@@ -2760,19 +2593,17 @@ export default {
       this.answerMatch.answer = null;
       this.answerMatch.answerImage = null;
       this.answerMatch.audio = null;
-      this.$nextTick(() => {
-        this.$refs.addAnswerFromForm.reset();
-      });
+      this.answerMatch.audioUrl = null;
+      this.$refs.answerMatchAudio.$refs.answerMatchAudio.removeAllFiles()
     },
     addAnswerMatchTo() {
       this.answerToId++;
       this.answersListMatchTo.push({id: this.answerToId, ...this.answerMatchTo});
       this.answerMatchTo.answer = null;
       this.answerMatchTo.audio = null;
+      this.answerMatchTo.audioUrl = null;
       this.answerMatchTo.answerImage = null;
-      this.$nextTick(() => {
-        this.$refs.addAnswerToForm.reset();
-      });
+      this.$refs.answerMatchToAudio.$refs.answerMatchToAudio.removeAllFiles()
     },
     removeAnswerMatch(index) {
       this.answersListMatch.splice(index, 1);
@@ -2929,6 +2760,13 @@ export default {
         if (answerList === 'answersListDragSort') {
           this.answersListDragSort[indexWillChange][answerOrAudio] = $event
         }
+        if (answerList === 'answersListDragSortAudio') {
+          this.answersListDragSortAudio[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListDragSortImage') {
+          this.answersListDragSortImage[indexWillChange][answerOrAudio] = $event
+        }
+
       } else {
         this.formValues[keyName] = $event
       }
@@ -2956,8 +2794,30 @@ export default {
         if (answerList === 'answersListDragSort') {
           this.answersListDragSort[indexWillChange][answerOrAudio] = $event
         }
+        if (answerList === 'answersListDragSortAudio') {
+          this.answersListDragSortAudio[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListDragSortImage') {
+          this.answersListDragSortImage[indexWillChange][answerOrAudio] = $event
+        }
       } else {
         this.formValues[keyName] = $event
+      }
+    },
+    async setAnswerMatchId(keyName, $event, matchType) {
+      if (matchType === 'answerMatch') {
+        this.answerMatch[keyName] = $event
+      }
+      if (matchType === 'answerMatchTo') {
+        this.answerMatchTo[keyName] = $event
+      }
+    },
+    async setAnswerMatchUrl(keyName, $event, matchType) {
+      if (matchType === 'answerMatch') {
+        this.answerMatch[keyName] = $event
+      }
+      if (matchType === 'answerMatchTo') {
+        this.answerMatchTo[keyName] = $event
       }
     },
     onSubmit() {
@@ -3123,7 +2983,7 @@ export default {
         order: 0,
         correct: 0,
         answer_pattern: "audio",
-        audioName: "",
+        answerAudioUser: "",
       });
     },
     // remove answer and check correct
@@ -3153,7 +3013,6 @@ export default {
     },
     assignAnswersMcq() {
       this.formValues.answers = this.answersListMcQ;
-      console.log('this.formValues.answers', this.formValues.answers)
     },
     assignAnswersMcqImage() {
       this.formValues.answers = this.answersListMcQImage.filter((answer) => answer.answer);
@@ -3171,7 +3030,6 @@ export default {
     assignAnswersMatchOneToMany() {
       this.formValues.answers.answersListMatch = this.answersListMatch;
       this.formValues.answers.answersListMatchTo = this.answersListMatchTo;
-      // console.log('this.formValues.answers', this.formValues.answers)
     },
     assignAnswersDragSort() {
       this.formValues.answers = this.answersDragSortToSend;
@@ -3202,16 +3060,20 @@ export default {
     answersListMatchTo: {
       handler(newVal) {
         let checkArray = [];
-        // console.log('newVal', newVal)
         newVal.forEach((item) => {
           checkArray.push(item.answerToId);
         });
-        // console.log('checkArray', checkArray.includes(''))
         this.checkAssignAnswers = checkArray.includes("");
       },
       deep: true,
     },
     answersListDragSort: {
+      handler(newList) {
+        this.answersListDragSortDragged = newList
+      },
+      deep: true,
+    },
+    answersListDragSortDragged: {
       handler(newList) {
         const list = newList.map((item, index) => {
           return {
@@ -3223,10 +3085,15 @@ export default {
           };
         });
         this.answersDragSortToSend = list;
+      }
+    },
+    answersListDragSortImage: {
+      handler(newList) {
+        this.answersListDragSortImageDragged = newList
       },
       deep: true,
     },
-    answersListDragSortImage: {
+    answersListDragSortImageDragged: {
       handler(newList) {
         const list = newList.map((item, index) => {
           return {
@@ -3245,18 +3112,23 @@ export default {
     },
     answersListDragSortAudio: {
       handler(newList) {
+        this.answersListDragSortAudioDragged = newList
+      },
+      deep: true,
+    },
+    answersListDragSortAudioDragged: {
+      handler(newList) {
         const list = newList.map((item, index) => {
           return {
             answer: item.answer,
             order: index + 1,
             correct: 0,
             answer_pattern: "audio",
-            audioName: item.audioName,
+            answerAudioUser: item.answerAudioUser,
           };
         });
         this.answersDragSortToSend = list;
-      },
-      deep: true,
+      }
     },
     "formValues.question"(newVal) {
       if (typeof newVal === "string") {
@@ -3290,12 +3162,10 @@ export default {
       this.formValues.hint = questionEdit.hint;
       this.formValues.answers = questionEdit.answers;
       this.answersListMcQ = this.formValues.answers;
-      console.log('watch answersListMcQ', this.answersListMcQ)
       this.answersListMatchOneToOne = this.formValues.answers;
     },
   },
   mounted() {
-    // console.log('questionSlug', this.questionSlug.slug)
     if (this.questionSlug.slug === "match_one_voice_text") {
       this.answerMatchTo.answer_pattern = "audio";
     } else if (this.questionSlug.slug === "match_one_voice_voice") {
