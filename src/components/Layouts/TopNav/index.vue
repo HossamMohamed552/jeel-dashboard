@@ -120,7 +120,7 @@
                   </b-nav-item-dropdown>
                 </b-nav-item>
 
-                <b-nav-item class="nav-item" v-if="user.is_super_admin === 1">
+                <b-nav-item class="nav-item">
                   <b-nav-item-dropdown>
                     <template #button-content>
                       <span style="color: #fff">{{ $t("MENU.system_settings") }}</span>
@@ -355,15 +355,6 @@
                 <ul>
                   <router-link
                     tag="li"
-                    v-if="routeUser.permission === 'view-roles' && user.is_super_admin === 1"
-                    :to="routeUser.path"
-                    v-for="(routeUser, index) in routesUsers"
-                    :key="index"
-                    >{{ routeUser.name }}</router-link
-                  >
-                  <router-link
-                    tag="li"
-                    v-if="routeUser.permission !== 'view-roles'"
                     :to="routeUser.path"
                     v-for="(routeUser, index) in routesUsers"
                     :key="index"
@@ -413,21 +404,14 @@
             </div>
             <!------------- end routesPrizes section ---------------->
 
-            <div class="nav-item" v-if="user.is_super_admin === 1">
+            <div class="nav-item">
               <p>
                 <span>{{ $t("MENU.system_settings") }}</span
                 ><img src="@/assets/images/icons/arrow.svg" />
               </p>
               <div class="dropdown-item-list">
                 <ul>
-                  <router-link
-                    tag="li"
-                    :to="route.path"
-                    v-for="(route, index) in routeSettings"
-                    :key="index"
-                  >
-                    {{ route.name }}</router-link
-                  >
+                  <router-link tag="li" :to="route.path" v-for="(route, index) in routeSettings" :key="index">{{ route.name }}</router-link>
                 </ul>
               </div>
             </div>

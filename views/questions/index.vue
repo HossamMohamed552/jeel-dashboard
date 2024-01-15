@@ -97,8 +97,11 @@ export default {
   },
   mounted() {
     this.getQuestions()
+    window.localStorage.setItem("page","questions");
+  },
+  beforeDestroy() {
+    window.localStorage.setItem('page', '')
   }
-
 }
 </script>
 

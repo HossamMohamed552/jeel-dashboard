@@ -11,15 +11,15 @@
       @deleteItem="deleteItem($event)"
       :loading="loading"
       @refetch="getcharacters"
-      :permission_delete="'delete-characters'"
-      :permission_edit="'edit-characters'"
-      :permission_view="'show-characters'"
+      :permission_delete="'delete-prize-characters'"
+      :permission_edit="'edit-prize-characters'"
+      :permission_view="'show-prize-characters'"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddCharacter"
-          v-if="user.permissions.includes(`add-characters`)"
+          v-if="user.permissions.includes(`add-prize-characters`)"
         >
           <img src="../../src/assets/images/icons/plus.svg" />
           <span>إضافة شخصية جديدة </span>

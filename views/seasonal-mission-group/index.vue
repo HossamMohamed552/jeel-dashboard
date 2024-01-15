@@ -12,16 +12,16 @@
       @deleteItem="deleteItem($event)"
       @refetch="getSeasonalMissionGroups"
       :loading="loading"
-      :permission_delete="'delete-languageSkill'"
-      :permission_edit="'edit-languageSkill'"
-      :permission_view="'show-languageSkill'"
+      :permission_delete="'delete-seasonal-mission-groups'"
+      :permission_edit="'edit-seasonal-mission-groups'"
+      :permission_view="'show-seasonal-mission-groups'"
     >
       <!-- todo tooo check the permission above and for the button -->
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddSeasonalMissionGroup"
-          v-if="user.permissions.includes(`add-languageSkill`)"
+          v-if="user.permissions.includes(`add-seasonal-mission-groups`)"
         >
           <img src="@/assets/images/icons/plus.svg" alt="seasonal" />
           <span>إضافة مجموعة </span>

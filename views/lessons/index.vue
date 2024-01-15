@@ -11,15 +11,15 @@
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
       @refetch="getLessonsList"
-      :permission_delete="'delete-outcome'"
-      :permission_edit="'edit-outcome'"
-      :permission_view="'show-outcome'"
+      :permission_delete="'delete-lesson'"
+      :permission_edit="'edit-lesson'"
+      :permission_view="'show-lesson'"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddLesson"
-          v-if="user.permissions.includes(`add-outcome`)"
+          v-if="user.permissions.includes(`add-lesson`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
           <span>إضافة درس تعليمي</span>

@@ -255,6 +255,7 @@ export default {
       selectedPrice: 0,
       selectedCurrency: "",
       discountValueForUpdate: "",
+      en: "en",
       formValues: {
         school_group_id: "",
         school_id: "",

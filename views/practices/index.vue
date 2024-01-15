@@ -50,7 +50,7 @@ export default {
         {key: "name", label: "اسم التمرين"},
         {key: "type.name", label: "نوع التمرين"},
         {key: "learning_path.name", label: "المسار التعليمي"},
-        {key: "lesson.name", label: "اسم الدرس"},
+        {key: "lessons", label: "اسم الدرس"},
         {key: "actions", label: "الإجراء"},
       ],
     }
@@ -91,6 +91,10 @@ export default {
   },
   mounted() {
     this.getQuizzes()
+    window.localStorage.setItem("page","practices");
+  },
+  beforeDestroy() {
+    window.localStorage.setItem("page","");
   }
 }
 </script>

@@ -12,15 +12,15 @@
       @deleteItem="deleteItem($event)"
       :loading="loading"
       @refetch="getJeelLibrary"
-      :permission_delete="'delete-badge'"
-      :permission_edit="'edit-badge'"
-      :permission_view="'show-badge'"
+      :permission_delete="'delete-prize-library'"
+      :permission_edit="'edit-prize-library'"
+      :permission_view="'show-prize-library'"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToItemToJeelLibrary"
-          v-if="user.permissions.includes(`add-characters`)"
+          v-if="user.permissions.includes(`add-prize-library`)"
         >
           <img src="../../src/assets/images/icons/plus.svg" />
           <span>إضافة عنصر للمكتبة </span>

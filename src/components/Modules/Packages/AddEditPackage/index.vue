@@ -48,7 +48,7 @@
             <b-row>
               <b-col
                 v-for="role in createPackage.roles"
-                :key="role.id"
+                :key="role.role"
                 lg="4"
                 class="mb-3"
               >
@@ -171,27 +171,27 @@ export default {
         country_id: "",
         roles: [
           {
-            role_id: 5,
+            role: "student",
             name: "الطلاب",
             number: "",
           },
           {
-            role_id: 4,
+            role: "teacher",
             name: "المدرسين",
             number: "",
           },
           {
-            role_id: 3,
+            role: "supervisor",
             name: "المشرفين",
             number: "",
           },
           {
-            role_id: 2,
+            role: "schooladmin",
             name: "المديرين",
             number: "",
           },
           {
-            role_id: 6,
+            role: "parent",
             name: "أولياء الأمور",
             number: "",
           }
