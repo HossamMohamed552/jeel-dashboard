@@ -211,12 +211,8 @@ import axios from "axios";
 import VueCookies from "vue-cookies";
 
 // Dropdown
-import {
-  getSingleUserRequest,
-  addEditUserRequest,
-  deleteProfileImageRequest,
-  postChangeStatusRequest,
-} from "@/api/user";
+import { deleteProfileImageRequest } from "@/api/user";
+import { mapActions } from "vuex";
 
 import { getAllNationaltyRequest } from "@/api/country";
 import { getAllGenderRequest, getAllReligionRequest } from "@/api/system";
@@ -271,6 +267,8 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["updateUser"]),
+
     openFileInput() {
       this.$refs.fileInput.click();
     },
@@ -329,7 +327,7 @@ export default {
           } else if (key === "image") {
             if (this.image && this.editImage) formData.append(key, this.user[key]);
             else return;
-          } else if (key === "is_student") {
+          } else if (key === "gender") {
             formData.append(key, this.user[key]);
           } else {
             formData.append(key, this.user[key]);
@@ -345,10 +343,10 @@ export default {
             },
           })
           .then((response) => {
-            console.log(response);
+            this.updateUser(response.data.data);
           })
           .then(() => {
-            this.$router.push({ name: "profile" });
+            this.$router.push({ name: "view-profile" });
           });
       });
     },
