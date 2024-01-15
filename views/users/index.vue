@@ -86,7 +86,7 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.status"),
         },
         {
-          key: "mobile",
+          key: "status.name",
           label: this.$i18n.t("TABLE_FIELDS.block"),
         },
         {
@@ -160,6 +160,10 @@ export default {
   },
   mounted() {
     this.getAllUsers();
+    window.localStorage.setItem("page", "userAdmin");
+  },
+  beforeDestroy() {
+    window.localStorage.setItem("page", "");
   },
 };
 </script>
