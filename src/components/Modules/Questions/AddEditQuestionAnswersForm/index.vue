@@ -710,7 +710,7 @@
               </div>
             </b-col>
             <b-col lg="3" class="mb-3 d-flex justify-content-center align-items-center">
-              <div class="hold-field">
+              <div class="hold-field w-100">
                 <label>{{ $t("QUESTIONS.ANSWER_TYPE") }}</label>
                 <SelectSearch
                   :rules="'required'"
@@ -1943,12 +1943,12 @@
               <b-col lg="12" class="mb-3 px-0" v-if="answerMatch.answer_pattern === 'image'">
                 <div class="hold-field">
                   <UploadAttachment :type-of-attachment="'image'"
-                                    :dropIdRef="`answerMatch`"
+                                    :dropIdRef="`answerMatchImage`"
                                     :accept-files="'image/*'"
                                     :label="'صوره الإجابة'"
                                     :name="'answerMatchImage'"
                                     :rules="'required'"
-                                    ref="answerMatch"
+                                    ref="answerMatchImage"
                                     @setFileId="setAnswerMatchId('answer',$event,'answerMatch')"
                                     @setFileUrl="setAnswerMatchUrl('answerImage',$event,'answerMatch')"
                   />
@@ -2080,12 +2080,12 @@
                 <b-col lg="12" class="mb-3 px-0" v-if="answerMatchTo.answer_pattern === 'image'">
                   <div class="hold-field">
                     <UploadAttachment :type-of-attachment="'image'"
-                                      :dropIdRef="`answerMatchTo`"
+                                      :dropIdRef="`answerMatchToImage`"
                                       :accept-files="'image/*'"
                                       :label="'صوره الإجابة'"
                                       :name="'answerMatchToImage'"
                                       :rules="'required'"
-                                      ref="answerMatchTo"
+                                      ref="answerMatchToImage"
                                       @setFileId="setAnswerMatchId('answer',$event,'answerMatchTo')"
                                       @setFileUrl="setAnswerMatchUrl('answerImage',$event,'answerMatchTo')"
                     />
@@ -2579,6 +2579,9 @@ export default {
       this.answerMatch.audio = null;
       this.answerMatch.audioUrl = null;
       this.$refs.answerMatch.$refs.answerMatch.removeAllFiles()
+      if (this.$refs.answerMatchImage){
+        this.$refs.answerMatchImage.$refs.answerMatchImage.removeAllFiles()
+      }
     },
     addAnswerMatchTo() {
       this.answerToId++;
@@ -2588,6 +2591,9 @@ export default {
       this.answerMatchTo.audioUrl = null;
       this.answerMatchTo.answerImage = null;
       this.$refs.answerMatchTo.$refs.answerMatchTo.removeAllFiles()
+      if (this.$refs.answerMatchToImage){
+        this.$refs.answerMatchToImage.$refs.answerMatchToImage.removeAllFiles()
+      }
     },
     removeAnswerMatch(index) {
       this.answersListMatch.splice(index, 1);
