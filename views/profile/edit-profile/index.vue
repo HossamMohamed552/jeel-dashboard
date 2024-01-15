@@ -144,21 +144,7 @@
                       ></SelectSearch>
                     </div>
                   </b-col>
-                  <b-col lg="4">
-                    <div class="hold-field">
-                      <SelectSearch
-                        v-model="user.roles"
-                        :label="$t('USERS.DEPARTMENT')"
-                        :name="$t('USERS.DEPARTMENT')"
-                        :options="departmentsList"
-                        :reduce="(option) => option.id"
-                        :get-option-label="(option) => option.name"
-                        :rules="'required'"
-                        :deselectFromDropdown="true"
-                        multiple
-                      ></SelectSearch>
-                    </div>
-                  </b-col>
+
                   <b-col lg="12">
                     <h3 class="mt-2">روابط التواصل الإجتماعي</h3>
                   </b-col>
@@ -227,7 +213,6 @@ import VueCookies from "vue-cookies";
 // Dropdown
 import {
   getSingleUserRequest,
-  getAllRolesRequest,
   addEditUserRequest,
   deleteProfileImageRequest,
   postChangeStatusRequest,
@@ -337,23 +322,15 @@ export default {
       this.$refs.addEditUserForm.validate().then((success) => {
         if (!success) return;
         const formData = new FormData();
-        formData.append("first_name", this.user.first_name);
-        formData.append("last_name", this.user.last_name);
-        formData.append("email", this.user.email);
-        formData.append("password", this.user.password);
-        formData.append("mobile", this.user.mobile);
-        formData.append("social_media", this.user.social_media);
         formData.append("_method", "PUT");
-        formData.append("roles[0]", this.user.roles);
-
         Object.keys(this.user).forEach((key) => {
           if (key === "roles") {
-            this.user.roles.forEach((role, index) => {
-              formData.append(`roles[${index}]`, role);
-            });
+            return;
           } else if (key === "image") {
             if (this.image && this.editImage) formData.append(key, this.user[key]);
             else return;
+          } else if (key === "is_student") {
+            formData.append(key, this.user[key]);
           } else {
             formData.append(key, this.user[key]);
           }
@@ -396,17 +373,11 @@ export default {
         this.religions = response.data.data;
       });
     },
-    getAllDepartments() {
-      this.ApiService(getAllRolesRequest()).then((response) => {
-        this.departmentsList = response.data.data;
-      });
-    },
   },
   mounted() {
     this.getAllCountries();
     this.getAllGenders();
     this.getAllReligions();
-    this.getAllDepartments();
   },
 
   computed: {
@@ -414,6 +385,7 @@ export default {
       this.user = this.$store.getters.user;
       this.user.country_id = this.$store.getters.user?.user_country.id;
       this.user.religion_id = this.$store.getters.user?.user_religion.id;
+      this.user.gender = this.$store.getters.user?.gender.id;
       console.log(this.user);
 
       return this.$store.getters.user;
