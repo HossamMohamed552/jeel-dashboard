@@ -81,7 +81,7 @@ li {
     transform: translateY(-50%);
     left: 18px;
   }
-  .form-control {
+  .form-control:not(textarea) {
     height: 55px;
     padding: 0 1.5rem;
     transition: padding 0.3s;
