@@ -1,9 +1,9 @@
-import badges from './modules/badges'
-import characters from './modules/characters'
-import powerUpBoxes from './modules/powerUpBoxes'
-import jeelLibrary from './modules/jeelLibrary'
-import jeelStoreGames from './modules/jeelStoreGames'
-import jeelStoreLibrary from './modules/jeelStoreLibrary'
+import badges from "./modules/badges";
+import characters from "./modules/characters";
+import powerUpBoxes from "./modules/powerUpBoxes";
+import jeelLibrary from "./modules/jeelLibrary";
+import jeelStoreGames from "./modules/jeelStoreGames";
+import jeelStoreLibrary from "./modules/jeelStoreLibrary";
 import jeelStoreCharacters from "./modules/jeelStoreCharacters";
 
 const protectedRoutes = [
@@ -1462,14 +1462,7 @@ const protectedRoutes = [
           preLink: "",
         },
       },
-      {
-        path: "/profile",
-        name: "profile",
-        component: () => import("../../views/profile/index.vue"),
-        meta: {
-          breadcrumb: "حسابي",
-        },
-      },
+
       {
         path: "/dashboard/super-class",
         name: "super-class",
@@ -1645,6 +1638,22 @@ const protectedRoutes = [
         component: () => import("../../views/profile/index.vue"),
         meta: {
           breadcrumb: "حسابي",
+        },
+      },
+      {
+        path: "/view-profile",
+        name: "view-profile",
+        component: () => import("../../views/profile/view-profile/index.vue"),
+        meta: {
+          breadcrumb: "الملف الشخصي",
+        },
+      },
+      {
+        path: "/edit-profile",
+        name: "edit-profile",
+        component: () => import("../../views/profile/edit-profile/index.vue"),
+        meta: {
+          breadcrumb: "الملف الشخصي",
         },
       },
       {

@@ -11,15 +11,6 @@
     "rememberMe": "تذكرنى",
     "forgetPassword": "نسيت كلمة المرور ؟"
   },
-  "SOCIAL_MEDIA": {
-    "FACEBOOK": "فيس بوك",
-    "TWITTER": "تويتر",
-    "LINKEDIN": "لينكدان"
-  },
-  "BUTTONS": {
-    "EDIT": "تغيير",
-    "DELETE": "حذف"
-  },
   "USERS": {
     "ADD_NEW": "إضافة مستخدم إدارة منظومة",
     "ACTIVE": "فعال",
@@ -39,8 +30,6 @@
     "showDetails": "تفاصيل المستخدم",
     "name": "اسم المستخدم",
     "first_name": "الاسم الاول",
-    "last_name": "الاسم الثانى",
-    "roles": "الصلاحية",
     "mobile": "الهاتف",
     "email": "البريد الإلكترونى",
     "gender": "النوع",
@@ -122,7 +111,6 @@
     "power_up_box_country": "الدولة",
     "power_up_box_type": "النوع",
     "power_up_box_appear_after_missions": "ظهور بعد",
-
     "jeel_library_name": "الأسم",
     "jeel_library_level": "الصف الدراسى",
     "jeel_library_type": "النوع"
@@ -130,18 +118,27 @@
   "CONTROLS": {
     "detailBtn": "تفاصيل",
     "editBtn": "تعديل",
+    "permissions": "الصلاحيات",
+    "users": "المستخدمين",
     "deleteBtn": "حذف",
     "addVideoQuestion": "اضافة اسئله الفيديو",
     "ManageClasses": "إداره الصفوف",
     "addAd": "إضافة إعلان",
-    "AddVideo": "إضافة أسئلة الفيديو"
+    "AddVideo": "إضافة أسئلة الفيديو",
+    "showDetails": "عرض تفاصيل صلاحية المستخدم"
   },
   "ROLES": {
     "ADD_NEW": "إضافة صلاحية",
     "EDIT": "تعديل الصلاحية",
     "name": "إسم الصلاحية",
     "description": "الوصف",
-    "showDetails": "عرض تفاصيل صلاحية المستخدم"
+    "CATEGORIES": "التصنيف",
+    "DEPARTMENT": "اسم الدور الوظيفي",
+    "ADD_DEPARTMENT": "إضافة دور وظيفي",
+    "EDIT_DEPARTMENT": "تعديل دور وظيفي",
+    "ENTER_DEPARTMENT": "أدخل اسم الدور الوظيفي",
+    "ENTER_DESCRIPTION": "أدخل الوصف",
+    "showDetails": "تفاصيل دور وظيفي"
   },
   "BADGE": {
     "ADD_NEW": "إضافة شارة جديدة",
@@ -200,6 +197,11 @@
     "DESCRIPTION_INPUT_PLACEHOLDER": "أدخل ملاحظات"
   },
   "SCHOOL": {
+    "SCHOOL_INFO": "بيانات المدرسة",
+    "SCHOOL_MANAGER_INFO": "بيانات مسؤل المدرسة",
+    "MANAGER_NAME": "اسم المسؤل",
+    "MANAGER_TYPE": "صفة المسؤل",
+    "MANAGER_MOBILE": "رقم هاتف المسؤل",
     "ADD_NEW": "إضافة مدرسة جديدة",
     "EDIT": "تعديل مدرسة جديدة",
     "name": "اسم المدرسة",
@@ -224,6 +226,17 @@
     "dateTo": "نهاية التعاقد",
     "user_name": "اسم المستخدم",
     "contact": "رقم الهاتف",
+    "COUNTRY": "الدولة",
+    "SCHOOL_COLLECTION": "مجموعة المدارس",
+    "SCHOOL_LOGO": "شعار المدرسة",
+    "SCHOOL_TYPE": "نوع إدارة المدرسة",
+    "SCHOOL_CERTIFICATE_TYPE": "نوع شهادة المدرسة",
+    "LEARNING_LANGAUAGE": "لغة التدريس",
+    "STUDENT_TYPE": "نوع الطلبة",
+    "MOBILE": "رقم هاتف المدرسة",
+    "VOICE": "الصوت",
+    "SCHOOL_ADDRESS": "عنوان المدرسة",
+    "NOTES": "ملاحظات",
     "address": "العنوان"
   },
   "LEVEL": {
@@ -330,7 +343,8 @@
     "selectQUESTION_SUB_PATTERN": "أختر نمط السؤال الفرعي",
     "STEP_ONE": "البيانات الاساسية",
     "STEP_TWO": "الآسئلة والإجابات",
-    "STEP_THREE": "معاينة السؤال",
+    "STEP_THREE": "محتوى انجاز المهمه",
+    "STEP_FOUR": "مراجعة المحتوى المهمة",
     "ANSWER_TYPE": "نوع الإجابة",
     "ANSWER": "الإجابة",
     "HINT": "التلميح",
@@ -339,7 +353,7 @@
     "enterQUESTION": "أدخل السؤال",
     "LEVELS": "المرحلة الدراسية",
     "TYPE": "نوع السؤال",
-    "LEARNING_METHOD": "اسلوب التعلم",
+    "LEARNING_METHOD": "إسلوب التعلم",
     "selectLEARNING_METHOD": "أختر إسلوب التعلم",
     "BLOOM_CATEGORIES": "بلوم",
     "selectBLOOM_CATEGORIES": "أختر بلوم",
@@ -383,8 +397,7 @@
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",
     "STEP_TWO": "محتوى المهمة",
-    "STEP_THREE": "محتوى انجاز المهمه",
-    "STEP_FOUR": "مراجعة المحتوى المهمة",
+    "STEP_THREE": "مراجعة المحتوى المهمة",
     "EDIT": "تعديل المهمة",
     "ADD_NEW": "إضافة مهمة جديدة",
     "name": "إسم المهمة",
@@ -397,7 +410,7 @@
     "videos": "الفيديوهات",
     "paperWork": "اوراق العمل",
     "quizzes": "التمارين",
-    "tasks": "التسجيلات الصوتيه",
+    "audios": "التسجيلات الصوتيه",
     "description": "الوصف",
     "content": "المحتوى",
     "ShowDetails": "عرض تفاصيل المهمة",
@@ -550,6 +563,7 @@
     "role": "الدور",
     "student_action_histories": "تاريخ عمل الطالب",
     "user_credits": "رصيد المستخدم",
+    "EDIT_MY_PROFILE": "تعديل الملف الشخصي",
     "level": "مرحلة",
     "xp": "xp",
     "gems": "gems",
@@ -590,6 +604,7 @@
   "MISSSION_DETAILS": "تفاصيل المرحلة",
   "BACK": "رجوع",
   "MY_PROFILE": "حسابي",
+  "EDIT_MY_PROFILE": "تعديل الملف الشخصي",
   "CHANGE_PASSWORD": "تغيير كلمة المرور",
   "PERSONAL_INFO": "البيانات الشخصية",
   "FIRST_NAME_AR": "الاسم الأول بالعربية",
@@ -705,5 +720,25 @@
     "QUESTION_TITLE_PLACEHOLDER": "نص السؤال",
     "SHOW_DETAILS": "تفاصيل التسجيل الصوتى"
   },
-  "NO_MATCHING": "لا توجد نتائج"
+  "NO_MATCHING": "لا توجد نتائج",
+  "STATISTICS": {
+    "school_group": "عدد مجموعات المدارس",
+    "school": "عدد المدارس",
+    "subscription": "عدد الإشتراكات",
+    "missions": "المهام",
+    "seasonal_missions": "المهام الموسمية",
+    "jeel_admins_user": "عدد مستخدمي إدارة المنظومة",
+    "package": "الباقات",
+    "library": "عناصر مكتبة الشراء",
+    "store_library": "عناصر مكتبة جيل"
+  },
+  "SOCIAL_MEDIA": {
+    "FACEBOOK": "فيس بوك",
+    "TWITTER": "تويتر",
+    "LINKEDIN": "لينكدان"
+  },
+  "BUTTONS": {
+    "EDIT": "تغيير",
+    "DELETE": "حذف"
+  }
 }

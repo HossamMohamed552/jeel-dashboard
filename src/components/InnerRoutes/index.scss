@@ -1,30 +1,96 @@
 @import "src/assets/style/scss/_variables";
 @import "src/assets/style/scss/_mixin";
-.inner-routes{
+.inner-routes {
   @include styleViewListHome;
-  .taps{
+  .user-info {
+    height: fit-content;
+    margin-bottom: 2rem;
+    ::v-deep {
+      .profile-btn {
+        margin-top: 4rem !important;
+      }
+    }
+  }
+  .route-card {
+    padding: 40px;
+  }
+  .img-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin: 0 auto 12px;
+
+    > span {
+      position: relative;
+      width: 109px;
+      height: 109px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      background-color: #f1e8f0;
+      i {
+        color: $color-primary;
+        font-family: "Font Awesome 6 Free" !important;
+        font-size: 45.67px;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+    > div {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+  }
+  .last-attempt {
+    background: #ddf4fd 0% 0% no-repeat padding-box;
+    border: 1px solid #ddf4fd;
+    border-radius: 25px;
+    padding: 4rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    p {
+      font-weight: 600;
+      &:first-of-type {
+        font-size: 1.5rem;
+        color: $color-primary;
+      }
+      &:last-of-type {
+        font-size: 1.25rem;
+      }
+    }
+  }
+  .taps {
     color: $color-paragraph-alt;
     display: flex;
-    border-bottom: 1px solid #8C8C8C;
+    border-bottom: 1px solid #8c8c8c;
     max-width: 100%;
     overflow: auto;
-    .tap{
+    .tap {
       padding: 0 5rem 2rem 5rem;
       cursor: pointer;
-      transition: all ease-in-out .2s;
+      transition: all ease-in-out 0.2s;
       border-bottom: 2px solid transparent;
       font-weight: bold;
       font-size: 1.2rem;
-      &:first-of-type{
+      &:first-of-type {
         padding: 0 0 2rem 0;
       }
     }
-    .active{
+    .active {
       color: $color-primary;
       border-bottom: 2px solid $color-primary;
       position: relative;
-      transition: all ease-in-out .2s;
-      &:after{
+      transition: all ease-in-out 0.2s;
+      &:after {
         content: "";
         display: block;
         width: 0;
@@ -40,71 +106,71 @@
       }
     }
   }
-  .content{
+  .content {
     margin-top: 3.375rem;
   }
 }
 
-.supervisor-section{
+.supervisor-section {
   position: relative;
   top: -5rem;
 }
-.hold-img-profile{
+.hold-img-profile {
   width: 70px;
   height: 70px;
   border-radius: 50%;
   overflow: hidden;
   margin: 0 auto;
-  img{
-    @include image
+  img {
+    @include image;
   }
 }
-.hold-info{
+.hold-info {
   text-align: center;
-  p{
+  p {
     margin: 0;
   }
-  .name{
-    margin: .5rem 0;
+  .name {
+    margin: 0.5rem 0;
     color: $color-primary;
     font-weight: bold;
     font-size: 1.5rem;
   }
-  .role{
+  .role {
     color: $color-notify;
     font-weight: bold;
     font-size: 1.1rem;
   }
-  .school-name{
+  .school-name {
     color: $color-paragraph;
     font-weight: bold;
     font-size: 1.1rem;
     margin: 1rem 0;
   }
 }
-.profile-card{
+.profile-card {
   padding: 4rem 0 2rem 0;
   height: 100%;
 }
-.stats{
+.stats {
   background: #fff;
-  border: 1px solid #F4EDF3;
+  border: 1px solid #f4edf3;
   border-radius: 1.5rem;
   padding: 2.5rem;
   margin-top: 3rem;
-  .heading{
+  .heading {
     margin-bottom: 1rem;
     color: #000;
     font-size: 1.3rem;
     font-weight: bold;
   }
-  .item-link{
+  .item-link {
     display: flex;
     justify-content: left;
     align-items: center;
     border-top: 1px solid rgba(164, 163, 163, 0.2);
     margin-top: 1rem;
-    a{
+    a {
       color: $color-primary;
       font-weight: bold;
       text-decoration: none;
