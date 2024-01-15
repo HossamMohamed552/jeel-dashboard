@@ -18,10 +18,13 @@
                 </div>
               </b-col>
               <b-col lg="6">
-                <UploadAttachment v-if="!$route.params.id || createVideo.videoChangedRequest" :type-of-attachment="'video'"
+                <UploadAttachment v-if="!$route.params.id || createVideo.videoChangedRequest"
+                                  :type-of-attachment="'video'"
                                   :dropIdRef="'VideFile'"
-                                  :accept-files="'.mp4'" :label="'ملف الفيديو'" :name="'VideFile'"
-                                  :rules="'required'" @setFileId="setVideoFileId($event)"/>
+                                  :accept-files="'.mp4'"
+                                  :label="'ملف الفيديو'" :name="'VideFile'"
+                                  :rules="'required'"
+                                  @setFileId="setVideoFileId($event)"/>
                 <PreviewMedia v-if="$route.params.id && createVideo.videoChanged === false && !createVideo.videoChangedRequest" :header="'ملف الفيديو'"
                               :media-name="createVideo.videoPreview_name"
                               :file-size="createVideo.videoPreview_size"

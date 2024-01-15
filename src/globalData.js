@@ -336,6 +336,7 @@ let routeSuperVisor = [
     permission: "view-announcements",
   },
 ];
+
 let routesPrizes = [
   {
     name: "شارات جيل",
@@ -370,6 +371,35 @@ let routesPrizes = [
     permission: "view-classes",
   },
 ];
+
+let routesJeelStores = [
+  {
+    name: "محموعة جيمز",
+    path: "/dashboard/jeel-store-games",
+    altImage: "jeel-store-games",
+    titleImage: "jeel-store-games",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-classes",
+  },
+  {
+    name: "شخصيات الشراء",
+    path: "/dashboard/jeel-store-character",
+    altImage: "jeel-store-character",
+    titleImage: "jeel-store-character",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-classes",
+  },
+  {
+    name: "مكتبة الشراء",
+    path: "/dashboard/jeel-store-library",
+    altImage: "jeel-store-library",
+    titleImage: "jeel-store-library",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-classes",
+  },
+];
+
+
 export {
   routesUsers,
   routesSchool,
@@ -380,4 +410,5 @@ export {
   routesSubscribes,
   routeSuperVisor,
   routesPrizes,
+  routesJeelStores
 };

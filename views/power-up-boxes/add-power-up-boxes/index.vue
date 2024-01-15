@@ -32,16 +32,18 @@ export default {
   methods: {
     handleAddBadge($event) {
       this.loading = true;
-      this.showModal = true;
       this.ApiService(postAddPowerUpBoxRequest($event))
         .then((response) => {
           this.loading = false;
+          this.showModal = true;
           setTimeout(() => {
             this.showModal = false;
           }, 3000);
         })
         .then(() => {
           this.$router.push("/dashboard/power-up-boxes");
+        }).catch((error) => {
+          this.loading = false;
         });
     },
     handleCancel() {

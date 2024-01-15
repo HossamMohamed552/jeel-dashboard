@@ -9,6 +9,11 @@ export const getQuizTypeListRequest = () => ({
   url: 'system_codes/quiz/type'
 })
 
+export const getLibraryTypeRequest = (params) => ({
+  method: 'get',
+  url: 'system_codes/library/type',
+  config: {params}
+})
 export const getSortQuizTypeRequest = (params) => ({
   method: "get",
   url: "system_codes/quiz/order_type",
