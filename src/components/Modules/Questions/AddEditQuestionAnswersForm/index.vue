@@ -1969,7 +1969,7 @@
                 </div>
                 <!--                  setQuestionAudioId('question_audio',$event)-->
               </b-col>
-              <b-col lg="4" class="mb-3" v-if="answerMatch.answer_pattern === 'audio'">
+              <b-col lg="12" class="mb-3" v-if="answerMatch.answer_pattern === 'audio'">
                 <div class="hold-field">
                   <UploadAttachment :type-of-attachment="'audio'"
                                     :dropIdRef="`answerMatch`"
@@ -1985,14 +1985,15 @@
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
-                  <button class="add-btn" @click.prevent="addAnswerMatch()" :disabled="answerMatch.answer === null || answerMatch.audio === null">
+                  <button class="add-btn" @click.prevent="addAnswerMatch()"
+                          :disabled="answerMatch.answer === null || ((answerMatch.answer_pattern === 'text' && answerMatch.audio === null)||(answerMatch.answer_pattern === 'image' && answerMatch.audio === null))">
                     {{ $t("ADD_ANSWER") }}
                   </button>
                 </div>
               </b-col>
-<!--              <validation-observer v-slot="{ invalid }" ref="addAnswerFromForm" class="row w-100">-->
-<!--              -->
-<!--              </validation-observer>-->
+              <!--              <validation-observer v-slot="{ invalid }" ref="addAnswerFromForm" class="row w-100">-->
+              <!--              -->
+              <!--              </validation-observer>-->
             </b-row>
             <!-- show answer based on answer patter -->
             <slot v-if="answersListMatch.length > 0">
@@ -2013,7 +2014,9 @@
                   <img :src="answer.answerImage" alt="answer image" class="answer_image"/>
                 </b-col>
                 <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'audio'">
-                  {{ answer.answer.name }}
+                  <audio controls>
+                    <source :src="answer.audioUrl">
+                  </audio>
                 </b-col>
                 <b-col lg="3" class="answer-item" v-if="answer.answer_pattern !== 'audio'">
                   <audio controls>
@@ -2120,7 +2123,7 @@
                     <button
                       class="add-btn"
                       @click.prevent="addAnswerMatchTo()"
-                      :disabled="invalid"
+                      :disabled="answerMatchTo.answer === null || ((answerMatchTo.answer_pattern === 'text' && answerMatchTo.audio === null)||(answerMatchTo.answer_pattern === 'image' && answerMatchTo.audio === null))"
                     >
                       {{ $t("ADD_ANSWER") }}
                     </button>
@@ -3145,7 +3148,7 @@ export default {
       this.answersListMcQ = this.formValues.answers;
       this.answersListMatchOneToOne = this.formValues.answers;
     },
-    "questionSlug.slug"(newVal){
+    "questionSlug.slug"(newVal) {
       if (newVal === "match_one_voice_text") {
         this.answerMatchTo.answer_pattern = "audio";
       } else if (newVal === "match_one_voice_voice") {
