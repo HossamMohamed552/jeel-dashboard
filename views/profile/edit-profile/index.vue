@@ -239,6 +239,7 @@ export default {
     return {
       imageUrl: null,
       isStudent: false,
+      userStrored: {},
       user: {
         image: null,
         first_name: "",
@@ -315,8 +316,6 @@ export default {
     },
 
     onSubmit() {
-      console.log(this.user);
-
       this.$refs.addEditUserForm.validate().then((success) => {
         if (!success) return;
         const formData = new FormData();
@@ -356,38 +355,46 @@ export default {
     },
 
     // All Dropdown
-    getAllCountries() {
+    async getAllCountries() {
       this.ApiService(getAllNationaltyRequest()).then((response) => {
         this.countries = response.data.data;
       });
     },
-    getAllGenders() {
+    async getAllGenders() {
       this.ApiService(getAllGenderRequest()).then((response) => {
         this.genderList = response.data.data;
       });
     },
-    getAllReligions() {
+    async getAllReligions() {
       this.ApiService(getAllReligionRequest()).then((response) => {
         this.religions = response.data.data;
       });
     },
   },
-  mounted() {
-    this.getAllCountries();
-    this.getAllGenders();
-    this.getAllReligions();
-  },
-
-  computed: {
-    userStrored() {
-      this.user = this.$store.getters.user;
+  async mounted() {
+    try {
+      await this.getAllCountries();
+      await this.getAllGenders();
+      await this.getAllReligions();
+      this.userStrored = JSON.parse(localStorage.getItem("user"));
+      this.user = this.userStrored;
       this.user.country_id = this.$store.getters.user?.user_country.id;
       this.user.religion_id = this.$store.getters.user?.user_religion.id;
       this.user.gender = this.$store.getters.user?.gender.id;
-      console.log(this.user);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  },
 
-      return this.$store.getters.user;
-    },
+  computed: {
+    // userStrored() {
+    //   this.user = this.$store.getters.user;
+    //   this.user.country_id = this.$store.getters.user?.user_country.id;
+    //   this.user.religion_id = this.$store.getters.user?.user_religion.id;
+    //   this.user.gender = this.$store.getters.user?.gender.id;
+    //   console.log(this.user);
+    //   return this.$store.getters.user;
+    // },
   },
 };
 </script>
