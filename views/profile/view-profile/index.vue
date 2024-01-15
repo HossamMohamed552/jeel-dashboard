@@ -10,7 +10,7 @@
                 <Button @click="handleShowChangePasswordForm" custom-class="cancel-btn margin">
                   {{ $t("CHANGE_PASSWORD") }}
                 </Button>
-                <Button type="submit" :custom-class="'submit-btn'">
+                <Button @click="handleEditProfile" :custom-class="'submit-btn'">
                   {{ $t("EDIT_MY_PROFILE") }}
                 </Button>
               </div>
@@ -75,13 +75,19 @@
         </b-row>
       </div>
     </div>
-    <GeneralModal id="change-password-modal" size="lg" :title="$t('CHANGE_PASSWORD')">
+
+    <GeneralModal id="change-password-modal" size="md" :hideHeader="true">
       <template #modalBody>
         <validation-observer v-slot="{ invalid }" ref="changePasswordForm">
-          <b-form @submit.prevent="onSubmit" class="px-4">
+          <b-form @submit.prevent="onSubmit">
             <b-row>
               <b-col lg="12">
-                <b-form-group class="mb-3">
+                <h3 class="modal-title">
+                  {{ $t("CHANGE_PASSWORD") }}
+                </h3>
+              </b-col>
+              <b-col lg="12">
+                <b-form-group>
                   <TextField
                     v-model="changePassword.old_password"
                     rules="required"
@@ -100,10 +106,8 @@
                   </TextField>
                 </b-form-group>
               </b-col>
-            </b-row>
-            <b-row>
               <b-col lg="12">
-                <b-form-group class="mb-3">
+                <b-form-group>
                   <TextField
                     v-model="changePassword.new_password"
                     rules="required"
@@ -118,10 +122,8 @@
                   </TextField>
                 </b-form-group>
               </b-col>
-            </b-row>
-            <b-row>
               <b-col lg="12">
-                <b-form-group class="mb-3">
+                <b-form-group>
                   <TextField
                     v-model="changePassword.confirm_password"
                     :rules="`required|confirmed:${$t('LOGIN_NEW_PASSWORD')}`"
@@ -141,11 +143,11 @@
               </b-col>
             </b-row>
 
-            <b-row class="align-items-center mt-4 mb-3">
+            <b-row class="buttons-container">
               <Button type="submit" :loading="loading" :disabled="invalid">
                 {{ $t("GLOBAL_SAVE") }}
               </Button>
-              <Button custom-class="cancel-button mx-3" @click="handleCancel">
+              <Button custom-class="cancel-btn" @click="handleCancel">
                 {{ $t("GLOBAL_CANCEL") }}
               </Button>
             </b-row>
@@ -161,6 +163,7 @@
   </section>
 </template>
 <script>
+import { postChangePasswordRequest } from "@/api/user.js";
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
@@ -217,7 +220,9 @@ export default {
     onSubmit() {
       this.handleChangePassword();
     },
-
+    handleEditProfile() {
+      this.$router.push("/edit-profile");
+    },
     handleCancel() {
       this.$bvModal.hide("change-password-modal");
       this.changePassword = {

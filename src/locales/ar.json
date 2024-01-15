@@ -590,6 +590,7 @@
   "MISSSION_DETAILS": "تفاصيل المرحلة",
   "BACK": "رجوع",
   "MY_PROFILE": "حسابي",
+  "EDIT_MY_PROFILE": "تعديل الملف الشخصي",
   "CHANGE_PASSWORD": "تغيير كلمة المرور",
   "PERSONAL_INFO": "البيانات الشخصية",
   "FIRST_NAME_AR": "الاسم الأول بالعربية",
@@ -705,5 +706,16 @@
     "QUESTION_TITLE_PLACEHOLDER": "نص السؤال",
     "SHOW_DETAILS": "تفاصيل التسجيل الصوتى"
   },
-  "NO_MATCHING": "لا توجد نتائج"
+  "NO_MATCHING": "لا توجد نتائج",
+  "STATISTICS": {
+    "school_group": "عدد مجموعات المدارس",
+    "school": "عدد المدارس",
+    "subscription": "عدد الإشتراكات",
+    "missions": "المهام",
+    "seasonal_missions": "المهام الموسمية",
+    "jeel_admins_user": "عدد مستخدمي إدارة المنظومة",
+    "package": "الباقات",
+    "library": "عناصر مكتبة الشراء",
+    "store_library": "عناصر مكتبة جيل"
+  }
 }

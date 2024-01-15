@@ -11,11 +11,47 @@
     color: $color-primary;
     padding: 0;
   }
-  .btn {
-    min-width: 195px;
-    padding: 0 !important;
-    height: 54px;
-    margin: 0 !important;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 24px 29px !important;
+    > .row {
+      gap: 1.5rem;
+    }
+    .text-field label {
+      margin: 0.7rem 0.7rem 0.6rem;
+    }
+    .form-group,
+    .text-field {
+      margin: 0;
+    }
+  }
+  h3.modal-title {
+    font-size: 1.25rem;
+  }
+
+  .buttons-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    .btn {
+      border-radius: 50px;
+      height: 45px;
+      margin: 0;
+      font-size: 1.2rem;
+      min-width: 150px;
+      padding: 0 !important;
+    }
+  }
+  .heading-section {
+    .btn {
+      min-width: 195px;
+      padding: 0 !important;
+      height: 54px;
+      margin: 0 !important;
+    }
   }
 }
 
