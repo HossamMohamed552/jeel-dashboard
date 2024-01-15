@@ -34,9 +34,8 @@
           </div>
         </b-col>
         <b-col lg="12">
-          <img :src="formValues.question_slug.question_type_image"
-               v-if="formValues.question_slug && formValues.question_slug.question_type_image"
-               class="question_img cover mb-3" alt="question image" @error="altImage">
+          <img v-if="formValues.question_slug === null" src="@/assets/images/bg/login.png" class="question_img cover mb-3" alt="question image">
+          <img :src="formValues.question_slug.question_type_image" v-if="formValues.question_slug && formValues.question_slug.question_type_image" class="question_img cover mb-3" alt="question image" @error="altImage">
         </b-col>
       </b-row>
       <b-row>
@@ -311,7 +310,7 @@ export default {
       this.$emit("getSubQuestionTypes", id);
     }, 100),
     altImage($event) {
-      $event.target.src = require("@/assets/images/bg/login.png")
+      $event.target.src = require("@/assets/images/logo-white.png")
     },
     setQuestionAudioId(keyName, $event) {
       this.formValues[keyName] = $event
