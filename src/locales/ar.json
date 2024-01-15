@@ -12,10 +12,12 @@
     "forgetPassword": "نسيت كلمة المرور ؟"
   },
   "USERS": {
-    "ADD_NEW": "إضافة مستخدم جديد",
+    "ADD_NEW": "إضافة مستخدم إدارة منظومة",
+    "ACTIVE": "فعال",
     "EDIT": "تعديل بيانات المستخدم",
     "USER_NAME": "إسم المستخدم",
     "FIRST_NAME": "الإسم الأول",
+    "SECOND_NAME": "الاسم الثاني",
     "LAST_NAME": "إسم العائلة",
     "EMAIL": "البريد الإلكترونى",
     "PASSWORD": "كلمة المرور",
@@ -23,14 +25,16 @@
     "SOCIAL_MEDIA": "رابط وسائل التواصل الإجتماعى",
     "ROLES": "الصلاحيات",
     "UPLOAD_IMAGE": "صورة المستخدم",
+    "NATIONALITY": "الجنسية",
     "showDetails": "تفاصيل المستخدم",
     "name": "اسم المستخدم",
     "first_name": "الاسم الاول",
-    "last_name": "الاسم الثانى",
-    "roles": "الصلاحية",
     "mobile": "الهاتف",
     "email": "البريد الإلكترونى",
     "gender": "النوع",
+    "DEPARTMENT": "الدور الوظيفي",
+    "ENTER": "أدخل",
+    "ENTER_LINK": "ادخل الرابط",
     "religion": "الديانة"
   },
   "MENU": {
@@ -49,7 +53,10 @@
   },
   "TABLE_FIELDS": {
     "id": "التسلسل",
+    "email_username": "البريد الإلكتروني (اسم المستخدم)",
     "name": "الإسم",
+    "block": "الحظر",
+    "not_block": "إلغاء الحظر",
     "avatar": "الصورة",
     "school_group": "اسم المجموعة",
     "email": "البريد الإلكترونى",
@@ -92,7 +99,20 @@
     "paperName": "اسم ورقة العمل",
     "paper_work_final_degree": "الدرجة",
     "bloom": "بلوم",
-    "learning_path_name": "اسم المسار"
+    "badge_name": "اسم الشارة",
+    "percentage_of": "نسبة من",
+    "percentage_to": "نسبة إلي",
+    "learning_path_name": "اسم المسار",
+    "character_name": "اسم الشخصية",
+    "character_logo": "صورة الشخصية",
+    "power_up_box_name": "اسم الصندوق",
+    "power_up_box_level": "الصف الدراسى",
+    "power_up_box_country": "الدولة",
+    "power_up_box_type": "النوع",
+    "power_up_box_appear_after_missions": "ظهور بعد",
+    "jeel_library_name": "الأسم",
+    "jeel_library_level": "الصف الدراسى",
+    "jeel_library_type": "النوع"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -103,7 +123,8 @@
     "addVideoQuestion": "اضافة اسئله الفيديو",
     "ManageClasses": "إداره الصفوف",
     "addAd": "إضافة إعلان",
-    "AddVideo": "إضافة أسئلة الفيديو"
+    "AddVideo": "إضافة أسئلة الفيديو",
+    "showDetails": "عرض تفاصيل صلاحية المستخدم"
   },
   "ROLES": {
     "ADD_NEW": "إضافة صلاحية",
@@ -117,6 +138,30 @@
     "ENTER_DEPARTMENT": "أدخل اسم الدور الوظيفي",
     "ENTER_DESCRIPTION": "أدخل الوصف",
     "showDetails": "تفاصيل دور وظيفي"
+  },
+  "BADGE": {
+    "ADD_NEW": "إضافة شارة جديدة",
+    "EDIT": "تعديل شارة",
+    "name": "إسم الشارة",
+    "NAME": "إسم الشارة",
+    "main_percentage": "نسبة من ",
+    "max_percentage": "نسبة الى",
+    "description": "الوصف",
+    "showDetails": "عرض تفاصيل الشاره",
+    "bade_logo": "لوجو الشارة",
+    "bade_details": "تفاصيل شارة جيل"
+  },
+  "CHARACTER": {
+    "ADD_NEW": "إضافة شخصية جديدة",
+    "EDIT": "تعديل الشخصية",
+    "name": "إسم الشخصية",
+    "NAME": "إسم الشخصية",
+    "description": "الوصف",
+    "showDetails": "عرض تفاصيل الشخصية",
+    "character_logo": "لوجو الشخصية",
+    "character_details": "تفاصيل الشخصية",
+    "country": "الدولة",
+    "type": "النوع"
   },
   "COUNTRY": {
     "ADD_NEW": "إضافة دولة جديدة",
@@ -297,7 +342,8 @@
     "selectQUESTION_SUB_PATTERN": "أختر نمط السؤال الفرعي",
     "STEP_ONE": "البيانات الاساسية",
     "STEP_TWO": "الآسئلة والإجابات",
-    "STEP_THREE": "معاينة السؤال",
+    "STEP_THREE": "محتوى انجاز المهمه",
+    "STEP_FOUR": "مراجعة المحتوى المهمة",
     "ANSWER_TYPE": "نوع الإجابة",
     "ANSWER": "الإجابة",
     "HINT": "التلميح",
@@ -367,7 +413,11 @@
     "description": "الوصف",
     "content": "المحتوى",
     "ShowDetails": "عرض تفاصيل المهمة",
-    "UPLOAD_IMAGE": "صورة المهمة"
+    "UPLOAD_IMAGE": "صورة المهمة",
+    "BadgeContentType": "نوع المحتوى",
+    "BadgeContent": "المحتوى",
+    "BadgeAdd": "اضافة",
+    "UPLOAD_AUDIO": "صوت المهمه"
   },
   "LESSONS": {
     "LESSONS": "الدروس",
@@ -382,7 +432,7 @@
   },
   "QUIZZES": {
     "EDIT": "تعديل التمرين",
-    "ADD_NEW": "إضافة تمرين جديد",
+    "ADD_NEW": "إضافة تمرين",
     "name": "إسم التمرين",
     "level": "السنة الدراسية",
     "LEARNING_PATH": "المسار",
@@ -503,6 +553,7 @@
   "USER": {
     "showDetails": "عرض تفاصيل المستخدم",
     "first_name": "الاسم الأول",
+    "second_name": "الاسم الثانى",
     "last_name": "الاسم الثانى",
     "name": "الاسم",
     "email": "البريد الإلكترونى",
@@ -511,6 +562,7 @@
     "role": "الدور",
     "student_action_histories": "تاريخ عمل الطالب",
     "user_credits": "رصيد المستخدم",
+    "EDIT_MY_PROFILE": "تعديل الملف الشخصي",
     "level": "مرحلة",
     "xp": "xp",
     "gems": "gems",
@@ -678,5 +730,14 @@
     "package": "الباقات",
     "library": "عناصر مكتبة الشراء",
     "store_library": "عناصر مكتبة جيل"
+  },
+  "SOCIAL_MEDIA": {
+    "FACEBOOK": "فيس بوك",
+    "TWITTER": "تويتر",
+    "LINKEDIN": "لينكدان"
+  },
+  "BUTTONS": {
+    "EDIT": "تغيير",
+    "DELETE": "حذف"
   }
 }
