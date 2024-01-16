@@ -88,6 +88,7 @@
                         :name="$t('USERS.EMAIL')"
                         :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.EMAIL')"
                         :rules="'required|email'"
+                        disabled
                       ></TextField>
                     </div>
                   </b-col>
