@@ -27,6 +27,7 @@ export default {
   methods:{
     handleAddSubscribtion($event) {
       this.loading = true
+      $event.clone =  $event.clone ? 1 : 0
       this.ApiService(postSubscribtionsRequest($event)).then((response) => {
         this.loading = false
         this.showModal = true
