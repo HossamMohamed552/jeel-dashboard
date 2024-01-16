@@ -10,12 +10,11 @@
 </template>
 <script>
 import AddEditRole from "@/components/Modules/Users/AddEditRole/index.vue";
-import {putRoleRequest} from "@/api/role";
-import {getPermissionRequest} from "@/api/permission";
+import { putRoleRequest } from "@/api/role";
 
 export default {
   name: "index",
-  components: {AddEditRole},
+  components: { AddEditRole },
   data() {
     return {
       permission: [],
@@ -26,22 +25,15 @@ export default {
     this.getAllPermissions();
   },
   methods: {
-    getAllPermissions() {
-      this.ApiService(getPermissionRequest()).then((response) => {
-        this.permission = response.data.data;
-      });
-    },
     handleEditRole($event) {
       this.ApiService(putRoleRequest(this.$route.params.id, $event)).then((response) => {
         this.$router.push("/dashboard/role");
-      })
+      });
     },
     handleCancel() {
       this.$router.push("/dashboard/role");
     },
   },
-}
+};
 </script>
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
