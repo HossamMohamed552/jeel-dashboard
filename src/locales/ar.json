@@ -135,6 +135,7 @@
     "CATEGORIES": "التصنيف",
     "DEPARTMENT": "اسم الدور الوظيفي",
     "ADD_DEPARTMENT": "إضافة دور وظيفي",
+    "CLASSIFICATION_DEPARTMENT": "تصنيف الدور الوظيفي",
     "EDIT_DEPARTMENT": "تعديل دور وظيفي",
     "ENTER_DEPARTMENT": "أدخل اسم الدور الوظيفي",
     "ENTER_DESCRIPTION": "أدخل الوصف",
