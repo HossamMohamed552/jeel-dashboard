@@ -615,7 +615,10 @@ export default {
         return "hide";
       } else if (this.activePage === "practices") {
         return "hide";
-      } else if (this.user.permissions.includes(`${this.permission_edit}`)) {
+      } else if (this.activePage === "missions") {
+        return "hide";
+      }
+      else if (this.user.permissions.includes(`${this.permission_edit}`)) {
         return "show";
       } else {
         return "hide";

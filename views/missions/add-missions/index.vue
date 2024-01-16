@@ -290,7 +290,6 @@ export default {
       });
       console.log(this.collectData);
       this.loading = true;
-      this.showModal = true;
       axios
         .post("/missions", formData, {
           headers: {
@@ -301,11 +300,15 @@ export default {
         })
         .then((res) => {
           this.loading = false;
+          this.showModal = true;
           setTimeout(() => {
             this.showModal = false;
           }, 3000);
           this.$router.push("/dashboard/missions");
-        });
+        }).catch(()=>{
+        this.loading = false;
+        this.showModal = false;
+      })
     },
     handleAssignObject(data) {
       Object.assign(this.collectData, { ...data });
