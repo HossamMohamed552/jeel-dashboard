@@ -69,17 +69,11 @@ export default {
     },
     async downloadFile() {
       try {
-        const response = await axios({
-          url: this.imageUrl,
-          method: "GET",
-          responseType: "blob",
-        });
-        const blob = new Blob([response.data]);
-
         const link = document.createElement("a");
 
-        link.href = window.URL.createObjectURL(blob);
+        link.href = this.imageUrl;
         link.download = this.mediaName;
+        link.target = "_blank";
 
         link.click();
       } catch (error) {
