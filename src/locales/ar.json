@@ -418,7 +418,8 @@
     "BadgeContentType": "نوع المحتوى",
     "BadgeContent": "المحتوى",
     "BadgeAdd": "اضافة",
-    "UPLOAD_AUDIO": "صوت المهمه"
+    "UPLOAD_AUDIO": "صوت المهمه",
+    "tasks": "التسجيلات الصوتيه"
   },
   "LESSONS": {
     "LESSONS": "الدروس",

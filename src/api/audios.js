@@ -5,8 +5,8 @@ export const getAudiosRequest = (params) => ({
 });
 export const getAudioPerLevelPathRequest = (params) => ({
   method: "get",
-  url: `tasks?&learning_path_id=${params.learnPathId}&list_all=ture`,
-  config: {},
+  url: `tasks`,
+  config: {params},
   // level_id=${params.levelId}&learning_path_id=${params.learnPathId}&term_id=${params.termId}
 });
 export const getSingleAudioRequest = (params) => ({
