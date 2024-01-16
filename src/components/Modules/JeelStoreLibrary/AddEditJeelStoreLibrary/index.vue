@@ -9,7 +9,7 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
-                      v-model="createItem.gems_count"
+                      v-model="createItem.file_name"
                       :label="'اسم المحتوى'"
                       :name="'اسم المحتوى'"
                       placeholder="أختر المحتوى"
@@ -39,7 +39,7 @@
                 <div class="hold-field">
                   <TextField
                       type="number"
-                      v-model="createItem.file_name"
+                      v-model="createItem.gems"
                       :label="'عدد الجيمز'"
                       :name="'عدد الجيمز'"
                       placeholder="أختر عدد الجيمز"
@@ -108,7 +108,7 @@
               </b-col>
 
               <!------------------- start file audio --------------------------------->
-              <b-col lg="6" v-if="createItem.type==111" class="mb-3 mt-4">
+              <b-col lg="6" v-if="createItem.type==145" class="mb-3 mt-4">
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.audioChangedRequest"
                   :type-of-attachment="'audio'"
@@ -139,7 +139,7 @@
               </b-col>
               <!------------------- end  file audio --------------------------------->
               <!------------------- start file image --------------------------------->
-              <b-col lg="6" v-if="createItem.type==112" class="mb-3 mt-4">
+              <b-col lg="6" v-if="createItem.type==146" class="mb-3 mt-4">
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.imageChangedRequest"
                   :rules="'required'"
@@ -169,7 +169,7 @@
               <!------------------- end file image --------------------------------->
 
               <!------------------- start video 1  --------------------------------->
-              <b-col lg="6"  v-if="createItem.type==113" class="mb-3 mt-4">
+              <b-col lg="6"  v-if="createItem.type==147" class="mb-3 mt-4">
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.videoWithOutMuiscChangedRequest"
                   :type-of-attachment="'video'"
@@ -202,7 +202,7 @@
               <!------------------- end video 1 --------------------------------->
 
               <!------------------- start video 2 --------------------------------->
-              <b-col lg="6"  v-if="createItem.type==113" class="mb-3 mt-4">
+              <b-col lg="6"  v-if="createItem.type==147" class="mb-3 mt-4">
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.videoWithMuiscChangedRequest"
                   :type-of-attachment="'video'"
@@ -234,32 +234,54 @@
               </b-col>
               <!------------------- end 2 --------------------------------->
 
-              <b-col lg="12" class="mb-3" v-if="createItem.type==116">
+              <!------------------- start pdf --------------------------------->
+              <b-col lg="6"  v-if="createItem.type==148" class="mb-3 mt-4">
+                <UploadAttachment
+                  v-if="!$route.params.id || attachment.fileChangedRequest"
+                  :type-of-attachment="'file'"
+                  :label="'ملف المحتوي '"
+                  :name="'File'"
+                  :dropIdRef="'File'"
+                  :accept-files="'.pdf'"
+                  @setFileId="setFileId"
+                />
+
+
+                <PreviewMedia
+                  v-if="
+                    $route.params.id &&
+                    attachment.fileChanged === false &&
+                    !attachment.fileChangedRequest
+                  "
+                  :header="`${$t('BADGE.bade_logo')}`"
+                  :media-name="attachment.file_name"
+                  :file-size="attachment.file_size"
+                  :image-url="attachment.file"
+                  :typeOfMedia="'file'"
+                  :show-remove-button="true"
+                  @removeFile="
+                    removeFile('file', 'fileChanged', 'fileChangedRequest')
+                  "
+                  @showModal="showModal(createItem,'videoWithMusic')"
+                />
+              </b-col>
+              <!------------------- end --------------------------------->
+
+              <b-col lg="12" class="mb-3" v-if="createItem.type==150">
                 <div class="hold-field">
                   <TextAreaField
-                    v-if="createItem.type==116"
+                    v-if="createItem.type==150"
                     :label="'اكتب ملحوظة'"
                     :rules="'required|min:3|max:250'"
-                    v-model="createItem.description"
+                    v-model="createItem.note"
                   />
-
-<!--                  <label>الوصف</label>-->
-<!--                  <b-form-textarea-->
-
-<!--                    id="textarea"-->
-<!--                    v-model="createItem.description"-->
-<!--                    placeholder="اكتب ملحوظة"-->
-<!--                    rows="3"-->
-<!--                    max-rows="6"-->
-<!--                  ></b-form-textarea>-->
 
                 </div>
               </b-col>
 
-              <b-col lg="6" class="mb-3">
+              <b-col lg="6" class="mb-3" v-if="createItem.type == 151 || createItem.type == 149">
                 <div class="hold-field">
                   <TextField
-                    v-if="createItem.type==117 || createItem.type==115 || createItem.type==114"
                     v-model="createItem.link"
                     :label="'رابط'"
                     :name="'رابط'"
@@ -312,6 +334,10 @@
             <img :src="attachment.thumbnail" class="image-modal" />
           </div>
 
+          <div class="height-modal" v-if=" typeOfAttachment=='file'">
+            <input type="file" :value="attachment.file" class="image-modal" />
+          </div>
+
           <audio :src="audioUrl"  v-if=" typeOfAttachment =='audio'"
                  ref="player"
                  autoplay="autoplay"
@@ -352,7 +378,7 @@ import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import {getAllLevelsRequest} from "@/api/level";
 import {getJeelStoreLibraryByIdRequest} from "@/api/jeel-store-library";
-import {getLibraryTypeRequest} from "@/api/system";
+import {getStoreLibraryTypeRequest} from "@/api/system";
 
 export default {
   components: {
@@ -379,21 +405,16 @@ export default {
   data() {
     return {
       levels: [],
-      types: [
-        // {id: 1, name: "صوت",},
-        // {id: 2, name: "فيديو ",},
-        // {id: 3, name: "صورة",},
-        // {id: 4, name: "نص",},
-        // {id: 5, name: "رابط",},
-      ],
+      types: [],
       typeOfAttachment:null,
       imageUrl:null,
       audioUrl:null,
       videoUrl:null,
+      fileUrl: null,
       createItem: {
         level_id: "",
         file_name: "",
-        gems_count: "",
+        gems: "",
         link: "",
         type: null,
         image: "",
@@ -403,6 +424,8 @@ export default {
         audio: "",
         file: "",
 
+        // note
+        note: null
       },
       attachment:{
         //  thumbnail
@@ -410,17 +433,20 @@ export default {
         thumbnailChanged: false,
         thumbnailChangedRequest: false,
 
-
         //  image
         image: null,
         imageChanged: false,
         imageChangedRequest: false,
 
-
         //  audio
         audio: null,
         audioChanged: false,
         audioChangedRequest: false,
+
+        //  file
+        file: null,
+        fileChanged: false,
+        fileChangedRequest: false,
 
         //  video_with_muisc
         videoWithMuisc: null,
@@ -434,7 +460,6 @@ export default {
 
       },
       finalSelected: [],
-      isDefault: 0,
     };
   },
   methods: {
@@ -447,8 +472,6 @@ export default {
     },
 
     setImageId(id) {
-      console.log('image');
-      console.log(id);
       this.attachment.image = id;
       this.createItem.image = id;
       this.attachment.imageChanged = false;
@@ -476,6 +499,13 @@ export default {
       this.attachment.videoWithMuiscChangedRequest = true;
     },
 
+    setFileId(id) {
+      this.attachment.file = id;
+      this.createItem.file = id;
+      this.attachment.fileChanged = false;
+      this.attachment.fileChangedRequest = true;
+    },
+
     removeFile(fileName, fileChange, fileRequest) {
       this.createItem[fileName] = null;
       this.createItem[fileChange] = true;
@@ -486,9 +516,6 @@ export default {
       this.$bvModal.show('holdContent');
 
       this.typeOfAttachment = typeOfAttachment;
-
-      // console.log(item,typeOfAttachment);
-
       //videoWithMusic , logo ,videoWithOutMusic ,image ,audio
 
       if (typeOfAttachment === 'videoWithMusic') {
@@ -505,6 +532,9 @@ export default {
       }
       else if (typeOfAttachment === 'image') {
         this.imageUrl = this.attachment.image
+      }
+      else if (typeOfAttachment === 'file') {
+        this.fileUrl = this.attachment.file
       }
 
     },
@@ -547,7 +577,6 @@ export default {
           this.attachment.thumbnail_size = response.data.data.logo_size;
           this.attachment.thumbnail = response.data.data.logo;
 
-          this.isDefault = this.createItem.is_default;
         });
       }
     },
@@ -559,7 +588,7 @@ export default {
     },
 
     getAllLibraryTypes() {
-      this.ApiService(getLibraryTypeRequest()).then((response) => {
+      this.ApiService(getStoreLibraryTypeRequest()).then((response) => {
         this.types = response.data.data;
       });
     },
