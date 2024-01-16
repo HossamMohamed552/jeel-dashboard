@@ -10,9 +10,10 @@
                :permission_delete="'delete-missions'"
                :permission_edit="'edit-missions'"
                :permission_view="'show-missions'"
-               >
+    >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddMissions" v-if="user.permissions.includes(`add-missions`)">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddMissions"
+                v-if="user.permissions.includes(`add-missions`)">
           <img src="@/assets/images/icons/plus.svg">
           <span>إضافة مهمة جديد</span>
         </Button>
@@ -34,13 +35,13 @@ import {deleteMissionsRequest, getMissionsRequest} from "@/api/missios";
 import {getLevelsRequest} from "@/api/level";
 import {mapGetters} from "vuex";
 
-export default{
+export default {
   name: "index",
   components: {Modal, ListItems, Button},
-  computed:{
+  computed: {
     ...mapGetters(['user'])
   },
-  data(){
+  data() {
     return {
       loading: false,
       showModal: false,
@@ -57,8 +58,8 @@ export default{
       ],
     }
   },
-  methods:{
-    goToAddMissions(){
+  methods: {
+    goToAddMissions() {
       this.$router.push('/dashboard/missions/add')
     },
     getMissions(event) {
@@ -67,9 +68,9 @@ export default{
       this.ApiService(getMissionsRequest(params)).then((response) => {
         this.missionsList = response.data.data
         this.totalNumber = response.data.meta.total
-      }) .finally(() => {
-          this.loading = false;
-        });
+      }).finally(() => {
+        this.loading = false;
+      });
     },
     searchBy($event) {
 
@@ -96,6 +97,10 @@ export default{
   },
   mounted() {
     this.getMissions()
+    window.localStorage.setItem("page", "missions");
+  },
+  beforeDestroy() {
+    window.localStorage.setItem("page", "");
   }
 }
 </script>
