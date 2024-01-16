@@ -262,7 +262,7 @@
                   @removeFile="
                     removeFile('file', 'fileChanged', 'fileChangedRequest')
                   "
-                  @showModal="showModal(createItem,'videoWithMusic')"
+                  @showModal="showModal(createItem,'file')"
                 />
               </b-col>
               <!------------------- end --------------------------------->
@@ -568,7 +568,7 @@ export default {
         this.ApiService(getJeelStoreLibraryByIdRequest(this.$route.params.id)).then((response) => {
 
           this.createItem = response.data.data;
-          // this.createItem.name= response.data.data.name;
+          this.createItem.level_id= response.data.data.level.id;
 
           //
           // logo: null,
