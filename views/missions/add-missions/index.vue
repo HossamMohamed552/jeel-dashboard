@@ -25,11 +25,11 @@
       @handleBack="goToMissionDataForm"
       @handleCancel="handleCancel"
       @goToMissionContentStep="goToMissionContentStep"/>
-      <AddEditCompleteTaskContent 
+      <AddEditCompleteTaskContent
         v-if="currentStep === 2"
         @goToFinalStep="goToFinalStep"
         @handleBack="backToMissionContentStep"
-        @handleCancel="handleCancel"  
+        @handleCancel="handleCancel"
       />
     <div class="container-fluid custom-container" v-if="currentStep === 3">
       <div class="mission-review ">
@@ -173,10 +173,10 @@ export default {
           icon: "3",
           title: this.$t("MISSIONS.STEP_THREE"),
         },
-        {
-          icon: "4",
-          title: this.$t("MISSIONS.STEP_FOUR"),
-        }
+        // {
+        //   icon: "4",
+        //   title: this.$t("MISSIONS.STEP_FOUR"),
+        // }
       ],
       currentStep: 0,
       learningPathSelected: [],
@@ -203,10 +203,10 @@ export default {
     backToFillContent() {
       this.handleNavigation(1);
     },
-    backToMissionContentStep() { 
+    backToMissionContentStep() {
       this.handleNavigation(2);
     },
-    goToMissionContentStep(data) { 
+    goToMissionContentStep(data) {
       Object.assign(this.collectData, { paths: [...data] });
       this.handleSaveCollectedData(data);
       this.handleNavigation(2);
@@ -224,10 +224,10 @@ export default {
       formData.append("data_range", this.collectData.duration);
       formData.append("description", this.collectData.description);
       formData.append("term_id", this.collectData.term_id);
-      
+
       for (let index = 0; index < this.collectData.lessons_ids.length; index++) {
         const lesson = this.collectData.lessons_ids[index];
-        formData.append(`lessons[${index}]`, lesson);  
+        formData.append(`lessons[${index}]`, lesson);
       }
       if (this.collectData.thumbnail)
         formData.append("mission_image", this.collectData.thumbnail);
