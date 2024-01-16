@@ -39,7 +39,17 @@ const protectedRoutes = [
         name: "add-role",
         component: () => import("../../views/role/add-role/index.vue"),
         meta: {
-          breadcrumb: "إضافة صلاحية",
+          breadcrumb: "إضافة دور وظيفي",
+          preLabel: "صلاحيات النظام",
+          preLink: "/dashboard/role",
+        },
+      },
+      {
+        path: "/dashboard/role/permission/:id",
+        name: "permission",
+        component: () => import("../../views/role/permission/index.vue"),
+        meta: {
+          breadcrumb: "الصلاحيات",
           preLabel: "صلاحيات النظام",
           preLink: "/dashboard/role",
         },
@@ -59,7 +69,7 @@ const protectedRoutes = [
         name: "edit-role",
         component: () => import("../../views/role/edit-role/index.vue"),
         meta: {
-          breadcrumb: "تعديل الصلاحية",
+          breadcrumb: "تعديل دور وظيفي",
           preLabel: "صلاحيات النظام",
           preLink: "/dashboard/role",
         },
