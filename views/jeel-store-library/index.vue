@@ -99,7 +99,7 @@ export default {
                 (item) => {
                   return {
                     id: item.id,
-                    name: item.name,
+                    name: item.file_name,
                     level: item.level,
                     gems: item.gems,
                     type: item.type.name,

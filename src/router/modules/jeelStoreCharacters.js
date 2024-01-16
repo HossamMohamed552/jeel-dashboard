@@ -1,42 +1,42 @@
 export default [
     {
-        path: "/dashboard/characters",
+        path: "/dashboard/jeel-store-character",
         name: "characters",
-        component: () => import("../../../views/characters/index.vue"),
+        component: () => import("../../../views/jeel-store-character/index.vue"),
         meta: {
-            breadcrumb: "الشخصيات",
+            breadcrumb: "شخصيات الشراء",
             preLabel: "",
             preLink: "",
         },
     },
     {
-        path: "/dashboard/characters/add",
+        path: "/dashboard/jeel-store-character/add",
         name: "add-character",
-        component: () => import("../../../views/characters/add-character/index.vue"),
+        component: () => import("../../../views/jeel-store-character/add-character/index.vue"),
         meta: {
           breadcrumb: "إضافة شخصية جديدة",
-          preLabel: "الشخصيات",
-          preLink: "/dashboard/characters",
+          preLabel: "شخصيات الشراء",
+          preLink: "/dashboard/jeel-store-character",
         },
     },
     {
-      path: "/dashboard/characters/edit/:id",
+      path: "/dashboard/jeel-store-character/edit/:id",
       name: "edit-character",
-      component: () => import("../../../views/characters/edit-character/index.vue"),
+      component: () => import("../../../views/jeel-store-character/edit-character/index.vue"),
       meta: {
         breadcrumb: "تعديل الشخصية",
-        preLabel: "الشخصيات",
-        preLink: "/dashboard/characters",
+        preLabel: "شخصيات الشراء",
+        preLink: "/dashboard/jeel-store-character",
       },
     },
     {
-      path: "/dashboard/characters/show/:id",
+      path: "/dashboard/jeel-store-character/show/:id",
       name: "show-character",
-      component: () => import("../../../views/characters/view-character/index.vue"),
+      component: () => import("../../../views/jeel-store-character/view-character/index.vue"),
       meta: {
         breadcrumb: "تفاصيل الشخصية",
-        preLabel: "الشخصيات",
-        preLink: "/dashboard/characters",
+        preLabel: "شخصيات الشراء",
+        preLink: "/dashboard/jeel-store-character",
       },
     },
 

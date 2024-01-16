@@ -1,18 +1,19 @@
 <template>
   <div class="add-role">
     <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
-    <AddEditCharacter :loading="loading" @handleAddCharacter="handleAddCharacter($event)" @handleCancel="handleCancel" />
+    <AddEditStoreCharacter :loading="loading" @handleAddStoreCharacter="handleAddStoreCharacter($event)"
+      @handleCancel="handleCancel" />
   </div>
 </template>
 <script>
-import AddEditCharacter from "@/components/Modules/Characters/AddEditCharacter/index.vue";
-import { postAddCharacterRequest } from "@/api/character";
+import AddEditStoreCharacter from "@/components/Modules/JeelStoreCharacters/AddEditCharacter/index.vue";
+import { postAddCharacterRequest } from "@/api/jeel-store-character";
 import Modal from "@/components/Shared/Modal/index.vue";
 
 export default {
   components: {
     Modal,
-    AddEditCharacter,
+    AddEditStoreCharacter
   },
   data() {
     return {
@@ -22,7 +23,7 @@ export default {
   },
   mounted() { },
   methods: {
-    handleAddCharacter($event) {
+    handleAddStoreCharacter($event) {
       this.loading = true;
       this.ApiService(postAddCharacterRequest($event))
         .then((response) => {
@@ -30,7 +31,7 @@ export default {
           this.showModal = true;
           setTimeout(() => {
             this.showModal = false;
-            this.$router.push("/dashboard/characters");
+            this.$router.push("/dashboard/jeel-store-character");
           }, 3000);
         })
         .finally(() => {
@@ -38,7 +39,7 @@ export default {
         });
     },
     handleCancel() {
-      this.$router.push("/dashboard/characters");
+      this.$router.push("/dashboard/jeel-store-character");
     },
   },
 };
