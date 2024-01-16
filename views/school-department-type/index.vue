@@ -11,15 +11,15 @@
       @deleteItem="deleteItem($event)"
       @refetch="getSchoolDepartmentsTypes"
       :loading="loading"
-      :permission_delete="'delete-languageSkill'"
-      :permission_edit="'edit-languageSkill'"
-      :permission_view="'show-languageSkill'"
+      :permission_delete="'delete-management-types'"
+      :permission_edit="'edit-management-types'"
+      :permission_view="'show-management-types'"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddSchoolDepartmentType"
-          v-if="user.permissions.includes(`add-languageSkill`)"
+          v-if="user.permissions.includes(`add-management-types`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
           <span>إضافة نوع ادارة </span>

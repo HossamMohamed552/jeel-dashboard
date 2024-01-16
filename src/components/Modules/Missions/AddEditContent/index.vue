@@ -134,7 +134,8 @@ export default {
       collectArray: [],
       loading: false,
       watchLearningPathSelected: [],
-      learnPathsVideoPaperWokQuiz: []
+      learnPathsVideoPaperWokQuiz: [],
+      filterWith: {}
     }
   },
   methods: {
@@ -163,8 +164,8 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              videos: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)),
-              videoIds: [...item.videos.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
+              videos: response.data.data.filter(itemData => this.lessonsSelected.includes(itemData.lesson.id)),
+              videoIds: [...item.videos.filter(itemData => this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
             })
           })
           this.ApiService(getPaperWorkPerLevelPathRequest({
@@ -173,8 +174,8 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              paperWorks: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)),
-              paperWorkIds: [...item.papersWork.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
+              paperWorks: response.data.data.filter(itemData => this.lessonsSelected.includes(itemData.lesson.id)),
+              paperWorkIds: [...item.papersWork.filter(itemData => this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
             })
           })
           this.ApiService(getQuizLevelPathRequest({
@@ -183,8 +184,8 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData?.lesson?.id)),
-              quizzesIds: [...item.quizzes.filter(itemData=>this.lessonsSelected.includes(itemData?.lesson?.id)).map(item => item.id)]
+              quizzes: response.data.data.filter(itemData => this.lessonsSelected.includes(itemData?.lesson?.id)),
+              quizzesIds: [...item.quizzes.filter(itemData => this.lessonsSelected.includes(itemData?.lesson?.id)).map(item => item.id)]
             })
           })
           this.ApiService(getAudioPerLevelPathRequest({
@@ -193,8 +194,8 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              tasks: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData?.lesson?.id)),
-              tasksIds: [...item.tasks.filter(itemData=>this.lessonsSelected.includes(itemData?.lesson?.id)).map(item => item.id)]
+              tasks: response.data.data.filter(itemData => this.lessonsSelected.includes(itemData?.lesson?.id)),
+              tasksIds: [...item.tasks.filter(itemData => this.lessonsSelected.includes(itemData?.lesson?.id)).map(item => item.id)]
             })
           })
           // this.ApiService(getAudioPerLevelPathRequest({
@@ -215,7 +216,10 @@ export default {
             learnPathId: item.id,
             // termId: this.term
           })).then((response) => {
-            Object.assign(item, {videos: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), videoIds: []})
+            Object.assign(item, {
+              videos: response.data.data.filter(itemData => this.lessonsSelected.includes(itemData.lesson.id)),
+              videoIds: []
+            })
           })
           this.ApiService(getPaperWorkPerLevelPathRequest({
             // levelId: this.level,
@@ -223,7 +227,7 @@ export default {
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              paperWorks: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)),
+              paperWorks: response.data.data.filter(itemData => this.lessonsSelected.includes(itemData.lesson.id)),
               paperWorkIds: []
             })
           })
@@ -232,14 +236,20 @@ export default {
             learnPathId: item.id,
             // termId: this.term
           })).then((response) => {
-            Object.assign(item, {quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData?.lesson?.id)), quizzesIds: []})
+            Object.assign(item, {
+              quizzes: response.data.data.filter(itemData => this.lessonsSelected.includes(itemData?.lesson?.id)),
+              quizzesIds: []
+            })
           })
           this.ApiService(getAudioPerLevelPathRequest({
             // levelId: this.level,
             learnPathId: item.id,
             // termId: this.term
           })).then((response) => {
-            Object.assign(item, {quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData?.lesson?.id)), tasksIds: []})
+            Object.assign(item, {
+              quizzes: response.data.data.filter(itemData => this.lessonsSelected.includes(itemData?.lesson?.id)),
+              tasksIds: []
+            })
           })
           this.ApiService(getAudioPerLevelPathRequest({
             // levelId: this.level,
@@ -254,42 +264,70 @@ export default {
     } else {
       this.watchLearningPathSelected = this.learningPathSelected
       let collectArray = []
+      for (let lesson = 0; lesson < this.lessonsSelected.length; lesson++) {
+        this.filterWith[`lessons[${lesson}]`] = this.lessonsSelected[lesson]
+      }
       this.watchLearningPathSelected.forEach((item) => {
         this.ApiService(getVideoPerLevelPathRequest({
           // levelId: this.level,
           learnPathId: item.id,
+          ...this.filterWith,
+          'list_all': 'true'
           // termId: this.term
         })).then((response) => {
-          Object.assign(item, {videos: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), videoIds: []})
+          Object.assign(item, {
+            videos: response.data.data,
+            videoIds: []
+          })
         })
         this.ApiService(getPaperWorkPerLevelPathRequest({
           // levelId: this.level,
           learnPathId: item.id,
+          ...this.filterWith,
+          'list_all': 'true'
           // termId: this.term
         })).then((response) => {
-          Object.assign(item, {paperWorks: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), paperWorkIds: []})
+          Object.assign(item, {
+            paperWorks: response.data.data,
+            paperWorkIds: []
+          })
         })
         this.ApiService(getQuizLevelPathRequest({
           // levelId: this.level,
           learnPathId: item.id,
+          ...this.filterWith,
+          'list_all': 'true'
           // termId: this.term
         })).then((response) => {
-          Object.assign(item, {quizzes: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData?.lesson?.id)), quizzesIds: []})
+          // let lessonsId = response.data.data.map((item)=>{
+          //   return item.lessons.map((ids)=>{
+          //     return ids.id
+          //   })
+          // })
+          Object.assign(item, {
+            quizzes: response.data.data,
+            quizzesIds: []
+          })
         })
         this.ApiService(getAudioPerLevelPathRequest({
           // levelId: this.level,
           learnPathId: item.id,
+          ...this.filterWith,
+          'list_all': 'true'
           // termId: this.term
         })).then((response) => {
-          Object.assign(item, {tasks: response.data.data.filter(itemData=>this.lessonsSelected.includes(itemData.lesson.id)), tasksIds: []})
+          Object.assign(item, {
+            tasks: response.data.data,
+            tasksIds: []
+          })
         })
-        this.ApiService(getAudioPerLevelPathRequest({
-          // levelId: this.level,
-          learnPathId: item.id,
-          // termId: this.term
-        })).then((response) => {
-          Object.assign(item, {tasks: response.data.data, tasksIds: []})
-        })
+        // this.ApiService(getAudioPerLevelPathRequest({
+        //   // levelId: this.level,
+        //   learnPathId: item.id,
+        //   // termId: this.term
+        // })).then((response) => {
+        //   Object.assign(item, {tasks: response.data.data, tasksIds: []})
+        // })
         collectArray.push(item)
       })
       this.learnPathsVideoPaperWokQuiz = collectArray

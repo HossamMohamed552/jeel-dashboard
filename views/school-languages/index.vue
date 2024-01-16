@@ -11,16 +11,16 @@
       @deleteItem="deleteItem($event)"
       @refetch="getSchoolLanguages"
       :loading="loading"
-      :permission_delete="'delete-languageSkill'"
-      :permission_edit="'edit-languageSkill'"
-      :permission_view="'show-languageSkill'"
+      :permission_delete="'delete-languages'"
+      :permission_edit="'edit-languages'"
+      :permission_view="'show-languages'"
     >
       <!-- todo tooo check the permission above and for the button -->
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddSchoolLanguage"
-          v-if="user.permissions.includes(`add-languageSkill`)"
+          v-if="user.permissions.includes(`add-languages`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
           <span>إضافة لغة </span>

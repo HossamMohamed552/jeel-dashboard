@@ -705,6 +705,7 @@ export default {
         lessons: this.createQuiz.lessons,
         learning_styles: this.createQuiz.learning_styles,
         language_skills: this.createQuiz.language_skills,
+        blooms: this.createQuiz.blooms,
         question_difficuly: [
           {
             question_difficulty_id: 1,

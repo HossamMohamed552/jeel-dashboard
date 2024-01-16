@@ -102,7 +102,7 @@
                     <label>
                       تاريخ بدء الإشتراك
                       <span><i class="fa-solid fa-asterisk"></i></span
-                    ></label>
+                      ></label>
 
                     <date-picker
                       placeholder="أختر تاريخ بدء الإشتراك"
@@ -138,6 +138,15 @@
                     </p>
                   </ValidationProvider>
                 </div>
+              </b-col>
+              <b-col lg="4" class="mb-3">
+                <ValidationProvider rules="required">
+                  <label class="invisible mt-4">
+                    تاريخ نهاية الإشتراك
+                    <span><i class="fa-solid fa-asterisk"></i></span>
+                  </label>
+                  <b-form-checkbox v-model="formValues.clone">نسخ المهام الدراسية</b-form-checkbox>
+                </ValidationProvider>
               </b-col>
             </b-row>
             <b-row class="mt-4">
@@ -211,22 +220,22 @@
 <script>
 import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import { getSingleSubscriptionsRequest } from "@/api/subscription.js";
+import {getSingleSubscriptionsRequest} from "@/api/subscription.js";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { getAllRolesRequest, getAllRolesSystemRequest } from "@/api/user";
-import { getAllCountryRequest } from "@/api/country";
+import {getAllRolesRequest, getAllRolesSystemRequest} from "@/api/user";
+import {getAllCountryRequest} from "@/api/country";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
-import { getCurrencyRequest } from "@/api/currency";
+import {getCurrencyRequest} from "@/api/currency";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/locale/en";
 import "vue2-datepicker/index.css";
-import { getAllSchoolGroupRequest } from "@/api/schoolGroup";
-import { getSchoolsRequest } from "@/api/school";
-import { getSchoolYearRequest } from "@/api/school-year";
-import { debounce } from "lodash";
-import { getAllTermsRequest } from "@/api/term";
-import { getPackagesRequest } from "@/api/packages.js";
-import { getLevelsRequest } from "@/api/level";
+import {getAllSchoolGroupRequest} from "@/api/schoolGroup";
+import {getSchoolsRequest} from "@/api/school";
+import {getSchoolYearRequest} from "@/api/school-year";
+import {debounce} from "lodash";
+import {getAllTermsRequest} from "@/api/term";
+import {getPackagesRequest} from "@/api/packages.js";
+import {getLevelsRequest} from "@/api/level";
 
 export default {
   components: {
@@ -255,6 +264,8 @@ export default {
       selectedPrice: 0,
       selectedCurrency: "",
       discountValueForUpdate: "",
+      en: "en",
+      showDate: true,
       formValues: {
         school_group_id: "",
         school_id: "",
@@ -267,6 +278,7 @@ export default {
         terms: [],
         start_subscription: "",
         end_subscription: "",
+        clone: false
       },
       subscribtionId: this.$route.params.id,
       currencyList: [],
@@ -283,6 +295,12 @@ export default {
         this.$emit("handleAddSubscribtion", this.formValues);
       }
     },
+    changeDate() {
+      this.showDate = false;
+    },
+    disabledBeforeToday(date) {
+      return date < new Date(new Date().setHours(0, 0, 0, 0));
+    },
     handleCancel() {
       this.$emit("handleCancel");
     },
@@ -292,7 +310,7 @@ export default {
           .then((response) => {
             const responseObj = response.data.data;
             this.formValues.country_id = responseObj.country.id;
-            this.formValues.levels = responseObj.levels;
+            this.formValues.levels = responseObj.levels.map((item)=> item.id);
             this.formValues.package_id = responseObj.package.id;
             this.discountValueForUpdate = responseObj.package_discount;
             this.formValues.package_discount = responseObj.package_discount;
@@ -307,12 +325,12 @@ export default {
             this.formValues.start_subscription = responseObj.start_subscription;
             this.formValues.end_subscription = responseObj.end_subscription;
             this.formValues.study_year_id = responseObj.study_year.id;
-            this.formValues.terms = responseObj.terms;
+            this.formValues.terms = responseObj.terms.map((item)=> item.id);
           })
           .then(() => {
-        setTimeout(() => {
-          this.discountValueForUpdate = "";
-        }, 5000)
+            setTimeout(() => {
+              this.discountValueForUpdate = "";
+            }, 5000)
           });
       }
     },

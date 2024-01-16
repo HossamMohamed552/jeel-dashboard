@@ -11,15 +11,15 @@
       @deleteItem="deleteItem($event)"
       @refetch="getDegreeTypes"
       :loading="loading"
-      :permission_delete="'delete-languageSkill'"
-      :permission_edit="'edit-languageSkill'"
-      :permission_view="'show-languageSkill'"
+      :permission_delete="'delete-certificates'"
+      :permission_edit="'edit-certificates'"
+      :permission_view="'show-certificates'"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddDegreeType"
-          v-if="user.permissions.includes(`add-languageSkill`)"
+          v-if="user.permissions.includes(`add-certificates`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
           <span>إضافة نوع شهادة </span>

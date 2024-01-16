@@ -22,29 +22,29 @@ let routesSchool = [
   {
     name: "نوع الادارة",
     path: "/dashboard/school-department-types",
-    altImage: "schoolGroups",
-    titleImage: "schoolGroups",
+    altImage: "management-types",
+    titleImage: "management-types",
     icon: require("@/assets/images/icons/school-group.svg"),
     // todo tooo change the permission acc to backend
-    permission: "view-schoolGroups",
+    permission: "view-management-types",
   },
   {
     name: "نوع الشهادة",
     path: "/dashboard/school-degree-types",
-    altImage: "schoolGroups",
-    titleImage: "schoolGroups",
+    altImage: "certificates",
+    titleImage: "certificates",
     icon: require("@/assets/images/icons/school-group.svg"),
     // todo tooo change the permission acc to backend
-    permission: "view-schoolGroups",
+    permission: "view-certificates",
   },
   {
     name: "اللغات",
     path: "/dashboard/school-languages",
-    altImage: "schoolGroups",
-    titleImage: "schoolGroups",
+    altImage: "languages",
+    titleImage: "languages",
     icon: require("@/assets/images/icons/school-group.svg"),
     // todo tooo change the permission acc to backend
-    permission: "view-schoolGroups",
+    permission: "view-languages",
   },
   {
     name: "مجموعات المدارس",
@@ -88,7 +88,6 @@ let routesContent = [
     icon: require("@/assets/images/icons/question.svg"),
     permission: "view-questions",
   },
-
   {
     name: "التمارين",
     path: "/dashboard/practices",
@@ -103,7 +102,7 @@ let routesContent = [
     altImage: "audio",
     titleImage: "audio",
     icon: require("@/assets/images/icons/video.svg"),
-    permission: "view-video",
+    permission: "view-tasks",
   },
   {
     name: "أوراق العمل",
@@ -153,7 +152,7 @@ let routesMissions = [
     altImage: "seasonal-mission-group",
     titleImage: "seasonal-mission-group",
     icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-missions",
+    permission: "view-seasonal-mission-groups",
   },
 ];
 let routeSettings = [
@@ -171,7 +170,7 @@ let routeSettings = [
     altImage: "student-levels",
     titleImage: "student-levels",
     icon: require("@/assets/images/icons/country.svg"),
-    permission: "view-countries",
+    permission: "view-jeel-level-xps",
   },
   {
     name: "جوائز التفاعل",
@@ -179,16 +178,16 @@ let routeSettings = [
     altImage: "rewarding-actions",
     titleImage: "rewarding-actions",
     icon: require("@/assets/images/icons/country.svg"),
-    permission: "view-countries",
+    permission: "view-reward-actions",
   },
-  {
-    name: "جيمز",
-    path: "/dashboard/jems",
-    altImage: "jems",
-    titleImage: "jems",
-    icon: require("@/assets/images/icons/country.svg"),
-    permission: "view-countries",
-  },
+  // {
+  //   name: "جيمز",
+  //   path: "/dashboard/jems",
+  //   altImage: "jems",
+  //   titleImage: "jems",
+  //   icon: require("@/assets/images/icons/country.svg"),
+  //   permission: "view-gems",
+  // },
 ];
 let routeBasicData = [
   {
@@ -206,7 +205,7 @@ let routeBasicData = [
     titleImage: "learning-skill",
     icon: require("@/assets/images/icons/school-section.svg"),
     // todo to change the permission
-    permission: "view-outcome",
+    permission: "view-languageSkill",
   },
   {
     name: "أساليب التعلم",
@@ -215,7 +214,7 @@ let routeBasicData = [
     titleImage: "learning-style",
     icon: require("@/assets/images/icons/school-section.svg"),
     // todo to change the permission
-    permission: "view-outcome",
+    permission: "view-languageMethod",
   },
   {
     name: "المسارات التعليمية",
@@ -231,7 +230,7 @@ let routeBasicData = [
     altImage: "lessons",
     titleImage: "lessons",
     icon: require("@/assets/images/icons/question.svg"),
-    permission: "view-outcome",
+    permission: "view-lesson",
   },
   {
     name: "أهداف التعلم",
@@ -258,7 +257,7 @@ let routesSubscribes = [
     titleImage: "currency",
     icon: require("@/assets/images/icons/school-section.svg"),
     // todo to change the permission
-    permission: "view-outcome",
+    permission: "view-currencies",
   },
   {
     name: "الباقات",
@@ -275,7 +274,7 @@ let routesSubscribes = [
     titleImage: "school-year",
     icon: require("@/assets/images/icons/school-section.svg"),
     // todo to change the permission
-    permission: "view-terms",
+    permission: "view-studyYear",
   },
   {
     name: "الإشتراكات",
@@ -344,7 +343,7 @@ let routesPrizes = [
     altImage: "jeel-badge",
     titleImage: "jeel-badge",
     icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-classes",
+    permission: "view-badge",
   },
   {
     name: "الشخصيات",
@@ -352,7 +351,7 @@ let routesPrizes = [
     altImage: "characters",
     titleImage: "characters",
     icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-classes",
+    permission: "view-prize-characters",
   },
   {
     name: "مكتبة جيل",
@@ -360,7 +359,7 @@ let routesPrizes = [
     altImage: "jeel-library",
     titleImage: "jeel-library",
     icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-classes",
+    permission: "view-prize-library",
   },
   {
     name: "صناديق الطاقة",
@@ -368,7 +367,7 @@ let routesPrizes = [
     altImage: "power-up-boxes",
     titleImage: "power-up-boxes",
     icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-classes",
+    permission: "view-power-up-boxes",
   },
 ];
 
@@ -379,7 +378,7 @@ let routesJeelStores = [
     altImage: "jeel-store-games",
     titleImage: "jeel-store-games",
     icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-classes",
+    permission: "view-gems",
   },
   {
     name: "شخصيات الشراء",
@@ -387,7 +386,7 @@ let routesJeelStores = [
     altImage: "jeel-store-character",
     titleImage: "jeel-store-character",
     icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-classes",
+    permission: "view-store-characters",
   },
   {
     name: "مكتبة الشراء",
@@ -395,7 +394,7 @@ let routesJeelStores = [
     altImage: "jeel-store-library",
     titleImage: "jeel-store-library",
     icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-classes",
+    permission: "view-store-library",
   },
 ];
 

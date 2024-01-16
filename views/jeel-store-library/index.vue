@@ -12,15 +12,15 @@
       @deleteItem="deleteItem($event)"
       :loading="loading"
       @refetch="getJeelStoreLibrary"
-      :permission_delete="'delete-badge'"
-      :permission_edit="'edit-badge'"
-      :permission_view="'show-badge'"
+      :permission_delete="'delete-store-library'"
+      :permission_edit="'edit-store-library'"
+      :permission_view="'show-store-library'"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddJeelStoreLibrary"
-          v-if="user.permissions.includes(`add-characters`)"
+          v-if="user.permissions.includes(`add-store-library`)"
         >
           <img src="../../src/assets/images/icons/plus.svg" />
           <span>إضافة محتوى </span>

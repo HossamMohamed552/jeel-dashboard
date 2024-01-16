@@ -12,15 +12,15 @@
       @deleteItem="deleteItem($event)"
       :loading="loading"
       @refetch="getJeelStoreGames"
-      :permission_delete="'delete-badge'"
-      :permission_edit="'edit-badge'"
-      :permission_view="'show-badge'"
+      :permission_delete="'delete-gems'"
+      :permission_edit="'edit-gems'"
+      :permission_view="'show-gems'"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddJeelStoreGames"
-          v-if="user.permissions.includes(`add-characters`)"
+          v-if="user.permissions.includes(`add-gems`)"
         >
           <img src="../../src/assets/images/icons/plus.svg" />
           <span>إضافة مجموعه </span>

@@ -8,13 +8,13 @@
                :loading="loading"
                @resetRefresh="refreshIt=false"
                :isRefresh="refreshIt"
-               :permission_delete="'delete-video'"
-               :permission_edit="'edit-video'"
-               :permission_view="'show-video'"
+               :permission_delete="'delete-tasks'"
+               :permission_edit="'edit-tasks'"
+               :permission_view="'show-tasks'"
     >
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddAudios"
-                v-if="user.permissions.includes(`add-video`)">
+                v-if="user.permissions.includes(`add-tasks`)">
           <img src="@/assets/images/icons/plus.svg">
           <span> إضافة تسجيل جديد</span>
         </Button>

@@ -105,15 +105,15 @@
       @deleteItem="deleteItem($event)"
       :loading="loading"
       @refetch="getPowerUpBoxes"
-      :permission_delete="'delete-badge'"
-      :permission_edit="'edit-badge'"
-      :permission_view="'show-badge'"
+      :permission_delete="'delete-power-up-boxes'"
+      :permission_edit="'edit-power-up-boxes'"
+      :permission_view="'show-power-up-boxes'"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddPowerUpBox"
-          v-if="user.permissions.includes(`add-characters`)"
+          v-if="user.permissions.includes(`add-power-up-boxes`)"
         >
           <img src="../../src/assets/images/icons/plus.svg" />
           <span>إضافة صندوق </span>

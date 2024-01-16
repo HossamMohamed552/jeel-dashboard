@@ -12,7 +12,7 @@
             <ShowItem :title="$t('QUIZZES.name')" :subtitle="quiz.name"/>
           </b-col>
           <b-col lg="4" class="mb-4" v-if="quiz && quiz.type">
-            <ShowItem :title="$t('QUIZZES.type')" :subtitle="quiz.type"/>
+            <ShowItem :title="$t('QUIZZES.type')" :subtitle="quiz.type.name"/>
           </b-col>
           <b-col lg="4" class="mb-4" v-if="quiz && quiz.level">
             <ShowItem :title="$t('QUIZZES.level')" :subtitle="quiz.level.name"/>

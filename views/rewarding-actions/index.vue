@@ -11,8 +11,8 @@
       :loading="loading"
       @refetch="getRewardingActions"
       :showSortControls="false"
-      :permission_edit="'edit-questionDifficulty'"
-      :permission_view="'show-questionDifficulty'"
+      :permission_edit="'edit-reward-actions'"
+      :permission_view="'show-reward-actions'"
     >
     </ListItems>
   </section>

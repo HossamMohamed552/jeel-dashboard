@@ -12,14 +12,15 @@
       </b-col>
       <b-col>
         <label for="" class="label">{{ $t("SYSTEM_SETTINGS.COINS") }}</label>
-        <TextField v-model="item.jeel_coins_quantity" type="number" />
+        <TextField v-model="item.jeel_coins_quantity" type="number"/>
       </b-col>
       <b-col cols="2" class="d-flex align-items-end">
         <Button
           variant="primary"
           :loading="updateLoading"
           @click="updateJem(item.id, item.jeel_coins_quantity)"
-          >{{ $t("SYSTEM_SETTINGS.UPDATE") }}</Button
+        >{{ $t("SYSTEM_SETTINGS.UPDATE") }}
+        </Button
         >
       </b-col>
     </b-row>
@@ -27,15 +28,15 @@
 </template>
 
 <script>
-import { getGemPricesRequest, putGemPricesRequest } from "@/api/system-settings.js";
+import {getGemPricesRequest, putGemPricesRequest} from "@/api/system-settings.js";
 
 export default {
   data() {
-        return {
-            loading: false,
-            updateLoading: false,
-            jems: []
-        };
+    return {
+      loading: false,
+      updateLoading: false,
+      jems: []
+    };
   },
   mounted() {
     this.getJems();
@@ -53,7 +54,7 @@ export default {
     },
     updateJem(id, quantity) {
       this.updateLoading = true;
-      this.ApiService(putGemPricesRequest(id, { jeel_coins_quantity: quantity }))
+      this.ApiService(putGemPricesRequest(id, {jeel_coins_quantity: quantity}))
         .then((response) => {
 
         })
