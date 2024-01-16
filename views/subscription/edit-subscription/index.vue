@@ -29,6 +29,7 @@ export default {
   methods: {
     handleEditSubscribtion($event) {
       this.loading = true;
+      delete $event.clone
       this.ApiService(putSubscriptionsRequest(this.subscribtionId, $event))
         .then(() => {
           this.loading = false;
