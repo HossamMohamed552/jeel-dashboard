@@ -112,9 +112,9 @@
               />
             </b-col>
             <b-col lg="4">
-              <ShowItem
-                :title="$t('QUESTIONS.BLOOM_CATEGORIES')"
-                :subtitle="question.blooms.name"
+              <ShowItem v-if="question.blooms"
+                        :title="$t('QUESTIONS.BLOOM_CATEGORIES')"
+                        :subtitle="question.blooms.name"
               />
             </b-col>
             <b-col lg="4">
@@ -130,14 +130,13 @@
             <h4 class="heading title">{{ $t("QUESTIONS.ANSWERS") }}</h4>
           </div>
           <div
-            v-if="question.answers && question.question_type.name !== 'مطابقة الاجابات الصحيحة و التوصيل'">
+            v-if="question.answers && question.question_type.name !== 'مطابقة الاجابات الصحيحة'">
             <div v-for="(answer, ind) in question.answers" :key="ind">
               <div v-if="answer.answer_pattern === 'text'"
                    class="d-flex justify-content-start align-items-center">
-                <span class="sub-title">{{ answer.answer }}</span><span v-if="answer.correct"
-                                                                        class="px-2 the-right-answer">({{
-                  $t("QUESTIONS.THE_RIGHT_ANSWER")
-                }})</span>
+                <span class="sub-title">{{ answer.answer }}</span>
+                <span v-if="answer.correct"
+                      class="px-2 the-right-answer">({{ $t("QUESTIONS.THE_RIGHT_ANSWER") }})</span>
                 <div v-if="answer.audio">
                   <b-icon
                     v-if="isPlaying && currentActiveId === answer.id + '-' + ind"
@@ -158,9 +157,7 @@
               <div v-else-if="answer.answer_pattern === 'image'"
                    class="d-flex justify-content-start align-items-center">
                 <img :src="answer.answer" class="answer-img"><span v-if="answer.correct"
-                                                                   class="px-2 the-right-answer">({{
-                  $t("QUESTIONS.THE_RIGHT_ANSWER")
-                }})</span>
+                                                                   class="px-2 the-right-answer">({{ $t("QUESTIONS.THE_RIGHT_ANSWER") }})</span>
                 <div v-if="answer.audio">
                   <b-icon
                     v-if="isPlaying && currentActiveId === answer.id + '-' + ind"
@@ -189,11 +186,14 @@
             </div>
           </div>
           <div
-            v-if="question.answers && question.question_type.name === 'مطابقة الاجابات الصحيحة و التوصيل'">
-            <p>الإجابه من</p>
-            <div v-for="(itemAnswerTo, ind) in answersTo" :key="ind" class="d-flex justify-content-start align-items-center">
+            v-if="question.answers && question.question_type.name === 'مطابقة الاجابات الصحيحة'">
+<!--            <p>الإجابه من</p>-->
+            <div v-for="(itemAnswerTo, ind) in answersTo" :key="ind" class="d-flex justify-content-start align-items-center mb-3">
               <div>
-                <div v-if="itemAnswerTo.answer_pattern === 'text'"><span class="sub-title">{{ itemAnswerTo.answer }}</span><div v-if="itemAnswerTo.audio">
+                <div v-if="itemAnswerTo.answer_pattern === 'text'"
+                     class="d-flex justify-content-start align-items-center">
+                  <span class="sub-title">{{ itemAnswerTo.answer }}</span>
+                  <div v-if="itemAnswerTo.audio">
                     <b-icon
                       v-if="isPlaying && currentActiveId === itemAnswerTo.id + '-' + ind"
                       variant="primary"
@@ -208,8 +208,10 @@
                       @click="playAudio(itemAnswerTo.audio, itemAnswerTo.id + '-' + ind)"
                       icon="volume-up"
                     />
-                  </div></div>
-                <div v-else-if="itemAnswerTo.answer_pattern === 'image'">
+                  </div>
+                </div>
+                <div v-else-if="itemAnswerTo.answer_pattern === 'image'"
+                     class="d-flex justify-content-start align-items-center">
                   <img :src="itemAnswerTo.answer" class="answer-img">
                   <div v-if="itemAnswerTo.audio">
                     <b-icon
@@ -228,7 +230,8 @@
                     />
                   </div>
                 </div>
-                <div v-else-if="itemAnswerTo.answer_pattern === 'audio'">
+                <div v-else-if="itemAnswerTo.answer_pattern === 'audio'"
+                     class="d-flex justify-content-start align-items-center">
                   <audio controls>
                     <source :src="itemAnswerTo.answer"/>
                   </audio>
@@ -238,26 +241,29 @@
                     }})</span>
                 </div>
               </div>
-              <div class="mx-2">الى</div>
+              <div class="to">الى</div>
               <div>
                 <div v-for="answer in itemAnswerTo.answerCorrect" :key="answer.id">
-                  <div v-if="answer.answer_pattern === 'text'" class="mb-3"><span class="sub-title">{{ answer.answer }}</span><div v-if="answer.audio">
-                    <b-icon
-                      v-if="isPlaying && currentActiveId === answer.id + '-' + ind"
-                      variant="primary"
-                      class="mx-2 cursor-pointer"
-                      @click="playAudio(answer.audio, answer.id + '-' + ind)"
-                      icon="volume-up-fill"
-                    />
-                    <b-icon
-                      v-else
-                      variant="primary"
-                      class="mx-2 cursor-pointer"
-                      @click="playAudio(answer.audio, answer.id + '-' + ind)"
-                      icon="volume-up"
-                    />
-                  </div></div>
-                  <div v-else-if="answer.answer_pattern === 'image'" class="mb-3">
+                  <div v-if="answer.answer_pattern === 'text'" class="d-flex justify-content-start align-items-center mb-3">
+                    <span class="sub-title">{{ answer.answer }}</span>
+                    <div v-if="answer.audio">
+                      <b-icon
+                        v-if="isPlaying && currentActiveId === answer.id + '-' + ind"
+                        variant="primary"
+                        class="mx-2 cursor-pointer"
+                        @click="playAudio(answer.audio, answer.id + '-' + ind)"
+                        icon="volume-up-fill"
+                      />
+                      <b-icon
+                        v-else
+                        variant="primary"
+                        class="mx-2 cursor-pointer"
+                        @click="playAudio(answer.audio, answer.id + '-' + ind)"
+                        icon="volume-up"
+                      />
+                    </div>
+                  </div>
+                  <div v-else-if="answer.answer_pattern === 'image'" class="d-flex justify-content-start align-items-center mb-3">
                     <img :src="answer.answer" class="answer-img"><span
                     v-if="answer.correct"
                     class="px-2 the-right-answer">({{
@@ -280,7 +286,7 @@
                       />
                     </div>
                   </div>
-                  <div v-else-if="answer.answer_pattern === 'audio'" class="mb-3">
+                  <div v-else-if="answer.answer_pattern === 'audio'" class="d-flex justify-content-start align-items-center mb-3">
                     <audio controls>
                       <source :src="answer.answer"/>
                     </audio>
@@ -318,7 +324,7 @@ export default {
     this.ApiService(getSingleQuestionRequest(this.$route.params.id)).then((response) => {
       this.question = response.data.data;
     }).then(() => {
-      if (this.question.question_type.name === 'مطابقة الاجابات الصحيحة و التوصيل') {
+      if (this.question.question_type.name === 'مطابقة الاجابات الصحيحة') {
         this.answersTo = this.question.answers.filter((item) => {
           return item.match_to === 1
         })

@@ -374,7 +374,7 @@ let routesPrizes = [
 
 let routesJeelStores = [
   {
-    name: "محموعة جيمز",
+    name: "مجموعة جيمز",
     path: "/dashboard/jeel-store-games",
     altImage: "jeel-store-games",
     titleImage: "jeel-store-games",

@@ -206,6 +206,9 @@
           >
           </b-form-checkbox>
         </template>
+        <template #cell(status.name)="data">
+          <span class="blocked-user" v-if="checkBlockUser(data) == 'show'">محظور</span>
+        </template>
         <template #cell(actions)="data">
           <b-dropdown
             size="lg"
@@ -219,7 +222,7 @@
               checkEdit() === 'show' ||
               checkAdd() === 'show' ||
               checkUsersAdd() === 'show' ||
-              checkBlockUser() === 'show' ||
+              checkBlockUser(data) === 'show' ||
               checkChangePassword() === 'show'
             "
           >
@@ -240,8 +243,11 @@
             </b-dropdown-item>
 
             <!-- Block User -->
-            <b-dropdown-divider v-if="checkBlockUser() === 'show'"></b-dropdown-divider>
-            <b-dropdown-item @click="cancelBlock(data.item.id)" v-if="checkBlockUser() === 'show'">
+            <b-dropdown-divider v-if="checkBlockUser(data) === 'show'"></b-dropdown-divider>
+            <b-dropdown-item
+              @click="cancelBlock(data.item.id)"
+              v-if="checkBlockUser(data) === 'show'"
+            >
               {{ $t("TABLE_FIELDS.not_block") }}
             </b-dropdown-item>
 
@@ -604,15 +610,9 @@ export default {
         return "hide";
       }
     },
-    checkBlockUser() {
-      return "show";
-      if (
-        !this.user.permissions.includes("manage-learningpath") &&
-        !this.activePage === "schoolAdmin"
-      ) {
+    checkBlockUser(data) {
+      if (this.activePage === "userAdmin" && data.item.status.key == "blocked") {
         return "show";
-      } else if (this.activePage === "schoolAdmin") {
-        return "hide";
       } else if (this.user.permissions.includes(`${this.cancel_block}`)) {
         return "show";
       } else {
@@ -620,15 +620,8 @@ export default {
       }
     },
     checkChangePassword() {
-      return "show";
-
-      if (
-        !this.user.permissions.includes("manage-learningpath") &&
-        !this.activePage === "schoolAdmin"
-      ) {
+      if (this.activePage === "userAdmin") {
         return "show";
-      } else if (this.activePage === "schoolAdmin") {
-        return "hide";
       } else if (this.user.permissions.includes(`${this.change_password}`)) {
         return "show";
       } else {

@@ -1,77 +1,48 @@
 <template>
-  <section class="inner-routes p-0" :class="isSuperVisor ? 'mt-0':''">
+  <section class="inner-routes p-0" :class="isSuperVisor ? 'mt-0' : ''">
     <div v-if="!isSuperVisor" class="supervisor-section">
       <b-row>
         <b-col lg="3">
-          <div class="profile-card item-card">
+          <div class="user-info profile-card item-card">
             <div>
-              <div class="hold-img-profile">
-                <img :src="user.avatar" alt="avatar" title="avatar" @error="altImage($event)">
+              <div class="img-container">
+                <span>
+                  <img
+                    v-if="user.image"
+                    :src="user.image"
+                    alt="avatar"
+                    title="avatar"
+                    @error="altImage($event)"
+                  />
+                  <i v-else class="far fa-user"></i>
+                </span>
               </div>
               <div class="hold-info">
                 <p class="name">{{ user.name }}</p>
-                <p class="role">{{ user.roles[0]?.name }}</p>
-                <p class="school-name">{{ user.school.name }}</p>
-                <Button custom-class="cancel-btn profile-btn">
+                <p class="role" v-if="user?.roles[0]?.name">{{ user.roles[0]?.name }}</p>
+                <p class="school-name" v-if="user?.school?.name">{{ user.school.name }}</p>
+                <Button custom-class="cancel-btn profile-btn" @click="handleViewProfile">
                   {{ $t("profile-page") }}
                 </Button>
               </div>
             </div>
           </div>
+
+          <div class="last-attempt">
+            <div>
+              <p>آخر عملية تسجيل دخول</p>
+              <p>{{ user.last_attempt }}</p>
+            </div>
+          </div>
         </b-col>
         <b-col lg="9">
           <b-row>
-            <b-col lg="4" class="mb-5">
+            <b-col lg="4" class="mb-5" v-for="(value, key) in this.statistics" :key="key">
               <div class="item-card route-card">
-                <div class="item-number"></div>
+                <div class="item-number">{{ value }}</div>
                 <div class="item-name">
-                  <span></span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
-                </div>
-              </div>
-            </b-col>
-            <b-col lg="4" class="mb-5">
-              <div class="item-card route-card">
-                <div class="item-number"></div>
-                <div class="item-name">
-                  <span></span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
-                </div>
-              </div>
-            </b-col>
-            <b-col lg="4" class="mb-5">
-              <div class="item-card route-card">
-                <div class="item-number"></div>
-                <div class="item-name">
-                  <span></span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
-                </div>
-              </div>
-            </b-col>
-            <b-col lg="4">
-              <div class="item-card route-card">
-                <div class="item-number"></div>
-                <div class="item-name">
-                  <span></span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
-                </div>
-              </div>
-            </b-col>
-            <b-col lg="4">
-              <div class="item-card route-card">
-                <div class="item-number"></div>
-                <div class="item-name">
-                  <span></span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
-                </div>
-              </div>
-            </b-col>
-            <b-col lg="4">
-              <div class="item-card route-card">
-                <div class="item-number"></div>
-                <div class="item-name">
-                  <span></span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                  <span>{{ $t(`STATISTICS.${key}`) }}</span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg" /></span>
                 </div>
               </div>
             </b-col>
@@ -85,7 +56,7 @@
           <div class="profile-card item-card">
             <div>
               <div class="hold-img-profile">
-                <img :src="user.avatar" alt="avatar" title="avatar" @error="altImage($event)">
+                <img :src="user.avatar" alt="avatar" title="avatar" @error="altImage($event)" />
               </div>
               <div class="hold-info">
                 <p class="name">{{ user.name }}</p>
@@ -105,7 +76,7 @@
                 <div class="item-number">27</div>
                 <div class="item-name">
                   <span>المراحل</span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg" /></span>
                 </div>
               </div>
             </b-col>
@@ -114,7 +85,7 @@
                 <div class="item-number">85</div>
                 <div class="item-name">
                   <span>المهام</span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg" /></span>
                 </div>
               </div>
             </b-col>
@@ -123,7 +94,7 @@
                 <div class="item-number">150</div>
                 <div class="item-name">
                   <span>الطلاب</span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg" /></span>
                 </div>
               </div>
             </b-col>
@@ -132,7 +103,7 @@
                 <div class="item-number">14</div>
                 <div class="item-name">
                   <span>المدرسين</span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg" /></span>
                 </div>
               </div>
             </b-col>
@@ -141,7 +112,7 @@
                 <div class="item-number">8</div>
                 <div class="item-name">
                   <span>المسابقات</span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg" /></span>
                 </div>
               </div>
             </b-col>
@@ -150,7 +121,7 @@
                 <div class="item-number">740</div>
                 <div class="item-name">
                   <span>الإعلانات</span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg"></span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg" /></span>
                 </div>
               </div>
             </b-col>
@@ -163,9 +134,11 @@
             <div class="heading">
               <span>المهام</span>
             </div>
-            <ChartMission/>
+            <ChartMission />
             <div class="item-link">
-              <router-link to="missions"><span>الكل</span> <span><img src="@/assets/images/icons/arrow-left.svg"></span></router-link>
+              <router-link to="missions"
+                ><span>الكل</span> <span><img src="@/assets/images/icons/arrow-left.svg" /></span
+              ></router-link>
             </div>
           </div>
         </b-col>
@@ -174,9 +147,11 @@
             <div class="heading">
               <span>لوحة الصدارة</span>
             </div>
-            <LeaderBoard/>
+            <LeaderBoard />
             <div class="item-link">
-              <router-link to="missions"><span>الكل</span> <span><img src="@/assets/images/icons/arrow-left.svg"></span></router-link>
+              <router-link to="missions"
+                ><span>الكل</span> <span><img src="@/assets/images/icons/arrow-left.svg" /></span
+              ></router-link>
             </div>
           </div>
         </b-col>
@@ -185,27 +160,29 @@
             <div class="heading">
               <span>المسابقات</span>
             </div>
-            <ChartCompetition/>
+            <ChartCompetition />
             <div class="item-link">
-              <router-link to="missions"><span>الكل</span> <span><img src="@/assets/images/icons/arrow-left.svg"></span></router-link>
+              <router-link to="missions"
+                ><span>الكل</span> <span><img src="@/assets/images/icons/arrow-left.svg" /></span
+              ></router-link>
             </div>
           </div>
         </b-col>
       </b-row>
     </div>
-    <WelcomeModal/>
+    <WelcomeModal />
   </section>
 </template>
 <script>
 import RouteItem from "@/components/RouteItem/index.vue";
-import {routesUsers, routesSchool, routesContent, routeBasicData} from "@/globalData";
+import { routesUsers, routesSchool, routesContent, routeBasicData } from "@/globalData";
 import WelcomeModal from "@/components/Shared/WelcomeModal/index.vue";
-import {mapActions} from "vuex";
+import { mapActions } from "vuex";
 import Button from "@/components/Shared/Button/index.vue";
 import ChartMission from "@/components/ChartMissions/ChartMission.vue";
 import ChartCompetition from "@/components/ChartCompetitions/ChartCompetitions.vue";
 import LeaderBoard from "@/components/LeaderBoard/LeaderBoard.vue";
-
+import { getAllStatisticsRequest } from "@/api/statistics";
 export default {
   name: "index",
   data() {
@@ -215,8 +192,8 @@ export default {
       routesSchool: [],
       routesContent: [],
       routeBasicData: [],
+      statistics: [],
       isSuperVisor: false,
-
     };
   },
 
@@ -233,6 +210,9 @@ export default {
     hideModal() {
       this.hide();
     },
+    handleViewProfile() {
+      this.$router.push(`/view-profile`);
+    },
     getRoutes(routeArr = []) {
       return routeArr.filter((route) => this.permissions?.includes(route.permission));
     },
@@ -240,7 +220,7 @@ export default {
       this.activeTap = tap;
     },
     altImage($event) {
-      $event.target.src = require("@/assets/images/icons/user-avatar.png")
+      $event.target.src = require("@/assets/images/icons/user-avatar.png");
     },
   },
   watch: {
@@ -257,12 +237,16 @@ export default {
   computed: {
     permissions() {
       return this.$store.getters.user?.permissions;
-    }, user() {
+    },
+    user() {
       return this.$store.getters.user;
     },
-
   },
   mounted() {
+    this.ApiService(getAllStatisticsRequest()).then((response) => {
+      this.statistics = response.data.data;
+    });
+
     setTimeout(() => {
       this.hideModal();
     }, 6000);
@@ -270,12 +254,12 @@ export default {
       this.activeTapActive(1);
     } else if (Array.from(this.routesSchool).length >= 1) {
       this.activeTapActive(2);
-    } else if (Array.from((this.routeBasicData).length >= 1)) {
+    } else if (Array.from(this.routeBasicData.length >= 1)) {
       this.activeTapActive(4);
     } else {
       this.activeTapActive(3);
     }
-    this.isSuperVisor = this.user.roles[0]?.code === 'supervisor';
+    this.isSuperVisor = this.user.roles[0]?.code === "supervisor";
   },
 };
 </script>
@@ -288,10 +272,10 @@ export default {
   background-repeat: no-repeat;
   background-position: top;
   background-size: 100%;
-  border: 1px solid #F4EDF3;
+  border: 1px solid #f4edf3;
 
   .item-number {
-    color: #76236C;
+    color: #76236c;
     font-size: 2.8rem;
     font-weight: bold;
   }
@@ -316,8 +300,8 @@ export default {
   span {
     &:last-of-type {
       border-radius: 50%;
-      background: #FFFFFF;
-      border: 1px solid #F4EDF3;
+      background: #ffffff;
+      border: 1px solid #f4edf3;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -327,7 +311,7 @@ export default {
       opacity: 0;
       position: relative;
       left: -1.5rem;
-      transition: all ease-in-out .3s;
+      transition: all ease-in-out 0.3s;
 
       &:hover {
         background: $color-primary;
@@ -348,7 +332,7 @@ export default {
     }
   }
 }
-.leader-board{
+.leader-board {
   background: url("../../assets/images/bg/leader-bg.svg");
   background-color: #fff;
   background-repeat: no-repeat;

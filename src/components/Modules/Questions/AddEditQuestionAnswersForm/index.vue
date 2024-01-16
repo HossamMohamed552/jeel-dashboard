@@ -710,7 +710,7 @@
               </div>
             </b-col>
             <b-col lg="3" class="mb-3 d-flex justify-content-center align-items-center">
-              <div class="hold-field">
+              <div class="hold-field w-100">
                 <label>{{ $t("QUESTIONS.ANSWER_TYPE") }}</label>
                 <SelectSearch
                   :rules="'required'"
@@ -1942,67 +1942,58 @@
               </b-col>
               <b-col lg="12" class="mb-3 px-0" v-if="answerMatch.answer_pattern === 'image'">
                 <div class="hold-field">
-                  <ImageUploader
-                    v-model="answerMatch.answer"
-                    :is-required="true"
-                    :name="`answerMatchImage`"
-                    :text="'صوره الإجابة'"
-                    @imageUpload="handleUploadImageOnAnswers(answerMatch, $event)"
-                    @deleteImage="answerMatch.answer = answerMatch.answerImage = null"
-                    :item-image="answerMatch.answerImage"
+                  <UploadAttachment :type-of-attachment="'image'"
+                                    :dropIdRef="`answerMatchImage`"
+                                    :accept-files="'image/*'"
+                                    :label="'صوره الإجابة'"
+                                    :name="'answerMatchImage'"
+                                    :rules="'required'"
+                                    ref="answerMatchImage"
+                                    @setFileId="setAnswerMatchId('answer',$event,'answerMatch')"
+                                    @setFileUrl="setAnswerMatchUrl('answerImage',$event,'answerMatch')"
                   />
                 </div>
               </b-col>
-              <b-col lg="12" class="mb-3"
-                     v-if=" answerMatch.answer_pattern === 'text' ||answerMatch.answer_pattern === 'image'">
+              <b-col lg="12" class="mb-3" v-if=" answerMatch.answer_pattern === 'text' ||answerMatch.answer_pattern === 'image'">
                 <div class="hold-field">
                   <UploadAttachment :type-of-attachment="'audio'"
-                                    :dropIdRef="`answerMatchAudio`"
+                                    :dropIdRef="`answerMatch`"
                                     :accept-files="'audio/*'"
                                     :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
                                     :name="'answerMatchAudio'"
                                     :rules="'required'"
-                                    ref="answerMatchAudio"
+                                    ref="answerMatch"
                                     @setFileId="setAnswerMatchId('audio',$event,'answerMatch')"
                                     @setFileUrl="setAnswerMatchUrl('audioUrl',$event,'answerMatch')"
                   />
                 </div>
                 <!--                  setQuestionAudioId('question_audio',$event)-->
               </b-col>
-              <b-col lg="4" class="mb-3" v-if="answerMatch.answer_pattern === 'audio'">
+              <b-col lg="12" class="mb-3" v-if="answerMatch.answer_pattern === 'audio'">
                 <div class="hold-field">
-                  <label
-                  ><span><i class="fa-solid fa-asterisk"></i></span
-                  >{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label
-                  >
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    :rules="'required|audio'"
-                    name="audio"
-                  >
-                    <b-form-file
-                      accept="audio/*"
-                      :placeholder="answerMatch.answer ? answerMatch.answer.name : 'اختر ملف'"
-                      v-model="answerMatch.answer"
-                      name="answerMatchAudioAnswer"
-                    >
-                    </b-form-file>
-                    <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                      {{ error }}
-                    </b-form-invalid-feedback>
-                  </ValidationProvider>
+                  <UploadAttachment :type-of-attachment="'audio'"
+                                    :dropIdRef="`answerMatch`"
+                                    :accept-files="'audio/*'"
+                                    :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                                    :name="'answerMatchAudio'"
+                                    :rules="'required'"
+                                    ref="answerMatch"
+                                    @setFileId="setAnswerMatchId('answer',$event,'answerMatch')"
+                                    @setFileUrl="setAnswerMatchUrl('audioUrl',$event,'answerMatch')"
+                  />
                 </div>
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
-                  <button class="add-btn" @click.prevent="addAnswerMatch()" :disabled="answerMatch.answer === null || answerMatch.audio === null">
+                  <button class="add-btn" @click.prevent="addAnswerMatch()"
+                          :disabled="answerMatch.answer === null || ((answerMatch.answer_pattern === 'text' && answerMatch.audio === null)||(answerMatch.answer_pattern === 'image' && answerMatch.audio === null))">
                     {{ $t("ADD_ANSWER") }}
                   </button>
                 </div>
               </b-col>
-<!--              <validation-observer v-slot="{ invalid }" ref="addAnswerFromForm" class="row w-100">-->
-<!--              -->
-<!--              </validation-observer>-->
+              <!--              <validation-observer v-slot="{ invalid }" ref="addAnswerFromForm" class="row w-100">-->
+              <!--              -->
+              <!--              </validation-observer>-->
             </b-row>
             <!-- show answer based on answer patter -->
             <slot v-if="answersListMatch.length > 0">
@@ -2023,7 +2014,9 @@
                   <img :src="answer.answerImage" alt="answer image" class="answer_image"/>
                 </b-col>
                 <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'audio'">
-                  {{ answer.answer.name }}
+                  <audio controls>
+                    <source :src="answer.audioUrl">
+                  </audio>
                 </b-col>
                 <b-col lg="3" class="answer-item" v-if="answer.answer_pattern !== 'audio'">
                   <audio controls>
@@ -2086,53 +2079,42 @@
                 </b-col>
                 <b-col lg="12" class="mb-3 px-0" v-if="answerMatchTo.answer_pattern === 'image'">
                   <div class="hold-field">
-                    <ImageUploader
-                      v-model="answerMatchTo.answer"
-                      :is-required="true"
-                      :name="`answerMatchToImage`"
-                      :text="'صوره الإجابة'"
-                      @imageUpload="handleUploadImageOnAnswers(answerMatchTo, $event)"
-                      @deleteImage="answerMatchTo.answer = answerMatchTo.answerImage = null"
-                      :item-image="answerMatchTo.answerImage"
+                    <UploadAttachment :type-of-attachment="'image'"
+                                      :dropIdRef="`answerMatchToImage`"
+                                      :accept-files="'image/*'"
+                                      :label="'صوره الإجابة'"
+                                      :name="'answerMatchToImage'"
+                                      :rules="'required'"
+                                      ref="answerMatchToImage"
+                                      @setFileId="setAnswerMatchId('answer',$event,'answerMatchTo')"
+                                      @setFileUrl="setAnswerMatchUrl('answerImage',$event,'answerMatchTo')"
                     />
                   </div>
                 </b-col>
                 <b-col lg="12" class="mb-3" v-if="answerMatchTo.answer_pattern === 'text' || answerMatchTo.answer_pattern === 'image' ">
                   <UploadAttachment :type-of-attachment="'audio'"
-                                    :dropIdRef="`answerMatchToAudio`"
+                                    :dropIdRef="`answerMatchTo`"
                                     :accept-files="'audio/*'"
                                     :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
                                     :name="'answerMatchToAudio'"
                                     :rules="'required'"
-                                    ref="answerMatchToAudio"
+                                    ref="answerMatchTo"
                                     @setFileId="setAnswerMatchId('audio',$event,'answerMatchTo')"
                                     @setFileUrl="setAnswerMatchUrl('audioUrl',$event,'answerMatchTo')"
                   />
                 </b-col>
-                <b-col lg="4" class="mb-3" v-if="answerMatchTo.answer_pattern === 'audio'">
+                <b-col lg="12" class="mb-3" v-if="answerMatchTo.answer_pattern === 'audio'">
                   <div class="hold-field">
-                    <label
-                    ><span><i class="fa-solid fa-asterisk"></i></span
-                    >{{ $t("QUESTIONS.QUESTION_ANSWER_AUDIO") }}</label
-                    >
-                    <ValidationProvider
-                      v-slot="{ errors }"
-                      :rules="'required|audio'"
-                      name="answerMatchToAudioAnswer"
-                    >
-                      <b-form-file
-                        accept="audio/*"
-                        :placeholder="
-                              answerMatchTo.answer ? answerMatchTo.answer.name : 'اختر ملف'
-                            "
-                        v-model="answerMatchTo.answer"
-                        name="audio"
-                      >
-                      </b-form-file>
-                      <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
-                        {{ error }}
-                      </b-form-invalid-feedback>
-                    </ValidationProvider>
+                    <UploadAttachment :type-of-attachment="'audio'"
+                                      :dropIdRef="`answerMatchTo`"
+                                      :accept-files="'audio/*'"
+                                      :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                                      :name="'answerMatchToAudio'"
+                                      :rules="'required'"
+                                      ref="answerMatchTo"
+                                      @setFileId="setAnswerMatchId('answer',$event,'answerMatchTo')"
+                                      @setFileUrl="setAnswerMatchUrl('audioUrl',$event,'answerMatchTo')"
+                    />
                   </div>
                 </b-col>
                 <b-col lg="12" class="px-0">
@@ -2141,7 +2123,7 @@
                     <button
                       class="add-btn"
                       @click.prevent="addAnswerMatchTo()"
-                      :disabled="invalid"
+                      :disabled="answerMatchTo.answer === null || ((answerMatchTo.answer_pattern === 'text' && answerMatchTo.audio === null)||(answerMatchTo.answer_pattern === 'image' && answerMatchTo.audio === null))"
                     >
                       {{ $t("ADD_ANSWER") }}
                     </button>
@@ -2194,7 +2176,9 @@
                     <img :src="answer.answerImage" alt="answer image" class="answer_image"/>
                   </b-col>
                   <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'audio'">
-                    {{ answer.answer.name }}
+                    <audio controls>
+                      <source :src="answer.audioUrl">
+                    </audio>
                   </b-col>
                   <b-col lg="3" class="answer-item" v-if="answer.answer_pattern !== 'audio'">
                     <audio controls>
@@ -2594,7 +2578,10 @@ export default {
       this.answerMatch.answerImage = null;
       this.answerMatch.audio = null;
       this.answerMatch.audioUrl = null;
-      this.$refs.answerMatchAudio.$refs.answerMatchAudio.removeAllFiles()
+      this.$refs.answerMatch.$refs.answerMatch.removeAllFiles()
+      if (this.$refs.answerMatchImage){
+        this.$refs.answerMatchImage.$refs.answerMatchImage.removeAllFiles()
+      }
     },
     addAnswerMatchTo() {
       this.answerToId++;
@@ -2603,7 +2590,10 @@ export default {
       this.answerMatchTo.audio = null;
       this.answerMatchTo.audioUrl = null;
       this.answerMatchTo.answerImage = null;
-      this.$refs.answerMatchToAudio.$refs.answerMatchToAudio.removeAllFiles()
+      this.$refs.answerMatchTo.$refs.answerMatchTo.removeAllFiles()
+      if (this.$refs.answerMatchToImage){
+        this.$refs.answerMatchToImage.$refs.answerMatchToImage.removeAllFiles()
+      }
     },
     removeAnswerMatch(index) {
       this.answersListMatch.splice(index, 1);
@@ -3164,33 +3154,33 @@ export default {
       this.answersListMcQ = this.formValues.answers;
       this.answersListMatchOneToOne = this.formValues.answers;
     },
-  },
-  mounted() {
-    if (this.questionSlug.slug === "match_one_voice_text") {
-      this.answerMatchTo.answer_pattern = "audio";
-    } else if (this.questionSlug.slug === "match_one_voice_voice") {
-      this.answerMatch.answer_pattern = "audio";
-      this.answerMatchTo.answer_pattern = "audio";
-    } else if (this.questionSlug.slug === "match_one_text_image") {
-      this.answerMatchTo.answer_pattern = "image";
-    } else if (this.questionSlug.slug === "match_one_voice_image") {
-      this.answerMatch.answer_pattern = "audio";
-      this.answerMatchTo.answer_pattern = "image";
-    } else if (
-      this.questionSlug.slug === "match_many_image_images" ||
-      this.questionSlug.slug === "match_many_images_images"
-    ) {
-      this.answerMatch.answer_pattern = "image";
-      this.answerMatchTo.answer_pattern = "image";
-    } else if (this.questionSlug.slug === "match_many_image_voices") {
-      this.answerMatch.answer_pattern = "audio";
-      this.answerMatchTo.answer_pattern = "image";
-    } else if (this.questionSlug.slug === "match_many_images_text") {
-      this.answerMatch.answer_pattern = "text";
-      this.answerMatchTo.answer_pattern = "image";
-    } else if (this.questionSlug.slug === "match_many_images_voices") {
-      this.answerMatch.answer_pattern = "audio";
-      this.answerMatchTo.answer_pattern = "image";
+    "questionSlug.slug"(newVal) {
+      if (newVal === "match_one_voice_text") {
+        this.answerMatchTo.answer_pattern = "audio";
+      } else if (newVal === "match_one_voice_voice") {
+        this.answerMatch.answer_pattern = "audio";
+        this.answerMatchTo.answer_pattern = "audio";
+      } else if (newVal === "match_one_text_image") {
+        this.answerMatchTo.answer_pattern = "image";
+      } else if (newVal === "match_one_voice_image") {
+        this.answerMatch.answer_pattern = "audio";
+        this.answerMatchTo.answer_pattern = "image";
+      } else if (
+        newVal === "match_many_image_images" ||
+        newVal === "match_many_images_images"
+      ) {
+        this.answerMatch.answer_pattern = "image";
+        this.answerMatchTo.answer_pattern = "image";
+      } else if (newVal === "match_many_image_voices") {
+        this.answerMatch.answer_pattern = "audio";
+        this.answerMatchTo.answer_pattern = "image";
+      } else if (newVal === "match_many_images_text") {
+        this.answerMatch.answer_pattern = "text";
+        this.answerMatchTo.answer_pattern = "image";
+      } else if (newVal === "match_many_images_voices") {
+        this.answerMatch.answer_pattern = "audio";
+        this.answerMatchTo.answer_pattern = "image";
+      }
     }
   },
 };

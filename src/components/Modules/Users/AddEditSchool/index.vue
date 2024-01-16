@@ -2,263 +2,135 @@
   <div class="add-edit-school">
     <div class="container-fluid custom-container">
       <div class="add-edit-school-form">
-        <h3>
+        <!-- <h3>
           {{ $route.params.id ? $t("SCHOOL.EDIT") : $t("SCHOOL.ADD_NEW") }}
-        </h3>
+        </h3> -->
         <validation-observer v-slot="{ invalid }" ref="addEditSchoolForm">
-          <form @submit.prevent="onSubmit" class="mt-5">
-            <b-row>
-              <b-col lg="9" class="px-0 mb-3">
-                <div class="hold-field">
-                  <TextField
-                    v-model="createSchool.name"
-                    :label="$t('SCHOOL.name')"
-                    :name="$t('SCHOOL.name')"
-                    :rules="'required|min:3|max:100'"
-                  ></TextField>
-                </div>
-              </b-col>
-              <b-col lg="3" class="mb-3">
-                <div class="hold-field">
-                  <SelectSearch
-                    :disabled="$route.params.id && !user.permissions.includes(`add-packages`)"
-                    v-model="createSchool.school_group_id"
-                    :label="$t('SCHOOL.school_group')"
-                    :name="$t('SCHOOL.school_group')"
-                    :options="schoolGroups"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                    :rules="'required'"
-                    @input="getSoundType($event)"
-                  ></SelectSearch>
-                </div>
-              </b-col>
-              <b-col lg="12">
-                <b-row>
-                  <b-col lg="9" class="px-0">
-                    <b-row>
-                      <b-col lg="12" class="mb-3">
-                        <div class="hold-field">
-                          <SelectSearch
-                            :disabled="
-                              $route.params.id && !user.permissions.includes(`add-packages`)
-                            "
-                            v-model="createSchool.school_type_id"
-                            :label="$t('SCHOOL.school_type')"
-                            :name="$t('SCHOOL.school_type')"
-                            :options="schoolTypes"
-                            :reduce="(option) => option.id"
-                            :get-option-label="(option) => option.name"
-                            :rules="'required'"
-                          ></SelectSearch>
-                        </div>
-                      </b-col>
-                      <b-col lg="6" class="mb-3">
-                        <div class="hold-field">
-                          <SelectSearch
-                            :disabled="
-                              $route.params.id && !user.permissions.includes(`add-packages`)
-                            "
-                            v-model="createSchool.admin_id"
-                            :label="$t('SCHOOL.userName')"
-                            :name="$t('SCHOOL.userName')"
-                            :options="users"
-                            :reduce="(option) => option.id"
-                            :get-option-label="(option) => option.name"
-                            :rules="'required'"
-                          ></SelectSearch>
-                        </div>
-                      </b-col>
-                      <b-col lg="6" class="mb-3">
-                        <div class="hold-field">
-                          <SelectSearch
-                            :disabled="
-                              $route.params.id && !user.permissions.includes(`add-packages`)
-                            "
-                            v-model="createSchool.package_id"
-                            :label="$t('SCHOOL.package')"
-                            :name="$t('SCHOOL.package')"
-                            :options="packages"
-                            :reduce="(option) => option.id"
-                            :get-option-label="(option) => option.name"
-                            :rules="'required'"
-                          ></SelectSearch>
-                        </div>
-                      </b-col>
-                      <!-- <b-col lg="6" class="px-3 mb-3">
-                        <div class="hold-field">
-                          <TextField
-                            v-model="createSchool.username"
-                            :label="$t('SCHOOL.user_name')"
-                            :name="$t('SCHOOL.user_name')"
-                          ></TextField>
-                        </div>
-                      </b-col> -->
-                      <b-col lg="6" class="px-3 mb-3">
-                        <div class="hold-field">
-                          <TextField
-                            v-model="createSchool.email"
-                            :label="$t('SCHOOL.email')"
-                            :name="$t('SCHOOL.email')"
-                            rules="email"
-                          ></TextField>
-                        </div>
-                      </b-col>
-                      <b-col lg="6" class="px-3 mb-3">
-                        <div class="hold-field">
-                          <TextField
-                            v-model="createSchool.contact"
-                            :label="$t('SCHOOL.contact')"
-                            :name="$t('SCHOOL.contact')"
-                            :rules="{
-                              required: true,
-                              regex: /^01[0125][0-9]{8}$/,
-                            }"
-                          ></TextField>
-                        </div>
-                      </b-col>
-                      <b-col lg="12" class="px-3 mb-3">
-                        <div class="hold-field">
-                          <TextField
-                            :rules="{ max: 100 }"
-                            v-model="createSchool.address"
-                            :label="$t('SCHOOL.address')"
-                            :name="$t('SCHOOL.address')"
-                          ></TextField>
-                        </div>
-                      </b-col>
+          <form @submit.prevent="onSubmit">
+            <div class="inputs-group">
+              <h3>{{ $t("SCHOOL.SCHOOL_INFO") }}</h3>
+              <b-row>
+                <b-col v-for="(field, index) in schoolInfoFields" :key="index" :lg="field.col">
+                  <div class="hold-field">
+                    <SelectSearch
+                      v-if="field.type === 'select'"
+                      v-model="field.value"
+                      :label="field.label"
+                      :name="field.label"
+                      :options="field.options"
+                      :reduce="(option) => option.id"
+                      :get-option-label="(option) => option.name"
+                      :rules="field.rules"
+                      :deselectFromDropdown="field.deselectFromDropdown"
+                      :multiple="field.multiple"
+                    ></SelectSearch>
+                    <TextField
+                      v-if="field.type === 'text'"
+                      v-model="field.value"
+                      :label="field.label"
+                      :name="field.label"
+                      :rules="field.rules"
+                    ></TextField>
+                  </div>
+                </b-col>
+                <b-col lg="12">
+                  <div class="hold-field mt-4">
+                    <UploadAttachment
+                      v-if="!$route.params.id || createSchool.taskImageChangedRequest"
+                      :type-of-attachment="'image'"
+                      :label="$t('SCHOOL.SCHOOL_LOGO')"
+                      :dropImage="true"
+                      :name="'image'"
+                      :rules="'required'"
+                      :dropIdRef="'VideImage'"
+                      :accept-files="'image/*'"
+                      @setFileId="setFileImageId($event)"
+                    />
+                    <PreviewMedia
+                      v-if="
+                        $route.params.id &&
+                        createSchool.taskImageChanged === false &&
+                        !createSchool.taskImageChangedRequest
+                      "
+                      :header="$t('صورة السؤال')"
+                      :media-name="createSchool.task_file_name"
+                      :file-size="createSchool.task_file_size"
+                      :image-url="createSchool.task"
+                      :typeOfMedia="'image'"
+                      :showRemoveButton="true"
+                      @removeFile="
+                        removeFile('task_image', 'taskImageChanged', 'taskImageChangedRequest')
+                      "
+                    />
+                  </div>
+                </b-col>
+              </b-row>
+            </div>
 
-                      <b-col lg="6" class="mb-3">
-                        <div class="hold-field">
-                          <ValidationProvider rules="required">
-                            <label for="status" class="group-type d-inline-block">{{
-                              $t("SCHOOL.status")
-                            }}</label>
-                            <span><i class="fa-solid fa-asterisk"></i></span>
-                            <b-form-group
-                              id="status"
-                              class="d-flex justify-content-start align-items-start mt-1"
-                            >
-                              <b-form-radio
-                                :disabled="
-                                  $route.params.id && !user.permissions.includes(`add-packages`)
-                                "
-                                v-model="createSchool.status"
-                                value="0"
-                                name="group-status"
-                                >غير مفعل
-                              </b-form-radio>
-                              <b-form-radio
-                                :disabled="
-                                  $route.params.id && !user.permissions.includes(`add-packages`)
-                                "
-                                v-model="createSchool.status"
-                                value="1"
-                                name="group-status"
-                                >مفعل
-                              </b-form-radio>
-                            </b-form-group>
-                          </ValidationProvider>
-                        </div>
-                      </b-col>
-                      <b-col lg="6" class="mb-3">
-                        <div class="hold-field">
-                          <ValidationProvider rules="required">
-                            <label for="music" class="group-type d-inline-block">{{
-                              $t("GROUP.music")
-                            }}</label>
-                            <span><i class="fa-solid fa-asterisk"></i></span>
-                            <b-form-group
-                              id="music"
-                              class="d-flex justify-content-start align-items-start mt-1"
-                            >
-                              <b-form-radio
-                                :disabled="
-                                  $route.params.id && !user.permissions.includes(`add-packages`)
-                                "
-                                v-model="createSchool.music_status"
-                                value="0"
-                                name="group-music_type"
-                                >أكابيلا
-                              </b-form-radio>
-                              <b-form-radio
-                                :disabled="
-                                  $route.params.id && !user.permissions.includes(`add-packages`)
-                                "
-                                v-model="createSchool.music_status"
-                                value="1"
-                                name="group-music_type"
-                                >بموسيقى
-                              </b-form-radio>
-                            </b-form-group>
-                          </ValidationProvider>
-                        </div>
-                      </b-col>
-                      <b-col lg="6" class="mb-3">
-                        <div class="hold-field">
-                          <ValidationProvider rules="required">
-                            <label>
-                              {{ $t("SCHOOL.start_subscription") }}
-                              <span><i class="fa-solid fa-asterisk"></i></span
-                            ></label>
+            <div class="inputs-group">
+              <h3>{{ $t("SCHOOL.SCHOOL_MANAGER_INFO") }}</h3>
+              <b-row>
+                <b-col v-for="(field, index) in schoolManangerFields" :key="index" :lg="field.col">
+                  <div class="hold-field">
+                    <SelectSearch
+                      v-if="field.type === 'select'"
+                      v-model="field.value"
+                      :label="field.label"
+                      :name="field.label"
+                      :options="schoolGroups"
+                      :reduce="(option) => option.id"
+                      :get-option-label="(option) => option.name"
+                      :rules="field.rules"
+                      :deselectFromDropdown="field.deselectFromDropdown"
+                      :multiple="field.multiple"
+                    ></SelectSearch>
+                    <TextField
+                      v-if="field.type === 'text'"
+                      v-model="field.value"
+                      :label="field.label"
+                      :name="field.label"
+                      :rules="field.rules"
+                    ></TextField>
+                  </div>
+                </b-col>
+              </b-row>
+            </div>
+            <div class="inputs-group">
+              <h3>{{ $t("SCHOOL.address") }}</h3>
+              <b-row>
+                <b-col v-for="(field, index) in addressFields" :key="index" :lg="field.col">
+                  <div class="hold-field">
+                    <SelectSearch
+                      v-if="field.type === 'select'"
+                      v-model="field.value"
+                      :label="field.label"
+                      :name="field.label"
+                      :options="schoolGroups"
+                      :reduce="(option) => option.id"
+                      :get-option-label="(option) => option.name"
+                      :rules="field.rules"
+                      :deselectFromDropdown="field.deselectFromDropdown"
+                      :multiple="field.multiple"
+                    ></SelectSearch>
+                    <TextField
+                      v-if="field.type === 'text'"
+                      v-model="field.value"
+                      :label="field.label"
+                      :name="field.label"
+                      :rules="field.rules"
+                    ></TextField>
+                    <TextAreaField
+                      v-if="field.type === 'textarea'"
+                      v-model="field.value"
+                      :label="field.label"
+                      :name="field.label"
+                      :rules="field.rules"
+                    ></TextAreaField>
+                  </div>
+                </b-col>
+              </b-row>
+            </div>
 
-                            <date-picker
-                              :disabled-date="disabledBeforeToday"
-                              :disabled="
-                                $route.params.id && !user.permissions.includes(`add-packages`)
-                              "
-                              :lang="en"
-                              v-model="createSchool.startDate"
-                              @change="changeDate"
-                              valueType="format"
-                            ></date-picker>
-                            <p class="show-date" v-if="showDate">
-                              {{ createSchool.startDate }}
-                            </p>
-                          </ValidationProvider>
-                        </div>
-                      </b-col>
-                      <b-col lg="6" class="mb-3">
-                        <div class="hold-field">
-                          <ValidationProvider rules="required">
-                            <label>
-                              {{ $t("SCHOOL.end_subscription") }}
-                              <span><i class="fa-solid fa-asterisk"></i></span>
-                            </label>
-                            <date-picker
-                              :disabled-date="disabledBeforeToday"
-                              :lang="en"
-                              v-model="createSchool.endDate"
-                              :disabled="
-                                $route.params.id && !user.permissions.includes(`add-packages`)
-                              "
-                              @change="changeDate"
-                              valueType="format"
-                            ></date-picker>
-                            <p class="show-date" v-if="showDate">
-                              {{ createSchool.endDate }}
-                            </p>
-                          </ValidationProvider>
-                        </div>
-                      </b-col>
-                    </b-row>
-                  </b-col>
-                  <b-col lg="3">
-                    <div class="hold-field mt-4">
-                      <ImageUploader
-                        :is-required="true"
-                        :name="'schoolLogo'"
-                        v-model="createSchool.logo"
-                        :itemImage="itemImage"
-                        :text="$t('SCHOOL.UPLOAD_IMAGE')"
-                        @imageUpload="handleUploadImage"
-                        @deleteImage="deleteImage"
-                      />
-                    </div>
-                  </b-col>
-                </b-row>
-              </b-col>
-            </b-row>
             <b-row>
               <div class="hold-btns-form">
                 <Button @click="handleCancel" custom-class="cancel-btn margin">
@@ -281,29 +153,41 @@
   </div>
 </template>
 <script>
+import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import TextField from "@/components/Shared/TextField/index.vue";
+import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
+import UploadAttachment from "@/components/Shared/UploadAttachment";
 import Button from "@/components/Shared/Button/index.vue";
-import { getSchoolOwnerRequest, getSingleSchoolsRequest } from "@/api/school";
+import { getSingleSchoolsRequest } from "@/api/school";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { getAllPackagesRequest } from "@/api/packages";
+// Dropdown List
 import { getAllSchoolGroupRequest } from "@/api/schoolGroup";
-import { getAllSchoolTypesRequest } from "@/api/schoolType";
+import { getSchoolDepartmentTypesRequest } from "@/api/school-department-type";
+import { getAllCountryRequest } from "@/api/country";
+import { getSchoolDegreeTypesRequest } from "@/api/school-degree-type";
+import { getSchoolLanguagesRequest } from "@/api/school-languages";
+import {
+  getAllMusicStatusRequest,
+  getAllStatusRequest,
+  getAllStudentsTypeRequest,
+} from "@/api/system";
+//
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/locale/en";
 import "vue2-datepicker/index.css";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
-import { getAllSearchUsersRequest } from "@/api/user";
 import axios from "axios";
 import VueCookies from "vue-cookies";
-import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import { mapGetters } from "vuex";
 
 export default {
   components: {
     SelectSearch,
+    TextField,
+    TextAreaField,
+    UploadAttachment,
     ImageUploader,
     Modal,
-    TextField,
     Button,
     DatePicker,
   },
@@ -319,121 +203,231 @@ export default {
   data() {
     return {
       en: "en",
-      schoolGroups: [],
+      schoolGroups: [
+        {
+          id: 1,
+          name: "test",
+          label: "test",
+        },
+      ],
       packages: [],
       schoolTypes: [],
-      users: [],
       itemImage: null,
       showDate: true,
-      createSchool: {
-        name: "",
-        startDate: "",
-        endDate: "",
-        email: "",
-        school_group_id: "",
-        school_type_id: "",
-        admin_id: "",
-        package_id: "",
-        music_status: "",
-        status: "",
-        logo: null,
-        // username: "",
-        contact: "",
-        address: "",
-      },
+
+      schoolInfoFields: [
+        {
+          key: "name",
+          col: "4",
+          type: "text",
+          label: this.$t("SCHOOL.name"),
+          value: "",
+          rules: "required|min:3|max:100",
+        },
+        {
+          key: "country_id",
+          col: "4",
+          type: "select",
+          label: this.$t("SCHOOL.COUNTRY"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+        },
+        {
+          key: "school_group_id",
+          col: "4",
+          type: "select",
+          label: this.$t("SCHOOL.SCHOOL_COLLECTION"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+        },
+        {
+          key: "management_type_id",
+          col: "4",
+          type: "select",
+          label: this.$t("SCHOOL.SCHOOL_TYPE"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+        },
+        {
+          key: "certificate_id",
+          col: "4",
+          type: "select",
+          label: this.$t("SCHOOL.SCHOOL_CERTIFICATE_TYPE"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+        },
+        {
+          key: "teaching_language_id",
+          col: "4",
+          type: "select",
+          label: this.$t("SCHOOL.LEARNING_LANGAUAGE"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+        },
+        {
+          key: "students_type",
+          col: "4",
+          type: "select",
+          label: this.$t("SCHOOL.STUDENT_TYPE"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+        },
+        {
+          key: "phone",
+          col: "4",
+          type: "text",
+          label: this.$t("SCHOOL.MOBILE"),
+          value: "",
+          rules: "required",
+        },
+        {
+          key: "music_status",
+          col: "4",
+          type: "select",
+          label: this.$t("SCHOOL.VOICE"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+        },
+        {
+          key: "status",
+          col: "4",
+          type: "select",
+          label: this.$t("SCHOOL.status"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+        },
+      ],
+      schoolManangerFields: [
+        {
+          key: "owner_name",
+          col: "4",
+          type: "text",
+          label: this.$t("SCHOOL.MANAGER_NAME"),
+          value: "",
+          rules: "required|min:3|max:100",
+        },
+        {
+          key: "owner_role",
+          col: "4",
+          type: "text",
+          label: this.$t("SCHOOL.MANAGER_TYPE"),
+          value: "",
+          rules: "required|min:3|max:100",
+        },
+        {
+          key: "owner_phone",
+          col: "4",
+          type: "text",
+          label: this.$t("SCHOOL.MANAGER_MOBILE"),
+          value: "",
+          rules: "required|min:3|max:100",
+        },
+      ],
+      addressFields: [
+        {
+          key: "address",
+          col: "12",
+          type: "text",
+          label: this.$t("SCHOOL.SCHOOL_ADDRESS"),
+          value: "",
+          rules: "required|min:3|max:100",
+        },
+        {
+          key: "notes",
+          col: "12",
+          type: "textarea",
+          label: this.$t("SCHOOL.NOTES"),
+          value: "",
+          rules: "required|min:3|max:100",
+        },
+      ],
+
+      createSchool: {},
     };
   },
   methods: {
-    getSoundType(id) {
-      if (!this.$route.params.id) {
-        const chosenItem = this.schoolGroups.find((item) => item.id == id);
-        this.createSchool.music_status = chosenItem ? chosenItem.music_status : "";
-        this.createSchool.status = chosenItem ? chosenItem.status : "";
-      }
+    setFileImageId($event) {
+      this.createSchool.logo = $event;
     },
+    handleInputValue() {
+      const allFields = [this.schoolInfoFields, this.schoolManangerFields, this.addressFields];
+      allFields.forEach((fieldArray) => {
+        this.updateFields(fieldArray);
+      });
+    },
+
+    updateFields(fieldArray) {
+      // Generic method to update createSchool object based on the fieldArray
+      fieldArray.forEach((field) => {
+        try {
+          this.$set(this.createSchool, field.key, field.value);
+        } catch (error) {
+          console.error(`Error updating field ${field.key}:`, error);
+        }
+      });
+    },
+
     deleteImage() {
       this.createSchool.logo = null;
       this.itemImage = null;
     },
-    disabledBeforeToday(date) {
-      return date < new Date(new Date().setHours(0, 0, 0, 0));
-    },
-    changeDate() {
-      this.showDate = false;
-    },
-    handleUploadImage(e) {
-      this.itemImage = URL.createObjectURL(e.target.files[0]);
-      if (e) {
-        this.createSchool.logo = e.target.files[0];
-      } else return;
-    },
-    getAllPackages() {
-      this.ApiService(getAllPackagesRequest()).then((response) => {
-        this.packages = response.data.data;
-      });
-    },
-    getAlSchoolGroups() {
-      this.ApiService(getAllSchoolGroupRequest()).then((response) => {
-        this.schoolGroups = response.data.data;
-      });
-    },
-    getAllSchoolType() {
-      this.ApiService(getAllSchoolTypesRequest()).then((response) => {
-        this.schoolTypes = response.data.data;
-      });
-    },
-    getAllUsers() {
-      this.ApiService(getSchoolOwnerRequest({ school_id: this.$route.params.id })).then(
-        (response) => {
-          this.users = response.data.data;
-        }
-      );
-    },
+
     sendDataNewSchool() {
+      this.handleInputValue();
       const formData = new FormData();
-      formData.append("name", this.createSchool.name);
-      // formData.append("username", this.createSchool.username);
-      formData.append("address", this.createSchool.address);
-      formData.append("contact", this.createSchool.contact);
-      formData.append("email", this.createSchool.email);
-      formData.append("school_group_id", this.createSchool.school_group_id);
-      formData.append("status", this.createSchool.status);
-      formData.append("music_status", this.createSchool.music_status);
-      formData.append("admin_id", this.createSchool.admin_id);
-      formData.append("school_type_id", this.createSchool.school_type_id);
-      formData.append("subscription_start_date", this.createSchool.startDate);
-      formData.append("subscription_end_date", this.createSchool.endDate);
-      formData.append("package_id", this.createSchool.package_id);
-      if (typeof this.createSchool.logo != "string" && this.createSchool.logo) {
-        formData.append("logo", this.createSchool.logo);
-      }
-      if (this.$route.params.id) {
-        formData.append("_method", "PUT");
-        // this.ApiService(postSchoolsRequest(formData)).then((res)=>{})
-        axios
-          .post(`/schools/${this.$route.params.id}`, formData, {
-            headers: {
-              Authorization: `Bearer ${VueCookies.get("token")}`,
-              locale: "ar",
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((response) => {
-            this.$router.push("/dashboard/schools");
-          });
-      } else {
-        axios
-          .post("/schools", formData, {
-            headers: {
-              Authorization: `Bearer ${VueCookies.get("token")}`,
-              locale: "ar",
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then(() => {
-            this.$router.push("/dashboard/schools");
-          });
-      }
+
+      // Append form data using a loop
+      Object.entries(this.createSchool).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          // Handle special cases or custom conditions if needed
+          if (key === "logo" && typeof value !== "string") {
+            formData.append(key, value);
+          } else {
+            formData.append(key, value);
+          }
+        }
+      });
+
+      const requestConfig = {
+        headers: {
+          Authorization: `Bearer ${VueCookies.get("token")}`,
+          locale: "ar",
+          "Content-Type": "multipart/form-data",
+        },
+      };
+
+      const endpoint = this.$route.params.id ? `/schools/${this.$route.params.id}` : "/schools";
+      const httpMethod = this.$route.params.id ? "PUT" : "POST";
+
+      axios
+        .request({
+          url: endpoint,
+          method: httpMethod,
+          data: formData,
+          ...requestConfig,
+        })
+        .then(() => {
+          this.$router.push("/dashboard/schools");
+        })
+        .catch((error) => {
+          console.error("Error sending school data:", error);
+        });
     },
     onSubmit() {
       this.sendDataNewSchool();
@@ -441,36 +435,108 @@ export default {
     handleCancel() {
       this.$emit("handleCancel");
     },
-    getSchoolToEdit() {
+
+    setValuesInArray(array, sourceObject) {
+      array.forEach((field) => {
+        // Check if the field key exists in the sourceObject
+        if (sourceObject.hasOwnProperty(field.key)) {
+          this.$set(field, "value", sourceObject[field.key]);
+        }
+      });
+    },
+
+    async getSchoolToEdit() {
       if (this.$route.params.id) {
-        this.ApiService(getSingleSchoolsRequest(this.$route.params.id)).then((response) => {
-          // console.log('response.data.data.music_status',response.data.data.music_status)
-          // console.log('response.data.data.status',response.data.data.status)
-          this.createSchool.name = response.data.data.name;
-          // this.createSchool.username = response.data.data.username;
-          this.createSchool.address = response.data.data.address;
-          this.createSchool.contact = response.data.data.contact;
-          this.createSchool.email = response.data.data.email;
-          this.createSchool.admin_id = response.data.data.admin.id;
-          this.createSchool.school_group_id = response.data.data.school_group.id;
-          this.createSchool.school_type_id = response.data.data.school_type.id;
-          this.createSchool.package_id = response.data.data.package.id;
-          this.createSchool.music_status = response.data.data.music_status;
-          this.createSchool.status = response.data.data.status;
-          this.createSchool.startDate = response.data.data.subscription_start_date;
-          this.createSchool.endDate = response.data.data.subscription_end_date;
-          this.itemImage = response.data.data.logo;
-          this.createSchool.logo = response.data.data.logo;
-        });
+        const response = await this.ApiService(getSingleSchoolsRequest(this.$route.params.id));
+        const { data } = response.data;
+
+        this.createSchool = {
+          name: data.name,
+          country_id: data.country.id,
+          management_type_id: data.management_type.id,
+          certificate_id: data.certificate.id,
+          teaching_language_id: data.teaching_language.id,
+          students_type: data.teaching_language.id,
+          music_status: data.music_status.id,
+          status: data.status.id,
+          phone: data.phone,
+          owner_name: data.owner_name,
+          owner_role: data.owner_role,
+          owner_phone: data.owner_phone,
+          address: data.address,
+          notes: data.notes,
+        };
+
+        this.setValuesInArray(this.schoolInfoFields, this.createSchool);
+        this.setValuesInArray(this.schoolManangerFields, this.createSchool);
+        this.setValuesInArray(this.addressFields, this.createSchool);
+
+        this.itemImage = logo;
+      }
+    },
+
+    async fetchDataAndUpdateOptions(apiRequest, label) {
+      try {
+        const response = await this.ApiService(apiRequest);
+        this.updateFieldOptions(label, response.data.data);
+      } catch (error) {
+        console.error(`Error fetching ${label}:`, error);
+      }
+    },
+    async getAlSchoolGroups() {
+      await this.fetchDataAndUpdateOptions(getAllSchoolGroupRequest(), "SCHOOL.SCHOOL_COLLECTION");
+    },
+
+    async getALLCountries() {
+      await this.fetchDataAndUpdateOptions(getAllCountryRequest(), "SCHOOL.COUNTRY");
+    },
+
+    async getSchoolDepartmentTypes() {
+      await this.fetchDataAndUpdateOptions(getSchoolDepartmentTypesRequest(), "SCHOOL.SCHOOL_TYPE");
+    },
+
+    async getSchoolDegreeTypes() {
+      await this.fetchDataAndUpdateOptions(
+        getSchoolDegreeTypesRequest(),
+        "SCHOOL.SCHOOL_CERTIFICATE_TYPE"
+      );
+    },
+
+    async getSchoolLanguages() {
+      await this.fetchDataAndUpdateOptions(
+        getSchoolLanguagesRequest(),
+        "SCHOOL.LEARNING_LANGAUAGE"
+      );
+    },
+    async getAllMusicStatus() {
+      await this.fetchDataAndUpdateOptions(getAllMusicStatusRequest(), "SCHOOL.VOICE");
+    },
+    async getAllStatus() {
+      await this.fetchDataAndUpdateOptions(getAllStatusRequest(), "SCHOOL.status");
+    },
+    async getAllStudentsType() {
+      await this.fetchDataAndUpdateOptions(getAllStudentsTypeRequest(), "SCHOOL.STUDENT_TYPE");
+    },
+
+    updateFieldOptions(label, data) {
+      const selectOptionsField = this.schoolInfoFields.find(
+        (field) => field.label === this.$t(label)
+      );
+      if (selectOptionsField) {
+        selectOptionsField.options = data;
       }
     },
   },
   mounted() {
-    this.getSchoolToEdit();
-    this.getAllPackages();
+    if (this.$route.params.id) this.getSchoolToEdit();
     this.getAlSchoolGroups();
-    this.getAllSchoolType();
-    this.getAllUsers();
+    this.getALLCountries();
+    this.getSchoolDepartmentTypes();
+    this.getSchoolDegreeTypes();
+    this.getSchoolLanguages();
+    this.getAllMusicStatus();
+    this.getAllStudentsType();
+    this.getAllStatus();
   },
 };
 </script>

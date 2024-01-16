@@ -70,9 +70,26 @@ li {
   cursor: pointer;
 }
 
+.rtl {
+  .icon-password {
+    left: 24px;
+    right: unset;
+  }
+  .vs__actions {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 18px;
+  }
+  .form-control:not(textarea) {
+    height: 55px;
+    padding: 0 1.5rem;
+    transition: padding 0.3s;
+  }
+}
 .icon-password {
   position: absolute;
-  top: 58px;
+  top: 53px;
   z-index: 10;
   right: 24px;
   display: flex !important;
@@ -82,7 +99,6 @@ li {
   width: 36px;
   padding: 8px;
   cursor: pointer;
-
   &:lang(ar) {
     left: 24px;
     right: unset;
