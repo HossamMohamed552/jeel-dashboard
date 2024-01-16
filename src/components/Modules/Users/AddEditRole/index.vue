@@ -34,7 +34,7 @@
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <TextAreaField
-                    :rules="'required|min:3|max:250'"
+                    :rules="'min:3|max:250'"
                     v-model="createRole.description"
                     :label="$t('ROLES.description')"
                     :name="$t('ROLES.description')"
