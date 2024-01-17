@@ -1,128 +1,135 @@
 <template>
   <div class="add-mission">
     <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
-    <Stepper
-      v-show="currentStep === 0 || currentStep === 1 || currentStep === 2"
-      class="mt-5 mb-3"
-      :steps="steps"
-      :current-step="currentStep"
-    />
-    <AddEditMissionDataForm
-      v-if="currentStep === 0"
-      :levels="levels"
-      :learning-paths="learningPaths"
-      :terms="terms"
-      :countries="countries"
-      @onSubmit="goToFillContent"
-      @handleCancel="handleCancel"
-    />
-    <AddEditContent
-      v-if="currentStep === 1"
-      :learningPathSelected="learningPathSelected"
-      :level="level"
-      :term="term"
-      :lessonsSelected="lessonsSelected"
-      @handleBack="goToMissionDataForm"
-      @handleCancel="handleCancel"
-      @goToMissionContentStep="goToMissionContentStep"/>
-      <AddEditCompleteTaskContent
-        v-if="currentStep === 2"
-        @goToFinalStep="goToFinalStep"
-        @handleBack="backToMissionContentStep"
-        @handleCancel="handleCancel"
-      />
-    <div class="container-fluid custom-container" v-if="currentStep === 3">
-      <div class="mission-review ">
-        <b-row>
-          <b-col lg="4">
-            <h6>السنة الدراسية</h6>
-            <p>{{ levels.find((item) => item.id === collectData.level_id).name }}</p>
-          </b-col>
-          <b-col lg="4">
-            <h6>إسم المهمة</h6>
-            <p>{{ collectData.name }}</p>
-          </b-col>
-          <b-col lg="4">
-            <h6>الدولة</h6>
-            <p>{{ countries.find((item) => item.id === collectData.country_id).name }}</p>
-          </b-col>
-          <b-col lg="4">
-            <h6>الصف الدراسى</h6>
-            <p>{{ terms.find((item) => item.id === collectData.term_id).name }}</p>
-          </b-col>
-          <b-col lg="4">
-            <h6>الوصف</h6>
-            <p>{{ collectData.description }}</p>
-          </b-col>
-          <b-col lg="4">
-            <h6>المدة الزمنية</h6>
-            <p>{{ collectData.duration }}</p>
-          </b-col>
-          <b-col lg="12">
-            <div>
-              <p>المحتوى</p>
-              <div v-for="path in collectData.paths" :key="path.id">
-                <b-row>
-                  <b-col lg="12">
-                    <h6>المسار</h6>
-                    <p>{{ path.name }}</p>
-                  </b-col>
-                  <b-col lg="4">
-                    <div>
-                      <h6>الفيديوهات</h6>
-                      <span
-                        v-for="(video, index) in Array.from(path.videos).filter((item) =>
+    <div class="add-edit-mission">
+      <div class="container-fluid custom-container">
+        <div class="add-edit-mission-form">
+          <h3>{{ $route.params.id ? $t("MISSIONS.EDIT") : $t("MISSIONS.ADD_NEW") }}</h3>
+          <Stepper
+            v-show="currentStep === 0 || currentStep === 1 || currentStep === 2 || currentStep === 3"
+            class="mt-5 mb-3"
+            :steps="steps"
+            :current-step="currentStep"
+          />
+          <AddEditMissionDataForm
+            v-if="currentStep === 0"
+            :levels="levels"
+            :learning-paths="learningPaths"
+            :terms="terms"
+            :countries="countries"
+            @onSubmit="goToFillContent"
+            @handleCancel="handleCancel"
+          />
+          <AddEditContent
+            v-if="currentStep === 1"
+            :learningPathSelected="learningPathSelected"
+            :level="level"
+            :term="term"
+            :lessonsSelected="lessonsSelected"
+            @handleBack="goToMissionDataForm"
+            @handleCancel="handleCancel"
+            @goToMissionContentStep="goToMissionContentStep"/>
+          <AddEditCompleteTaskContent
+            v-if="currentStep === 2"
+            @goToFinalStep="goToFinalStep"
+            @handleBack="backToMissionContentStep"
+            @handleCancel="handleCancel"
+          />
+          <div class="container-fluid custom-container" v-if="currentStep === 3">
+            <div class="mission-review ">
+              <b-row>
+                <b-col lg="4">
+                  <h6>السنة الدراسية</h6>
+                  <p>{{ levels.find((item) => item.id === collectData.level_id).name }}</p>
+                </b-col>
+                <b-col lg="4">
+                  <h6>إسم المهمة</h6>
+                  <p>{{ collectData.name }}</p>
+                </b-col>
+                <b-col lg="4">
+                  <h6>الدولة</h6>
+                  <p>{{ countries.find((item) => item.id === collectData.country_id).name }}</p>
+                </b-col>
+                <b-col lg="4">
+                  <h6>الصف الدراسى</h6>
+                  <p>{{ terms.find((item) => item.id === collectData.term_id).name }}</p>
+                </b-col>
+                <b-col lg="4">
+                  <h6>الوصف</h6>
+                  <p>{{ collectData.description }}</p>
+                </b-col>
+                <b-col lg="4">
+                  <h6>المدة الزمنية</h6>
+                  <p>{{ collectData.duration }}</p>
+                </b-col>
+                <b-col lg="12">
+                  <div>
+                    <p>المحتوى</p>
+                    <div v-for="path in collectData.paths" :key="path.id">
+                      <b-row>
+                        <b-col lg="12">
+                          <h6>المسار</h6>
+                          <p>{{ path.name }}</p>
+                        </b-col>
+                        <b-col lg="4">
+                          <div>
+                            <h6>الفيديوهات</h6>
+                            <span
+                              v-for="(video, index) in Array.from(path.videos).filter((item) =>
                           path.videoIds.includes(item.id)
                         )"
-                        :key="`${video.id} ${index}`"
-                        >{{ video.title }}</span
-                      >
-                    </div>
-                  </b-col>
-                  <b-col lg="4">
-                    <div>
-                      <h6>اوراق العمل</h6>
-                      <span
-                        v-for="(paperWork, index) in Array.from(path.paperWorks).filter((item) =>
+                              :key="`${video.id} ${index}`"
+                            >{{ video.title }}</span
+                            >
+                          </div>
+                        </b-col>
+                        <b-col lg="4">
+                          <div>
+                            <h6>اوراق العمل</h6>
+                            <span
+                              v-for="(paperWork, index) in Array.from(path.paperWorks).filter((item) =>
                           path.paperWorkIds.includes(item.id)
                         )"
-                        :key="`${paperWork.id} ${index}`"
-                        >{{ paperWork.name }}</span
-                      >
-                    </div>
-                  </b-col>
-                  <b-col lg="4">
-                    <div>
-                      <h6>التمارين</h6>
-                      <span
-                        v-for="(quiz, index) in Array.from(path.quizzes).filter((item) =>
+                              :key="`${paperWork.id} ${index}`"
+                            >{{ paperWork.name }}</span
+                            >
+                          </div>
+                        </b-col>
+                        <b-col lg="4">
+                          <div>
+                            <h6>التمارين</h6>
+                            <span
+                              v-for="(quiz, index) in Array.from(path.quizzes).filter((item) =>
                           path.quizzesIds.includes(item.id)
                         )"
-                        :key="`${quiz.id} ${index}`"
-                        >{{ quiz.name }}</span
-                      >
+                              :key="`${quiz.id} ${index}`"
+                            >{{ quiz.name }}</span
+                            >
+                          </div>
+                        </b-col>
+                      </b-row>
                     </div>
-                  </b-col>
-                </b-row>
-              </div>
+                  </div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <div class="action-holder">
+                  <div>
+                    <Button :loading="loading" custom-class="submit-btn" @click="createMission">
+                      {{ $t("GLOBAL_SAVE") }}
+                    </Button>
+                    <Button class="mx-3" @click="backToMissionContentStep" custom-class="submit-btn back-btn">
+                      {{ $t("GLOBAL_BACK") }}
+                    </Button>
+                  </div>
+                  <Button @click="handleCancel" custom-class="cancel-btn margin">
+                    {{ $t("GLOBAL_CANCEL") }}
+                  </Button>
+                </div>
+              </b-row>
             </div>
-          </b-col>
-        </b-row>
-        <b-row>
-          <div class="action-holder">
-            <div>
-              <Button :loading="loading" custom-class="submit-btn" @click="createMission">
-                {{ $t("GLOBAL_SAVE") }}
-              </Button>
-              <Button class="mx-3" @click="backToMissionContentStep" custom-class="submit-btn back-btn">
-                {{ $t("GLOBAL_BACK") }}
-              </Button>
-            </div>
-            <Button @click="handleCancel" custom-class="cancel-btn margin">
-              {{ $t("GLOBAL_CANCEL") }}
-            </Button>
           </div>
-        </b-row>
+        </div>
       </div>
     </div>
   </div>
@@ -173,10 +180,10 @@ export default {
           icon: "3",
           title: this.$t("MISSIONS.STEP_THREE"),
         },
-        // {
-        //   icon: "4",
-        //   title: this.$t("MISSIONS.STEP_FOUR"),
-        // }
+        {
+          icon: "4",
+          title: this.$t("MISSIONS.STEP_FOUR"),
+        }
       ],
       currentStep: 0,
       learningPathSelected: [],
@@ -204,7 +211,8 @@ export default {
       this.handleNavigation(1);
     },
     backToMissionContentStep() {
-      this.handleNavigation(2);
+      console.log('asd',2)
+      this.handleNavigation(1);
     },
     goToMissionContentStep(data) {
       Object.assign(this.collectData, { paths: [...data] });

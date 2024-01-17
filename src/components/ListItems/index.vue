@@ -214,6 +214,9 @@
         <template #cell(status.name)="data">
           <span class="blocked-user" v-if="checkBlockUser(data) == 'show'">محظور</span>
         </template>
+        <template #cell(status)="data">
+          <span>{{ data.item.status.name }}</span>
+        </template>
         <template #cell(actions)="data">
           <b-dropdown
             size="lg"
@@ -265,10 +268,10 @@
               {{ $t("CHANGE_PASSWORD") }}
             </b-dropdown-item>
             <!-- Add User -->
-            <b-dropdown-divider v-if="checkUsersAdd() === 'show'"></b-dropdown-divider>
-            <b-dropdown-item @click="addUser(data.item.id)" v-if="checkUsersAdd() === 'show'">
-              {{ $t("CONTROLS.users") }}
-            </b-dropdown-item>
+<!--            <b-dropdown-divider v-if="checkUsersAdd() === 'show'"></b-dropdown-divider>-->
+<!--            <b-dropdown-item @click="addUser(data.item.id)" v-if="checkUsersAdd() === 'show'">-->
+<!--              {{ $t("CONTROLS.users") }}-->
+<!--            </b-dropdown-item>-->
             <b-dropdown-divider v-if="checkEditClass() === 'show'"></b-dropdown-divider>
             <b-dropdown-item
               v-if="checkEditClass() === 'show'"

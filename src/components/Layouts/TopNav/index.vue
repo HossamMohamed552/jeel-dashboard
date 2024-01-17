@@ -10,7 +10,7 @@
             "
           >
             <router-link to="/dashboard/home" tag="div" class="logo">
-              <img src="@/assets/images/logo-white.png" alt="logo" title="geel logo" />
+              <img src="@/assets/images/logo-header.svg" alt="logo" title="geel logo" />
             </router-link>
             <div class="notification-info-admin">
               <!-- <div class="notification"> -->
@@ -208,7 +208,7 @@
             "
           >
             <router-link to="/dashboard/home" tag="div" class="logo">
-              <img src="@/assets/images/logo-white.png" alt="logo" title="geel logo" />
+              <img src="@/assets/images/logo-header.svg" alt="logo" title="geel logo" />
             </router-link>
             <div class="notification-info-admin">
               <div class="notification">

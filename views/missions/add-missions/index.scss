@@ -20,3 +20,6 @@
     word-break: break-word;
   }
 }
+.add-edit-mission-form{
+  @include styleViewList;
+}

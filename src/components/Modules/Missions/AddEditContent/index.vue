@@ -1,96 +1,90 @@
 <template>
-  <div class="add-edit-mission">
-    <div class="container-fluid custom-container">
-      <div class="add-edit-mission-form">
-        <validation-observer v-slot="{ invalid }" ref="addEditContentForm">
-          <form @submit.prevent="goToMissionContentStep" class="mt-5">
-            <b-row v-for="learnPath in learnPathsVideoPaperWokQuiz" :key="learnPath.id"
-                   class="hold-path">
-              <b-col lg="12" class="mb-3">
-                <h3>{{ learnPath.name }}</h3>
-              </b-col>
-              <b-col lg="6">
-                <SelectSearch
-                  v-model="learnPath.videoIds"
-                  :label="$t('MISSIONS.videos')"
-                  :name="$t('MISSIONS.videos')"
-                  :options="learnPath.videos"
-                  :reduce="(option) => option.id"
-                  :get-option-label="(option) => option.title"
-                  :rules="'required'"
-                  :deselectFromDropdown="true"
-                  multiple
-                ></SelectSearch>
-              </b-col>
-              <b-col lg="6">
-                <SelectSearch
-                  v-model="learnPath.paperWorkIds"
-                  :label="$t('MISSIONS.paperWork')"
-                  :name="$t('MISSIONS.paperWork')"
-                  :options="learnPath.paperWorks"
-                  :reduce="(option) => option.id"
-                  :get-option-label="(option) => option.name"
-                  :rules="'required'"
-                  :deselectFromDropdown="true"
-                  multiple
-                ></SelectSearch>
-              </b-col>
-              <b-col class="mt-3" lg="6">
-                <SelectSearch
-                  v-model="learnPath.quizzesIds"
-                  :label="$t('MISSIONS.quizzes')"
-                  :name="$t('MISSIONS.quizzes')"
-                  :options="learnPath.quizzes"
-                  :reduce="(option) => option.id"
-                  :get-option-label="(option) => option.name"
-                  :rules="'required'"
-                  :deselectFromDropdown="true"
-                  multiple
-                ></SelectSearch>
-              </b-col>
-              <b-col class="mt-3" lg="6">
-                <SelectSearch
-                  v-model="learnPath.tasksIds"
-                  :label="$t('MISSIONS.tasks')"
-                  :name="$t('MISSIONS.tasks')"
-                  :options="learnPath.tasks"
-                  :reduce="(option) => option.id"
-                  :get-option-label="(option) => option.name"
-                  :rules="'required'"
-                  :deselectFromDropdown="true"
-                  multiple
-                ></SelectSearch>
-              </b-col>
-            </b-row>
-            <b-row>
-              <div class="action-holder">
-                <div>
-                  <Button
-                    type="submit"
-                    :loading="loading"
-                    :disabled="invalid"
-                    :custom-class="'submit-btn'"
-                  >
-                    {{ $t("GLOBAL_NEXT") }}
-                  </Button>
-                  <Button
-                    class="mx-3"
-                    @click="handleBack"
-                    custom-class="submit-btn back-btn"
-                  >
-                    {{ $t("GLOBAL_BACK") }}
-                  </Button>
-                </div>
-                <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
-                  {{ $t("GLOBAL_CANCEL") }}
-                </Button>
-              </div>
-            </b-row>
-          </form>
-        </validation-observer>
-      </div>
-    </div>
-  </div>
+  <validation-observer v-slot="{ invalid }" ref="addEditContentForm">
+    <form @submit.prevent="goToMissionContentStep" class="mt-5">
+      <b-row v-for="learnPath in learnPathsVideoPaperWokQuiz" :key="learnPath.id"
+             class="hold-path">
+        <b-col lg="12" class="mb-3">
+          <h3>{{ learnPath.name }}</h3>
+        </b-col>
+        <b-col lg="6">
+          <SelectSearch
+            v-model="learnPath.videoIds"
+            :label="$t('MISSIONS.videos')"
+            :name="$t('MISSIONS.videos')"
+            :options="learnPath.videos"
+            :reduce="(option) => option.id"
+            :get-option-label="(option) => option.title"
+            :rules="'required'"
+            :deselectFromDropdown="true"
+            multiple
+          ></SelectSearch>
+        </b-col>
+        <b-col lg="6">
+          <SelectSearch
+            v-model="learnPath.paperWorkIds"
+            :label="$t('MISSIONS.paperWork')"
+            :name="$t('MISSIONS.paperWork')"
+            :options="learnPath.paperWorks"
+            :reduce="(option) => option.id"
+            :get-option-label="(option) => option.name"
+            :rules="'required'"
+            :deselectFromDropdown="true"
+            multiple
+          ></SelectSearch>
+        </b-col>
+        <b-col class="mt-3" lg="6">
+          <SelectSearch
+            v-model="learnPath.quizzesIds"
+            :label="$t('MISSIONS.quizzes')"
+            :name="$t('MISSIONS.quizzes')"
+            :options="learnPath.quizzes"
+            :reduce="(option) => option.id"
+            :get-option-label="(option) => option.name"
+            :rules="'required'"
+            :deselectFromDropdown="true"
+            multiple
+          ></SelectSearch>
+        </b-col>
+        <b-col class="mt-3" lg="6">
+          <SelectSearch
+            v-model="learnPath.tasksIds"
+            :label="$t('MISSIONS.tasks')"
+            :name="$t('MISSIONS.tasks')"
+            :options="learnPath.tasks"
+            :reduce="(option) => option.id"
+            :get-option-label="(option) => option.name"
+            :rules="'required'"
+            :deselectFromDropdown="true"
+            multiple
+          ></SelectSearch>
+        </b-col>
+      </b-row>
+      <b-row>
+        <div class="action-holder">
+          <div>
+            <Button
+              type="submit"
+              :loading="loading"
+              :disabled="invalid"
+              :custom-class="'submit-btn'"
+            >
+              {{ $t("GLOBAL_NEXT") }}
+            </Button>
+            <Button
+              class="mx-3"
+              @click="handleBack"
+              custom-class="submit-btn back-btn"
+            >
+              {{ $t("GLOBAL_BACK") }}
+            </Button>
+          </div>
+          <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
+            {{ $t("GLOBAL_CANCEL") }}
+          </Button>
+        </div>
+      </b-row>
+    </form>
+  </validation-observer>
 </template>
 <script>
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
