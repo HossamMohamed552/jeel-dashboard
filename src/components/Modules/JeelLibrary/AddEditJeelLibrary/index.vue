@@ -223,10 +223,9 @@
                 </div>
               </b-col>
 
-              <b-col lg="6" class="mb-3">
+              <b-col lg="6" class="mb-3" v-if="createItem.type== 117 ||  createItem.type ==115">
                 <div class="hold-field">
                   <TextField
-                    v-if="createItem.type==117 || createItem.type==115 || createItem.type==114"
                     v-model="createItem.link"
                     :label="'رابط'"
                     :name="'رابط'"
@@ -235,6 +234,39 @@
                   ></TextField>
                 </div>
               </b-col>
+
+              <!------------------- start pdf --------------------------------->
+              <b-col lg="6"  v-if="createItem.type == 114" class="mb-3 mt-4">
+                <UploadAttachment
+                  v-if="!$route.params.id || createItem.fileChangedRequest"
+                  :type-of-attachment="'file'"
+                  :label="'ملف المحتوي '"
+                  :name="'File'"
+                  :dropIdRef="'File'"
+                  :accept-files="'.pdf'"
+                  @setFileId="setFileId"
+                />
+
+
+                <PreviewMedia
+                  v-if="
+                    $route.params.id &&
+                    attachment.fileChanged === false &&
+                    !attachment.fileChangedRequest
+                  "
+                  :header="`${$t('BADGE.bade_logo')}`"
+                  :media-name="attachment.file_name"
+                  :file-size="attachment.file_size"
+                  :image-url="attachment.file"
+                  :typeOfMedia="'file'"
+                  :show-remove-button="true"
+                  @removeFile="
+                    removeFile('file', 'fileChanged', 'fileChangedRequest')
+                  "
+                  @showModal="showModal(createItem,'file')"
+                />
+              </b-col>
+              <!------------------- end --------------------------------->
 
 
 
@@ -277,6 +309,9 @@
         <div class="text-center">
           <div class="height-modal" v-if=" typeOfAttachment=='logo' || typeOfAttachment =='image'">
             <img :src="attachment.thumbnail" class="image-modal" />
+          </div>
+          <div class="height-modal" v-if=" typeOfAttachment=='file'">
+            <input type="file" :value="attachment.file" class="image-modal" />
           </div>
 
           <audio :src="audioUrl"  v-if=" typeOfAttachment =='audio'"
@@ -346,17 +381,12 @@ export default {
   data() {
     return {
       levels: [],
-      types: [
-        // {id: 1, name: "صوت",},
-        // {id: 2, name: "فيديو ",},
-        // {id: 3, name: "صورة",},
-        // {id: 4, name: "نص",},
-        // {id: 5, name: "رابط",},
-      ],
+      types: [],
       typeOfAttachment:null,
       imageUrl:null,
       audioUrl:null,
       videoUrl:null,
+      fileUrl: null,
       createItem: {
         level_id: "",
         file_name: "",
@@ -382,6 +412,10 @@ export default {
         imageChanged: false,
         imageChangedRequest: false,
 
+        //  file
+        file: null,
+        fileChanged: false,
+        fileChangedRequest: false,
 
         //  audio
         audio: null,
@@ -413,8 +447,6 @@ export default {
     },
 
     setImageId(id) {
-      console.log('image');
-      console.log(id);
       this.attachment.image = id;
       this.createItem.image = id;
       this.attachment.imageChanged = false;
@@ -442,6 +474,13 @@ export default {
       this.attachment.videoWithMuiscChangedRequest = true;
     },
 
+    setFileId(id) {
+      this.attachment.file = id;
+      this.createItem.file = id;
+      this.attachment.fileChanged = false;
+      this.attachment.fileChangedRequest = true;
+    },
+
     removeFile(fileName, fileChange, fileRequest) {
       this.createItem[fileName] = null;
       this.createItem[fileChange] = true;
@@ -452,10 +491,6 @@ export default {
       this.$bvModal.show('holdContent');
 
       this.typeOfAttachment = typeOfAttachment;
-
-      // console.log(item,typeOfAttachment);
-
-      //videoWithMusic , logo ,videoWithOutMusic ,image ,audio
 
       if (typeOfAttachment === 'videoWithMusic') {
         this.videoUrl = this.attachment.videoWithMuisc
@@ -471,6 +506,9 @@ export default {
       }
       else if (typeOfAttachment === 'image') {
         this.imageUrl = this.attachment.image
+      }
+      else if (typeOfAttachment === 'file') {
+        this.fileUrl = this.attachment.file
       }
 
     },
@@ -508,14 +546,12 @@ export default {
           this.createItem = response.data.data;
           this.createItem.level_id = response.data.data.level.id;
 
-          //
           // logo: null,
           this.createItem.logo = response.data.data.file;
           this.attachment.thumbnail_name = response.data.data.logo_name;
           this.attachment.thumbnail_size = response.data.data.logo_size;
           this.attachment.thumbnail = response.data.data.logo;
 
-          this.isDefault = this.createItem.is_default;
         });
       }
     },

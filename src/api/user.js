@@ -59,6 +59,16 @@ export const postAddUserRequest = (data) => ({
     "Content-Type": "multipart/form-data",
   },
 });
+export const postAddUserSchoolRequest = (data) => ({
+  method: "post",
+  url: "school/user/create",
+  config: {
+    data,
+  },
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+});
 export const addEditUserRequest = (endpoint, data) => ({
   method: "post",
   url: `${endpoint}`,

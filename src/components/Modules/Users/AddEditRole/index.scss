@@ -3,7 +3,7 @@
 
 .add-edit-role-form {
   @include styleViewList;
-  h3{
+  h3 {
     font-weight: bold;
   }
 }
@@ -16,14 +16,14 @@
 .heading-permission {
   color: $color-primary;
 }
-.hold-permissions{
+.hold-permissions {
   display: block;
   max-height: 275px;
   overflow: auto;
   background: #fff;
   padding: 1rem;
-  border-radius: .5rem;
-  border: 1px solid #BEBEBE;
+  border-radius: 0.5rem;
+  border: 1px solid #bebebe;
 }
 
 .permission-item {
@@ -31,7 +31,7 @@
   cursor: pointer;
 }
 ::v-deep {
-  .custom-control-input:checked~.custom-control-label::before {
+  .custom-control-input:checked ~ .custom-control-label::before {
     background: $color-primary;
     border-color: $color-primary;
     box-shadow: none;
@@ -39,7 +39,7 @@
   .custom-control {
     cursor: pointer;
     @media (max-width: 768px) {
-      font-size: .8rem;
+      font-size: 0.8rem;
     }
     &:lang(ar) {
       padding-right: 1.5rem;
@@ -60,7 +60,47 @@
     }
   }
 }
-.buttons{
+.buttons {
   height: 100%;
-  @include flexCenter(center)
+  @include flexCenter(center);
+}
+
+::v-deep {
+  .hold-field {
+    position: relative;
+    .invalid-feedback {
+      position: absolute;
+    }
+    label {
+      margin: 0.7rem 0.7rem 1rem;
+    }
+  }
+  .btn {
+    min-width: 195px;
+    padding: 0 !important;
+    height: 55px;
+  }
+  .group-type {
+    margin-right: 0.2rem;
+    .col-form-label {
+      color: $color-primary !important;
+    }
+  }
+
+  .custom-radio {
+    display: inline-block;
+  }
+
+  .mx-datepicker {
+    width: 100%;
+    border-radius: 3.125rem;
+  }
+
+  .mx-input {
+    padding: 1.3rem 2rem;
+    border-radius: 3.125rem;
+    background: transparent;
+    z-index: 2;
+    position: relative;
+  }
 }

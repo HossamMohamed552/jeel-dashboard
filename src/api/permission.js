@@ -1,5 +1,5 @@
-export const getPermissionRequest = () => ({
-  method: 'get',
-  url: 'permissions',
-  config: {}
-})
+export const getPermissionRequest = (params) => ({
+  method: "get",
+  url: "permissions",
+  config: { params },
+});

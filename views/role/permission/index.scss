@@ -11,6 +11,35 @@
   .permissions {
     padding: 0rem 0 !important;
     border-top: none;
+    .search-sort {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      .heading {
+        margin-bottom: 0;
+      }
+    }
+    .search {
+      position: relative;
+
+      .search-input {
+        @extend %search-sort-search-input;
+      }
+
+      .search-input::placeholder {
+        color: $color-primary;
+        font-weight: bold;
+      }
+
+      img {
+        position: absolute;
+        top: 50%;
+        left: 2rem;
+        transform: translateY(-50%);
+        width: 1.5rem;
+      }
+    }
     .permission-item {
       margin-bottom: 3.125rem;
       img {

@@ -231,12 +231,13 @@
                     <template #button-content>
                       <div class="user-image">
                         <img
-                          v-if="user && user.avatar"
-                          :src="user.avatar"
+                          v-if="user && user.image"
+                          :src="user.image"
                           alt="user"
                           title="user"
                           @error="altImage($event)"
                         />
+                        <i v-else class="far fa-user"></i>
                       </div>
                     </template>
                     <b-dropdown-item to="/view-profile">{{ $t("profile-page") }}</b-dropdown-item>
@@ -411,7 +412,13 @@
               </p>
               <div class="dropdown-item-list">
                 <ul>
-                  <router-link tag="li" :to="route.path" v-for="(route, index) in routeSettings" :key="index">{{ route.name }}</router-link>
+                  <router-link
+                    tag="li"
+                    :to="route.path"
+                    v-for="(route, index) in routeSettings"
+                    :key="index"
+                    >{{ route.name }}</router-link
+                  >
                 </ul>
               </div>
             </div>

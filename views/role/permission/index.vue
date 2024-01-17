@@ -28,7 +28,13 @@
         </b-row>
       </div>
       <div class="permissions">
-        <h2 class="heading">إدارة الصلاحيات</h2>
+        <div class="search-sort">
+          <h2 class="heading">إدارة الصلاحيات</h2>
+          <div class="search">
+            <b-form-input v-model="inputValue" placeholder="بحث" class="search-input" />
+            <img src="@/assets/images/icons/search.svg" />
+          </div>
+        </div>
         <b-table
           :head-variant="'gradient'"
           responsive
@@ -70,7 +76,9 @@
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-
+import ListItems from "@/components/ListItems/index.vue";
+import { debounce } from "lodash";
+import { getPermissionRequest } from "@/api/permission";
 import {
   getSingleRoleRequest,
   getRolePermissionsRequest,
@@ -80,11 +88,38 @@ export default {
   name: "index",
   components: {
     ShowItem,
+    ListItems,
   },
   data() {
     return {
       role: {},
+      inputValue: "",
+      formValues: {
+        per_page: 10,
+        page: 1,
+        name: "",
+        order: "",
+        order_by: "",
+      },
       fieldsList: [
+        {
+          key: "id",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "role",
+          label: "اسم القائمة",
+        },
+        {
+          key: "name",
+          label: "اسم الصلاحية",
+        },
+        {
+          key: "is_active",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ],
+      fieldsList2: [
         {
           key: "id",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -120,7 +155,20 @@ export default {
       return this.items.filter((item) => !item.is_active);
     },
   },
+
   methods: {
+    searchBy: debounce(function (name) {
+      console.log(name);
+      let params = {
+        role_id: this.$route.params.id,
+        category_id: this.categoryID,
+        name: name,
+      };
+
+      this.ApiService(getRolePermissionsRequest(params)).then((response) => {
+        this.flattenDataWithRole(response.data.data);
+      });
+    }, 500),
     handleCancel() {
       this.$router.push("/dashboard/role");
     },
@@ -174,6 +222,9 @@ export default {
   },
 
   watch: {
+    inputValue(newVal) {
+      this.searchBy(newVal);
+    },
     items: {
       handler(newItems) {
         this.isPermissionsChange(newItems);

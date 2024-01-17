@@ -76,7 +76,7 @@ header {
         .user-image {
           width: 58px;
           height: 58px;
-          background: #ffffff;
+          background-color: #f1e8f0;
           border-radius: 50%;
           overflow: hidden;
           @include flexCenter(center);
@@ -85,6 +85,11 @@ header {
             height: 100%;
             object-fit: cover;
             object-position: center;
+          }
+          i {
+            color: $color-primary;
+            font-family: "Font Awesome 6 Free" !important;
+            font-size: 25px;
           }
         }
       }
