@@ -1,0 +1,64 @@
+.hold-field {
+  position: relative;
+  margin-bottom: 30px;
+  .text-field {
+    margin-bottom: 0;
+  }
+
+  label {
+    margin: 0.7rem 0.7rem 1rem;
+  }
+  .show-date {
+    margin: 0;
+    position: absolute;
+    bottom: 1rem;
+    right: 2rem;
+    width: 20%;
+    background: transparent;
+    transform: translateY(20%);
+    font-size: 14px;
+    line-height: 1.4;
+    color: #555;
+  }
+}
+
+::v-deep {
+  .hold-field {
+    position: relative;
+    .invalid-feedback {
+      position: absolute;
+    }
+    label {
+      margin: 0.7rem 0.7rem 1rem;
+    }
+  }
+  .group-type {
+    margin-right: 0.2rem;
+    .col-form-label {
+      color: $color-primary !important;
+    }
+  }
+
+  .btn {
+    min-width: 195px;
+    padding: 0 !important;
+    height: 55px;
+  }
+
+  .custom-radio {
+    display: inline-block;
+  }
+
+  .mx-datepicker {
+    width: 100%;
+    border-radius: 3.125rem;
+  }
+
+  .mx-input {
+    padding: 1.3rem 2rem;
+    border-radius: 3.125rem;
+    background: transparent;
+    z-index: 2;
+    position: relative;
+  }
+}

@@ -13,6 +13,7 @@
   },
   "USERS": {
     "ADD_NEW": "إضافة مستخدم إدارة منظومة",
+    "ADD_SCHOOL_USER": "إضافة مستخدم للمدرسة",
     "ACTIVE": "فعال",
     "EDIT": "تعديل بيانات المستخدم",
     "USER_NAME": "إسم المستخدم",
@@ -54,6 +55,7 @@
   },
   "TABLE_FIELDS": {
     "id": "التسلسل",
+    "BLOCK": "الحظر",
     "email_username": "البريد الإلكتروني (اسم المستخدم)",
     "name": "الإسم",
     "block": "الحظر",
@@ -73,8 +75,6 @@
     "end_subscription": "نهاية التعاقد",
     "year": "السنه",
     "questions_num": "عدد الاسئله",
-    "gems_num": "عدد الجيمز",
-    "character_type": "نوع الشخصية",
     "learning_path": "المسار التعليمي",
     "level": "المرحله",
     "price": "السعر",
@@ -201,7 +201,9 @@
   },
   "SCHOOL": {
     "SCHOOL_INFO": "بيانات المدرسة",
+    "SEARCH_SCHOOL_USERS": "بحث مستخدمي المدارس",
     "SCHOOL_MANAGER_INFO": "بيانات مسؤل المدرسة",
+    "USERS_SCHOOL_LIST": "قائمة مستخدمي المدارس",
     "MANAGER_NAME": "اسم المسؤل",
     "MANAGER_TYPE": "صفة المسؤل",
     "MANAGER_MOBILE": "رقم هاتف المسؤل",
@@ -743,6 +745,8 @@
   },
   "BUTTONS": {
     "EDIT": "تغيير",
+    "RECOVERY": "إستعادة",
+    "SEARCH": "البحث",
     "DELETE": "حذف"
   }
 }

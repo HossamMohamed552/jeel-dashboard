@@ -18,6 +18,11 @@ export const putRolePermissionsRequest = (params) => ({
   url: `/permissions/role/${params.role_id}/category/${params.category_id}`,
   config: { params },
 });
+export const test = (params) => ({
+  method: "get",
+  url: `/permissions/role`,
+  config: { params },
+});
 export const getSingleRoleRequest = (params) => ({
   method: "get",
   url: `roles/${params}`,

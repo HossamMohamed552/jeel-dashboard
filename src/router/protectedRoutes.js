@@ -260,6 +260,26 @@ const protectedRoutes = [
         },
       },
       {
+        path: "/dashboard/schools-users-search/",
+        name: "schools-users-search",
+        component: () => import("../../views/schools-users-search/index.vue"),
+        meta: {
+          breadcrumb: "بحث مستخدمين المدارس",
+          preLabel: "المدارس",
+          preLink: "/dashboard/schools",
+        },
+      },
+      {
+        path: "/dashboard/schools-users-search/add",
+        name: "schools-users-search",
+        component: () => import("../../views/schools-users-search/add-user/index.vue"),
+        meta: {
+          breadcrumb: "إضافة مستخدم للمدرسة",
+          preLabel: "المدارس",
+          preLink: "/dashboard/schools",
+        },
+      },
+      {
         path: "/dashboard/schools/add",
         name: "add-schools",
         component: () => import("../../views/schools/add-schools/index.vue"),

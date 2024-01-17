@@ -5,22 +5,15 @@ export const getPaperWorkTypeRequest = (params) => ({
 });
 
 export const getQuizTypeListRequest = () => ({
-  method: 'get',
-  url: 'system_codes/quiz/type'
-})
+  method: "get",
+  url: "system_codes/quiz/type",
+});
 
 export const getLibraryTypeRequest = (params) => ({
-  method: 'get',
-  url: 'system_codes/library/type',
-  config: {params}
-})
-
-export const getStoreLibraryTypeRequest = (params) => ({
-  method: 'get',
-  url: 'system_codes/store_library/type',
-  config: {params}
-})
-
+  method: "get",
+  url: "system_codes/library/type",
+  config: { params },
+});
 export const getSortQuizTypeRequest = (params) => ({
   method: "get",
   url: "system_codes/quiz/order_type",
@@ -40,7 +33,6 @@ export const getCharacterTypeRequest = (params) => ({
   config: { params },
 });
 
-
 export const getStoreCharacterTypeRequest = (params) => ({
   method: "get",
   url: "system_codes/store_character/chracter_type",
@@ -52,6 +44,11 @@ export const getAllStatusRequest = (params) => ({
   url: "system_codes/school/status",
   config: { params },
 });
+export const getAllUserStatusRequest = (params) => ({
+  method: "get",
+  url: "system_codes/user/status",
+  config: { params },
+});
 export const getAllMusicStatusRequest = (params) => ({
   method: "get",
   url: "system_codes/school/music_status",
@@ -60,5 +57,15 @@ export const getAllMusicStatusRequest = (params) => ({
 export const getAllStudentsTypeRequest = (params) => ({
   method: "get",
   url: "system_codes/school/students_type",
+  config: { params },
+});
+export const getAllRolesTypeRequest = (params) => ({
+  method: "get",
+  url: "system_codes/role/type",
+  config: { params },
+});
+export const getAllRolesByTypeRequest = (params) => ({
+  method: "get",
+  url: `/roles?type=${params}`,
   config: { params },
 });

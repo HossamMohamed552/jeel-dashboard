@@ -14,7 +14,6 @@
       :permission_delete="'delete-schools'"
       :permission_edit="'edit-schools'"
       :permission_view="'show-schools'"
-      :users_add="'add-users'"
     >
       <template #buttons>
         <Button
