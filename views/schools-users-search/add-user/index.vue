@@ -140,7 +140,7 @@
                       ></TextField>
                     </div>
                   </b-col>
-                  <b-col lg="8" :class="isStudent && 'd-none'" v-if="!$route.params.id">
+                  <b-col lg="8" :class="isStudent && 'd-none'" v-if="!$route.params.id && !isManagementStudent">
                     <div class="hold-field">
                       <TextField
                         v-model="user.email"
@@ -381,6 +381,8 @@ export default {
       schoolsList: [],
       rolesTypeList: [],
       religions: [],
+      filterWith:[],
+      isManagementStudent: false,
     };
   },
   methods: {
@@ -472,7 +474,16 @@ export default {
     },
     getAllDepartments: _.debounce(function (value) {
       if (value != undefined) {
-        this.ApiService(getAllRolesByTypeRequest(value)).then((response) => {
+        console.log('value',value)
+        if (value.includes(125)){
+          this.isManagementStudent = true
+        } else {
+          this.isManagementStudent = false
+        }
+        for (let type = 0; type < value.length; type++) {
+          this.filterWith[`types[${type}]`] = value[type]
+        }
+        this.ApiService(getAllRolesByTypeRequest(this.filterWith)).then((response) => {
           this.departmentsList = response.data.data;
         });
       }

@@ -44,6 +44,13 @@ export const getAllRolesRequest = () => ({
   url: "roles?list_all=true&system_role=1",
   config: {},
 });
+export const getAllRolesOrganizationRequest = (params) => ({
+  method: "get",
+  url: "roles?list_all=true",
+  config: {
+    params
+  },
+});
 export const getAllRolesSystemRequest = () => ({
   method: "get",
   url: "roles?list_all=true&system_role=0",
