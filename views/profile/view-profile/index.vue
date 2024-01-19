@@ -35,11 +35,7 @@
                 <ShowItem :title="$t('USERS.SECOND_NAME')" :subtitle="user.middle_name" />
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-<<<<<<< HEAD
-                <ShowItem :title="$t('USER.last_name')" :subtitle="user.last_name" />
-=======
                 <ShowItem :title="$t('USERS.LAST_NAME')" :subtitle="user.last_name" />
->>>>>>> 8902559b285086b23b042b0f287533f5b3ff449a
               </b-col>
               <b-col lg="6" class="mb-5 showItem">
                 <ShowItem :title="$t('TABLE_FIELDS.email_username')" :subtitle="user.email" />

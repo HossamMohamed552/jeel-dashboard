@@ -7,27 +7,12 @@
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
               <b-col lg="4">
-                <div class="img-container">
-                  <span>
-                    <img v-if="imageUrl" :src="imageUrl" alt="Person Image" />
-                    <i v-else class="far fa-user"></i>
-                  </span>
-                  <input
-                    type="file"
-                    ref="fileInput"
-                    style="display: none"
-                    @change="handleImageChange"
-                  />
-
-                  <div>
-                    <Button type="button" @click="openFileInput" :custom-class="'submit-btn'">
-                      {{ $t("BUTTONS.EDIT") }}
-                    </Button>
-                    <Button @click="clearImage" custom-class="cancel-btn">
-                      {{ $t("BUTTONS.DELETE") }}
-                    </Button>
-                  </div>
-                </div>
+                <ImageUploader
+                  :imageUrl="imageUrl"
+                  @update:imageUrl="handleImageUrlUpdate"
+                  @image-uploaded="handleImageUploaded"
+                  @image-cleared="handleImageCleared"
+                />
                 <div v-if="$route.params.id" class="user-active">
                   <label for="">الحالة</label>
                   <div>
@@ -80,7 +65,11 @@
                       ></TextField>
                     </div>
                   </b-col>
-                  <b-col lg="8" :class="isStudent && 'd-none'" v-if="!$route.params.id">
+                  <b-col
+                    lg="8"
+                    :class="isStudent && 'd-none'"
+                    v-if="!$route.params.id || !isStudent"
+                  >
                     <div class="hold-field">
                       <TextField
                         v-model="user.email"
@@ -194,6 +183,7 @@
                         :get-option-label="(option) => option.name"
                         :rules="'required'"
                         :deselectFromDropdown="true"
+                        @input="onSelectRole($event)"
                         multiple
                       ></SelectSearch>
                     </div>
@@ -259,9 +249,7 @@
 import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
-import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
-import axios from "axios";
-import VueCookies from "vue-cookies";
+import ImageUploader from "@/components/Shared/UploadImage/index.vue";
 
 import { TogglePasswordMixins } from "@/mixins/TogglePasswordMixins";
 // Dropdown
@@ -269,12 +257,13 @@ import {
   getSingleUserRequest,
   getAllRolesRequest,
   addEditUserRequest,
-  deleteProfileImageRequest,
   postChangeStatusRequest,
 } from "@/api/user";
 
 import { getAllNationaltyRequest } from "@/api/country";
 import { getAllGenderRequest, getAllReligionRequest } from "@/api/system";
+
+import _ from "lodash";
 
 export default {
   components: {
@@ -327,49 +316,15 @@ export default {
     };
   },
   methods: {
-    openFileInput() {
-      this.$refs.fileInput.click();
+    // Image Upload Method
+    handleImageUploaded(imageUuid) {
+      this.user.image = imageUuid;
     },
-    handleImageChange(event) {
-      const file = event.target.files[0];
-      console.log(file);
-      if (file) this.imageUrl = URL.createObjectURL(file);
-      this.uploadImage(file);
+    handleImageUrlUpdate(newImageUrl) {
+      this.imageUrl = newImageUrl;
     },
-    uploadImage(file) {
-      const formData = new FormData();
-      formData.append("attachment", file);
-      formData.append("type", "image");
-
-      axios
-        .post("https://jeeladmin.suredemos.com/api/attachment", formData, {
-          headers: {
-            Authorization: `Bearer ${VueCookies.get("token")}`,
-            locale: "ar",
-          },
-        })
-        .then((res) => {
-          this.user.image = res.data.data.uuid;
-        })
-        .catch((error) => {
-          console.error("Error uploading image:", error);
-        });
-    },
-    clearImage() {
-      if (this.$route.params.id) {
-        this.ApiService(deleteProfileImageRequest({ user_id: this.$route.params.id })).then(() => {
-          this.user.image = null;
-        });
-      }
-
-      this.imageUrl = null;
-      this.user.image;
-    },
-    checkIsStudent(id) {
-      if (id === 5) {
-        this.isStudent = true;
-        this.formValues.email = "";
-      } else this.isStudent = false;
+    handleImageCleared() {
+      this.user.image = null;
     },
     changeStatus() {
       let userStatus = {
@@ -384,9 +339,10 @@ export default {
     },
 
     onSubmit() {
-      console.log(this.user);
+      if (this.isStudent) this.user.email = "";
       this.$refs.addEditUserForm.validate().then((success) => {
         if (!success) return;
+
         let endpoint;
         if (this.$route.params.id) {
           this.user["_method"] = "PUT";
@@ -399,6 +355,17 @@ export default {
         });
       });
     },
+    onSelectRole: _.debounce(function (value) {
+      const studentRole = this.departmentsList.find(
+        (role) => role.code.toLowerCase() === "student"
+      );
+      if (value.includes(studentRole.id)) {
+        this.user.roles = [studentRole.id];
+        this.isStudent = true;
+      } else {
+        this.isStudent = false;
+      }
+    }, 300),
 
     handleCancel() {
       this.$emit("handleCancel");
