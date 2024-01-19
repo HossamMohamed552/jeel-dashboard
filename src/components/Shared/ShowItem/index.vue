@@ -3,11 +3,17 @@
     <div class="title">
       {{ title }}
     </div>
-    <div class="subtitle" v-if="subtitle">
+    <div class="subtitle">
       {{ subtitle }}
     </div>
     <slot class="subtitle" v-if="listItems">
-      <span class="item listItem" v-for="item in listItems" :class="withOutBackground ? 'withOutBackground' : ''">{{item.name}}</span>
+      <span
+        class="item listItem"
+        v-for="item in listItems"
+        :key="item"
+        :class="withOutBackground ? 'withOutBackground' : ''"
+        >{{ item.name }}</span
+      >
     </slot>
   </div>
 </template>
@@ -17,21 +23,21 @@ export default {
   props: {
     title: {
       type: String,
-      default: ''
+      default: "",
     },
     subtitle: {
-      default: ''
+      default: "",
     },
     listItems: {
       type: Array,
-      default: null
+      default: null,
     },
-    withOutBackground:{
+    withOutBackground: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-}
+};
 </script>
 <style scoped lang="scss">
 @import "./index";
