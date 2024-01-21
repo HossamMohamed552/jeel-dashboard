@@ -41,7 +41,6 @@ export default {
   },
   methods: {
     handleAddVideo($event) {
-      console.log('$event', $event)
       this.video_name = $event.name;
       const formData = new FormData()
       formData.append('title', $event.name);
@@ -52,8 +51,12 @@ export default {
       formData.append('video_without_music', $event.video_without_music);
       formData.append('blooms', $event.blooms);
       formData.append('lesson_id', $event.lesson_id);
-      formData.append('learning_styles', $event.learning_styles);
-      formData.append('language_skills', $event.language_skills);
+      for (let learning=0; learning < $event.learning_styles.length; learning++){
+        formData.append(`learning_styles[${learning}]`, $event.learning_styles[learning]);
+      }
+      for (let languageSkill=0; languageSkill < $event.learning_styles.length; languageSkill++){
+        formData.append(`language_skills[${languageSkill}]`, $event.language_skills[languageSkill]);
+      }
       this.loading = true;
       let axiosSource = axios.CancelToken.source();
       this.cancelSource = axiosSource;
@@ -81,6 +84,9 @@ export default {
         this.loading = false;
         this.isSuccess = false;
         this.isFailed = true;
+        setTimeout(() => {
+          this.isFailed = false;
+        }, 2000)
       })
     },
     handleCancel() {

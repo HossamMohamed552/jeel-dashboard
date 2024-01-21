@@ -32,7 +32,7 @@
           <b-col lg="8">
             <ShowItem class="divider-show" :title="$t('VIDEO.NAME')" :subtitle="videoDetail.title"/>
           </b-col>
-          <b-col lg="4">
+          <b-col lg="4" v-if="totalDuration">
             <ShowItem class="divider-show" :title="$t('VIDEO.videoDuration')"
                       :subtitle="`${totalDuration}`"/>
           </b-col>

@@ -10,7 +10,7 @@
         <b-row>
           <b-col lg="12">
             <ShowItem class="divider-show" :title="$t('VIDEO.VIDEONAME')"
-                      :subtitle="video.original_name"/>
+                      :subtitle="video.title"/>
           </b-col>
         </b-row>
         <b-row>
