@@ -11,7 +11,7 @@
                 :label="field.label"
                 :name="field.label"
                 :options="field.options"
-                :reduce="(option) => option.id"
+                :reduce="(option) => option[field.listen]"
                 :get-option-label="(option) => option.name"
                 :rules="field.rules"
                 :deselectFromDropdown="field.deselectFromDropdown"

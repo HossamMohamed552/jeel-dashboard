@@ -95,6 +95,8 @@ export default {
           label: "",
           label: this.$t("USERS.name"),
           col: "4",
+          listen: "id",
+
           value: "",
           type: "text",
           rules: "",
@@ -102,6 +104,8 @@ export default {
         {
           key: "country_id",
           col: "4",
+          listen: "id",
+
           type: "select",
           label: this.$t("SCHOOL.COUNTRY"),
           options: [],
@@ -112,6 +116,8 @@ export default {
         {
           key: "school_group_id",
           col: "4",
+          listen: "id",
+
           type: "select",
           label: this.$t("SCHOOL.SCHOOL_COLLECTION"),
           options: [],
@@ -122,6 +128,8 @@ export default {
         {
           key: "school_id",
           col: "4",
+          listen: "id",
+
           type: "select",
           label: this.$t("TABLE_FIELDS.school"),
           options: [],
@@ -132,6 +140,8 @@ export default {
         {
           key: "roles_categories",
           col: "4",
+          listen: "id",
+
           type: "select",
           label: this.$t("ROLES.CLASSIFICATION_DEPARTMENT"),
           options: [],
@@ -143,6 +153,8 @@ export default {
           key: "roles",
           col: "4",
           type: "select",
+          listen: "id",
+
           label: this.$t("USERS.DEPARTMENT"),
           options: [],
           deselectFromDropdown: true,
@@ -155,6 +167,7 @@ export default {
           type: "select",
           label: this.$t("SCHOOL.status"),
           options: [],
+          listen: "key",
           deselectFromDropdown: true,
           value: "",
           rules: "",
@@ -193,8 +206,7 @@ export default {
 
   methods: {
     onSubmit(values) {
-      // this.loading = true;
-      console.log("onSubmit", values);
+      this.loading = true;
       this.getAllUsers(values);
     },
     handleInput: _.debounce(function (key, value) {

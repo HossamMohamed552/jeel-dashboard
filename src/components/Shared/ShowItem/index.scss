@@ -1,26 +1,30 @@
 @import "src/assets/style/scss/_variables";
-.title{
+.title {
   font-size: 1.3rem;
   color: #022930;
   font-weight: 400;
   margin-bottom: 1.2rem;
 }
-.subtitle,.item{
+.subtitle {
+  min-height: 31px;
+}
+.subtitle,
+.item {
   font-size: 1.3rem;
   color: $color-primary;
   font-weight: 700;
   word-break: break-word;
 }
-.item{
+.item {
   margin-left: 1rem;
 }
-.listItem{
+.listItem {
   background: $color-primary;
   color: #fff;
   border-radius: 3.125rem;
   padding: 0 0.5rem 0.5rem;
 }
-.withOutBackground{
+.withOutBackground {
   background: transparent;
   color: $color-primary;
   font-size: 1.3rem;

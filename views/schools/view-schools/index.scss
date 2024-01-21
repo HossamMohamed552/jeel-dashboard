@@ -1,26 +1,42 @@
 @import "src/assets/style/scss/_mixin";
 @import "src/assets/style/scss/_variables";
-.show-role{
+.show-role {
   @include styleViewList;
-  .heading{
+  .heading {
     margin-bottom: 3.125rem;
   }
-  .hold-fields{
+  .hold-fields {
     margin-bottom: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
   }
-  .permissions{
+  .permissions {
     padding: 4rem 0;
-    border-top: 1px solid #8C8C8C;
-    .permission-item{
+    border-top: 1px solid #8c8c8c;
+    .permission-item {
       margin-bottom: 3.125rem;
-      img{
+      img {
         margin-left: 1rem;
       }
-      span{
+      span {
         font-size: 1.2rem;
         color: $color-primary;
         font-weight: 600;
       }
     }
+  }
+}
+
+::v-deep {
+  .showItem > div {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+  .item.listItem {
+    background-color: transparent;
+    color: $color-primary;
+    padding: 0;
   }
 }
