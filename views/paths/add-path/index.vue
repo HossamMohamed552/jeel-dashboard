@@ -32,6 +32,8 @@ export default{
     handleAddPath($event) {
       this.loading = true;
       this.showModal = true;
+      delete $event.audioChanged
+      delete $event.audioChangedRequest
       this.ApiService(postLearningPathRequest($event)).then((response) => {
         this.loading = false
         setTimeout(() => {

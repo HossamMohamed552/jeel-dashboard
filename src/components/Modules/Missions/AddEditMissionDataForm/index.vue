@@ -1,9 +1,5 @@
 <template>
-  <div class="add-edit-mission">
-    <div class="container-fluid custom-container">
-      <div class="add-edit-mission-form">
-        <h3>{{ $route.params.id ? $t("MISSIONS.EDIT") : $t("MISSIONS.ADD_NEW") }}</h3>
-        <validation-observer v-slot="{ invalid }" ref="addEditMissionDataForm">
+  <validation-observer v-slot="{ invalid }" ref="addEditMissionDataForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
               <b-col cols="8" class="mb-3">
@@ -45,7 +41,7 @@
                   ></SelectSearch>
                 </div>
               </b-col>
-            
+
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
@@ -133,7 +129,7 @@
                 <div class="hold-field mt-4">
                   <UploadAttachment v-if="!$route.params.id" :type-of-attachment="'audio'"
                                     :label="$t('MISSIONS.UPLOAD_AUDIO')"
-                                    :dropImage="true" :name="'audioMission'" 
+                                    :dropImage="true" :name="'audioMission'"
                                     :rules="'required'"
                                     :dropIdRef="'missionAudioRef'"
                                     :accept-files="'audio/*'" @setFileId="setFileAudioId($event)"/>
@@ -169,9 +165,6 @@
             </b-row>
           </form>
         </validation-observer>
-      </div>
-    </div>
-  </div>
 </template>
 <script>
 import TextField from "@/components/Shared/TextField/index.vue";
@@ -259,13 +252,13 @@ export default {
       else return;
     },
     setFileImageId($event) {
-      if ($event) { 
+      if ($event) {
         this.mission.thumbnail = $event
         this.mission.thumbnailRequest = true
         this.mission.thumbnailChanged = false
       }
     },
-    setFileAudioId($event) { 
+    setFileAudioId($event) {
       this.mission.missionAudio = $event
     },
     removeFile(fileName,fileChange,fileRequest){
@@ -273,24 +266,24 @@ export default {
       this.mission[fileName] = null
       this.mission[fileRequest] = true
     },
-    removeAudioId() { 
+    removeAudioId() {
       this.mission.missionAudio = null
     },
-    getLessonsByLearningPathIdsRequest(learningPathIds) { 
-      this.ApiService(getLessonsByLearningPathRequest(learningPathIds)).then(res => { 
+    getLessonsByLearningPathIdsRequest(learningPathIds) {
+      this.ApiService(getLessonsByLearningPathRequest(learningPathIds)).then(res => {
         // set lessons options
         this.lessons = res.data.data;
         if (Object.keys(learningPathIds).length == 0) {
           this.lessons = [];
-        } else { 
+        } else {
           this.lessons = res.data.data;
         }
-        if (!this.$route.params.id) { 
+        if (!this.$route.params.id) {
           this.mission.lessons_ids = [];
         }
       })
     },
-    getLessonsByLearningPathIds(pathsIds) { 
+    getLessonsByLearningPathIds(pathsIds) {
       let obj = {};
       pathsIds.forEach((pathId, index) => {
         obj[`learning_paths[${index}]`]= pathId

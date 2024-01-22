@@ -145,7 +145,7 @@
                     تاريخ نهاية الإشتراك
                     <span><i class="fa-solid fa-asterisk"></i></span>
                   </label>
-                  <b-form-checkbox v-model="formValues.clone">نسخ المهام الدراسية</b-form-checkbox>
+                  <b-form-checkbox v-model="formValues.clone">نسخ المهام الدراسية مباشرة</b-form-checkbox>
                 </ValidationProvider>
               </b-col>
             </b-row>

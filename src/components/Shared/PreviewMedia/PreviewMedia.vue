@@ -6,7 +6,7 @@
         <div class="video" v-if="typeOfMedia === 'video'" @click="showModal">
           <div class="skeleton-video"><img src="@/assets/images/icons/play.png" /></div>
         </div>
-        <div class="video" v-if="typeOfMedia === 'audio'" @click="showModal">
+        <div class="video" v-else-if="typeOfMedia === 'audio'" @click="showModal">
           <div class="skeleton-video"><img src="@/assets/images/icons/audio.png" /></div>
         </div>
         <div class="image" v-else @click="showModal">

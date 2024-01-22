@@ -2,7 +2,7 @@ import store from "@/store";
 
 let routesUsers = [
   {
-    name: "صلاحيات النظام",
+    name: "الأدوار الوظيفية",
     path: "/dashboard/role",
     altImage: "roles",
     titleImage: "roles",
@@ -10,10 +10,18 @@ let routesUsers = [
     permission: "view-roles",
   },
   {
-    name: "قائمة المستخدمين",
+    name: "المستخدمين إدارة المنظومة",
     path: "/dashboard/users",
     altImage: "users",
     titleImage: "users",
+    icon: require("@/assets/images/icons/list.svg"),
+    permission: "view-users",
+  },
+  {
+    name: "مستخدمين المدارس",
+    path: "/dashboard/schools-users-search/",
+    altImage: "schools-users-search",
+    titleImage: "schools-users-search",
     icon: require("@/assets/images/icons/list.svg"),
     permission: "view-users",
   },
@@ -55,21 +63,21 @@ let routesSchool = [
     permission: "view-schoolGroups",
   },
   {
-    name: "قائمة المدارس",
+    name: "المدارس",
     path: "/dashboard/schools",
     altImage: "schools",
     titleImage: "schools",
     icon: require("@/assets/images/icons/school-list.svg"),
     permission: "view-schools",
   },
-  {
-    name: "قائمة أنواع المدارس",
-    path: "/dashboard/school-type",
-    altImage: "schoolTypes",
-    titleImage: "schoolTypes",
-    icon: require("@/assets/images/icons/school-list.svg"),
-    permission: "view-schoolTypes",
-  },
+  // {
+  //   name: "قائمة أنواع المدارس",
+  //   path: "/dashboard/school-type",
+  //   altImage: "schoolTypes",
+  //   titleImage: "schoolTypes",
+  //   icon: require("@/assets/images/icons/school-list.svg"),
+  //   permission: "view-schoolTypes",
+  // },
 ];
 let routesContent = [
   {
@@ -123,7 +131,7 @@ let routesMissions = [
     permission: "view-countries",
   },
   {
-    name: "قائمة الصفوف الدراسية",
+    name: "الصفوف الدراسية",
     path: "/dashboard/levels",
     altImage: "levels",
     titleImage: "levels",

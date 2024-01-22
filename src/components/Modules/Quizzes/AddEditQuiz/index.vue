@@ -321,7 +321,7 @@
                       />
                     </div>
                   </template>
-                  <template #cell(question_type)="data">
+                  <template #cell(question)="data">
                     <span v-if="data.item.question_pattern === 'text'">{{
                       data.item.question | cutString
                     }}</span>

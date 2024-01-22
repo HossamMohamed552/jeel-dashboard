@@ -115,7 +115,9 @@
     "power_up_box_appear_after_missions": "ظهور بعد",
     "jeel_library_name": "الأسم",
     "jeel_library_level": "الصف الدراسى",
-    "jeel_library_type": "النوع"
+    "jeel_library_type": "النوع",
+    "character_type": "النوع",
+    "gems_num": "عدد جيمز"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -402,7 +404,8 @@
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",
     "STEP_TWO": "محتوى المهمة",
-    "STEP_THREE": "مراجعة المحتوى المهمة",
+    "STEP_THREE": "محتوى إنجاز المهمة",
+    "STEP_FOUR": "معاينة المهمة",
     "EDIT": "تعديل المهمة",
     "ADD_NEW": "إضافة مهمة جديدة",
     "name": "إسم المهمة",

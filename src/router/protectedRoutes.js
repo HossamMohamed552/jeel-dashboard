@@ -29,7 +29,7 @@ const protectedRoutes = [
         name: "role",
         component: () => import("../../views/role/index.vue"),
         meta: {
-          breadcrumb: "صلاحيات النظام",
+          breadcrumb: "الأدوار الوظيفية",
           preLabel: "",
           preLink: "",
         },
@@ -264,14 +264,14 @@ const protectedRoutes = [
         name: "schools-users-search",
         component: () => import("../../views/schools-users-search/index.vue"),
         meta: {
-          breadcrumb: "بحث مستخدمين المدارس",
+          breadcrumb: "مستخدمين المدارس",
           preLabel: "المدارس",
           preLink: "/dashboard/schools",
         },
       },
       {
         path: "/dashboard/schools-users-search/add",
-        name: "schools-users-search",
+        name: "add-schools-users-search",
         component: () => import("../../views/schools-users-search/add-user/index.vue"),
         meta: {
           breadcrumb: "إضافة مستخدم للمدرسة",

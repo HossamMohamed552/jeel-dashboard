@@ -197,6 +197,8 @@
               </b-col>
               <b-col lg="12" class="mb-3 mt-4">
                 <UploadAttachment
+                  :label="$t('PAPER_WORK.paperWorkThumbnail')"
+                  :rules="'required'"
                   v-if="!$route.params.id || createPaperWork.thumbnailChangedRequest"
                   @setFileId="setImageId"
                   :type-of-attachment="'image'"

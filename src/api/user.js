@@ -5,6 +5,16 @@ export const getAllUsersRequest = (params) => ({
     params,
   },
 });
+
+
+export const getSchoolUsersRequest = (params) => ({
+  method: "get",
+  url: "school/users",
+  config: {
+    params,
+  },
+});
+
 export const getAllTeachersRequest = (schoolId, params) => ({
   method: "get",
   url: `school/${schoolId}/teachers`,
@@ -43,6 +53,13 @@ export const getAllRolesRequest = () => ({
   method: "get",
   url: "roles?list_all=true&system_role=1",
   config: {},
+});
+export const getAllRolesOrganizationRequest = (params) => ({
+  method: "get",
+  url: "roles?list_all=true",
+  config: {
+    params
+  },
 });
 export const getAllRolesSystemRequest = () => ({
   method: "get",

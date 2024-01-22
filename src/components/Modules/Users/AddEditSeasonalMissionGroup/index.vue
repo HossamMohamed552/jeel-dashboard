@@ -19,7 +19,7 @@
               </b-col>
               <b-col lg="12" cols="12" class="mb-3 mt-4">
                 <UploadAttachment
-                  :label="$t('PAPER_WORK.color')"
+                  :label="'لوجو المجموعة'"
                   v-if="isLogoDeleted || !$route.params.id"
                   @setFileId="setLogoId"
                   :type-of-attachment="'image'"

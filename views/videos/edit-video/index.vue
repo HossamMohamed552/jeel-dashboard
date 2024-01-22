@@ -48,8 +48,12 @@ export default {
       formData.append('learning_path_id', $event.learning_path_id);
       formData.append('blooms', $event.blooms);
       formData.append('lesson_id', $event.lesson_id);
-      formData.append('learning_styles', $event.learning_styles);
-      formData.append('language_skills', $event.language_skills);
+      for (let learning=0; learning < $event.learning_styles.length; learning++){
+        formData.append(`learning_styles[${learning}]`, $event.learning_styles[learning]);
+      }
+      for (let languageSkill=0; languageSkill < $event.learning_styles.length; languageSkill++){
+        formData.append(`language_skills[${languageSkill}]`, $event.language_skills[languageSkill]);
+      }
       formData.append("_method", 'PUT');
       if ($event.thumbnailChangedRequest)
         formData.append('thumbnail', $event.thumbnail);

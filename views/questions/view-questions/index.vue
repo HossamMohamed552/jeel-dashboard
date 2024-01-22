@@ -12,7 +12,6 @@
             <b-col lg="4">
               <ShowItem :title="$t('QUESTIONS.TYPE')" :subtitle="question.question_pattern"/>
             </b-col>
-
             <b-col lg="4" class="d-flex align-items-end">
               <div v-if="question.question_pattern === 'text'"
                    class="d-flex justify-content-start align-items-lg-end">
@@ -79,16 +78,16 @@
                 :subtitle="question.sub_question_type.name"
               />
             </b-col>
-            <b-col lg="4" v-if="question.language_skill">
+            <b-col lg="4" v-if="question.language_skills">
               <ShowItem
+                :list-items="question.language_skills"
                 :title="$t('QUESTIONS.LANGUAGE_SKILL')"
-                :subtitle="question.language_skill.name"
               />
             </b-col>
-            <b-col lg="4" v-if="question.language_method">
+            <b-col lg="4" v-if="question.learning_styles">
               <ShowItem
                 :title="$t('QUESTIONS.LANGUAGE_METHOD')"
-                :subtitle="question.language_method.name"
+                :list-items="question.learning_styles"
               />
             </b-col>
           </b-row>

@@ -126,6 +126,9 @@
                       ></TextField>
                     </div>
                   </b-col>
+<!--<<<<<<< HEAD-->
+<!--                  <b-col lg="8" :class="isStudent && 'd-none'" v-if="!$route.params.id && !isManagementStudent">-->
+<!--=======-->
                   <b-col lg="8" v-if="!isStudent">
                     <div class="hold-field">
                       <TextField
@@ -363,6 +366,8 @@ export default {
       schoolsList: [],
       rolesTypeList: [],
       religions: [],
+      filterWith:[],
+      isManagementStudent: false,
       isSelectingRoleCategories: false,
     };
   },
@@ -418,7 +423,22 @@ export default {
         this.religions = response.data.data;
       });
     },
-
+    getAllDepartments: _.debounce(function (value) {
+      if (value != undefined) {
+        console.log('value',value)
+        if (value.includes(125)){
+          this.isManagementStudent = true
+        } else {
+          this.isManagementStudent = false
+        }
+        for (let type = 0; type < value.length; type++) {
+          this.filterWith[`types[${type}]`] = value[type]
+        }
+        this.ApiService(getAllRolesByTypeRequest(this.filterWith)).then((response) => {
+          this.departmentsList = response.data.data;
+        });
+      }
+    }, 300),
     onSelectRole: _.debounce(function (value) {
       if (value != undefined) {
         const studentRole = this.departmentsList.find(
@@ -445,13 +465,6 @@ export default {
       }
     }, 300),
 
-    //
-    //
-    //
-    //
-    //
-    //
-    //
     onSelectRoleCategoriesInput: _.debounce(function (value) {
       if (value != undefined) {
         this.onSelectRoleCategories(value);
@@ -481,24 +494,17 @@ export default {
       }
     },
 
-    getAllDepartments: function (value) {
-      if (value != undefined) {
-        this.ApiService(getAllRolesByTypeRequest(value))
-          .then((response) => {
-            this.departmentsList = response.data.data;
-          })
-          .catch((error) => {
-            console.error("Error in getAllDepartments:", error);
-          });
-      }
-    },
-
-    //
-    //
-    //
-    //
-    //
-    //
+    // getAllDepartments: function (value) {
+    //   if (value != undefined) {
+    //     this.ApiService(getAllRolesByTypeRequest(value))
+    //       .then((response) => {
+    //         this.departmentsList = response.data.data;
+    //       })
+    //       .catch((error) => {
+    //         console.error("Error in getAllDepartments:", error);
+    //       });
+    //   }
+    // },
 
     getAllRolesType() {
       this.ApiService(getAllRolesTypeRequest()).then((response) => {

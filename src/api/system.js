@@ -66,6 +66,6 @@ export const getAllRolesTypeRequest = (params) => ({
 });
 export const getAllRolesByTypeRequest = (params) => ({
   method: "get",
-  url: `/roles?type=${params}`,
+  url: `/roles`,
   config: { params },
 });

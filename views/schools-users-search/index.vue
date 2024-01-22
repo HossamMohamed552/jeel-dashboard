@@ -30,15 +30,16 @@
         :header-name="$t('SCHOOL.USERS_SCHOOL_LIST')"
         :tableItems="usersList"
         :fields-list="fieldsList"
+        :number-of-item="totalNumber"
         @detailItem="detailItem($event)"
         @changeStatus="changeStatus($event)"
         @cancelBlock="cancelBlock($event)"
         @changePassword="changePassword($event)"
+        @refetch="getAllUsers"
         :loading="loading"
         :change_password="'change-password'"
         :permission_view="'show-schools'"
         :cancel_block="'cancel-block'"
-        :notHidePagination="false"
         :showSortControls="false"
       >
         <template #buttons>
@@ -60,7 +61,7 @@ import Button from "@/components/Shared/Button/index.vue";
 import GenericForm from "@/components/Shared/GenericForm";
 import ListItems from "@/components/ListItems/index.vue";
 import { mapGetters } from "vuex";
-import { postChangeStatusRequest, getAllUsersRequest } from "@/api/user";
+import {postChangeStatusRequest, getAllUsersRequest, getSchoolUsersRequest} from "@/api/user";
 import { getUsersSearch } from "@/api/school";
 import _ from "lodash";
 
@@ -91,12 +92,10 @@ export default {
       usersList: [],
       userSearch: [
         {
-          key: "name",
-          label: "",
+          key: "email",
           label: this.$t("USERS.name"),
           col: "4",
           listen: "id",
-
           value: "",
           type: "text",
           rules: "",
@@ -105,7 +104,6 @@ export default {
           key: "country_id",
           col: "4",
           listen: "id",
-
           type: "select",
           label: this.$t("SCHOOL.COUNTRY"),
           options: [],
@@ -117,7 +115,6 @@ export default {
           key: "school_group_id",
           col: "4",
           listen: "id",
-
           type: "select",
           label: this.$t("SCHOOL.SCHOOL_COLLECTION"),
           options: [],
@@ -129,7 +126,6 @@ export default {
           key: "school_id",
           col: "4",
           listen: "id",
-
           type: "select",
           label: this.$t("TABLE_FIELDS.school"),
           options: [],
@@ -138,10 +134,9 @@ export default {
           rules: "",
         },
         {
-          key: "roles_categories",
+          key: "category_id",
           col: "4",
           listen: "id",
-
           type: "select",
           label: this.$t("ROLES.CLASSIFICATION_DEPARTMENT"),
           options: [],
@@ -150,11 +145,10 @@ export default {
           rules: "",
         },
         {
-          key: "roles",
+          key: "role_id",
           col: "4",
           type: "select",
           listen: "id",
-
           label: this.$t("USERS.DEPARTMENT"),
           options: [],
           deselectFromDropdown: true,
@@ -173,7 +167,6 @@ export default {
           rules: "",
         },
       ],
-      usersList: [],
       totalNumber: 0,
       fieldsList: [
         {
@@ -212,8 +205,8 @@ export default {
     handleInput: _.debounce(function (key, value) {
       if (key == "school_group_id" && value != "")
         getAllSchoolsBySchoolGroup(this.userSearch, "school_id", value);
-      if (key == "roles_categories" && value != "")
-        getAllRolesByType(this.userSearch, "roles", value);
+      if (key == "category_id" && value != "")
+        getAllRolesByType(this.userSearch, "role_id", value);
       console.log("handleInput", key, value);
     }, 300),
 
@@ -257,7 +250,7 @@ export default {
     getAllUsers(event) {
       this.loading = true;
       const params = event;
-      this.ApiService(getAllUsersRequest(params))
+      this.ApiService(getSchoolUsersRequest(params))
         .then((response) => {
           this.usersList = response.data.data;
           this.totalNumber = response.data.meta.total;
@@ -268,10 +261,10 @@ export default {
     },
   },
   async mounted() {
-    getALLCountries(this.userSearch, "country_id");
-    getALLSchoolGroups(this.userSearch, "school_group_id");
-    getAllRolesType(this.userSearch, "roles_categories");
-    getAllUserStatus(this.userSearch, "status");
+    await getALLCountries(this.userSearch, "country_id");
+    await getALLSchoolGroups(this.userSearch, "school_group_id");
+    await getAllRolesType(this.userSearch, "category_id");
+    await getAllUserStatus(this.userSearch, "status");
     this.getAllUsers();
   },
   watch: {},

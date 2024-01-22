@@ -32,6 +32,12 @@ export default{
     handleEditPath($event) {
       this.loading = true;
       this.showModal = true;
+      delete $event.audioChanged
+      delete $event.audio_name
+      delete $event.audio_size
+      if (!$event.audioChangedRequest){
+        delete $event.audio
+      }
       this.ApiService(putLearningPathRequest(this.$route.params.id,$event)).then((response) => {
         this.loading = false
         setTimeout(() => {
@@ -40,7 +46,7 @@ export default{
       }).then(() => {
         this.$router.push("/dashboard/path");
       }).catch(err=>{
-        this.loading = false; 
+        this.loading = false;
         setTimeout(() => {
           this.showModal = false
         }, 3000)

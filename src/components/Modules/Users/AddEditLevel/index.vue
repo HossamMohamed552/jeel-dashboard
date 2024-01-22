@@ -4,7 +4,7 @@
     <div class="container-fluid custom-container">
       <div class="add-edit-country-form">
         <h3>{{ $route.params.id ? $t("LEVEL.EDIT") : $t("LEVEL.ADD_NEW") }}</h3>
-        <div v-if="user.is_super_admin === 1 && user.permissions.includes('edit-levels')">
+        <div>
           <validation-observer v-slot="{ invalid }" ref="addEditLevelForm">
             <form @submit.prevent="onSubmit" class="mt-5">
               <b-row>

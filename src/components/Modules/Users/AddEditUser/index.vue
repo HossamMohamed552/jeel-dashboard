@@ -255,9 +255,9 @@ import { TogglePasswordMixins } from "@/mixins/TogglePasswordMixins";
 // Dropdown
 import {
   getSingleUserRequest,
-  getAllRolesRequest,
   addEditUserRequest,
-  postChangeStatusRequest,
+  deleteProfileImageRequest,
+  postChangeStatusRequest, getAllRolesOrganizationRequest,
 } from "@/api/user";
 
 import { getAllNationaltyRequest } from "@/api/country";
@@ -388,7 +388,7 @@ export default {
       });
     },
     getAllDepartments() {
-      this.ApiService(getAllRolesRequest()).then((response) => {
+      this.ApiService(getAllRolesOrganizationRequest({'types[]':126})).then((response) => {
         this.departmentsList = response.data.data;
       });
     },

@@ -4,7 +4,7 @@
     <div class="add-edit-user">
       <div class="container-fluid custom-container">
         <div class="add-edit-question-form">
-          <h3>{{$t("QUESTIONS.ADD_NEW")}}</h3>
+          <h3>{{ $t("QUESTIONS.ADD_NEW") }}</h3>
           <Stepper
             v-if="currentStep === 0 || currentStep === 1 || currentStep === 2"
             :steps="steps"
@@ -34,7 +34,7 @@
             @handleCancel="handleCancel"
             @onSubmit="getSecondStepData"
           />
-          <div v-show="currentStep === 2" class="qustion-review">
+          <div v-if="currentStep === 2" class="qustion-review">
             <b-container>
               <b-row>
                 <b-col lg="3">
@@ -45,34 +45,40 @@
                   <h6>{{ $t("QUESTIONS.QUESTION_SUB_PATTERN") }}</h6>
                   <p>{{ getName(this.questionSubTypes, this.collectData.question_type_sub_id) }}</p>
                 </b-col>
-                <b-col lg="3">
+                <b-col lg="3" v-if="collectData.learning_path_id">
                   <h6>{{ $t("QUESTIONS.LEARNING_PATH") }}</h6>
-                  <p>{{ getName(this.learningPaths, this.collectData.learning_path_id) }}</p>
+                  <p >{{ getName(learningPaths, collectData.learning_path_id) }}</p>
                 </b-col>
-                <b-col lg="3">
+                <b-col lg="3" v-if="collectData.language_skill_id">
                   <h6>{{ $t("QUESTIONS.LANGUAGE_SKILLS") }}</h6>
-                  <p>{{ getName(this.languageSkills, this.collectData.language_skill_id) }}</p>
+                  <p
+                    v-for="languageSkill in getName(languageSkills, collectData.language_skill_id,true)"
+                    :key="languageSkill">{{ languageSkill }}</p>
                 </b-col>
                 <b-col lg="3">
                   <h6>{{ $t("QUESTIONS.QUESTIONDIFFICULTIES") }}</h6>
-                  <p>{{ getName(this.questionDifficulties, this.collectData.question_difficulty_id) }}</p>
+                  <p>{{
+                      getName(this.questionDifficulties, this.collectData.question_difficulty_id)
+                    }}</p>
                 </b-col>
                 <b-col lg="3">
                   <h6>{{ $t("QUESTIONS.BLOOM_CATEGORIES") }}</h6>
                   <p>{{ getName(this.bloomCategories, this.collectData.bloom_category_id) }}</p>
                 </b-col>
-                <b-col lg="3">
+                <b-col lg="3" v-if="collectData.language_method_id">
                   <h6>{{ $t("QUESTIONS.LEARNING_METHOD") }}</h6>
-                  <p>{{ getName(this.learningMethods, this.collectData.language_method_id) }}</p>
+                  <p
+                    v-for="learningMethod in getName(learningMethods, collectData.language_method_id,true)"
+                    :key="learningMethod">{{ learningMethod }}</p>
                 </b-col>
                 <b-col lg="3">
                   <h6>{{ $t("QUESTIONS.TYPE") }}</h6>
                   <p>{{ this.collectData.question_pattern }}</p>
                 </b-col>
-<!--                <b-col lg="3">-->
-<!--                  <h6>{{ $t("QUESTIONS.LEVELS") }}</h6>-->
-<!--                  <p>{{ getName(this.levels, this.collectData.level_id) }}</p>-->
-<!--                </b-col>-->
+                <!--                <b-col lg="3">-->
+                <!--                  <h6>{{ $t("QUESTIONS.LEVELS") }}</h6>-->
+                <!--                  <p>{{ getName(this.levels, this.collectData.level_id) }}</p>-->
+                <!--                </b-col>-->
               </b-row>
               <hr/>
               <b-row>
@@ -98,17 +104,23 @@
                 <b-col v-for="(answer, idx) in collectData.answers" :key="idx">
                   <h6>{{ `${$t('QUESTIONS.ANSWER')} ${idx + 1}` }}</h6>
                   <p v-if="answer.answer_pattern === 'text'">{{ answer && answer.answer }}</p>
-                  <img class="question_img" v-else-if="answer.answer_pattern === 'image'" :src="answer.answerImage">
+                  <img class="question_img" v-else-if="answer.answer_pattern === 'image'"
+                       :src="answer.answerImage">
                   <audio controls v-else-if="answer.answer_pattern === 'audio'" class="answer">
                     <source :src="answer.answerAudioUser"/>
                   </audio>
                 </b-col>
-                <b-col lg="12" v-if="!questionTypeSlug.includes('order') || !questionTypeSlug.includes('match')">
+                <b-col lg="12"
+                       v-if="!questionTypeSlug.includes('order') || !questionTypeSlug.includes('match')">
                   <h6>{{ $t('QUESTIONS.RIGHT_ANSWER') }}</h6>
                   <b-row>
-                    <b-col v-for="correctAnswer in getCorrectAnswer(collectData.answers,1)" :key="correctAnswer.id">
-                      <p v-if="correctAnswer.answer_pattern === 'text'">{{ correctAnswer.answer }}</p>
-                      <img v-if="correctAnswer.answer_pattern === 'image'" class="question_img" :src="correctAnswer.answerImage"/>
+                    <b-col v-for="correctAnswer in getCorrectAnswer(collectData.answers,1)"
+                           :key="correctAnswer.id">
+                      <p v-if="correctAnswer.answer_pattern === 'text'">{{
+                          correctAnswer.answer
+                        }}</p>
+                      <img v-if="correctAnswer.answer_pattern === 'image'" class="question_img"
+                           :src="correctAnswer.answerImage"/>
                       <audio controls v-if="correctAnswer.answer_pattern === 'audio'">
                         <source :src="correctAnswer.answerAudioUser"/>
                       </audio>
@@ -118,9 +130,13 @@
                 <b-col lg="12" v-if="questionTypeSlug.includes('order')">
                   <h6>{{ $t('QUESTIONS.RIGHT_sequence') }}</h6>
                   <b-row>
-                    <b-col v-for="correctAnswer in collectData.answers" :key="correctAnswer.id" lg="12">
-                      <p v-if="correctAnswer.answer_pattern === 'text'">{{ correctAnswer.answer }}</p>
-                      <img class="question_img" v-else-if="correctAnswer.answer_pattern === 'image'" :src="correctAnswer.answerImage">
+                    <b-col v-for="correctAnswer in collectData.answers" :key="correctAnswer.id"
+                           lg="12">
+                      <p v-if="correctAnswer.answer_pattern === 'text'">{{
+                          correctAnswer.answer
+                        }}</p>
+                      <img class="question_img" v-else-if="correctAnswer.answer_pattern === 'image'"
+                           :src="correctAnswer.answerImage">
                       <audio controls v-if="correctAnswer.answer_pattern === 'audio'">
                         <source :src="correctAnswer.answerAudioUser">
                       </audio>
@@ -137,12 +153,15 @@
                     </audio>
                     <p class="to">إلى</p>
                     <div v-for="(matchAnswerTo,index) in matchAnswer.answers_to" :key="index">
-                      <p v-if="matchAnswerTo.answer_pattern === 'text'">{{ matchAnswerTo.answer }}</p>
+                      <p v-if="matchAnswerTo.answer_pattern === 'text'">{{
+                          matchAnswerTo.answer
+                        }}</p>
                       <audio controls v-if="matchAnswerTo.answer_pattern === 'audio'">
                         <source :src="matchAnswerTo.audioUrl">
                       </audio>
                       <div v-if="matchAnswerTo.answer_pattern === 'image'"><img
-                        :src="matchAnswerTo.answerImage" alt="answer image" class="answer_image"></div>
+                        :src="matchAnswerTo.answerImage" alt="answer image" class="answer_image">
+                      </div>
                     </div>
                   </div>
                 </b-col>
@@ -153,7 +172,8 @@
                     <Button :loading="loading" custom-class="submit-btn" @click="saveQuestion">
                       {{ $t("GLOBAL_SAVE") }}
                     </Button>
-                    <Button class="mx-3" @click="goToAnswersForm" custom-class="submit-btn back-btn">
+                    <Button class="mx-3" @click="goToAnswersForm"
+                            custom-class="submit-btn back-btn">
                       {{ $t("GLOBAL_BACK") }}
                     </Button>
                   </div>
@@ -181,12 +201,12 @@ import AddEditQuestionAnswersForm
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {
-  getQuestionTypsRequest,
-  getQuestionSubTypsRequest,
-  getLaguageSkillsRequest,
   getAllBloomCategoriesRequest,
-  getAllQuestionDifficultiesRequest,
   getAllLearningMethodsRequest,
+  getAllQuestionDifficultiesRequest,
+  getLaguageSkillsRequest,
+  getQuestionSubTypsRequest,
+  getQuestionTypsRequest,
 } from "@/api/question";
 import Stepper from "@/components/Shared/Stepper/index.vue";
 import axios from "axios";
@@ -195,8 +215,6 @@ import globalAssetData from "@/mixins/getData/globalAssetData";
 import ProgressModal from "@/components/Shared/ProgressModal/index.vue";
 import {getAllObjectivesRequest} from "@/api/objective";
 import {getAllOutcomesRequest} from "@/api/outcome";
-import {getAllLessonsRequest} from "@/api/lessons";
-
 export default {
   mixins: [globalAssetData],
   components: {
@@ -337,10 +355,17 @@ export default {
       Object.assign(this.collectData, {...object});
       this.handleSaveCollectedData(this.collectData);
     },
-    getName(list, id) {
-      if (id) {
-        const name = list.find((item) => item.id == id).name;
-        return name;
+    getName(list, id, multi = false) {
+      if (id && !multi) {
+        return list.find((item) => item.id == id).name;
+      } else if (typeof id === 'object' && multi) {
+        let names = [];
+        list.forEach((item) => {
+          if (id.includes(item.id)) {
+            return names.push(item.name)
+          }
+        })
+        return names;
       }
     },
     getCorrectAnswer(list, id) {
@@ -357,7 +382,7 @@ export default {
       }
     },
     saveQuestion() {
-      console.log('final collectData',this.collectData)
+      console.log('final collectData', this.collectData)
       this.loading = true
       const formData = new FormData();
       formData.append("question_type_id", this.collectData.question_type_id);
@@ -438,7 +463,7 @@ export default {
           for (let id = 0; id < this.collectData.answers.answersListMatchTo[answerTo].answerToId.length; id++) {
             let indexOfId;
             indexOfId = this.collectData.answers.answersListMatch.findIndex((item) => item.id === this.collectData.answers.answersListMatchTo[answerTo].answerToId[id])
-            formData.append(`answers_to[${answerTo}][index_id][${id}]`,indexOfId);
+            formData.append(`answers_to[${answerTo}][index_id][${id}]`, indexOfId);
           }
           if (this.collectData.answers.answersListMatchTo[answerTo]?.audio) {
             formData.append(`answers_to[${answerTo}][audio]`, this.collectData.answers.answersListMatchTo[answerTo]?.audio);
@@ -481,12 +506,12 @@ export default {
       this.loading = false
       this.cancelSource.cancel();
     },
-    getObjectivesRequest(){
+    getObjectivesRequest() {
       this.ApiService(getAllObjectivesRequest()).then((response) => {
         this.objectives = response.data.data
       })
     },
-    getOutcomesRequest(){
+    getOutcomesRequest() {
       this.ApiService(getAllOutcomesRequest()).then((response) => {
         this.outcomes = response.data.data
       })

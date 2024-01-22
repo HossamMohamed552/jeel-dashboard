@@ -28,28 +28,28 @@
             <ShowItem :title="$t('TABLE_FIELDS.school_group')" :subtitle="school_group.name" />
           </b-col>
         </b-row>
-        <b-row
-          v-if="
-            user.permissions.includes('rearrange-missions') ||
-            user.permissions.includes('manage-learningpath')
-          "
-        >
-          <b-col lg="6">
-            <h3 class="mission-title">الصفوف</h3>
-            <div class="mission-item" v-for="mission in levelNotFiltered">
-              <span>{{ mission.name }}</span>
-            </div>
-          </b-col>
-          <b-col lg="6">
-            <h3 class="mission-title">الصفوف المختاره</h3>
-            <div class="mission-item" v-for="mission in levelFiltered">
-              <span>{{ mission.name }}</span>
-              <!--              <router-link :to="`/dashboard/path-content/${mission.id}`" class="mission-content"-->
-              <!--                           v-if="user.permissions.includes('manage-learningpath')">تعديل المحتوى <i-->
-              <!--                class="far fa-edit"></i></router-link>-->
-            </div>
-          </b-col>
-        </b-row>
+<!--        <b-row-->
+<!--          v-if="-->
+<!--            user.permissions.includes('rearrange-missions') ||-->
+<!--            user.permissions.includes('manage-learningpath')-->
+<!--          "-->
+<!--        >-->
+<!--          <b-col lg="6">-->
+<!--            <h3 class="mission-title">الصفوف</h3>-->
+<!--            <div class="mission-item" v-for="mission in levelNotFiltered">-->
+<!--              <span>{{ mission.name }}</span>-->
+<!--            </div>-->
+<!--          </b-col>-->
+<!--          <b-col lg="6">-->
+<!--            <h3 class="mission-title">الصفوف المختاره</h3>-->
+<!--            <div class="mission-item" v-for="mission in levelFiltered">-->
+<!--              <span>{{ mission.name }}</span>-->
+<!--              &lt;!&ndash;              <router-link :to="`/dashboard/path-content/${mission.id}`" class="mission-content"&ndash;&gt;-->
+<!--              &lt;!&ndash;                           v-if="user.permissions.includes('manage-learningpath')">تعديل المحتوى <i&ndash;&gt;-->
+<!--              &lt;!&ndash;                class="far fa-edit"></i></router-link>&ndash;&gt;-->
+<!--            </div>-->
+<!--          </b-col>-->
+<!--        </b-row>-->
         <!--        <b-row v-if="user.permissions.includes('manage-learningpath')">-->
         <!--          <b-col lg="12">-->
         <!--            <h3 class="mission-title">الصفوف المختاره</h3>-->
