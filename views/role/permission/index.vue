@@ -45,6 +45,12 @@
           data-custom-sort="customSort"
           show-empty
         >
+          <template :slot="`head(is_active)`">
+            <div class="d-flex">
+              <b-form-checkbox :checked="isSelectAll" @change="toggleSelectAll"></b-form-checkbox>
+              {{ this.$i18n.t("TABLE_FIELDS.actions") }}
+            </div>
+          </template>
           <template #empty>
             <div class="mt-5 pt-5 text-center">لا توجد بيانات</div>
           </template>
@@ -93,6 +99,7 @@ export default {
   data() {
     return {
       role: {},
+      isSelectAll: false,
       inputValue: "",
       formValues: {
         per_page: 10,
@@ -102,24 +109,6 @@ export default {
         order_by: "",
       },
       fieldsList: [
-        {
-          key: "id",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "role",
-          label: "اسم القائمة",
-        },
-        {
-          key: "name",
-          label: "اسم الصلاحية",
-        },
-        {
-          key: "is_active",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
-      fieldsList2: [
         {
           key: "id",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -157,6 +146,17 @@ export default {
   },
 
   methods: {
+    toggleSelectAll() {
+      this.isSelectAll = !this.isSelectAll;
+      console.log(this.isSelectAll);
+
+      this.items.forEach((item) => {
+        item.is_active = this.isSelectAll;
+      });
+
+      this.updateActiveInactiveIDs();
+    },
+
     searchBy: debounce(function (name) {
       console.log(name);
       let params = {
