@@ -51,7 +51,7 @@ export async function getAllRoles(array, key) {
   await fetchDataAndUpdateOptions(array, getRolesRequest(), key);
 }
 export async function getAllRolesByType(array, key, id) {
-  await fetchDataAndUpdateOptions(array, getAllRolesByTypeRequest(id), key);
+  await fetchDataAndUpdateOptions(array, getAllRolesByTypeRequest({'types[0]':id}), key);
 }
 export async function getAllRolesType(array, key) {
   await fetchDataAndUpdateOptions(array, getAllRolesTypeRequest(), key);

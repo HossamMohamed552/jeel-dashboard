@@ -73,7 +73,7 @@
                         :rules="'required'"
                         :deselectFromDropdown="true"
                         multiple
-                        @input="getAllDepartments($event)"
+                        @input="onSelectRoleCategoriesInput($event)"
                       ></SelectSearch>
                     </div>
                   </b-col>
@@ -126,7 +126,10 @@
                       ></TextField>
                     </div>
                   </b-col>
-                  <b-col lg="8" :class="isStudent && 'd-none'" v-if="!$route.params.id && !isManagementStudent">
+<!--<<<<<<< HEAD-->
+<!--                  <b-col lg="8" :class="isStudent && 'd-none'" v-if="!$route.params.id && !isManagementStudent">-->
+<!--=======-->
+                  <b-col lg="8" v-if="!isStudent">
                     <div class="hold-field">
                       <TextField
                         v-model="user.email"
@@ -333,6 +336,8 @@ export default {
     return {
       imageUrl: null,
       isStudent: false,
+      index: 0,
+      indexType: 0,
       user: {
         image: null,
         first_name: "",
@@ -363,6 +368,7 @@ export default {
       religions: [],
       filterWith:[],
       isManagementStudent: false,
+      isSelectingRoleCategories: false,
     };
   },
   methods: {
@@ -375,13 +381,6 @@ export default {
     },
     handleImageCleared() {
       this.user.image = null;
-    },
-
-    checkIsStudent(id) {
-      if (id === 5) {
-        this.isStudent = true;
-        this.formValues.email = "";
-      } else this.isStudent = false;
     },
     changeStatus() {
       let userStatus = {
@@ -441,14 +440,21 @@ export default {
       }
     }, 300),
     onSelectRole: _.debounce(function (value) {
-      const studentRole = this.departmentsList.find(
-        (role) => role.code.toLowerCase() === "student"
-      );
-      if (value.includes(studentRole.id)) {
-        this.user.roles = [studentRole.id];
-        this.isStudent = true;
-      } else {
-        this.isStudent = false;
+      if (value != undefined) {
+        const studentRole = this.departmentsList.find(
+          (role) => role.code.toLowerCase() === "student"
+        );
+        console.log("studentRoleType", studentRole);
+        console.log("value", value);
+        console.log("includes", value.includes(studentRole.id));
+        if (value.includes(studentRole.id)) this.isStudent = true;
+        else this.isStudent = false;
+        if (value.includes(studentRole.id) && this.index == 0) {
+          this.user.roles = [studentRole.id];
+          this.index = 1;
+        } else {
+          this.index = 0;
+        }
       }
     }, 300),
     getAllSchools: _.debounce(function (value) {
@@ -458,6 +464,48 @@ export default {
         });
       }
     }, 300),
+
+    onSelectRoleCategoriesInput: _.debounce(function (value) {
+      if (value != undefined) {
+        this.onSelectRoleCategories(value);
+      }
+    }, 300),
+
+    onSelectRoleCategories: async function (value) {
+      try {
+        const studentRoleType = this.rolesTypeList.find(
+          (type) => type.key.toLowerCase() === "student_management"
+        );
+        console.log("studentRoleType", studentRoleType);
+        console.log("value", value);
+        console.log("includes", value.includes(studentRoleType.id));
+        if (value.includes(studentRoleType.id)) this.isStudent = true;
+        else this.isStudent = false;
+        if (value.includes(studentRoleType.id) && this.indexType == 0) {
+          this.user.roles_categories = [studentRoleType.id];
+          this.indexType = 1;
+          this.getAllDepartments(studentRoleType.id);
+        } else {
+          this.getAllDepartments(value);
+          this.indexType = 0;
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
+    // getAllDepartments: function (value) {
+    //   if (value != undefined) {
+    //     this.ApiService(getAllRolesByTypeRequest(value))
+    //       .then((response) => {
+    //         this.departmentsList = response.data.data;
+    //       })
+    //       .catch((error) => {
+    //         console.error("Error in getAllDepartments:", error);
+    //       });
+    //   }
+    // },
+
     getAllRolesType() {
       this.ApiService(getAllRolesTypeRequest()).then((response) => {
         this.rolesTypeList = response.data.data;

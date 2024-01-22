@@ -5,6 +5,16 @@ export const getAllUsersRequest = (params) => ({
     params,
   },
 });
+
+
+export const getSchoolUsersRequest = (params) => ({
+  method: "get",
+  url: "school/users",
+  config: {
+    params,
+  },
+});
+
 export const getAllTeachersRequest = (schoolId, params) => ({
   method: "get",
   url: `school/${schoolId}/teachers`,
