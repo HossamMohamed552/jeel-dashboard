@@ -7,7 +7,7 @@
       :is-failed="isFailed"
       @cancel="
         showModal = false;
-        $router.push('/dashboard/video');
+        $router.push('/dashboard/audio');
       "
     />
     <AddEditAudio
@@ -55,8 +55,8 @@ export default {
       formData.append("task_degree", $event.task_degree);
       formData.append("type", $event.type);
       formData.append("task_audio", $event.task_audio);
-      if ($event.type == "text") formData.append("task", $event.task);
-      if ($event.type == "image")
+      if ($event.typeName == "text") formData.append("task", $event.task);
+      if ($event.typeName == "images")
         formData.append("task_image", $event.task_image);
       formData.append("learning_path_id", $event.learning_path_id);
       formData.append("blooms", $event.blooms);

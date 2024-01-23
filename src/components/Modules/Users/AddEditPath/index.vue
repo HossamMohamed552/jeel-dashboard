@@ -149,9 +149,9 @@ export default {
       this.createPath[fileRequest] = true
     },
     onSubmit() {
-      this.$refs.addEditPathForm.validate().then((success) => {
-        if (!success) return;
-      });
+      // this.$refs.addEditPathForm.validate().then((success) => {
+      //   if (!success) return;
+      // });
       if (this.$route.params.id) {
         this.$emit("handleEditPath", this.createPath);
       } else {

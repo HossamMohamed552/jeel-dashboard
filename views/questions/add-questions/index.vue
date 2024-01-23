@@ -382,7 +382,6 @@ export default {
       }
     },
     saveQuestion() {
-      console.log('final collectData', this.collectData)
       this.loading = true
       const formData = new FormData();
       formData.append("question_type_id", this.collectData.question_type_id);

@@ -103,6 +103,11 @@
             <source :src="data.item.question" />
           </audio>
         </template>
+        <template #cell(audio)="data">
+          <audio controls>
+            <source :src="data.item.audio" />
+          </audio>
+        </template>
         <template #cell(questionName)="data">
           <span>{{ data.item.question | cutString }}</span>
         </template>

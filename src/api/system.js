@@ -69,3 +69,8 @@ export const getAllRolesByTypeRequest = (params) => ({
   url: `/roles`,
   config: { params },
 });
+export const getAllTaskTypeRequest = (params) => ({
+  method: "get",
+  url: `system_codes/task/type`,
+  config: { params },
+});

@@ -3,6 +3,8 @@
     <Modal :content-message="'تمت الإضافة بنجاح'"
            :showModal="showModal"
            :is-success="true"/>
+    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <AddEditPath
       :loading="loading"
       @handleAddPath="handleAddPath($event)"
@@ -24,6 +26,7 @@ export default{
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
     };
   },
   mounted() {
@@ -31,20 +34,23 @@ export default{
   methods: {
     handleAddPath($event) {
       this.loading = true;
-      this.showModal = true;
       delete $event.audioChanged
       delete $event.audioChangedRequest
       this.ApiService(postLearningPathRequest($event)).then((response) => {
         this.loading = false
+        this.showModal = true;
         setTimeout(() => {
           this.showModal = false
         }, 3000)
       }).then(() => {
         this.$router.push("/dashboard/path");
       }).catch(err=>{
-        setTimeout(() => {
-          this.showModal = false
-        }, 3000)
+        this.showModal = false
+        this.showModalFailed = true
+        this.loading = false;
+        // setTimeout(() => {
+        //   this.showModal = false
+        // }, 3000)
       })
     },
     handleCancel() {
