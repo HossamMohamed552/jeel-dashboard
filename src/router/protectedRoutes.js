@@ -260,7 +260,7 @@ const protectedRoutes = [
         },
       },
       {
-        path: "/dashboard/schools-users-search/",
+        path: "/dashboard/schools-users-search",
         name: "schools-users-search",
         component: () => import("../../views/schools-users-search/index.vue"),
         meta: {

@@ -29,8 +29,8 @@
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف الصلاحية'"
-      :content-message-question="'هل انت متأكد من حذف الصلاحية'"
+      :content-message="'حذف الدور الوظيفي'"
+      :content-message-question="'هل انت متأكد من حذف الدور الوظيفي'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
