@@ -54,8 +54,9 @@
 <script>
 import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import { getBloomCategoryByIdRequest } from "@/api/bloom.js";
+import {getBloomCategoryByIdRequest} from "@/api/bloom.js";
 import Modal from "@/components/Shared/Modal/index.vue";
+
 export default {
   components: {
     Modal,
@@ -75,6 +76,7 @@ export default {
         // slug: "",
       },
       bloomTypeId: this.$route.params.id,
+      showModal: false,
     };
   },
   methods: {
@@ -95,7 +97,7 @@ export default {
       if (this.bloomTypeId) {
         this.ApiService(getBloomCategoryByIdRequest(this.bloomTypeId)).then((response) => {
           this.formValues = response.data.data;
-        });
+        })
       }
     },
   },

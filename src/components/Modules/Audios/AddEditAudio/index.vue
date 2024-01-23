@@ -75,17 +75,17 @@
                     :label="$t('AUDIOS.QUESTION_TYPE')"
                     :name="$t('AUDIOS.QUESTION_TYPE')"
                     :placeholder="$t('AUDIOS.QUESTION_TYPE_PLACEHOLDER')"
-                    :options="qustionTypes"
-                    :get-option-label="(option) => option.name"
-                    :reduce="(option) => option.value"
+                    :options="questionTypes"
+                    :get-option-label="(option) => option.key"
+                    :reduce="(option) => option.id"
                     :rules="'required'"
-                    @input="setQuestionType(formValues.type)"
+                    @input="setQuestionType($event)"
                   />
                 </div>
               </b-col>
             </b-row>
             <b-row>
-              <b-col v-if="questionType === 'text'" lg="12" class="mb-3">
+              <b-col v-if="questionType && questionType[0]?.name === 'text'" lg="12" class="mb-3">
                 <div class="hold-field">
                   <b-form-group
                     v-slot="{ ariaDescribedby }"
@@ -106,7 +106,7 @@
                   </b-form-group>
                 </div>
               </b-col>
-              <b-col v-else lg="12" class="mb-3">
+              <b-col v-if="questionType && questionType[0]?.name === 'images'" lg="12" class="mb-3">
                 <div class="hold-field mt-4">
                   <UploadAttachment
                     v-if="
@@ -302,6 +302,7 @@ import {getLearningSkillsRequest} from "@/api/learning-skill";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import {debounce} from "lodash";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
+import {getAllTaskTypeRequest} from "@/api/system";
 
 export default {
   components: {
@@ -326,21 +327,22 @@ export default {
     return {
       url: null,
       mediaType: null,
-      qustionTypes: [
-        {
-          name: "صورة",
-          value: "image",
-        },
-        {
-          name: "نص",
-          value: "text",
-        },
-      ],
-      questionType: "text",
+      questionTypes: [],
+      // questionTypes: [
+      //   {
+      //     name: "صورة",
+      //     value: "image",
+      //   },
+      //   {
+      //     name: "نص",
+      //     value: "text",
+      //   },
+      // ],
+      questionType: [],
       formValues: {
         name: "",
         task_degree: "",
-        type: "text",
+        type: "",
         task_audio: "",
         task: "",
         task_image: "",
@@ -384,10 +386,15 @@ export default {
       this.audioValue.play();
       this.isPlaying = true;
     },
-    setQuestionType: debounce(function (type) {
-      this.questionType = type;
+    setQuestionType: debounce(function ($event) {
+      console.log('type', $event)
+      this.questionType = this.questionTypes.filter((item)=>{
+        return item.id === $event
+      })
+      this.formValues.typeName = this.questionType[0]?.name
+      // this.questionType = type;
       if (this.$route.params.id) {
-        if (type == "text") {
+        if (this.questionType[0]?.name === "text") {
           // this.formValues.task_file_name = ""
           // this.formValues.task_file_size = ""
           // this.formValues.taskImageChanged = false
@@ -437,6 +444,11 @@ export default {
           this.loading = false;
         });
     },
+    getAllTaskType() {
+      this.ApiService(getAllTaskTypeRequest()).then((response) => {
+        this.questionTypes = response.data.data;
+      })
+    },
     onSubmit() {
       this.$refs.addEditAudioForm.validate().then((success) => {
         if (!success) return;
@@ -471,30 +483,20 @@ export default {
           (response) => {
             this.formValues.name = response.data.data.name;
             this.formValues.task_degree = response.data.data.task_degree;
-            this.formValues.type = response.data.data.type;
+            this.formValues.type = response.data.data.type.id;
             this.formValues.task = response.data.data.task;
             this.formValues.task_audio = response.data.data.task_audio;
-            this.formValues.task_audio_size =
-              response.data.data.task_audio_size;
-            this.formValues.task_audio_name =
-              response.data.data.task_audio_name;
-            this.formValues.task_audio_uuid =
-              response.data.data.task_audio_uuid;
+            this.formValues.task_audio_size = response.data.data.task_audio_size;
+            this.formValues.task_audio_name = response.data.data.task_audio_name;
+            this.formValues.task_audio_uuid = response.data.data.task_audio_uuid;
             this.formValues.task_file_size = response.data.data.task_file_size;
             this.formValues.task_file_name = response.data.data.task_file_name;
             this.formValues.task_file_uuid = response.data.data.task_file_uuid;
-            this.formValues.learning_path_id =
-              response.data.data.learningPath.id;
+            this.formValues.learning_path_id = response.data.data.learningPath.id;
             this.formValues.blooms = response.data.data.blooms.id;
             this.formValues.lesson_id = response.data.data.lesson.id;
-            this.formValues.learning_styles =
-              response.data.data.learning_styles.map((item) => {
-                return item.id;
-              });
-            this.formValues.language_skills =
-              response.data.data.language_skills.map((item) => {
-                return item.id;
-              });
+            this.formValues.learning_styles = response.data.data.learning_styles.map((item) => {return item.id;});
+            this.formValues.language_skills = response.data.data.language_skills.map((item) => {return item.id;});
           }
         );
       }
@@ -534,7 +536,7 @@ export default {
   },
   computed: {
     checkAudioInput() {
-      if (this.formValues.task_audio === "" || (this.questionType === "image" && this.formValues.task_image === "")
+      if (this.formValues.task_audio === "" || (this.questionType[0]?.name === "images" && this.formValues.task_image === "")
       ) {
         return true;
       } else {
@@ -542,7 +544,7 @@ export default {
       }
     },
     checkAudioInputsUpdate() {
-      if (this.formValues.taskAudioChanged === true || (this.questionType === "image" && this.formValues.taskImageChanged === true)) {
+      if (this.formValues.taskAudioChanged === true || (this.questionType[0]?.name === "images" && this.formValues.taskImageChanged === true)) {
         return true;
       } else {
         return false;
@@ -556,6 +558,7 @@ export default {
     this.getBloomCategories();
     this.getLanguageMethod();
     this.getLearningSkills();
+    this.getAllTaskType();
   },
 };
 </script>

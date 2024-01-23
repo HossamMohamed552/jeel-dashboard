@@ -59,7 +59,7 @@ export default {
       fieldsList: [
         { key: "id", label: "التسلسل" },
         { key: "name", label: this.$i18n.t("TABLE_FIELDS.learning_path_name") },
-        // {key: "description", label: this.$i18n.t('TABLE_FIELDS.description')},
+        {key: "audio", label: this.$i18n.t('TABLE_FIELDS.audio')},
         { key: "actions", label: "الإجراء" },
       ],
     };

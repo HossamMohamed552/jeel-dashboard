@@ -8,6 +8,7 @@
               <img src="@/assets/images/icons/email.png" v-show="isVerify">
               <img src="@/assets/images/icons/badge.png" v-show="isVerifyCheck">
               <img src="@/assets/images/icons/delete.svg" v-show="isWarning || isFailed">
+              <img src="@/assets/images/icons/reuse.png" v-show="isUsed">
               <img src="@/assets/images/icons/success.svg" v-show="isSuccess">
             </div>
             <div class="text-center">
@@ -25,6 +26,11 @@
              {{$t('GLOBAL_CANCEL')}}
            </Button>
          </div>
+          <div class="controls mt-3" style="justify-content: center;" v-if="isUsed">
+            <Button :custom-class="'rounded-btn'" @click="cancelWithConfirm()">
+              {{$t('GLOBAL_AGREE')}}
+            </Button>
+          </div>
          <div class="controls mt-3" style="justify-content: center;" v-if="isFailed">
            <Button :custom-class="'rounded-btn transparent-btn'" @click="cancel()">
              {{$t('GLOBAL_CANCEL')}}
@@ -80,6 +86,10 @@ export default {
       default: false
     },
     isFailed:{
+      type:Boolean,
+      default: false
+    },
+    isUsed:{
       type:Boolean,
       default: false
     },

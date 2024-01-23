@@ -1,6 +1,8 @@
 <template>
   <div class="add-country">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <AddEditLearningStyle
       :loading="loading"
       @handleAddLearningStyle="handleAddLearningStyle($event)"
@@ -11,27 +13,30 @@
 <script>
 import AddEditLearningStyle from "@/components/Modules/Users/addEditLearningStyle/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { postCreateLearningStyleRequest } from "@/api/learning-style";
+import {postCreateLearningStyleRequest} from "@/api/learning-style";
 
 export default {
   name: "index",
-  components: { Modal, AddEditLearningStyle },
+  components: {Modal, AddEditLearningStyle},
   data() {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false
     };
   },
   methods: {
     handleAddLearningStyle($event) {
       this.loading = true;
-      this.ApiService(postCreateLearningStyleRequest({ name: $event }))
+      this.ApiService(postCreateLearningStyleRequest({name: $event}))
         .then((response) => {
           this.showModal = true;
           setTimeout(() => {
             this.$router.push("/dashboard/learning-style");
           }, 3000);
-        })
+        }).catch(() => {
+        this.showModalFailed = true
+      })
         .finally(() => {
           this.loading = false;
         });

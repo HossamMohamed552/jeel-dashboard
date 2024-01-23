@@ -1,6 +1,8 @@
 <template>
   <div class="add-edit-learning-skill">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <AddEditLearningSkill
       :loading="loading"
       @handleAddLearningSkill="handleAddLearningSkill($event)"
@@ -11,31 +13,33 @@
 <script>
 import AddEditLearningSkill from "@/components/Modules/Users/AddEditLearningSkill/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { postCreateLearningSkillRequest } from "@/api/learning-skill";
+import {postCreateLearningSkillRequest} from "@/api/learning-skill";
 
 export default {
   name: "index",
-  components: { Modal, AddEditLearningSkill },
+  components: {Modal, AddEditLearningSkill},
   data() {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
     };
   },
   methods: {
     handleAddLearningSkill($event) {
       this.loading = true;
 
-      this.ApiService(postCreateLearningSkillRequest({ name: $event }))
+      this.ApiService(postCreateLearningSkillRequest({name: $event}))
         .then((response) => {
           this.showModal = true;
           setTimeout(() => {
             this.$router.push("/dashboard/learning-skill");
           }, 3000);
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+        }).catch(() => {
+        this.showModalFailed = true
+      }).finally(() => {
+        this.loading = false;
+      });
     },
     handleCancel() {
       this.$router.push("/dashboard/learning-skill");

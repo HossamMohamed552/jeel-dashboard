@@ -5,6 +5,8 @@
       :showModal="showModal"
       :is-success="true"
     />
+    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <AddEditObjectiveCategory
       :loading="loading"
       @addObjectiveCategory="handleAddObjectiveCategory($event)"
@@ -13,16 +15,19 @@
   </div>
 </template>
 <script>
-import AddEditObjectiveCategory from "@/components/Modules/ObjectiveCategory/AddEditObjectiveCategory/index.vue";
+import AddEditObjectiveCategory
+  from "@/components/Modules/ObjectiveCategory/AddEditObjectiveCategory/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { postAddObjectiveCategoriesRequest } from "@/api/objective";
+import {postAddObjectiveCategoriesRequest} from "@/api/objective";
+
 export default {
   name: "index",
-  components: { Modal, AddEditObjectiveCategory },
+  components: {Modal, AddEditObjectiveCategory},
   data() {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
     };
   },
   methods: {
@@ -37,7 +42,10 @@ export default {
             this.$router.push("/dashboard/objective");
           }, 3000);
         })
-        .catch(() => (this.loading = false));
+        .catch(() => {
+          this.loading = false
+          this.showModalFailed = true
+        });
     },
     handleCancel() {
       this.$router.push("/dashboard/objective");

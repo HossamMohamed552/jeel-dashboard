@@ -5,6 +5,8 @@
       :showModal="showModal"
       :is-success="true"
     />
+    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <AddEditOutcomeCategory
       :loading="loading"
       @addOutcomeCategory="handleAddOutcomeCategory($event)"
@@ -23,6 +25,7 @@ export default {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
     };
   },
   methods: {
@@ -38,6 +41,7 @@ export default {
           }, 3000);
         })
         .catch(() => {
+          this.showModalFailed = true
           this.loading = false;
         });
     },
