@@ -197,11 +197,11 @@ import axios from "axios";
 import VueCookies from "vue-cookies";
 
 // Dropdown
-import { deleteProfileImageRequest } from "@/api/user";
-import { mapActions } from "vuex";
+import {deleteProfileImageRequest} from "@/api/user";
+import {mapActions} from "vuex";
 
-import { getAllNationaltyRequest } from "@/api/country";
-import { getAllGenderRequest, getAllReligionRequest } from "@/api/system";
+import {getAllNationaltyRequest} from "@/api/country";
+import {getAllGenderRequest, getAllReligionRequest} from "@/api/system";
 
 export default {
   components: {
@@ -279,6 +279,7 @@ export default {
         const formData = new FormData();
         formData.append("_method", "PUT");
         Object.keys(this.user).forEach((key) => {
+          console.log('key', key, this.user[key])
           if (key === "roles") {
             return;
           } else if (key === "gender") {
@@ -300,7 +301,7 @@ export default {
             this.updateUser(response.data.data);
           })
           .then(() => {
-            this.$router.push({ name: "view-profile" });
+            this.$router.push({name: "view-profile"});
           });
       });
     },
@@ -328,6 +329,7 @@ export default {
   },
   async mounted() {
     try {
+      console.log('this.$store.getters.user', this.$store.getters.user)
       await this.getAllCountries();
       await this.getAllGenders();
       await this.getAllReligions();

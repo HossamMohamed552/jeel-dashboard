@@ -4,7 +4,7 @@
       <img v-if="localImageUrl" :src="localImageUrl" alt="Person Image" />
       <i v-else class="far fa-user"></i>
     </span>
-    <input type="file" ref="fileInput" style="display: none" @change="handleImageChange" />
+    <input type="file" accept="image/*" ref="fileInput" style="display: none" @change="handleImageChange" />
 
     <div>
       <Button type="button" @click="openFileInput" :custom-class="'submit-btn'">
@@ -97,7 +97,7 @@ export default {
       formData.append("type", "image");
 
       axios
-        .post("https://jeeladmin.suredemos.com/api/attachment", formData, {
+        .post(`${process.env.VUE_APP_ADMIN_URL}/attachment`, formData, {
           headers: {
             Authorization: `Bearer ${VueCookies.get("token")}`,
             locale: "ar",
