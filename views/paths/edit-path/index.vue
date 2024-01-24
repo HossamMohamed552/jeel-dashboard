@@ -3,6 +3,8 @@
     <Modal :content-message="' تم التعديل بنجاح'"
            :showModal="showModal"
            :is-success="true"/>
+    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <AddEditPath
       :loading="loading"
       @handleEditPath="handleEditPath($event)"
@@ -24,6 +26,7 @@ export default{
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
     };
   },
   mounted() {
@@ -31,21 +34,19 @@ export default{
   methods: {
     handleEditPath($event) {
       this.loading = true;
-      this.showModal = true;
-      delete $event.audioChanged
-      delete $event.audio_name
-      delete $event.audio_size
       if (!$event.audioChangedRequest){
         delete $event.audio
       }
       this.ApiService(putLearningPathRequest(this.$route.params.id,$event)).then((response) => {
         this.loading = false
+        this.showModal = true;
         setTimeout(() => {
           this.showModal = false
         }, 3000)
       }).then(() => {
         this.$router.push("/dashboard/path");
-      }).catch(err=>{
+      }).catch((error)=>{
+        this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
         this.loading = false;
         setTimeout(() => {
           this.showModal = false
