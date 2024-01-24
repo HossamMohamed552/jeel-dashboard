@@ -5,6 +5,8 @@
       :showModal="showModal"
       :is-success="true"
     />
+    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <AddEditObjectiveCategory
       :loading="loading"
       @editObjectiveCategory="handleEditObjectiveCategory($event)"
@@ -23,6 +25,7 @@ export default {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
       objectiveId: this.$route.params.id,
     };
   },
@@ -38,7 +41,10 @@ export default {
             this.$router.push("/dashboard/objective");
           }, 3000);
         })
-        .catch(() => (this.loading = false));
+        .catch((error) => {
+          this.loading = false
+          this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
+        });
     },
     handleCancel() {
       this.$router.push("/dashboard/objective");

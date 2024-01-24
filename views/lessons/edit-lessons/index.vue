@@ -5,6 +5,8 @@
       :showModal="showModal"
       :is-success="true"
     />
+    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <AddEditLesson
       :loading="loading"
       @editLessons="handleEditLessons($event)"
@@ -23,6 +25,7 @@ export default {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
       lessonId: this.$route.params.id,
     };
   },
@@ -40,7 +43,8 @@ export default {
             this.$router.push("/dashboard/lessons");
           }, 3000);
         })
-        .catch(() => {
+        .catch((error) => {
+          this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
           this.loading = false;
         });
     },

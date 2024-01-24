@@ -42,9 +42,9 @@ export default {
             this.$router.push("/dashboard/objective");
           }, 3000);
         })
-        .catch(() => {
+        .catch((error) => {
           this.loading = false
-          this.showModalFailed = true
+          this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
         });
     },
     handleCancel() {

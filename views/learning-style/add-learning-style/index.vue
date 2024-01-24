@@ -28,18 +28,16 @@ export default {
   methods: {
     handleAddLearningStyle($event) {
       this.loading = true;
-      this.ApiService(postCreateLearningStyleRequest({name: $event}))
-        .then((response) => {
+      this.ApiService(postCreateLearningStyleRequest({name: $event})).then((response) => {
           this.showModal = true;
           setTimeout(() => {
             this.$router.push("/dashboard/learning-style");
           }, 3000);
-        }).catch(() => {
-        this.showModalFailed = true
-      })
-        .finally(() => {
-          this.loading = false;
-        });
+        }).catch((error) => {
+        this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
+      }).finally(() => {
+        this.loading = false;
+      });
     },
     handleCancel() {
       this.$router.push("/dashboard/learning-style");
