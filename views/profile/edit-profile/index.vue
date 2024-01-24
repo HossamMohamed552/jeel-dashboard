@@ -232,12 +232,9 @@ export default {
         middle_name: "",
         last_name: "",
         email: "",
-        password: "",
-        password_confirmation: "",
         mobile: "",
         gender: "",
         religion_id: "",
-        roles: [],
         country_id: "",
         facebook: "",
         linkedin: "",
@@ -259,6 +256,7 @@ export default {
     // Image Upload Method
     handleImageUploaded(imageUuid) {
       this.user.image = imageUuid;
+      this.editImage = true
     },
     handleImageUrlUpdate(newImageUrl) {
       this.imageUrl = newImageUrl;
@@ -278,16 +276,30 @@ export default {
         if (!success) return;
         const formData = new FormData();
         formData.append("_method", "PUT");
-        Object.keys(this.user).forEach((key) => {
-          console.log('key', key, this.user[key])
-          if (key === "roles") {
-            return;
-          } else if (key === "gender") {
-            formData.append(key, this.user[key]);
-          } else {
-            formData.append(key, this.user[key]);
-          }
-        });
+        formData.append("first_name", this.user.first_name);
+        formData.append("middle_name", this.user.middle_name);
+        formData.append("last_name", this.user.last_name);
+        formData.append("email", this.user.email);
+        formData.append("mobile", this.user.mobile);
+        formData.append("gender", this.user.gender);
+        formData.append("religion_id", this.user.religion_id);
+        formData.append("country_id", this.user.country_id);
+        formData.append("facebook", this.user.facebook);
+        formData.append("linkedin", this.user.linkedin);
+        formData.append("twitter", this.user.twitter);
+        if (this.editImage)
+          formData.append("image", this.user.image);
+        // Object.keys(this.user).forEach((key) => {
+        //   console.log('key', this.user[key])
+        //   if (key === "roles") {
+        //     return;
+        //   } else if (key === "gender") {
+        //     formData.append(key, this.user[key]);
+        //   }
+        //   else {
+        //     formData.append(key, this.user[key]);
+        //   }
+        // });
 
         axios
           .post(`/user_auth_update`, formData, {
@@ -328,19 +340,20 @@ export default {
     },
   },
   async mounted() {
-    try {
-      console.log('this.$store.getters.user', this.$store.getters.user)
-      await this.getAllCountries();
-      await this.getAllGenders();
-      await this.getAllReligions();
-      this.userStrored = JSON.parse(localStorage.getItem("user"));
-      this.user = this.userStrored;
-      this.user.country_id = this.$store.getters.user?.user_country.id;
-      this.user.religion_id = this.$store.getters.user?.user_religion.id;
-      this.user.gender = this.$store.getters.user?.gender.id;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+    await this.getAllCountries();
+    await this.getAllGenders();
+    await this.getAllReligions();
+    this.userStrored = JSON.parse(localStorage.getItem("user"));
+    this.user = this.userStrored;
+    this.user.country_id = this.$store.getters.user.user_country ? this.$store.getters.user?.user_country.id : '';
+    this.user.religion_id = this.$store.getters.user.user_religion ? this.$store.getters.user?.user_religion.id : '';
+    this.user.gender = this.$store.getters.user?.gender ? this.$store.getters.user?.gender?.id : "";
+    // try {
+    //
+    //
+    // } catch (error) {
+    //   console.error("Error fetching data:", error);
+    // }
   },
 };
 </script>
