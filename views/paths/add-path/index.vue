@@ -44,9 +44,9 @@ export default{
         }, 3000)
       }).then(() => {
         this.$router.push("/dashboard/path");
-      }).catch(err=>{
+      }).catch((error)=>{
         this.showModal = false
-        this.showModalFailed = true
+        this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
         this.loading = false;
         // setTimeout(() => {
         //   this.showModal = false

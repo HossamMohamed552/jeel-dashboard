@@ -40,8 +40,8 @@ export default {
             this.$router.push("/dashboard/outcome");
           }, 3000);
         })
-        .catch(() => {
-          this.showModalFailed = true
+        .catch((error) => {
+          this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
           this.loading = false;
         });
     },
