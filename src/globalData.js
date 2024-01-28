@@ -343,7 +343,82 @@ let routeSuperVisor = [
     permission: "view-announcements",
   },
 ];
-
+let routeSchoolAdmin =[
+  {
+    name: "المستخدمين",
+    path: "/dashboard/users",
+    altImage: "users",
+    titleImage: "users",
+    icon: require("@/assets/images/icons/list.svg"),
+    permission: "view-school-users",
+  },
+  {
+    name: "بيانات المدرسة",
+    path: "/dashboard/school-info",
+    altImage: "school-info",
+    titleImage: "school-info",
+    icon: require("@/assets/images/icons/list.svg"),
+    permission: "show-schooladmin-school-info",
+  },
+  //TODO
+  {
+    name: "إدارة العام الدراسي",
+    path: "/dashboard/school-info",
+    altImage: "school-info",
+    titleImage: "school-info",
+    icon: require("@/assets/images/icons/list.svg"),
+    permission: "show-schooladmin-school-info",
+  },
+  {
+    name: "الفصول",
+    path: "/dashboard/classes",
+    altImage: "classes",
+    titleImage: "classes",
+    icon: require("@/assets/images/icons/list.svg"),
+    permission: "view-classes",
+  },
+  {
+    name: "مديري المدرسة",
+    path: "/dashboard/school-admins-users",
+    altImage: "schooladmins-users",
+    titleImage: "schooladmins-users",
+    icon: require("@/assets/images/icons/list.svg"),
+    permission: "view-schooladmins-users",
+  },
+  {
+    name: "المشرفين",
+    path: "/dashboard/supervisors-users",
+    altImage: "supervisors-users",
+    titleImage: "supervisors-users",
+    icon: require("@/assets/images/icons/list.svg"),
+    permission: "view-supervisors-users",
+  },
+  {
+    name: "المدرسين",
+    path: "/dashboard/teachers-users",
+    altImage: "teachers-users",
+    titleImage: "teachers-users",
+    icon: require("@/assets/images/icons/list.svg"),
+    permission: "view-teachers-users",
+  },
+  {
+    name: "الطلاب",
+    path: "/dashboard/students-users",
+    altImage: "students-users",
+    titleImage: "students-users",
+    icon: require("@/assets/images/icons/list.svg"),
+    permission: "view-students-users",
+  },
+  //TODO
+  {
+    name: "أولياء الأمور",
+    path: "/dashboard/parents-users",
+    altImage: "parents-users",
+    titleImage: "parents-users",
+    icon: require("@/assets/images/icons/list.svg"),
+    permission: "view-students-users",
+  },
+]
 let routesPrizes = [
   {
     name: "شارات جيل",
@@ -417,5 +492,6 @@ export {
   routesSubscribes,
   routeSuperVisor,
   routesPrizes,
-  routesJeelStores
+  routesJeelStores,
+  routeSchoolAdmin
 };
