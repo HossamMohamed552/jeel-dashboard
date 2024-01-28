@@ -753,5 +753,26 @@
     "RECOVERY": "إستعادة",
     "SEARCH": "البحث",
     "DELETE": "حذف"
+  },
+  "schoolAdmin": {
+    "schoolInfoDetail": "بيانات المدرسة",
+    "schoolName": "اسم المدرسة",
+    "country": "الدولة",
+    "schoolGroup":"مجموعة المدارس",
+    "managementType": "نوع إدارة المدرسة",
+    "certificate": "نوع شهادة المدرسة",
+    "teachingLanguage": "لغة التدريس",
+    "studentsType": "نوع الطلبة",
+    "phone": "رقم هاتف المدرسة",
+    "musicStatus": "الصوت",
+    "status": "الحالة",
+    "classCount": "عدد الفصول",
+    "schoolLogo": "شعار المدرسة",
+    "schoolInfoDetailResponsible": "بيانات مسؤل المدرسة",
+    "ownerName": "اسم المسؤل",
+    "ownerPhone": "رقم هاتف المدرسة",
+    "ownerRole": "صفة المسؤل",
+    "ResponsibleAddress": "العنوان",
+    "address": "عنوان المدرسة"
   }
 }

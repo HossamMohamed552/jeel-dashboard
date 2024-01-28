@@ -185,6 +185,14 @@ header {
       box-shadow: none;
     }
   }
+  .routes-school-admin{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    li{
+      margin-left: 2.5rem;
+    }
+  }
 }
 
 ::v-deep .nav-item.b-nav-dropdown.dropdown .dropdown-toggle::after {

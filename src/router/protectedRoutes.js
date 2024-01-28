@@ -5,7 +5,7 @@ import jeelLibrary from "./modules/jeelLibrary";
 import jeelStoreGames from "./modules/jeelStoreGames";
 import jeelStoreLibrary from "./modules/jeelStoreLibrary";
 import jeelStoreCharacters from "./modules/jeelStoreCharacters";
-
+import schoolAdmin from "@/router/modules/schoolAdmin";
 const protectedRoutes = [
   {
     path: "/dashboard/home",
@@ -1830,6 +1830,7 @@ const protectedRoutes = [
       ...jeelStoreGames,
       ...jeelStoreCharacters,
       ...jeelStoreLibrary,
+      ...schoolAdmin
     ],
   },
 ];

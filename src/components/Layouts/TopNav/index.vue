@@ -257,6 +257,22 @@
             <router-link tag="div" to="/dashboard/home" class="nav-item"
               >{{ $t("MENU.main") }}
             </router-link>
+            <!--route for school admin -->
+            <div class="nav-item" v-if="Array.from(routeSchoolAdmin).length >= 1">
+              <div>
+                <ul class="routes-school-admin">
+                  <router-link
+                    tag="li"
+                    :to="routeAdmin.path"
+                    v-for="(routeAdmin, index) in routeSchoolAdmin"
+                    :key="index"
+                  >
+                    {{ routeAdmin.name }}</router-link
+                  >
+                </ul>
+              </div>
+            </div>
+            <!--/-->
             <div class="nav-item" v-if="Array.from(routeBasicData).length >= 1">
               <p>
                 <span>{{ $t("MENU.basicData") }}</span
@@ -405,7 +421,7 @@
             </div>
             <!------------- end routesPrizes section ---------------->
 
-            <div class="nav-item">
+            <div class="nav-item" v-if="Array.from(routeSettings).length >= 1">
               <p>
                 <span>{{ $t("MENU.system_settings") }}</span
                 ><img src="@/assets/images/icons/arrow.svg" />
@@ -496,6 +512,7 @@ import {
   routeSuperVisor,
   routesPrizes,
   routesJeelStores,
+  routeSchoolAdmin
 } from "@/globalData";
 import { mapActions } from "vuex";
 
@@ -514,6 +531,7 @@ export default {
     routeSuperVisor: [],
     routesPrizes: [],
     routesJeelStores: [],
+    routeSchoolAdmin: [],
     collapseMode: false,
   }),
   watch: {
@@ -532,6 +550,7 @@ export default {
         this.routesPrizes = this.getRoutes(routesPrizes);
         this.routesJeelStores = this.getRoutes(routesJeelStores);
         this.routeSuperVisor = this.getRoutes(routeSuperVisor);
+        this.routeSchoolAdmin = this.getRoutes(routeSchoolAdmin);
       },
       immediate: true,
     },
