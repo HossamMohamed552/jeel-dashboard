@@ -61,7 +61,7 @@ import Button from "@/components/Shared/Button/index.vue";
 import GenericForm from "@/components/Shared/GenericForm";
 import ListItems from "@/components/ListItems/index.vue";
 import { mapGetters } from "vuex";
-import {postChangeStatusRequest, getAllUsersRequest, getSchoolUsersRequest} from "@/api/user";
+import { postChangeStatusRequest, getAllUsersRequest, getSchoolUsersRequest } from "@/api/user";
 import { getUsersSearch } from "@/api/school";
 import _ from "lodash";
 
@@ -205,8 +205,7 @@ export default {
     handleInput: _.debounce(function (key, value) {
       if (key == "school_group_id" && value != "")
         getAllSchoolsBySchoolGroup(this.userSearch, "school_id", value);
-      if (key == "category_id" && value != "")
-        getAllRolesByType(this.userSearch, "role_id", value);
+      if (key == "category_id" && value != "") getAllRolesByType(this.userSearch, "role_id", value);
       console.log("handleInput", key, value);
     }, 300),
 
@@ -244,7 +243,7 @@ export default {
       else userStatus.is_active = 0;
 
       this.ApiService(postChangeStatusRequest(userStatus)).then(() => {
-        this.getAllUsers();
+        // this.getAllUsers();
       });
     },
     getAllUsers(event) {
