@@ -379,7 +379,7 @@ let routeSchoolAdmin =[
   },
   {
     name: "مديري المدرسة",
-    path: "/dashboard/schooladmins-users",
+    path: "/dashboard/school-admins-users",
     altImage: "schooladmins-users",
     titleImage: "schooladmins-users",
     icon: require("@/assets/images/icons/list.svg"),

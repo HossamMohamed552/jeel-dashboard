@@ -9,4 +9,14 @@ export default [
       preLink: "",
     },
   },
+  {
+    path: "/dashboard/school-admins-users",
+    name: "school-admins-users",
+    component: () => import("../../../views/user-school-admin/index.vue"),
+    meta: {
+      breadcrumb: "إدارة المدرسين",
+      preLabel: "",
+      preLink: "",
+    },
+  },
 ]

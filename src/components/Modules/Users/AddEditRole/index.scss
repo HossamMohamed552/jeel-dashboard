@@ -48,15 +48,15 @@
   :lang(ar) {
     .custom-control-label {
       cursor: pointer;
-      &::before {
-        right: -1.5rem;
-        left: unset;
-      }
-
-      &::after {
-        right: -1.5rem;
-        left: unset;
-      }
+      //&::before {
+      //  right: -1.5rem;
+      //  left: unset;
+      //}
+      //
+      //&::after {
+      //  right: 0.5rem;
+      //  left: unset;
+      //}
     }
   }
 }
