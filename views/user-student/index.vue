@@ -1,14 +1,14 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'إدارة مديرى المدرسة'"
+      :header-name="'إدارة الطلاب'"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
-      :table-items="superVisorList"
+      :table-items="studentList"
       :v-search-model="userSearchWord"
       :loading="loading"
       :disableIt="true"
-      @refetch="getAllSchoolAdminsUsers"
+      @refetch="getAllStudentUsers"
       :is-user-page="true"
       :permission_delete="'delete-users'"
       :permission_edit="'edit-users'"
@@ -19,14 +19,14 @@
 </template>
 <script>
 import ListItems from "@/components/ListItems/index.vue";
-import {getAllSchoolAdminsUsersRequest} from "@/api/school-info";
+import {getAllStudentUsersRequest, getAllTeacherUsersRequest} from "@/api/school-info";
 
 export default {
   name: "index",
   components: {ListItems},
   data() {
     return {
-      superVisorList: [],
+      studentList: [],
       showModal: false,
       totalNumber: 0,
       loading: false,
@@ -68,11 +68,11 @@ export default {
     }
   },
   methods:{
-    getAllSchoolAdminsUsers(event) {
+    getAllStudentUsers(event) {
       this.loading = true;
-      this.ApiService(getAllSchoolAdminsUsersRequest(event))
+      this.ApiService(getAllStudentUsersRequest(event))
         .then((response) => {
-          this.superVisorList = response.data.data;
+          this.studentList = response.data.data;
           this.totalNumber = response.data.meta.total;
         })
         .finally(() => {
@@ -81,7 +81,7 @@ export default {
     },
   },
   mounted() {
-    this.getAllSchoolAdminsUsers()
+    this.getAllStudentUsers()
   }
 }
 </script>
