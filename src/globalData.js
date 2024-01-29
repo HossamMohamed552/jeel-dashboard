@@ -346,7 +346,7 @@ let routeSuperVisor = [
 let routeSchoolAdmin =[
   {
     name: "المستخدمين",
-    path: "/dashboard/users",
+    path: "/dashboard/all-school-users",
     altImage: "users",
     titleImage: "users",
     icon: require("@/assets/images/icons/list.svg"),

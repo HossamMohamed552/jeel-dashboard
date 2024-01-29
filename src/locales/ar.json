@@ -118,7 +118,10 @@
     "jeel_library_level": "الصف الدراسى",
     "jeel_library_type": "النوع",
     "character_type": "النوع",
-    "gems_num": "عدد جيمز"
+    "gems_num": "عدد جيمز",
+    "image": "الصورة",
+    "first_name": "الاسم الأول",
+    "last_name": "اسم العائلة"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -770,9 +773,10 @@
     "schoolLogo": "شعار المدرسة",
     "schoolInfoDetailResponsible": "بيانات مسؤل المدرسة",
     "ownerName": "اسم المسؤل",
-    "ownerPhone": "رقم هاتف المدرسة",
+    "ownerPhone": "رقم هاتف المسؤل",
     "ownerRole": "صفة المسؤل",
     "ResponsibleAddress": "العنوان",
-    "address": "عنوان المدرسة"
+    "address": "عنوان المدرسة",
+    "notes": "الملاحظات"
   }
 }

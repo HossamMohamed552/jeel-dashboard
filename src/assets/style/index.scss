@@ -148,6 +148,14 @@
 .custom-switch .custom-control-input:checked~.custom-control-label::after{
   right: 0.5rem;
 }
+.custom-switch .custom-control-input:disabled:checked~.custom-control-label::before{
+  background: $color-primary;
+  border-color: $color-primary;
+  cursor: not-allowed;
+}
+.custom-switch .custom-control-input:disabled:checked~.custom-control-label::after{
+  cursor: not-allowed;
+}
 h2.heading,
 h3.heading {
   font-weight: bold;

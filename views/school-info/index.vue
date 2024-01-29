@@ -82,6 +82,10 @@
           <ShowItem class="divider-show" :title="$t('schoolAdmin.address')"
                     :subtitle="schoolInfo.address"/>
         </b-col>
+        <b-col lg="12" class="mb-4">
+          <ShowItem class="divider-show" :title="$t('schoolAdmin.notes')"
+                    :subtitle="schoolInfo.notes"/>
+        </b-col>
       </b-row>
     </div>
     <GeneralModal :id="'holdContent'" :size="'lg'" :hide-header="true">
@@ -145,7 +149,7 @@ export default {
       })
     },
     goToAddEditSchoolInfo() {
-      this.$router.push('/')
+      this.$router.push('/dashboard/school-info-edit')
     }
   },
   mounted() {

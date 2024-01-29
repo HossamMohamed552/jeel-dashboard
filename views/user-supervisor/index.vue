@@ -1,14 +1,14 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'إدارة مديرى المدرسة'"
+      :header-name="'إدارة المشرفين'"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="superVisorList"
       :v-search-model="userSearchWord"
       :loading="loading"
       :disableIt="true"
-      @refetch="getAllSchoolAdminsUsers"
+      @refetch="getAllSupervisorsUsers"
       :is-user-page="true"
       :permission_delete="'delete-users'"
       :permission_edit="'edit-users'"
@@ -19,7 +19,7 @@
 </template>
 <script>
 import ListItems from "@/components/ListItems/index.vue";
-import {getAllSchoolAdminsUsersRequest} from "@/api/school-info";
+import {getAllSupervisorUsersRequest} from "@/api/school-info";
 
 export default {
   name: "index",
@@ -68,9 +68,9 @@ export default {
     }
   },
   methods:{
-    getAllSchoolAdminsUsers(event) {
+    getAllSupervisorsUsers(event) {
       this.loading = true;
-      this.ApiService(getAllSchoolAdminsUsersRequest(event))
+      this.ApiService(getAllSupervisorUsersRequest(event))
         .then((response) => {
           this.superVisorList = response.data.data;
           this.totalNumber = response.data.meta.total;
@@ -81,7 +81,7 @@ export default {
     },
   },
   mounted() {
-    this.getAllSchoolAdminsUsers()
+    this.getAllSupervisorsUsers()
   }
 }
 </script>

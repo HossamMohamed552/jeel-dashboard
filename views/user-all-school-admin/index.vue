@@ -1,14 +1,14 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'إدارة مديرى المدرسة'"
+      :header-name="'المستخدمين'"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
-      :table-items="superVisorList"
+      :table-items="usersSchoolList"
       :v-search-model="userSearchWord"
       :loading="loading"
       :disableIt="true"
-      @refetch="getAllSchoolAdminsUsers"
+      @refetch="getAllSchoolUsers"
       :is-user-page="true"
       :permission_delete="'delete-users'"
       :permission_edit="'edit-users'"
@@ -19,14 +19,18 @@
 </template>
 <script>
 import ListItems from "@/components/ListItems/index.vue";
-import {getAllSchoolAdminsUsersRequest} from "@/api/school-info";
+import {
+  getAllSchoolAdminsUsersRequest,
+  getAllSchoolUsersRequest,
+  getAllSchoolUsersUsersRequest
+} from "@/api/school-info";
 
 export default {
   name: "index",
   components: {ListItems},
   data() {
     return {
-      superVisorList: [],
+      usersSchoolList: [],
       showModal: false,
       totalNumber: 0,
       loading: false,
@@ -60,19 +64,19 @@ export default {
           key: "status.key",
           label: this.$i18n.t("TABLE_FIELDS.status"),
         },
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
+        // {
+        //   key: "actions",
+        //   label: this.$i18n.t("TABLE_FIELDS.actions"),
+        // },
       ],
     }
   },
   methods:{
-    getAllSchoolAdminsUsers(event) {
+    getAllSchoolUsers(event) {
       this.loading = true;
-      this.ApiService(getAllSchoolAdminsUsersRequest(event))
+      this.ApiService(getAllSchoolUsersRequest(event))
         .then((response) => {
-          this.superVisorList = response.data.data;
+          this.usersSchoolList = response.data.data;
           this.totalNumber = response.data.meta.total;
         })
         .finally(() => {
@@ -81,7 +85,7 @@ export default {
     },
   },
   mounted() {
-    this.getAllSchoolAdminsUsers()
+    this.getAllSchoolUsers()
   }
 }
 </script>
