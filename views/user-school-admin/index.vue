@@ -10,9 +10,11 @@
       :disableIt="true"
       @refetch="getAllSchoolAdminsUsers"
       :is-user-page="true"
+      :add_role="'add-enrollment-schooladmins-users'"
       :permission_delete="'delete-users'"
       :permission_edit="'edit-users'"
-      :permission_view="'show-users'"
+      :permission_view="'show-school-users'"
+      @addRole="addRole($event)"
     >
     </ListItems>
   </section>
@@ -68,6 +70,9 @@ export default {
     }
   },
   methods:{
+    addRole($event){
+      this.$router.push(`/dashboard/user-school-admin-enrollment/${$event}`)
+    },
     getAllSchoolAdminsUsers(event) {
       this.loading = true;
       this.ApiService(getAllSchoolAdminsUsersRequest(event))

@@ -121,13 +121,18 @@
     "gems_num": "عدد جيمز",
     "image": "الصورة",
     "first_name": "الاسم الأول",
-    "last_name": "اسم العائلة"
+    "last_name": "اسم العائلة",
+    "studyYear": "العام الدراسي",
+    "levelSchoolAdmin": "الصف الدراسي",
+    "className": "اسم الفصل",
+    "studyYearName": "العام الدراسى"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
     "editBtn": "تعديل",
     "permissions": "الصلاحيات",
     "users": "المستخدمين",
+    "addRoleBtn": "صلاحيات",
     "deleteBtn": "حذف",
     "addVideoQuestion": "اضافة اسئله الفيديو",
     "ManageClasses": "إداره الصفوف",
@@ -777,6 +782,20 @@
     "ownerRole": "صفة المسؤل",
     "ResponsibleAddress": "العنوان",
     "address": "عنوان المدرسة",
-    "notes": "الملاحظات"
+    "notes": "الملاحظات",
+    "addClass" : "إضافة فصل جديد",
+    "editClass": "تعديل الفصل",
+    "studyYear": "العام الدراسي",
+    "level": "الصف الدراسي",
+    "className": "اسم الفصل",
+    "className_PLACEHOLDER": "أدخل اسم الفصل",
+    "role": "الصلاحيات",
+    "firstName":"الاسم الأول",
+    "midName":"الاسم الثاني",
+    "lastName": "اسم العائلة",
+    "email": "البريد الإلكترونى (اسم المستخدم)",
+    "mobile": "رقم الهاتف",
+    "roleDetail": "الصلاحية",
+    "addRole": "إضافة صلاحية"
   }
 }

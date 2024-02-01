@@ -12,7 +12,9 @@
       :is-user-page="true"
       :permission_delete="'delete-users'"
       :permission_edit="'edit-users'"
-      :permission_view="'show-users'"
+      :add_role="'add-enrollment-teachers-users'"
+      :permission_view="'show-school-users'"
+      @addRole="addRole($event)"
     >
     </ListItems>
   </section>
@@ -79,6 +81,9 @@ export default {
           this.loading = false;
         });
     },
+    addRole($event){
+      this.$router.push(`/dashboard/teacher-enrollment/${$event}`)
+    }
   },
   mounted() {
     this.getAllTeachersUsers()

@@ -12,7 +12,9 @@
       :is-user-page="true"
       :permission_delete="'delete-users'"
       :permission_edit="'edit-users'"
-      :permission_view="'show-users'"
+      :permission_view="'show-school-users'"
+      :add_role="'add-enrollment-supervisors-users'"
+      @addRole="addRole($event)"
     >
     </ListItems>
   </section>
@@ -67,7 +69,7 @@ export default {
       ],
     }
   },
-  methods:{
+  methods: {
     getAllSupervisorsUsers(event) {
       this.loading = true;
       this.ApiService(getAllSupervisorUsersRequest(event))
@@ -79,6 +81,9 @@ export default {
           this.loading = false;
         });
     },
+    addRole($event){
+      this.$router.push(`/dashboard/supervisor-enrollment/${$event}`)
+    }
   },
   mounted() {
     this.getAllSupervisorsUsers()

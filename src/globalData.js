@@ -371,7 +371,7 @@ let routeSchoolAdmin =[
   },
   {
     name: "الفصول",
-    path: "/dashboard/classes",
+    path: "/dashboard/school-admin-classes",
     altImage: "classes",
     titleImage: "classes",
     icon: require("@/assets/images/icons/list.svg"),

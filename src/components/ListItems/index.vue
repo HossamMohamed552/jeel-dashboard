@@ -231,6 +231,7 @@
             no-caret
             class="hold-controls"
             v-if="
+            checkAddRole() === 'show' ||
               checkDelete(data) === 'show' ||
               checkDetail() === 'show' ||
               checkEdit() === 'show' ||
@@ -297,6 +298,12 @@
             <b-dropdown-divider v-if="checkDelete(data) === 'show'"></b-dropdown-divider>
             <b-dropdown-item v-if="checkDelete(data) === 'show'" @click="deleteItem(data.item.id)">
               {{ $t("CONTROLS.deleteBtn") }}
+            </b-dropdown-item>
+
+            <b-dropdown-divider v-if="checkAddRole(data) === 'show'"></b-dropdown-divider>
+            <b-dropdown-item v-if="checkAddRole(data) === 'show'"
+                             @click="addRoleItem(data.item.id)">
+              {{ $t("CONTROLS.addRoleBtn") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkAddAd(data) === 'show'"></b-dropdown-divider>
             <b-dropdown-item
@@ -397,6 +404,10 @@ export default {
       default: "",
     },
     permission_edit: {
+      type: String,
+      default: "",
+    },
+    add_role: {
       type: String,
       default: "",
     },
@@ -539,7 +550,9 @@ export default {
     addUser(id) {
       this.$emit("addUser", id);
     },
-
+    addRoleItem(id) {
+      this.$emit('addRole', id)
+    },
     changePassword(id) {
       this.$emit("changePassword", id);
     },
@@ -610,6 +623,13 @@ export default {
         return "hide";
       } else {
         return "hide";
+      }
+    },
+    checkAddRole() {
+      if (this.user.permissions.includes(`${this.add_role}`)) {
+        return 'show'
+      } else {
+        return "hide"
       }
     },
     checkAddQuestionVideo() {
