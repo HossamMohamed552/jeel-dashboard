@@ -88,7 +88,6 @@
                       :reduce="(option) => option.id"
                       :get-option-label="(option) => option.name"
                       :rules="'required'"
-                      @input="setClassesBasedOnLevel($event)"
                     ></SelectSearch>
                   </div>
                 </b-col>
@@ -128,9 +127,9 @@
           <b-col lg="12">
             <ListItems
               :fieldsList="fieldsList"
-              :table-items="teacherEnrollmentList"
+              :table-items="studentEnrollmentList"
               :loading="loading"
-              :permission_delete="'delete-enrollment-teachers-users'"
+              :permission_delete="'delete-enrollment-supervisors-users'"
               @deleteItem="deleteItem($event)"
               :showSortControls="false"
               class="m-0 p-0"
@@ -153,12 +152,14 @@
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import {
-  deleteSchoolAdminEnrollmentRequest, deleteTeacherEnrollmentRequest,
-  getAllClassesRequest, getClassesLevelRequest, geTeacherUsersRequest,
+  deleteStudentEnrollmentRequest,
+  deleteSupervisorEnrollmentRequest, getAllClassesRequest,
   getLevelsRequest,
-  getSchoolAdminUserRequest, getSchoolAdminUsersRequest,
+  getSchoolAdminUserRequest, getStudentsUsersRequest,
   getStudyYearsRequest,
-  postTeacherEnrollmentRequest
+  getSuperVisorUsersRequest,
+  postStudentEnrollmentRequest,
+  postSuperVisorEnrollmentRequest,
 } from "@/api/school-info";
 import Button from "@/components/Shared/Button/index.vue";
 import TextField from "@/components/Shared/TextField/index.vue";
@@ -178,34 +179,30 @@ export default {
       classes: [],
       enrollment: {},
       loading: false,
-      teacherEnrollmentList: [],
-      showModal: false,
+      studentEnrollmentList: [],
       fieldsList: [
         {
           key: "id",
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
+          key: "studyYear.name",
+          label: this.$i18n.t("TABLE_FIELDS.studyYearName"),
+        },
+        {
           key: "class.name",
-          label: this.$i18n.t("TABLE_FIELDS.className"),
-        },
-        {
-          key: "school.name",
-          label: this.$i18n.t("TABLE_FIELDS.schoolName"),
-        },
-        {
-          key: "level.name",
-          label: this.$i18n.t("schoolAdmin.level"),
+          label: this.$i18n.t("TABLE_FIELDS.class"),
         },
         {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
       ],
+      showModal: false,
     }
   },
   watch: {
-    teacherEnrollmentList(newVal) {
+    studentEnrollmentList(newVal) {
       return newVal
     },
     "enrollment.level_id"(newVal){
@@ -222,13 +219,13 @@ export default {
         })
       }
     },
-    getAllStudyYear() {
-      this.ApiService(getStudyYearsRequest()).then((response) => {
+    getAllStudyYear(){
+      this.ApiService(getStudyYearsRequest()).then((response)=>{
         this.studyYears = response.data.data
       })
     },
-    getAllLevels() {
-      this.ApiService(getLevelsRequest()).then((response) => {
+    getAllLevels(){
+      this.ApiService(getLevelsRequest()).then((response)=>{
         this.levels = response.data.data
       })
     },
@@ -237,9 +234,9 @@ export default {
         this.userDetail = response.data.data
       })
     },
-    getTeacherUsers() {
-      this.ApiService(geTeacherUsersRequest(this.userId)).then((response) => {
-        this.teacherEnrollmentList = response.data.data
+    getStudentUsers() {
+      this.ApiService(getStudentsUsersRequest(this.userId)).then((response) => {
+        this.studentEnrollmentList = response.data.data
       })
     },
     deleteItem($event) {
@@ -250,8 +247,8 @@ export default {
       this.showModal = $event;
     },
     cancelWithConfirm() {
-      this.ApiService(deleteTeacherEnrollmentRequest(this.itemId)).then(() => {
-        this.getTeacherUsers();
+      this.ApiService(deleteStudentEnrollmentRequest(this.itemId)).then(() => {
+        this.getStudentUsers();
       });
       this.cancel();
     },
@@ -260,13 +257,21 @@ export default {
         if (!success) return;
       });
       let data = {
-        role_id: this.userDetail.roles[0].id,
+        // level_id: this.enrollment.level_id,
+        // role_id: this.userDetail.roles[0].id,
         class_id: this.enrollment.class_id,
         study_year_id: this.enrollment.study_year_id,
         user_id: this.userId,
+        // school_id
       }
-      this.ApiService(postTeacherEnrollmentRequest(data)).then(() => {
-        this.getTeacherUsers()
+      this.ApiService(postStudentEnrollmentRequest(data)).then((response)=>{
+        this.enrollment.level_id = ""
+        this.enrollment.study_year_id = ""
+        this.enrollment.class_id = ""
+        this.$nextTick(() => {
+          this.$refs.addEditSchoolClassForm.reset()
+        })
+       this.getStudentUsers()
       })
     },
     handleCancel() {
@@ -277,7 +282,7 @@ export default {
     this.getAllStudyYear()
     this.getAllLevels()
     this.getUserDetail()
-    this.getTeacherUsers()
+    this.getStudentUsers()
   }
 }
 </script>

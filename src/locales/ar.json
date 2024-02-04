@@ -125,7 +125,8 @@
     "studyYear": "العام الدراسي",
     "levelSchoolAdmin": "الصف الدراسي",
     "className": "اسم الفصل",
-    "studyYearName": "العام الدراسى"
+    "studyYearName": "العام الدراسى",
+    "schoolName": "اسم المدرسة"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -796,6 +797,8 @@
     "email": "البريد الإلكترونى (اسم المستخدم)",
     "mobile": "رقم الهاتف",
     "roleDetail": "الصلاحية",
-    "addRole": "إضافة صلاحية"
+    "addRole": "إضافة صلاحية",
+    "classDETAILS": "تفاثيل الفصل",
+    "students_count": "عدد الطلاب"
   }
 }

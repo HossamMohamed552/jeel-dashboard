@@ -8,12 +8,11 @@
       :v-search-model="userSearchWord"
       :loading="loading"
       :disableIt="true"
-      @refetch="getAllSchoolAdminsUsers"
       :is-user-page="true"
       :add_role="'add-enrollment-schooladmins-users'"
-      :permission_delete="'delete-users'"
-      :permission_edit="'edit-users'"
       :permission_view="'show-school-users'"
+      @detailItem="detailItem($event)"
+      @refetch="getAllSchoolAdminsUsers"
       @addRole="addRole($event)"
     >
     </ListItems>
@@ -72,6 +71,9 @@ export default {
   methods:{
     addRole($event){
       this.$router.push(`/dashboard/user-school-admin-enrollment/${$event}`)
+    },
+    detailItem($event){
+      this.$router.push(`/dashboard/user-school-admin/${$event}`)
     },
     getAllSchoolAdminsUsers(event) {
       this.loading = true;

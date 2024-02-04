@@ -10,9 +10,10 @@
       :disableIt="true"
       @refetch="getAllStudentUsers"
       :is-user-page="true"
-      :permission_delete="'delete-users'"
-      :permission_edit="'edit-users'"
-      :permission_view="'show-users'"
+      :permission_view="'view-enrollment-students-users'"
+      :add_role="'add-enrollment-students-users'"
+      @addRole="addRole($event)"
+      @detailItem="detailItem($event)"
     >
     </ListItems>
   </section>
@@ -68,6 +69,12 @@ export default {
     }
   },
   methods:{
+    addRole($event){
+      this.$router.push(`/dashboard/student-enrollment/${$event}`)
+    },
+    detailItem($event){
+      this.$router.push(`/dashboard/user-student/${$event}`)
+    },
     getAllStudentUsers(event) {
       this.loading = true;
       this.ApiService(getAllStudentUsersRequest(event))

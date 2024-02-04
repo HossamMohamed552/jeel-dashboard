@@ -229,7 +229,6 @@
             </b-row>
             <b-row>
               <div class="hold-btns-form">
-
                 <Button @click="handleCancel" custom-class="cancel-btn margin">
                   {{ $t("GLOBAL_CANCEL") }}
                 </Button>

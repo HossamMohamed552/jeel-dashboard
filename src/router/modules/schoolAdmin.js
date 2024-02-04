@@ -1,5 +1,4 @@
 export default [
-
   {
     path: "/dashboard/all-school-users",
     name: "user-all-school-admin",
@@ -10,6 +9,17 @@ export default [
       preLink: "",
     },
   },
+  {
+    path: "/dashboard/add-user-school-admin",
+    name: "add-user-all-school-admin",
+    component: () => import("../../../views/user-all-school-admin/add-user-school-admin/index.vue"),
+    meta: {
+      breadcrumb: "إضافة مستخدم",
+      preLabel: "المستخدمين",
+      preLink: "/dashboard/all-school-users",
+    },
+  },
+
   {
     path: "/dashboard/school-info",
     name: "school-info",
@@ -61,6 +71,16 @@ export default [
     },
   },
   {
+    path: "/dashboard/school-admin-class/show/:id",
+    name: "edit-school-admin-classes",
+    component: () => import("../../../views/school-admin-classes/view-class/index.vue"),
+    meta: {
+      breadcrumb: "تفاصيل الفصل",
+      preLabel: "الفصول",
+      preLink: "/dashboard/school-admin-classes",
+    },
+  },
+  {
     path: "/dashboard/school-admins-users",
     name: "school-admins-users",
     component: () => import("../../../views/user-school-admin/index.vue"),
@@ -90,6 +110,17 @@ export default [
       preLink: "",
     },
   },
+  {
+    path: "/dashboard/view-supervisor/:id",
+    name: "view-supervisors-users",
+    component: () => import("../../../views/user-supervisor/view-supervisor/index.vue"),
+    meta: {
+      breadcrumb: "تفاصيل المستخدم",
+      preLabel: "إدارة المشرفين",
+      preLink: "/dashboard/supervisors-users",
+    },
+  },
+
   {
     path: "/dashboard/supervisor-enrollment/:id",
     name: "supervisors-users",
@@ -121,7 +152,6 @@ export default [
       preLink: "/dashboard/teachers-users",
     },
   },
-
   {
     path: "/dashboard/students-users",
     name: "students-users",
@@ -132,5 +162,65 @@ export default [
       preLink: "",
     },
   },
-
+  {
+    path: "/dashboard/student-enrollment/:id",
+    name: "add-students-enrollment",
+    component: () => import("../../../views/user-student/enrollment/index.vue"),
+    meta: {
+      breadcrumb: "الصلاحيات",
+      preLabel: "إدارة الطلاب",
+      preLink: "/dashboard/students-users",
+    },
+  },
+  //view users
+  {
+    path: "/dashboard/user-school-admin/:id",
+    name: "view-school-admins-users",
+    component: () => import("../../../views/user-school-admin/view-school-admin/index.vue"),
+    meta: {
+      breadcrumb: "تفاصيل  مدير المدرسة",
+      preLabel: "إدارة مديرى المدرسة",
+      preLink: "/dashboard/school-admins-users",
+    },
+  },
+  {
+    path: "/dashboard/user-supervisor/:id",
+    name: "view-supervisor-users",
+    component: () => import("../../../views/user-supervisor/view-supervisor/index.vue"),
+    meta: {
+      breadcrumb: "تفاصيل  مشرف المدرسة",
+      preLabel: "إدارة المشرفين",
+      preLink: "/dashboard/supervisors-users",
+    },
+  },
+  {
+    path: "/dashboard/user-teacher/:id",
+    name: "view-teacher-users",
+    component: () => import("../../../views/user-teacher/view-teacher/index.vue"),
+    meta: {
+      breadcrumb: "تفاصيل  مدرس المدرسة",
+      preLabel: "إدارة المدرسين",
+      preLink: "/dashboard/teacher-users",
+    },
+  },
+  {
+    path: "/dashboard/user-student/:id",
+    name: "view-student-users",
+    component: () => import("../../../views/user-student/view-student/index.vue"),
+    meta: {
+      breadcrumb: "تفاصيل  الطالب",
+      preLabel: "إدارة الطلاب",
+      preLink: "/dashboard/students-users",
+    },
+  },
+  {
+    path: "/dashboard/user-all-school/:id",
+    name: "view-school-users",
+    component: () => import("../../../views/user-all-school-admin/view-users-school-admin/index.vue"),
+    meta: {
+      breadcrumb: "تفاصيل  الطالب",
+      preLabel: "إدارة الطلاب",
+      preLink: "/dashboard/students-users",
+    },
+  }
 ]

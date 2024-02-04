@@ -8,13 +8,14 @@
       :v-search-model="userSearchWord"
       :loading="loading"
       :disableIt="true"
-      @refetch="getAllSupervisorsUsers"
       :is-user-page="true"
       :permission_delete="'delete-users'"
       :permission_edit="'edit-users'"
       :permission_view="'show-school-users'"
       :add_role="'add-enrollment-supervisors-users'"
+      @refetch="getAllSupervisorsUsers"
       @addRole="addRole($event)"
+      @detailItem="detailItem($event)"
     >
     </ListItems>
   </section>
@@ -70,6 +71,9 @@ export default {
     }
   },
   methods: {
+    detailItem($event){
+      this.$router.push(`/dashboard/view-supervisor/${$event}`)
+    },
     getAllSupervisorsUsers(event) {
       this.loading = true;
       this.ApiService(getAllSupervisorUsersRequest(event))

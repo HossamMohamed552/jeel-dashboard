@@ -10,11 +10,10 @@
       :disableIt="true"
       @refetch="getAllTeachersUsers"
       :is-user-page="true"
-      :permission_delete="'delete-users'"
-      :permission_edit="'edit-users'"
       :add_role="'add-enrollment-teachers-users'"
       :permission_view="'show-school-users'"
       @addRole="addRole($event)"
+      @detailItem="detailItem($event)"
     >
     </ListItems>
   </section>
@@ -83,7 +82,10 @@ export default {
     },
     addRole($event){
       this.$router.push(`/dashboard/teacher-enrollment/${$event}`)
-    }
+    },
+    detailItem($event){
+      this.$router.push(`/dashboard/user-teacher/${$event}`)
+    },
   },
   mounted() {
     this.getAllTeachersUsers()

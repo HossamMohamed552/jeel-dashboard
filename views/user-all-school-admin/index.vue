@@ -8,12 +8,23 @@
       :v-search-model="userSearchWord"
       :loading="loading"
       :disableIt="true"
-      @refetch="getAllSchoolUsers"
       :is-user-page="true"
-      :permission_delete="'delete-users'"
-      :permission_edit="'edit-users'"
-      :permission_view="'show-users'"
+      :permission_view="'show-school-users'"
+      @detailItem="detailItem($event)"
+      @refetch="getAllSchoolUsers"
     >
+      <template #buttons>
+
+        <Button
+          :custom-class="'btn-add rounded-btn big-padding'"
+          @click="goToAddUser"
+          v-if="user.permissions.includes(`add-school-users`)"
+        >
+          <img src="@/assets/images/icons/plus.svg"/>
+          <span>إضافة مستخدم جديد</span>
+        </Button>
+      </template>
+      <!--      /dashboard/users/show/:id-->
     </ListItems>
   </section>
 </template>
@@ -24,10 +35,15 @@ import {
   getAllSchoolUsersRequest,
   getAllSchoolUsersUsersRequest
 } from "@/api/school-info";
+import Button from "@/components/Shared/Button/index.vue";
+import {mapGetters} from "vuex";
 
 export default {
   name: "index",
-  components: {ListItems},
+  components: {Button, ListItems},
+  computed: {
+    ...mapGetters(["user"]),
+  },
   data() {
     return {
       usersSchoolList: [],
@@ -64,14 +80,14 @@ export default {
           key: "status.key",
           label: this.$i18n.t("TABLE_FIELDS.status"),
         },
-        // {
-        //   key: "actions",
-        //   label: this.$i18n.t("TABLE_FIELDS.actions"),
-        // },
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
       ],
     }
   },
-  methods:{
+  methods: {
     getAllSchoolUsers(event) {
       this.loading = true;
       this.ApiService(getAllSchoolUsersRequest(event))
@@ -83,7 +99,14 @@ export default {
           this.loading = false;
         });
     },
+    detailItem($event) {
+      this.$router.push(`/dashboard/user-all-school/${$event}`)
+    },
+    goToAddUser() {
+      this.$router.push('/dashboard/add-user-school-admin')
+    },
   },
+
   mounted() {
     this.getAllSchoolUsers()
   }
