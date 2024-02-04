@@ -1,0 +1,7 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+
+.add-edit-school-admin-class-form {
+  @include styleViewList;
+  min-height: 70vh;
+}

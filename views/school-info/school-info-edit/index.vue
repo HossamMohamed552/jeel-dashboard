@@ -152,16 +152,17 @@
                 </div>
               </b-col>
               <b-col lg="12">
-<!--                <UploadAttachment-->
-<!--                  :label="$t('PAPER_WORK.paperWorkThumbnail')"-->
-<!--                  :rules="'required'"-->
-<!--                  v-if="!$route.params.id || createPaperWork.thumbnailChangedRequest"-->
-<!--                  @setFileId="setImageId"-->
-<!--                  :type-of-attachment="'image'"-->
-<!--                  :accept-files="'image/*'"-->
-<!--                />-->
-<!--                v-if="$route.params.id && createPaperWork.thumbnailChanged === false && !createPaperWork.thumbnailChangedRequest"-->
+                <UploadAttachment
+                  :label="$t('schoolAdmin.schoolLogo')"
+                  :rules="'required'"
+                  v-if="schoolInfoEdit.logoChangedRequest"
+                  @setFileId="setImageId"
+                  :type-of-attachment="'image'"
+                  :accept-files="'image/*'"
+                />
+                <!--                v-if="$route.params.id && createPaperWork.thumbnailChanged === false && !createPaperWork.thumbnailChangedRequest"-->
                 <PreviewMedia
+                  v-if="schoolInfoEdit.logoChanged === false && !schoolInfoEdit.logoChangedRequest"
                   :header="`${$t('schoolAdmin.schoolLogo')}`"
                   :media-name="schoolInfoEdit.logo_name"
                   :file-size="schoolInfoEdit.logo_size"
@@ -233,6 +234,21 @@
                 </div>
               </b-col>
             </b-row>
+            <b-row>
+              <div class="hold-btns-form">
+                <Button @click="handleCancel" custom-class="cancel-btn margin">
+                  {{ $t("GLOBAL_CANCEL") }}
+                </Button>
+                <Button
+                  type="submit"
+                  :loading="loading"
+                  :disabled="invalid || checkSchoolLogoUpdate"
+                  custom-class="submit-btn"
+                >
+                  {{ $t("GLOBAL_EDIT") }}
+                </Button>
+              </div>
+            </b-row>
           </form>
         </validation-observer>
       </div>
@@ -267,30 +283,36 @@ import UploadAttachment from "@/components/Shared/UploadAttachment/index.vue";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
+import axios from "axios";
+import VueCookies from "vue-cookies";
+
 export default {
   name: "index",
   components: {
     TextAreaField,
-    Button, GeneralModal, UploadAttachment, PreviewMedia, SelectSearch, TextField},
+    Button, GeneralModal, UploadAttachment, PreviewMedia, SelectSearch, TextField
+  },
   data() {
     return {
       schoolInfoEdit: {
         name: "",
-        country_id:"",
-        management_type_id:"",
-        school_group_id:"",
-        certificate_id:"",
-        teaching_language_id:"",
-        students_type_id:"",
-        phone:"",
-        music_status_id:"",
-        status_id:"",
-        logo:"",
-        logo_name:"",
-        logo_size:"",
-        owner_name:"",
-        owner_role:"",
-        address:"",
+        country_id: "",
+        management_type_id: "",
+        school_group_id: "",
+        certificate_id: "",
+        teaching_language_id: "",
+        students_type_id: "",
+        phone: "",
+        music_status_id: "",
+        status_id: "",
+        logo: "",
+        logo_name: "",
+        logo_size: "",
+        logoChanged: false,
+        logoChangedRequest: false,
+        owner_name: "",
+        owner_role: "",
+        address: "",
       },
       url: null,
       mediaType: null,
@@ -300,11 +322,29 @@ export default {
       certificate: [],
       teachingLanguage: [],
       studentsType: [],
-      musicStatus:[],
-      schoolStatus:[],
+      musicStatus: [],
+      schoolStatus: [],
+      loading:false,
+    }
+  },
+  computed:{
+    checkSchoolLogoUpdate() {
+      if (this.schoolInfoEdit.logoChanged === true) {
+        return true
+      } else {
+        return false
+      }
     }
   },
   methods: {
+    setImageId(id) {
+      this.schoolInfoEdit.logo = id;
+      this.schoolInfoEdit.logoChanged = false;
+      this.schoolInfoEdit.logoChangedRequest = true;
+    },
+    handleCancel() {
+      this.$router.push("/dashboard/school-info");
+    },
     hideModal() {
       this.$bvModal.hide('holdContent')
     },
@@ -313,7 +353,7 @@ export default {
       this.schoolInfoEdit[fileChange] = true
       this.schoolInfoEdit[fileRequest] = true
     },
-    showModal(schoolInfoEdit, $event, fileUrl='') {
+    showModal(schoolInfoEdit, $event, fileUrl = '') {
       this.$bvModal.show('holdContent')
       this.mediaType = $event
       if (this.mediaType === 'audio') {
@@ -322,8 +362,8 @@ export default {
         this.url = fileUrl
       }
     },
-    getAllMusicStatus(){
-      this.ApiService(getAllMusicStatusRequest()).then((response)=>{
+    getAllMusicStatus() {
+      this.ApiService(getAllMusicStatusRequest()).then((response) => {
         this.musicStatus = response.data.data
       })
     },
@@ -357,7 +397,37 @@ export default {
       })
     },
     onSubmit() {
-
+      const formData = new FormData()
+      formData.append('music_status', this.schoolInfoEdit.music_status_id);
+      formData.append('owner_name', this.schoolInfoEdit.owner_name);
+      formData.append('owner_role', this.schoolInfoEdit.owner_role);
+      formData.append('owner_phone', this.schoolInfoEdit.owner_phone);
+      formData.append('notes', this.schoolInfoEdit.notes);
+      formData.append('address', this.schoolInfoEdit.address);
+      formData.append('phone', this.schoolInfoEdit.phone);
+      formData.append('_method', 'PUT');
+      if (this.schoolInfoEdit.logoChangedRequest) {
+        formData.append('logo', this.schoolInfoEdit.logo);
+      }
+      this.loading = true;
+      axios.post(`school-admin/school/update`, formData, {
+        headers: {
+          Authorization: `Bearer ${VueCookies.get("token")}`,
+          locale: 'ar',
+          'Content-Type': 'multipart/form-data',
+          'Accept': '*/*'
+        }
+      }).then((response) => {
+        this.showModal = true
+        this.loading = false
+        setTimeout(() => {
+          this.showModal = false
+        }, 3000)
+      }).then(() => {
+        this.$router.push("/dashboard/school-info");
+      }).catch(err => {
+        this.loading = false;
+      })
     }
   },
   mounted() {
