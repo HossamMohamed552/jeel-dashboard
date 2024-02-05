@@ -363,7 +363,7 @@
                 </ul>
               </div>
             </div>
-            <div class="nav-item" v-if="Array.from(routesUsers).length >= 1">
+            <div class="nav-item" v-if="Array.from(routesUsers).length >= 1 && user.roles[0]?.type.key === 'system_administration'">
               <p>
                 <span>{{ $t("MENU.permissionsSystemUsers") }}</span
                 ><img src="@/assets/images/icons/arrow.svg" />

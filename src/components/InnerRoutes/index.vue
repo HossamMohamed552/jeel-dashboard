@@ -37,7 +37,7 @@
         </b-col>
         <b-col lg="9">
           <b-row>
-            <b-col lg="4" class="mb-5" v-for="(value, key) in this.statistics" :key="key">
+            <b-col lg="4" class="mb-5" v-for="(value, key) in statistics" :key="key">
               <div class="item-card route-card">
                 <div class="item-number">{{ value }}</div>
                 <div class="item-name">
@@ -182,7 +182,7 @@ import Button from "@/components/Shared/Button/index.vue";
 import ChartMission from "@/components/ChartMissions/ChartMission.vue";
 import ChartCompetition from "@/components/ChartCompetitions/ChartCompetitions.vue";
 import LeaderBoard from "@/components/LeaderBoard/LeaderBoard.vue";
-import { getAllStatisticsRequest } from "@/api/statistics";
+import {getAllStatisticsRequest, getAllStatisticsSchoolAdminRequest} from "@/api/statistics";
 export default {
   name: "index",
   data() {
@@ -243,9 +243,16 @@ export default {
     },
   },
   mounted() {
-    this.ApiService(getAllStatisticsRequest()).then((response) => {
-      this.statistics = response.data.data;
-    });
+    if (this.user.roles[0]?.type.key === "system_administration"){
+      this.ApiService(getAllStatisticsRequest()).then((response) => {
+        this.statistics = response.data.data;
+      });
+    } else if(this.user.roles[0]?.type.key === "school_management"){
+      this.ApiService(getAllStatisticsSchoolAdminRequest()).then((response) => {
+        this.statistics = response.data.data;
+      });
+    }
+
 
     setTimeout(() => {
       this.hideModal();

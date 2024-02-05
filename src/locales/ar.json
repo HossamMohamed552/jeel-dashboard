@@ -750,7 +750,14 @@
     "jeel_admins_user": "عدد مستخدمي إدارة المنظومة",
     "package": "الباقات",
     "library": "عناصر مكتبة الشراء",
-    "store_library": "عناصر مكتبة جيل"
+    "store_library": "عناصر مكتبة جيل",
+    "all_users": "عدد المستخدمين",
+    "classes": "عدد الفصول",
+    "levels": "عدد الصفوف الدراسية",
+    "schooladmins": "عدد مديرى المدارس",
+    "supervisors": "عدد المشرفين",
+    "teachers": "عدد المدرسين",
+    "students": "عدد الطلاب"
   },
   "SOCIAL_MEDIA": {
     "FACEBOOK": "فيس بوك",

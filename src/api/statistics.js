@@ -5,3 +5,10 @@ export const getAllStatisticsRequest = (params) => ({
     params,
   },
 });
+export const getAllStatisticsSchoolAdminRequest = (params) => ({
+  method: "get",
+  url: "school-admin/statistics",
+  config: {
+    params,
+  },
+});
