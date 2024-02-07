@@ -258,7 +258,7 @@
               >{{ $t("MENU.main") }}
             </router-link>
             <!--route for school admin -->
-            <div class="nav-item" v-if="Array.from(routeSchoolAdmin).length >= 1">
+            <div v-if="Array.from(routeSchoolAdmin).length >= 1">
               <div>
                 <ul class="routes-school-admin">
                   <router-link
@@ -266,6 +266,7 @@
                     :to="routeAdmin.path"
                     v-for="(routeAdmin, index) in routeSchoolAdmin"
                     :key="index"
+                    class="nav-item"
                   >
                     {{ routeAdmin.name }}</router-link
                   >
