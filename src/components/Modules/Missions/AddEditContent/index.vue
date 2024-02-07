@@ -148,47 +148,59 @@ export default {
       this.watchLearningPathSelected = this.learningPathSelected
       this.ApiService(getSingleMissionsRequest(this.$route.params.id)).then((response) => {
         this.learnPathsVideoPaperWokQuiz = response.data.data.learningpaths
-        this.levelMission = response.data.data.level
+        this.lessonsSelected = response.data.data.lessons.map((item)=> item.id)
+        // this.levelMission = response.data.data.level
+        for (let lesson = 0; lesson < this.lessonsSelected.length; lesson++) {
+          this.filterWith[`lessons[${lesson}]`] = this.lessonsSelected[lesson]
+        }
       }).finally(() => {
         let learnPathsVideoPaperWokQuizWithFilter = this.learnPathsVideoPaperWokQuiz.filter(item => this.watchLearningPathSelected.map(itemMap => itemMap.id).includes(item.id))
         learnPathsVideoPaperWokQuizWithFilter.forEach((item) => {
           this.ApiService(getVideoPerLevelPathRequest({
             // levelId: this.levelMission.id,
             learnPathId: item.id,
+            ...this.filterWith,
+            'list_all': 'true'
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              videos: response.data.data.filter(itemData => this.lessonsSelected.includes(itemData.lesson.id)),
+              videos: response.data.data,
               videoIds: [...item.videos.filter(itemData => this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
             })
           })
           this.ApiService(getPaperWorkPerLevelPathRequest({
             // levelId: this.levelMission.id,
             learnPathId: item.id,
+            ...this.filterWith,
+            'list_all': 'true'
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              paperWorks: response.data.data.filter(itemData => this.lessonsSelected.includes(itemData.lesson.id)),
+              paperWorks: response.data.data,
               paperWorkIds: [...item.papersWork.filter(itemData => this.lessonsSelected.includes(itemData.lesson.id)).map(item => item.id)]
             })
           })
           this.ApiService(getQuizLevelPathRequest({
             // levelId: this.levelMission.id,
             learnPathId: item.id,
+            ...this.filterWith,
+            'list_all': 'true'
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              quizzes: response.data.data.filter(itemData => this.lessonsSelected.includes(itemData?.lesson?.id)),
+              quizzes: response.data.data,
               quizzesIds: [...item.quizzes.filter(itemData => this.lessonsSelected.includes(itemData?.lesson?.id)).map(item => item.id)]
             })
           })
           this.ApiService(getAudioPerLevelPathRequest({
             // levelId: this.levelMission.id,
             learnPathId: item.id,
+            ...this.filterWith,
+            'list_all': 'true'
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              tasks: response.data.data.filter(itemData => this.lessonsSelected.includes(itemData?.lesson?.id)),
+              tasks: response.data.data,
               tasksIds: [...item.tasks.filter(itemData => this.lessonsSelected.includes(itemData?.lesson?.id)).map(item => item.id)]
             })
           })
@@ -208,40 +220,48 @@ export default {
           this.ApiService(getVideoPerLevelPathRequest({
             // levelId: this.level,
             learnPathId: item.id,
+            ...this.filterWith,
+            'list_all': 'true'
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              videos: response.data.data.filter(itemData => this.lessonsSelected.includes(itemData.lesson.id)),
+              videos: response.data.data,
               videoIds: []
             })
           })
           this.ApiService(getPaperWorkPerLevelPathRequest({
             // levelId: this.level,
             learnPathId: item.id,
+            ...this.filterWith,
+            'list_all': 'true'
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              paperWorks: response.data.data.filter(itemData => this.lessonsSelected.includes(itemData.lesson.id)),
+              paperWorks: response.data.data,
               paperWorkIds: []
             })
           })
           this.ApiService(getQuizLevelPathRequest({
             // levelId: this.level,
             learnPathId: item.id,
+            ...this.filterWith,
+            'list_all': 'true'
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              quizzes: response.data.data.filter(itemData => this.lessonsSelected.includes(itemData?.lesson?.id)),
+              quizzes: response.data.data,
               quizzesIds: []
             })
           })
           this.ApiService(getAudioPerLevelPathRequest({
             // levelId: this.level,
             learnPathId: item.id,
+            ...this.filterWith,
+            'list_all': 'true'
             // termId: this.term
           })).then((response) => {
             Object.assign(item, {
-              quizzes: response.data.data.filter(itemData => this.lessonsSelected.includes(itemData?.lesson?.id)),
+              quizzes: response.data.data,
               tasksIds: []
             })
           })

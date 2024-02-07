@@ -1,123 +1,127 @@
 <template>
   <div class="add-mission">
-    <Modal :content-message="'تمت التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
-    <Stepper
-      v-show="currentStep === 0 || currentStep === 1 || currentStep === 2"
-      class="mt-5 mb-3"
-      :steps="steps"
-      :current-step="currentStep"
-    />
-    <AddEditMissionDataForm
-      v-if="currentStep === 0"
-      :levels="levels"
-      :learning-paths="learningPaths"
-      :terms="terms"
-      :countries="countries"
-      @onSubmit="goToFillContent"
-      @handleCancel="handleCancel"
-    />
-    <AddEditContent
-      v-if="currentStep === 1"
-      :learningPathSelected="learningPathSelected"
-      :level="level"
-      :term="term"
-      @handleCancel="handleCancel"
-      @handleBack="goToMissionDataForm"
-      @goToFinalStep="goToFinalStep"/>
-    <div class="container-fluid custom-container" v-if="currentStep === 2">
-      <div class="mission-review ">
-        <b-row>
-          <b-col lg="4">
-            <h6>السنة الدراسية</h6>
-            <p>{{ levels.find((item) => item.id === collectData.level_id).name }}</p>
-          </b-col>
-          <b-col lg="4">
-            <h6>إسم المهمة</h6>
-            <p>{{ collectData.name }}</p>
-          </b-col>
-          <b-col lg="4">
-            <h6>الدولة</h6>
-            <p>{{ countries.find((item) => item.id === collectData.country_id).name }}</p>
-          </b-col>
-          <b-col lg="4">
-            <h6>الصف الدراسى</h6>
-            <p>{{ terms.find((item) => item.id === collectData.term_id).name }}</p>
-          </b-col>
-          <b-col lg="4">
-            <h6>الوصف</h6>
-            <p>{{ collectData.description }}</p>
-          </b-col>
-          <b-col lg="4">
-            <h6>المدة الزمنية</h6>
-            <p>{{ collectData.duration }}</p>
-          </b-col>
-          <b-col lg="12">
-            <div>
-              <p>المحتوى</p>
-              <div v-for="path in collectData.paths" :key="path.id">
-                <b-row>
-                  <b-col lg="12">
-                    <h6>المسار</h6>
-                    <p>{{ path.name }}</p>
-                  </b-col>
-                  <b-col lg="4">
-                    <div>
-                      <h6>المهمات</h6>
-                      <span
-                        v-for="(video, index) in Array.from(path.videos).filter((item) =>
+    <section class="container-fluid custom-container">
+      <Modal :content-message="'تمت التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
+      <Stepper
+        v-show="currentStep === 0 || currentStep === 1 || currentStep === 2"
+        class="mt-5 mb-3"
+        :steps="steps"
+        :current-step="currentStep"
+      />
+      <!--        @setLessonSelected="lessonsSelected = $event"-->
+      <AddEditMissionDataForm
+        v-if="currentStep === 0"
+        :levels="levels"
+        :learning-paths="learningPaths"
+        :terms="terms"
+        :countries="countries"
+        @onSubmit="goToFillContent"
+        @handleCancel="handleCancel"
+      />
+<!--      :lessonsSelected="lessonsSelected"-->
+      <AddEditContent
+        v-if="currentStep === 1"
+        :learningPathSelected="learningPathSelected"
+        :level="level"
+        :term="term"
+        @handleCancel="handleCancel"
+        @handleBack="goToMissionDataForm"
+        @goToFinalStep="goToFinalStep"/>
+      <div class="container-fluid custom-container" v-if="currentStep === 2">
+        <div class="mission-review ">
+          <b-row>
+            <b-col lg="4">
+              <h6>السنة الدراسية</h6>
+              <p>{{ levels.find((item) => item.id === collectData.level_id).name }}</p>
+            </b-col>
+            <b-col lg="4">
+              <h6>إسم المهمة</h6>
+              <p>{{ collectData.name }}</p>
+            </b-col>
+            <b-col lg="4">
+              <h6>الدولة</h6>
+              <p>{{ countries.find((item) => item.id === collectData.country_id).name }}</p>
+            </b-col>
+            <b-col lg="4">
+              <h6>الصف الدراسى</h6>
+              <p>{{ terms.find((item) => item.id === collectData.term_id).name }}</p>
+            </b-col>
+            <b-col lg="4">
+              <h6>الوصف</h6>
+              <p>{{ collectData.description }}</p>
+            </b-col>
+            <b-col lg="4">
+              <h6>المدة الزمنية</h6>
+              <p>{{ collectData.duration }}</p>
+            </b-col>
+            <b-col lg="12">
+              <div>
+                <p>المحتوى</p>
+                <div v-for="path in collectData.paths" :key="path.id">
+                  <b-row>
+                    <b-col lg="12">
+                      <h6>المسار</h6>
+                      <p>{{ path.name }}</p>
+                    </b-col>
+                    <b-col lg="4">
+                      <div>
+                        <h6>المهمات</h6>
+                        <span
+                          v-for="(video, index) in Array.from(path.videos).filter((item) =>
                           path.videoIds.includes(item.id)
                         )"
-                        :key="`${video.id} ${index}`"
-                      >{{ video.title }}</span
-                      >
-                    </div>
-                  </b-col>
-                  <b-col lg="4">
-                    <div>
-                      <h6>اوراق العمل</h6>
-                      <span
-                        v-for="(paperWork, index) in Array.from(path.paperWorks).filter((item) =>
+                          :key="`${video.id} ${index}`"
+                        >{{ video.title }}</span
+                        >
+                      </div>
+                    </b-col>
+                    <b-col lg="4">
+                      <div>
+                        <h6>اوراق العمل</h6>
+                        <span
+                          v-for="(paperWork, index) in Array.from(path.paperWorks).filter((item) =>
                           path.paperWorkIds.includes(item.id)
                         )"
-                        :key="`${paperWork.id} ${index}`"
-                      >{{ paperWork.name }}</span
-                      >
-                    </div>
-                  </b-col>
-                  <b-col lg="4">
-                    <div>
-                      <h6>التمارين</h6>
-                      <span
-                        v-for="(quiz, index) in Array.from(path.quizzes).filter((item) =>
+                          :key="`${paperWork.id} ${index}`"
+                        >{{ paperWork.name }}</span
+                        >
+                      </div>
+                    </b-col>
+                    <b-col lg="4">
+                      <div>
+                        <h6>التمارين</h6>
+                        <span
+                          v-for="(quiz, index) in Array.from(path.quizzes).filter((item) =>
                           path.quizzesIds.includes(item.id)
                         )"
-                        :key="`${quiz.id} ${index}`"
-                      >{{ quiz.name }}</span
-                      >
-                    </div>
-                  </b-col>
-                </b-row>
+                          :key="`${quiz.id} ${index}`"
+                        >{{ quiz.name }}</span
+                        >
+                      </div>
+                    </b-col>
+                  </b-row>
+                </div>
               </div>
-            </div>
-          </b-col>
-        </b-row>
-        <b-row>
-          <div class="action-holder">
-            <div>
-              <Button :loading="loading" custom-class="submit-btn" @click="createMission">
-                {{ $t("GLOBAL_SAVE") }}
+            </b-col>
+          </b-row>
+          <b-row>
+            <div class="action-holder">
+              <div>
+                <Button :loading="loading" custom-class="submit-btn" @click="createMission">
+                  {{ $t("GLOBAL_SAVE") }}
+                </Button>
+                <Button class="mx-3" @click="backToFillContent" custom-class="submit-btn back-btn">
+                  {{ $t("GLOBAL_BACK") }}
+                </Button>
+              </div>
+              <Button @click="handleCancel" custom-class="cancel-btn margin">
+                {{ $t("GLOBAL_CANCEL") }}
               </Button>
-              <Button class="mx-3" @click="backToFillContent" custom-class="submit-btn back-btn">
-                {{ $t("GLOBAL_BACK") }}
-              </Button>
             </div>
-            <Button @click="handleCancel" custom-class="cancel-btn margin">
-              {{ $t("GLOBAL_CANCEL") }}
-            </Button>
-          </div>
-        </b-row>
+          </b-row>
+        </div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 <script>
@@ -166,6 +170,7 @@ export default {
       ],
       currentStep: 0,
       learningPathSelected: [],
+      lessonsSelected:[],
     };
   },
   methods: {
@@ -203,7 +208,7 @@ export default {
       formData.append("term_id", this.collectData.term_id);
       for (let index = 0; index < this.collectData.lessons_ids.length; index++) {
         const lesson = this.collectData.lessons_ids[index];
-        formData.append(`lesson_id[${index}]`, lesson);  
+        formData.append(`lesson_id[${index}]`, lesson);
       }
       if (this.collectData.mission_image)
         formData.append("mission_image", this.collectData.mission_image);

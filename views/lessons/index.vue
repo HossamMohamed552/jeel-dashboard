@@ -21,7 +21,7 @@
           @click="goToAddLesson"
           v-if="user.permissions.includes(`add-lesson`)"
         >
-          <img src="@/assets/images/icons/plus.svg" />
+          <img src="@/assets/images/icons/plus.svg"/>
           <span>إضافة درس تعليمي</span>
         </Button>
       </template>
@@ -34,6 +34,9 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+           :showModal="showModalFailed" :alarm="true"
+           @cancelWithConfirm="showModalFailed=false"/>
   </section>
 </template>
 
@@ -43,12 +46,14 @@ import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {mapGetters} from "vuex";
 import {deleteLessonRequest, getLessonsRequest} from "@/api/lessons";
+
 export default {
-  components: { Modal, ListItems, Button },
+  components: {Modal, ListItems, Button},
   data() {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
       lessonSearchWord: "",
       lessonsList: [],
       totalNumber: 0,
@@ -70,7 +75,7 @@ export default {
       itemId: 0,
     };
   },
-  computed:{
+  computed: {
     ...mapGetters(['user'])
   },
   methods: {
@@ -104,8 +109,11 @@ export default {
     cancelWithConfirm() {
       this.ApiService(deleteLessonRequest(this.itemId)).then(() => {
         this.getLessonsList();
-      });
-      this.cancel();
+      }).catch((error) => {
+        this.showModalFailed = error.response.data.code === 23000;
+      }).finally(() => {
+        this.cancel();
+      })
     },
   },
   mounted() {

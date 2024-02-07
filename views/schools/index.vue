@@ -97,8 +97,9 @@ export default {
     cancelWithConfirm() {
       this.ApiService(deleteSchoolsRequest(this.itemId)).then(() => {
         this.getSchools();
-      });
-      this.cancel();
+      }).finally(()=>{
+        this.cancel();
+      })
     },
   },
   mounted() {

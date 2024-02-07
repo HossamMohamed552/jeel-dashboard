@@ -97,7 +97,7 @@ export default {
   },
   mounted() {
     this.getMissions()
-    window.localStorage.setItem("page", "missions");
+    // window.localStorage.setItem("page", "missions");
   },
   beforeDestroy() {
     window.localStorage.setItem("page", "");

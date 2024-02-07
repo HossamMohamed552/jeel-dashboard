@@ -34,6 +34,9 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+           :showModal="showModalFailed" :alarm="true"
+           @cancelWithConfirm="showModalFailed=false"/>
   </section>
 </template>
 
@@ -49,6 +52,7 @@ export default {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
       outcomeSearchWord: "",
       outcomeCategories: [],
       totalNumber: 0,
@@ -106,8 +110,11 @@ export default {
     cancelWithConfirm() {
       this.ApiService(deleteOutcomeRequest(this.itemId)).then(() => {
         this.getOutcomeCategories();
-      });
-      this.cancel();
+      }).catch((error) => {
+        this.showModalFailed = error.response.data.code === 23000;
+      }).finally(() => {
+        this.cancel();
+      })
     },
   },
   mounted() {
