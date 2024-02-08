@@ -26,6 +26,9 @@
            @cancel="cancel($event)"
            :is-warning="true"
            @cancelWithConfirm="cancelWithConfirm($event)"/>
+    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+           :showModal="showModalFailed" :alarm="true"
+           @cancelWithConfirm="showModalFailed=false"/>
   </section>
 </template>
 
@@ -45,6 +48,7 @@ export default {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
       refreshIt: false,
       groupSearchWord: "",
       videosList: [],
@@ -96,8 +100,11 @@ export default {
       this.ApiService(deleteVideoRequest(this.itemId)).then(() => {
         this.getVideos()
         this.refreshIt = true
+      }).catch((error) => {
+        this.showModalFailed = error.response.data.code === 23000;
+      }).finally(() => {
+        this.cancel();
       })
-      this.cancel()
     }
   },
   mounted() {

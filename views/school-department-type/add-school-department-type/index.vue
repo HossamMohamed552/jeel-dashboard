@@ -1,6 +1,8 @@
 <template>
   <div class="add-edit-learning-skill">
     <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <AddEditSchoolDepartmentType
       :loading="loading"
       @handleAddSchoolDepartmentType="handleAddSchoolDepartmentType($event)"
@@ -20,6 +22,7 @@ export default {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
     };
   },
   methods: {
@@ -32,8 +35,9 @@ export default {
           setTimeout(() => {
             this.$router.push("/dashboard/school-department-types");
           }, 3000);
-        })
-        .finally(() => {
+        }).catch((error) => {
+          this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
+        }).finally(() => {
           this.loading = false;
         });
     },

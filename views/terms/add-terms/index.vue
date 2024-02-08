@@ -1,6 +1,8 @@
 <template>
   <div class="add-country">
     <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <AddEditTerms
       :loading="loading"
       @handleAddTerm="handleAddTerm($event)"
@@ -19,6 +21,7 @@ export default {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
     };
   },
   methods: {
@@ -31,7 +34,8 @@ export default {
           setTimeout(() => {
             this.$router.push("/dashboard/terms");
           }, 3000);
-        })
+        }).catch((error) => {
+          this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');})
         .finally(() => {
           this.loading = false;
         });
