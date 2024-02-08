@@ -1,6 +1,8 @@
 <template>
   <div class="add-country">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <AddEditCountry
       :loading="loading"
       @handleAddCountry="handleAddCountry($event)"
@@ -11,14 +13,16 @@
 <script>
 import AddEditCountry from "@/components/Modules/Users/AddEditCountry/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { postCountryRequest } from "@/api/country";
+import {postCountryRequest} from "@/api/country";
+
 export default {
   name: "index",
-  components: { Modal, AddEditCountry },
+  components: {Modal, AddEditCountry},
   data() {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
     };
   },
   methods: {
@@ -32,10 +36,11 @@ export default {
             this.showModal = false;
             this.$router.push("/dashboard/country");
           }, 3000);
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+        }).catch((error) => {
+        this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
+      }).finally(() => {
+        this.loading = false;
+      });
     },
     handleCancel() {
       this.$router.push("/dashboard/country");

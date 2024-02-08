@@ -211,7 +211,6 @@ export default {
       this.handleNavigation(1);
     },
     backToMissionContentStep() {
-      console.log('asd',2)
       this.handleNavigation(1);
     },
     goToMissionContentStep(data) {
@@ -232,7 +231,6 @@ export default {
       formData.append("data_range", this.collectData.duration);
       formData.append("description", this.collectData.description);
       formData.append("term_id", this.collectData.term_id);
-
       for (let index = 0; index < this.collectData.lessons_ids.length; index++) {
         const lesson = this.collectData.lessons_ids[index];
         formData.append(`lessons[${index}]`, lesson);
@@ -245,20 +243,12 @@ export default {
       for (let learnPath = 0; learnPath < this.collectData.paths.length; ) {
         formData.append(`learningpaths[${learnPath}][id]`, this.collectData.paths[learnPath].id);
         for (let video = 0; video < this.collectData.paths[learnPath].videoIds.length; ) {
-          formData.append(
-            `learningpaths[${learnPath}][videos][${video}][id]`,
-            this.collectData.paths[learnPath].videoIds[video]
-          );
+          formData.append(`learningpaths[${learnPath}][videos][${video}][id]`, this.collectData.paths[learnPath].videoIds[video]);
           formData.append(`learningpaths[${learnPath}][videos][${video}][order]`, video + 1);
           formData.append(`learningpaths[${learnPath}][videos][${video}][is_selected]`, 1);
           video++;
         }
-        for (
-          let paperWork = 0;
-          paperWork < this.collectData.paths[learnPath].paperWorkIds.length;
-
-        ) {
-          formData.append(
+        for (let paperWork = 0; paperWork < this.collectData.paths[learnPath].paperWorkIds.length;) {formData.append(
             `learningpaths[${learnPath}][papersworks][${paperWork}][id]`,
             this.collectData.paths[learnPath].paperWorkIds[paperWork]
           );
@@ -296,7 +286,6 @@ export default {
         formData.append(`badge_rewards[${index}][badge_id]`, content.badgeId);
         formData.append(`badge_rewards[${index}][library_id]`, content.badgeRewardId);
       });
-      console.log(this.collectData);
       this.loading = true;
       axios
         .post("/missions", formData, {
@@ -309,9 +298,7 @@ export default {
         .then((res) => {
           this.loading = false;
           this.showModal = true;
-          setTimeout(() => {
-            this.showModal = false;
-          }, 3000);
+          setTimeout(() => {this.showModal = false;}, 3000);
           this.$router.push("/dashboard/missions");
         }).catch(()=>{
         this.loading = false;

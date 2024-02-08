@@ -21,7 +21,7 @@
           @click="goToAddSchoolDepartmentType"
           v-if="user.permissions.includes(`add-management-types`)"
         >
-          <img src="@/assets/images/icons/plus.svg" />
+          <img src="@/assets/images/icons/plus.svg"/>
           <span>إضافة نوع ادارة </span>
         </Button>
       </template>
@@ -34,6 +34,8 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
   </section>
 </template>
 
@@ -45,21 +47,22 @@ import {
   deleteSchoolDepartmentTypeRequest,
 } from "@/api/school-department-type";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
-  components: { Modal, ListItems, Button },
+  components: {Modal, ListItems, Button},
   data() {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
       groupSearchWord: "",
       departmentTypeList: [],
       totalNumber: null,
       fieldsList: [
-        { key: "id", label: "التسلسل" },
-        { key: "name", label: "اسم نوع الادارة" },
-        { key: "actions", label: "الإجراء" },
+        {key: "id", label: "التسلسل"},
+        {key: "name", label: "اسم نوع الادارة"},
+        {key: "actions", label: "الإجراء"},
       ],
     };
   },
@@ -95,7 +98,7 @@ export default {
     cancelWithConfirm() {
       this.ApiService(deleteSchoolDepartmentTypeRequest(this.itemId)).then(() => {
         this.getSchoolDepartmentsTypes();
-      });
+      })
       this.cancel();
     },
   },

@@ -27,6 +27,9 @@
            @cancel="cancel($event)"
            :is-warning="true"
            @cancelWithConfirm="cancelWithConfirm($event)"/>
+    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+           :showModal="showModalFailed" :alarm="true"
+           @cancelWithConfirm="showModalFailed=false"/>
   </section>
 </template>
 
@@ -46,6 +49,7 @@ export default {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
       groupSearchWord: "",
       questionsList: [],
       totalNumber: 0,
@@ -91,8 +95,11 @@ export default {
       this.ApiService(deleteQuestionRequest(this.itemId)).then(() => {
         this.getQuestions()
         this.refreshIt = true
-      })
-      this.cancel()
+      }).catch((error) => {
+        this.showModalFailed = error.response.data.code === 23000;
+      }).finally(() => {
+        this.cancel();
+      })()
     }
   },
   mounted() {

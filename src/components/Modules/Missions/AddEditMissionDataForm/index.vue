@@ -84,6 +84,7 @@
               :rules="'required'"
               :deselectFromDropdown="true"
               multiple
+              @input="$emit('setLessonSelected',mission.lessons_ids)"
             ></SelectSearch>
           </div>
         </b-col>
@@ -112,7 +113,9 @@
             <UploadAttachment v-if="!$route.params.id || mission?.thumbnailChangedRequest"
                               :type-of-attachment="'image'"
                               :label="$t('MISSIONS.UPLOAD_IMAGE')"
-                              :dropImage="true" :name="'logoMission'" :rules="'required'"
+                              :dropImage="true"
+                              :name="'logoMission'"
+                              :rules="'required'"
                               :dropIdRef="'missionImgRef'"
                               :accept-files="'image/*'" @setFileId="setFileImageId($event)"/>
             <PreviewMedia
@@ -131,12 +134,18 @@
         </b-col>
         <b-col lg="6" class="mb-3">
           <div class="hold-field mt-4">
-            <UploadAttachment v-if="!$route.params.id" :type-of-attachment="'audio'"
-                              :label="$t('MISSIONS.UPLOAD_AUDIO')"
-                              :dropImage="true" :name="'audioMission'"
-                              :rules="'required'"
+            <UploadAttachment v-if="!$route.params.id || mission.missionAudioChangedRequest" :type-of-attachment="'audio'" :label="$t('MISSIONS.UPLOAD_AUDIO')"
+                              :name="'audioMission'" :rules="'required'"
                               :dropIdRef="'missionAudioRef'"
-                              :accept-files="'audio/*'" @setFileId="setFileAudioId($event)"/>
+                              :accept-files="'audio/*'"
+                              @setFileId="setFileAudioId($event)"/>
+            <PreviewMedia v-if="$route.params.id && mission.missionAudioChanged === false && !mission.missionAudioChangedRequest" :header="$t('MISSIONS.UPLOAD_AUDIO')"
+                          :media-name="mission.mission_audio_name"
+                          :file-size="mission.mission_audio_size"
+                          :typeOfMedia="'audio'"
+                          :show-remove-button="true"
+                          @removeFile="removeFile('missionAudio','missionAudioChanged','missionAudioChangedRequest')"/>
+            <p v-if="mission.missionAudioChangedRequest" class="invalid-feedback d-block">ملف الفيديو بدون موسيقى مطلوب</p>
           </div>
         </b-col>
       </b-row>
@@ -230,7 +239,10 @@ export default {
         thumbnailChanged: false,
         thumbnailChangedRequest: false,
         thumbnailPreview: null,
-        missionAudio: null
+
+        missionAudio: null,
+        missionAudioChanged:false,
+        missionAudioChangedRequest:false
       },
       lessons: []
     };
@@ -258,20 +270,19 @@ export default {
     setFileImageId($event) {
       if ($event) {
         this.mission.thumbnail = $event
-        this.mission.thumbnailRequest = true
+        this.mission.thumbnailChangedRequest = true
         this.mission.thumbnailChanged = false
       }
     },
     setFileAudioId($event) {
       this.mission.missionAudio = $event
+      this.mission.missionAudioChangedRequest = true
+      this.mission.missionAudioChanged = false
     },
     removeFile(fileName, fileChange, fileRequest) {
       this.mission[fileChange] = true
       this.mission[fileName] = null
       this.mission[fileRequest] = true
-    },
-    removeAudioId() {
-      this.mission.missionAudio = null
     },
     getLessonsByLearningPathIdsRequest(learningPathIds) {
       this.ApiService(getLessonsByLearningPathRequest(learningPathIds)).then(res => {
@@ -304,7 +315,7 @@ export default {
       }
     },
     checkInputsUpdate() {
-      if (this.mission.thumbnailChanged === true) {
+      if (this.mission.thumbnailChanged === true || this.mission.missionAudioChanged === true) {
         return true
       } else {
         return false
@@ -324,10 +335,16 @@ export default {
         this.mission.learning_path_ids = response.data.data.learningpaths.map((item) => item.id);
         this.mission.itemImage = response.data.data.mission_image;
         this.mission.mission_image = response.data.data.mission_image;
+
         this.mission.thumbnail = response.data.data.thumbnail_uuid
-        this.mission.thumbnailPreview = response.data.data.thumbnail;
-        this.mission.thumbnailPreview_name = response.data.data.thumbnail_name;
-        this.mission.thumbnailPreview_size = response.data.data.thumbnail_size;
+        this.mission.thumbnailPreview = response.data.data.mission_image;
+        this.mission.thumbnailPreview_name = response.data.data.mission_image_name;
+        this.mission.thumbnailPreview_size = response.data.data.mission_imaga_size;
+
+        this.mission.mission_audio = response.data.data.mission_audio
+        this.mission.mission_audio_name = response.data.data.mission_audio_name
+        this.mission.mission_audio_size = response.data.data.mission_audio_size
+
         // this.$emit('setLessonSelected',this.mission.lessons_ids)
         this.getLessonsByLearningPathIds(this.mission.learning_path_ids)
       });

@@ -3,7 +3,7 @@
     <section class="container-fluid custom-container">
       <Modal :content-message="'تمت التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
       <Stepper
-        v-show="currentStep === 0 || currentStep === 1 || currentStep === 2"
+        v-show="currentStep === 0 || currentStep === 1 || currentStep === 2  || currentStep === 3"
         class="mt-5 mb-3"
         :steps="steps"
         :current-step="currentStep"
@@ -15,19 +15,26 @@
         :learning-paths="learningPaths"
         :terms="terms"
         :countries="countries"
+        @setLessonSelected="lessonsSelected = $event"
         @onSubmit="goToFillContent"
         @handleCancel="handleCancel"
       />
-<!--      :lessonsSelected="lessonsSelected"-->
       <AddEditContent
         v-if="currentStep === 1"
         :learningPathSelected="learningPathSelected"
+        :lessonsSelected="lessonsSelected"
         :level="level"
         :term="term"
         @handleCancel="handleCancel"
         @handleBack="goToMissionDataForm"
-        @goToFinalStep="goToFinalStep"/>
-      <div class="container-fluid custom-container" v-if="currentStep === 2">
+        @goToMissionContentStep="goToMissionContentStep"/>
+      <AddEditCompleteTaskContent
+        v-if="currentStep === 2"
+        @goToFinalStep="goToFinalWithContentStep"
+        @handleBack="backToMissionContentStep"
+        @handleCancel="handleCancel"
+      />
+      <div class="container-fluid custom-container" v-if="currentStep === 3">
         <div class="mission-review ">
           <b-row>
             <b-col lg="4">
@@ -134,10 +141,13 @@ import axios from "axios";
 import VueCookies from "vue-cookies";
 import globalAssetData from "@/mixins/getData/globalAssetData";
 import tr from "vue2-datepicker/locale/es/tr";
+import AddEditCompleteTaskContent
+  from "@/components/Modules/Missions/AddEditCompleteTaskContent/index.vue";
 
 export default {
   mixins: [globalAssetData],
   components: {
+    AddEditCompleteTaskContent,
     Modal,
     Button,
     Stepper,
@@ -167,6 +177,10 @@ export default {
           icon: "3",
           title: this.$t("MISSIONS.STEP_THREE"),
         },
+        {
+          icon: "4",
+          title: this.$t("MISSIONS.STEP_FOUR"),
+        }
       ],
       currentStep: 0,
       learningPathSelected: [],
@@ -193,10 +207,23 @@ export default {
     backToFillContent() {
       this.handleNavigation(1);
     },
+    backToMissionContentStep() {
+      this.handleNavigation(1);
+    },
+    goToMissionContentStep(data) {
+      Object.assign(this.collectData, { paths: [...data] });
+      this.handleSaveCollectedData(data);
+      this.handleNavigation(2);
+    },
     goToFinalStep(data) {
       Object.assign(this.collectData, {paths: [...data]});
       this.handleSaveCollectedData(data);
       this.handleNavigation(2);
+    },
+    goToFinalWithContentStep(completeTaskContent) {
+      Object.assign(this.collectData, { completeTaskContent: [...completeTaskContent] });
+      this.handleSaveCollectedData(this.collectData);
+      this.handleNavigation(3);
     },
     createMission() {
       const formData = new FormData();
@@ -208,11 +235,12 @@ export default {
       formData.append("term_id", this.collectData.term_id);
       for (let index = 0; index < this.collectData.lessons_ids.length; index++) {
         const lesson = this.collectData.lessons_ids[index];
-        formData.append(`lesson_id[${index}]`, lesson);
+        formData.append(`lessons[${index}]`, lesson);
       }
-      if (this.collectData.mission_image)
-        formData.append("mission_image", this.collectData.mission_image);
-
+      if (this.collectData.thumbnailChangedRequest)
+        formData.append("mission_image", this.collectData.thumbnail);
+      if (this.collectData.missionAudioChangedRequest)
+        formData.append("mission_audio", this.collectData.missionAudio);
       formData.append("_method", "PUT");
       // for to get learnPaths
       for (let learnPath = 0; learnPath < this.collectData.paths.length;) {
@@ -226,10 +254,7 @@ export default {
           formData.append(`learningpaths[${learnPath}][videos][${video}][is_selected]`, 1);
           video++;
         }
-        for (
-          let paperWork = 0;
-          paperWork < this.collectData.paths[learnPath].paperWorkIds.length;
-        ) {
+        for (let paperWork = 0; paperWork < this.collectData.paths[learnPath].paperWorkIds.length;) {
           formData.append(
             `learningpaths[${learnPath}][papersworks][${paperWork}][id]`,
             this.collectData.paths[learnPath].paperWorkIds[paperWork]
@@ -250,25 +275,35 @@ export default {
           formData.append(`learningpaths[${learnPath}][quizzes][${quiz}][is_selected]`, 1);
           quiz++;
         }
+        for (let task = 0; task < this.collectData.paths[learnPath].tasksIds.length; ) {
+          formData.append(`learningpaths[${learnPath}][tasks][${task}][id]`, this.collectData.paths[learnPath].tasksIds[task]);
+          formData.append(`learningpaths[${learnPath}][tasks][${task}][order]`, task + 1);
+          formData.append(`learningpaths[${learnPath}][tasks][${task}][is_selected]`, 1);
+          task++;
+        }
         learnPath++;
       }
+      this.collectData.completeTaskContent.forEach((content,index) => {
+        formData.append(`badge_rewards[${index}][badge_id]`, content.badgeId);
+        formData.append(`badge_rewards[${index}][library_id]`, content.badgeRewardId);
+      });
       this.loading = true;
       this.showModal = true;
-      axios
-        .post(`/missions/${this.$route.params.id}`, formData, {
+      axios.post(`/missions/${this.$route.params.id}`, formData, {
           headers: {
             Authorization: `Bearer ${VueCookies.get("token")}`,
             locale: "ar",
             "Content-Type": "multipart/form-data",
           },
-        })
-        .then((res) => {
+        }).then((res) => {
           this.loading = false;
           setTimeout(() => {
             this.showModal = false;
           }, 3000);
           this.$router.push("/dashboard/missions");
-        });
+        }).catch(()=>{
+        this.loading = false
+      })
     },
     handleAssignObject(data) {
       Object.assign(this.collectData, {...data});

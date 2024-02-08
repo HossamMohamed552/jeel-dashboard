@@ -1,6 +1,8 @@
 <template>
   <div class="add-group">
     <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <AddEditGroup
       :loading="loading"
       @handleAddGroup="handleAddGroup($event)"
@@ -20,6 +22,7 @@ export default {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
     };
   },
   mounted() {},
@@ -37,8 +40,9 @@ export default {
             this.showModal = false;
             this.$router.push("/dashboard/school-group");
           }, 1000);
-        })
-        .finally(() => {
+        }).catch((error) => {
+          this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
+        }).finally(() => {
           this.loading = false;
         });
     },
