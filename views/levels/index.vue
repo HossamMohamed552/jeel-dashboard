@@ -21,7 +21,7 @@
           @click="goToAddLevel"
           v-if="user.permissions.includes(`add-levels`)"
         >
-          <img src="@/assets/images/icons/plus.svg" />
+          <img src="@/assets/images/icons/plus.svg"/>
           <span>إضافة صف دراسي</span>
         </Button>
       </template>
@@ -34,6 +34,9 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+           :showModal="showModalFailed" :alarm="true"
+           @cancelWithConfirm="showModalFailed=false"/>
   </section>
 </template>
 
@@ -45,18 +48,19 @@ import Modal from "@/components/Shared/Modal/index.vue";
 import {mapGetters} from "vuex";
 
 export default {
-  components: { Modal, ListItems, Button },
+  components: {Modal, ListItems, Button},
   data() {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
       groupSearchWord: "",
       levelsList: [],
       totalNumber: 0,
       fieldsList: [
-        { key: "id", label: "التسلسل" },
-        { key: "name", label: "اسم الصف الدراسي" },
-        { key: "actions", label: "الإجراء" },
+        {key: "id", label: "التسلسل"},
+        {key: "name", label: "اسم الصف الدراسي"},
+        {key: "actions", label: "الإجراء"},
       ],
     };
   },
@@ -94,8 +98,11 @@ export default {
     cancelWithConfirm() {
       this.ApiService(deleteLevelRequest(this.itemId)).then(() => {
         this.getLevels();
-      });
-      this.cancel();
+      }).catch((error) => {
+        this.showModalFailed = error.response.data.code === 23000;
+      }).finally(() => {
+        this.cancel();
+      })
     },
   },
   mounted() {

@@ -3,6 +3,8 @@
     <Modal :content-message="'تمت التعديل بنجاح'"
            :showModal="showModal"
            :is-success="true"/>
+    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <AddEditCountry
       :loading="loading"
       @handleEditCountry="handleEditCountry($event)"
@@ -22,6 +24,7 @@ export default {
     return{
       loading: false,
       showModal: false,
+      showModalFailed: false,
     }
   },
   methods:{
@@ -34,7 +37,11 @@ export default {
           this.showModal = false;
           this.$router.push("/dashboard/country");
         }, 3000);
-      })
+      }).catch((error) => {
+          this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
+        }).finally(() => {
+        this.loading = false;
+      });
     },
     handleCancel() {
       this.$router.push("/dashboard/country");

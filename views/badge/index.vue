@@ -34,6 +34,9 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+           :showModal="showModalFailed" :alarm="true"
+           @cancelWithConfirm="showModalFailed=false"/>
   </section>
 </template>
 <script>
@@ -50,6 +53,7 @@ export default {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
       groupSearchWord: "",
       totalNumber: 0,
       badgesList: [],
@@ -111,8 +115,11 @@ export default {
     cancelWithConfirm() {
       this.ApiService(deleteBadgeRequest(this.itemId)).then(() => {
         this.getBadges();
-      });
-      this.cancel();
+      }).catch((error) => {
+        this.showModalFailed = error.response.data.code === 23000;
+      }).finally(() => {
+        this.cancel();
+      })
     },
   },
   computed: {
