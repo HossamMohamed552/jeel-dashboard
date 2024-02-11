@@ -1,6 +1,8 @@
 <template>
   <div class="add-role">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <AddEditLevel
       :loading="loading"
       @handleAddLevel="handleAddLevel($event)"
@@ -24,6 +26,7 @@ export default {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
       schoolGroupOptions: [],
     };
   },
@@ -39,18 +42,18 @@ export default {
     handleAddLevel($event) {
       this.loading = true;
       this.ApiService(postLevelRequest($event)).then((response) => {
-        if (response.code === 200) {
-          this.loading = false;
-          this.showModal = true;
-          setTimeout(() => {
-            this.showModal = false;
-          }, 3000);
-        }
+        this.loading = false;
+        this.showModal = true;
+        setTimeout(() => {
+          this.showModal = false;
+        }, 3000);
       }).then(() => {
         this.$router.push("/dashboard/levels");
-      }).catch(()=>{
-        this.loading = false;
-      })
+      }).catch((error) => {
+        this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');})
+        .finally(() => {
+          this.loading = false;
+        });
     },
     handleCancel() {
       this.$router.push("/dashboard/levels");

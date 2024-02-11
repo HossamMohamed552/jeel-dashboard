@@ -34,7 +34,8 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
-    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+           :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>
 </template>
@@ -98,8 +99,11 @@ export default {
     cancelWithConfirm() {
       this.ApiService(deleteSchoolDepartmentTypeRequest(this.itemId)).then(() => {
         this.getSchoolDepartmentsTypes();
+      }).catch((error) => {
+        this.showModalFailed = error.response.data.code === 23000;
+      }).finally(() => {
+        this.cancel();
       })
-      this.cancel();
     },
   },
   computed: {

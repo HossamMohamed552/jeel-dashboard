@@ -196,11 +196,10 @@ export default {
         if (!success) return;
       });
       if (this.$route.params.id) {
-        if (this.createBadge.logo != null) {
+        if (this.createBadge.thumbnailChangedRequest === true) {
           this.$emit("handleEditBadge", this.createBadge);
         } else {
           delete this.createBadge.logo;
-
           this.$emit("handleEditBadge", this.createBadge);
         }
       } else {
