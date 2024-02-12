@@ -6,6 +6,7 @@ import jeelStoreGames from "./modules/jeelStoreGames";
 import jeelStoreLibrary from "./modules/jeelStoreLibrary";
 import jeelStoreCharacters from "./modules/jeelStoreCharacters";
 import schoolAdmin from "@/router/modules/schoolAdmin";
+import systemAudios from "@/router/modules/systemAudios";
 const protectedRoutes = [
   {
     path: "/dashboard/home",
@@ -23,6 +24,7 @@ const protectedRoutes = [
           breadcrumb: "",
         },
       },
+
       // role
       {
         path: "/dashboard/role",
@@ -1830,7 +1832,8 @@ const protectedRoutes = [
       ...jeelStoreGames,
       ...jeelStoreCharacters,
       ...jeelStoreLibrary,
-      ...schoolAdmin
+      ...schoolAdmin,
+      ...systemAudios,
     ],
   },
 ];

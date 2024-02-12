@@ -21,9 +21,9 @@
           <p>قم بسحب الملف هنا او<span class="browse">تصفح الملفات</span></p>
         </h3>
         <div class="subtitle">
-          <p class="d-inline-block mr-1"> نوع الملفات </p>
-          <p class="d-inline-block m-0" v-if="typeOfAttachment === 'video'"> (mp4.) </p>
-          <p class="d-inline-block m-0" v-if="typeOfAttachment === 'audio'"> (mp3.) </p>
+          <p class="d-inline-block mr-1">نوع الملفات</p>
+          <p class="d-inline-block m-0" v-if="typeOfAttachment === 'video'">(mp4.)</p>
+          <p class="d-inline-block m-0" v-if="typeOfAttachment === 'audio'">(mp3.)</p>
           <div class="subtitle">
             <p>اكبر حجم للملف : {{ dropzoneOptions.maxFilesize }} ميجابايت</p>
           </div>
@@ -42,7 +42,7 @@ import vue2Dropzone from "vue2-dropzone";
 
 export default {
   name: "index",
-  components: {vue2Dropzone},
+  components: { vue2Dropzone },
   computed: {
     isRequired() {
       if (typeof this.rules === "string") return !!this.rules.includes("required");
@@ -120,7 +120,7 @@ export default {
             </a>
           </div>
         `,
-        headers: {Authorization: `Bearer ${VueCookies.get("token")}`},
+        headers: { Authorization: `Bearer ${VueCookies.get("token")}` },
         paramName: "attachment",
       },
       ShowError: false,
@@ -133,20 +133,21 @@ export default {
     sendFile(file, xhr, formData) {
       formData.append("type", `${this.typeOfAttachment}`);
     },
-    showErrorFile(){
-      this.ShowError = true
+    showErrorFile() {
+      this.ShowError = true;
     },
     async fileSent(file, response) {
-      this.fileInfo = response.data
-      this.fileUrl = this.fileInfo.original_url
-      this.fileId = this.fileInfo.uuid
-      this.$emit('setFileId', this.fileId)
-      this.$emit('setFileUrl', this.fileUrl)
+      this.fileInfo = response.data;
+      this.fileUrl = this.fileInfo.original_url;
+      this.fileId = this.fileInfo.uuid;
+      this.$emit("setFileId", this.fileId);
+      this.$emit("setFileUrl", this.fileUrl);
+      this.$emit("setFile", { uuid: this.fileId, url: this.fileUrl });
     },
     removeFile() {
-      this.$emit('setFileId', null)
-      this.$emit('setFileUrl', null)
-      this.ShowError = false
+      this.$emit("setFileId", null);
+      this.$emit("setFileUrl", null);
+      this.ShowError = false;
     },
     showModal() {
       const thumbnail = document.getElementById("dz-image");
@@ -155,8 +156,7 @@ export default {
       });
     },
   },
-  mounted() {
-  },
+  mounted() {},
   created() {
     this.dropzoneOptions.acceptedFiles = this.acceptFiles;
     this.dropzoneOptions.url = `${process.env.VUE_APP_ADMIN_URL}/attachment`;

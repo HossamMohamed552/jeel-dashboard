@@ -21,6 +21,15 @@
     color: #555;
   }
 }
+.list-title {
+  font-size: 1.3rem;
+  color: #76236c;
+  margin-bottom: 0;
+  &.border-top {
+    padding-top: 32px;
+    border-top: 1px solid #76236c;
+  }
+}
 
 ::v-deep {
   .hold-field {
@@ -36,6 +45,22 @@
     margin-right: 0.2rem;
     .col-form-label {
       color: $color-primary !important;
+    }
+  }
+
+  .mx-datepicker {
+    .mx-input-wrapper {
+      input {
+        background: #ffffff 0% 0% no-repeat padding-box;
+        border: 1px solid #d1d1d1;
+        border-radius: 50px;
+      }
+      i {
+        z-index: 99;
+        right: unset;
+        color: #76236c;
+        left: 24px;
+      }
     }
   }
 
