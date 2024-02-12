@@ -1,0 +1,138 @@
+<template>
+  <validation-observer v-slot="{ invalid }" ref="stepTwoForm">
+    <GenericForm
+      :schema="stepForm"
+      @handleInput="handleInput"
+      :loading="loading"
+      :submitedForm="false"
+      :invalid="invalid"
+    >
+      <template v-slot:customSubmit>
+        <b-col class="adding" lg="12">
+          <Button
+            :disabled="invalid"
+            type="submit"
+            :loading="loading"
+            @click="handleAdd"
+            custom-class="submit-btn"
+          >
+            إضافة
+          </Button>
+        </b-col>
+      </template>
+      <ListItems
+        class="seasonal-mission-custom-list-item"
+        :tableItems="notifactionGroup"
+        :headerName="'قائمة الإشعار'"
+        :fieldsList="fieldsList"
+        :showSortControls="false"
+      >
+      </ListItems>
+      <div class="buttons-container">
+        <slot></slot>
+        <div class="steps">
+          <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
+            السابق
+          </Button>
+
+          <Button custom-class="submit-btn" @click="nextStep"> التالي </Button>
+        </div>
+      </div>
+    </GenericForm>
+  </validation-observer>
+</template>
+
+<script>
+import GenericForm from "@/components/Shared/GenericForm";
+import ListItems from "@/components/ListItems/index.vue";
+import { mapActions } from "vuex";
+
+export default {
+  components: {
+    GenericForm,
+    ListItems,
+  },
+  props: {
+    currentStep: {
+      type: Number,
+      default: 0,
+    },
+    stepForm: {
+      type: Array,
+      default: () => [],
+    },
+  },
+  data() {
+    return {
+      loading: false,
+      entry: {},
+      watchedField: ["name", "start_date", "description"],
+      notifactionGroup: [],
+      notifactionIndex: 0,
+      fieldsList: [
+        { key: "id", label: "التسلسل" },
+        { key: "name", label: "عنوان اللإشعار" },
+        { key: "start_date", label: "تاريخ ووقت الإشعار" },
+        { key: "original_url", label: "صوت الإشعار" },
+        { key: "description", label: "نص الإشعار" },
+      ],
+    };
+  },
+  methods: {
+    ...mapActions(["addNotification"]),
+    nextStep() {
+      this.$emit("nextStep");
+    },
+    prevStep() {
+      this.$emit("prevStep");
+    },
+    handleCancel() {
+      this.$emit("onSubmit", this.stepForm);
+    },
+    handleInput(key, value) {
+      if (typeof value == "object") {
+        this.entry["uuid"] = value.uuid;
+        this.entry["audio"] = value.uuid;
+        this.entry["original_url"] = value.url;
+      } else {
+        this.entry[key] = value;
+      }
+    },
+    removeFile() {
+      let removeButton = document.getElementById("removeFile");
+      removeButton.click();
+    },
+    handleAdd() {
+      this.stepForm.forEach((field) => {
+        if (this.watchedField.includes(field.key)) {
+          try {
+            this.$set(this.entry, field.key, field.value);
+            this.$set(this.entry, `${field.key}_name`, field.value);
+            field.value = "";
+          } catch (error) {
+            console.error(`Error updating field ${field.key}:`, error);
+          }
+        }
+      });
+
+      this.notifactionIndex++;
+      this.entry.id = this.notifactionIndex;
+      this.addNotification(this.entry);
+      this.notifactionGroup.push(this.entry);
+      this.entry = {};
+      this.removeFile();
+    },
+  },
+  async mounted() {},
+};
+</script>
+
+<style lang="scss" scoped>
+@import "../index.scss";
+
+.adding {
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+}
+</style>

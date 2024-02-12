@@ -3,6 +3,11 @@ export const getSeasonalMissionGroupsRequest = (params) => ({
   url: "seasonal_mission_groups",
   config: { params },
 });
+export const getAllSeasonalMissionGroupsRequest = (params) => ({
+  method: "get",
+  url: "seasonal_mission_groups?list_all=true",
+  config: { params },
+});
 export const getSeasonalMissionGroupByIdRequest = (params) => ({
   method: "get",
   url: `seasonal_mission_groups/${params}`,
