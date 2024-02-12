@@ -98,7 +98,7 @@ export default {
   },
   mounted() {
     this.getQuizzes()
-    window.localStorage.setItem("page","practices");
+    // window.localStorage.setItem("page","practices");
   },
   beforeDestroy() {
     window.localStorage.setItem("page","");

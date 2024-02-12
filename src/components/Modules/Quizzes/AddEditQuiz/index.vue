@@ -89,8 +89,8 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :disabled="!createQuiz.learning_path_id"
-                    multiple="multiple"
                   ></SelectSearch>
+                  <!--                  multiple="multiple"-->
                 </div>
               </b-col>
               <b-col lg="4" class="mb-3">
@@ -105,6 +105,7 @@
                     :get-option-label="(option) => option.name"
                     :disabled="!createQuiz.learning_path_id"
                     multiple="multiple"
+                    @input="selectAllCheckLearning(createQuiz.learning_styles)"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -120,6 +121,7 @@
                     :get-option-label="(option) => option.name"
                     :disabled="!createQuiz.learning_path_id"
                     multiple="multiple"
+                    @input="selectAllCheckSkills(createQuiz.language_skills)"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -253,14 +255,16 @@
                           v-if="isGetQuestions"
                           custom-class="submit-btn"
                           @click="resetGettingQuestion"
-                          >إعادة ضبط</Button
+                        >إعادة ضبط
+                        </Button
                         >
                         <Button
                           v-else
                           custom-class="submit-btn"
                           @click="getQuestionsList"
                           :disabled="!easyCount && !mediumCount && !hardCount"
-                          >عرض الأسئلة</Button
+                        >عرض الأسئلة
+                        </Button
                         >
                       </div>
                     </b-col>
@@ -285,22 +289,13 @@
                     />
                   </template>
                   <template #cell(question_difficulty.name)="data">
-                    <div
-                      v-if="data.item.question_difficulty.id == 1"
-                      class="easy"
-                    >
+                    <div v-if="data.item.question_difficulty && data.item.question_difficulty.id == 1" class="easy">
                       {{ data.item.question_difficulty.name }}
                     </div>
-                    <div
-                      v-else-if="data.item.question_difficulty.id == 2"
-                      class="medium"
-                    >
+                    <div v-else-if="data.item.question_difficulty && data.item.question_difficulty.id == 2" class="medium">
                       {{ data.item.question_difficulty.name }}
                     </div>
-                    <div
-                      v-else-if="data.item.question_difficulty.id == 3"
-                      class="hard"
-                    >
+                    <div v-else-if="data.item.question_difficulty && data.item.question_difficulty.id == 3" class="hard">
                       {{ data.item.question_difficulty.name }}
                     </div>
                   </template>
@@ -323,18 +318,18 @@
                   </template>
                   <template #cell(question)="data">
                     <span v-if="data.item.question_pattern === 'text'">{{
-                      data.item.question | cutString
-                    }}</span>
+                        data.item.question ? data.item.question : data.item.name | cutString
+                      }}</span>
                     <img
                       v-else-if="data.item.question_pattern === 'image'"
-                      :src="data.item.question"
+                      :src="data.item.question ? data.item.question : data.item.name"
                       class="question-image-show"
                     />
                     <audio
                       v-else-if="data.item.question_pattern === 'audio'"
                       controls
                     >
-                      <source :src="data.item.question" />
+                      <source :src="data.item.question ? data.item.question : data.item.name"/>
                     </audio>
                   </template>
                 </b-table>
@@ -502,27 +497,24 @@ import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import SelectField from "@/components/Shared/SelectField/index.vue";
-// import { getAllLevelsRequest } from "@/api/level";
 import {
   getAllBloomCategoriesRequest,
   getAllLearningMethodsRequest,
   getAllLearningPathsRequest,
   getLaguageSkillsRequest,
-  getQuestionRequest,
 } from "@/api/question";
 import {
   getGeneralQuestionRequest,
   getQuestionDifficultyLevelLearnRequest,
+  getQuizQuestionStatisticsRequest,
   getSingleQuizRequest,
   postRandomQuizRequest,
-  getQuizQuestionStatisticsRequest,
 } from "@/api/quiz";
 import draggable from "vuedraggable";
-// import { getAllTermsRequest } from "@/api/term";
 import QuestionDetailsModal from "@/components/Shared/QuestionDetailsModal/index.vue";
-import { getLessonsRequest } from "@/api/lessons";
-import { getQuizTypeListRequest, getSortQuizTypeRequest } from "@/api/system";
-import { debounce } from "lodash";
+import {getLessonsRequest} from "@/api/lessons";
+import {getQuizTypeListRequest, getSortQuizTypeRequest} from "@/api/system";
+import {debounce} from "lodash";
 
 export default {
   filters: {
@@ -615,7 +607,9 @@ export default {
         lessons: [],
         description: "",
         type: "",
-        order_type: ""
+        order_type: "",
+        selectAllOptionLearning: false,
+        selectAllOptionSkills: false,
       },
       lessons: [],
       question_difficulty: [],
@@ -651,6 +645,18 @@ export default {
     },
   },
   methods: {
+    selectAllCheckLearning(learning) {
+      this.createQuiz.selectAllOptionLearning = learning.includes("selectAll" || "اختيار الكل")
+      if (this.createQuiz.selectAllOptionLearning) {
+        return this.createQuiz.learning_styles = []
+      }
+    },
+    selectAllCheckSkills(Skills) {
+      this.createQuiz.selectAllOptionSkills = Skills.includes("selectAll" || "اختيار الكل")
+      if (this.createQuiz.selectAllOptionSkills) {
+        return this.createQuiz.language_skills = []
+      }
+    },
     setQuizType: debounce(function () {
       this.quizType = this.createQuiz.type;
       this.isGetQuestions = false;
@@ -664,30 +670,33 @@ export default {
       if (this.createQuiz.lessons && this.createQuiz.lessons > 0) {
         let params = {
           learning_path_id: this.createQuiz.learning_path_id,
-          lessons: [],
-          blooms: [],
-          learning_styles: [],
-          language_skills: [],
+          lessons: this.createQuiz.lessons,
+          'blooms[]': this.createQuiz.blooms,
         };
-        let lessons = this.createQuiz.lessons;
-        let blooms = this.createQuiz.blooms;
-        let learning_styles = this.createQuiz.learning_styles;
-        let language_skills = this.createQuiz.language_skills;
-
-        if (lessons && lessons.length > 0) params.lessons = lessons;
-        // else this.params.lessons = ''
-        if (blooms && blooms.length > 0) params.blooms = blooms;
-        // else this.params.blooms = ''
-        if (learning_styles && learning_styles.length > 0)
-          params.learning_styles = learning_styles;
-        // else this.params.learning_styles = ''
-        if (language_skills && language_skills.length > 0)
-          params.language_skills = language_skills;
-        // else this.params.language_skills = ''
+        if (typeof this.createQuiz.learning_styles === 'object' && this.createQuiz.learning_styles && this.createQuiz.learning_styles.length > 0) {
+          Object.assign(params, {learning_styles: this.createQuiz.learning_styles})
+        }
+        if (typeof this.createQuiz.learning_styles === 'object' && this.createQuiz.language_skills && this.createQuiz.language_skills.length > 0) {
+          Object.assign(params, {language_skills: this.createQuiz.language_skills})
+        }
+        // language_skills: this.createQuiz.language_skills,
+        // let lessons = this.createQuiz.lessons;
+        // let blooms = this.createQuiz.blooms;
+        // let learning_styles = this.createQuiz.learning_styles;
+        // let language_skills = this.createQuiz.language_skills;
+        // if (lessons && lessons.length > 0) params.lessons = lessons;
+        // // else this.params.lessons = ''
+        // if (blooms && blooms.length > 0) params.blooms = blooms;
+        // // else this.params.blooms = ''
+        // if (learning_styles && learning_styles.length > 0)
+        //   params.learning_styles = learning_styles;
+        // // else this.params.learning_styles = ''
+        // if (language_skills && language_skills.length > 0)
+        //   params.language_skills = language_skills;
+        // // else this.params.language_skills = ''
 
         this.ApiService(getQuizQuestionStatisticsRequest(params)).then(
           (response) => {
-            console.log("response.data.data");
             const data = response.data.data;
             this.easyCount = data[0].questions_count;
             this.mediumCount = data[1].questions_count;
@@ -703,9 +712,7 @@ export default {
       const data = {
         learning_path_id: this.createQuiz.learning_path_id,
         lessons: this.createQuiz.lessons,
-        learning_styles: this.createQuiz.learning_styles,
-        language_skills: this.createQuiz.language_skills,
-        blooms: this.createQuiz.blooms,
+        'blooms[]': this.createQuiz.blooms,
         question_difficuly: [
           {
             question_difficulty_id: 1,
@@ -721,6 +728,15 @@ export default {
           },
         ],
       };
+      if (typeof this.createQuiz.learning_styles === 'object' && this.createQuiz.learning_styles && this.createQuiz.learning_styles.length > 0) {
+        Object.assign(data, {learning_styles: this.createQuiz.learning_styles})
+      }
+      if (typeof this.createQuiz.learning_styles === 'object' && this.createQuiz.language_skills && this.createQuiz.language_skills.length > 0) {
+        Object.assign(data, {language_skills: this.createQuiz.language_skills})
+      }
+      // learning_styles: this.createQuiz.learning_styles,
+      //   language_skills: this.createQuiz.language_skills,
+      //
 
       this.ApiService(postRandomQuizRequest(data)).then((response) => {
         this.actions = response.data.data;
@@ -775,9 +791,9 @@ export default {
         this.isEditable = false;
       }
     },
-    log() {
-      this.createQuiz.type = "manual";
-    },
+    // log() {
+    //   this.createQuiz.type = "manual";
+    // },
     changeQuizTypeGetQuestions() {
       this.createQuiz.type = "automatic";
       this.getNumberQuestionDifficulty();
@@ -807,7 +823,7 @@ export default {
       ).then((response) => {
         let allQuestionsLevel = response.data.data;
         this.question_difficulty = allQuestionsLevel.map((item) =>
-          Object.assign(item, { numberSelected: item.questions_count })
+          Object.assign(item, {numberSelected: item.questions_count})
         );
         this.getNumberQuestionDifficulty();
       });
@@ -816,10 +832,12 @@ export default {
       this.isEditable = true;
     },
     setLessonsBasedLearningPathId: debounce(function ($event) {
-      this.ApiService(getLessonsRequest({ learning_path_id: $event })).then(
+      this.ApiService(getLessonsRequest({learning_path_id: $event})).then(
         (response) => {
           this.lessons = response.data.data;
-          this.createQuiz.lessons = null;
+          if (!this.$route.params.id) {
+            this.createQuiz.lessons = null;
+          }
         }
       );
     }, 500),
@@ -918,11 +936,13 @@ export default {
     getLearningMethods() {
       this.ApiService(getAllLearningMethodsRequest()).then((response) => {
         this.learningMethods = response.data.data;
+        this.learningMethods.unshift({id: "selectAll", name: "اختيار الكل"})
       });
     },
     getLanguageSkills() {
       this.ApiService(getLaguageSkillsRequest()).then((response) => {
         this.languageSkills = response.data.data;
+        this.languageSkills.unshift({id: "selectAll", name: "اختيار الكل"})
       });
     },
     getQuizTypeList() {
@@ -951,31 +971,38 @@ export default {
     //   this.questionBank = response.data.data
     // })
     if (this.$route.params.id) {
-      this.ApiService(getSingleQuizRequest(this.$route.params.id)).then(
-        (response) => {
-          this.createQuiz.name = response.data.data.name;
-          this.createQuiz.description = response.data.data.description;
-          this.createQuiz.level_id = response.data.data.level.id;
-          this.createQuiz.term_id = response.data.data.term.id;
-          this.createQuiz.learning_path_id =
-            response.data.data.learning_path.id;
-          this.createQuiz.type = response.data.data.type;
-          this.question_difficulty =
-            response.data.data.questions_difficulties.map((item) =>
-              Object.assign(item, { numberSelected: item.questions_count })
-            );
-          this.createQuiz.total_question = this.question_difficulty.reduce(
-            (accumulator, currentValue) =>
-              accumulator + currentValue.numberSelected,
-            0
-          );
-          this.questionsToSend = this.questionBank.filter((item) =>
-            response.data.data.questions
-              .map((item) => item.id)
-              .includes(item.id)
-          );
+      let quizData;
+      this.ApiService(getSingleQuizRequest(this.$route.params.id)).then((response) => {
+        quizData = response.data.data
+        this.createQuiz.name = quizData.name;
+        this.createQuiz.description = quizData.description;
+        this.createQuiz.learning_path_id = quizData.learning_path.id;
+        this.createQuiz.lessons = quizData.lessons.map((item) => item.id)
+        this.createQuiz.blooms = quizData.blooms.id
+        if (typeof quizData.learning_styles === 'object') {
+          this.createQuiz.learning_styles = quizData.learning_styles.map((item) => item.id)
+        } else {
+          this.createQuiz.learning_styles = ["selectAll"]
         }
-      );
+        if (typeof quizData.language_skills === 'object') {
+          this.createQuiz.language_skills = quizData.language_skills.map((item) => item.id)
+        } else {
+          this.createQuiz.language_skills = ["selectAll"]
+        }
+        this.createQuiz.type = quizData.type.id;
+        this.createQuiz.order_type = quizData.order_type.id;
+      }).then(() => {
+        setTimeout(()=>{
+          this.question_difficulty = quizData.questions_difficulties.map((item) => Object.assign(item, {numberSelected: item.total_question}));
+          this.createQuiz.total_question = this.question_difficulty.reduce((accumulator, currentValue) => accumulator + currentValue.numberSelected, 0);
+          this.easyCount = this.question_difficulty.filter((item)=> item.name === 'سهل')?.[0]?.numberSelected ? this.question_difficulty.filter((item)=> item.name === 'سهل')?.[0]?.numberSelected : 0
+          this.mediumCount = this.question_difficulty.filter((item)=> item.name === 'متوسط')?.[0]?.numberSelected ? this.question_difficulty.filter((item)=> item.name === 'متوسط')?.[0]?.numberSelected : 0
+          this.hardCount = this.question_difficulty.filter((item)=> item.name === 'صعب')?.[0]?.numberSelected ? this.question_difficulty.filter((item)=> item.name === 'صعب')?.[0]?.numberSelected : 0
+          this.createTotalsLists();
+          // this.questionsToSend = this.questionBank.filter((item) => quizData.questions.map((item) => item.id).includes(item.id));
+          this.actions = quizData.questions
+        },1000)
+      })
     }
   },
 };

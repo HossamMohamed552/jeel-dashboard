@@ -26,13 +26,28 @@ export default {
       formData.append('description',quiz.description);
       formData.append('total_question',quiz.total_question);
       formData.append('type',quiz.type);
+      formData.append('order_type',quiz.order_type);
       formData.append('learning_path_id',quiz.learning_path_id);
-      formData.append('level_id',quiz.level_id);
-      formData.append('term_id',quiz.term_id);
+      // formData.append('level_id',quiz.level_id);
+      // formData.append('term_id',quiz.term_id);
       formData.append('_method','PUT');
+      formData.append(`blooms[0]`, quiz.blooms);
       for (let questions = 0; questions < quiz.questions.length;) {
-        formData.append(`questions[${questions}]`, quiz.questions[questions].id);
+        formData.append(`questions[${questions}]`, quiz.questions[questions]);
         questions++
+      }
+      for (let learning_styles = 0; learning_styles < quiz.learning_styles.length;) {
+        formData.append(`learning_styles[${learning_styles}]`, quiz.learning_styles[learning_styles]);
+        learning_styles++
+      }
+      for (let language_skills = 0; language_skills < quiz.language_skills.length;) {
+        formData.append(`language_skills[${language_skills}]`, quiz.language_skills[language_skills]);
+        language_skills++
+      }
+
+      for (let lessons = 0; lessons < quiz.lessons.length;) {
+        formData.append(`lessons[${lessons}]`, quiz.lessons[lessons]);
+        lessons++
       }
       this.showModal = true
       axios.post(`/quizzes/${this.$route.params.id}`, formData, {
