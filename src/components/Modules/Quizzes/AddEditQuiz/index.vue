@@ -289,13 +289,19 @@
                     />
                   </template>
                   <template #cell(question_difficulty.name)="data">
-                    <div v-if="data.item.question_difficulty && data.item.question_difficulty.id == 1" class="easy">
+                    <div
+                      v-if="data.item.question_difficulty && data.item.question_difficulty.id == 1"
+                      class="easy">
                       {{ data.item.question_difficulty.name }}
                     </div>
-                    <div v-else-if="data.item.question_difficulty && data.item.question_difficulty.id == 2" class="medium">
+                    <div
+                      v-else-if="data.item.question_difficulty && data.item.question_difficulty.id == 2"
+                      class="medium">
                       {{ data.item.question_difficulty.name }}
                     </div>
-                    <div v-else-if="data.item.question_difficulty && data.item.question_difficulty.id == 3" class="hard">
+                    <div
+                      v-else-if="data.item.question_difficulty && data.item.question_difficulty.id == 3"
+                      class="hard">
                       {{ data.item.question_difficulty.name }}
                     </div>
                   </template>
@@ -992,16 +998,17 @@ export default {
         this.createQuiz.type = quizData.type.id;
         this.createQuiz.order_type = quizData.order_type.id;
       }).then(() => {
-        setTimeout(()=>{
+        setTimeout(() => {
           this.question_difficulty = quizData.questions_difficulties.map((item) => Object.assign(item, {numberSelected: item.total_question}));
           this.createQuiz.total_question = this.question_difficulty.reduce((accumulator, currentValue) => accumulator + currentValue.numberSelected, 0);
-          this.easyCount = this.question_difficulty.filter((item)=> item.name === 'سهل')?.[0]?.numberSelected ? this.question_difficulty.filter((item)=> item.name === 'سهل')?.[0]?.numberSelected : 0
-          this.mediumCount = this.question_difficulty.filter((item)=> item.name === 'متوسط')?.[0]?.numberSelected ? this.question_difficulty.filter((item)=> item.name === 'متوسط')?.[0]?.numberSelected : 0
-          this.hardCount = this.question_difficulty.filter((item)=> item.name === 'صعب')?.[0]?.numberSelected ? this.question_difficulty.filter((item)=> item.name === 'صعب')?.[0]?.numberSelected : 0
+          this.easyCount = this.question_difficulty.filter((item) => item.name === 'سهل')?.[0]?.numberSelected ? this.question_difficulty.filter((item) => item.name === 'سهل')?.[0]?.numberSelected : 0
+          this.mediumCount = this.question_difficulty.filter((item) => item.name === 'متوسط')?.[0]?.numberSelected ? this.question_difficulty.filter((item) => item.name === 'متوسط')?.[0]?.numberSelected : 0
+          this.hardCount = this.question_difficulty.filter((item) => item.name === 'صعب')?.[0]?.numberSelected ? this.question_difficulty.filter((item) => item.name === 'صعب')?.[0]?.numberSelected : 0
           this.createTotalsLists();
           // this.questionsToSend = this.questionBank.filter((item) => quizData.questions.map((item) => item.id).includes(item.id));
           this.actions = quizData.questions
-        },1000)
+          this.selectedQestions = quizData.questions.map(item => item.id)
+        }, 1000)
       })
     }
   },
