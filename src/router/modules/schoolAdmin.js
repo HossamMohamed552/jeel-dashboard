@@ -222,5 +222,26 @@ export default [
       preLabel: "إدارة الطلاب",
       preLink: "/dashboard/students-users",
     },
-  }
+  },
+  {
+    path: "/dashboard/parents-users",
+    name: "parents-users",
+    component: () => import("../../../views/user-parent/index.vue"),
+    meta: {
+      breadcrumb: "إدارة أولياء الأمور",
+      preLabel: "",
+      preLink: "",
+    },
+  },
+  {
+    path: "/dashboard/user-parent/:id",
+    name: "show-parents-users",
+    component: () => import("../../../views/user-parent/view-parent/index.vue"),
+    meta: {
+      breadcrumb: "تفاصيل ولى الأمر",
+      preLabel: "إدارة أولياء الأمور",
+      preLink: "/dashboard/parents-users",
+    },
+  },
+
 ]

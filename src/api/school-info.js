@@ -39,6 +39,14 @@ export const getAllStudentUsersRequest = (params) => ({
     params,
   },
 });
+export const getAllParentUsersRequest = (params) => ({
+  method: "get",
+  url: "/school-admin/parents/users",
+  config: {
+    params,
+  },
+});
+
 export const getAllClassesRequest = (params) => ({
   method: "get",
   url: "classes",
@@ -201,3 +209,11 @@ export const postAddUserSchoolRequest = (data) => ({
     data,
   },
 });
+
+export const getStudentForParentUserRequest = (id,data) =>({
+  method: "get",
+  url: `school-admin/parent/${id}/students`,
+  config: {
+    data,
+  },
+})

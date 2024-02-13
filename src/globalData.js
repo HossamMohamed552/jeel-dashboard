@@ -432,7 +432,7 @@ let routeSchoolAdmin =[
     altImage: "parents-users",
     titleImage: "parents-users",
     icon: require("@/assets/images/icons/list.svg"),
-    permission: "view-students-users",
+    permission: "view-parents-users",
   },
 ]
 let routesPrizes = [
