@@ -8,6 +8,7 @@ import jeelStoreCharacters from "./modules/jeelStoreCharacters";
 import schoolAdmin from "@/router/modules/schoolAdmin";
 import seasonalMissions from "@/router/modules/seasonalMissions";
 import systemAudios from "@/router/modules/systemAudios";
+import academicYear from "@/router/modules/academicYear";
 const protectedRoutes = [
   {
     path: "/dashboard/home",
@@ -1836,6 +1837,7 @@ const protectedRoutes = [
       ...schoolAdmin,
       ...seasonalMissions,
       ...systemAudios,
+      ...academicYear,
     ],
   },
 ];

@@ -80,7 +80,7 @@ export default {
     return {
       loading: false,
       showModal: false,
-      currentStep: 0,
+      currentStep: 2,
       steps: [
         {
           icon: "1",
