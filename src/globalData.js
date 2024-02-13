@@ -379,7 +379,7 @@ let routeSchoolAdmin =[
   //TODO
   {
     name: "إدارة العام الدراسي",
-    path: "/dashboard/school-info",
+    path: "/dashboard/management-academic-year",
     altImage: "school-info",
     titleImage: "school-info",
     icon: require("@/assets/images/icons/list.svg"),
