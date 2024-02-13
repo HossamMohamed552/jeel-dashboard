@@ -115,7 +115,7 @@ export default {
             <div class="dz-error-message">
               <span data-dz-errormessage></span>
             </div>
-            <a class="dz-remove" href="javascript:undefined;" data-dz-remove>
+            <a id="removeFile" class="dz-remove" href="javascript:undefined;" data-dz-remove>
               حذف الملف
             </a>
           </div>

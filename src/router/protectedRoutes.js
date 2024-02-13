@@ -6,6 +6,7 @@ import jeelStoreGames from "./modules/jeelStoreGames";
 import jeelStoreLibrary from "./modules/jeelStoreLibrary";
 import jeelStoreCharacters from "./modules/jeelStoreCharacters";
 import schoolAdmin from "@/router/modules/schoolAdmin";
+import seasonalMissions from "@/router/modules/seasonalMissions";
 import systemAudios from "@/router/modules/systemAudios";
 const protectedRoutes = [
   {
@@ -1833,6 +1834,7 @@ const protectedRoutes = [
       ...jeelStoreCharacters,
       ...jeelStoreLibrary,
       ...schoolAdmin,
+      ...seasonalMissions,
       ...systemAudios,
     ],
   },

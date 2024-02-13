@@ -1,30 +1,26 @@
 <template>
   <div :class="$i18n.locale === 'en' ? '' : 'rtl'">
     <router-view />
-    <Toast/>
+    <Toast />
   </div>
 </template>
 
 <script>
 import Toast from "@/components/Shared/Toast/index.vue";
 export default {
-  components:{
-    Toast
+  components: {
+    Toast,
   },
-  created() {
-  },
-  beforeCreate(){
-  },
-  mounted(){
-  },
-  watch:{
-  }
+  created() {},
+  beforeCreate() {},
+  mounted() {},
+  watch: {},
 };
 </script>
 
 <style lang="scss">
 @import "@/assets/style/scss/__variables";
-*{
+*:not(.fa-solid) {
   font-family: "DiodrumArabic", sans-serif !important;
 }
 
@@ -76,8 +72,8 @@ export default {
     padding: 0 8px;
   }
   .table tr td:first-child {
-    background: linear-gradient(to left, #76236C, #58C6F2);;
-    --bs-table-accent-bg: linear-gradient(to left, #76236C, #58C6F2);;
+    background: linear-gradient(to left, #76236c, #58c6f2);
+    --bs-table-accent-bg: linear-gradient(to left, #76236c, #58c6f2);
     color: #fff;
   }
 
@@ -95,7 +91,7 @@ export default {
   }
   .table td:before {
     content: attr(data-th);
-  /*  border-left: 1px solid #dee2e6;**/
+    /*  border-left: 1px solid #dee2e6;**/
     display: table-cell;
     padding: 10px;
     width: 130px;

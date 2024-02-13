@@ -11,15 +11,18 @@
         <div class="hold-fields">
           <b-row>
             <b-col lg="12">
-              <GenericForm
-                :schema="userSearch"
-                @handleCancel="handleCancel"
-                @onSubmit="onSubmit"
-                @handleInput="handleInput"
-                :loading="loading"
-                :submitButton="$t('BUTTONS.SEARCH')"
-                :cancelButton="$t('BUTTONS.RECOVERY')"
-              ></GenericForm>
+              <validation-observer v-slot="{ invalid }" ref="schoolsUsersSearch">
+                <GenericForm
+                  :schema="userSearch"
+                  @handleCancel="handleCancel"
+                  @onSubmit="onSubmit"
+                  @handleInput="handleInput"
+                  :loading="loading"
+                  :submitButton="$t('BUTTONS.SEARCH')"
+                  :cancelButton="$t('BUTTONS.RECOVERY')"
+                  :invalid="invalid"
+                ></GenericForm>
+              </validation-observer>
             </b-col>
           </b-row>
         </div>
@@ -105,6 +108,7 @@ export default {
           col: "4",
           listen: "id",
           type: "select",
+          optionValue: "name",
           label: this.$t("SCHOOL.COUNTRY"),
           options: [],
           deselectFromDropdown: true,
@@ -116,6 +120,7 @@ export default {
           col: "4",
           listen: "id",
           type: "select",
+          optionValue: "name",
           label: this.$t("SCHOOL.SCHOOL_COLLECTION"),
           options: [],
           deselectFromDropdown: true,
@@ -127,6 +132,7 @@ export default {
           col: "4",
           listen: "id",
           type: "select",
+          optionValue: "name",
           label: this.$t("TABLE_FIELDS.school"),
           options: [],
           deselectFromDropdown: true,
@@ -138,6 +144,7 @@ export default {
           col: "4",
           listen: "id",
           type: "select",
+          optionValue: "name",
           label: this.$t("ROLES.CLASSIFICATION_DEPARTMENT"),
           options: [],
           deselectFromDropdown: true,
@@ -148,6 +155,7 @@ export default {
           key: "role_id",
           col: "4",
           type: "select",
+          optionValue: "name",
           listen: "id",
           label: this.$t("USERS.DEPARTMENT"),
           options: [],
@@ -159,6 +167,7 @@ export default {
           key: "status",
           col: "4",
           type: "select",
+          optionValue: "name",
           label: this.$t("SCHOOL.status"),
           options: [],
           listen: "key",

@@ -14,7 +14,7 @@
         </div>
         <div class="info-media">
           <p>{{ mediaName }}</p>
-          <p>
+          <p v-if="fileSize != ''">
             <span>حجم الملف </span> <span>{{ fileSize }}</span>
           </p>
         </div>

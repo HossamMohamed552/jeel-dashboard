@@ -14,6 +14,15 @@ export const getLibraryTypeRequest = (params) => ({
   url: "system_codes/library/type",
   config: { params },
 });
+export const getLibraryContentRequest = (params) => ({
+  method: "get",
+  url: `library?type=[${params}]`,
+});
+export const getCharacterContentRequest = (params) => ({
+  method: "get",
+  url: `prize_character?type=[${params}]`,
+});
+
 export const getSortQuizTypeRequest = (params) => ({
   method: "get",
   url: "system_codes/quiz/order_type",
@@ -72,5 +81,10 @@ export const getAllRolesByTypeRequest = (params) => ({
 export const getAllTaskTypeRequest = (params) => ({
   method: "get",
   url: `system_codes/task/type`,
+  config: { params },
+});
+export const getAllPrizeSeasonalMissionTypeRequest = (params) => ({
+  method: "get",
+  url: `system_codes/prize_seasonal_mission/type`,
   config: { params },
 });
