@@ -243,5 +243,16 @@ export default [
       preLink: "/dashboard/parents-users",
     },
   },
+  {
+    path: "/dashboard/parent-enrollment/:id",
+    name: "add-students-parent-enrollment",
+    component: () => import("../../../views/user-parent/students/index.vue"),
+    meta: {
+      breadcrumb: "إضافة طالب إلى ولى الأمر",
+      preLabel: "إدارة أولياء الأمور",
+      preLink: "/dashboard/parents-users",
+    },
+  },
+
 
 ]

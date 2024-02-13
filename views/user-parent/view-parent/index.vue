@@ -133,8 +133,12 @@ export default {
           label: this.$i18n.t("USERS.name"),
         },
         {
-          key: "roles",
-          label: this.$i18n.t("USERS.DEPARTMENT"),
+          key: "class.level.name",
+          label: this.$i18n.t("schoolAdmin.level"),
+        },
+        {
+          key: "class.name",
+          label: this.$i18n.t("schoolAdmin.class"),
         },
         {
           key: "status.key",

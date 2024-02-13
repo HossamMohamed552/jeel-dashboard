@@ -806,6 +806,7 @@
     "roleDetail": "الصلاحية",
     "addRole": "إضافة صلاحية",
     "classDETAILS": "تفاثيل الفصل",
-    "students_count": "عدد الطلاب"
+    "students_count": "عدد الطلاب",
+    "class": "الفصل"
   }
 }

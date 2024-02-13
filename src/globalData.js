@@ -380,10 +380,10 @@ let routeSchoolAdmin =[
   {
     name: "إدارة العام الدراسي",
     path: "/dashboard/management-academic-year",
-    altImage: "school-info",
-    titleImage: "school-info",
+    altImage: "management-academic-year",
+    titleImage: "management-academic-year",
     icon: require("@/assets/images/icons/list.svg"),
-    permission: "show-schooladmin-school-info",
+    permission: "view-school-study-years",
   },
   {
     name: "الفصول",
