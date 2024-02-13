@@ -246,11 +246,11 @@ export default {
     },
   },
   mounted() {
-    if (this.user.roles[0]?.type.key === "system_administration"){
+    if (this.user && this.user.roles && this.user.roles[0]?.type.key === "system_administration"){
       this.ApiService(getAllStatisticsRequest()).then((response) => {
         this.statistics = response.data.data;
       });
-    } else if(this.user.roles[0]?.type.key === "school_management"){
+    } else if( this.user && this.user.roles && this.user.roles[0]?.type.key === "school_management"){
       this.ApiService(getAllStatisticsSchoolAdminRequest()).then((response) => {
         this.statistics = response.data.data;
       });

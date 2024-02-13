@@ -32,7 +32,7 @@
               </b-col>
               <b-col lg="8">
                 <b-row>
-                  <b-col lg="4">
+                  <b-col lg="4" v-if="getUserAdmin.roles[0]?.type.key === 'system_administration'">
                     <div class="hold-field">
                       <SelectSearch
                         v-model="user.school_group_id"
@@ -47,7 +47,7 @@
                       ></SelectSearch>
                     </div>
                   </b-col>
-                  <b-col lg="4">
+                  <b-col lg="4" v-if="getUserAdmin.roles[0]?.type.key === 'system_administration'">
                     <div class="hold-field">
                       <SelectSearch
                         v-model="user.school_id"
@@ -309,6 +309,7 @@ import {
   getAllRolesTypeRequest,
   getAllRolesByTypeRequest,
 } from "@/api/system";
+import {mapGetters} from "vuex";
 
 export default {
   components: {
@@ -318,7 +319,11 @@ export default {
     ImageUploader,
   },
   mixins: [TogglePasswordMixins],
-
+  computed:{
+    getUserAdmin(){
+      return this.$store.getters.user
+    }
+  },
   props: {
     systemRoles: {
       type: Array,
@@ -521,7 +526,7 @@ export default {
     this.getAllGenders();
     this.getAllReligions();
     this.getAllRolesType();
-    // this.getAllSchoolGroup();
+    this.getAllSchoolGroup();
   },
 };
 </script>
