@@ -162,6 +162,14 @@ let routesMissions = [
     icon: require("@/assets/images/icons/steps.svg"),
     permission: "view-seasonal-mission-groups",
   },
+  {
+    name: "المهام الموسمية",
+    path: "/dashboard/seasonal-mission",
+    altImage: "seasonal-mission",
+    titleImage: "seasonal-mission",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-seasonal-missions",
+  },
 ];
 let routeSettings = [
   {
@@ -187,6 +195,14 @@ let routeSettings = [
     titleImage: "rewarding-actions",
     icon: require("@/assets/images/icons/country.svg"),
     permission: "view-reward-actions",
+  },
+  {
+    name: "أصوات المنصة",
+    path: "/dashboard/system-audios",
+    altImage: "system-audios",
+    titleImage: "system-audios",
+    icon: require("@/assets/images/icons/country.svg"),
+    permission: "view-system-audio",
   },
   // {
   //   name: "جيمز",

@@ -41,14 +41,14 @@
         @deleteItem="deleteItem($event)"
         @refetch="getSeasonalMission"
         :loading="loading"
-        :permission_delete="'delete-seasonal-mission'"
-        :permission_edit="'edit-seasonal-mission'"
-        :permission_view="'show-seasonal-mission'"
+        :permission_delete="'delete-seasonal-missions'"
+        :permission_edit="'edit-seasonal-missions'"
+        :permission_view="'show-seasonal-missions'"
       >
         <!-- todo tooo check the permission above and for the button -->
         <template #buttons>
-          <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSeasonalMission">
-            <!-- v-if="user.permissions.includes(`add-seasonal-mission`)" -->
+          <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSeasonalMission" v-if="user.permissions.includes(`add-seasonal-missions`)">
+            <!--  -->
             <img src="@/assets/images/icons/plus.svg" alt="seasonal" />
             <span>إضافة مهمة موسمية</span>
           </Button>

@@ -29,6 +29,9 @@
           </div>
 
           <div class="last-attempt">
+            <div class="last-attempt-icon">
+              <img src="@/assets/images/icons/last-attempt.svg" alt="last-attempt">
+            </div>
             <div>
               <p>آخر عملية تسجيل دخول</p>
               <p>{{ user.last_attempt }}</p>
