@@ -1,0 +1,10 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+
+.add-edit-academic-year-form {
+  @include styleViewList;
+  min-height: fit-content;
+  h3 {
+    font-weight: bold;
+  }
+}

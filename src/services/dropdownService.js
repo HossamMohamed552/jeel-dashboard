@@ -14,6 +14,10 @@ import {
   getLibraryTypeRequest, // نوع المحتوى ( مكتبة )
   getLibraryContentRequest, // المحتوى ( مكتبة )
 } from "@/api/system";
+import {
+  geTermsRequest, // الترم الدراسي
+  getStudyYearRequest, // العام الدراسى
+} from "@/api/academicYear";
 import { getSchoolsRequest } from "@/api/school";
 import { getRolesRequest } from "@/api/role";
 import { getAllSeasonalMissionGroupsRequest } from "@/api/seasonal-mission-group"; // اسم المجموعة الموسمية
@@ -25,6 +29,7 @@ import { getVideoPerLevelPathRequest } from "@/api/videos"; // الفيديوه�
 
 export async function updateFieldOptions(array, key, data) {
   const selectOptionsField = array.find((field) => field.key === key);
+  console.log(selectOptionsField);
   if (selectOptionsField) {
     if (key === "school_id") selectOptionsField.options = data.schools;
     else selectOptionsField.options = data;
@@ -100,10 +105,15 @@ export async function getCharacterContent(array, key, id) {
 export async function getLibraryContent(array, key, id) {
   await fetchDataAndUpdateOptions(array, getLibraryContentRequest(id), key);
 }
-
 export async function getQuizLevelPath(array, key) {
   await fetchDataAndUpdateOptions(array, getQuizLevelPathRequest(), key);
 }
 export async function getVideoPerLevelPath(array, key) {
   await fetchDataAndUpdateOptions(array, getVideoPerLevelPathRequest(), key);
+}
+export async function geAllTerms(array, key) {
+  await fetchDataAndUpdateOptions(array, geTermsRequest(), key);
+}
+export async function getAllStudyYear(array, key) {
+  await fetchDataAndUpdateOptions(array, getStudyYearRequest(), key);
 }
