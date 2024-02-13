@@ -11,8 +11,8 @@
       @deleteItem="deleteItem($event)"
       @refetch="getSystemAudios"
       :loading="loading"
-      :permission_edit="'edit-questionDifficulty'"
-      :permission_view="'show-questionDifficulty'"
+      :permission_edit="'edit-system-audio'"
+      :permission_view="'show-system-audio'"
     />
   </section>
 </template>

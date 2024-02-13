@@ -32,35 +32,35 @@
               </b-col>
               <b-col lg="8">
                 <b-row>
-<!--                  <b-col lg="4">-->
-<!--                    <div class="hold-field">-->
-<!--                      <SelectSearch-->
-<!--                        v-model="user.school_group_id"-->
-<!--                        :label="$t('SCHOOL.SCHOOL_COLLECTION')"-->
-<!--                        :name="$t('SCHOOL.SCHOOL_COLLECTION')"-->
-<!--                        :options="schoolGroupList"-->
-<!--                        :reduce="(option) => option.id"-->
-<!--                        :get-option-label="(option) => option.name"-->
-<!--                        :rules="'required'"-->
-<!--                        :deselectFromDropdown="true"-->
-<!--                        @input="getAllSchools($event)"-->
-<!--                      ></SelectSearch>-->
-<!--                    </div>-->
-<!--                  </b-col>-->
-<!--                  <b-col lg="4">-->
-<!--                    <div class="hold-field">-->
-<!--                      <SelectSearch-->
-<!--                        v-model="user.school_id"-->
-<!--                        :label="$t('TABLE_FIELDS.school')"-->
-<!--                        :name="$t('TABLE_FIELDS.school')"-->
-<!--                        :options="schoolsList"-->
-<!--                        :reduce="(option) => option.id"-->
-<!--                        :get-option-label="(option) => option.name"-->
-<!--                        :rules="'required'"-->
-<!--                        :deselectFromDropdown="true"-->
-<!--                      ></SelectSearch>-->
-<!--                    </div>-->
-<!--                  </b-col>-->
+                  <b-col lg="4" v-if="getUserAdmin.roles[0]?.type.key === 'system_administration'">
+                    <div class="hold-field">
+                      <SelectSearch
+                        v-model="user.school_group_id"
+                        :label="$t('SCHOOL.SCHOOL_COLLECTION')"
+                        :name="$t('SCHOOL.SCHOOL_COLLECTION')"
+                        :options="schoolGroupList"
+                        :reduce="(option) => option.id"
+                        :get-option-label="(option) => option.name"
+                        :rules="'required'"
+                        :deselectFromDropdown="true"
+                        @input="getAllSchools($event)"
+                      ></SelectSearch>
+                    </div>
+                  </b-col>
+                  <b-col lg="4" v-if="getUserAdmin.roles[0]?.type.key === 'system_administration'">
+                    <div class="hold-field">
+                      <SelectSearch
+                        v-model="user.school_id"
+                        :label="$t('TABLE_FIELDS.school')"
+                        :name="$t('TABLE_FIELDS.school')"
+                        :options="schoolsList"
+                        :reduce="(option) => option.id"
+                        :get-option-label="(option) => option.name"
+                        :rules="'required'"
+                        :deselectFromDropdown="true"
+                      ></SelectSearch>
+                    </div>
+                  </b-col>
                   <b-col lg="4">
                     <div class="hold-field">
                       <SelectSearch
@@ -309,6 +309,7 @@ import {
   getAllRolesTypeRequest,
   getAllRolesByTypeRequest,
 } from "@/api/system";
+import {mapGetters} from "vuex";
 
 export default {
   components: {
@@ -318,7 +319,11 @@ export default {
     ImageUploader,
   },
   mixins: [TogglePasswordMixins],
-
+  computed:{
+    getUserAdmin(){
+      return this.$store.getters.user
+    }
+  },
   props: {
     systemRoles: {
       type: Array,
@@ -453,13 +458,13 @@ export default {
         }
       }
     }, 300),
-    // getAllSchools: _.debounce(function (value) {
-    //   if (value != undefined) {
-    //     this.ApiService(getSingleSchoolGroupRequest(value)).then((response) => {
-    //       this.schoolsList = response.data.data.schools;
-    //     });
-    //   }
-    // }, 300),
+    getAllSchools: _.debounce(function (value) {
+      if (value != undefined) {
+        this.ApiService(getSingleSchoolGroupRequest(value)).then((response) => {
+          this.schoolsList = response.data.data.schools;
+        });
+      }
+    }, 300),
 
     onSelectRoleCategoriesInput: _.debounce(function (value) {
       if (value != undefined) {
@@ -510,18 +515,18 @@ export default {
       });
     },
 
-    // getAllSchoolGroup() {
-    //   this.ApiService(getAllSchoolGroupRequest()).then((response) => {
-    //     this.schoolGroupList = response.data.data;
-    //   });
-    // },
+    getAllSchoolGroup() {
+      this.ApiService(getAllSchoolGroupRequest()).then((response) => {
+        this.schoolGroupList = response.data.data;
+      });
+    },
   },
   mounted() {
     this.getAllCountries();
     this.getAllGenders();
     this.getAllReligions();
     this.getAllRolesType();
-    // this.getAllSchoolGroup();
+    this.getAllSchoolGroup();
   },
 };
 </script>
