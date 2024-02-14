@@ -4,7 +4,7 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">{{ $t("schoolAdmin.role") }}</h2>
+            <h2 class="heading">إضافة ولى الأمر إلى الطالب</h2>
           </b-col>
         </b-row>
         <b-row>
@@ -57,37 +57,39 @@
               :subtitle="singleUser?.roles?.[0].name"
             />
           </b-col>
-          <validation-observer class="w-100 px-3" v-slot="{ invalid }" ref="addEditSchoolClassForm">
-            <form @submit.prevent="onSubmit">
-              <b-row>
-                <b-col lg="12">
-                  <h2 class="heading mt-3">{{ $t("schoolAdmin.addStudent") }}</h2>
-                </b-col>
-                <b-col lg="10">
-                  <SelectSearch
-                    v-model="enrollment.student_id"
-                    :label="$t('schoolAdmin.selectStudent')"
-                    :name="$t('schoolAdmin.selectStudent')"
-                    :placeholder="$t('schoolAdmin.selectStudent')"
-                    :options="studentList"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                    :rules="'required'"
-                  ></SelectSearch>
-                </b-col>
-                <b-col lg="2" class="mt-3 mb-3">
-                  <Button type="submit" :loading="loading" :disabled="invalid"
-                          custom-class="submit-btn margin-0">
-                    {{ $t("GLOBAL_SAVE") }}
-                  </Button>
-                </b-col>
-              </b-row>
-            </form>
-          </validation-observer>
+        </b-row>
+        <validation-observer class="w-100 px-3" v-slot="{ invalid }" ref="addEditSchoolClassForm">
+          <form @submit.prevent="onSubmit">
+            <b-row>
+              <b-col lg="12">
+                <h2 class="heading mt-3">{{ $t("schoolAdmin.addParent") }}</h2>
+              </b-col>
+              <b-col lg="10">
+                <SelectSearch
+                  v-model="enrollment.parent_id"
+                  :label="$t('schoolAdmin.selectParent')"
+                  :name="$t('schoolAdmin.selectParent')"
+                  :placeholder="$t('schoolAdmin.selectParent')"
+                  :options="parentsList"
+                  :reduce="(option) => option.id"
+                  :get-option-label="(option) => option.name"
+                  :rules="'required'"
+                ></SelectSearch>
+              </b-col>
+              <b-col lg="2" class="mt-3 mb-3">
+                <Button type="submit" :loading="loading" :disabled="invalid"
+                        custom-class="submit-btn margin-0">
+                  {{ $t("GLOBAL_SAVE") }}
+                </Button>
+              </b-col>
+            </b-row>
+          </form>
+        </validation-observer>
+        <b-row>
           <b-col lg="12">
             <ListItems
               :fieldsList="fieldsList"
-              :table-items="singleUser.students"
+              :table-items="singleUser.parents"
               :loading="loading"
               :permission_delete="'delete-enrollment-students-parents-users'"
               @deleteItem="deleteItem($event)"
@@ -100,33 +102,20 @@
         </b-row>
       </div>
     </div>
-    <Modal
-      :content-message="'حذف العنصر'"
-      :content-message-question="'هل انت متأكد من حذف العنصر ؟'"
-      :showModal="showModal"
-      @cancel="cancel($event)"
-      :is-warning="true"
-      @cancelWithConfirm="cancelWithConfirm($event)"
-    />
   </section>
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import {
-  deleteStudentEnrollmentRequest,
-  deleteSupervisorEnrollmentRequest, getAllClassesRequest, getAllStudentUsersListTrueRequest,
-  getLevelsRequest,
-  getSchoolAdminUserRequest, getStudentForParentUserRequest, getStudentsUsersRequest,
-  getStudyYearsRequest,
-  getSuperVisorUsersRequest,
-  postStudentEnrollmentRequest, postStudentForParentRequest,
-  postSuperVisorEnrollmentRequest,
-} from "@/api/school-info";
 import Button from "@/components/Shared/Button/index.vue";
 import TextField from "@/components/Shared/TextField/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {
+  getAllParentUsersRequest,
+  getParentForStudentUserRequest,
+  postStudentForParentRequest
+} from "@/api/school-info";
 
 export default {
   name: "index",
@@ -136,10 +125,11 @@ export default {
       userId: this.$route.params.id,
       singleUser: {},
       loading: false,
-      studentList: [],
+      showModal: false,
+      parentsList:[],
       enrollment: {
-        student_id: "",
-        parent_id: Number(this.$route.params.id)
+        student_id:  Number(this.$route.params.id),
+        parent_id: "",
       },
       fieldsList: [
         {
@@ -163,14 +153,6 @@ export default {
           label: this.$i18n.t("USERS.name"),
         },
         {
-          key: "class.level.name",
-          label: this.$i18n.t("schoolAdmin.level"),
-        },
-        {
-          key: "class.name",
-          label: this.$i18n.t("schoolAdmin.class"),
-        },
-        {
           key: "status.key",
           label: this.$i18n.t("TABLE_FIELDS.status"),
         },
@@ -179,24 +161,17 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
       ],
-      showModal: false,
     }
   },
   watch: {
-    "singleUser"(newVal) {
+    singleUser(newVal) {
       return newVal
-    },
+    }
   },
   methods: {
-    getStudentsForParent() {
-      this.ApiService(getStudentForParentUserRequest(this.$route.params.id)).then((response) => {
+    getStudentDetails() {
+      this.ApiService(getParentForStudentUserRequest(this.userId)).then((response) => {
         this.singleUser = response.data.data
-      })
-    },
-
-    getAllStudentUsers() {
-      this.ApiService(getAllStudentUsersListTrueRequest()).then((response) => {
-        this.studentList = response.data.data
       })
     },
     deleteItem($event) {
@@ -206,31 +181,24 @@ export default {
     cancel($event) {
       this.showModal = $event;
     },
-    cancelWithConfirm() {
-      this.ApiService(deleteStudentEnrollmentRequest(this.itemId)).then(() => {
-        this.getStudentUsers();
-      });
-      this.cancel();
-    },
-    onSubmit() {
-      this.$refs.addEditSchoolClassForm.validate().then((success) => {
-        if (!success) return;
-      });
-      this.ApiService(postStudentForParentRequest(this.enrollment)).then((response) => {
+    onSubmit(){
+      this.ApiService(postStudentForParentRequest(this.enrollment)).then(() => {
         this.$nextTick(() => {
-          this.student_id = ""
+          this.parent_id = ""
           this.$refs.addEditSchoolClassForm.reset()
         })
-        this.getStudentsForParent()
+        this.getStudentDetails()
+    })
+  },
+    getParentUsers(){
+      this.ApiService(getAllParentUsersRequest()).then((response)=>{
+        this.parentsList = response.data.data
       })
-    },
-    handleCancel() {
-      this.$emit("handleCancel");
-    },
+    }
   },
   mounted() {
-    this.getStudentsForParent()
-    this.getAllStudentUsers()
+    this.getStudentDetails()
+    this.getParentUsers()
   }
 }
 </script>

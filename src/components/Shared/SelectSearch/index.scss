@@ -34,4 +34,11 @@ label{
   }
 }
 
-
+.image-in-table {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  object-position: center;
+  object-fit: cover;
+}

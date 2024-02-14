@@ -219,6 +219,11 @@ export default {
         })
       }
     },
+    getAllStudyYear(){
+      this.ApiService(getStudyYearsRequest()).then((response)=>{
+        this.studyYears = response.data.data
+      })
+    },
     getAllLevels(){
       this.ApiService(getLevelsRequest()).then((response)=>{
         this.levels = response.data.data
@@ -231,7 +236,7 @@ export default {
     },
     getStudentUsers() {
       this.ApiService(getStudentsUsersRequest(this.userId)).then((response) => {
-        this.studentList = response.data.data
+        this.studentEnrollmentList = response.data.data
       })
     },
     deleteItem($event) {
@@ -274,6 +279,8 @@ export default {
     },
   },
   mounted() {
+    this.getAllStudyYear()
+    this.getAllLevels()
     this.getUserDetail()
     this.getStudentUsers()
   }

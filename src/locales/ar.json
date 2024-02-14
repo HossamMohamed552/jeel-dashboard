@@ -140,7 +140,9 @@
     "addAd": "إضافة إعلان",
     "AddVideo": "إضافة أسئلة الفيديو",
     "showDetails": "عرض تفاصيل صلاحية المستخدم",
-    "addStudent": "الطلاب"
+    "addStudent": "الطلاب",
+    "addStudentInClass": "تسجيل الصف الدراسى",
+    "addParent": "أولياء الأمور"
   },
   "ROLES": {
     "ADD_NEW": "إضافة صلاحية",
@@ -809,6 +811,9 @@
     "classDETAILS": "تفاثيل الفصل",
     "students_count": "عدد الطلاب",
     "class": "الفصل",
-    "addStudent": "إضافة طالب"
+    "addStudent": "إضافة طالب",
+    "selectStudent": "اختر اسم الطالب",
+    "selectParent": "اختر اسم ولى الأمر",
+    "addParent": "إضافة ولى أمر"
   }
 }

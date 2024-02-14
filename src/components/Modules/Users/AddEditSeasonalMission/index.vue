@@ -285,7 +285,7 @@ export default {
           rules: "required",
         },
         {
-          key: "prizeable_type",
+          key: "type_id",
           col: "4",
           listen: "id",
           type: "select",
@@ -297,7 +297,7 @@ export default {
           rules: "required",
         },
         {
-          key: "prizeable_id",
+          key: "prizeable_type",
           col: "4",
           listen: "id",
           type: "select",
@@ -310,7 +310,7 @@ export default {
           multiple: true,
         },
         {
-          key: "type_id",
+          key: "prizeable_id",
           col: "4",
           listen: "id",
           type: "select",

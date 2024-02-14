@@ -2,10 +2,9 @@ import ApiService from "@/api/ApiService";
 import { getAllCountryRequest } from "@/api/country"; // الدولة
 import { getAllSchoolGroupRequest, getSingleSchoolGroupRequest } from "@/api/schoolGroup";
 import {
-  getAllStatusRequest,
-  getAllRolesTypeRequest,
-  getAllRolesByTypeRequest,
-  getAllUserStatusRequest,
+  getAllRolesTypeRequest, // تصنيف الدور الوظيفي
+  getAllRolesByTypeRequest, // الدور الوظيفي
+  getAllUserStatusRequest, // الحالة
   getAllGenderRequest, // النوع
   getAllReligionRequest, // الديانة
   getAllPrizeSeasonalMissionTypeRequest, // نوع الجائزة
@@ -50,9 +49,6 @@ export async function getALLCountries(array, key) {
 }
 export async function getALLSchoolGroups(array, key) {
   await fetchDataAndUpdateOptions(array, getAllSchoolGroupRequest(), key);
-}
-export async function getALLStatuses(array, key) {
-  await fetchDataAndUpdateOptions(array, getAllStatusRequest(), key);
 }
 export async function getAllSchools(array, key) {
   await fetchDataAndUpdateOptions(array, getSchoolsRequest(), key);

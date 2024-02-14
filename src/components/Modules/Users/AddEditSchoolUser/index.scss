@@ -1,0 +1,99 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+
+.add-edit-user-form {
+  @include styleViewList;
+
+  h3 {
+    font-weight: bold;
+  }
+}
+
+.action-holder {
+  width: 100%;
+  @include flexCenter(flex-end);
+}
+h3 {
+  font-size: 1.5rem;
+}
+
+::v-deep {
+  .img-container .btn {
+    margin: 0;
+    height: 36px;
+    min-width: 120px;
+    font-size: 1rem;
+  }
+
+  .btn {
+    min-width: 195px;
+    padding: 0 !important;
+    height: 55px;
+  }
+  .hold-field label {
+    margin: 0.7rem 0.7rem 1rem;
+  }
+  .group-type {
+    margin-right: 0.2rem;
+    .col-form-label {
+      color: $color-primary !important;
+    }
+    .custom-radio {
+      &:first-of-type {
+        padding-right: 0.2rem;
+      }
+    }
+  }
+
+  .large-checkbox {
+    height: calc(2.9rem - 4px);
+    .custom-control-input:checked ~ .custom-control-label::after {
+      transform: translateX(2.1rem);
+    }
+    .custom-control-label {
+      &::before {
+        height: 2rem;
+        width: 4.125rem;
+        border-radius: 50px;
+      }
+      &::after {
+        width: calc(2rem - 4px);
+        height: calc(2rem - 4px);
+        border-radius: 1.625rem;
+      }
+    }
+  }
+
+  .hold-field > span {
+    margin: 0 0 0.7rem 0;
+  }
+  .icon-password {
+    left: 24px;
+    right: unset;
+  }
+  .custom-radio {
+    display: inline-block;
+    margin-top: 1.5rem;
+  }
+}
+.user-active {
+  border-top: 1px solid #cccccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-top: 24px;
+  margin-top: 24px;
+  .b-custom-control-lg .custom-control-label::after {
+    left: unset !important;
+    right: 1.65rem !important;
+  }
+  label {
+    margin-bottom: 0;
+  }
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 19px;
+  }
+}

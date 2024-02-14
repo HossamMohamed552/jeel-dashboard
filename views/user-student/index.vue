@@ -12,8 +12,10 @@
       :is-user-page="true"
       :permission_view="'view-enrollment-students-users'"
       :add_role="'add-enrollment-students-users'"
+      :add_parent="'add-enrollment-students-parents-users'"
       @addRole="addRole($event)"
       @detailItem="detailItem($event)"
+      @addParentToStudentItem="addParentToStudentItem($event)"
     >
     </ListItems>
   </section>
@@ -74,6 +76,9 @@ export default {
     },
     detailItem($event){
       this.$router.push(`/dashboard/user-student/${$event}`)
+    },
+    addParentToStudentItem($event){
+      this.$router.push(`/dashboard/add-parent-to-student-user/${$event}`)
     },
     getAllStudentUsers(event) {
       this.loading = true;
