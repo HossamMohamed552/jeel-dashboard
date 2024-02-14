@@ -71,7 +71,6 @@ import _ from "lodash";
 import {
   getALLCountries,
   getALLSchoolGroups,
-  getALLStatuses,
   getAllUserStatus,
   getAllRolesType,
   getAllSchoolsBySchoolGroup,

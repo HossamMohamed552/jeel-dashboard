@@ -1,13 +1,52 @@
 export const getSchoolInfoRequest = (params) => ({
   method: "get",
   url: "school-admin/school-info",
-  config: {params},
+  config: { params },
 });
 export const getAllSchoolUsersRequest = (params) => ({
   method: "get",
   url: "school-admin/users",
   config: {
     params,
+  },
+});
+export const getSingleSchoolUserRequest = (params) => ({
+  method: "get",
+  url: `school-admin/users/${params}`,
+});
+export const addEditSchoolUserRequest = (endpoint, data) => ({
+  method: "post",
+  url: `${endpoint}`,
+  config: {
+    data,
+  },
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+});
+export const deleteSchoolUserRequest = (params) => ({
+  method: "delete",
+  url: `school-admin/users/${params}`,
+});
+export const postChangePasswordSchoolUserRequest = (id, data) => ({
+  method: "post",
+  url: `school-admin/users/${id}`,
+  config: {
+    data,
+  },
+});
+export const postChangeStatusSchoolUserRequest = (data) => ({
+  method: "post",
+  url: `school-admin/users`,
+  config: {
+    data,
+  },
+});
+export const postCancelBlockSchoolUserRequest = (data) => ({
+  method: "post",
+  url: `school-admin/users`,
+  config: {
+    data,
   },
 });
 export const getAllSchoolAdminsUsersRequest = (params) => ({
@@ -64,8 +103,8 @@ export const putSchoolClassRequest = (id, data) => ({
   method: "put",
   url: `classes/${id}`,
   config: {
-    data
-  }
+    data,
+  },
 });
 export const getSchoolClassByIdRequest = (id) => ({
   method: "get",
@@ -128,28 +167,28 @@ export const postStudentEnrollmentRequest = (data) => ({
   },
 });
 // delete enrollment
-export const deleteSchoolAdminEnrollmentRequest = (id,data) => ({
+export const deleteSchoolAdminEnrollmentRequest = (id, data) => ({
   method: "delete",
   url: `school_admin_enrollments/${id}`,
   config: {
     data,
   },
 });
-export const deleteSupervisorEnrollmentRequest = (id,data) => ({
+export const deleteSupervisorEnrollmentRequest = (id, data) => ({
   method: "delete",
   url: `supervisorEnrollment/${id}`,
   config: {
     data,
   },
 });
-export const deleteTeacherEnrollmentRequest = (id,data) => ({
+export const deleteTeacherEnrollmentRequest = (id, data) => ({
   method: "delete",
   url: `teacher_enrollments/${id}`,
   config: {
     data,
   },
 });
-export const deleteStudentEnrollmentRequest = (id,data) => ({
+export const deleteStudentEnrollmentRequest = (id, data) => ({
   method: "delete",
   url: `class_students/${id}`,
   config: {
@@ -157,28 +196,28 @@ export const deleteStudentEnrollmentRequest = (id,data) => ({
   },
 });
 // list enrollment school admin
-export const getSchoolAdminUsersRequest = (id,params) => ({
+export const getSchoolAdminUsersRequest = (id, params) => ({
   method: "get",
   url: `user/${id}/school_admin_enrollments`,
   config: {
     params,
   },
 });
-export const getSuperVisorUsersRequest = (id,params) => ({
+export const getSuperVisorUsersRequest = (id, params) => ({
   method: "get",
   url: `user/${id}/supervisorEnrollment`,
   config: {
     params,
   },
 });
-export const geTeacherUsersRequest = (id,params) => ({
+export const geTeacherUsersRequest = (id, params) => ({
   method: "get",
   url: `user/${id}/teacher_enrollments`,
   config: {
     params,
   },
 });
-export const getStudentsUsersRequest = (id,params) => ({
+export const getStudentsUsersRequest = (id, params) => ({
   method: "get",
   url: `user/${id}/class_students`,
   config: {
@@ -186,7 +225,7 @@ export const getStudentsUsersRequest = (id,params) => ({
   },
 });
 // get user detail
-export const getUsersSchoolAdminRequest = (id,params) => ({
+export const getUsersSchoolAdminRequest = (id, params) => ({
   method: "get",
   url: `school-admin/users/${id}`,
   config: {

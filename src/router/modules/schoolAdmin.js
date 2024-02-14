@@ -19,6 +19,28 @@ export default [
       preLink: "/dashboard/all-school-users",
     },
   },
+  {
+    path: "/dashboard/edit-user-school-admin/:id",
+    name: "edit-user-all-school-admin",
+    component: () =>
+      import("../../../views/user-all-school-admin/edit-user-school-admin/index.vue"),
+    meta: {
+      breadcrumb: "تعديل مستخدم",
+      preLabel: "المستخدمين",
+      preLink: "/dashboard/all-school-users",
+    },
+  },
+  {
+    path: "/dashboard/user-school-admin/change-password/:id",
+    name: "change-password-user-school-admin",
+    component: () =>
+      import("../../../views/user-all-school-admin/change-password-user-school-admin/index.vue"),
+    meta: {
+      breadcrumb: "تغيير كلمة سر المستخدم",
+      preLabel: "المستخدمين",
+      preLink: "/dashboard/all-school-users",
+    },
+  },
 
   {
     path: "/dashboard/school-info",
@@ -216,11 +238,12 @@ export default [
   {
     path: "/dashboard/user-all-school/:id",
     name: "view-school-users",
-    component: () => import("../../../views/user-all-school-admin/view-users-school-admin/index.vue"),
+    component: () =>
+      import("../../../views/user-all-school-admin/view-users-school-admin/index.vue"),
     meta: {
       breadcrumb: "تفاصيل  الطالب",
       preLabel: "إدارة الطلاب",
       preLink: "/dashboard/students-users",
     },
-  }
-]
+  },
+];

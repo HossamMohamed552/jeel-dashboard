@@ -18,6 +18,18 @@
           </b-col>
           <b-col lg="9">
             <b-row>
+              <b-col lg="6" class="mb-5 showItem">
+                <ShowItem
+                  :title="$t('ROLES.CLASSIFICATION_DEPARTMENT')"
+                  :subtitle="getRoleName(singleUser.category_roles)"
+                />
+              </b-col>
+              <b-col lg="6" class="mb-5 showItem">
+                <ShowItem
+                  :title="$t('USERS.DEPARTMENT')"
+                  :subtitle="getRoleName(singleUser.roles)"
+                />
+              </b-col>
               <b-col lg="4" class="mb-5 showItem">
                 <ShowItem :title="$t('USER.first_name')" :subtitle="singleUser.first_name" />
               </b-col>
@@ -48,9 +60,6 @@
               <b-col lg="4" class="mb-5 showItem">
                 <ShowItem :title="$t('USERS.gender')" :subtitle="singleUser?.gender?.name" />
               </b-col>
-              <b-col lg="6" class="mb-5 showItem" v-if="singleUser && singleUser.roles">
-                <ShowItem :title="$t('USERS.DEPARTMENT')" :listItems="singleUser.roles" />
-              </b-col>
               <b-col lg="4" class="mb-5 showItem">
                 <ShowItem :title="$t('USERS.ACTIVE')" :subtitle="singleUser?.status?.name" />
               </b-col>
@@ -78,7 +87,7 @@
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import {getUsersSchoolAdminRequest} from "@/api/school-info";
+import { getUsersSchoolAdminRequest } from "@/api/school-info";
 export default {
   name: "index",
   components: {
@@ -89,6 +98,17 @@ export default {
       singleUser: {},
     };
   },
+  methods: {
+    getRoleName(values) {
+      if (values && Array.isArray(values)) {
+        let roleName = values.map((item) => item.name);
+        return roleName.join(", ");
+      } else {
+        return ""; // Or any default value if the array is not defined
+      }
+    },
+  },
+
   mounted() {
     this.ApiService(getUsersSchoolAdminRequest(this.$route.params.id)).then((response) => {
       this.singleUser = response.data.data;
