@@ -308,7 +308,7 @@
               v-if="checkAddRole(data) === 'show'"
               @click="addRoleItem(data.item.id)"
             >
-              {{ $t("CONTROLS.addRoleBtn") }}
+              {{ currentPage.includes('parents-users') ? $t("CONTROLS.addStudent") : $t("CONTROLS.addRoleBtn") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkAddAd(data) === 'show'"></b-dropdown-divider>
             <b-dropdown-item
@@ -384,6 +384,9 @@ export default {
     ...mapGetters(["user"]),
     activePage() {
       return window.localStorage.getItem("page");
+    },
+    currentPage(){
+      return  this.$route.path
     },
     watchRefresh: function () {
       return this.isRefresh;

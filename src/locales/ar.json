@@ -139,7 +139,8 @@
     "ManageClasses": "إداره الصفوف",
     "addAd": "إضافة إعلان",
     "AddVideo": "إضافة أسئلة الفيديو",
-    "showDetails": "عرض تفاصيل صلاحية المستخدم"
+    "showDetails": "عرض تفاصيل صلاحية المستخدم",
+    "addStudent": "الطلاب"
   },
   "ROLES": {
     "ADD_NEW": "إضافة صلاحية",
@@ -807,6 +808,7 @@
     "addRole": "إضافة صلاحية",
     "classDETAILS": "تفاثيل الفصل",
     "students_count": "عدد الطلاب",
-    "class": "الفصل"
+    "class": "الفصل",
+    "addStudent": "إضافة طالب"
   }
 }

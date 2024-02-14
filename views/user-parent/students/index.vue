@@ -61,26 +61,16 @@
             <form @submit.prevent="onSubmit">
               <b-row>
                 <b-col lg="12">
-                  <h2 class="heading mt-3">{{ $t("schoolAdmin.addRole") }}</h2>
+                  <h2 class="heading mt-3">{{ $t("schoolAdmin.addStudent") }}</h2>
                 </b-col>
-                <b-col lg="3" class="mt-3 mb-3">
+                <b-col lg="9" class="mt-3 mb-3">
                   ikugfsdsf
                 </b-col>
-              </b-row>
-              <b-row>
-                <div class="hold-btns-form">
-                  <Button @click="handleCancel" custom-class="cancel-btn margin">
-                    {{ $t("GLOBAL_CANCEL") }}
-                  </Button>
-                  <Button
-                    type="submit"
-                    :loading="loading"
-                    :disabled="invalid"
-                    custom-class="submit-btn"
-                  >
+                <b-col lg="3" class="mt-3 mb-3">
+                  <Button type="submit" :loading="loading" :disabled="invalid" custom-class="submit-btn">
                     {{ $t("GLOBAL_SAVE") }}
                   </Button>
-                </div>
+                </b-col>
               </b-row>
             </form>
           </validation-observer>
@@ -115,7 +105,7 @@ import {
   deleteStudentEnrollmentRequest,
   deleteSupervisorEnrollmentRequest, getAllClassesRequest,
   getLevelsRequest,
-  getSchoolAdminUserRequest, getStudentsUsersRequest,
+  getSchoolAdminUserRequest, getStudentForParentUserRequest, getStudentsUsersRequest,
   getStudyYearsRequest,
   getSuperVisorUsersRequest,
   postStudentEnrollmentRequest,
@@ -139,7 +129,7 @@ export default {
       classes: [],
       enrollment: {},
       loading: false,
-      studentEnrollmentList: [],
+      studentList: [],
       fieldsList: [
         {
           key: "id",
@@ -162,7 +152,7 @@ export default {
     }
   },
   watch: {
-    studentEnrollmentList(newVal) {
+    studentList(newVal) {
       return newVal
     },
     "enrollment.level_id"(newVal){
@@ -179,24 +169,9 @@ export default {
         })
       }
     },
-    getAllStudyYear(){
-      this.ApiService(getStudyYearsRequest()).then((response)=>{
-        this.studyYears = response.data.data
-      })
-    },
-    getAllLevels(){
-      this.ApiService(getLevelsRequest()).then((response)=>{
-        this.levels = response.data.data
-      })
-    },
     getUserDetail() {
       this.ApiService(getSchoolAdminUserRequest(this.userId)).then((response) => {
         this.userDetail = response.data.data
-      })
-    },
-    getStudentUsers() {
-      this.ApiService(getStudentsUsersRequest(this.userId)).then((response) => {
-        this.studentEnrollmentList = response.data.data
       })
     },
     deleteItem($event) {
