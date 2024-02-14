@@ -63,7 +63,7 @@
                 <b-col lg="12">
                   <h2 class="heading mt-3">{{ $t("schoolAdmin.addRole") }}</h2>
                 </b-col>
-                <b-col lg="3" class="mt-3 mb-3">
+                <b-col lg="5" >
                   <div class="hold-field" v-if="studyYears">
                     <SelectSearch
                       v-model="enrollment.study_year_id"
@@ -77,7 +77,7 @@
                     ></SelectSearch>
                   </div>
                 </b-col>
-                <b-col lg="3" class="mt-3 mb-3">
+                <b-col lg="5">
                   <div class="hold-field" v-if="levels">
                     <SelectSearch
                       v-model="enrollment.level_id"
@@ -91,21 +91,22 @@
                     ></SelectSearch>
                   </div>
                 </b-col>
-              </b-row>
-              <b-row>
-                <div class="hold-btns-form">
-                  <Button @click="handleCancel" custom-class="cancel-btn margin">
-                    {{ $t("GLOBAL_CANCEL") }}
-                  </Button>
+                <b-col lg="2" class="mt-3">
                   <Button
                     type="submit"
                     :loading="loading"
                     :disabled="invalid"
-                    custom-class="submit-btn"
+                    custom-class="submit-btn margin-0"
                   >
                     {{ $t("GLOBAL_SAVE") }}
                   </Button>
-                </div>
+<!--                  <div >-->
+<!--                    <Button @click="handleCancel" custom-class="cancel-btn margin">-->
+<!--                      {{ $t("GLOBAL_CANCEL") }}-->
+<!--                    </Button>-->
+
+<!--                  </div>-->
+                </b-col>
               </b-row>
             </form>
           </validation-observer>

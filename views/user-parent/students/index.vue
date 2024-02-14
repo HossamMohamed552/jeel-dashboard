@@ -4,7 +4,7 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">{{ $t("schoolAdmin.role") }}</h2>
+            <h2 class="heading">إضافة طالب إلى ولى الأمر</h2>
           </b-col>
         </b-row>
         <b-row>
@@ -113,7 +113,7 @@
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import {
-  deleteStudentEnrollmentRequest,
+  deleteStudentEnrollmentRequest, deleteStudentParentEnrollmentRequest,
   deleteSupervisorEnrollmentRequest, getAllClassesRequest, getAllStudentUsersListTrueRequest,
   getLevelsRequest,
   getSchoolAdminUserRequest, getStudentForParentUserRequest, getStudentsUsersRequest,
@@ -159,7 +159,7 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.last_name"),
         },
         {
-          key: "user_name",
+          key: "email",
           label: this.$i18n.t("USERS.name"),
         },
         {
@@ -207,8 +207,8 @@ export default {
       this.showModal = $event;
     },
     cancelWithConfirm() {
-      this.ApiService(deleteStudentEnrollmentRequest(this.itemId)).then(() => {
-        this.getStudentUsers();
+      this.ApiService(deleteStudentParentEnrollmentRequest(this.itemId)).then(() => {
+        this.getStudentsForParent();
       });
       this.cancel();
     },
@@ -218,7 +218,7 @@ export default {
       });
       this.ApiService(postStudentForParentRequest(this.enrollment)).then((response) => {
         this.$nextTick(() => {
-          this.student_id = ""
+          this.student_id = []
           this.$refs.addEditSchoolClassForm.reset()
         })
         this.getStudentsForParent()

@@ -201,6 +201,9 @@
         <template #cell(first_name)="data">
           {{ data.item.first_name | cutStringName }}
         </template>
+        <template #cell(middle_name)="data">
+          {{ data.item.middle_name | cutStringName }}
+        </template>
         <template #cell(last_name)="data">
           {{ data.item.last_name | cutStringName }}
         </template>
@@ -305,7 +308,7 @@
               {{ $t("CONTROLS.AddVideo") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkDelete(data) === 'show'"></b-dropdown-divider>
-            <b-dropdown-item v-if="checkDelete(data) === 'show'" @click="deleteItem(data.item.id)">
+            <b-dropdown-item v-if="checkDelete(data) === 'show'" @click="deleteItem(data.item)">
               {{ $t("CONTROLS.deleteBtn") }}
             </b-dropdown-item>
 
@@ -441,7 +444,7 @@ export default {
       type: String,
       default: "",
     },
-    add_parent:{
+    add_parent: {
       type: String,
       default: "",
     },
@@ -612,8 +615,12 @@ export default {
     permissionItem(id) {
       this.$emit("permissionItem", id);
     },
-    deleteItem(id) {
-      this.$emit("deleteItem", id);
+    deleteItem(item) {
+      if(this.$route.name === 'add-students-parent-enrollment' || this.$route.name === 'add-parent-to-student-user-enrollment'){
+        this.$emit("deleteItem", item.parent_student_id);
+      } else {
+        this.$emit("deleteItem", item.id);
+      }
     },
     addVideoQuestion(videoId) {
       this.$router.push(`/dashboard/video/${videoId}/questions`);
@@ -822,7 +829,7 @@ export default {
         this.switchSort = "DESC";
       }
     },
-    addParentToStudentItem(id){
+    addParentToStudentItem(id) {
       this.$emit("addParentToStudentItem", id);
     }
   },

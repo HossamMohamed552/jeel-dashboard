@@ -102,6 +102,14 @@
         </b-row>
       </div>
     </div>
+    <Modal
+      :content-message="'حذف العنصر'"
+      :content-message-question="'هل انت متأكد من حذف العنصر ؟'"
+      :showModal="showModal"
+      @cancel="cancel($event)"
+      :is-warning="true"
+      @cancelWithConfirm="cancelWithConfirm($event)"
+    />
   </section>
 </template>
 <script>
@@ -112,6 +120,7 @@ import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {
+  deleteStudentParentEnrollmentRequest,
   getAllParentUsersRequest,
   getParentForStudentUserRequest,
   postStudentForParentRequest
@@ -180,6 +189,12 @@ export default {
     },
     cancel($event) {
       this.showModal = $event;
+    },
+    cancelWithConfirm() {
+      this.ApiService(deleteStudentParentEnrollmentRequest(this.itemId)).then(() => {
+        this.getStudentDetails();
+      });
+      this.cancel();
     },
     onSubmit(){
       this.ApiService(postStudentForParentRequest(this.enrollment)).then(() => {

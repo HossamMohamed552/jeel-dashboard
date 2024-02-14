@@ -46,6 +46,10 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.first_name"),
         },
         {
+          key: "middle_name",
+          label: this.$i18n.t("TABLE_FIELDS.middle_name"),
+        },
+        {
           key: "last_name",
           label: this.$i18n.t("TABLE_FIELDS.last_name"),
         },

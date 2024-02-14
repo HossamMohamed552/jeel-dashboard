@@ -278,3 +278,10 @@ export const getParentForStudentUserRequest = (id, data) => ({
     data,
   },
 })
+export const deleteStudentParentEnrollmentRequest = (id, data) => ({
+  method: "delete",
+  url: `students_parents/${id}`,
+  config: {
+    data,
+  },
+});
