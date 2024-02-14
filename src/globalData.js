@@ -379,11 +379,11 @@ let routeSchoolAdmin =[
   //TODO
   {
     name: "إدارة العام الدراسي",
-    path: "/dashboard/school-info",
-    altImage: "school-info",
-    titleImage: "school-info",
+    path: "/dashboard/management-academic-year",
+    altImage: "management-academic-year",
+    titleImage: "management-academic-year",
     icon: require("@/assets/images/icons/list.svg"),
-    permission: "show-schooladmin-school-info",
+    permission: "view-school-study-years",
   },
   {
     name: "الفصول",
@@ -432,7 +432,7 @@ let routeSchoolAdmin =[
     altImage: "parents-users",
     titleImage: "parents-users",
     icon: require("@/assets/images/icons/list.svg"),
-    permission: "view-students-users",
+    permission: "view-parents-users",
   },
 ]
 let routesPrizes = [

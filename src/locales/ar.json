@@ -121,6 +121,7 @@
     "gems_num": "عدد جيمز",
     "image": "الصورة",
     "first_name": "الاسم الأول",
+    "middle_name": "الاسم الثانى",
     "last_name": "اسم العائلة",
     "studyYear": "العام الدراسي",
     "levelSchoolAdmin": "الصف الدراسي",
@@ -139,7 +140,10 @@
     "ManageClasses": "إداره الصفوف",
     "addAd": "إضافة إعلان",
     "AddVideo": "إضافة أسئلة الفيديو",
-    "showDetails": "عرض تفاصيل صلاحية المستخدم"
+    "showDetails": "عرض تفاصيل صلاحية المستخدم",
+    "addStudent": "الطلاب",
+    "addStudentInClass": "تسجيل الصف الدراسى",
+    "addParent": "أولياء الأمور"
   },
   "ROLES": {
     "ADD_NEW": "إضافة صلاحية",
@@ -806,6 +810,11 @@
     "roleDetail": "الصلاحية",
     "addRole": "إضافة صلاحية",
     "classDETAILS": "تفاثيل الفصل",
-    "students_count": "عدد الطلاب"
+    "students_count": "عدد الطلاب",
+    "class": "الفصل",
+    "addStudent": "إضافة طالب",
+    "selectStudent": "اختر اسم الطالب",
+    "selectParent": "اختر اسم ولى الأمر",
+    "addParent": "إضافة ولى أمر"
   }
 }

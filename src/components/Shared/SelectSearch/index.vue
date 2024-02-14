@@ -34,6 +34,10 @@ import "vue-select/dist/vue-select.css";
 export default {
   mixins: [FieldMixin],
   props: {
+    isSelectStudent:{
+      type:Boolean,
+      default: false
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -50,6 +54,11 @@ export default {
   components: {
     vSelect,
   },
+  methods:{
+    altImage($event) {
+      $event.target.src = require("@/assets/images/icons/user-avatar.png");
+    },
+  }
 };
 </script>
 

@@ -246,4 +246,45 @@ export default [
       preLink: "/dashboard/students-users",
     },
   },
-];
+  {
+    path: "/dashboard/parents-users",
+    name: "parents-users",
+    component: () => import("../../../views/user-parent/index.vue"),
+    meta: {
+      breadcrumb: "إدارة أولياء الأمور",
+      preLabel: "",
+      preLink: "",
+    },
+  },
+  {
+    path: "/dashboard/user-parent/:id",
+    name: "show-parents-users",
+    component: () => import("../../../views/user-parent/view-parent/index.vue"),
+    meta: {
+      breadcrumb: "تفاصيل ولى الأمر",
+      preLabel: "إدارة أولياء الأمور",
+      preLink: "/dashboard/parents-users",
+    },
+  },
+  {
+    path: "/dashboard/parent-enrollment/:id",
+    name: "add-students-parent-enrollment",
+    component: () => import("../../../views/user-parent/students/index.vue"),
+    meta: {
+      breadcrumb: "إضافة طالب إلى ولى الأمر",
+      preLabel: "إدارة أولياء الأمور",
+      preLink: "/dashboard/parents-users",
+    },
+  },
+  {
+    path: "/dashboard/add-parent-to-student-user/:id",
+    name: "add-parent-to-student-user-enrollment",
+    component: () => import("../../../views/user-student/student-parent-enrollment/index.vue"),
+    meta: {
+      breadcrumb: "إضافة ولى الأمر إلى الطالب",
+      preLabel: "إدارة الطلاب",
+      preLink: "/dashboard/students-users",
+    },
+  },
+
+]

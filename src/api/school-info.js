@@ -1,7 +1,7 @@
 export const getSchoolInfoRequest = (params) => ({
   method: "get",
   url: "school-admin/school-info",
-  config: { params },
+  config: {params},
 });
 export const getAllSchoolUsersRequest = (params) => ({
   method: "get",
@@ -78,6 +78,21 @@ export const getAllStudentUsersRequest = (params) => ({
     params,
   },
 });
+export const getAllStudentUsersListTrueRequest = (params) => ({
+  method: "get",
+  url: "school-admin/students/users?list_all=true",
+  config: {
+    params,
+  },
+});
+export const getAllParentUsersRequest = (params) => ({
+  method: "get",
+  url: "/school-admin/parents/users",
+  config: {
+    params,
+  },
+});
+
 export const getAllClassesRequest = (params) => ({
   method: "get",
   url: "classes",
@@ -236,6 +251,36 @@ export const getUsersSchoolAdminRequest = (id, params) => ({
 export const postAddUserSchoolRequest = (data) => ({
   method: "post",
   url: "/school-admin/user/create",
+  config: {
+    data,
+  },
+});
+
+export const getStudentForParentUserRequest = (id, data) => ({
+  method: "get",
+  url: `school-admin/parent/${id}/students`,
+  config: {
+    data,
+  },
+})
+
+export const postStudentForParentRequest = (data) => ({
+  method: "post",
+  url: `students_parents`,
+  config: {
+    data,
+  },
+})
+export const getParentForStudentUserRequest = (id, data) => ({
+  method: "get",
+  url: `school-admin/student/${id}/parents`,
+  config: {
+    data,
+  },
+})
+export const deleteStudentParentEnrollmentRequest = (id, data) => ({
+  method: "delete",
+  url: `students_parents/${id}`,
   config: {
     data,
   },

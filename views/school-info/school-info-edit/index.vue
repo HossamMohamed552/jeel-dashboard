@@ -122,20 +122,6 @@
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="4" class="mt-3 mb-3">
-                <div class="hold-field">
-                  <SelectSearch
-                    v-model="schoolInfoEdit.music_status_id"
-                    :label="$t('schoolAdmin.musicStatus')"
-                    :name="$t('schoolAdmin.musicStatus')"
-                    placeholder="الصوت"
-                    :options="musicStatus"
-                    :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.name"
-                    :rules="'required'"
-                  ></SelectSearch>
-                </div>
-              </b-col>
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
@@ -148,6 +134,20 @@
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
                     disabled="disabled"
+                  ></SelectSearch>
+                </div>
+              </b-col>
+              <b-col lg="4" class="mt-3 mb-3">
+                <div class="hold-field">
+                  <SelectSearch
+                    v-model="schoolInfoEdit.music_status_id"
+                    :label="$t('schoolAdmin.musicStatus')"
+                    :name="$t('schoolAdmin.musicStatus')"
+                    placeholder="الصوت"
+                    :options="musicStatus"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
+                    :rules="'required'"
                   ></SelectSearch>
                 </div>
               </b-col>
