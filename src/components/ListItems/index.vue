@@ -10,11 +10,11 @@
     </div>
     <div class="search-sort" v-if="showSortControls">
       <div class="search">
-        <b-form-input v-model="inputValue" placeholder="بحث" class="search-input"/>
-        <img src="@/assets/images/icons/search.svg"/>
+        <b-form-input v-model="inputValue" placeholder="بحث" class="search-input" />
+        <img src="@/assets/images/icons/search.svg" />
       </div>
       <div class="sort">
-        <img src="@/assets/images/icons/sort.svg"/>
+        <img src="@/assets/images/icons/sort.svg" />
         <select @change="orderBy">
           <option value="" selected disabled>ترتيب حسب</option>
           <option v-for="(item, index) in sortArray" :id="item.id" :value="item.value" :key="index">
@@ -45,7 +45,7 @@
           <div :class="headerItem.key !== 'actions' ? 'sort' : ''">
             <span>{{ headerItem.label }}</span>
             <span class="sortIcon" v-if="headerItem.key !== 'actions'">
-              <img src="@/assets/images/icons/arrow-up-down.png" @click="sortBy(headerItem.key)"/>
+              <img src="@/assets/images/icons/arrow-up-down.png" @click="sortBy(headerItem.key)" />
             </span>
           </div>
         </template>
@@ -56,7 +56,7 @@
         </template>
         <template #cell(avatar)="data">
           <div class="hold-image">
-            <img class="image-in-table" :src="data.item.avatar" @error="altImage($event)"/>
+            <img class="image-in-table" :src="data.item.avatar" @error="altImage($event)" />
           </div>
         </template>
         <template #cell(status)="data">
@@ -73,12 +73,12 @@
         </template>
         <template #cell(logo)="data">
           <div class="hold-image-school">
-            <img class="image-school-in-table" :src="data.item.logo"/>
+            <img class="image-school-in-table" :src="data.item.logo" />
           </div>
         </template>
         <template #cell(image)="data">
           <div class="hold-image-school">
-            <img class="image-school-in-table" :src="data.item.image"/>
+            <img class="image-school-in-table" :src="data.item.image" />
           </div>
         </template>
         <template #cell(school_type)="data">
@@ -92,23 +92,33 @@
         </template>
         <template #cell(question)="data">
           <span v-if="data.item.question_pattern === 'text'">{{
-              data.item.question | cutString
-            }}</span>
+            data.item.question | cutString
+          }}</span>
           <img
             v-else-if="data.item.question_pattern === 'image'"
             :src="data.item.question"
             class="question-image-show"
           />
           <audio v-else-if="data.item.question_pattern === 'audio'" controls>
-            <source :src="data.item.question"/>
+            <source :src="data.item.question" />
           </audio>
         </template>
         <template #cell(original_url)="data">
-          <AudioFakePlayer :data="data"/>
+          <AudioFakePlayer :data="data" />
+        </template>
+        <template #cell(audio_ar)="data">
+          <audio controls>
+            <source :src="data.item.audio_ar" />
+          </audio>
+        </template>
+        <template #cell(audio_en)="data">
+          <audio controls>
+            <source :src="data.item.audio_en" />
+          </audio>
         </template>
         <template #cell(audio)="data">
           <audio controls>
-            <source :src="data.item.audio"/>
+            <source :src="data.item.audio" />
           </audio>
         </template>
         <template #cell(questionName)="data">
@@ -124,7 +134,7 @@
           <span
             class="questionDifficulty"
             :class="questionDifficultyClass(data.item.questionDifficulty)"
-          >{{ data.item.questionDifficulty.name | cutString }}</span
+            >{{ data.item.questionDifficulty.name | cutString }}</span
           >
         </template>
         <template #cell(level)="data">
@@ -132,31 +142,31 @@
         </template>
         <template #cell(chracter_type)="data">
           <span v-if="data.item.chracter_type">{{
-              data.item.chracter_type[0].key | cutString
-            }}</span>
+            data.item.chracter_type[0].key | cutString
+          }}</span>
         </template>
         <template #cell(term)="data">
           <span v-if="data.item.term">{{ data.item.term.name | cutString }}</span>
         </template>
         <template #cell(video_with_music_transcode)="data">
           <span>{{
-              data.item.video_with_music_transcode ? "تم رفع الفيديو" : "لم يتم رفع الفيديو بعد"
-            }}</span>
+            data.item.video_with_music_transcode ? "تم رفع الفيديو" : "لم يتم رفع الفيديو بعد"
+          }}</span>
         </template>
         <template #cell(learningpaths)="data">
           <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{
-              path.name | cutString
-            }}</span>
+            path.name | cutString
+          }}</span>
         </template>
         <template #cell(lessons)="data">
           <span v-for="(lesson, ind) in data.item.lessons" :key="ind" class="path">{{
-              lesson.name | cutString
-            }}</span>
+            lesson.name | cutString
+          }}</span>
         </template>
         <template #cell(teachers)="data">
           <span v-for="(teacher, ind) in data.item.teachers" :key="ind" class="path">{{
-              teacher.name | cutString
-            }}</span>
+            teacher.name | cutString
+          }}</span>
         </template>
         <template #cell(learning_path)="data">
           <span v-if="data.item.learning_path">{{ data.item.learning_path.name | cutString }}</span>
@@ -168,28 +178,28 @@
         </template>
         <template #cell(number_users_roles[0])="data">
           <span v-if="data.item.number_users_roles[0]">{{
-              data.item.number_users_roles[0].number
-            }}</span>
+            data.item.number_users_roles[0].number
+          }}</span>
         </template>
         <template #cell(number_users_roles[1])="data">
           <span v-if="data.item.number_users_roles[1]">{{
-              data.item.number_users_roles[1].number
-            }}</span>
+            data.item.number_users_roles[1].number
+          }}</span>
         </template>
         <template #cell(number_users_roles[2])="data">
           <span v-if="data.item.number_users_roles[2]">{{
-              data.item.number_users_roles[2].number
-            }}</span>
+            data.item.number_users_roles[2].number
+          }}</span>
         </template>
         <template #cell(number_users_roles[3])="data">
           <span v-if="data.item.number_users_roles[3]">{{
-              data.item.number_users_roles[3].number
-            }}</span>
+            data.item.number_users_roles[3].number
+          }}</span>
         </template>
         <template #cell(number_users_roles[4])="data">
           <span v-if="data.item.number_users_roles[4]">{{
-              data.item.number_users_roles[4].number
-            }}</span>
+            data.item.number_users_roles[4].number
+          }}</span>
         </template>
         <template #cell(allowEdit)="data">
           <b-form-checkbox
@@ -212,7 +222,7 @@
             :custom-class="'transparent-btn rounded-btn'"
             @click="goToMissionContent(data.item.id, data.item.mission_id)"
             :disabled="data.item.is_selected === false"
-          >تعديل المحتوى
+            >تعديل المحتوى
           </Button>
         </template>
         <template #cell(status.key)="data">
@@ -254,7 +264,7 @@
             "
           >
             <template #button-content>
-              <img src="@/assets/images/icons/actions.svg"/>
+              <img src="@/assets/images/icons/actions.svg" />
             </template>
             <b-dropdown-item @click="detailItem(data.item)" v-if="checkDetail() === 'show'">
               {{ $t("CONTROLS.detailBtn") }}
@@ -341,8 +351,8 @@
         </template>
         <template #cell(edit_action)="data">
           <span class="pointer cursor-pointer" @click="editItem(data.item)">{{
-              $t("CONTROLS.editBtn")
-            }}</span>
+            $t("CONTROLS.editBtn")
+          }}</span>
         </template>
         <template #cell(download)="data">
           <span
@@ -350,7 +360,7 @@
             v-if="showDownloadBtn"
             @click="downloadImg(data.item)"
           >
-            <img src="@/assets/images/icons/download.png"/>
+            <img src="@/assets/images/icons/download.png" />
           </span>
         </template>
       </b-table>
@@ -367,13 +377,13 @@
   </section>
 </template>
 <script>
-import {debounce} from "lodash";
-import {mapGetters} from "vuex";
+import { debounce } from "lodash";
+import { mapGetters } from "vuex";
 import Button from "@/components/Shared/Button/index.vue";
 import AudioFakePlayer from "@/components/Shared/AudioFakePlayer/index.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
-import {type} from "os";
+import { type } from "os";
 
 export default {
   name: "index",
@@ -403,12 +413,12 @@ export default {
       return window.localStorage.getItem("page");
     },
     translateRoleButton() {
-      if (this.$route.path.includes('parents-users')) {
-        return "CONTROLS.addStudent"
-      } else if (this.$route.path.includes('students-users')) {
-        return `CONTROLS.addStudentInClass`
+      if (this.$route.path.includes("parents-users")) {
+        return "CONTROLS.addStudent";
+      } else if (this.$route.path.includes("students-users")) {
+        return `CONTROLS.addStudentInClass`;
       } else {
-        return `CONTROLS.addRoleBtn`
+        return `CONTROLS.addRoleBtn`;
       }
     },
     watchRefresh: function () {
@@ -538,7 +548,7 @@ export default {
       } else {
         return value;
       }
-    }
+    },
   },
   watch: {
     watchRefresh(newVal) {
@@ -616,7 +626,10 @@ export default {
       this.$emit("permissionItem", id);
     },
     deleteItem(item) {
-      if(this.$route.name === 'add-students-parent-enrollment' || this.$route.name === 'add-parent-to-student-user-enrollment'){
+      if (
+        this.$route.name === "add-students-parent-enrollment" ||
+        this.$route.name === "add-parent-to-student-user-enrollment"
+      ) {
         this.$emit("deleteItem", item.parent_student_id);
       } else {
         this.$emit("deleteItem", item.id);
@@ -651,10 +664,8 @@ export default {
             },
           }
         )
-        .then((response) => {
-        })
-        .catch((error) => {
-        });
+        .then((response) => {})
+        .catch((error) => {});
     },
     checkDelete(data) {
       if (
@@ -831,7 +842,7 @@ export default {
     },
     addParentToStudentItem(id) {
       this.$emit("addParentToStudentItem", id);
-    }
+    },
   },
   updated() {
     // To ADD TH TEXT INSIDE TD ATTR

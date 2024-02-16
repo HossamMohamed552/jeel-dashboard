@@ -8,7 +8,7 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="6" class="mb-5">
+          <b-col lg="12" class="mb-5">
             <ShowItem
               class="divider-show"
               title="اسم التصنيف"
@@ -16,15 +16,35 @@
             />
           </b-col>
           <b-col lg="6" class="mb-5">
-            <ShowItem class="divider-show" title="اسم الصوت" :subtitle="singleSystemAudios.name" />
+            <ShowItem
+              class="divider-show"
+              title="اسم الصوت بالعربية"
+              :subtitle="singleSystemAudios.name.ar"
+            />
           </b-col>
-          <b-col lg="12" class="mb-5">
+          <b-col lg="6" class="mb-5">
+            <ShowItem
+              class="divider-show"
+              title="اسم الصوت بالانجليزية"
+              :subtitle="singleSystemAudios.name.en"
+            />
+          </b-col>
+          <b-col lg="6" class="mb-5">
             <PreviewMedia
-              :header="$t('ملف الصوت')"
-              :media-name="singleSystemAudios.audio_name"
-              :file-size="singleSystemAudios.audio_size"
+              header="ملف الصوت العربي"
+              :media-name="singleSystemAudios.audio_ar_name"
+              :file-size="singleSystemAudios.audio_ar_size"
               :typeOfMedia="'audio'"
-              @showModal="showModal(singleSystemAudios.audio)"
+              @showModal="showModal(singleSystemAudios.audio_ar)"
+            />
+          </b-col>
+          <b-col lg="6" class="mb-5">
+            <PreviewMedia
+              header="ملف الصوت الانجليزي"
+              :media-name="singleSystemAudios.audio_en_name"
+              :file-size="singleSystemAudios.audio_en_size"
+              :typeOfMedia="'audio'"
+              @showModal="showModal(singleSystemAudios.audio_en)"
             />
           </b-col>
         </b-row>

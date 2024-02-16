@@ -33,8 +33,10 @@ export default {
       fieldsList: [
         { key: "id", label: "التسلسل" },
         { key: "category.name", label: "التصنيف" },
-        { key: "name", label: "اسم الصوت" },
-        { key: "audio", label: "الصوت" },
+        { key: "name.ar", label: "اسم الصوت بالعربية" },
+        { key: "audio_ar", label: "الصوت" },
+        { key: "name.en", label: "اسم الصوت بالانجليزية" },
+        { key: "audio_en", label: "الصوت" },
         { key: "actions", label: "الإجراء" },
       ],
     };

@@ -10,7 +10,7 @@
             </b-col>
           </b-row>
           <b-row>
-            <b-col lg="6" class="mb-5">
+            <b-col lg="12" class="mb-5">
               <ShowItem
                 class="divider-show"
                 title="اسم التصنيف"
@@ -20,31 +20,76 @@
             <b-col lg="6" class="mb-5">
               <ShowItem
                 class="divider-show"
-                title="اسم الصوت"
-                :subtitle="singleSystemAudios.name"
+                title="اسم الصوت بالعربية"
+                :subtitle="singleSystemAudios.name.ar"
               />
             </b-col>
-            <b-col lg="12" class="mb-5">
+            <b-col lg="6" class="mb-5">
+              <ShowItem
+                class="divider-show"
+                title="اسم الصوت بالانجليزية"
+                :subtitle="singleSystemAudios.name.en"
+              />
+            </b-col>
+            <b-col lg="6" class="mb-5">
               <UploadAttachment
-                v-if="singleSystemAudios.taskAudioChangedRequest"
+                v-if="singleSystemAudios.taskAudioChangedRequest_ar"
                 :type-of-attachment="'audio'"
                 :dropIdRef="'audioFile'"
                 :accept-files="'audio/*'"
-                :label="'ملف الصوت'"
+                label="ملف الصوت العربي"
                 :name="'audioFile'"
                 :rules="'required'"
-                @setFileId="setAudioFileId($event)"
+                @setFileId="
+                  setAudioFileId(
+                    $event,
+                    'audio_ar',
+                    'taskAudioChanged_ar',
+                    'taskAudioChangedRequest_ar'
+                  )
+                "
               />
               <PreviewMedia
                 v-else
-                :header="$t('ملف الصوت')"
-                :media-name="singleSystemAudios.audio_name"
-                :file-size="singleSystemAudios.audio_size"
+                header="ملف الصوت العربي"
+                :media-name="singleSystemAudios.audio_ar_name"
+                :file-size="singleSystemAudios.audio_ar_size"
                 :typeOfMedia="'audio'"
                 :showRemoveButton="true"
-                @showModal="showModal(singleSystemAudios.audio)"
+                @showModal="showModal(singleSystemAudios.audio_ar)"
                 @removeFile="
-                  removeFile('audio_name', 'taskAudioChanged', 'taskAudioChangedRequest')
+                  removeFile('audio_ar_name', 'taskAudioChanged_ar', 'taskAudioChangedRequest_ar')
+                "
+              />
+            </b-col>
+            <b-col lg="6" class="mb-5">
+              <UploadAttachment
+                v-if="singleSystemAudios.taskAudioChangedRequest_en"
+                :type-of-attachment="'audio'"
+                :dropIdRef="'audioFile'"
+                :accept-files="'audio/*'"
+                label="ملف الصوت الانجليزي"
+                :name="'audioFile'"
+                :rules="'required'"
+                @setFileId="
+                  setAudioFileId(
+                    $event,
+                    'audio_en',
+                    'taskAudioChanged_en',
+                    'taskAudioChangedRequest_en'
+                  )
+                "
+              />
+              <PreviewMedia
+                v-else
+                header="ملف الصوت الانجليزي"
+                :media-name="singleSystemAudios.audio_en_name"
+                :file-size="singleSystemAudios.audio_en_size"
+                :typeOfMedia="'audio'"
+                :showRemoveButton="true"
+                @showModal="showModal(singleSystemAudios.audio_en)"
+                @removeFile="
+                  removeFile('audio_en_name', 'taskAudioChanged_en', 'taskAudioChangedRequest_en')
                 "
               />
             </b-col>
@@ -106,6 +151,7 @@ export default {
       isShowModal: false,
       loading: false,
       isSubmit: true,
+      audioForm: {},
     };
   },
   methods: {
@@ -116,10 +162,11 @@ export default {
       this.$bvModal.show("holdContent");
       this.url = audio;
     },
-    setAudioFileId($event) {
-      this.singleSystemAudios.audio = $event;
-      this.singleSystemAudios.taskAudioChangedRequest = true;
-      this.singleSystemAudios.taskAudioChanged = false;
+    setAudioFileId($event, fileName, fileChange, fileRequest) {
+      this.audioForm[fileName] = $event;
+      this.singleSystemAudios[fileName] = $event;
+      this.singleSystemAudios[fileChange] = false;
+      this.singleSystemAudios[fileRequest] = true;
       this.isSubmit = false;
     },
     removeFile(fileName, fileChange, fileRequest) {
@@ -129,7 +176,9 @@ export default {
     },
     onSubmit() {
       this.ApiService(
-        putSystemAudiosRequest(this.$route.params.id, { audio: this.singleSystemAudios.audio })
+        putSystemAudiosRequest(this.$route.params.id, {
+          ...this.audioForm,
+        })
       )
         .then((response) => {
           this.loading = true;
@@ -150,8 +199,10 @@ export default {
   created() {
     this.ApiService(getSingleSystemAudiosRequest(this.$route.params)).then((response) => {
       this.singleSystemAudios = response.data.data;
-      this.singleSystemAudios.taskAudioChanged = false;
-      this.singleSystemAudios.taskAudioChangedRequest = false;
+      this.singleSystemAudios.taskAudioChanged_ar = false;
+      this.singleSystemAudios.taskAudioChanged_en = false;
+      this.singleSystemAudios.taskAudioChangedRequest_ar = false;
+      this.singleSystemAudios.taskAudioChangedRequest_en = false;
     });
   },
 };
