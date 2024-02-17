@@ -15,20 +15,42 @@ const router = new Router({
   routes: [
     ...publicRoutes,
     ...protectedRoutes,
-    { path: "/", redirect: { path: "/dashboard/home" } },
-    { path: "/dashboard", redirect: { path: "/dashboard/home" } },
+    {
+      path: "/",
+      meta: {
+        breadcrumb: "الصفحة الرئيسية",
+      },
+      redirect: {path: "/dashboard/home"}
+    },
+    {
+      path: "/dashboard",
+      meta: {
+        breadcrumb: "الصفحة الرئيسية",
+      },
+      redirect: {
+        path: "/dashboard/home",
+        meta: {
+          breadcrumb: "الرئيسية",
+        },
+      }
+    },
   ],
 });
 router.beforeEach((to, from, next) => {
   let tokenFound = !!store.getters.token
-  if (!["login", "user-verification", "forget-password"].includes(to.name) && !tokenFound){
+  if (!["login", "user-verification", "forget-password"].includes(to.name) && !tokenFound) {
     next({name: "login"})
   } else {
     if (to.name === "login" && tokenFound) {
-      next({ name: "main" });
+      next({name: "main"});
     } else {
       next();
     }
   }
 });
+router.afterEach((to, from) => {
+  Vue.nextTick(() => {
+    document.title = to.meta.breadcrumb || "Jeel dashBoard"
+  })
+})
 export default router;

@@ -1,11 +1,11 @@
 <template>
   <section class="container-fluid custom-container">
     <div class="show-role">
-      <div class="hold-fields">
+      <div class="hold-fields m-0">
         <b-row>
           <b-col lg="12">
             <div class="heading-section">
-              <h2 class="heading">{{ $t("USERS.showDetails") }}</h2>
+              <h2 class="heading">{{ $t("USERS.showDetailsUser") }}</h2>
               <div class="buttons-container">
                 <Button @click="handleShowChangePasswordForm" custom-class="cancel-btn margin">
                   {{ $t("CHANGE_PASSWORD") }}
@@ -28,34 +28,34 @@
           </b-col>
           <b-col lg="9">
             <b-row>
-              <b-col lg="4" class="mb-5 showItem">
+              <b-col lg="4" class=" showItem">
                 <ShowItem :title="$t('USER.first_name')" :subtitle="user.first_name" />
               </b-col>
-              <b-col lg="4" class="mb-5 showItem">
+              <b-col lg="4" class=" showItem">
                 <ShowItem :title="$t('USERS.SECOND_NAME')" :subtitle="user.middle_name" />
               </b-col>
-              <b-col lg="4" class="mb-5 showItem">
+              <b-col lg="4" class=" showItem">
                 <ShowItem :title="$t('USERS.LAST_NAME')" :subtitle="user.last_name" />
               </b-col>
-              <b-col lg="6" class="mb-5 showItem">
+              <b-col lg="8" class=" showItem">
                 <ShowItem :title="$t('TABLE_FIELDS.email_username')" :subtitle="user.email" />
               </b-col>
-              <b-col lg="6" class="mb-5 showItem">
+              <b-col lg="4" class=" showItem">
                 <ShowItem :title="$t('USER.mobile')" :subtitle="user.mobile" />
               </b-col>
-              <b-col lg="4" class="mb-5 showItem">
+              <b-col lg="4" class=" showItem">
                 <ShowItem :title="$t('USERS.NATIONALITY')" :subtitle="user?.user_country?.name" />
               </b-col>
-              <b-col lg="4" class="mb-5 showItem">
+              <b-col lg="4" class=" showItem">
                 <ShowItem :title="$t('USERS.religion')" :subtitle="user?.user_religion?.name" />
               </b-col>
-              <b-col lg="4" class="mb-5 showItem">
+              <b-col lg="4" class=" showItem">
                 <ShowItem :title="$t('USERS.gender')" :subtitle="user?.gender?.name" />
               </b-col>
-              <b-col lg="6" class="mb-5 showItem" v-if="user && user.roles">
+              <b-col lg="4" class=" showItem" v-if="user && user.roles">
                 <ShowItem :title="$t('USERS.DEPARTMENT')" :listItems="user.roles" />
               </b-col>
-              <b-col lg="4" class="mb-5 showItem">
+              <b-col lg="4" class=" showItem">
                 <ShowItem :title="$t('USERS.ACTIVE')" :subtitle="user?.status?.name" />
               </b-col>
               <b-col lg="12">
@@ -65,10 +65,10 @@
                 <ShowItem :title="$t('SOCIAL_MEDIA.FACEBOOK')" :subtitle="user?.facebook" />
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('SOCIAL_MEDIA.TWITTER')" :subtitle="user?.twitter" />
+                <ShowItem :title="$t('SOCIAL_MEDIA.LINKEDIN')" :subtitle="user?.linkedin" />
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('SOCIAL_MEDIA.LINKEDIN')" :subtitle="user?.linkedin" />
+                <ShowItem :title="$t('SOCIAL_MEDIA.TWITTER')" :subtitle="user?.twitter" />
               </b-col>
             </b-row>
           </b-col>

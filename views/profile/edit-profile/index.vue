@@ -270,7 +270,6 @@ export default {
         this.formValues.email = "";
       } else this.isStudent = false;
     },
-
     onSubmit() {
       this.$refs.addEditUserForm.validate().then((success) => {
         if (!success) return;
@@ -319,7 +318,7 @@ export default {
     },
 
     handleCancel() {
-      this.$emit("handleCancel");
+      this.$router.back()
     },
 
     // All Dropdown
@@ -348,6 +347,7 @@ export default {
     this.user.country_id = this.$store.getters.user.user_country ? this.$store.getters.user?.user_country.id : '';
     this.user.religion_id = this.$store.getters.user.user_religion ? this.$store.getters.user?.user_religion.id : '';
     this.user.gender = this.$store.getters.user?.gender ? this.$store.getters.user?.gender?.id : "";
+    this.imageUrl =  this.$store.getters.user?.image ? this.$store.getters.user?.image: "";
     // try {
     //
     //
