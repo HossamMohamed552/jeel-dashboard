@@ -23,7 +23,7 @@ const protectedRoutes = [
         name: "main",
         component: () => import("../../views/home/index.vue"),
         meta: {
-          breadcrumb: "",
+          breadcrumb: "الصفحة الرئيسية",
         },
       },
 
@@ -1687,7 +1687,7 @@ const protectedRoutes = [
         name: "edit-profile",
         component: () => import("../../views/profile/edit-profile/index.vue"),
         meta: {
-          breadcrumb: "الملف الشخصي",
+          breadcrumb: "تعديل الملف الشخصي",
         },
       },
       {

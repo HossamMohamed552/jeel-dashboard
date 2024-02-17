@@ -3,7 +3,7 @@
     <div class="title">
       {{ title }}
     </div>
-    <div class="subtitle">
+    <div class="subtitle" v-if="subtitle">
       {{ subtitle }}
     </div>
     <slot class="subtitle" v-if="listItems">
