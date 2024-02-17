@@ -64,7 +64,7 @@ import Button from "@/components/Shared/Button/index.vue";
 import GenericForm from "@/components/Shared/GenericForm";
 import ListItems from "@/components/ListItems/index.vue";
 import { mapGetters } from "vuex";
-import { postChangeStatusRequest, getAllUsersRequest, getSchoolUsersRequest } from "@/api/user";
+import { postChangeStatusRequest, postCancelBlockRequest, getSchoolUsersRequest } from "@/api/user";
 import { getUsersSearch } from "@/api/school";
 import _ from "lodash";
 

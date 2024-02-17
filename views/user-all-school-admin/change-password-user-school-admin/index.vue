@@ -34,7 +34,7 @@
                 <b-form-group class="mb-3">
                   <TextField
                     v-model="user.password"
-                    rules="required"
+                    :rules="'required|min:8'"
                     :type="passwordType"
                     :label="$t('USERS.PASSWORD')"
                     :name="$t('USERS.PASSWORD')"
@@ -90,7 +90,8 @@
 
 <script>
 import { TogglePasswordMixins } from "@/mixins/TogglePasswordMixins";
-import { getUsersSchoolAdminRequest, postChangePasswordSchoolUserRequest } from "@/api/school-info";
+import { getUsersSchoolAdminRequest } from "@/api/school-info";
+import { postChangePasswordRequest } from "@/api/user";
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 
 export default {
@@ -129,11 +130,9 @@ export default {
     onSubmit() {
       this.$refs.addEditUserForm.validate().then((success) => {
         if (!success) return;
-        this.ApiService(postChangePasswordSchoolUserRequest(this.id, this.user)).then(
-          (response) => {
-            this.$router.push(`/dashboard/user-school-admin`);
-          }
-        );
+        this.ApiService(postChangePasswordRequest(this.id, this.user)).then((response) => {
+          this.$router.push(`/dashboard/all-school-users`);
+        });
       });
     },
   },

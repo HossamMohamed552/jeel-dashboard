@@ -78,12 +78,9 @@ import Button from "@/components/Shared/Button/index.vue";
 import GenericForm from "@/components/Shared/GenericForm";
 import Modal from "@/components/Shared/Modal/index.vue";
 
-import {
-  getAllSchoolUsersRequest,
-  deleteSchoolUserRequest,
-  postChangeStatusSchoolUserRequest,
-  postCancelBlockSchoolUserRequest,
-} from "@/api/school-info";
+import { getAllSchoolUsersRequest, deleteSchoolUserRequest } from "@/api/school-info";
+import { postChangeStatusRequest, postCancelBlockRequest } from "@/api/user";
+
 import { mapGetters } from "vuex";
 import { getAllUserStatus, getAllRolesByType } from "@/services/dropdownService";
 export default {
@@ -231,10 +228,10 @@ export default {
         userStatus.is_active = 1;
       else userStatus.is_active = 0;
 
-      this.ApiService(postChangeStatusSchoolUserRequest(userStatus)).then(() => {});
+      this.ApiService(postChangeStatusRequest(userStatus)).then(() => {});
     },
     cancelBlock($event) {
-      this.ApiService(postCancelBlockSchoolUserRequest({ user_id: $event })).then(() => {
+      this.ApiService(postCancelBlockRequest({ user_id: $event })).then(() => {
         this.getAllSchoolUsers();
       });
     },

@@ -35,13 +35,7 @@ export const postChangePasswordSchoolUserRequest = (id, data) => ({
     data,
   },
 });
-export const postChangeStatusSchoolUserRequest = (data) => ({
-  method: "post",
-  url: `school-admin/users`,
-  config: {
-    data,
-  },
-});
+
 export const postCancelBlockSchoolUserRequest = (data) => ({
   method: "post",
   url: `school-admin/users`,
