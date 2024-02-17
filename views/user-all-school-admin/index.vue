@@ -170,12 +170,23 @@ export default {
           rules: "",
         },
         {
-          key: "blocked",
+          key: "is_blocked",
           col: "3",
           type: "select",
           optionValue: "name",
           label: "الحظر",
-          options: [],
+          options: [
+            {
+              id: 0,
+              key: true,
+              name: "محظور",
+            },
+            {
+              id: 1,
+              key: false,
+              name: "غير محظور",
+            },
+          ],
           listen: "key",
           deselectFromDropdown: true,
           value: "",
