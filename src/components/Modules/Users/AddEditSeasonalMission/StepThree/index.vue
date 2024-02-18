@@ -117,7 +117,7 @@ export default {
         field.name = optionName;
       }
 
-      if (key === "prizeable_type") {
+      if (key === "type_id") {
         let selected = this.stepForm[2].options.find((option) => option.id === value);
         this.prizeType = selected.name;
         if (selected.name == "المكتبة" || selected.name == "شخصيات") {
@@ -125,17 +125,22 @@ export default {
           this.stepForm[4].type = "select";
           this.stepForm[3].value = "";
 
-          if (selected.name == "المكتبة") getLibraryType(this.stepForm, "prizeable_id");
-          else if (selected.name == "شخصيات") getCharacterType(this.stepForm, "prizeable_id");
+          if (selected.name == "المكتبة") getLibraryType(this.stepForm, "prizeable_type");
+          else if (selected.name == "شخصيات") getCharacterType(this.stepForm, "prizeable_type");
         } else {
           this.stepForm[3].type = "hidden";
           this.stepForm[4].type = "hidden";
         }
       }
 
-      if (key === "prizeable_id") {
-        if (this.prizeType == "المكتبة") getLibraryContent(this.stepForm, "type_id", value);
-        else if (this.prizeType == "شخصيات") getCharacterContent(this.stepForm, "type_id", value);
+      if (key === "prizeable_type") {
+        if (this.prizeType == "المكتبة") {
+          field.models = "App\\Models\\Library";
+          getLibraryContent(this.stepForm, "prizeable_id", value);
+        } else if (this.prizeType == "شخصيات") {
+          field.models = "App\\Models\\PrizeCharacter";
+          getCharacterContent(this.stepForm, "prizeable_id", value);
+        }
       }
     }, 300),
     handleAdd() {
@@ -143,7 +148,8 @@ export default {
         try {
           if (field.type == "select") {
             if (field.multiple) {
-              this.$set(this.entry, field.key, field.value);
+              if (field.key == "prizeable_type") this.$set(this.entry, field.key, field.models);
+              else this.$set(this.entry, field.key, field.value);
               this.$set(this.entry, `${field.key}_name`, field.name.join(", "));
             } else {
               this.$set(this.entry, `${field.key}_name`, field.name);
@@ -164,7 +170,7 @@ export default {
   },
   computed: {},
   async mounted() {
-    getAllPrizeSeasonalMissionType(this.stepForm, "prizeable_type");
+    getAllPrizeSeasonalMissionType(this.stepForm, "type_id");
   },
 };
 </script>

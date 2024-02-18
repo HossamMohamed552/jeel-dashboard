@@ -1,0 +1,98 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+
+.add-edit-learning-skill {
+  @include styleViewList;
+  min-height: 70vh;
+}
+::v-deep {
+  .hold-field {
+    label {
+      margin: 0.7rem 0.7rem 1rem;
+    }
+  }
+  .vs__dropdown-toggle {
+    padding: 0 1.3rem;
+  }
+  .vs__selected-options {
+    height: 44px;
+  }
+  .stepper {
+    width: fit-content;
+  }
+}
+
+.buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+::v-deep {
+  .divider-show {
+    margin-bottom: 1.5rem;
+  }
+  .list {
+    padding: 0;
+    margin-top: 20px;
+    min-height: unset;
+    .header {
+      display: none;
+    }
+  }
+}
+
+.collapse-search {
+  @include styleViewList;
+  min-height: auto;
+  background-color: #fff;
+  ::v-deep {
+    .list {
+      padding: 0;
+      margin-top: 0;
+      min-height: unset;
+      .header {
+        display: none;
+      }
+    }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    h2 {
+      margin-bottom: 0px;
+    }
+    .collapsed {
+      all: unset;
+      background: transparent linear-gradient(90deg, #76236c 0%, #e25199 100%)
+        0% 0% no-repeat padding-box;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      border-radius: 50%;
+      border: 1px solid #76236c;
+      cursor: pointer;
+      transition: 0.4s;
+    }
+    i {
+      font-family: "Font Awesome 6 Free" !important;
+      transition: 0.4s;
+    }
+  }
+  &__body {
+    margin-top: 3.375rem;
+    transition: 0.4s;
+    overflow: hidden;
+    height: auto;
+    &.collapsed {
+      height: 0px;
+      margin-top: 0;
+    }
+  }
+}

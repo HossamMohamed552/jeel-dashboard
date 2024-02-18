@@ -75,6 +75,7 @@ import ListItems from "@/components/ListItems/index.vue";
 import learningPathCollapse from "./learningPathCollapse.vue";
 import { mapGetters } from "vuex";
 import { postCreateSeasonalMissionRequest } from "@/api/seasonal-mission.js";
+import moment from "moment";
 
 export default {
   components: {
@@ -135,20 +136,24 @@ export default {
   methods: {
     submitForm() {
       this.updateFields();
-      this.ApiService(postCreateSeasonalMissionRequest(this.submittedForm)).then(() => {});
+      this.ApiService(postCreateSeasonalMissionRequest(this.submittedForm)).then(() => {
+         this.$router.push("/dashboard/seasonal-mission");
+      });
     },
     prevStep() {
       this.$emit("prevStep");
     },
-    handleCancel() {
-      this.$emit("onSubmit", this.stepForm);
-    },
-
     updateFields() {
       // Generic method to update createSchool object based on the fieldArray
       this.stepForm.forEach((field) => {
         try {
-          this.$set(this.submittedForm, field.key, field.value);
+          if (field.type === "date")
+            this.$set(
+              this.submittedForm,
+              field.key,
+              moment(field.value, "DD-MM-YYYY").format("YYYY-MM-DD")
+            );
+          else this.$set(this.submittedForm, field.key, field.value);
         } catch (error) {
           console.error(`Error updating field ${field.key}:`, error);
         }

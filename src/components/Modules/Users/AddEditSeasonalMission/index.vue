@@ -80,7 +80,7 @@ export default {
     return {
       loading: false,
       showModal: false,
-      currentStep: 2,
+      currentStep: 0,
       steps: [
         {
           icon: "1",
@@ -144,7 +144,7 @@ export default {
           col: "3",
           listen: "id",
           value: "",
-          type: "datetime",
+          type: "date",
           rules: "required",
           placeholder: "أختر تاريخ بدء المهمة",
         },
@@ -154,7 +154,7 @@ export default {
           col: "3",
           listen: "id",
           value: "",
-          type: "datetime",
+          type: "date",
           rules: "required",
           placeholder: "أختر تاريخ نهاية المهمة",
         },
@@ -338,7 +338,7 @@ export default {
           col: "4",
           listen: "id",
           value: "",
-          type: "datetime",
+          type: "date",
           rules: "required",
         },
         {
