@@ -241,6 +241,20 @@ export const getUsersSchoolAdminRequest = (id, params) => ({
     params,
   },
 });
+export const getUsersStudentSchoolAdminRequest = (id, params) => ({
+  method: "get",
+  url: `school-admin/student/${id}`,
+  config: {
+    params,
+  },
+});
+export const getUsersTeacherRequest = (id, params) => ({
+  method: "get",
+  url: `school-admin/teacher/${id}`,
+  config: {
+    params,
+  },
+});
 // add users
 export const postAddUserSchoolRequest = (data) => ({
   method: "post",

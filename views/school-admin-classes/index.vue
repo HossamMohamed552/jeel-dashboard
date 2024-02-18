@@ -110,6 +110,7 @@ export default {
     },
     addStudentOnClassItem($event) {
       console.log('$event', $event)
+      this.$router.push(`/dashboard/school-admin-class/students/${$event}`)
     },
     goToAddClass() {
       this.$router.push('/dashboard/school-admin-classes/add')

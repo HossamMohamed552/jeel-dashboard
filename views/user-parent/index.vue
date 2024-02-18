@@ -58,10 +58,6 @@ export default {
           label: this.$i18n.t("USERS.name"),
         },
         {
-          key: "roles",
-          label: this.$i18n.t("USERS.DEPARTMENT"),
-        },
-        {
           key: "status.key",
           label: this.$i18n.t("TABLE_FIELDS.status"),
         },
