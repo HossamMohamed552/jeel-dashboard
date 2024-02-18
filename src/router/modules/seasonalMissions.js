@@ -1,39 +1,39 @@
 export default [
   {
     path: "/dashboard/seasonal-mission",
-    name: "main",
+    name: "seasonal-mission",
     component: () => import("../../../views/seasonal-mission/index.vue"),
     meta: {
-      breadcrumb: "مجموعة المهام المدرسية",
+      breadcrumb: "المهام الموسيمية",
     },
   },
   {
     path: "/dashboard/seasonal-mission/add",
-    name: "main",
+    name: "add-seasonal-mission",
     component: () => import("../../../views/seasonal-mission/add-seasonal-mission/index.vue"),
     meta: {
       breadcrumb: "إضافة مهمة موسمية",
-      preLabel: "مجموعة المهام المدرسية",
+      preLabel: "المهام الموسيمية",
       preLink: "/dashboard/seasonal-mission",
     },
   },
   {
     path: "/dashboard/seasonal-mission/edit/:id",
-    name: "main",
+    name: "edit-seasonal-mission",
     component: () => import("../../../views/seasonal-mission/edit-seasonal-mission/index.vue"),
     meta: {
-      breadcrumb: "إضافة مهمة موسمية",
-      preLabel: "مجموعة المهام المدرسية",
+      breadcrumb: "تعديل المهمة الموسمية",
+      preLabel: "المهام الموسيمية",
       preLink: "/dashboard/seasonal-mission",
     },
   },
   {
     path: "/dashboard/seasonal-mission/show/:id",
-    name: "main",
+    name: "view-seasonal-mission",
     component: () => import("../../../views/seasonal-mission/view-seasonal-mission/index.vue"),
     meta: {
-      breadcrumb: "إضافة مهمة موسمية",
-      preLabel: "مجموعة المهام المدرسية",
+      breadcrumb: "تفاصيل المهمة الموسمية",
+      preLabel: "المهام الموسيمية",
       preLink: "/dashboard/seasonal-mission",
     },
   },
