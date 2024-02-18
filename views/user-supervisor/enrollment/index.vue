@@ -57,7 +57,7 @@
               :subtitle="userDetail.roles[0].name"
             />
           </b-col>
-          <validation-observer class="w-100" v-slot="{ invalid }" ref="addEditSchoolClassForm">
+          <validation-observer class="w-100 px-3" v-slot="{ invalid }" ref="addEditSchoolClassForm">
             <form @submit.prevent="onSubmit">
               <b-row>
                 <b-col lg="12">
@@ -110,6 +110,9 @@
               </b-row>
             </form>
           </validation-observer>
+          <b-col lg="12">
+            <h2 class="heading mt-4 mb-0">{{ $t("schoolAdmin.rolesList") }}</h2>
+          </b-col>
           <b-col lg="12">
             <ListItems
               :fieldsList="fieldsList"
@@ -172,7 +175,7 @@ export default {
         },
         {
           key: "level.name",
-          label: this.$i18n.t("TABLE_FIELDS.level"),
+          label: this.$i18n.t("TABLE_FIELDS.levelSchoolAdmin"),
         },
         {
           key: "actions",

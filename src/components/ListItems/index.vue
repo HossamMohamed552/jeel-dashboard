@@ -325,7 +325,6 @@
             <b-dropdown-item v-if="checkDelete(data) === 'show'" @click="deleteItem(data.item)">
               {{ $t("CONTROLS.deleteBtn") }}
             </b-dropdown-item>
-
             <b-dropdown-divider v-if="checkAddRole(data) === 'show'"></b-dropdown-divider>
             <b-dropdown-item
               v-if="checkAddRole(data) === 'show'"

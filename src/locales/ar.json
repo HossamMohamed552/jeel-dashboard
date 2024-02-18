@@ -818,6 +818,7 @@
     "selectStudent": "اختر اسم الطالب",
     "selectParent": "اختر اسم ولى الأمر",
     "addParent": "إضافة ولى أمر",
-    "studyYearsList": "قائمة الأعوام الدراسية"
+    "studyYearsList": "قائمة الأعوام الدراسية",
+    "rolesList": "قائمة الصلاحيات"
   }
 }
