@@ -5,6 +5,10 @@ export const getSystemAudiosRequest = (params = { per_page: 10 }) => ({
     params,
   },
 });
+export const getSystemAudiosCategoriesRequest = () => ({
+  method: "get",
+  url: `system_categoy_audio`,
+});
 
 export const getSingleSystemAudiosRequest = (params) => ({
   method: "get",

@@ -42,6 +42,7 @@
               valueType="format"
               :name="field.label"
               :rules="field.rules"
+              @input="handleInput(field.key, field.value, field)"
             ></DatePicker>
 
             <div class="hold-field" v-if="filesUploadedTypes.includes(field.type)">

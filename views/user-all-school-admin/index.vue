@@ -79,7 +79,7 @@ import GenericForm from "@/components/Shared/GenericForm";
 import Modal from "@/components/Shared/Modal/index.vue";
 
 import { getAllSchoolUsersRequest, deleteSchoolUserRequest } from "@/api/school-info";
-import { postChangeStatusRequest, postCancelBlockRequest } from "@/api/user";
+import { postChangeStatusRequest, postCancelBlockRequest, deleteUserRequest } from "@/api/user";
 
 import { mapGetters } from "vuex";
 import { getAllUserStatus, getAllRolesByType } from "@/services/dropdownService";
@@ -247,7 +247,7 @@ export default {
       this.showModal = $event;
     },
     cancelWithConfirm() {
-      this.ApiService(deleteSchoolUserRequest(this.itemId)).then(() => {
+      this.ApiService(deleteUserRequest(this.itemId)).then(() => {
         this.getAllSchoolUsers();
       });
       this.cancel();

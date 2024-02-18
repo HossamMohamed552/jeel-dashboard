@@ -46,6 +46,7 @@
 import GenericForm from "@/components/Shared/GenericForm";
 import ListItems from "@/components/ListItems/index.vue";
 import { mapActions } from "vuex";
+import moment from "moment";
 
 export default {
   components: {
@@ -106,8 +107,13 @@ export default {
       this.stepForm.forEach((field) => {
         if (this.watchedField.includes(field.key)) {
           try {
-            this.$set(this.entry, field.key, field.value);
-            this.$set(this.entry, `${field.key}_name`, field.value);
+            if (field.type === "date")
+              this.$set(
+                this.entry,
+                field.key,
+                moment(field.value, "DD-MM-YYYY").format("YYYY-MM-DD")
+              );
+            else this.$set(this.entry, field.key, field.value);
             field.value = "";
           } catch (error) {
             console.error(`Error updating field ${field.key}:`, error);

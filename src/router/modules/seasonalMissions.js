@@ -30,7 +30,7 @@ export default [
   {
     path: "/dashboard/seasonal-mission/show/:id",
     name: "main",
-    component: () => import("../../../views/seasonal-mission/add-seasonal-mission/index.vue"),
+    component: () => import("../../../views/seasonal-mission/view-seasonal-mission/index.vue"),
     meta: {
       breadcrumb: "إضافة مهمة موسمية",
       preLabel: "مجموعة المهام المدرسية",

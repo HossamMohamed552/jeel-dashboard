@@ -18,18 +18,24 @@
               />
             </b-col>
             <b-col lg="6" class="mb-5">
-              <ShowItem
-                class="divider-show"
-                title="اسم الصوت بالعربية"
-                :subtitle="singleSystemAudios.name.ar"
-              />
+              <TextField
+                v-model="singleSystemAudios.name.ar"
+                @change="handleInput(singleSystemAudios.name.ar, 'ar')"
+                label="الاسم بالعربية"
+                name="الاسم بالعربية"
+                :placeholder="$t('USERS.ENTER') + ' ' + 'الاسم بالعربية'"
+                :rules="'required|min:2'"
+              ></TextField>
             </b-col>
             <b-col lg="6" class="mb-5">
-              <ShowItem
-                class="divider-show"
-                title="اسم الصوت بالانجليزية"
-                :subtitle="singleSystemAudios.name.en"
-              />
+              <TextField
+                v-model="singleSystemAudios.name.en"
+                @change="handleInput(singleSystemAudios.name.en, 'en')"
+                label="الاسم بالانجليزية"
+                name="الاسم بالانجليزية"
+                :placeholder="$t('USERS.ENTER') + ' ' + 'الاسم بالانجليزية'"
+                :rules="'required|min:2'"
+              ></TextField>
             </b-col>
             <b-col lg="6" class="mb-5">
               <UploadAttachment
@@ -133,6 +139,7 @@ import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
 import UploadAttachment from "@/components/Shared/UploadAttachment";
 import Modal from "@/components/Shared/Modal/index.vue";
+import TextField from "@/components/Shared/TextField/index.vue";
 
 import { getSingleSystemAudiosRequest, putSystemAudiosRequest } from "@/api/system-audios.js";
 export default {
@@ -143,6 +150,7 @@ export default {
     GeneralModal,
     UploadAttachment,
     Modal,
+    TextField,
   },
   data() {
     return {
@@ -151,12 +159,18 @@ export default {
       isShowModal: false,
       loading: false,
       isSubmit: true,
-      audioForm: {},
+      audioForm: {
+        name: {},
+      },
     };
   },
   methods: {
     hideModal() {
       this.$bvModal.hide("holdContent");
+    },
+    handleInput(value, key) {
+      this.audioForm.name[key] = value;
+      this.isSubmit = false;
     },
     showModal(audio) {
       this.$bvModal.show("holdContent");
@@ -196,7 +210,7 @@ export default {
       this.$router.push("/dashboard/system-audios");
     },
   },
-  created() {
+  mounted() {
     this.ApiService(getSingleSystemAudiosRequest(this.$route.params)).then((response) => {
       this.singleSystemAudios = response.data.data;
       this.singleSystemAudios.taskAudioChanged_ar = false;

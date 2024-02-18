@@ -18,6 +18,7 @@ import {
   getStudyYearRequest, // العام الدراسى
 } from "@/api/academicYear";
 import { getSchoolsRequest } from "@/api/school";
+import { getSystemAudiosCategoriesRequest } from "@/api/system-audios"; //  تصنيف اصوات النظام
 import { getRolesRequest } from "@/api/role";
 import { getAllSeasonalMissionGroupsRequest } from "@/api/seasonal-mission-group"; // اسم المجموعة الموسمية
 import { getAllLearningPathsRequest } from "@/api/learningPath"; // المسار التعليمي
@@ -112,4 +113,7 @@ export async function geAllTerms(array, key) {
 }
 export async function getAllStudyYear(array, key) {
   await fetchDataAndUpdateOptions(array, getStudyYearRequest(), key);
+}
+export async function getSystemAudiosCategories(array, key) {
+  await fetchDataAndUpdateOptions(array, getSystemAudiosCategoriesRequest(), key);
 }
