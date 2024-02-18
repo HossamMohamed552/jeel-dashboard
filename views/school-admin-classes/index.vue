@@ -11,11 +11,13 @@
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
+      @addStudentOnClassItem="addStudentOnClassItem($event)"
       @refetch="getAllClasses"
       :is-user-page="true"
       :permission_delete="'delete-classes'"
       :permission_edit="'edit-classes'"
       :permission_view="'show-classes'"
+      :permission_addStudent="'add-enrollment-students-users'"
     >
       <template #buttons>
         <Button
@@ -23,7 +25,7 @@
           @click="goToAddClass"
           v-if="user.permissions.includes(`add-classes`)"
         >
-          <img src="@/assets/images/icons/plus.svg" />
+          <img src="@/assets/images/icons/plus.svg"/>
           <span>إضافة فصل</span>
         </Button>
       </template>
@@ -51,9 +53,9 @@ export default {
   computed: {
     ...mapGetters(["user"]),
   },
-  data(){
-    return{
-     classesList: [],
+  data() {
+    return {
+      classesList: [],
       showModal: false,
       totalNumber: 0,
       loading: false,
@@ -86,7 +88,7 @@ export default {
       ],
     }
   },
-  methods:{
+  methods: {
     cancel($event) {
       this.showModal = $event;
     },
@@ -106,11 +108,14 @@ export default {
       this.itemId = $event;
       this.showModal = true;
     },
-    goToAddClass(){
+    addStudentOnClassItem($event) {
+      console.log('$event', $event)
+    },
+    goToAddClass() {
       this.$router.push('/dashboard/school-admin-classes/add')
     },
-    getAllClasses(){
-      this.ApiService(getAllClassesRequest()).then((response)=>{
+    getAllClasses() {
+      this.ApiService(getAllClassesRequest()).then((response) => {
         this.classesList = response.data.data
         this.totalNumber = response.data.meta.total;
       })

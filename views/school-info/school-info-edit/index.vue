@@ -189,10 +189,10 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
-                    v-model="schoolInfoEdit.owner_phone"
-                    :label="$t('schoolAdmin.ownerPhone')"
-                    :name="$t('schoolAdmin.ownerPhone')"
-                    :placeholder="$t('schoolAdmin.ownerPhone')"
+                    v-model="schoolInfoEdit.owner_role"
+                    :label="$t('schoolAdmin.ownerRole')"
+                    :name="$t('schoolAdmin.ownerRole')"
+                    :placeholder="$t('schoolAdmin.ownerRole')"
                     :rules="'required|max:100'"
                   ></TextField>
                 </div>
@@ -200,10 +200,10 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
-                    v-model="schoolInfoEdit.owner_role"
-                    :label="$t('schoolAdmin.ownerRole')"
-                    :name="$t('schoolAdmin.ownerRole')"
-                    :placeholder="$t('schoolAdmin.ownerRole')"
+                    v-model="schoolInfoEdit.owner_phone"
+                    :label="$t('schoolAdmin.ownerPhone')"
+                    :name="$t('schoolAdmin.ownerPhone')"
+                    :placeholder="$t('schoolAdmin.ownerPhone')"
                     :rules="'required|max:100'"
                   ></TextField>
                 </div>

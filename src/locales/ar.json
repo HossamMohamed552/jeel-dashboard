@@ -144,7 +144,8 @@
     "showDetails": "عرض تفاصيل صلاحية المستخدم",
     "addStudent": "الطلاب",
     "addStudentInClass": "تسجيل الصف الدراسى",
-    "addParent": "أولياء الأمور"
+    "addParent": "أولياء الأمور",
+    "addStudentOnClassBtn": "طلاب الفصل"
   },
   "ROLES": {
     "ADD_NEW": "إضافة صلاحية",
@@ -810,12 +811,13 @@
     "mobile": "رقم الهاتف",
     "roleDetail": "الصلاحية",
     "addRole": "إضافة صلاحية",
-    "classDETAILS": "تفاثيل الفصل",
+    "classDETAILS": "تفاصيل الفصل",
     "students_count": "عدد الطلاب",
     "class": "الفصل",
     "addStudent": "إضافة طالب",
     "selectStudent": "اختر اسم الطالب",
     "selectParent": "اختر اسم ولى الأمر",
-    "addParent": "إضافة ولى أمر"
+    "addParent": "إضافة ولى أمر",
+    "studyYearsList": "قائمة الأعوام الدراسية"
   }
 }
