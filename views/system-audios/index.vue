@@ -112,8 +112,7 @@ export default {
       this.$router.push({
         name: "show-system-audios",
         params: {
-          id: $event.category.id,
-          name: $event.name,
+          id: $event,
         },
       });
     },
@@ -121,8 +120,7 @@ export default {
       this.$router.push({
         name: "edit-system-audios",
         params: {
-          id: $event.category.id,
-          name: $event.name,
+          id: $event,
         },
       });
     },

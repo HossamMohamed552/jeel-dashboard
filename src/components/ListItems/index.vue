@@ -594,18 +594,12 @@ export default {
     detailItem(item) {
       if (this.$route.name === "show-teacher") {
         this.$emit("detailItem", item.term.id);
-      } else if (this.$route.name === "system-audios") {
-        this.$emit("detailItem", item);
       } else {
         this.$emit("detailItem", item.id);
       }
     },
     editItem(item) {
-      if (this.$route.name === "system-audios") {
-        this.$emit("editItem", item);
-      } else {
-        this.$emit("editItem", item.id);
-      }
+      this.$emit("editItem", item.id);
     },
     addUser(id) {
       this.$emit("addUser", id);
