@@ -90,7 +90,7 @@ export default {
         url: "",
         maxFiles: 1,
         thumbnailWidth: 150,
-        maxFilesize: 5,
+        maxFilesize: 500,
         clickable: true,
         previewTemplate: `
           <div class="dz-preview dz-file-preview">
