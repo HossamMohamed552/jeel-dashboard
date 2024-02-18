@@ -40,7 +40,7 @@
         </b-col>
         <b-col lg="9">
           <b-row>
-            <b-col lg="4" class="mb-5" v-for="(value, key) in statistics" :key="key">
+            <b-col lg="4" class="margin-card" v-for="(value, key) in statistics" :key="key">
               <div class="item-card route-card">
                 <div class="item-number">{{ value }}</div>
                 <div class="item-name">
@@ -306,7 +306,6 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
-
   span {
     &:last-of-type {
       border-radius: 50%;
@@ -348,5 +347,8 @@ export default {
   background-repeat: no-repeat;
   background-size: 80%;
   background-position: center;
+}
+.margin-card{
+  margin-bottom: 2rem;
 }
 </style>

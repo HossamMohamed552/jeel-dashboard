@@ -236,7 +236,7 @@ export const getStudentsUsersRequest = (id, params) => ({
 // get user detail
 export const getUsersSchoolAdminRequest = (id, params) => ({
   method: "get",
-  url: `school-admin/users/${id}`,
+  url: `school-admin/${id}`,
   config: {
     params,
   },

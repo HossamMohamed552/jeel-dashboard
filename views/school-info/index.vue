@@ -5,7 +5,7 @@
         <b-col lg="9">
           <h2 class="heading">{{ $t("schoolAdmin.schoolInfoDetail") }}</h2>
         </b-col>
-        <b-col lg="3">
+        <b-col lg="3" class="d-flex justify-content-end">
           <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddEditSchoolInfo"
                   v-if="user.permissions.includes(`update-schooladmin-school`)">
             <span>تعديل بيانات المدرسة</span>
@@ -158,5 +158,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-
+.school-info{
+  background: transparent;
+}
 </style>

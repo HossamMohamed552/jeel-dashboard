@@ -317,6 +317,10 @@
             >
               {{ $t("CONTROLS.AddVideo") }}
             </b-dropdown-item>
+            <b-dropdown-divider v-if="checkAddStudent(data) === 'show'"></b-dropdown-divider>
+            <b-dropdown-item v-if="checkAddStudent(data) === 'show'" @click="addStudentOnClassItem(data.item)">
+              {{ $t("CONTROLS.addStudentOnClassBtn") }}
+            </b-dropdown-item>
             <b-dropdown-divider v-if="checkDelete(data) === 'show'"></b-dropdown-divider>
             <b-dropdown-item v-if="checkDelete(data) === 'show'" @click="deleteItem(data.item)">
               {{ $t("CONTROLS.deleteBtn") }}
@@ -451,6 +455,10 @@ export default {
       default: "",
     },
     add_role: {
+      type: String,
+      default: "",
+    },
+    permission_addStudent:{
       type: String,
       default: "",
     },
@@ -600,6 +608,13 @@ export default {
     },
     editItem(item) {
       this.$emit("editItem", item.id);
+    },
+    checkAddStudent(item){
+      if (this.user.permissions.includes(`${this.permission_addStudent}`)) {
+        return "show";
+      } else {
+        return "hide";
+      }
     },
     addUser(id) {
       this.$emit("addUser", id);
@@ -837,6 +852,9 @@ export default {
     addParentToStudentItem(id) {
       this.$emit("addParentToStudentItem", id);
     },
+    addStudentOnClassItem(item){
+      this.$emit('addStudentOnClassItem',item.id)
+    }
   },
   updated() {
     // To ADD TH TEXT INSIDE TD ATTR
