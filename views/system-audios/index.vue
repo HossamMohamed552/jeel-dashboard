@@ -17,6 +17,7 @@
                   @onSubmit="onSubmit"
                   @handleCancel="handleCancel"
                   :loading="loading"
+                  :IsAudio="true"
                   :submitButton="$t('BUTTONS.SEARCH')"
                   :cancelButton="$t('BUTTONS.RECOVERY')"
                   :invalid="invalid"
@@ -29,7 +30,7 @@
     </div>
     <div class="collapse-search listing">
       <ListItems
-        :header-name="'قائمة الاصوات'"
+        :header-name="'أصوات المنصة'"
         :showSortControls="false"
         :number-of-item="totalNumber"
         :tableItems="systemAudiosList"
@@ -69,7 +70,7 @@ export default {
         {
           key: "category_id",
           label: "التصنيف",
-          col: "6",
+          col: "4",
           listen: "id",
           type: "select",
           optionValue: "name",
@@ -81,7 +82,7 @@ export default {
         {
           key: "name",
           label: "الاسم",
-          col: "6",
+          col: "4",
           listen: "id",
           value: "",
           type: "text",

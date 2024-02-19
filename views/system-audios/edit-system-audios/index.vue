@@ -10,14 +10,22 @@
             </b-col>
           </b-row>
           <b-row>
-            <b-col lg="12" class="mb-5">
-              <ShowItem
-                class="divider-show"
-                title="اسم التصنيف"
-                :subtitle="singleSystemAudios.category.name"
-              />
+            <b-col lg="4" class="mb-5">
+              <TextField
+                v-model="singleSystemAudios.category.name"
+                disabled="disabled"
+                label="التصنيف"
+                name="التصنيف"
+                :placeholder="'التصنيف'"
+                :rules="'required|min:2'"
+              ></TextField>
+<!--              <ShowItem-->
+<!--                class="divider-show"-->
+<!--                title="اسم التصنيف"-->
+<!--                :subtitle="singleSystemAudios.category.name"-->
+<!--              />-->
             </b-col>
-            <b-col lg="6" class="mb-5">
+            <b-col lg="4" class="mb-5">
               <TextField
                 v-model="singleSystemAudios.name.ar"
                 @change="handleInput(singleSystemAudios.name.ar, 'ar')"
@@ -27,7 +35,7 @@
                 :rules="'required|min:2'"
               ></TextField>
             </b-col>
-            <b-col lg="6" class="mb-5">
+            <b-col lg="4" class="mb-5">
               <TextField
                 v-model="singleSystemAudios.name.en"
                 @change="handleInput(singleSystemAudios.name.en, 'en')"
