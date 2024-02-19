@@ -88,7 +88,7 @@ export default {
       dropzoneOptions: {
         acceptedFiles: "",
         url: "",
-        timeout: 600000,
+        timeout: null ,
         // chunking: true,
         // chunkSize: 50,
         maxFiles: 1,

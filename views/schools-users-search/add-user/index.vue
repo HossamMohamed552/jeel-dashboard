@@ -147,9 +147,9 @@
                         :label="$t('USERS.PHONE_NUMBER')"
                         :name="$t('USERS.PHONE_NUMBER')"
                         :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.PHONE_NUMBER')"
-                        :rules="{ required: true }"
+                        :rules="{ required: true }">
 <!--                        regex: /^01[0125][0-9]{8}$/-->
-                      ></TextField>
+                      </TextField>
                     </div>
                   </b-col>
                   <b-col lg="4">
