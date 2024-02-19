@@ -2,7 +2,7 @@
   <section>
     <TopNav />
     <BreadCrumb />
-    <transition name="router-view-fade" mode="out-in" appear>
+    <transition name="router-view-fade" mode="in-out" appear>
       <router-view></router-view>
     </transition>
     <CopyRight :isLayout="true" />

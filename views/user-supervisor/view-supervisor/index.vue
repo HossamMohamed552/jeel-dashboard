@@ -1,5 +1,5 @@
 <template>
-  <section class="container-fluid custom-container">
+  <section class="container-fluid custom-container fix-display">
     <div class="show-role">
       <div class="hold-fields">
         <b-row>

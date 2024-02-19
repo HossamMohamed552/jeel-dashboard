@@ -763,7 +763,8 @@
     "schooladmins": "عدد مديرى المدرسة",
     "supervisors": "عدد المشرفين",
     "teachers": "عدد المدرسين",
-    "students": "عدد الطلاب"
+    "students": "عدد الطلاب",
+    "parents": "عدد أولياء الأمور"
   },
   "SOCIAL_MEDIA": {
     "FACEBOOK": "فيس بوك",

@@ -333,13 +333,13 @@ export default {
     }
   }
 
-  &:hover {
-    span {
-      &:last-of-type {
-        opacity: 1;
-      }
-    }
-  }
+  //&:hover {
+  //  span {
+  //    &:last-of-type {
+  //      opacity: 1;
+  //    }
+  //  }
+  //}
 }
 .leader-board {
   background: url("../../assets/images/bg/leader-bg.svg");
