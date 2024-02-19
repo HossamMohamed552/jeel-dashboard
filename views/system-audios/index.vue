@@ -15,6 +15,7 @@
                 <GenericForm
                   :schema="searchSchema"
                   @onSubmit="onSubmit"
+                  @handleCancel="handleCancel"
                   :loading="loading"
                   :submitButton="$t('BUTTONS.SEARCH')"
                   :cancelButton="$t('BUTTONS.RECOVERY')"
@@ -29,6 +30,7 @@
     <div class="collapse-search listing">
       <ListItems
         :header-name="'قائمة الاصوات'"
+        :showSortControls="false"
         :number-of-item="totalNumber"
         :tableItems="systemAudiosList"
         :fieldsList="fieldsList"
@@ -124,6 +126,10 @@ export default {
           id: $event,
         },
       });
+    },
+    handleCancel() {
+      this.searchSchema.map((field) => (field.value = ""));
+      this.getSystemAudios();
     },
     toggleCollapsed() {
       this.collapsed = !this.collapsed;

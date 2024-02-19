@@ -272,7 +272,7 @@ export default {
           col: "4",
           listen: "id",
           value: "",
-          type: "text",
+          type: "number",
           rules: "required",
         },
         {
@@ -281,7 +281,7 @@ export default {
           col: "4",
           listen: "id",
           value: "",
-          type: "text",
+          type: "number",
           rules: "required",
         },
         {
@@ -325,7 +325,7 @@ export default {
       stepFourForm: [
         {
           key: "name",
-          label: "عنوان اللإشعار",
+          label: "عنوان الإشعار",
           col: "4",
           listen: "id",
           value: "",
