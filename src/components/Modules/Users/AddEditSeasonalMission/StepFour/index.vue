@@ -72,7 +72,7 @@ export default {
       notifactionIndex: 0,
       fieldsList: [
         { key: "id", label: "التسلسل" },
-        { key: "name", label: "عنوان اللإشعار" },
+        { key: "name", label: "عنوان الإشعار" },
         { key: "start_date", label: "تاريخ ووقت الإشعار" },
         { key: "original_url", label: "صوت الإشعار" },
         { key: "description", label: "نص الإشعار" },

@@ -47,7 +47,11 @@
       >
         <!-- todo tooo check the permission above and for the button -->
         <template #buttons>
-          <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSeasonalMission" v-if="user.permissions.includes(`add-seasonal-missions`)">
+          <Button
+            :custom-class="'btn-add rounded-btn big-padding'"
+            @click="goToAddSeasonalMission"
+            v-if="user.permissions.includes(`add-seasonal-missions`)"
+          >
             <!--  -->
             <img src="@/assets/images/icons/plus.svg" alt="seasonal" />
             <span>إضافة مهمة موسمية</span>
@@ -107,6 +111,7 @@ export default {
           value: "",
           type: "text",
           rules: "",
+          placeholder: "إدخل اسم المهمة",
         },
         {
           key: "seasonal_mission_group_id",
@@ -119,6 +124,7 @@ export default {
           deselectFromDropdown: true,
           value: "",
           rules: "",
+          placeholder: "إختار اسم المجموعة",
         },
         {
           key: "country_id",
@@ -149,7 +155,8 @@ export default {
   },
   methods: {
     handleCancel() {
-      console.log("handleCancel");
+      this.seasonalMissionSchema.map((field) => (field.value = ""));
+      this.getSeasonalMission();
     },
     toggleCollapsed() {
       this.collapsed = !this.collapsed;

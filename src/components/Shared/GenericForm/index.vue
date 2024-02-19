@@ -19,13 +19,16 @@
               :deselectFromDropdown="field.deselectFromDropdown"
               :multiple="field.multiple"
               @input="handleInput(field.key, field.value, field)"
+              :placeholder="'إختر' + ' ' + field.label"
             ></SelectSearch>
             <TextField
-              v-if="field.type === 'text'"
+              v-if="field.type === 'text' || field.type === 'number'"
               v-model="field.value"
               :label="field.label"
               :name="field.label"
               :rules="field.rules"
+              :type="field.type"
+              :placeholder="'إدخل' + ' ' + field.label"
             ></TextField>
             <TextAreaField
               v-if="field.type === 'textarea'"
