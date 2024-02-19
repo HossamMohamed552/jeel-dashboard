@@ -29,6 +29,7 @@
     <div class="collapse-search listing">
       <ListItems
         :header-name="'قائمة الاصوات'"
+        :showSortControls="false"
         :number-of-item="totalNumber"
         :tableItems="systemAudiosList"
         :fieldsList="fieldsList"
