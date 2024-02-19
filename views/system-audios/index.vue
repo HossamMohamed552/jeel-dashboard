@@ -15,6 +15,7 @@
                 <GenericForm
                   :schema="searchSchema"
                   @onSubmit="onSubmit"
+                  @handleCancel="handleCancel"
                   :loading="loading"
                   :submitButton="$t('BUTTONS.SEARCH')"
                   :cancelButton="$t('BUTTONS.RECOVERY')"
@@ -124,6 +125,10 @@ export default {
           id: $event,
         },
       });
+    },
+    handleCancel() {
+      this.searchSchema.map((field) => (field.value = ""));
+      this.getSystemAudios();
     },
     toggleCollapsed() {
       this.collapsed = !this.collapsed;
