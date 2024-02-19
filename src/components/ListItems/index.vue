@@ -9,9 +9,11 @@
       </div>
     </div>
     <div class="search-sort" v-if="showSortControls">
-      <div class="search">
-        <b-form-input v-model="inputValue" placeholder="بحث" class="search-input" />
-        <img src="@/assets/images/icons/search.svg" />
+      <div class="search" >
+        <div v-if="showSearchInput">
+          <b-form-input v-model="inputValue" placeholder="بحث" class="search-input" />
+          <img src="@/assets/images/icons/search.svg" />
+        </div>
       </div>
       <div class="sort">
         <img src="@/assets/images/icons/sort.svg" />
@@ -325,7 +327,6 @@
             <b-dropdown-item v-if="checkDelete(data) === 'show'" @click="deleteItem(data.item)">
               {{ $t("CONTROLS.deleteBtn") }}
             </b-dropdown-item>
-
             <b-dropdown-divider v-if="checkAddRole(data) === 'show'"></b-dropdown-divider>
             <b-dropdown-item
               v-if="checkAddRole(data) === 'show'"
@@ -430,6 +431,10 @@ export default {
     },
   },
   props: {
+    showSearchInput:{
+      type: Boolean,
+      default: true,
+    },
     disableIt: {
       type: Boolean,
       default: false,

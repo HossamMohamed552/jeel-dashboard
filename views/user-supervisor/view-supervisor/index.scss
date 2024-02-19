@@ -1,5 +1,8 @@
 @import "src/assets/style/scss/_mixin";
 @import "src/assets/style/scss/_variables";
+.fix-display{
+  min-height: 100vh;
+}
 ::v-deep {
   .showItem > div {
     margin-bottom: 2rem;

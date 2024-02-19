@@ -35,6 +35,7 @@
         :tableItems="systemAudiosList"
         :fieldsList="fieldsList"
         :v-search-model="groupSearchWord"
+        :showSearchInput="false"
         @detailItem="detailItem($event)"
         @editItem="editItem($event)"
         @deleteItem="deleteItem($event)"

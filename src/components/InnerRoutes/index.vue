@@ -322,24 +322,24 @@ export default {
       left: -1.5rem;
       transition: all ease-in-out 0.3s;
 
-      &:hover {
-        background: $color-primary;
-
-        img {
-          filter: brightness(0) invert(1);
-          -webkit-filter: brightness(0) invert(1);
-        }
-      }
+      //&:hover {
+      //  background: $color-primary;
+      //
+      //  img {
+      //    filter: brightness(0) invert(1);
+      //    -webkit-filter: brightness(0) invert(1);
+      //  }
+      //}
     }
   }
 
-  &:hover {
-    span {
-      &:last-of-type {
-        opacity: 1;
-      }
-    }
-  }
+  //&:hover {
+  //  span {
+  //    &:last-of-type {
+  //      opacity: 1;
+  //    }
+  //  }
+  //}
 }
 .leader-board {
   background: url("../../assets/images/bg/leader-bg.svg");

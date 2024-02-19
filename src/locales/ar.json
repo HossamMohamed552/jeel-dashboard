@@ -14,7 +14,7 @@
   "USERS": {
     "ADD_NEW": "إضافة مستخدم إدارة منظومة",
     "ADD_SCHOOL_USER": "إضافة مستخدم للمدرسة",
-    "ACTIVE": "فعال",
+    "ACTIVE": "الحالة",
     "EDIT": "تعديل بيانات المستخدم",
     "USER_NAME": "إسم المستخدم",
     "FIRST_NAME": "الإسم الأول",
@@ -135,7 +135,7 @@
     "editBtn": "تعديل",
     "permissions": "الصلاحيات",
     "users": "المستخدمين",
-    "addRoleBtn": "صلاحيات",
+    "addRoleBtn": "الصلاحيات",
     "deleteBtn": "حذف",
     "addVideoQuestion": "اضافة اسئله الفيديو",
     "ManageClasses": "إداره الصفوف",
@@ -760,10 +760,11 @@
     "all_users": "عدد المستخدمين",
     "classes": "عدد الفصول",
     "levels": "عدد الصفوف الدراسية",
-    "schooladmins": "عدد مديرى المدارس",
+    "schooladmins": "عدد مديرى المدرسة",
     "supervisors": "عدد المشرفين",
     "teachers": "عدد المدرسين",
-    "students": "عدد الطلاب"
+    "students": "عدد الطلاب",
+    "parents": "عدد أولياء الأمور"
   },
   "SOCIAL_MEDIA": {
     "FACEBOOK": "فيس بوك",
@@ -817,7 +818,16 @@
     "addStudent": "إضافة طالب",
     "selectStudent": "اختر اسم الطالب",
     "selectParent": "اختر اسم ولى الأمر",
-    "addParent": "إضافة ولى أمر",
-    "studyYearsList": "قائمة الأعوام الدراسية"
+    "addParent": "بيانات أولياء الأمور",
+    "studyYearsList": "قائمة الأعوام الدراسية",
+    "rolesList": "قائمة الصلاحيات",
+    "showDetailsTeacher":"تفاصيل المدرس",
+    "showDetailsParent":"تفاصيل ولى الأمر",
+    "roleStudentOnClass": "تسجيل الصف الدراسى",
+    "addStudentOnClass": "بيانات الصف الدراسى",
+    "classList": "قائمة الصفوف الدراسية",
+    "parentList": "قائمة أولياء الأمور",
+    "addStudentClassDETAILS": "إضافة طلاب للفصل",
+    "studentName": "اسم الطالب"
   }
 }

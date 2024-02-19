@@ -57,13 +57,13 @@
               :subtitle="userDetail.roles[0].name"
             />
           </b-col>
-          <validation-observer class="w-100" v-slot="{ invalid }" ref="addEditSchoolClassForm">
+          <validation-observer class="w-100 px-3" v-slot="{ invalid }" ref="addEditSchoolClassForm">
             <form @submit.prevent="onSubmit">
               <b-row>
                 <b-col lg="12">
-                  <h2 class="heading mt-3">{{ $t("schoolAdmin.addRole") }}</h2>
+                  <h2 class="heading my-4">{{ $t("schoolAdmin.addRole") }}</h2>
                 </b-col>
-                <b-col lg="3" class="mt-3 mb-3">
+                <b-col lg="3" class="">
                   <div class="hold-field" v-if="studyYears">
                     <SelectSearch
                       v-model="enrollment.study_year_id"
@@ -77,7 +77,7 @@
                     ></SelectSearch>
                   </div>
                 </b-col>
-                <b-col lg="3" class="mt-3 mb-3">
+                <b-col lg="3" class="">
                   <div class="hold-field" v-if="levels">
                     <SelectSearch
                       v-model="enrollment.level_id"
@@ -92,7 +92,7 @@
                     ></SelectSearch>
                   </div>
                 </b-col>
-                <b-col lg="3" class="mt-3 mb-3">
+                <b-col lg="3" class="">
                   <div class="hold-field" v-if="classes">
                     <SelectSearch
                       v-model="enrollment.class_id"
@@ -107,24 +107,30 @@
                     ></SelectSearch>
                   </div>
                 </b-col>
-              </b-row>
-              <b-row>
-                <div class="hold-btns-form">
-                  <Button @click="handleCancel" custom-class="cancel-btn margin">
-                    {{ $t("GLOBAL_CANCEL") }}
-                  </Button>
+                <b-col lg="3" class="d-flex justify-content-start align-items-end">
                   <Button
                     type="submit"
                     :loading="loading"
                     :disabled="invalid"
-                    custom-class="submit-btn"
+                    class="mt-3"
+                    custom-class="submit-btn margin-0-all"
                   >
                     {{ $t("GLOBAL_SAVE") }}
                   </Button>
-                </div>
+                </b-col>
               </b-row>
+<!--              <b-row>-->
+<!--                <div class="hold-btns-form">-->
+<!--                  <Button @click="handleCancel" custom-class="cancel-btn margin">-->
+<!--                    {{ $t("GLOBAL_CANCEL") }}-->
+<!--                  </Button>-->
+<!--                </div>-->
+<!--              </b-row>-->
             </form>
           </validation-observer>
+          <b-col lg="12">
+            <h2 class="heading mt-5 mb-0">{{ $t("schoolAdmin.rolesList") }}</h2>
+          </b-col>
           <b-col lg="12">
             <ListItems
               :fieldsList="fieldsList"
@@ -186,16 +192,16 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
-          key: "class.name",
-          label: this.$i18n.t("TABLE_FIELDS.className"),
-        },
-        {
-          key: "school.name",
-          label: this.$i18n.t("TABLE_FIELDS.schoolName"),
+          key: "studyYear.name",
+          label: this.$i18n.t("TABLE_FIELDS.studyYear"),
         },
         {
           key: "level.name",
           label: this.$i18n.t("schoolAdmin.level"),
+        },
+        {
+          key: "class.name",
+          label: this.$i18n.t("TABLE_FIELDS.className"),
         },
         {
           key: "actions",

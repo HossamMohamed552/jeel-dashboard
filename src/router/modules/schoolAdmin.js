@@ -103,6 +103,16 @@ export default [
     },
   },
   {
+    path: "/dashboard/school-admin-class/students/:id",
+    name: "add-student-classes",
+    component: () => import("../../../views/school-admin-classes/students-class/index.vue"),
+    meta: {
+      breadcrumb: "تفاصيل الفصل",
+      preLabel: "الفصول",
+      preLink: "/dashboard/school-admin-classes",
+    },
+  },
+  {
     path: "/dashboard/school-admins-users",
     name: "school-admins-users",
     component: () => import("../../../views/user-school-admin/index.vue"),
@@ -189,7 +199,7 @@ export default [
     name: "add-students-enrollment",
     component: () => import("../../../views/user-student/enrollment/index.vue"),
     meta: {
-      breadcrumb: "الصلاحيات",
+      breadcrumb: "تسجيل الصف الدراسى",
       preLabel: "إدارة الطلاب",
       preLink: "/dashboard/students-users",
     },
@@ -281,7 +291,7 @@ export default [
     name: "add-parent-to-student-user-enrollment",
     component: () => import("../../../views/user-student/student-parent-enrollment/index.vue"),
     meta: {
-      breadcrumb: "إضافة ولى الأمر إلى الطالب",
+      breadcrumb: "أولياء الأمور للطالب",
       preLabel: "إدارة الطلاب",
       preLink: "/dashboard/students-users",
     },

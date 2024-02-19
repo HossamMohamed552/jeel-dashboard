@@ -34,7 +34,6 @@
         :table-items="usersSchoolList"
         :v-search-model="userSearchWord"
         :loading="loading"
-        :disableIt="true"
         :is-user-page="true"
         :permission_view="'show-school-users'"
         :permission_delete="'show-school-users'"

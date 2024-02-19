@@ -4,7 +4,7 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">إضافة ولى الأمر إلى الطالب</h2>
+            <h2 class="heading">أولياء الأمور للطالب</h2>
           </b-col>
         </b-row>
         <b-row>
@@ -62,7 +62,7 @@
           <form @submit.prevent="onSubmit">
             <b-row>
               <b-col lg="12">
-                <h2 class="heading mt-3">{{ $t("schoolAdmin.addParent") }}</h2>
+                <h2 class="heading mb-4">{{ $t("schoolAdmin.addParent") }}</h2>
               </b-col>
               <b-col lg="10">
                 <SelectSearch
@@ -86,6 +86,9 @@
           </form>
         </validation-observer>
         <b-row>
+          <b-col lg="12">
+            <h2 class="heading m-0">{{ $t("schoolAdmin.parentList") }}</h2>
+          </b-col>
           <b-col lg="12">
             <ListItems
               :fieldsList="fieldsList"
@@ -199,7 +202,7 @@ export default {
     onSubmit(){
       this.ApiService(postStudentForParentRequest(this.enrollment)).then(() => {
         this.$nextTick(() => {
-          this.parent_id = ""
+          this.enrollment.parent_id = ""
           this.$refs.addEditSchoolClassForm.reset()
         })
         this.getStudentDetails()

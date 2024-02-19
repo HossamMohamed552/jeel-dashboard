@@ -66,33 +66,103 @@
               <b-col lg="4" class="mb-5 showItem">
                 <ShowItem :title="$t('SOCIAL_MEDIA.LINKEDIN')" :subtitle="singleUser?.linkedin" />
               </b-col>
-              <b-col lg="6" class="mb-5 showItem img-container">
-                <img class="w-100" :src="singleUser.avatar" />
-              </b-col>
             </b-row>
+          </b-col>
+          <b-col lg="12">
+            <h2 class="heading m-0">{{ $t("schoolAdmin.classList") }}</h2>
+          </b-col>
+          <b-col lg="12">
+            <ListItems
+              :fieldsList="fieldsList"
+              :table-items="singleUser.classes"
+              :loading="loading"
+              :permission_delete="'delete-enrollment-supervisors-users'"
+              @deleteItem="deleteItem($event)"
+              :showSortControls="false"
+              class="m-0 p-0"
+            >
+            </ListItems>
           </b-col>
         </b-row>
       </div>
     </div>
+    <Modal
+      :content-message="'حذف العنصر'"
+      :content-message-question="'هل انت متأكد من حذف العنصر ؟'"
+      :showModal="showModal"
+      @cancel="cancel($event)"
+      :is-warning="true"
+      @cancelWithConfirm="cancelWithConfirm($event)"
+    />
   </section>
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import {getUsersSchoolAdminRequest} from "@/api/school-info";
+import {
+  deleteSchoolAdminEnrollmentRequest, deleteStudentEnrollmentRequest,
+  getUsersSchoolAdminRequest,
+  getUsersStudentSchoolAdminRequest
+} from "@/api/school-info";
+import ListItems from "@/components/ListItems/index.vue";
+import Modal from "@/components/Shared/Modal/index.vue";
 export default {
   name: "index",
   components: {
+    Modal,
+    ListItems,
     ShowItem,
   },
   data() {
     return {
       singleUser: {},
+      loading: false,
+      showModal: false,
+      fieldsList: [
+        {
+          key: "id",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "studyYear.name",
+          label: this.$i18n.t("TABLE_FIELDS.studyYearName"),
+        },
+        {
+          key: "level.name",
+          label: this.$i18n.t("TABLE_FIELDS.levelSchoolAdmin"),
+        },
+        {
+          key: "name",
+          label: this.$i18n.t("TABLE_FIELDS.className"),
+        },
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ],
     };
   },
+  methods:{
+    deleteItem($event) {
+      this.itemId = $event;
+      this.showModal = true;
+    },
+    cancel($event) {
+      this.showModal = $event;
+    },
+    cancelWithConfirm() {
+      this.ApiService(deleteStudentEnrollmentRequest(this.itemId)).then(() => {
+        this.getStudentSchoolAdmin();
+      });
+      this.cancel();
+    },
+    getStudentSchoolAdmin(){
+      this.ApiService(getUsersStudentSchoolAdminRequest(this.$route.params.id)).then((response) => {
+        this.singleUser = response.data.data;
+      });
+    }
+  },
   mounted() {
-    this.ApiService(getUsersSchoolAdminRequest(this.$route.params.id)).then((response) => {
-      this.singleUser = response.data.data;
-    });
+    this.getStudentSchoolAdmin()
   },
 };
 </script>
