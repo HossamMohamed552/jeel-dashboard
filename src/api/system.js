@@ -14,6 +14,13 @@ export const getLibraryTypeRequest = (params) => ({
   url: "system_codes/library/type",
   config: { params },
 });
+
+export const getStoreLibraryTypeRequest = (params) => ({
+  method: "get",
+  url: "system_codes/store_library/type",
+  config: { params },
+});
+
 export const getLibraryContentRequest = (params) => ({
   method: "get",
   url: `library?type=[${params}]`,

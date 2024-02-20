@@ -6,6 +6,7 @@
       :fieldsList="fieldsList"
       :table-items="jeelGamesList"
       :v-search-model="groupSearchWord"
+      :showSearchInput="false"
       @detailItem="detailItem($event)"
       :number-of-item="totalNumber"
       @editItem="editItem($event)"
