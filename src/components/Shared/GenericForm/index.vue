@@ -98,8 +98,8 @@
             </div>
           </div>
         </b-col>
-        <b-col lg="4" v-if="IsAudio">
-          <div class="hold-btns-form" :class="IsAudio ? 'margin-button d-flex justify-content-between align-items-center': ''">
+        <b-col lg="12" v-if="IsAudio">
+          <div class="hold-btns-form" :class="IsAudio ? 'margin-button d-flex align-items-center': ''">
             <Button @click="handleCancel" custom-class="cancel-btn margin">
               {{ cancelButton }}
             </Button>
@@ -155,7 +155,7 @@ export default {
   props: {
     IsAudio: {
       type: Boolean,
-      default: true
+      default: false
     },
     schema: {
       type: Array,
