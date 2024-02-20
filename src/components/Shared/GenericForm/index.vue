@@ -47,7 +47,6 @@
               :rules="field.rules"
               @input="handleInput(field.key, field.value, field)"
             ></DatePicker>
-
             <div class="hold-field" v-if="filesUploadedTypes.includes(field.type)">
               <UploadAttachment
                 v-if="!$route.params.id"
@@ -99,11 +98,20 @@
             </div>
           </div>
         </b-col>
+        <b-col lg="4" v-if="IsAudio">
+          <div class="hold-btns-form" :class="IsAudio ? 'margin-button d-flex justify-content-between align-items-center': ''">
+            <Button @click="handleCancel" custom-class="cancel-btn margin">
+              {{ cancelButton }}
+            </Button>
+            <Button :disabled="invalid" type="submit" :loading="loading" custom-class="submit-btn">
+              {{ submitButton }}
+            </Button>
+          </div>
+        </b-col>
         <slot name="customSubmit"></slot>
       </b-row>
-
       <slot></slot>
-      <b-row v-if="submitedForm">
+      <b-row v-if="submitedForm && !IsAudio">
         <div class="hold-btns-form">
           <Button @click="handleCancel" custom-class="cancel-btn margin">
             {{ cancelButton }}
@@ -145,6 +153,10 @@ export default {
     };
   },
   props: {
+    IsAudio: {
+      type: Boolean,
+      default: true
+    },
     schema: {
       type: Array,
       default: () => [],

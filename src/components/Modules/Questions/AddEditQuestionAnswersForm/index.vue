@@ -12,7 +12,7 @@
                   :label="$t('QUESTIONS.QUESTION')"
                   :name="$t('QUESTIONS.QUESTION')"
                   :placeholder="$t('QUESTIONS.enterQUESTION')"
-                  :rules="'required|max:100'"
+                  :rules="'required|max:150'"
                 ></TextField>
               </div>
             </b-col>
@@ -32,7 +32,7 @@
                   :label="$t('QUESTIONS.HINT')"
                   :name="$t('QUESTIONS.HINT')"
                   :placeholder="$t('QUESTIONS.enterHINT')"
-                  :rules="'required|max:100'"
+                  :rules="'required|max:150'"
                 ></TextField>
               </div>
             </b-col>
@@ -55,7 +55,7 @@
             <b-col lg="9" class="mb-3">
               <div class="hold-field">
                 <TextField
-                  :rules="'required|max:100'"
+                  :rules="'required|max:150'"
                   v-model="answer.answer"
                   :label="$t('QUESTIONS.ANSWER')"
                   :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
@@ -164,7 +164,7 @@
                   v-model="formValues.hint"
                   :label="$t('QUESTIONS.HINT')"
                   :name="$t('QUESTIONS.HINT')"
-                  :rules="'required|max:100'"
+                  :rules="'required|max:150'"
                 ></TextField>
               </div>
             </b-col>

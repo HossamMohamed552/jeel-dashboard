@@ -13,7 +13,7 @@
                     :label="$t('COUNTRY.countryName')"
                     :name="$t('COUNTRY.countryName')"
                     placeholder="ادخل اسم الدولة"
-                    :rules="'required|min:3|max:100'"
+                    :rules="'required|min:3|max:150'"
                   ></TextField>
                 </div>
               </b-col>

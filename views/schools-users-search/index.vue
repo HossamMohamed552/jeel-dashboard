@@ -7,7 +7,7 @@
           <i :class="collapsed ? 'fas fa-minus' : 'fas fa-plus'"></i>
         </button>
       </div>
-      <div :class="collapsed ? '' : 'collapsed'" class="collapse-search__body">
+      <div :class="collapsed ? '' : 'collapsed'" class="collapse-search__body" v-if="collapsed">
         <div class="hold-fields">
           <b-row>
             <b-col lg="12">
@@ -218,8 +218,8 @@ export default {
     }, 300),
 
     handleCancel() {
-      console.log("handleCancel");
-      // this.$router.push("/dashboard/schools");
+      this.userSearch.map((field) => (field.value = ""));
+      this.getAllUsers()
     },
     toggleCollapsed() {
       this.collapsed = !this.collapsed;

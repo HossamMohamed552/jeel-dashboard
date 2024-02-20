@@ -13,7 +13,7 @@
                     :label="$t('VIDEO.VIDEONAME')"
                     :name="$t('VIDEO.VIDEONAME')"
                     :placeholder="$t('VIDEO.placeVIDEONAME')"
-                    :rules="'required|min:3|max:30'"
+                    :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
               </b-col>
