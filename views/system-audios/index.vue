@@ -70,7 +70,7 @@ export default {
         {
           key: "category_id",
           label: "التصنيف",
-          col: "4",
+          col: "6",
           listen: "id",
           type: "select",
           optionValue: "name",
@@ -82,7 +82,7 @@ export default {
         {
           key: "name",
           label: "الاسم",
-          col: "4",
+          col: "6",
           listen: "id",
           value: "",
           type: "text",
