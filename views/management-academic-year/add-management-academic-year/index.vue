@@ -34,7 +34,7 @@ export default {
           console.log("response", response);
           setTimeout(() => {
             this.showModal = false;
-          }, 3000);
+          }, 1500);
         })
         .then(() => {
           this.$router.push("/dashboard/management-academic-year");

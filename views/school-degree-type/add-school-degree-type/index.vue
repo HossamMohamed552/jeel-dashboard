@@ -33,7 +33,7 @@ export default {
           this.showModal = true;
           setTimeout(() => {
             this.$router.push("/dashboard/school-degree-types");
-          }, 3000);
+          }, 1500);
         }).catch((error) => {
           this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
         }).finally(() => {

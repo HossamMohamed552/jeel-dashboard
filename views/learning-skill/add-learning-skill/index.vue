@@ -33,7 +33,7 @@ export default {
           this.showModal = true;
           setTimeout(() => {
             this.$router.push("/dashboard/learning-skill");
-          }, 3000);
+          }, 1500);
         }).catch((error) => {
         this.loading = false;
         this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');

@@ -1,6 +1,6 @@
 <template>
   <div class="add-practice">
-    <Modal :content-message="'تمت التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="'تم التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
     <AddEditQuiz @handleEditQuiz="handleEditQuiz" @handleCancel="handleCancel"/>
   </div>
 </template>
@@ -59,7 +59,7 @@ export default {
       }).then(()=>{
         setTimeout(() => {
           this.showModal = false
-        }, 3000)
+        }, 1500)
         this.$router.push('/dashboard/practices')
       }).catch(()=>this.showModal = false)
     },

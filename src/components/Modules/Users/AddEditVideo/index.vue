@@ -126,7 +126,7 @@
                       v-model="createVideo.learning_styles"
                       :label="$t('VIDEO.languageMethods')"
                       :placeholder="$t('VIDEO.selectLanguageMethods')"
-                      :name="'languageMethods'"
+                      :name="$t('VIDEO.languageMethods')"
                       :options="languageMethods"
                       :get-option-label="(option) => option.name"
                       :reduce="(option) => option.id"

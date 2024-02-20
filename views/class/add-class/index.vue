@@ -45,7 +45,7 @@ export default {
         this.isError = false
         setTimeout(() => {
           this.showModal = false
-        }, 3000)
+        }, 1500)
       }).then(() => {
         this.$router.push(`/dashboard/schools/show/${this.schoolId}`);
       }).catch((error)=>{

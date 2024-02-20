@@ -29,7 +29,7 @@ export default {
           this.showModal = true;
           setTimeout(() => {
             this.$router.push("/dashboard/currency");
-          }, 3000);
+          }, 1500);
         })
         .finally(() => {
           this.loading = false;

@@ -1,7 +1,7 @@
 <template>
   <div class="add-mission">
     <section class="container-fluid custom-container">
-      <Modal :content-message="'تمت التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
+      <Modal :content-message="'تم التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
       <Stepper
         v-show="currentStep === 0 || currentStep === 1 || currentStep === 2  || currentStep === 3"
         class="mt-5 mb-3"
@@ -299,7 +299,7 @@ export default {
           this.loading = false;
           setTimeout(() => {
             this.showModal = false;
-          }, 3000);
+          }, 1500);
           this.$router.push("/dashboard/missions");
         }).catch(()=>{
         this.loading = false

@@ -208,7 +208,7 @@ export default {
           setTimeout(() => {
             this.isShowModal = false;
             this.$router.push("/dashboard/system-audios");
-          }, 3000);
+          }, 1500);
         })
         .catch(() => {
           this.loading = false;

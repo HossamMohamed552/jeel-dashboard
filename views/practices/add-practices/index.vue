@@ -62,7 +62,7 @@ export default {
       }).then(()=>{
         setTimeout(() => {
           this.showModal = false
-        }, 3000)
+        }, 1500)
         this.$router.push('/dashboard/practices')
       }).catch(()=>this.showModal = false)
     },

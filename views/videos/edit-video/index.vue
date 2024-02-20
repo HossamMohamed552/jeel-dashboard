@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal :content-message="isSuccess ? 'تمت التعديل بنجاح' : 'فشل التعديل'"
+    <Modal :content-message="isSuccess ? 'تم التعديل بنجاح' : 'فشل التعديل'"
            :showModal="showModal"
            :is-success="isSuccess"
            :is-failed="isFailed"
@@ -83,7 +83,7 @@ export default {
         setTimeout(() => {
           this.showModal = false
           this.$router.push("/dashboard/video");
-        }, 3000)
+        }, 1500)
       }).catch(err => {
         this.showModal = true
         this.loading = false;

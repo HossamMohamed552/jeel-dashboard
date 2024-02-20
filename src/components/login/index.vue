@@ -24,11 +24,7 @@
               type="text"
               class="password-input"
             >
-              <b-icon
-                icon="eye-slash"
-                @click="showPassword = !showPassword"
-                class="icon-password"
-              />
+              <b-icon icon="eye" @click="showPassword = !showPassword" class="icon-password" />
             </TextField>
             <TextField
               v-else
@@ -39,7 +35,11 @@
               type="password"
               class="password-input"
             >
-              <b-icon icon="eye" @click="showPassword = !showPassword" class="icon-password" />
+              <b-icon
+                icon="eye-slash"
+                @click="showPassword = !showPassword"
+                class="icon-password"
+              />
             </TextField>
           </div>
           <div class="hold-field remember-me">

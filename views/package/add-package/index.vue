@@ -33,7 +33,7 @@ export default {
         setTimeout(() => {
           this.showModal = false
           this.$router.push("/dashboard/package");
-        }, 3000)
+        }, 1500)
       }).catch(()=>{
         this.loading = false
         this.showModal = false

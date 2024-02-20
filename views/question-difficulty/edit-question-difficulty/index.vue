@@ -38,7 +38,7 @@ export default {
         setTimeout(() => {
           this.showModal = false;
           this.$router.push("/dashboard/question-difficulty");
-          }, 3000);
+          }, 1500);
       }) .catch(() => {
           this.loading = false;
         });

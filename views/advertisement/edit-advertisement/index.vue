@@ -1,6 +1,6 @@
 <template>
   <div className="add-ad">
-    <Modal :content-message="'تمت التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="'تم التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
     <AddEditAdvertisementCategory
       :loading="loading"
       @editAdCategory="editAdCategory($event)"
@@ -31,7 +31,7 @@ export default {
           this.showModal = true;
           setTimeout(() => {
             this.showModal = false;
-          }, 3000);
+          }, 1500);
         })
         .then(() => {
           this.$router.push("/dashboard/advertisements");

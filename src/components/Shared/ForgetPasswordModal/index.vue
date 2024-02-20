@@ -75,7 +75,7 @@ export default {
             setTimeout(() => {
               this.showSuccessModal = false;
               this.$bvModal.hide("forget-password-modal");
-            }, 3000);
+            }, 1500);
           })
           .finally(() => {
             this.loading = false;

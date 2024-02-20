@@ -122,7 +122,7 @@ export default {
           setTimeout(() => {
             this.showSuccessModal = false;
             this.$router.push("login");
-          }, 3000);
+          }, 1500);
         }).catch((err)=> {
         if(err.response.status == 403) {
           this.rsponseType = 'expired'
