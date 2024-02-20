@@ -143,7 +143,7 @@
                       v-model="createVideo.language_skills"
                       :label="$t('VIDEO.learningSkills')"
                       :placeholder="$t('VIDEO.selectLearningSkills')"
-                      :name="'learningSkills'"
+                      :name="$t('VIDEO.learningSkills')"
                       :options="learningSkills"
                       :get-option-label="(option) => option.name"
                       :reduce="(option) => option.id"
