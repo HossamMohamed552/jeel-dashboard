@@ -56,6 +56,7 @@
                     :options="levels"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
+                    :rules="'required'"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -76,7 +77,7 @@
                 <UploadAttachment
                   v-if="!$route.params.id || createCharacter.thumbnailChangedRequest"
                   :rules="'required'"
-                  :label="$t('CHARACTER.character_logo')"
+                  :label="$t('TABLE_FIELDS.character_logo')"
                   :type-of-attachment="'image'"
                   :accept-files="'image/*'"
                   @setFileId="setImageId"
@@ -87,7 +88,7 @@
                     createCharacter.thumbnailChanged === false &&
                     !createCharacter.thumbnailChangedRequest
                   "
-                  :header="`${$t('CHARACTER.character_logo')}`"
+                  :header="`${$t('TABLE_FIELDS.character_logo')}`"
                   :media-name="createCharacter.thumbnail_name"
                   :file-size="createCharacter.thumbnail_size"
                   :image-url="createCharacter.thumbnail"
