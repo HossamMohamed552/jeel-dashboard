@@ -43,7 +43,7 @@
                       :label="'عدد الجيمز'"
                       :name="'عدد الجيمز'"
                       placeholder="أختر عدد الجيمز"
-                      :rules="'required|min:3|max:100'"
+                      :rules="'required'"
                   ></TextField>
                 </div>
               </b-col>

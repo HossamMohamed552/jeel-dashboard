@@ -11,6 +11,7 @@
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
       :loading="loading"
+      :showSearchInput="false"
       @refetch="getJeelStoreLibrary"
       :permission_delete="'delete-store-library'"
       :permission_edit="'edit-store-library'"

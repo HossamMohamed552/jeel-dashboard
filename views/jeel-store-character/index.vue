@@ -89,6 +89,7 @@
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
       :loading="loading"
+      :showSearchInput="false"
       @refetch="getcharacters"
       :permission_delete="'delete-characters'"
       :permission_edit="'edit-characters'"
