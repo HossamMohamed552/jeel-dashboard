@@ -391,7 +391,6 @@ export default {
     sendDataNewSchool() {
       this.handleInputValue();
       const formData = new FormData();
-
       // Append form data using a loop
       Object.entries(this.createSchool).forEach(([key, value]) => {
         if (value !== null && value !== undefined) {
@@ -403,7 +402,7 @@ export default {
           }
         }
       });
-
+      formData.append("_method", "put")
       const requestConfig = {
         headers: {
           Authorization: `Bearer ${VueCookies.get("token")}`,
@@ -413,7 +412,7 @@ export default {
       };
 
       const endpoint = this.$route.params.id ? `/schools/${this.$route.params.id}` : "/schools";
-      const httpMethod = this.$route.params.id ? "PUT" : "POST";
+      const httpMethod = this.$route.params.id ? "POST" : "POST";
 
       axios
         .request({
@@ -454,9 +453,10 @@ export default {
           name: data.name,
           country_id: data.country.id,
           management_type_id: data.management_type.id,
+          school_group_id: data.school_group.id,
           certificate_id: data.certificate.id,
           teaching_language_id: data.teaching_language.id,
-          students_type: data.teaching_language.id,
+          students_type: data.students_type.id,
           music_status: data.music_status.id,
           status: data.status.id,
           phone: data.phone,

@@ -41,7 +41,7 @@
         </b-col>
         <b-col lg="4" class="mb-4">
           <ShowItem class="divider-show" :title="$t('schoolAdmin.phone')"
-                    :subtitle="schoolInfo.owner_phone"/>
+                    :subtitle="schoolInfo.phone"/>
         </b-col>
         <b-col lg="4" class="mb-4">
           <ShowItem class="divider-show" :title="$t('schoolAdmin.musicStatus')"
