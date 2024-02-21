@@ -402,6 +402,7 @@ export default {
           }
         }
       });
+      if (this.$route.params.id)
       formData.append("_method", "put")
       const requestConfig = {
         headers: {
