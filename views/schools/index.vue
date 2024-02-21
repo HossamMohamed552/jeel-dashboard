@@ -60,7 +60,7 @@ export default {
         { key: "id", label: "التسلسل" },
         { key: "name", label: this.$i18n.t("SCHOOL.name") },
         { key: "country.name", label: this.$i18n.t("MISSIONS.country") },
-        { key: "status.name", label: this.$i18n.t("TABLE_FIELDS.status") },
+        { key: "status", label: this.$i18n.t("TABLE_FIELDS.status") },
         { key: "actions", label: "الإجراء" },
       ],
     };
