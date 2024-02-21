@@ -4,7 +4,6 @@
       <div class="add-edit-term-form">
         <h3>{{ $route.params.id ? "تعديل المهمة موسمية" : "إضافة مهمة موسمية" }}</h3>
         <Stepper v-show="true" class="mt-5 mb-3" :steps="steps" :current-step="currentStep" />
-
         <StepOne
           v-if="currentStep === 0"
           :stepForm="stepOneForm"
@@ -128,7 +127,7 @@ export default {
         },
         {
           key: "seasonal_mission_group_id",
-          col: "6",
+          col: "4",
           listen: "id",
           type: "select",
           optionValue: "name",
@@ -141,7 +140,7 @@ export default {
         {
           key: "start_date",
           label: "تاريخ بدء المهمة",
-          col: "3",
+          col: "4",
           listen: "id",
           value: "",
           type: "date",
@@ -151,7 +150,7 @@ export default {
         {
           key: "end_date",
           label: "تاريخ نهاية المهمة",
-          col: "3",
+          col: "4",
           listen: "id",
           value: "",
           type: "date",
@@ -366,7 +365,6 @@ export default {
     handleCancel() {
       this.$router.push("/dashboard/seasonal-mission");
     },
-
     nextStep() {
       this.currentStep = this.currentStep + 1;
     },
