@@ -40,7 +40,7 @@ export default {
           setTimeout(() => {
             this.showModal = false;
             this.$router.push("/dashboard/objective");
-          }, 3000);
+          }, 1500);
         })
         .catch((error) => {
           this.loading = false

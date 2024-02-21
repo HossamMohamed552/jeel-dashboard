@@ -38,7 +38,7 @@ export default {
           this.showModal = true;
           setTimeout(() => {
             this.showModal = false;
-          }, 3000);
+          }, 1500);
         })
         .then(() => {
           this.$router.push("/dashboard/power-up-boxes");

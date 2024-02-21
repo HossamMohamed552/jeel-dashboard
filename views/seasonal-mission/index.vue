@@ -98,8 +98,8 @@ export default {
         { key: "id", label: "التسلسل" },
         { key: "logo", label: "اسم الموسم" },
         { key: "name", label: "اسم المجموعة" },
-        { key: "grade", label: "الصف الدراسي" },
-        { key: "date", label: "تاريخ البداية" },
+        { key: "level.name", label: "الصف الدراسي" },
+        { key: "start_date", label: "تاريخ البداية" },
         { key: "actions", label: "الإجراء" },
       ],
       seasonalMissionSchema: [

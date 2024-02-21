@@ -108,7 +108,7 @@ export default {
           this.getLevels();
           setTimeout(() => {
             this.showModal = false;
-          }, 3000);
+          }, 1500);
         })
         .finally(() => {
           this.loading = false;

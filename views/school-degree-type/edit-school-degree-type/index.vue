@@ -1,6 +1,6 @@
 <template>
   <div class="edit-term">
-    <Modal :content-message="'تمت التعديل بنجاح'"
+    <Modal :content-message="'تم التعديل بنجاح'"
            :showModal="showModal"
            :is-success="true"/>
     <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"

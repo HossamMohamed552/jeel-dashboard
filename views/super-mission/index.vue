@@ -207,12 +207,12 @@ export default {
         this.showModal = true
         setTimeout(() => {
           this.showModal = false;
-        }, 3000);
+        }, 1500);
       }).then(() => this.$router.push('/')).catch((error) => {
         this.isError = true
         setTimeout(() => {
           this.isError = false;
-        }, 3000);
+        }, 1500);
       })
     },
     handleCancel() {

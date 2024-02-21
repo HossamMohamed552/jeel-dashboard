@@ -34,14 +34,15 @@
               v-if="field.type === 'textarea'"
               v-model="field.value"
               :label="field.label"
+              :placeholder="'إدخل' + ' ' + field.label"
               :name="field.label"
               :rules="field.rules"
             ></TextAreaField>
             <DatePicker
               v-if="field.type === 'date' || field.type === 'datetime'"
               v-model="field.value"
-              :placeholder="field.placeholder"
               :label="field.label"
+              :placeholder="'إدخل' + ' ' + field.label"
               valueType="format"
               :name="field.label"
               :rules="field.rules"

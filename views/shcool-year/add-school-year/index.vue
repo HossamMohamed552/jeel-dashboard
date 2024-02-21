@@ -41,7 +41,7 @@ export default {
           this.showModal = true;
           setTimeout(() => {
             this.$router.push("/dashboard/school-year");
-          }, 3000);
+          }, 1500);
         })
         .finally(() => {
           this.loading = false;

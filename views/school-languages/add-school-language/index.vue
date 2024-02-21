@@ -31,7 +31,7 @@ export default {
           this.showModal = true;
           setTimeout(() => {
             this.$router.push("/dashboard/school-languages");
-          }, 3000);
+          }, 1500);
         })
         .finally(() => {
           this.loading = false;

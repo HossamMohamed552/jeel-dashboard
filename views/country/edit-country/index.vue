@@ -1,6 +1,6 @@
 <template>
   <div class="add-country">
-    <Modal :content-message="'تمت التعديل بنجاح'"
+    <Modal :content-message="'تم التعديل بنجاح'"
            :showModal="showModal"
            :is-success="true"/>
     <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
@@ -36,7 +36,7 @@ export default {
         setTimeout(() => {
           this.showModal = false;
           this.$router.push("/dashboard/country");
-        }, 3000);
+        }, 1500);
       }).catch((error) => {
           this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
         }).finally(() => {

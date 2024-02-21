@@ -32,7 +32,7 @@ export default {
           setTimeout(() => {
             this.showModal = false;
             this.$router.push("/dashboard/jeel-store-character");
-          }, 3000);
+          }, 1500);
         })
         .finally(() => {
           this.loading = false;

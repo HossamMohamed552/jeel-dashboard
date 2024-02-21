@@ -30,7 +30,7 @@ export default {
           this.showModal = true;
           setTimeout(() => {
             this.$router.push("/dashboard/seasonal-mission-group");
-          }, 3000);
+          }, 1500);
         })
         .finally(() => {
           this.loading = false;

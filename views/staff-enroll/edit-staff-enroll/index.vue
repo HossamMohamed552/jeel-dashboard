@@ -1,7 +1,7 @@
 <template>
   <div class="add-country">
     <Modal
-      :content-message="'تمت التعديل بنجاح'"
+      :content-message="'تم التعديل بنجاح'"
       :showModal="showModal"
       :is-success="true"
     />

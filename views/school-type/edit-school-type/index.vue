@@ -1,7 +1,7 @@
 <template>
   <div class="add-country">
     <Modal
-      :content-message="'تمت التعديل بنجاح'"
+      :content-message="'تم التعديل بنجاح'"
       :showModal="showModal"
       :is-success="true"
     />
@@ -36,7 +36,7 @@ export default {
         setTimeout(() => {
           this.showModal = false
           this.$router.back()
-        }, 3000)
+        }, 1500)
       })
     },
     handleCancel() {

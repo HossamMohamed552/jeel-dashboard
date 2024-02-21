@@ -1,7 +1,7 @@
 <template>
   <div class="add-country">
     <Modal
-      :content-message="'تمت التعديل بنجاح'"
+      :content-message="'تم التعديل بنجاح'"
       :showModal="showModal"
       :is-success="true"
     />
@@ -41,7 +41,7 @@ export default {
           setTimeout(() => {
             this.showModal = false;
             this.$router.push("/dashboard/lessons");
-          }, 3000);
+          }, 1500);
         })
         .catch((error) => {
           this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');

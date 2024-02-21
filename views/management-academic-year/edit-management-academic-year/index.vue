@@ -1,6 +1,6 @@
 <template>
   <div class="add-role">
-    <Modal :content-message="'تمت التعديل بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="'تم التعديل بنجاح'" :showModal="showModal" :is-success="true" />
     <AddEditAcademicYear
       :loading="loading"
       @handleAddAcademicYear="handleAddAcademicYear($event)"
@@ -33,7 +33,7 @@ export default {
           this.loading = false;
           setTimeout(() => {
             this.showModal = false;
-          }, 3000);
+          }, 1500);
         })
         .then(() => {
           this.$router.push("/dashboard/management-academic-year");

@@ -42,15 +42,14 @@ export default{
         this.showModal = true;
         setTimeout(() => {
           this.showModal = false
-        }, 3000)
-      }).then(() => {
-        this.$router.push("/dashboard/path");
+          this.$router.push("/dashboard/path");
+        }, 1500)
       }).catch((error)=>{
         this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
         this.loading = false;
         setTimeout(() => {
           this.showModal = false
-        }, 3000)
+        }, 1500)
       })
     },
     handleCancel() {

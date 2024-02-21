@@ -37,7 +37,7 @@ export default {
           setTimeout(() => {
             this.showModal = false;
             this.$router.push("/dashboard/school-admin-classes");
-          }, 3000);
+          }, 1500);
         })
         .catch((error) => {
           this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
