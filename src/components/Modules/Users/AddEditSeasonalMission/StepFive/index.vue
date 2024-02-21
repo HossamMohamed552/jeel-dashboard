@@ -126,7 +126,7 @@ export default {
         { key: "id", label: "التسلسل" },
         { key: "name", label: "عنوان اللإشعار" },
         { key: "start_date", label: "تاريخ ووقت الإشعار" },
-        { key: "audio", label: "صوت الإشعار" },
+        { key: "original_url", label: "صوت الإشعار" },
         { key: "description", label: "نص الإشعار" },
       ],
       submittedForm: {},
