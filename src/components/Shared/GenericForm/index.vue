@@ -20,6 +20,8 @@
               :multiple="field.multiple"
               @input="handleInput(field.key, field.value, field)"
               :placeholder="'إختر' + ' ' + field.label"
+              :disabled="field.disabled"
+
             ></SelectSearch>
             <TextField
               v-if="field.type === 'text' || field.type === 'number'"
@@ -29,6 +31,7 @@
               :rules="field.rules"
               :type="field.type"
               :placeholder="'إدخل' + ' ' + field.label"
+              :disabled="field.disabled"
             ></TextField>
             <TextAreaField
               v-if="field.type === 'textarea'"

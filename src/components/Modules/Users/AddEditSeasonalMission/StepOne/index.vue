@@ -14,7 +14,9 @@
           <Button :custom-class="'cancel-btn margin'" v-if="currentStep > 0" @click="prevStep">
             السابق
           </Button>
-          <Button :disabled="invalid" :custom-class="'submit-btn'" @click="nextStep"> التالي </Button>
+          <Button :disabled="invalid" :custom-class="'submit-btn'" @click="nextStep">
+            التالي
+          </Button>
         </div>
       </div>
     </GenericForm>
@@ -31,7 +33,7 @@ import {
   getAllGender,
   getAllSeasonalMissionGroups,
   getAllLearningPaths,
-  getAllLessons,
+  getLessonsDepenseLearningPath,
   getAllLevels,
 } from "@/services/dropdownService";
 import _ from "lodash";
@@ -67,13 +69,13 @@ export default {
       this.$emit("onSubmit", this.stepForm);
     },
     handleInput: _.debounce(function (key, value, field) {
-      console.log('key',key)
-      console.log('value',value)
-      console.log('field',field)
       if (key === "image") {
         const imageObjectIndex = this.stepForm.findIndex((field) => field.key === "image");
         this.stepForm[imageObjectIndex].value = value.uuid;
         this.stepForm[imageObjectIndex].url = value.url;
+      } else if (key === "learningpaths") {
+        if (value != "") this.stepForm[7].disabled = false;
+        getLessonsDepenseLearningPath(this.stepForm, "lessons", value);
       } else {
         if (field.multiple) {
           field["learningpaths"] = [];
@@ -105,7 +107,6 @@ export default {
   async mounted() {
     await getAllSeasonalMissionGroups(this.stepForm, "seasonal_mission_group_id");
     await getAllLearningPaths(this.stepForm, "learningpaths");
-    await getAllLessons(this.stepForm, "lessons");
     await getALLCountries(this.stepForm, "countries");
     await getAllReligion(this.stepForm, "religions");
     await getAllGender(this.stepForm, "types");

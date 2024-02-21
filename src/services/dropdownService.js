@@ -22,7 +22,10 @@ import { getSystemAudiosCategoriesRequest } from "@/api/system-audios"; //  تص
 import { getRolesRequest } from "@/api/role";
 import { getAllSeasonalMissionGroupsRequest } from "@/api/seasonal-mission-group"; // اسم المجموعة الموسمية
 import { getAllLearningPathsRequest } from "@/api/learningPath"; // المسار التعليمي
-import { getAllLessonsRequest } from "@/api/lessons"; // الدرس
+import {
+  getAllLessonsRequest, // الدروس ( كل الدروس )
+  getLessonsDepenseLearningPathRequest, // الدروس ( اعتماداَ المسار التعليمي )
+} from "@/api/lessons"; // الدرس
 import { getAllLevelsRequest } from "@/api/level"; // الصف الدراسي
 import { getQuizLevelPathRequest } from "@/api/quiz"; // التمارين
 import { getVideoPerLevelPathRequest } from "@/api/videos"; // الفيديوهات
@@ -43,6 +46,11 @@ export async function fetchDataAndUpdateOptions(array, apiRequest, key) {
   } catch (error) {
     console.error(`Error fetching ${key}:`, error);
   }
+}
+
+export function separateIDs(key, IDs) {
+  const params = IDs.map((id, index) => `${key}[${index}]=${id}`).join("&");
+  return params;
 }
 
 export async function getALLCountries(array, key) {
@@ -86,6 +94,10 @@ export async function getAllLearningPaths(array, key) {
 }
 export async function getAllLessons(array, key) {
   await fetchDataAndUpdateOptions(array, getAllLessonsRequest(), key);
+}
+export async function getLessonsDepenseLearningPath(array, key, ids) {
+  const paramsString = await separateIDs("learning_paths", ids);
+  await fetchDataAndUpdateOptions(array, getLessonsDepenseLearningPathRequest(paramsString), key);
 }
 export async function getAllPrizeSeasonalMissionType(array, key) {
   await fetchDataAndUpdateOptions(array, getAllPrizeSeasonalMissionTypeRequest(), key);

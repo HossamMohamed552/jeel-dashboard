@@ -3,7 +3,6 @@
     <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
     <AddEditSeasonalMission
       :loading="loading"
-      @handleAddSeasonalMissionGroup="handleAddSeasonalMissionGroup($event)"
       @handleCancel="handleCancel"
     />
   </div>
