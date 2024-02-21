@@ -194,6 +194,7 @@ export default {
           value: "",
           rules: "required",
           multiple: true,
+          disabled: true
         },
         {
           key: "religions",
