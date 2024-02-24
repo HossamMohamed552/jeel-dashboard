@@ -129,21 +129,26 @@ export default {
         { key: "original_url", label: "صوت الإشعار" },
         { key: "description", label: "نص الإشعار" },
       ],
-      submittedForm: {},
+      submittedForm: {
+        learningpaths: {
+          videos: [],
+          quizzes: [],
+        },
+      },
       loading: false,
     };
   },
   methods: {
-    submitForm() {
-      this.updateFields();
+    async submitForm() {
+      await this.updateFields();
       this.ApiService(postCreateSeasonalMissionRequest(this.submittedForm)).then(() => {
-         this.$router.push("/dashboard/seasonal-mission");
+        this.$router.push("/dashboard/seasonal-mission");
       });
     },
     prevStep() {
       this.$emit("prevStep");
     },
-    updateFields() {
+    async updateFields() {
       // Generic method to update createSchool object based on the fieldArray
       this.stepForm.forEach((field) => {
         try {
@@ -153,14 +158,15 @@ export default {
               field.key,
               moment(field.value, "DD-MM-YYYY").format("YYYY-MM-DD")
             );
-          else this.$set(this.submittedForm, field.key, field.value);
+          else if (field.key != "learningpaths") this.$set(this.submittedForm, field.key, field.value);
         } catch (error) {
           console.error(`Error updating field ${field.key}:`, error);
         }
       });
       this.submittedForm["prizes"] = this.prizesList;
       this.submittedForm["notifications"] = this.notificationsList;
-      this.submittedForm["learningpaths"] = this.stepForm[6].learningpaths;
+      this.submittedForm.learningpaths.videos = this.videosList;
+      this.submittedForm.learningpaths.quizzes = this.exercisesList;
     },
   },
   async mounted() {},

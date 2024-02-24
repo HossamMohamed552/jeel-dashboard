@@ -45,7 +45,7 @@
 <script>
 import GenericForm from "@/components/Shared/GenericForm";
 import ListItems from "@/components/ListItems/index.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import moment from "moment";
 
 export default {
@@ -129,7 +129,22 @@ export default {
       this.removeFile();
     },
   },
-  async mounted() {},
+  computed: {
+    ...mapGetters(["getNotificationsList"]),
+  },
+  async mounted() {
+    this.notifactionGroup = this.getNotificationsList;
+    if (this.$route.params.id) {
+      this.notifactionGroup.forEach((notifaction) => {
+        notifaction["original_url"] = notifaction.audio;
+      });
+    }
+  },
+  watch: {
+    getNotificationsList() {
+      this.notifactionGroup = this.getNotificationsList;
+    },
+  },
 };
 </script>
 

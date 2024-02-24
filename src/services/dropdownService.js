@@ -32,7 +32,6 @@ import { getVideoPerLevelPathRequest } from "@/api/videos"; // الفيديوه�
 
 export async function updateFieldOptions(array, key, data) {
   const selectOptionsField = array.find((field) => field.key === key);
-  console.log(selectOptionsField);
   if (selectOptionsField) {
     if (key === "school_id") selectOptionsField.options = data.schools;
     else selectOptionsField.options = data;
@@ -108,11 +107,13 @@ export async function getCharacterType(array, key) {
 export async function getLibraryType(array, key) {
   await fetchDataAndUpdateOptions(array, getLibraryTypeRequest(), key);
 }
-export async function getCharacterContent(array, key, id) {
-  await fetchDataAndUpdateOptions(array, getCharacterContentRequest(id), key);
+export async function getCharacterContent(array, key, ids) {
+  const paramsString = await separateIDs("type", ids);
+  await fetchDataAndUpdateOptions(array, getCharacterContentRequest(paramsString), key);
 }
-export async function getLibraryContent(array, key, id) {
-  await fetchDataAndUpdateOptions(array, getLibraryContentRequest(id), key);
+export async function getLibraryContent(array, key, ids) {
+  const paramsString = await separateIDs("type", ids);
+  await fetchDataAndUpdateOptions(array, getLibraryContentRequest(paramsString), key);
 }
 export async function getQuizLevelPath(array, key) {
   await fetchDataAndUpdateOptions(array, getQuizLevelPathRequest(), key);
