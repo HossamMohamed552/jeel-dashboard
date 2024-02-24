@@ -74,7 +74,10 @@ import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import learningPathCollapse from "./learningPathCollapse.vue";
 import { mapGetters } from "vuex";
-import { postCreateSeasonalMissionRequest } from "@/api/seasonal-mission.js";
+import {
+  postCreateSeasonalMissionRequest,
+  putUpdateSeasonalMissionRequest,
+} from "@/api/seasonal-mission.js";
 import moment from "moment";
 
 export default {
@@ -141,7 +144,19 @@ export default {
   methods: {
     async submitForm() {
       await this.updateFields();
+      if (this.$route.params.id) this.handleEditSeasonalMission();
+      else this.handleAddSeasonalMission();
+    },
+    handleAddSeasonalMission() {
       this.ApiService(postCreateSeasonalMissionRequest(this.submittedForm)).then(() => {
+        this.$router.push("/dashboard/seasonal-mission");
+      });
+    },
+    handleEditSeasonalMission() {
+      this.submittedForm["_method"] = "PUT";
+      this.ApiService(
+        putUpdateSeasonalMissionRequest(this.submittedForm, this.$route.params.id)
+      ).then(() => {
         this.$router.push("/dashboard/seasonal-mission");
       });
     },
@@ -158,7 +173,8 @@ export default {
               field.key,
               moment(field.value, "DD-MM-YYYY").format("YYYY-MM-DD")
             );
-          else if (field.key != "learningpaths") this.$set(this.submittedForm, field.key, field.value);
+          else if (field.key != "learningpaths")
+            this.$set(this.submittedForm, field.key, field.value);
         } catch (error) {
           console.error(`Error updating field ${field.key}:`, error);
         }
