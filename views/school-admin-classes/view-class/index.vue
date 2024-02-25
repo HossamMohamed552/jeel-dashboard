@@ -78,6 +78,10 @@ export default {
           label: this.$i18n.t("USERS.name"),
         },
         {
+          key: "user_religion.name",
+          label: this.$i18n.t("USERS.religion"),
+        },
+        {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },

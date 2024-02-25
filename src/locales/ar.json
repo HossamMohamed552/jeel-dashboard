@@ -145,7 +145,8 @@
     "addStudent": "الطلاب",
     "addStudentInClass": "تسجيل الصف الدراسى",
     "addParent": "أولياء الأمور",
-    "addStudentOnClassBtn": "طلاب الفصل"
+    "addStudentOnClassBtn": "طلاب الفصل",
+    "classes": "الفصول الدراسية"
   },
   "ROLES": {
     "ADD_NEW": "إضافة صلاحية",
@@ -580,7 +581,7 @@
     "showDetails": "عرض تفاصيل المستخدم",
     "first_name": "الاسم الأول",
     "second_name": "الاسم الثانى",
-    "last_name": "الاسم الثانى",
+    "last_name": "إسم العائلة",
     "name": "الاسم",
     "email": "البريد الإلكترونى",
     "mobile": "الهاتف",
@@ -828,6 +829,8 @@
     "classList": "قائمة الصفوف الدراسية",
     "parentList": "قائمة أولياء الأمور",
     "addStudentClassDETAILS": "إضافة طلاب للفصل",
-    "studentName": "اسم الطالب"
+    "studentName": "اسم الطالب",
+    "addClassTeacherEnrollment": "إضافة فصل دراسي",
+    "classesList": "الفصول الدراسية"
   }
 }

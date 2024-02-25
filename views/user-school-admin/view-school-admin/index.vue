@@ -48,7 +48,7 @@
               <b-col lg="4" class="mb-5 showItem">
                 <ShowItem :title="$t('USERS.gender')" :subtitle="singleUser?.gender?.name" />
               </b-col>
-              <b-col lg="6" class="mb-5 showItem" v-if="singleUser && singleUser.roles">
+              <b-col lg="4" class="mb-5 showItem" v-if="singleUser && singleUser.roles">
                 <ShowItem :title="$t('USERS.DEPARTMENT')" :listItems="singleUser.roles" />
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
@@ -72,7 +72,7 @@
             </b-row>
           </b-col>
           <b-col lg="12">
-            <h2 class="heading">{{ $t("schoolAdmin.studyYearsList") }}</h2>
+            <h2 class="heading">{{ $t("schoolAdmin.rolesList") }}</h2>
           </b-col>
           <b-col lg="12">
             <ListItems

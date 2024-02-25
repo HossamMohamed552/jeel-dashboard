@@ -61,7 +61,7 @@
             <form @submit.prevent="onSubmit">
               <b-row>
                 <b-col lg="12">
-                  <h2 class="heading my-4">{{ $t("schoolAdmin.addRole") }}</h2>
+                  <h2 class="heading my-4">{{ $t("schoolAdmin.addClassTeacherEnrollment") }}</h2>
                 </b-col>
                 <b-col lg="3" class="">
                   <div class="hold-field" v-if="studyYears">
@@ -119,17 +119,17 @@
                   </Button>
                 </b-col>
               </b-row>
-<!--              <b-row>-->
-<!--                <div class="hold-btns-form">-->
-<!--                  <Button @click="handleCancel" custom-class="cancel-btn margin">-->
-<!--                    {{ $t("GLOBAL_CANCEL") }}-->
-<!--                  </Button>-->
-<!--                </div>-->
-<!--              </b-row>-->
+              <!--              <b-row>-->
+              <!--                <div class="hold-btns-form">-->
+              <!--                  <Button @click="handleCancel" custom-class="cancel-btn margin">-->
+              <!--                    {{ $t("GLOBAL_CANCEL") }}-->
+              <!--                  </Button>-->
+              <!--                </div>-->
+              <!--              </b-row>-->
             </form>
           </validation-observer>
           <b-col lg="12">
-            <h2 class="heading mt-5 mb-0">{{ $t("schoolAdmin.rolesList") }}</h2>
+            <h2 class="heading mt-5 mb-0">{{ $t("schoolAdmin.classesList") }}</h2>
           </b-col>
           <b-col lg="12">
             <ListItems
@@ -214,7 +214,7 @@ export default {
     teacherEnrollmentList(newVal) {
       return newVal
     },
-    "enrollment.level_id"(newVal){
+    "enrollment.level_id"(newVal) {
       this.setClassesBasedOnLevel(newVal)
     }
   },
@@ -272,6 +272,12 @@ export default {
         user_id: this.userId,
       }
       this.ApiService(postTeacherEnrollmentRequest(data)).then(() => {
+        this.enrollment.study_year_id = "";
+        this.enrollment.level_id = "";
+        this.enrollment.class_id = "";
+        this.$nextTick(() => {
+          this.$refs.addEditSchoolClassForm.reset()
+        })
         this.getTeacherUsers()
       })
     },

@@ -153,6 +153,8 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
   </section>
 </template>
 <script>
@@ -185,6 +187,7 @@ export default {
       classes: [],
       enrollment: {},
       loading: false,
+      showModalFailed: false,
       studentEnrollmentList: [],
       fieldsList: [
         {
@@ -282,6 +285,8 @@ export default {
           this.$refs.addEditSchoolClassForm.reset()
         })
        this.getStudentUsers()
+      }).catch((error) => {
+        this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الصف الدراسى مُستخدمة من قبل');
       })
     },
     handleCancel() {

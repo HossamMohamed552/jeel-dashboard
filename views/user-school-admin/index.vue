@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'إدارة مديرى المدرسة'"
+      :header-name="'قائمة مديرى المدرسة'"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="superVisorList"
