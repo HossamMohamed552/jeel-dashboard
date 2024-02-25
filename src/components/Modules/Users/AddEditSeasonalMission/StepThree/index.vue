@@ -47,7 +47,7 @@ import Stepper from "@/components/Shared/Stepper/index.vue";
 import GenericForm from "@/components/Shared/GenericForm";
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import {
   getAllPrizeSeasonalMissionType,
   getCharacterType,
@@ -120,13 +120,19 @@ export default {
       if (key === "type_id") {
         let selected = this.stepForm[2].options.find((option) => option.id === value);
         this.prizeType = selected.name;
+        this.stepForm[3].disabled = false;
         if (selected.name == "المكتبة" || selected.name == "شخصيات") {
           this.stepForm[3].type = "select";
           this.stepForm[4].type = "select";
           this.stepForm[3].value = "";
 
-          if (selected.name == "المكتبة") getLibraryType(this.stepForm, "prizeable_type");
-          else if (selected.name == "شخصيات") getCharacterType(this.stepForm, "prizeable_type");
+          if (selected.name == "المكتبة") {
+            this.stepForm[4].optionValue = "file_name";
+            getLibraryType(this.stepForm, "prizeable_type");
+          } else if (selected.name == "شخصيات") {
+            this.stepForm[4].optionValue = "name";
+            getCharacterType(this.stepForm, "prizeable_type");
+          }
         } else {
           this.stepForm[3].type = "hidden";
           this.stepForm[4].type = "hidden";
@@ -134,6 +140,7 @@ export default {
       }
 
       if (key === "prizeable_type") {
+        this.stepForm[4].disabled = false;
         if (this.prizeType == "المكتبة") {
           field.models = "App\\Models\\Library";
           getLibraryContent(this.stepForm, "prizeable_id", value);
@@ -143,6 +150,10 @@ export default {
         }
       }
     }, 300),
+    resetInput() {
+      this.stepForm[3].disabled = true;
+      this.stepForm[4].disabled = true;
+    },
     handleAdd() {
       this.stepForm.forEach((field) => {
         try {
@@ -166,11 +177,27 @@ export default {
       this.addPrize(this.entry);
       this.prizeGroup.push(this.entry);
       this.entry = {};
+      this.resetInput();
     },
   },
-  computed: {},
+  computed: {
+    ...mapGetters(["getPrizesList"]),
+  },
   async mounted() {
     getAllPrizeSeasonalMissionType(this.stepForm, "type_id");
+    this.prizeGroup = this.getPrizesList;
+    if (this.$route.params.id) {
+      this.prizeGroup.forEach((prize) => {
+        prize["prizeable_type_name"] = prize.type.name;
+        if (prize?.type?.key == "characters") prize["prizeable_id_name"] = prize.character.name;
+        if (prize?.type?.key == "library") prize["prizeable_id_name"] = prize.library.name;
+      });
+    }
+  },
+  watch: {
+    getPrizesList() {
+      this.prizeGroup = this.getPrizesList;
+    },
   },
 };
 </script>

@@ -14,9 +14,7 @@
           <Button :custom-class="'cancel-btn margin'" v-if="currentStep > 0" @click="prevStep">
             السابق
           </Button>
-          <Button :disabled="invalid" :custom-class="'submit-btn'" @click="nextStep">
-            التالي
-          </Button>
+          <Button :custom-class="'submit-btn'" @click="nextStep"> التالي </Button>
         </div>
       </div>
     </GenericForm>

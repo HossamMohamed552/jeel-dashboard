@@ -69,6 +69,7 @@ export default {
         });
         field.name = selectedOptionNames;
       }
+      this.learningPath.learningpaths = [];
       if (key === "video_id") {
         if (!this.videoLists[index - 1]) {
           this.$set(this.videoLists, index - 1, []);
@@ -76,7 +77,8 @@ export default {
           this.videoLists[index - 1] = [];
         }
         const videoObjects = field.name.map((video) => ({ ...video }));
-        this.learningPath.learningpaths[index - 1].videos = videoObjects;
+        this.learningPath.learningpaths["videos"] = videoObjects;
+        console.log(this.learningPath.learningpaths);
         this.videoLists[index - 1] = this.videoLists[index - 1].concat(videoObjects);
       } else {
         if (!this.exerciseLists[index - 1]) {
@@ -85,7 +87,7 @@ export default {
           this.exerciseLists[index - 1] = [];
         }
         const exerciseObjects = field.name.map((exercise) => ({ ...exercise }));
-        this.learningPath.learningpaths[index - 1].quizzes = exerciseObjects;
+        this.learningPath.learningpaths["quizzes"] = exerciseObjects;
         this.exerciseLists[index - 1] = this.exerciseLists[index - 1].concat(exerciseObjects);
       }
     }, 300),
@@ -97,8 +99,37 @@ export default {
           else if (index == 2) formElement.label = "اسم المسار الثاني";
           else if (index == 3) formElement.label = "اسم المسار الثالث";
           else formElement.label = "اسم المسار الأخير";
+        } else if (formElement.key === "video_id") {
+          if (index == 1) {
+            formElement.value = this.learningPath.value[0].videos;
+            this.videoLists[0] = this.learningPath.value[0].videos;
+          } else if (index == 2) {
+            formElement.value = this.learningPath.value[1].videos;
+            this.videoLists[1] = this.learningPath.value[1].videos;
+          } else if (index == 3) {
+            formElement.value = this.learningPath.value[2].videos;
+            this.videoLists[2] = this.learningPath.value[2].videos;
+          } else {
+            formElement.value = this.learningPath.value[3].videos;
+            this.videoLists[3] = this.learningPath.value[3].videos;
+          }
+        } else if (formElement.key === "exams_id") {
+          if (index == 1) {
+            formElement.value = this.learningPath.value[0].quizzes;
+            this.exerciseLists[0] = this.learningPath.value[0].quizzes;
+          } else if (index == 2) {
+            formElement.value = this.learningPath.value[1].quizzes;
+            this.exerciseLists[1] = this.learningPath.value[1].quizzes;
+          } else if (index == 3) {
+            formElement.value = this.learningPath.value[2].quizzes;
+            this.exerciseLists[2] = this.learningPath.value[2].quizzes;
+          } else {
+            formElement.value = this.learningPath.value[3].quizzes;
+            this.exerciseLists[3] = this.learningPath.value[3].quizzes;
+          }
         }
       });
+      console.log("duplicatedForm", duplicatedForm);
       return duplicatedForm;
     },
     nextStep() {
@@ -117,9 +148,7 @@ export default {
     getQuizLevelPath(this.stepForm, "exams_id");
     getVideoPerLevelPath(this.stepForm, "video_id");
   },
-  computed: {
-    pathNum() {},
-  },
+  computed: {},
 };
 </script>
 

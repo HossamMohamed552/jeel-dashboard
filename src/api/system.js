@@ -23,11 +23,11 @@ export const getStoreLibraryTypeRequest = (params) => ({
 
 export const getLibraryContentRequest = (params) => ({
   method: "get",
-  url: `library?type=[${params}]`,
+  url: `library?${params}`,
 });
 export const getCharacterContentRequest = (params) => ({
   method: "get",
-  url: `prize_character?type=[${params}]`,
+  url: `prize_character?${params}`,
 });
 
 export const getSortQuizTypeRequest = (params) => ({

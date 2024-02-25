@@ -65,6 +65,10 @@ import StepThree from "@/components/Modules/Users/AddEditSeasonalMission/StepThr
 import StepFour from "@/components/Modules/Users/AddEditSeasonalMission/StepFour/index.vue";
 import StepFive from "@/components/Modules/Users/AddEditSeasonalMission/StepFive/index.vue";
 
+import { getSeasonalMissionByIdRequest } from "@/api/seasonal-mission";
+import moment from "moment";
+import { mapActions } from "vuex";
+
 export default {
   components: {
     Stepper,
@@ -194,7 +198,7 @@ export default {
           value: "",
           rules: "required",
           multiple: true,
-          disabled: true
+          disabled: true,
         },
         {
           key: "religions",
@@ -308,6 +312,7 @@ export default {
           value: "",
           rules: "required",
           multiple: true,
+          disabled: true,
         },
         {
           key: "prizeable_id",
@@ -320,6 +325,7 @@ export default {
           deselectFromDropdown: true,
           value: "",
           rules: "required",
+          disabled: true,
         },
       ],
       stepFourForm: [
@@ -363,6 +369,8 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["addPrizeById", "addNotificationById"]),
+
     handleCancel() {
       this.$router.push("/dashboard/seasonal-mission");
     },
@@ -372,8 +380,46 @@ export default {
     prevStep() {
       this.currentStep = this.currentStep - 1;
     },
+    updateFieldOptions(array, key, data) {
+      const selectOptionsField = array.find((field) => field.key === key);
+      if (selectOptionsField) {
+        if (Array.isArray(data)) {
+          selectOptionsField.value = data;
+          selectOptionsField.name = data.map((item) => (item && item.name) || null);
+        } else {
+          selectOptionsField.value = data;
+        }
+      }
+    },
   },
-  async mounted() {},
+  async mounted() {
+    if (this.$route.params.id) {
+      this.ApiService(getSeasonalMissionByIdRequest(this.$route.params.id)).then((response) => {
+        let seasonalMission = response.data.data;
+        // get key and value
+        const mergedAllSteps = [
+          ...this.stepOneForm,
+          ...this.stepTwoForm,
+          ...this.stepThreeForm,
+          ...this.stepFourForm,
+        ];
+        Object.entries(seasonalMission).forEach(([key, value]) => {
+          this.updateFieldOptions(mergedAllSteps, key, value);
+        });
+        mergedAllSteps[2].value = seasonalMission.sesonalMissionGroup;
+        mergedAllSteps[2].name = seasonalMission.sesonalMissionGroup.name;
+        mergedAllSteps[3].value = moment(seasonalMission.start_date).format("DD-MM-YYYY");
+        mergedAllSteps[4].value = moment(seasonalMission.end_date).format("DD-MM-YYYY");
+        mergedAllSteps[5].value = seasonalMission.level;
+        mergedAllSteps[5].name = seasonalMission.level.name;
+        mergedAllSteps[10].task_audio_name = seasonalMission.image_name;
+        mergedAllSteps[10].task_audio_size = seasonalMission.image_size;
+        this.addPrizeById(seasonalMission.prizes);
+        this.addNotificationById(seasonalMission.notifications);
+        console.log(mergedAllSteps);
+      });
+    }
+  },
 };
 </script>
 
