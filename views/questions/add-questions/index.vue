@@ -10,6 +10,8 @@
             :steps="steps"
             :current-step="currentStep"
           />
+<!--          :objectives="objectives"-->
+<!--          :outcomes="outcomes"-->
           <AddEditQuestionPatternForm
             v-show="currentStep === 0"
             :loading="loading"
@@ -19,8 +21,6 @@
             :bloom-categories="bloomCategories"
             :learning-methods="learningMethods"
             :language-skills="languageSkills"
-            :objectives="objectives"
-            :outcomes="outcomes"
             :question-difficulties="questionDifficulties"
             @getSubQuestionTypes="getQuestionSubTypes"
             @handleCancel="handleCancel"
@@ -274,8 +274,8 @@ export default {
     this.getQuestionDifficulties();
     this.getBloomCategories();
     this.getLearningMethods();
-    this.getObjectivesRequest();
-    this.getOutcomesRequest();
+    // this.getObjectivesRequest();
+    // this.getOutcomesRequest();
   },
   methods: {
     getQuestionTypes() {
@@ -505,16 +505,7 @@ export default {
       this.loading = false
       this.cancelSource.cancel();
     },
-    getObjectivesRequest() {
-      this.ApiService(getAllObjectivesRequest()).then((response) => {
-        this.objectives = response.data.data
-      })
-    },
-    getOutcomesRequest() {
-      this.ApiService(getAllOutcomesRequest()).then((response) => {
-        this.outcomes = response.data.data
-      })
-    },
+
   }
 };
 </script>

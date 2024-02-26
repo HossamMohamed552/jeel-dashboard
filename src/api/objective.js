@@ -9,7 +9,7 @@ export const getObjectiveCategoriesRequest = (params) => ({
 export const getAllObjectivesRequest = (params) => ({
   method: 'get',
   url: `objective?list_all=true`,
-  config: {}
+  config: {params}
 })
 export const getObjectiveCategoryByIdRequest = (id) => ({
   method: "get",

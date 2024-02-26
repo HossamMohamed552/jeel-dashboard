@@ -11,14 +11,14 @@
           <b-col cols="12" md="6" lg="3">
             <ShowItem
               title="العام الدراسى"
-              :subtitle="academicYear?.name"
+              :subtitle="academicYear?.studyYear?.name"
               class="with-border-bottom"
             />
           </b-col>
           <b-col cols="12" md="6" lg="3">
             <ShowItem
               title="الترم الدراسى"
-              :subtitle="academicYear?.name"
+              :subtitle="academicYear?.term?.name"
               class="with-border-bottom"
             />
           </b-col>

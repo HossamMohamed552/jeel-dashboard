@@ -1143,9 +1143,9 @@
           <b-row>
             <b-col lg="9" class="mb-3">
               <div class="hold-field">
+<!--                @paste.prevent-->
+<!--                @drop.prevent-->
                 <TextField
-                  @paste.prevent
-                  @drop.prevent
                   v-model="formValues.question"
                   :label="$t('QUESTIONS.QUESTION')"
                   :name="$t('QUESTIONS.QUESTION')"
@@ -3180,6 +3180,8 @@ export default {
       } else if (newVal === "match_many_images_voices") {
         this.answerMatch.answer_pattern = "audio";
         this.answerMatchTo.answer_pattern = "image";
+      } else if (newVal === "drag_and_drop_text_text" || newVal ===  "drag_and_drop_text_image_text"){
+        this.formValues.question = ""
       }
     }
   },

@@ -422,6 +422,8 @@ export default {
         return "CONTROLS.addStudent";
       } else if (this.$route.path.includes("students-users")) {
         return `CONTROLS.addStudentInClass`;
+      } else if (this.$route.path.includes("teachers-users")) {
+        return `CONTROLS.classes`;
       } else {
         return `CONTROLS.addRoleBtn`;
       }

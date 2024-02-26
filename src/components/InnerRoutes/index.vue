@@ -27,7 +27,6 @@
               </div>
             </div>
           </div>
-
           <div class="last-attempt">
             <div class="last-attempt-icon">
               <img src="@/assets/images/icons/last-attempt.svg" alt="last-attempt">
@@ -45,7 +44,7 @@
                 <div class="item-number">{{ value }}</div>
                 <div class="item-name">
                   <span>{{ $t(`STATISTICS.${key}`) }}</span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg" /></span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg"/></span>
                 </div>
               </div>
             </b-col>
@@ -56,16 +55,25 @@
     <div v-if="isSuperVisor" class="supervisor-section">
       <b-row>
         <b-col lg="3">
-          <div class="profile-card item-card">
+          <div class="user-info profile-card item-card">
             <div>
-              <div class="hold-img-profile">
-                <img :src="user.avatar" alt="avatar" title="avatar" @error="altImage($event)" />
+              <div class="img-container">
+                <span>
+                  <img
+                    v-if="user.image"
+                    :src="user.image"
+                    alt="avatar"
+                    title="avatar"
+                    @error="altImage($event)"
+                  />
+                  <i v-else class="far fa-user"></i>
+                </span>
               </div>
               <div class="hold-info">
                 <p class="name">{{ user.name }}</p>
-                <p class="role">{{ user.roles[0]?.name }}</p>
-                <p class="school-name">{{ user.school.name }}</p>
-                <Button custom-class="cancel-btn profile-btn">
+                <p class="role" v-if="user?.roles[0]?.name">{{ user.roles[0]?.name }}</p>
+                <p class="school-name" v-if="user?.school?.name">{{ user.school.name }}</p>
+                <Button custom-class="cancel-btn profile-btn" @click="handleViewProfile">
                   {{ $t("profile-page") }}
                 </Button>
               </div>
@@ -74,57 +82,12 @@
         </b-col>
         <b-col lg="9">
           <b-row>
-            <b-col lg="4" class="mb-5">
+            <b-col lg="4" class="margin-card" v-for="(value, key) in statistics" :key="key">
               <div class="item-card route-card">
-                <div class="item-number">27</div>
+                <div class="item-number">{{ value }}</div>
                 <div class="item-name">
-                  <span>المراحل</span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg" /></span>
-                </div>
-              </div>
-            </b-col>
-            <b-col lg="4" class="mb-5">
-              <div class="item-card route-card">
-                <div class="item-number">85</div>
-                <div class="item-name">
-                  <span>المهام</span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg" /></span>
-                </div>
-              </div>
-            </b-col>
-            <b-col lg="4" class="mb-5">
-              <div class="item-card route-card">
-                <div class="item-number">150</div>
-                <div class="item-name">
-                  <span>الطلاب</span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg" /></span>
-                </div>
-              </div>
-            </b-col>
-            <b-col lg="4">
-              <div class="item-card route-card">
-                <div class="item-number">14</div>
-                <div class="item-name">
-                  <span>المدرسين</span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg" /></span>
-                </div>
-              </div>
-            </b-col>
-            <b-col lg="4">
-              <div class="item-card route-card">
-                <div class="item-number">8</div>
-                <div class="item-name">
-                  <span>المسابقات</span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg" /></span>
-                </div>
-              </div>
-            </b-col>
-            <b-col lg="4">
-              <div class="item-card route-card">
-                <div class="item-number">740</div>
-                <div class="item-name">
-                  <span>الإعلانات</span>
-                  <span><img src="@/assets/images/icons/arrow-left.svg" /></span>
+                  <span>{{ $t(`STATISTICS.${key}`) }}</span>
+                  <span><img src="@/assets/images/icons/arrow-left.svg"/></span>
                 </div>
               </div>
             </b-col>
@@ -137,11 +100,10 @@
             <div class="heading">
               <span>المهام</span>
             </div>
-            <ChartMission />
+            <ChartMission/>
             <div class="item-link">
-              <router-link to="missions"
-                ><span>الكل</span> <span><img src="@/assets/images/icons/arrow-left.svg" /></span
-              ></router-link>
+              <router-link to="missions"><span>الكل</span> <span><img
+                src="@/assets/images/icons/arrow-left.svg"/></span></router-link>
             </div>
           </div>
         </b-col>
@@ -150,11 +112,10 @@
             <div class="heading">
               <span>لوحة الصدارة</span>
             </div>
-            <LeaderBoard />
+            <LeaderBoard/>
             <div class="item-link">
-              <router-link to="missions"
-                ><span>الكل</span> <span><img src="@/assets/images/icons/arrow-left.svg" /></span
-              ></router-link>
+              <router-link to="missions"><span>الكل</span> <span><img
+                src="@/assets/images/icons/arrow-left.svg"/></span></router-link>
             </div>
           </div>
         </b-col>
@@ -163,29 +124,33 @@
             <div class="heading">
               <span>المسابقات</span>
             </div>
-            <ChartCompetition />
+            <ChartCompetition/>
             <div class="item-link">
-              <router-link to="missions"
-                ><span>الكل</span> <span><img src="@/assets/images/icons/arrow-left.svg" /></span
-              ></router-link>
+              <router-link to="missions"><span>الكل</span> <span><img
+                src="@/assets/images/icons/arrow-left.svg"/></span></router-link>
             </div>
           </div>
         </b-col>
       </b-row>
     </div>
-    <WelcomeModal />
+    <WelcomeModal/>
   </section>
 </template>
 <script>
 import RouteItem from "@/components/RouteItem/index.vue";
-import { routesUsers, routesSchool, routesContent, routeBasicData } from "@/globalData";
+import {routesUsers, routesSchool, routesContent, routeBasicData} from "@/globalData";
 import WelcomeModal from "@/components/Shared/WelcomeModal/index.vue";
-import { mapActions } from "vuex";
+import {mapActions} from "vuex";
 import Button from "@/components/Shared/Button/index.vue";
 import ChartMission from "@/components/ChartMissions/ChartMission.vue";
 import ChartCompetition from "@/components/ChartCompetitions/ChartCompetitions.vue";
 import LeaderBoard from "@/components/LeaderBoard/LeaderBoard.vue";
-import {getAllStatisticsRequest, getAllStatisticsSchoolAdminRequest} from "@/api/statistics";
+import {
+  getAllStatisticsRequest,
+  getAllStatisticsSchoolAdminRequest,
+  getAllStatisticsSuperVisorRequest
+} from "@/api/statistics";
+
 export default {
   name: "index",
   data() {
@@ -246,17 +211,19 @@ export default {
     },
   },
   mounted() {
-    if (this.user && this.user.roles && this.user.roles[0]?.type.key === "system_administration"){
+    if (this.user && this.user.roles && this.user.roles[0]?.type.key === "system_administration") {
       this.ApiService(getAllStatisticsRequest()).then((response) => {
         this.statistics = response.data.data;
       });
-    } else if( this.user && this.user.roles && this.user.roles[0]?.type.key === "school_management"){
+    } else if (this.user && this.user.roles && this.user.roles[0]?.type.key === "school_management") {
       this.ApiService(getAllStatisticsSchoolAdminRequest()).then((response) => {
+        this.statistics = response.data.data;
+      })
+    } else if (this.user && this.user.roles && this.user.roles[0]?.type.key === "supervisors_management") {
+      this.ApiService(getAllStatisticsSuperVisorRequest()).then((response) => {
         this.statistics = response.data.data;
       });
     }
-
-
     setTimeout(() => {
       this.hideModal();
     }, 6000);
@@ -275,6 +242,7 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "./index";
+
 .item-card {
   background: url("../../assets/images/bg/bg-super.svg");
   background-color: #fff;
@@ -300,12 +268,14 @@ export default {
     margin: 1rem 0 0 0;
   }
 }
+
 .route-card {
   padding: 1rem 3rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
+
   span {
     &:last-of-type {
       border-radius: 50%;
@@ -341,6 +311,7 @@ export default {
   //  }
   //}
 }
+
 .leader-board {
   background: url("../../assets/images/bg/leader-bg.svg");
   background-color: #fff;
@@ -348,7 +319,8 @@ export default {
   background-size: 80%;
   background-position: center;
 }
-.margin-card{
+
+.margin-card {
   margin-bottom: 2rem;
 }
 </style>

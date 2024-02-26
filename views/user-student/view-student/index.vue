@@ -27,10 +27,10 @@
               <b-col lg="4" class="mb-5 showItem">
                 <ShowItem :title="$t('USER.last_name')" :subtitle="singleUser.last_name" />
               </b-col>
-              <b-col lg="6" class="mb-5 showItem">
+              <b-col lg="8" class="mb-5 showItem">
                 <ShowItem :title="$t('TABLE_FIELDS.email_username')" :subtitle="singleUser.email" />
               </b-col>
-              <b-col lg="6" class="mb-5 showItem">
+              <b-col lg="4" class="mb-5 showItem">
                 <ShowItem :title="$t('USER.mobile')" :subtitle="singleUser.mobile" />
               </b-col>
               <b-col lg="4" class="mb-5 showItem">

@@ -84,11 +84,13 @@
                     v-model="createQuiz.blooms"
                     :label="$t('QUESTIONS.BLOOM_CATEGORIES')"
                     :name="$t('QUESTIONS.BLOOM_CATEGORIES')"
-                    :placeholder="$t('QUESTIONS.selectBLOOM_CATEGORIES')"
+                    :placeholder="createQuiz.blooms.length === 0 ? 'اختيار الكل' : $t('QUESTIONS.selectBLOOM_CATEGORIES')"
                     :options="bloomCategories"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :disabled="!createQuiz.learning_path_id"
+                    multiple="multiple"
+                    @input="selectAllCheckBloom(createQuiz.blooms)"
                   ></SelectSearch>
                   <!--                  multiple="multiple"-->
                 </div>
@@ -99,7 +101,7 @@
                     v-model="createQuiz.learning_styles"
                     :label="$t('QUESTIONS.LEARNING_METHOD')"
                     :name="$t('QUESTIONS.LEARNING_METHOD')"
-                    :placeholder="$t('QUESTIONS.selectLEARNING_METHOD')"
+                    :placeholder="createQuiz.learning_styles.length === 0 ? 'اختيار الكل' : $t('QUESTIONS.selectLEARNING_METHOD')"
                     :options="learningMethods"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -115,7 +117,7 @@
                     v-model="createQuiz.language_skills"
                     :label="$t('QUESTIONS.LANGUAGE_SKILLS')"
                     :name="$t('QUESTIONS.LANGUAGE_SKILLS')"
-                    :placeholder="$t('QUESTIONS.selectLANGUAGE_SKILLS')"
+                    :placeholder="createQuiz.language_skills.length === 0 ? 'اختيار الكل' : $t('QUESTIONS.selectLANGUAGE_SKILLS')"
                     :options="languageSkills"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -162,10 +164,11 @@
                     v-slot="{ ariaDescribedby }"
                     class="description"
                   >
+<!--                    required|min:3|-->
                     <TextAreaField
                       :name="$t('QUIZZES.description')"
                       placeholder="وصف التمرين"
-                      :rules="'required|min:3|max:250'"
+                      :rules="'max:250'"
                       v-model="createQuiz.description"
                     />
                   </b-form-group>
@@ -521,6 +524,7 @@ import QuestionDetailsModal from "@/components/Shared/QuestionDetailsModal/index
 import {getLessonsRequest} from "@/api/lessons";
 import {getQuizTypeListRequest, getSortQuizTypeRequest} from "@/api/system";
 import {debounce} from "lodash";
+import {log} from "video.js";
 
 export default {
   filters: {
@@ -614,6 +618,7 @@ export default {
         description: "",
         type: "",
         order_type: "",
+        selectAllOptionBloom: false,
         selectAllOptionLearning: false,
         selectAllOptionSkills: false,
       },
@@ -651,6 +656,12 @@ export default {
     },
   },
   methods: {
+    selectAllCheckBloom(bloom) {
+      this.createQuiz.selectAllOptionBloom = bloom.includes("selectAll" || "اختيار الكل")
+      if (this.createQuiz.selectAllOptionBloom) {
+        return this.createQuiz.blooms = []
+      }
+    },
     selectAllCheckLearning(learning) {
       this.createQuiz.selectAllOptionLearning = learning.includes("selectAll" || "اختيار الكل")
       if (this.createQuiz.selectAllOptionLearning) {
@@ -677,8 +688,10 @@ export default {
         let params = {
           learning_path_id: this.createQuiz.learning_path_id,
           lessons: this.createQuiz.lessons,
-          'blooms[]': this.createQuiz.blooms,
         };
+        if (typeof this.createQuiz.blooms === 'object' && this.createQuiz.blooms && this.createQuiz.blooms.length > 0) {
+          Object.assign(params, {blooms: this.createQuiz.blooms})
+        }
         if (typeof this.createQuiz.learning_styles === 'object' && this.createQuiz.learning_styles && this.createQuiz.learning_styles.length > 0) {
           Object.assign(params, {learning_styles: this.createQuiz.learning_styles})
         }
@@ -718,7 +731,7 @@ export default {
       const data = {
         learning_path_id: this.createQuiz.learning_path_id,
         lessons: this.createQuiz.lessons,
-        'blooms[]': this.createQuiz.blooms,
+        // 'blooms[]': this.createQuiz.blooms,
         question_difficuly: [
           {
             question_difficulty_id: 1,
@@ -734,6 +747,9 @@ export default {
           },
         ],
       };
+      if (typeof this.createQuiz.blooms === 'object' && this.createQuiz.blooms && this.createQuiz.blooms.length > 0) {
+        Object.assign(data, {blooms: this.createQuiz.blooms})
+      }
       if (typeof this.createQuiz.learning_styles === 'object' && this.createQuiz.learning_styles && this.createQuiz.learning_styles.length > 0) {
         Object.assign(data, {learning_styles: this.createQuiz.learning_styles})
       }
@@ -937,6 +953,7 @@ export default {
     getBloomCategories() {
       this.ApiService(getAllBloomCategoriesRequest()).then((response) => {
         this.bloomCategories = response.data.data;
+        this.bloomCategories.unshift({id: "selectAll", name: "اختيار الكل"})
       });
     },
     getLearningMethods() {
@@ -984,7 +1001,12 @@ export default {
         this.createQuiz.description = quizData.description;
         this.createQuiz.learning_path_id = quizData.learning_path.id;
         this.createQuiz.lessons = quizData.lessons.map((item) => item.id)
-        this.createQuiz.blooms = quizData.blooms.id
+        // this.createQuiz.blooms = quizData.blooms.id
+        if (typeof quizData.blooms === 'object') {
+          this.createQuiz.blooms = quizData.blooms.map((item) => item.id)
+        } else {
+          this.createQuiz.blooms = ["selectAll"]
+        }
         if (typeof quizData.learning_styles === 'object') {
           this.createQuiz.learning_styles = quizData.learning_styles.map((item) => item.id)
         } else {

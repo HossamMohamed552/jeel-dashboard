@@ -99,7 +99,7 @@
             </form>
           </validation-observer>
           <b-col lg="12">
-            <h2 class="heading m-0">{{ $t("schoolAdmin.studyYearsList") }}</h2>
+            <h2 class="heading m-0">{{ $t("schoolAdmin.rolesList") }}</h2>
           </b-col>
           <b-col lg="12">
             <ListItems

@@ -65,6 +65,7 @@
             <ListItems
               :fieldsList="fieldsList"
               :table-items="classItem.student"
+              :disableIt="true"
               :loading="loading"
               :permission_delete="'delete-enrollment-supervisors-users'"
               @deleteItem="deleteItem($event)"
@@ -127,6 +128,10 @@ export default {
         {
           key: "email",
           label: this.$i18n.t("USERS.name"),
+        },
+        {
+          key: "status.key",
+          label: this.$i18n.t("TABLE_FIELDS.status"),
         },
         {
           key: "actions",

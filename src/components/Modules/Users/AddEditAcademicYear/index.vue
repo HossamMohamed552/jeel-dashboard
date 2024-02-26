@@ -118,10 +118,11 @@ export default {
         this.ApiService(getSingleAcademicYearRequest(this.$route.params.id))
           .then((response) => {
             console.log(response.data.data);
+            console.log('this.academicYearSchema',this.academicYearSchema)
             this.academicYearSchema[0].value = response.data.data.studyYear.id;
             this.academicYearSchema[1].value = response.data.data.term.id;
-            this.academicYearSchema[2].value = response.data.data.start_date;
-            this.academicYearSchema[3].value = response.data.data.end_date;
+            this.academicYearSchema[2].value = moment(response.data.data.start_date, "YYYY-MM-DD").format("DD-MM-YYYY");
+            this.academicYearSchema[3].value = moment(response.data.data.end_date, "YYYY-MM-DD").format("DD-MM-YYYY");
           })
           .then(() => {
             this.showPermissionItemsSelected();
