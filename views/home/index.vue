@@ -1,5 +1,5 @@
 <template>
-  <section class="main" :class="isSuperVisor ? 'main-supervisor' : ''">
+  <section class="main">
     <div class="container-fluid custom-container">
       <InnerRoutes class="px-0" />
     </div>
@@ -11,7 +11,7 @@ export default {
   name: "index",
   data() {
     return {
-      isSuperVisor: false,
+      // isSuperVisor: false,
     };
   },
   components: {
@@ -23,7 +23,7 @@ export default {
     },
   },
   mounted() {
-    this.isSuperVisor = this.user.roles[0]?.code === "supervisor";
+    // this.isSuperVisor = this.user.roles[0]?.code === "supervisor";
     window.localStorage.setItem("page", "");
   },
 };

@@ -10,7 +10,7 @@ export const getOutcomeCategoriesRequest = (params) => ({
 export const getAllOutcomesRequest = (params) => ({
   method: 'get',
   url: `outcome?list_all=true`,
-  config: {}
+  config: {params}
 })
 export const getOutcomeCategoryByIdRequest = (id) => ({
   method: "get",

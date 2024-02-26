@@ -34,8 +34,11 @@ export default {
         formData.append(`questions[${questions}]`, quiz.questions[questions]);
         questions++
       }
-
-      formData.append(`blooms[0]`, quiz.blooms);
+      for (let blooms = 0; blooms < quiz.blooms.length;) {
+        formData.append(`blooms[${blooms}]`, quiz.blooms[blooms]);
+        blooms++
+      }
+      // formData.append(`blooms[0]`, quiz.blooms);
 
       for (let learning_styles = 0; learning_styles < quiz.learning_styles.length;) {
         formData.append(`learning_styles[${learning_styles}]`, quiz.learning_styles[learning_styles]);

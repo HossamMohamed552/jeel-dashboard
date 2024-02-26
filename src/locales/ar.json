@@ -765,7 +765,9 @@
     "supervisors": "عدد المشرفين",
     "teachers": "عدد المدرسين",
     "students": "عدد الطلاب",
-    "parents": "عدد أولياء الأمور"
+    "parents": "عدد أولياء الأمور",
+    "announcements": "الإعلانات",
+    "competitions": "المسابقات"
   },
   "SOCIAL_MEDIA": {
     "FACEBOOK": "فيس بوك",

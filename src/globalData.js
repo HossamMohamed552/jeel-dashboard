@@ -316,7 +316,7 @@ let routeSuperVisor = [
     altImage: "super-class",
     titleImage: "super-class",
     icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-classes",
+    permission: "view-supervisor-classes",
   },
   {
     name: "المهام",
@@ -332,7 +332,7 @@ let routeSuperVisor = [
     altImage: "view-teachers",
     titleImage: "view-teachers",
     icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-teachers",
+    permission: "view-supervisor-teachers",
   },
   {
     name: "الطلاب",
@@ -340,7 +340,7 @@ let routeSuperVisor = [
     altImage: "view-students",
     titleImage: "view-students",
     icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-roles",
+    permission: "view-supervisor-students",
   },
   {
     name: "المسابقات",
@@ -348,7 +348,7 @@ let routeSuperVisor = [
     altImage: "view-competitions",
     titleImage: "view-competitions",
     icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-competitions",
+    permission: "view-competition",
   },
   {
     name: "الإعلانات",

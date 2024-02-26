@@ -45,7 +45,7 @@
             :label="$t('QUESTIONS.headQUESTION')"
             :name="$t('QUESTIONS.headQUESTION')"
             :placeholder="$t('QUESTIONS.enterHeadQUESTION')"
-            :rules="'required|max:100'"
+            :rules="'required|max:150'"
           ></TextField>
         </b-col>
         <b-col lg="12" class="mb-3">
@@ -142,6 +142,7 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
+              :disabled="!formValues.learning_path_id"
             ></SelectSearch>
           </div>
         </b-col>
@@ -156,6 +157,7 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
+              :disabled="!formValues.learning_path_id"
             ></SelectSearch>
           </div>
         </b-col>
@@ -203,6 +205,8 @@ import getData from "@/mixins/getData/getData";
 import TextField from "@/components/Shared/TextField/index.vue";
 import UploadAttachment from "@/components/Shared/UploadAttachment/index.vue";
 import {getAllLessonsRequest, getLessonsRequest} from "@/api/lessons";
+import {getAllObjectivesRequest} from "@/api/objective";
+import {getAllOutcomesRequest} from "@/api/outcome";
 
 export default {
   mixins: [getData('question')],
@@ -237,14 +241,14 @@ export default {
       type: Array,
       default: () => [],
     },
-    objectives: {
-      type: Array,
-      default: () => [],
-    },
-    outcomes: {
-      type: Array,
-      default: () => [],
-    },
+    // objectives: {
+    //   type: Array,
+    //   default: () => [],
+    // },
+    // outcomes: {
+    //   type: Array,
+    //   default: () => [],
+    // },
     questionDifficulties:{
       type: Array,
       default: () => [],
@@ -257,6 +261,8 @@ export default {
   data() {
     return {
       lessons:[],
+      objectives:[],
+      outcomes:[],
       formValues: {
         question_type_id: null,
         question_type_sub_id: null,
@@ -323,7 +329,22 @@ export default {
         this.lessons = response.data.data
         this.formValues.lesson_id = null
       })
-    }
+      this.getObjectivesRequest($event)
+      this.getOutcomesRequest($event)
+    },
+    getObjectivesRequest($event) {
+      this.ApiService(getAllObjectivesRequest({learning_path_id: $event})).then((response) => {
+        this.objectives = response.data.data
+      })
+    },
+    getOutcomesRequest($event) {
+      this.ApiService(getAllOutcomesRequest({learning_path_id: $event})).then((response) => {
+        this.outcomes = response.data.data
+      })
+    },
+// {
+//   learning_path_id: this.formValues.learning_path_id,
+// }
   },
 };
 </script>

@@ -33,8 +33,14 @@ export default {
       formData.append('paper_work_final_degree', $event.paper_work_final_degree);
       formData.append('blooms', $event.blooms);
       formData.append('lesson_id', $event.lesson_id);
-      formData.append('learning_styles', $event.learning_styles);
-      formData.append('language_skills', $event.language_skills);
+      // formData.append('learning_styles', $event.learning_styles);
+      // formData.append('language_skills', $event.language_skills);
+      $event.language_skills.forEach((e) => {
+        formData.append("language_skills[]", e);
+      });
+      $event.learning_styles.forEach((e) => {
+        formData.append("learning_styles[]", e);
+      });
       if ($event.audioChangedRequest) {
         formData.append('audio', $event.audio);
       }
