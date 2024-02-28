@@ -131,6 +131,14 @@ export const getStudyYearsRequest = (data) => ({
     data,
   },
 });
+export const getStudyYearsForSuperVisorRequest = (data) => ({
+  method: "get",
+  url: `supervisor/study_years`,
+  config: {
+    data,
+  },
+});
+
 export const getLevelsRequest = (data) => ({
   method: "get",
   url: `school/levels`,

@@ -1,57 +1,72 @@
 <template>
   <section class="container-fluid custom-container">
     <section class="list">
-      <div class="header">
+      <validation-observer v-slot="{ invalid }" ref="schoolsUsersSearch">
+        <b-row>
+          <b-col lg="12">
+            <h2 class="heading">{{ $t("BUTTONS.SEARCH") }}</h2>
+          </b-col>
+        </b-row>
+        <GenericForm
+          class="w-100"
+          :schema="missionSearch"
+          @onSubmit="onSubmit"
+          :loading="loading"
+          :submitButton="$t('BUTTONS.SEARCH')"
+          :cancelButton="$t('BUTTONS.RECOVERY')"
+          :invalid="invalid"
+          @handleInput="handleInput"
+        ></GenericForm>
+      </validation-observer>
+      <div class="header m-0">
         <div class="list-of-item">
-          <p class="name-of-item">المهام الدراسية</p>
-          <span class="no-of-item">{{ missions.length }}</span>
+          <p class="name-of-item">قائمة المهام الدراسية</p>
+          <!--          <span class="no-of-item">{{ missions.length }}</span>-->
         </div>
       </div>
       <b-row>
-        <b-col lg="4" v-if="level_id">
-          <SelectSearch
-            v-model="level_id"
-            :label="$t('ads.superLevel')"
-            :name="$t('ads.superLevel')"
-            :options="levels"
-            :reduce="(option) => option.id"
-            :get-option-label="(option) => option.name"
-            :deselectFromDropdown="true"
-            @input="getMissions($event)"
-          ></SelectSearch>
-        </b-col>
-        <b-col lg="8" class="d-flex justify-content-start align-items-end">
+        <!--        <b-col lg="4" v-if="level_id">-->
+        <!--          <SelectSearch-->
+        <!--            v-model="level_id"-->
+        <!--            :label="$t('ads.superLevel')"-->
+        <!--            :name="$t('ads.superLevel')"-->
+        <!--            :options="levels"-->
+        <!--            :reduce="(option) => option.level.id"-->
+        <!--            :get-option-label="(option) => option.level.name"-->
+        <!--            :deselectFromDropdown="true"-->
+        <!--            @input="getMissions($event)"-->
+        <!--          ></SelectSearch>-->
+        <!--        </b-col>-->
+        <b-col lg="8" class="d-flex justify-content-start align-items-end" v-if="minMissions">
           <div class="info">
             <span><img src="@/assets/images/icons/info.png"></span>
-            <span v-if="levelSelected && levelSelected[0]">يجب أن لا يقل عدد المهام عن {{
-                levelSelected[0].min_levels
-              }} مهام</span>
+            <span>يجب أن لا يقل عدد المهام عن {{ minMissions }} مهام</span>
           </div>
         </b-col>
       </b-row>
       <div class="mission-header">
         <b-row>
-          <b-col></b-col>
-          <b-col>#</b-col>
-          <b-col>اسم المهمة</b-col>
-          <b-col>بداية المهمة</b-col>
-          <b-col>نهاية المهمة</b-col>
-          <b-col>الحالة</b-col>
-          <b-col></b-col>
+          <b-col lg="1"></b-col>
+          <b-col lg="1">#</b-col>
+          <b-col lg="2">اسم المهمة</b-col>
+          <b-col lg="2">بداية المهمة</b-col>
+          <b-col lg="2">نهاية المهمة</b-col>
+          <b-col lg="2" class="d-flex justify-content-center align-items-center">الحالة</b-col>
+          <b-col lg="2"></b-col>
         </b-row>
       </div>
       <validation-observer v-slot="{ invalid }" ref="addEditLevelForm">
-        <form @submit.prevent="sortMissions" class="mt-5">
+        <form @submit.prevent="sortMissions">
           <draggable v-model="missionSaved" group="items" :animation="150" class="list-group"
                      :sort="true"
                      :options="{ draggable: '.itemEnabled' }" :move="checkMove">
             <div v-for="(item,index) in missionSaved" :key="item.id" class="list-group-item"
                  :class="[(item.is_selected === 1 || item.is_selected ===  true) &&  !item.is_mission_start? 'itemEnabled': 'itemDisabled',item.is_mission_start ? 'mission-started':'',index % 2 === 1 ? 'odd': '']">
               <b-row>
-                <b-col><span><img src="@/assets/images/icons/drag.svg"></span></b-col>
-                <b-col><p class="sort"><span>{{ index + 1 }}</span></p></b-col>
-                <b-col><span class="mission-name">{{ item.name }}</span></b-col>
-                <b-col>
+                <b-col lg="1"><span><img src="@/assets/images/icons/drag.svg"></span></b-col>
+                <b-col lg="1"><p class="sort"><span>{{ index + 1 }}</span></p></b-col>
+                <b-col lg="2"><span class="mission-name">{{ item.name }}</span></b-col>
+                <b-col lg="2">
                   <ValidationProvider v-slot="{errors, invalid}" rules="required" :name="item.name">
                     <date-picker :disabled-date="disableEndDateItemBefore" :lang="en"
                                  v-model="item.start_date"
@@ -62,7 +77,7 @@
                   </ValidationProvider>
 
                 </b-col>
-                <b-col>
+                <b-col lg="2">
                   <ValidationProvider v-slot="{errors, invalid}" rules="required"
                                       :name="`${item.name}+end`">
                     <date-picker :disabled-date="disabledBeforeToday" :lang="en"
@@ -73,11 +88,12 @@
                   </ValidationProvider>
 
                 </b-col>
-                <b-col class="custom-border-left">
+                <b-col lg="2"
+                       class="custom-border-left d-flex justify-content-center align-items-center">
                   <b-form-checkbox v-model="item.is_selected" switch
                                    :disabled="item.is_mission_start"></b-form-checkbox>
                 </b-col>
-                <b-col>
+                <b-col lg="2" class="d-flex justify-content-center align-items-center">
                   <button class="detail" @click="goToMission(item.id)">{{ $t('detail') }}</button>
                 </b-col>
               </b-row>
@@ -89,7 +105,8 @@
             <Button @click="handleCancel" custom-class="cancel-btn margin">
               {{ $t("GLOBAL_CANCEL") }}
             </Button>
-            <Button @click="sortMissions" :disabled="invalid" :loading="loading" custom-class="submit-btn">
+            <Button @click="sortMissions" :disabled="missionSaved.length === 0" :loading="loading"
+                    custom-class="submit-btn">
               {{ $t("GLOBAL_SAVE") }}
             </Button>
           </div>
@@ -101,7 +118,7 @@
 <script>
 
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
-import {getLevelsRequest} from "@/api/level";
+import {getLevelsForSuperVisorRequest, getLevelsRequest} from "@/api/level";
 import Button from "@/components/Shared/Button/index.vue";
 import draggable from 'vuedraggable'
 import {getSuperMissionsRequest} from "@/api/missios";
@@ -110,10 +127,16 @@ import 'vue2-datepicker/locale/en'
 import "vue2-datepicker/index.css";
 import axios from "axios";
 import VueCookies from "vue-cookies";
+import GenericForm from "@/components/Shared/GenericForm/index.vue";
+import {
+  getLevelsForSuperVisor,
+  getSTermsForSuperVisor,
+  getStudyYearsForSuperVisor
+} from "@/services/dropdownService";
 
 export default {
   name: "index",
-  components: {Button, draggable, SelectSearch, DatePicker},
+  components: {GenericForm, Button, draggable, SelectSearch, DatePicker},
   data() {
     return {
       en: 'en',
@@ -125,6 +148,46 @@ export default {
       missionSaved: [],
       endDateItemBefore: null,
       loading: false,
+      invalid: true,
+      minMissions: null,
+      missionSearch: [
+        {
+          key: "study_year_id",
+          col: "4",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: this.$t("TABLE_FIELDS.studyYear"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: 'required'
+        },
+        {
+          key: "level_id",
+          col: "4",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: this.$t("TABLE_FIELDS.levelSchoolAdmin"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: 'required'
+        },
+        {
+          key: "term_id",
+          col: "4",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: this.$t("MISSIONS.terms"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: 'required'
+        },
+      ],
     }
   },
   computed: {
@@ -135,15 +198,25 @@ export default {
     }
   },
   methods: {
-    getLevelsBySchoolId() {
-      this.ApiService(getLevelsRequest()).then((response) => {
-        this.levels = response.data.data
-      }).then(() => {
-        this.level_id = this.levels ? this.levels[0].id : ""
-      })
+    handleInput(key, value, field) {
+      if (key === 'term_id') {
+        this.minMissions = field?.options ? field?.options.find(item => item.id === value)?.min_missions : null
+      } else if (key === 'level_id') {
+        this.level_id = value
+      }
     },
-    getMissions(levelId) {
-      this.ApiService(getSuperMissionsRequest(levelId)).then((response) => {
+    onSubmit(values) {
+      this.getMissions(values)
+    },
+    // getLevelsBySchoolId() {
+    //   this.ApiService(getLevelsForSuperVisorRequest()).then((response) => {
+    //     this.levels = response.data.data
+    //   }).then(() => {
+    //     this.level_id = this.levels ? this.levels[0].level.id : ""
+    //   })
+    // },
+    getMissions(values) {
+      this.ApiService(getSuperMissionsRequest(values)).then((response) => {
         this.missions = response.data.data
         this.missionsStarted = this.missions.filter((item) => item.is_mission_start === true).map((item) => {
           return {...item, is_selected: item.is_selected === 1}
@@ -194,7 +267,6 @@ export default {
           end_date: item.end_date
         }
       })
-
       axios.post('/rearrange-mission', {
         level_id: this.level_id,
         missions: missions
@@ -220,7 +292,10 @@ export default {
     }
   },
   mounted() {
-    this.getLevelsBySchoolId()
+    // this.getLevelsBySchoolId()
+    getLevelsForSuperVisor(this.missionSearch, 'level_id')
+    getStudyYearsForSuperVisor(this.missionSearch, 'study_year_id')
+    getSTermsForSuperVisor(this.missionSearch, 'term_id')
   }
 }
 </script>

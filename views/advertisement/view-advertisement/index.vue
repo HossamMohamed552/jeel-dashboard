@@ -11,10 +11,16 @@
           <b-col lg="4">
             <ShowItem :title="$t('ads.superLevel')" :subtitle="adObject.level.name"/>
           </b-col>
-          <b-col lg="4" v-if="adObject && adObject.teachers">
+          <b-col lg="4" v-if="adObject && adObject.teachers && typeof  adObject.teachers === 'object'">
             <ShowItem
               :title="$t('ads.superTeachersTo')"
               :listItems="adObject.teachers"
+            />
+          </b-col>
+          <b-col lg="4" v-else>
+            <ShowItem
+              :title="$t('ads.superTeachersTo')"
+              :subtitle="adObject.teachers"
             />
           </b-col>
           <b-col lg="4">
@@ -22,7 +28,7 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col lg="12">
+          <b-col lg="12" class="mt-5">
             <ShowItem :title="$t('ads.superDescription')" :subtitle="adObject.description"/>
           </b-col>
         </b-row>

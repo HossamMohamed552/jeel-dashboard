@@ -663,12 +663,12 @@
   },
   "ads": {
     "ADD": "إضافة اعلان",
-    "superLevel": "المرحلة الدراسية",
-    "superTeachersTo": "موجهة لـ",
-    "subject": "العنوان",
-    "superDescription": "الإعلان",
-    "DETAILS": "تفاصيل الاعلان",
-    "EDIT": "تعديل الاعلان"
+    "superLevel": "الصف الدراسى",
+    "superTeachersTo": "الموجهة له",
+    "subject": "عنوان الرسالة",
+    "superDescription": "محتوى الرسالة",
+    "DETAILS": "تفاصيل الرسالة",
+    "EDIT": "تعديل الرسالة"
   },
   "teacher": {
     "data": "بيانات المدرس",
@@ -678,7 +678,7 @@
     "role": "الصلاحية",
     "mobile": "رقم الهاتف",
     "email": "البريد الالكترونى",
-    "social_media": "رابط وسائل التواصل الإجتماعى",
+    "social_media": "روابط التواصل الإجتماعى",
     "school": "المدرسة",
     "enrollment_school_date": "تاريخ الإنضمام"
   },
@@ -693,7 +693,7 @@
     "learningPath": "المسارات التعليمية"
   },
   "GLOBAL_SEND": "إرسال",
-  "GLOBAL_EDITAd": "تعديل الإعلان",
+  "GLOBAL_EDITAd": "إرسال",
   "This link is invalid": "هذا الرابط غير صالح",
   "This link has been expired": "هذا الرابط انتهت صلاحيته",
   "FORGET_PASSWORD_TITLE": "ادخل بريدك الإلكترونى لإعادة ادخال كلمة المرور",

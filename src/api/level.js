@@ -3,6 +3,17 @@ export const getLevelsRequest = (params) => ({
   url: 'levels',
   config: {params}
 })
+export const getLevelsForSuperVisorRequest = (params) => ({
+  method: 'get',
+  url: 'supervisor/levels',
+  config: {params}
+})
+export const getLevelsForSuperVisorDropDownRequest = (params) => ({
+  method: 'get',
+  url: 'supervisor/list/levels',
+  config: {params}
+})
+
 export const getAllLevelsRequest = (params) => ({
   method: 'get',
   url: 'levels?list_all=true',
@@ -11,6 +22,10 @@ export const getAllLevelsRequest = (params) => ({
 export const getSingleLevelRequest = (params) => ({
   method: 'get',
   url: `levels/${params}`,
+})
+export const getSingleLevelForSuperVisorRequest = (params) => ({
+  method: 'get',
+  url: `supervisor/levels/${params}`,
 })
 export const putLevelRequest = (params,data) => ({
   method: 'put',

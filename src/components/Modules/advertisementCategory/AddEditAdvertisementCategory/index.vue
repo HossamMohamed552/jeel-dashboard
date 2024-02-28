@@ -5,7 +5,7 @@
         <h3>
           {{ adId ? $t("ads.EDIT") : $t("ads.ADD") }}
         </h3>
-        <validation-observer v-slot="{ invalid }" ref="addEditSchoolTyeForm">
+        <validation-observer v-slot="{invalid}" ref="addEditSchoolTyeForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
               <b-col lg="4">
@@ -31,16 +31,15 @@
                   :rules="'required'"
                   multiple
                   :deselectFromDropdown="true"
+                  @input="setSendToFromOutSide"
+                  @option:selected="selectAll($event)"
                 ></SelectSearch>
               </b-col>
               <b-col lg="4">
                 <div class="hold-field">
-                  <label class="m-0">
-                    <span><i class="fa-solid fa-asterisk"></i></span> {{ $t("ads.subject") }}</label
-                  >
                   <TextField
-                    class="subject"
                     v-model="adObject.subject"
+                    :label="$t('ads.subject')"
                     :name="$t('ads.subject')"
                     :rules="'required|min:3|max:100'"
                   ></TextField>
@@ -52,7 +51,7 @@
                     v-model="adObject.description"
                     :label="$t('ads.superDescription')"
                     :name="$t('ads.superDescription')"
-                    :rules="'required|min:250'"
+                    :rules="'required|min:50'"
                   ></TextAreaField>
                 </div>
               </b-col>
@@ -84,12 +83,11 @@ import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import SelectField from "@/components/Shared/SelectField/index.vue";
-import { mapGetters } from "vuex";
-import { getLevelsRequest } from "@/api/level";
+import {mapGetters} from "vuex";
+import {getLevelsForSuperVisorDropDownRequest} from "@/api/level";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
-import { getAllTeachersRequest } from "@/api/user";
-import { getAnnouncementByIdRequest } from "@/api/announcement";
-
+import {getAnnouncementByIdRequest} from "@/api/announcement";
+import {getAllTeachersForSuperVisorRequest} from "@/api/user";
 export default {
   components: {
     SelectSearch,
@@ -120,6 +118,22 @@ export default {
     };
   },
   methods: {
+    setSendToFromOutSide(){
+      if (this.teacherId){
+        this.adObject.users = this.teacherId
+      }
+    },
+    selectAll($event) {
+      if ($event.map(item => item.id).includes(1000000)) {
+        const selectAllFilter = $event.filter((item) => {
+          return item.id === 1000000
+        })
+        setTimeout(() => {
+          this.adObject.users = []
+          this.adObject.users = [selectAllFilter[0].id]
+        }, 300)
+      }
+    },
     onSubmit() {
       this.$refs.addEditSchoolTyeForm.validate().then((success) => {
         if (!success) return;
@@ -134,13 +148,14 @@ export default {
       this.$emit("handleCancel");
     },
     getLevelsBySchoolId() {
-      this.ApiService(getLevelsRequest({ school_id: this.user.school.id })).then((response) => {
+      this.ApiService(getLevelsForSuperVisorDropDownRequest()).then((response) => {
         this.levels = response.data.data;
       });
     },
     getAllTeachers() {
-      this.ApiService(getAllTeachersRequest(this.user.school.id)).then((response) => {
+      this.ApiService(getAllTeachersForSuperVisorRequest()).then((response) => {
         this.teachers = response.data.data;
+        this.teachers.unshift({id: 1000000, name: "كل المدرسين"})
       });
     },
   },
@@ -161,12 +176,9 @@ export default {
         this.adObject.description = response.data.data.description;
       });
     }
-    if (this.teacherId) {
-      this.adObject.users.push(this.teacherId);
-    }
   },
   destroyed() {
-    this.$store.commit("teacherId", null);
+    this.$store.commit("SET_TEACHER_ID", null);
   },
 };
 </script>

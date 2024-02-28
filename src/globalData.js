@@ -311,6 +311,14 @@ let routesSubscribes = [
 ];
 let routeSuperVisor = [
   {
+    name: "الصفوف الدراسية",
+    path: "/dashboard/super-level",
+    altImage: "super-level",
+    titleImage: "super-level",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-supervisor-levels",
+  },
+  {
     name: "الفصول",
     path: "/dashboard/super-class",
     altImage: "super-class",
@@ -351,7 +359,7 @@ let routeSuperVisor = [
     permission: "view-competition",
   },
   {
-    name: "الإعلانات",
+    name: "الرسائل",
     path: "/dashboard/advertisements",
     altImage: "view-announcements",
     titleImage: "view-advertisements",
