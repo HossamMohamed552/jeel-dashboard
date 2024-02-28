@@ -82,8 +82,6 @@ export default {
   data() {
     return {
       loading: false,
-      start_date_rule: "required",
-
       showModal: false,
       currentStep: 0,
       steps: [
@@ -152,14 +150,6 @@ export default {
           type: "date",
           rules: "required",
           placeholder: "أختر تاريخ بدء المهمة",
-          ref: "startDate",
-          watch: {
-            handler(newVal) {
-              console.log(newVal)
-              this.start_date_rule = `required|after:${newVal}`;
-            },
-            deep: true,
-          },
         },
         {
           key: "end_date",
@@ -168,7 +158,7 @@ export default {
           listen: "id",
           value: "",
           type: "date",
-          rules: this.start_date_rule,
+          rules: "required|after:startDate",
           placeholder: "أختر تاريخ نهاية المهمة",
         },
         {
@@ -439,11 +429,6 @@ export default {
         console.log(mergedAllSteps);
       });
     }
-  },
-  watch: {
-    start_date_rule(newRule) {
-      this.$refs.validationProvider.setRules("end_date", newRule);
-    },
   },
 };
 </script>
