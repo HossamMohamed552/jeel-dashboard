@@ -156,3 +156,12 @@ export const postResetPasswordRequest = (data) => ({
     data,
   },
 });
+
+// daily login for student
+export const getDailyLoginRequest = (id,params) => ({
+  method: "get",
+  url: `user/logins/${id}`,
+  config: {
+    params
+  },
+});

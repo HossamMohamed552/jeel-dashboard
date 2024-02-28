@@ -94,6 +94,11 @@ export default {
       ],
     };
   },
+  methods:{
+    detailItem($event){
+      this.$router.push(`/dashboard/super-student/show/${$event}`)
+    }
+  },
   mounted() {
     this.ApiService(getSingleClassForSuperVisorRequest(this.$route.params.id)).then(
       (response) => {
