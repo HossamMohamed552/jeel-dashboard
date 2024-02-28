@@ -82,6 +82,8 @@ export default {
   data() {
     return {
       loading: false,
+      start_date_rule: "required",
+
       showModal: false,
       currentStep: 0,
       steps: [
@@ -150,6 +152,14 @@ export default {
           type: "date",
           rules: "required",
           placeholder: "أختر تاريخ بدء المهمة",
+          ref: "startDate",
+          watch: {
+            handler(newVal) {
+              console.log(newVal)
+              this.start_date_rule = `required|after:${newVal}`;
+            },
+            deep: true,
+          },
         },
         {
           key: "end_date",
@@ -158,7 +168,7 @@ export default {
           listen: "id",
           value: "",
           type: "date",
-          rules: "required",
+          rules: this.start_date_rule,
           placeholder: "أختر تاريخ نهاية المهمة",
         },
         {
@@ -277,7 +287,7 @@ export default {
           listen: "id",
           value: "",
           type: "number",
-          rules: "required",
+          rules: "required|numeric|max_value:100|min_value:0",
         },
         {
           key: "max_percentage",
@@ -286,7 +296,7 @@ export default {
           listen: "id",
           value: "",
           type: "number",
-          rules: "required",
+          rules: "required|numeric|max_value:100|min_value:0",
         },
         {
           key: "type_id",
@@ -369,7 +379,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addPrizeById", "addNotificationById"]),
+    ...mapActions(["addPrizeById", "addNotificationById", "addVideo", "addExercises"]),
 
     handleCancel() {
       this.$router.push("/dashboard/seasonal-mission");
@@ -391,6 +401,15 @@ export default {
         }
       }
     },
+    emptyStore() {
+      this.addPrizeById([]);
+      this.addNotificationById([]);
+      this.addVideo([]);
+      this.addExercises([]);
+    },
+  },
+  beforeMount() {
+    this.emptyStore();
   },
   async mounted() {
     if (this.$route.params.id) {
@@ -412,6 +431,7 @@ export default {
         mergedAllSteps[4].value = moment(seasonalMission.end_date).format("DD-MM-YYYY");
         mergedAllSteps[5].value = seasonalMission.level;
         mergedAllSteps[5].name = seasonalMission.level.name;
+        mergedAllSteps[10].url = seasonalMission.image;
         mergedAllSteps[10].task_audio_name = seasonalMission.image_name;
         mergedAllSteps[10].task_audio_size = seasonalMission.image_size;
         this.addPrizeById(seasonalMission.prizes);
@@ -419,6 +439,11 @@ export default {
         console.log(mergedAllSteps);
       });
     }
+  },
+  watch: {
+    start_date_rule(newRule) {
+      this.$refs.validationProvider.setRules("end_date", newRule);
+    },
   },
 };
 </script>

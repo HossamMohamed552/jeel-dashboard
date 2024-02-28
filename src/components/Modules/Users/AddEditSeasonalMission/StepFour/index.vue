@@ -121,10 +121,10 @@ export default {
         }
       });
 
-      this.notifactionIndex++;
+      if (this.notifactionGroup.length == 0) this.notifactionIndex++;
+      else this.notifactionIndex = this.notifactionGroup[this.notifactionGroup.length - 1].id + 1;
       this.entry.id = this.notifactionIndex;
       this.addNotification(this.entry);
-      this.notifactionGroup.push(this.entry);
       this.entry = {};
       this.removeFile();
     },

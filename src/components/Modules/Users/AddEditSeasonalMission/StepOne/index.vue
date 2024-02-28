@@ -71,6 +71,8 @@ export default {
         const imageObjectIndex = this.stepForm.findIndex((field) => field.key === "image");
         this.stepForm[imageObjectIndex].value = value.uuid;
         this.stepForm[imageObjectIndex].url = value.url;
+        this.stepForm[imageObjectIndex].task_audio_name = value.file_name;
+        this.stepForm[imageObjectIndex].task_audio_size = value.size / 1000;
       } else if (key === "learningpaths") {
         if (value != "") this.stepForm[7].disabled = false;
         getLessonsDepenseLearningPath(this.stepForm, "lessons", value);

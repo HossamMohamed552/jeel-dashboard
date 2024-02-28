@@ -172,10 +172,11 @@ export default {
           console.error(`Error updating field ${field.key}:`, error);
         }
       });
-      this.prizeIndex++;
+      console.log(this.prizeGroup)
+      if (this.prizeGroup.length == 0) this.prizeIndex++;
+      else this.prizeIndex = this.prizeGroup[this.prizeGroup.length - 1].id + 1;
       this.entry.id = this.prizeIndex;
       this.addPrize(this.entry);
-      this.prizeGroup.push(this.entry);
       this.entry = {};
       this.resetInput();
     },

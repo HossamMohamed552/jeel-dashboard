@@ -6,8 +6,8 @@
           <PreviewMedia
             v-if="filesUploadedTypes.includes(field.type)"
             :header="field.label"
-            :media-name="''"
-            :file-size="''"
+            :media-name="field.task_audio_name"
+            :file-size="field.task_audio_size"
             :showRemoveButton="false"
             :typeOfMedia="'image'"
             :image-url="field.url"
