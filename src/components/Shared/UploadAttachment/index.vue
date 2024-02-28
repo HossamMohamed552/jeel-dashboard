@@ -146,6 +146,7 @@ export default {
       this.$emit("setFileId", this.fileId);
       this.$emit("setFileUrl", this.fileUrl);
       this.$emit("setFile", { uuid: this.fileId, url: this.fileUrl });
+      this.$emit("setFileInfo", { uuid: this.fileId, url: this.fileUrl , ...this.fileInfo});
     },
     removeFile() {
       this.$emit("setFileId", null);

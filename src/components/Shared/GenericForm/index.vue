@@ -21,7 +21,6 @@
               @input="handleInput(field.key, field.value, field)"
               :placeholder="'إختر' + ' ' + field.label"
               :disabled="field.disabled"
-
             ></SelectSearch>
             <TextField
               v-if="field.type === 'text' || field.type === 'number'"
@@ -46,6 +45,7 @@
               v-model="field.value"
               :label="field.label"
               :placeholder="'إدخل' + ' ' + field.label"
+              :refValue="field.ref"
               valueType="format"
               :name="field.label"
               :rules="field.rules"
@@ -62,7 +62,7 @@
                 :dropIdRef="'audioFile'"
                 :accept-files="`${field.type}/*`"
                 @setFileId="handleInput(field.key, $event, field)"
-                @setFile="handleInput(field.key, $event)"
+                @setFileInfo="handleInput(field.key, $event)"
               />
               <PreviewMedia
                 v-if="$route.params.id"
@@ -71,6 +71,7 @@
                 :file-size="field.task_audio_size"
                 :typeOfMedia="field.type"
                 :showRemoveButton="true"
+                :image-url="field.url"
                 @removeFile="
                   removeFile('task_image', 'taskImageChanged', 'taskImageChangedRequest')
                 "
@@ -78,7 +79,7 @@
             </div>
             <div class="hold-field" v-if="field.type == 'audio'">
               <UploadAttachment
-                v-if="!$route.params.id"
+                v-if="field.value == ''"
                 :type-of-attachment="field.type"
                 :label="field.label"
                 :dropImage="true"
@@ -89,7 +90,7 @@
                 @setFile="handleInput(field.key, $event)"
               />
               <PreviewMedia
-                v-if="$route.params.id"
+                v-if="field.value != ''"
                 :header="field.label"
                 :media-name="field.task_audio_name"
                 :file-size="field.task_audio_size"
@@ -103,7 +104,10 @@
           </div>
         </b-col>
         <b-col lg="12" v-if="IsAudio">
-          <div class="hold-btns-form" :class="IsAudio ? 'margin-button d-flex align-items-center': ''">
+          <div
+            class="hold-btns-form"
+            :class="IsAudio ? 'margin-button d-flex align-items-center' : ''"
+          >
             <Button @click="handleCancel" custom-class="cancel-btn margin">
               {{ cancelButton }}
             </Button>
@@ -159,7 +163,7 @@ export default {
   props: {
     IsAudio: {
       type: Boolean,
-      default: false
+      default: false,
     },
     schema: {
       type: Array,

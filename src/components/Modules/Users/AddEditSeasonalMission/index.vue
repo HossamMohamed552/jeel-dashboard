@@ -158,7 +158,7 @@ export default {
           listen: "id",
           value: "",
           type: "date",
-          rules: "required",
+          rules: "required|after:startDate",
           placeholder: "أختر تاريخ نهاية المهمة",
         },
         {
@@ -277,7 +277,7 @@ export default {
           listen: "id",
           value: "",
           type: "number",
-          rules: "required",
+          rules: "required|numeric|max_value:100|min_value:0",
         },
         {
           key: "max_percentage",
@@ -286,7 +286,7 @@ export default {
           listen: "id",
           value: "",
           type: "number",
-          rules: "required",
+          rules: "required|numeric|max_value:100|min_value:0",
         },
         {
           key: "type_id",
@@ -369,7 +369,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addPrizeById", "addNotificationById"]),
+    ...mapActions(["addPrizeById", "addNotificationById", "addVideo", "addExercises"]),
 
     handleCancel() {
       this.$router.push("/dashboard/seasonal-mission");
@@ -391,6 +391,15 @@ export default {
         }
       }
     },
+    emptyStore() {
+      this.addPrizeById([]);
+      this.addNotificationById([]);
+      this.addVideo([]);
+      this.addExercises([]);
+    },
+  },
+  beforeMount() {
+    this.emptyStore();
   },
   async mounted() {
     if (this.$route.params.id) {
@@ -412,6 +421,7 @@ export default {
         mergedAllSteps[4].value = moment(seasonalMission.end_date).format("DD-MM-YYYY");
         mergedAllSteps[5].value = seasonalMission.level;
         mergedAllSteps[5].name = seasonalMission.level.name;
+        mergedAllSteps[10].url = seasonalMission.image;
         mergedAllSteps[10].task_audio_name = seasonalMission.image_name;
         mergedAllSteps[10].task_audio_size = seasonalMission.image_size;
         this.addPrizeById(seasonalMission.prizes);
