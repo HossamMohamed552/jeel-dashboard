@@ -128,7 +128,9 @@
     "levelSchoolAdmin": "الصف الدراسي",
     "className": "اسم الفصل",
     "studyYearName": "العام الدراسى",
-    "schoolName": "اسم المدرسة"
+    "schoolName": "اسم المدرسة",
+    "date": "اليوم",
+    "time": "النشاط"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -139,7 +141,7 @@
     "deleteBtn": "حذف",
     "addVideoQuestion": "اضافة اسئله الفيديو",
     "ManageClasses": "إداره الصفوف",
-    "addAd": "إضافة إعلان",
+    "addAd": "إضافة رسالة",
     "AddVideo": "إضافة أسئلة الفيديو",
     "showDetails": "عرض تفاصيل صلاحية المستخدم",
     "addStudent": "الطلاب",
@@ -833,6 +835,12 @@
     "addStudentClassDETAILS": "إضافة طلاب للفصل",
     "studentName": "اسم الطالب",
     "addClassTeacherEnrollment": "إضافة فصل دراسي",
-    "classesList": "الفصول الدراسية"
+    "classesList": "الفصول الدراسية",
+    "school": "المدرسة"
+  },
+  "superVisor": {
+    "date": "اليوم",
+    "selectDate": "أختر اليوم",
+    "studentData": "بيانات الطالب"
   }
 }

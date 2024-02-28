@@ -4,14 +4,16 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">{{ $t("teacher.data") }}</h2>
+            <h2 class="heading">{{ $t("superVisor.studentData") }}</h2>
           </b-col>
         </b-row>
         <b-row>
           <b-col lg="2">
             <b-row>
               <b-col lg="12" class="img-container">
-                <img class="w-100" :src="studentObject.avatar ? studentObject.avatar :'@/assets/images/icons/user-avatar.png'" @error="altImage($event)"/>
+                <img class="w-100"
+                     :src="studentObject.avatar ? studentObject.avatar :'@/assets/images/icons/user-avatar.png'"
+                     @error="altImage($event)"/>
               </b-col>
             </b-row>
           </b-col>
@@ -51,8 +53,7 @@
               </b-col>
               <b-col lg="4">
                 <div class="hold-field">
-                  <ShowItem :title="$t('SOCIAL_MEDIA.TWITTER')"
-                            :subtitle="studentObject.twitter"/>
+                  <ShowItem :title="$t('SOCIAL_MEDIA.TWITTER')" :subtitle="studentObject.twitter"/>
                 </div>
               </b-col>
               <b-col lg="4">
@@ -64,31 +65,37 @@
             </b-row>
           </b-col>
         </b-row>
-        <!-- tabs-->
-        <div class="taps">
-          <div @click="activeTap = 1" :class="activeTap === 1 ? 'active' : ''" class="tap">
-            البيانات الدراسية
-          </div>
-          <div @click="activeTap = 2" :class="activeTap === 2 ? 'active' : ''" class="tap">
-            الدخول اليومي
-          </div>
-          <div @click="activeTap = 3" :class="activeTap === 3 ? 'active' : ''" class="tap">
-            المهام
-          </div>
-          <div @click="activeTap = 4" :class="activeTap === 4 ? 'active' : ''" class="tap">
-            الإنجازات
-          </div>
-          <div @click="activeTap = 5" :class="activeTap === 5 ? 'active' : ''" class="tap">
-            المنافسات
-          </div>
-          <div @click="activeTap = 6" :class="activeTap === 6 ? 'active' : ''" class="tap">
-            المواسم
-          </div>
-        </div>
-        <div class="content">
-          <ScholasticData v-if="activeTap === 1"/>
-          <DailyLogin  v-if="activeTap === 2"/>
-        </div>
+        <b-row>
+          <b-col lg="12">
+            <!-- tabs-->
+            <div class="taps">
+              <div @click="activeTap = 1" :class="activeTap === 1 ? 'active' : ''" class="tap">
+                البيانات الدراسية
+              </div>
+              <div @click="activeTap = 2" :class="activeTap === 2 ? 'active' : ''" class="tap">
+                الدخول اليومي
+              </div>
+              <div @click="activeTap = 3" :class="activeTap === 3 ? 'active' : ''" class="tap">
+                المهام
+              </div>
+              <div @click="activeTap = 4" :class="activeTap === 4 ? 'active' : ''" class="tap">
+                الإنجازات
+              </div>
+              <div @click="activeTap = 5" :class="activeTap === 5 ? 'active' : ''" class="tap">
+                المنافسات
+              </div>
+              <div @click="activeTap = 6" :class="activeTap === 6 ? 'active' : ''" class="tap">
+                المواسم
+              </div>
+            </div>
+          </b-col>
+          <b-col lg="12">
+            <div class="content">
+              <ScholasticData :scholasticData="studentObject.scholastic_data" v-if="activeTap === 1"/>
+              <DailyLogin v-if="activeTap === 2"/>
+            </div>
+          </b-col>
+        </b-row>
       </div>
     </div>
   </section>
@@ -100,6 +107,7 @@ import ListItems from "@/components/ListItems/index.vue";
 import TextField from "@/components/Shared/TextField/index.vue";
 import ScholasticData from "@/components/SuperVisor/ScholasticData/index.vue";
 import DailyLogin from "@/components/SuperVisor/DailyLogin/index.vue";
+
 export default {
   name: "index",
   components: {

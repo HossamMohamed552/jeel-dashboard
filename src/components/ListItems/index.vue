@@ -225,6 +225,10 @@
         <template #cell(last_name)="data">
           {{ data.item.last_name | cutStringName }}
         </template>
+
+        <template #cell(time)="data">
+          الدخول الساعة {{ data.item.time }}
+        </template>
         <template #cell(edit)="data">
           <Button
             :custom-class="'transparent-btn rounded-btn'"
