@@ -1,6 +1,24 @@
 <template>
-  <section class="container-fluid custom-container">
+  <section class="container-fluid custom-container show-role">
+    <validation-observer v-slot="{ invalid }" ref="schoolsUsersSearch">
+      <b-row>
+        <b-col lg="12">
+          <h2 class="heading">{{ $t("BUTTONS.SEARCH") }}</h2>
+        </b-col>
+      </b-row>
+      <GenericForm
+        class="w-100"
+        :schema="studentSearch"
+        @onSubmit="onSubmit"
+        @handleCancel="handleCancel"
+        :loading="loading"
+        :submitButton="$t('BUTTONS.SEARCH')"
+        :cancelButton="$t('BUTTONS.RECOVERY')"
+        :invalid="invalid"
+      ></GenericForm>
+    </validation-observer>
     <ListItems
+      class="m-0 p-0"
       :header-name="'قائمة الطلاب'"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
@@ -8,8 +26,9 @@
       :v-search-model="studentsSearchWord"
       :loading="loading"
       :disable-it="true"
+      :show-sort-controls="false"
       @detailItem="detailItem($event)"
-      @refetch="getAllTeachers"
+      @refetch="getAllStudents"
       :permission_delete="'delete-teachers'"
       :permission_edit="'edit-teachers'"
       :permission_view="'show-supervisor-students'"
@@ -25,13 +44,17 @@ import Modal from "@/components/Shared/Modal/index.vue";
 import {mapGetters} from "vuex";
 import {
   getAllStudentsForSuperVisorRequest,
-  getAllTeachersForSuperVisorRequest,
-  getAllTeachersRequest
 } from "@/api/user";
-import students from "../user-parent/students/index.vue";
+import GenericForm from "@/components/Shared/GenericForm/index.vue";
+import {
+  getClasses,
+  getLevelsForSuperVisor,
+  getSTermsForSuperVisor,
+  getStudyYearsForSuperVisor
+} from "@/services/dropdownService";
 
 export default {
-  components: {Modal, ListItems, Button},
+  components: {GenericForm, Modal, ListItems, Button},
   data() {
     return {
       loading: false,
@@ -73,6 +96,59 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
       ],
+      studentSearch: [
+        {
+          key: "name",
+          col: "4",
+          type: "text",
+          label: this.$t("TABLE_FIELDS.studentName"),
+          value: "",
+        },
+        {
+          key: "study_year_id",
+          col: "4",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: this.$t("TABLE_FIELDS.studyYear"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+        },
+        {
+          key: "level_id",
+          col: "4",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: this.$t("TABLE_FIELDS.levelSchoolAdmin"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+        },
+        {
+          key: "term_id",
+          col: "4",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: this.$t("MISSIONS.terms"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+        },
+        {
+          key: "class_id",
+          col: "4",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: this.$t("TABLE_FIELDS.className"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+        },
+      ],
       itemId: 0,
     };
   },
@@ -80,18 +156,28 @@ export default {
     ...mapGetters(['user'])
   },
   methods: {
-    getAllTeachers(){
-      this.ApiService(getAllStudentsForSuperVisorRequest()).then((response)=>{
+    getAllStudents(values){
+      this.ApiService(getAllStudentsForSuperVisorRequest(values)).then((response)=>{
         this.students = response.data.data
         this.totalNumber = response.data.meta.total
       })
+    },
+    onSubmit(values) {
+      this.getAllStudents(values)
+    },
+    handleCancel(){
+      this.getAllStudents()
     },
     detailItem($event) {
       this.$router.push(`/dashboard/super-student/show/${$event}`);
     },
   },
   mounted() {
-    this.getAllTeachers();
+    this.getAllStudents();
+    getLevelsForSuperVisor(this.studentSearch, 'level_id')
+    getStudyYearsForSuperVisor(this.studentSearch, 'study_year_id')
+    getSTermsForSuperVisor(this.studentSearch, 'term_id')
+    getClasses(this.studentSearch, 'class_id')
   },
 };
 </script>

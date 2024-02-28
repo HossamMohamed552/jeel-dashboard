@@ -31,23 +31,25 @@ import {getLevelsForSuperVisorRequest} from "@/api/level"; // الصف الدر�
 import {getQuizLevelPathRequest} from "@/api/quiz"; // التمارين
 import {getVideoPerLevelPathRequest} from "@/api/videos";
 import {getStudyYearsForSuperVisorRequest} from "@/api/school-info";
-import {getTermsForSupervisorRequest} from "@/api/term"; // الفيديوهات
+import {getTermsForSupervisorRequest} from "@/api/term";
+import {getClassForSuperRequest} from "@/api/class"; // الفيديوهات
 
-export async function updateFieldOptions(array, key, data, isSub = false) {
+// isSub = false
+export async function updateFieldOptions(array, key, data) {
   const selectOptionsField = array.find((field) => field.key === key);
   if (selectOptionsField) {
     if (key === "school_id") selectOptionsField.options = data.schools;
-    if (key === "level_id" && isSub) selectOptionsField.options = data.map((item) => {
-      return item.level
-    });
+    // if (key === "level_id" && isSub) selectOptionsField.options = data.map((item) => {
+    //   return item.level
+    // });
     else selectOptionsField.options = data;
   }
 }
-
-export async function fetchDataAndUpdateOptions(array, apiRequest, key, isSub = false) {
+// isSub = false
+export async function fetchDataAndUpdateOptions(array, apiRequest, key) {
   try {
     const response = await ApiService(apiRequest);
-    await updateFieldOptions(array, key, response.data.data, isSub);
+    await updateFieldOptions(array, key, response.data.data);
   } catch (error) {
     console.error(`Error fetching ${key}:`, error);
   }
@@ -162,11 +164,14 @@ export async function getSystemAudiosCategories(array, key) {
 }
 
 export async function getLevelsForSuperVisor(array, key) {
-  await fetchDataAndUpdateOptions(array, getLevelsForSuperVisorDropDownRequest(), key, true);
+  await fetchDataAndUpdateOptions(array, getLevelsForSuperVisorDropDownRequest(), key);
 }
 export async function getStudyYearsForSuperVisor(array, key) {
   await fetchDataAndUpdateOptions(array, getStudyYearsForSuperVisorRequest(), key);
 }
 export async function getSTermsForSuperVisor(array, key) {
   await fetchDataAndUpdateOptions(array, getTermsForSupervisorRequest(), key);
+}
+export async function getClasses(array, key) {
+  await fetchDataAndUpdateOptions(array, getClassForSuperRequest(), key);
 }
