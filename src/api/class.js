@@ -5,6 +5,14 @@ export const getClassRequest = (params) => ({
     params
   }
 })
+export const getClassForSuperRequest = (params) => ({
+  method: 'get',
+  url: 'supervisor/classes',
+  config: {
+    params
+  }
+})
+
 // export const getClassForTeacherRequest = (params) => ({
 //   method: 'get',
 //   url: 'classes',
@@ -20,6 +28,11 @@ export const getSingleClassRequest = (params) => ({
   method: 'get',
   url: `classes/${params}`,
 })
+export const getSingleClassForSuperVisorRequest = (params) => ({
+  method: 'get',
+  url: `supervisor/classes/${params}`,
+})
+
 export const putClassRequest = (params,data) => ({
   method: 'put',
   url: `classes/${params}`,

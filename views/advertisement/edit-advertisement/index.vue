@@ -25,6 +25,9 @@ export default {
   methods: {
     editAdCategory($event) {
       this.loading = true;
+      if ($event.users.includes(1000000)){
+        delete $event.users
+      }
       this.ApiService(putEditAnnouncementRequest(this.$route.params.id,$event))
         .then((response) => {
           this.loading = false;

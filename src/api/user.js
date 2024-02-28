@@ -15,13 +15,21 @@ export const getSchoolUsersRequest = (params) => ({
   },
 });
 
-export const getAllTeachersRequest = (schoolId, params) => ({
+export const getAllTeachersForSuperVisorRequest = (schoolId, params) => ({
   method: "get",
-  url: `school/${schoolId}/teachers`,
+  url: `supervisor/teachers/users`,
   config: {
     params,
   },
 });
+export const getAllStudentsForSuperVisorRequest = (params) => ({
+  method: "get",
+  url: `supervisor/students/users`,
+  config: {
+    params,
+  },
+});
+
 export const getAllSearchUsersRequest = (params) => ({
   method: "get",
   url: "users?list_all=true",
@@ -33,6 +41,17 @@ export const getSingleUserRequest = (params) => ({
   method: "get",
   url: `users/${params}`,
 });
+
+export  const  getTeacherForSuperVisor = (id) => ({
+  method: "get",
+  url: `supervisor/teacher/${id}`,
+})
+
+export  const  getStudentForSuperVisor = (id) => ({
+  method: "get",
+  url: `supervisor/student/${id}`,
+})
+
 export const getRolesRequest = () => ({
   method: "get",
   url: "roles",
@@ -130,7 +149,6 @@ export const deleteProfileImageRequest = (data) => ({
     data,
   },
 });
-
 export const postResetPasswordRequest = (data) => ({
   method: "post",
   url: `${process.env.VUE_APP_AUTH_URL}/reset-password`,

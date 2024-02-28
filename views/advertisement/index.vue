@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة الإعلانات'"
+      :header-name="'قائمة الرسائل'"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="announcement"
@@ -22,13 +22,13 @@
           v-if="user.permissions.includes(`add-announcements`)"
         >
           <img src="@/assets/images/icons/plus.svg"/>
-          <span>إضافة إعلان</span>
+          <span>إضافة رسالة</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف الإعلان'"
-      :content-message-question="'هل انت متأكد من حذف الإعلان ؟'"
+      :content-message="'حذف الرسالة'"
+      :content-message-question="'هل انت متأكد من حذف الرسالة ؟'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -61,7 +61,7 @@ export default {
         {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.superLevel')},
         {key: "teachers", label: this.$i18n.t('TABLE_FIELDS.superTeachersTo')},
         {key: "subject", label: this.$i18n.t('TABLE_FIELDS.subject')},
-        {key: "description", label: this.$i18n.t('TABLE_FIELDS.superDescription')},
+        {key: "description", label: this.$i18n.t('ads.superDescription')},
         {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),

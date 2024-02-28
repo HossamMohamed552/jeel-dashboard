@@ -1,4 +1,4 @@
-export const getMissionsRequest = (params = {per_page:10, page: 1}) => ({
+export const getMissionsRequest = (params = {per_page: 10, page: 1}) => ({
   method: 'get',
   url: `missions`,
   config: {
@@ -9,17 +9,20 @@ export const getSingleMissionsRequest = (params) => ({
   method: 'get',
   url: `missions/${params}`,
 })
-export const getSuperMissionsRequest = (levelId) => ({
-    method: 'get',
-    url: `level/${levelId}/school-missions`,
-  })
+export const getSuperMissionsRequest = (params) => ({
+  method: 'get',
+  url: `supervisor/missions`,
+  config:{
+    params
+  }
+})
 
 export const getSingleMissionsDetailsRequest = (params) => ({
   method: 'get',
   url: `missions/${params}/full-details`,
 })
 
-export const putMissionsRequest = (params,data) => ({
+export const putMissionsRequest = (params, data) => ({
   method: 'put',
   url: `missions/${params}`,
   config: {
@@ -33,15 +36,15 @@ export const postMissionsRequest = (data) => ({
     data
   }
 })
-export const deleteMissionsRequest = (params) =>({
+export const deleteMissionsRequest = (params) => ({
   method: 'delete',
   url: `missions/${params}`,
 })
-export const getDetailMissionsWithLearningPaths = (missionId) =>({
+export const getDetailMissionsWithLearningPaths = (missionId) => ({
   method: 'get',
   url: `mission/${missionId}/learningpaths`
 })
-export const getLearningPathInMission = (missionId,learningPathId) =>({
+export const getLearningPathInMission = (missionId, learningPathId) => ({
   method: 'get',
   url: `mission-path-contents?mission_id=${missionId}&learningpath_id=${learningPathId}`
 })

@@ -5,15 +5,15 @@
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getClasses"
                :loading="loading"
-               :permission_delete="'delete-classes'"
-               :permission_edit="'edit-classes'"
-               :permission_view="'show-classes'"
+               :permission_delete="'delete-supervisor-classes'"
+               :permission_edit="'edit-supervisor-classes'"
+               :permission_view="'show-supervisor-classes'"
                />
   </section>
 </template>
 <script>
 import ListItems from "@/components/ListItems/index.vue";
-import {deleteClassRequest, getClassRequest} from "@/api/class";
+import {deleteClassRequest, getClassForSuperRequest, getClassRequest} from "@/api/class";
 
 export default {
   name: "index",
@@ -27,9 +27,10 @@ export default {
       totalNumber: null,
       fieldsList: [
         {key: "id", label: "التسلسل"},
-        {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
-        {key: "term", label: this.$i18n.t('TABLE_FIELDS.superTerm')},
-        {key: "students_count", label: this.$i18n.t('TABLE_FIELDS.students_count')},
+        {key: "studyYear.name", label: this.$i18n.t('TABLE_FIELDS.studyYearName')},
+        {key: "level", label: this.$i18n.t('TABLE_FIELDS.levelSchoolAdmin')},
+        {key: "name", label: this.$i18n.t('TABLE_FIELDS.className')},
+        {key: "student_count", label: this.$i18n.t('TABLE_FIELDS.students_count')},
         {key: "actions", label: "الإجراء"},
       ],
     }
@@ -38,7 +39,7 @@ export default {
     getClasses(event) {
       this.loading = true
       const params = !event ? { per_page: 10 } : event;
-      this.ApiService(getClassRequest(params)).then((response) => {
+      this.ApiService(getClassForSuperRequest(params)).then((response) => {
         this.classesList = response.data.data
         this.totalNumber = response.data.meta.total
       }) .finally(() => {

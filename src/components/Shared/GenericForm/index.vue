@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <div class="container-fluid">
+    <div class="container-fluid px-0">
       <b-row>
         <b-col v-for="(field, index) in schema" :key="index" :lg="field.col">
           <h3 class="list-title" :class="field.classList" v-if="field.type == 'title'">

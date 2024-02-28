@@ -45,8 +45,9 @@
   justify-items: flex-start;
   align-items: center;
   width: 100%;
-  padding: 0.3rem 0.7rem 0.8rem 0;
+  padding: 0.3rem 0.7rem 0.3rem 0;
   border-radius: 1.75rem;
+  margin: 1rem 0;
   color: $color-primary;
   span {
     font-weight: bold;
@@ -98,7 +99,6 @@
     text-align: center;
     width: 100%;
     display: block;
-    padding: 0 0 0.5rem 0;
     font-weight: bold;
     font-size: 1.2rem;
   }
@@ -123,4 +123,5 @@
   padding: .5rem 1.8rem .8rem 1.8rem;
   color: $color-primary;
   font-weight: bold;
+  width: 200px;
 }

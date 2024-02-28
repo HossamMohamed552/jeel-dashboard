@@ -24,6 +24,9 @@ export default {
   methods: {
     handleAddAdCategory($event) {
       this.loading = true;
+      if ($event.users.includes(1000000)){
+        delete $event.users
+      }
       this.ApiService(postAddAnnouncementRequest($event))
         .then((response) => {
           this.loading = false;

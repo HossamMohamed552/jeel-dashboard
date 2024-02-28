@@ -8,6 +8,11 @@ export const getAllTermsRequest = (params) => ({
   url: 'terms?list_all=true',
   config: {params}
 })
+export const getTermsForSupervisorRequest = (params) => ({
+    method: 'get',
+    url: '/supervisor/terms',
+    config: {params}
+  })
 export const getSingleTermsRequest = (params) => ({
   method: 'get',
   url: `terms/${params}`,
