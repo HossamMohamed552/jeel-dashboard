@@ -63,7 +63,12 @@ export default {
   },
   methods: {
     getDailyLoginForStudent(event) {
-      this.ApiService(getDailyLoginRequest(this.$route.params.id, event)).then((response) => {
+      const params = {
+        start_date: this.startDate,
+        end_date: this.endDate,
+       ...event
+      };
+      this.ApiService(getDailyLoginRequest(this.$route.params.id, params)).then((response) => {
         let data = response.data
         this.dailyLoginData = data.data
         this.totalNumber = data.meta.total
@@ -78,10 +83,7 @@ export default {
     setDate($event) {
       this.startDate = $event[0]
       this.endDate = $event[1]
-      this.getDailyLoginForStudent({
-        start_date: this.startDate,
-        end_date: this.endDate
-      })
+      this.getDailyLoginForStudent()
     }
   },
   mounted() {

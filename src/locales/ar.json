@@ -130,7 +130,8 @@
     "studyYearName": "العام الدراسى",
     "schoolName": "اسم المدرسة",
     "date": "اليوم",
-    "time": "النشاط"
+    "time": "النشاط",
+    "studentName": "اسم الطالب"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",

@@ -15,7 +15,7 @@ export const getSchoolUsersRequest = (params) => ({
   },
 });
 
-export const getAllTeachersForSuperVisorRequest = (schoolId, params) => ({
+export const getAllTeachersForSuperVisorRequest = (params) => ({
   method: "get",
   url: `supervisor/teachers/users`,
   config: {
