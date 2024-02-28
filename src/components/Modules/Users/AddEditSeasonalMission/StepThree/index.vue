@@ -113,7 +113,11 @@ export default {
         field.name = selectedOptionNames;
       } else {
         const selectedOption = field.options.find((option) => option[field.listen] === value);
-        const optionName = selectedOption ? selectedOption.name : "";
+        let optionName;
+        if (this.prizeType == "المكتبة")
+          optionName = selectedOption ? selectedOption.file_name : "";
+        else optionName = selectedOption ? selectedOption.name : "";
+        console.log("optionName", optionName);
         field.name = optionName;
       }
 
@@ -138,6 +142,7 @@ export default {
           this.stepForm[4].type = "hidden";
         }
       }
+
 
       if (key === "prizeable_type") {
         this.stepForm[4].disabled = false;
@@ -172,7 +177,7 @@ export default {
           console.error(`Error updating field ${field.key}:`, error);
         }
       });
-      console.log(this.prizeGroup)
+      console.log(this.prizeGroup);
       if (this.prizeGroup.length == 0) this.prizeIndex++;
       else this.prizeIndex = this.prizeGroup[this.prizeGroup.length - 1].id + 1;
       this.entry.id = this.prizeIndex;
