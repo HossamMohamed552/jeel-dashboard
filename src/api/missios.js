@@ -12,11 +12,17 @@ export const getSingleMissionsRequest = (params) => ({
 export const getSuperMissionsRequest = (params) => ({
   method: 'get',
   url: `supervisor/missions`,
-  config:{
+  config: {
     params
   }
 })
-
+export const getSuperPowerUpBoxRequest = (params) => ({
+  method: 'get',
+  url: `supervisor/power-up-boxes`,
+  config: {
+    params
+  }
+})
 export const getSingleMissionsDetailsRequest = (params) => ({
   method: 'get',
   url: `missions/${params}/full-details`,
