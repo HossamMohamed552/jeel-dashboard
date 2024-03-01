@@ -30,10 +30,7 @@ export const deleteCompetitionRequest = (id) => ({
 
 export const getMissionForCompetitonRequest = (params) => ({
   method: "get",
-  url: "missions_out_of_date",
-  config: {
-    params,
-  },
+  url: `missions_out_of_date?level_id=${params}`,
 });
 
 export const getGoalsForCompetitonRequest = (missions) => ({

@@ -71,21 +71,21 @@ export default {
       }
       this.learningPath.learningpaths = [];
       if (key === "video_id") {
-        if (!this.videoLists[index - 1]) {
-          this.$set(this.videoLists, index - 1, []);
-        } else {
-          this.videoLists[index - 1] = [];
-        }
+        // if (!this.videoLists[index - 1]) this.$set(this.videoLists, index - 1, []);
+        // else this.videoLists[index - 1] = [];
+        console.log(index);
+
         const videoObjects = field.name.map((video) => ({ ...video }));
         this.learningPath.learningpaths["videos"] = videoObjects;
-        console.log(this.learningPath.learningpaths);
-        this.videoLists[index - 1] = this.videoLists[index - 1].concat(videoObjects);
+        this.videoLists[index - 1] = videoObjects;
+        this.addVideo(this.videoLists[index - 1]);
+
+        console.log(this.learningPath.learningpaths["videos"]);
+        console.log(videoObjects);
       } else {
-        if (!this.exerciseLists[index - 1]) {
-          this.$set(this.exerciseLists, index - 1, []);
-        } else {
-          this.exerciseLists[index - 1] = [];
-        }
+        if (!this.exerciseLists[index - 1]) this.$set(this.exerciseLists, index - 1, []);
+        else this.exerciseLists[index - 1] = [];
+
         const exerciseObjects = field.name.map((exercise) => ({ ...exercise }));
         this.learningPath.learningpaths["quizzes"] = exerciseObjects;
         this.exerciseLists[index - 1] = this.exerciseLists[index - 1].concat(exerciseObjects);
@@ -129,10 +129,11 @@ export default {
           }
         }
       });
-      console.log("duplicatedForm", duplicatedForm);
       return duplicatedForm;
     },
     nextStep() {
+      console.log("videoLists", this.videoLists);
+      console.log("exerciseLists", this.exerciseLists);
       this.addVideo(this.videoLists);
       this.addExercises(this.exerciseLists);
       this.$emit("nextStep");

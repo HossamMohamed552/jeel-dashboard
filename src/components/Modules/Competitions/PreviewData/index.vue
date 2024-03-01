@@ -1,19 +1,10 @@
 <template>
-  <section>
-    <div class="container-fluid">
+  <div class="add-edit-competition">
+    <div class="container-fluid custom-container">
       <b-row>
         <b-col v-for="field in stepForm" :key="field.key" :lg="field.col">
-          <PreviewMedia
-            v-if="filesUploadedTypes.includes(field.type)"
-            :header="field.label"
-            :media-name="field.task_audio_name"
-            :file-size="field.task_audio_size"
-            :showRemoveButton="false"
-            :typeOfMedia="'image'"
-            :image-url="field.url"
-          />
           <ShowItem
-            v-else-if="field.type === 'select'"
+            v-if="field.type === 'select'"
             class="divider-show"
             :title="field?.label"
             :subtitle="Array.isArray(field?.name) ? field?.name.join(', ') : field?.name"
@@ -30,15 +21,7 @@
           >
           </ListItems>
         </b-col>
-        <b-col :lg="12" v-for="index in learningPathCount" :key="index">
-          <learningPathCollapse
-            :index="index"
-            :videosList="videosList[index - 1]"
-            :videosFieldsList="videosFieldsList"
-            :exercisesList="exercisesList[index - 1]"
-            :exercisesFieldsList="exercisesFieldsList"
-          />
-        </b-col>
+
         <b-col :lg="12">
           <ListItems
             class="seasonal-mission-custom-list-item"
@@ -65,27 +48,19 @@
         </b-col>
       </b-row>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import learningPathCollapse from "./learningPathCollapse.vue";
 import { mapGetters } from "vuex";
-import {
-  postCreateSeasonalMissionRequest,
-  putUpdateSeasonalMissionRequest,
-} from "@/api/seasonal-mission.js";
 import moment from "moment";
 
 export default {
   components: {
     ShowItem,
-    PreviewMedia,
     ListItems,
-    learningPathCollapse,
   },
   props: {
     currentStep: {
@@ -96,14 +71,9 @@ export default {
       type: Array,
       default: () => [],
     },
-    learningPathCount: {
-      type: Number,
-      default: () => 0,
-    },
   },
   data() {
     return {
-      filesUploadedTypes: ["image", "audio", "video"],
       prizesList: [],
       notificationsList: [],
       videosList: [],
@@ -200,7 +170,6 @@ export default {
       this.handleArray("religions");
       this.handleArray("types");
       this.handleObject("seasonal_mission_group_id");
-
     },
   },
   async mounted() {},
@@ -229,7 +198,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../index.scss";
+@import "./index.scss";
 
 .adding {
   display: flex;

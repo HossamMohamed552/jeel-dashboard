@@ -2,58 +2,66 @@
   <div class="add-mission">
     <!-- {{ collectData }} -->
     <!-- <pre>{{ user.school.id }}</pre> -->
-    <Modal
-      :content-message="'تمت الإضافة بنجاح'"
-      :showModal="showModal"
-      :is-success="true"
-    />
-    <Stepper
-      v-show="currentStep === 0 || currentStep === 1 || currentStep === 2"
-      class="mt-5 mb-3"
-      :steps="steps"
-      :current-step="currentStep"
-    />
+    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Stepper class="mt-5 mb-3" :steps="steps" :current-step="currentStep" />
     <AddEditCompetitionInfo
-      v-show="currentStep === 0"
-      :levels="levels"
-      :missions="missions"
-      :goals="goals"
-      :outcomes="outcomes"
-      @getMissions="getMissions"
-      @getGoalsAndOutcomes="getGoalsAndOutcomes"
-      @onSubmit="nextStepTwo"
+      v-if="currentStep === 0"
+      :stepForm="competitionInfoForm"
+      @nextStep="nextStep"
       @handleCancel="handleCancel"
-    />
+    >
+      <Button @click="handleCancel" custom-class="cancel-btn margin"> إلغاء </Button>
+    </AddEditCompetitionInfo>
+
     <AddEditCompetitionQuestions
-      v-show="currentStep === 1"
-      :questions-numbers="questionsNumbers"
-      :random-questions="randomQuestions"
+      v-if="currentStep === 1"
       @onSubmit="nextToStepThree"
-      @handleBack="backToStepOne"
+      @handleBack="prevStep"
       @handleCancel="handleCancel"
-      @generateRandomQuestions="generateRandomQuestions"
+      :level_id="competitionInfoForm[1].value"
+      :missions_ids="[1, 2]"
     />
-    <AddEditCompetitionRewards
-      v-show="currentStep === 2"
-      :arrangmentList="arrangmentList"
-      @onSubmit="submitCreateCompetition"
-      @handleBack="backToSteptwo"
-      @handleCancel="handleCancel"
-      @getArrangmentList="getArrangmentList"
-    />
+    <!-- competitionInfoForm[1].value -->
+    <AddEditPrizes
+      v-if="currentStep === 2"
+      :stepForm="prizeForm"
+      @nextStep="nextStep"
+      @prevStep="prevStep"
+      :currentStep="currentStep"
+    >
+      <Button @click="handleCancel" custom-class="cancel-btn margin"> إلغاء </Button>
+    </AddEditPrizes>
+    <AddEditNotification
+      v-if="currentStep === 3"
+      :stepForm="notificationForm"
+      @nextStep="nextStep"
+      @prevStep="prevStep"
+      :currentStep="currentStep"
+    >
+      <Button @click="handleCancel" custom-class="cancel-btn margin"> إلغاء </Button>
+    </AddEditNotification>
+    <PreviewData
+      v-if="currentStep === 4"
+      :currentStep="currentStep"
+      @prevStep="prevStep"
+      :stepForm="[...competitionInfoForm]"
+    >
+      <Button @click="handleCancel" custom-class="cancel-btn margin"> إلغاء </Button>
+    </PreviewData>
   </div>
 </template>
 <script>
+// Steps
 import AddEditCompetitionInfo from "@/components/Modules/Competitions/AddEditCompetitionInfo/index.vue";
 import AddEditCompetitionQuestions from "@/components/Modules/Competitions/AddEditCompetitionQuestions/index.vue";
-import AddEditCompetitionRewards from "@/components/Modules/Competitions/AddEditCompetitionRewards/index.vue";
+import PreviewData from "@/components/Modules/Competitions/PreviewData";
+import AddEditPrizes from "@/components/Modules/addEditPrize";
+import AddEditNotification from "@/components/Modules/addEditNotification";
+
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import Stepper from "@/components/Shared/Stepper/index.vue";
-import axios from "axios";
-import VueCookies from "vue-cookies";
 import globalAssetData from "@/mixins/getData/globalAssetData";
-import { getAllLevelsRequest } from "@/api/level";
 import {
   getMissionForCompetitonRequest,
   getOutcomesForCompetitonRequest,
@@ -61,40 +69,242 @@ import {
   getCompetitonQuestionNumberRequest,
   getRandomQuestionRequest,
   getArrangmentListRequest,
-  postCreateCompetitonRequest
+  postCreateCompetitonRequest,
 } from "@/api/competition";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
-  mixins: [globalAssetData],
+  // mixins: [globalAssetData],
   components: {
+    Stepper,
     Modal,
     Button,
-    Stepper,
     AddEditCompetitionInfo,
+    AddEditPrizes,
+    AddEditNotification,
     AddEditCompetitionQuestions,
-    AddEditCompetitionRewards,
+    PreviewData,
   },
   data() {
     return {
       loading: false,
       showModal: false,
+      currentStep: 0,
       collectData: {},
       steps: [
         {
           icon: "1",
-          title: this.$t("COMPETITIONS.STEP_ONE"),
+          title: "البيانات الاساسية",
         },
         {
           icon: "2",
-          title: this.$t("COMPETITIONS.STEP_TWO"),
+          title: "أسئلة المسابقة",
         },
         {
           icon: "3",
-          title: this.$t("COMPETITIONS.STEP_THREE"),
+          title: "الجوائز",
+        },
+        {
+          icon: "4",
+          title: "الاشعارات",
+        },
+        {
+          icon: "5",
+          title: "معاينة المسابقة",
         },
       ],
-      currentStep: 0,
+
+      competitionInfoForm: [
+        {
+          key: "name",
+          label: "اسم المسابقة",
+          col: "4",
+          listen: "id",
+          value: "",
+          type: "text",
+          rules: "required|min:3|max:100",
+        },
+        {
+          key: "level_id",
+          col: "4",
+          listen: "id",
+          type: "select",
+          optionValue: "name",
+          label: "الصفوف المدرسية",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+          multiple: false,
+        },
+        {
+          key: "missions",
+          disabled: true,
+          col: "4",
+          listen: "id",
+          type: "select",
+          optionValue: "name",
+          label: "المهام",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+          multiple: true,
+        },
+        {
+          key: "objective_id",
+          col: "4",
+          disabled: true,
+          listen: "id",
+          type: "select",
+          optionValue: "name",
+          label: "الاهداف التعليمية",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+          multiple: false,
+        },
+        {
+          key: "outcome_id",
+          disabled: true,
+          col: "4",
+          listen: "id",
+          type: "select",
+          optionValue: "name",
+          label: "مخرجات التعلم",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+          multiple: false,
+        },
+        {
+          key: "start_date",
+          label: "بداية المسابقة",
+          col: "2",
+          listen: "id",
+          value: "",
+          type: "date",
+          rules: "required",
+          placeholder: "من",
+        },
+        {
+          key: "end_date",
+          label: "نهاية المسابقة",
+          col: "2",
+          listen: "id",
+          value: "",
+          type: "date",
+          rules: "required",
+          placeholder: "الى",
+        },
+        {
+          key: "competition_time",
+          label: "المدة الزمنية (بالساعات)",
+          col: "4",
+          value: "",
+          type: "number",
+          rules: "required|numeric",
+        },
+      ],
+      prizeForm: [
+        {
+          key: "main_percentage",
+          label: "من نسبة",
+          col: "4",
+          listen: "id",
+          value: "",
+          type: "number",
+          rules: "required|numeric|max_value:100|min_value:0",
+        },
+        {
+          key: "max_percentage",
+          label: "إلى نسبة",
+          col: "4",
+          listen: "id",
+          value: "",
+          type: "number",
+          rules: "required|numeric|max_value:100|min_value:0",
+        },
+        {
+          key: "type_id",
+          col: "4",
+          listen: "id",
+          type: "select",
+          optionValue: "name",
+          label: "نوع الجائزة",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+        },
+        {
+          key: "prizeable_type",
+          col: "4",
+          listen: "id",
+          type: "select",
+          optionValue: "name",
+          label: "نوع المحتوى",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+          multiple: true,
+          disabled: true,
+        },
+        {
+          key: "prizeable_id",
+          col: "4",
+          listen: "id",
+          type: "select",
+          optionValue: "name",
+          label: "المحتوى",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+          disabled: true,
+        },
+      ],
+      notificationForm: [
+        {
+          key: "name",
+          label: "عنوان الإشعار",
+          col: "4",
+          listen: "id",
+          value: "",
+          type: "text",
+          rules: "required|min:3|max:100",
+        },
+        {
+          key: "start_date",
+          label: "تاريخ ووقت الإشعار",
+          col: "4",
+          listen: "id",
+          value: "",
+          type: "date",
+          rules: "required",
+        },
+        {
+          key: "description",
+          label: "نص الإشعار",
+          col: "12",
+          listen: "id",
+          value: "",
+          type: "textarea",
+          rules: "required|min:3|max:100",
+        },
+        {
+          key: "audio",
+          label: "صوت الإشعار",
+          col: "12",
+          listen: "id",
+          value: "",
+          type: "audio",
+          rules: "required",
+        },
+      ],
       levels: [],
       missions: [],
       goals: [],
@@ -107,21 +317,28 @@ export default {
   computed: {
     ...mapGetters(["user"]),
   },
-  mounted() {
-    this.getAllLevels();
-  },
   methods: {
+    ...mapActions(["addPrizeById", "addNotificationById"]),
+
+    emptyStore() {
+      this.addPrizeById([]);
+      this.addNotificationById([]);
+    },
+
     handleCancel() {
       this.$router.push("/dashboard/competitions");
     },
-    nextStepTwo(data) {
-      this.getQuestionsNumbers(data.missions, data.level_id);
-      this.handleAssignObject(data);
-      this.handleNavigation(1);
+
+    nextStep() {
+      this.currentStep = this.currentStep + 1;
     },
+    prevStep() {
+      this.currentStep = this.currentStep - 1;
+    },
+
     nextToStepThree(data) {
       this.handleAssignObject(data);
-      this.handleNavigation(2);
+      this.nextStep();
     },
     submitCreateCompetition(data) {
       this.handleAssignObject(data);
@@ -139,12 +356,7 @@ export default {
           this.$router.push("/dashboard/competitions");
         });
     },
-    backToStepOne() {
-      this.handleNavigation(0);
-    },
-    backToSteptwo() {
-      this.handleNavigation(1);
-    },
+
     addCompetition() {},
     handleAssignObject(data) {
       Object.assign(this.collectData, { ...data });
@@ -153,61 +365,26 @@ export default {
     handleSaveCollectedData(data) {
       sessionStorage.setItem("collectData", data);
     },
-    handleNavigation(nextStep) {
-      this.currentStep = nextStep;
-    },
-    getAllLevels() {
-      this.ApiService(getAllLevelsRequest()).then((response) => {
-        this.levels = response.data.data;
-      });
-    },
-    getMissions(levelId) {
-      this.ApiService(
-        getMissionForCompetitonRequest({ level_id: levelId })
-      ).then((response) => {
-        this.missions = response.data.data;
-      });
-    },
+
     getGoalsAndOutcomes(missions) {
-      this.ApiService(getGoalsForCompetitonRequest(missions)).then(
-        (response) => {
-          this.goals = response.data.data;
-        }
-      );
+      this.ApiService(getGoalsForCompetitonRequest(missions)).then((response) => {
+        this.goals = response.data.data;
+      });
 
-      this.ApiService(getOutcomesForCompetitonRequest(missions)).then(
-        (response) => {
-          this.outcomes = response.data.data;
-        }
-      );
-    },
-    getQuestionsNumbers(missions, levelId) {
-      const missionsIds = missions.join(",");
-      this.ApiService(
-        getCompetitonQuestionNumberRequest({
-          missions: missionsIds,
-          level_id: levelId,
-        })
-      ).then((response) => {
-        this.questionsNumbers = response.data;
+      this.ApiService(getOutcomesForCompetitonRequest(missions)).then((response) => {
+        this.outcomes = response.data.data;
       });
     },
-    generateRandomQuestions(questionDifficulties) {
-      const data = {
-        level_id: this.collectData.level_id,
-        missions: this.collectData.missions,
-        question_difficuly: questionDifficulties,
-      };
 
-      this.ApiService(getRandomQuestionRequest(data)).then((response) => {
-        this.randomQuestions = response.data.data;
-      });
-    },
     getArrangmentList(data) {
       this.ApiService(getArrangmentListRequest(data)).then((response) => {
         this.arrangmentList = response.data.data;
       });
     },
+  },
+  mounted() {},
+  beforeMount() {
+    this.emptyStore();
   },
 };
 </script>
