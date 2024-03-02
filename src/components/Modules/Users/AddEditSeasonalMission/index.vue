@@ -158,7 +158,7 @@ export default {
           listen: "id",
           value: "",
           type: "date",
-          rules: "required|after:startDate",
+          rules: "required",
           placeholder: "أختر تاريخ نهاية المهمة",
         },
         {

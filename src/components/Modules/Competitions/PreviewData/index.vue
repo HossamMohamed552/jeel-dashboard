@@ -76,18 +76,6 @@ export default {
     return {
       prizesList: [],
       notificationsList: [],
-      videosList: [],
-      exercisesList: [],
-      videosFieldsList: [
-        { key: "id", label: "التسلسل" },
-        { key: "title", label: "عنوان الفيديو" },
-        { key: "actions", label: "الاجراء" },
-      ],
-      exercisesFieldsList: [
-        { key: "id", label: "التسلسل" },
-        { key: "name", label: "عنوان التمرين" },
-        { key: "actions", label: "الاجراء" },
-      ],
       prizeFieldsList: [
         { key: "id", label: "التسلسل" },
         { key: "main_percentage", label: "من نسبة" },
@@ -103,10 +91,6 @@ export default {
         { key: "description", label: "نص الإشعار" },
       ],
       submittedForm: {
-        learningpaths: {
-          videos: [],
-          quizzes: [],
-        },
       },
       loading: false,
     };

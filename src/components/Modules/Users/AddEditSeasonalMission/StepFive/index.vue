@@ -182,8 +182,9 @@ export default {
       });
       this.submittedForm["prizes"] = this.prizesList;
       this.submittedForm["notifications"] = this.notificationsList;
-      this.submittedForm.learningpaths.videos = this.videosList;
-      this.submittedForm.learningpaths.quizzes = this.exercisesList;
+      this.submittedForm["learningpaths"] = this.getLearningPaths;
+      // this.submittedForm.learningpaths.videos = this.videosList;
+      // this.submittedForm.learningpaths.quizzes = this.exercisesList;
     },
 
     handleArray(key) {
@@ -200,12 +201,17 @@ export default {
       this.handleArray("religions");
       this.handleArray("types");
       this.handleObject("seasonal_mission_group_id");
-
     },
   },
   async mounted() {},
   computed: {
-    ...mapGetters(["getPrizesList", "getNotificationsList", "getVideosList", "getExercisesList"]),
+    ...mapGetters([
+      "getPrizesList",
+      "getNotificationsList",
+      "getVideosList",
+      "getExercisesList",
+      "getLearningPaths",
+    ]),
 
     showValue(values) {
       if (typeof values == Array) {

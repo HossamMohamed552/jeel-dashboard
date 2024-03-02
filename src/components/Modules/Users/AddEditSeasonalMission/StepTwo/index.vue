@@ -29,7 +29,7 @@ import GenericForm from "@/components/Shared/GenericForm";
 import { getQuizLevelPath, getVideoPerLevelPath } from "@/services/dropdownService";
 import _ from "lodash";
 
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
@@ -58,7 +58,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addVideo", "addExercises"]),
+    ...mapActions(["addVideoesInArray", "addExercisesInArray", "addLearningPath"]),
     handleInput: _.debounce(function (key, value, field, index) {
       if (field.multiple) {
         const selectedOptionNames = value.map((singleValue) => {
@@ -71,24 +71,19 @@ export default {
       }
       this.learningPath.learningpaths = [];
       if (key === "video_id") {
-        // if (!this.videoLists[index - 1]) this.$set(this.videoLists, index - 1, []);
-        // else this.videoLists[index - 1] = [];
-        console.log(index);
-
         const videoObjects = field.name.map((video) => ({ ...video }));
-        this.learningPath.learningpaths["videos"] = videoObjects;
-        this.videoLists[index - 1] = videoObjects;
-        this.addVideo(this.videoLists[index - 1]);
-
-        console.log(this.learningPath.learningpaths["videos"]);
-        console.log(videoObjects);
+        let videoesPayload = {
+          videos: videoObjects,
+          index: index - 1,
+        };
+        this.addVideoesInArray(videoesPayload);
       } else {
-        if (!this.exerciseLists[index - 1]) this.$set(this.exerciseLists, index - 1, []);
-        else this.exerciseLists[index - 1] = [];
-
         const exerciseObjects = field.name.map((exercise) => ({ ...exercise }));
-        this.learningPath.learningpaths["quizzes"] = exerciseObjects;
-        this.exerciseLists[index - 1] = this.exerciseLists[index - 1].concat(exerciseObjects);
+        let exercisesPayload = {
+          exercisess: exerciseObjects,
+          index: index - 1,
+        };
+        this.addExercisesInArray(exercisesPayload);
       }
     }, 300),
     getStepTwoForm(index) {
@@ -131,13 +126,22 @@ export default {
       });
       return duplicatedForm;
     },
-    nextStep() {
-      console.log("videoLists", this.videoLists);
-      console.log("exerciseLists", this.exerciseLists);
-      this.addVideo(this.videoLists);
-      this.addExercises(this.exerciseLists);
+    async nextStep() {
+      await this.handleLearningPaths();
+      this.addLearningPath(this.learningPath.learningpaths);
       this.$emit("nextStep");
     },
+
+    async handleLearningPaths() {
+      this.learningPath.value.map((id, index) => {
+        this.learningPath.learningpaths[index] = {
+          id,
+          videos: this.getVideosList[index],
+          quizzes: this.getExercisesList[index],
+        };
+      });
+    },
+
     prevStep() {
       this.$emit("prevStep");
     },
@@ -145,11 +149,13 @@ export default {
       this.$emit("onSubmit", this.stepForm);
     },
   },
+  computed: {
+    ...mapGetters(["getVideosList", "getExercisesList"]),
+  },
   async mounted() {
     getQuizLevelPath(this.stepForm, "exams_id");
     getVideoPerLevelPath(this.stepForm, "video_id");
   },
-  computed: {},
 };
 </script>
 
