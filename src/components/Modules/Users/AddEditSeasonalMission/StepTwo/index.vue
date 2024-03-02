@@ -94,48 +94,78 @@ export default {
           else if (index == 2) formElement.label = "اسم المسار الثاني";
           else if (index == 3) formElement.label = "اسم المسار الثالث";
           else formElement.label = "اسم المسار الأخير";
-        } else if (formElement.key === "video_id") {
-          if (index == 1) {
-            formElement.value = this.learningPath.value[0].videos;
-            this.videoLists[0] = this.learningPath.value[0].videos;
-          } else if (index == 2) {
-            formElement.value = this.learningPath.value[1].videos;
-            this.videoLists[1] = this.learningPath.value[1].videos;
-          } else if (index == 3) {
-            formElement.value = this.learningPath.value[2].videos;
-            this.videoLists[2] = this.learningPath.value[2].videos;
-          } else {
-            formElement.value = this.learningPath.value[3].videos;
-            this.videoLists[3] = this.learningPath.value[3].videos;
-          }
-        } else if (formElement.key === "exams_id") {
-          if (index == 1) {
-            formElement.value = this.learningPath.value[0].quizzes;
-            this.exerciseLists[0] = this.learningPath.value[0].quizzes;
-          } else if (index == 2) {
-            formElement.value = this.learningPath.value[1].quizzes;
-            this.exerciseLists[1] = this.learningPath.value[1].quizzes;
-          } else if (index == 3) {
-            formElement.value = this.learningPath.value[2].quizzes;
-            this.exerciseLists[2] = this.learningPath.value[2].quizzes;
-          } else {
-            formElement.value = this.learningPath.value[3].quizzes;
-            this.exerciseLists[3] = this.learningPath.value[3].quizzes;
+        }
+
+        if (this.$route.params.id) {
+          let i;
+          if (formElement.key === "video_id") {
+            if (index == 1) i = 0;
+            else if (index == 2) i = 1;
+            else if (index == 3) i = 2;
+            else i = 3;
+            let videoesPayload = {
+              videos: this.learningPath.value[i].videos,
+              index: i,
+            };
+            this.addVideoesInArray(videoesPayload);
+            formElement.value = this.learningPath.value[i].videos;
+          } else if (formElement.key === "exams_id") {
+            if (index == 1) i = 0;
+            else if (index == 2) i = 1;
+            else if (index == 3) i = 2;
+            else i = 3;
+            let exercisesPayload = {
+              exercisess: this.learningPath.value[i].quizzes,
+              index: i,
+            };
+            this.addExercisesInArray(exercisesPayload);
+            formElement.value = this.learningPath.value[i].quizzes;
           }
         }
       });
       return duplicatedForm;
     },
     async nextStep() {
-      await this.handleLearningPaths();
+      if (this.$route.params.id) await this.handleEditLearningPaths();
+      else await this.handleLearningPaths();
       this.addLearningPath(this.learningPath.learningpaths);
       this.$emit("nextStep");
+    },
+
+    processArray(arr) {
+      // Check if the array is not empty
+      if (arr.length > 0) {
+        // Get the type of the first element
+        const firstElementType = typeof arr[0];
+        // Check if the first element is an object
+        if (firstElementType === "object") {
+          // Array of objects
+          return false;
+        } else if (firstElementType === "string") {
+          // Array of strings
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        // Handle empty array if needed
+        return false;
+      }
     },
 
     async handleLearningPaths() {
       this.learningPath.value.map((id, index) => {
         this.learningPath.learningpaths[index] = {
           id,
+          videos: this.getVideosList[index],
+          quizzes: this.getExercisesList[index],
+        };
+      });
+    },
+    async handleEditLearningPaths() {
+      this.learningPath.value.map((id, index) => {
+        this.learningPath.learningpaths[index] = {
+          id: id.id,
           videos: this.getVideosList[index],
           quizzes: this.getExercisesList[index],
         };

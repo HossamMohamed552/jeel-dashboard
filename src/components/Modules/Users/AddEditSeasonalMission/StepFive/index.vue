@@ -152,8 +152,9 @@ export default {
         this.$router.push("/dashboard/seasonal-mission");
       });
     },
-    handleEditSeasonalMission() {
-      this.handleDateToUpdate();
+    async handleEditSeasonalMission() {
+      await this.handleDateToUpdate();
+      console.log(this.submittedForm);
       this.submittedForm["_method"] = "PUT";
       this.ApiService(
         putUpdateSeasonalMissionRequest(this.submittedForm, this.$route.params.id)
@@ -165,7 +166,6 @@ export default {
       this.$emit("prevStep");
     },
     async updateFields() {
-      // Generic method to update createSchool object based on the fieldArray
       this.stepForm.forEach((field) => {
         try {
           if (field.type === "date")
@@ -183,24 +183,42 @@ export default {
       this.submittedForm["prizes"] = this.prizesList;
       this.submittedForm["notifications"] = this.notificationsList;
       this.submittedForm["learningpaths"] = this.getLearningPaths;
-      // this.submittedForm.learningpaths.videos = this.videosList;
-      // this.submittedForm.learningpaths.quizzes = this.exercisesList;
     },
 
     handleArray(key) {
       this.submittedForm[key] = this.submittedForm[key].map((item) => item.id);
-      console.log(this.submittedForm);
     },
     handleObject(key) {
-      this.submittedForm[key] = this.submittedForm[key].map((item) => item.id);
-      console.log(this.submittedForm);
+      this.submittedForm[key] = this.submittedForm[key].id;
     },
-    handleDateToUpdate() {
-      this.handleArray("countries");
-      this.handleArray("lessons");
-      this.handleArray("religions");
-      this.handleArray("types");
+    processArray(arr) {
+      // Check if the array is not empty
+      if (arr.length > 0) {
+        // Get the type of the first element
+        const firstElementType = typeof arr[0];
+        // Check if the first element is an object
+        if (firstElementType === "object") {
+          // Array of objects
+          return true;
+        } else if (firstElementType === "string") {
+          // Array of strings
+          return false;
+        } else {
+          return false;
+        }
+      } else {
+        // Handle empty array if needed
+        console.log("Empty array");
+      }
+    },
+
+    async handleDateToUpdate() {
+      if (this.processArray(this.submittedForm["countries"])) this.handleArray("countries");
+      if (this.processArray(this.submittedForm["lessons"])) this.handleArray("lessons");
+      if (this.processArray(this.submittedForm["religions"])) this.handleArray("religions");
+      if (this.processArray(this.submittedForm["types"])) this.handleArray("types");
       this.handleObject("seasonal_mission_group_id");
+      this.handleObject("level_id");
     },
   },
   async mounted() {},
