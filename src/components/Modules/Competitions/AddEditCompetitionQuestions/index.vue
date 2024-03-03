@@ -156,6 +156,7 @@
                     <img
                       class="cursor-pointer"
                       src="@/assets/images/icons/view-random-question.svg"
+                      @click="viewQuestion(data.item.id)"
                     />
                   </div>
                 </template>
@@ -186,10 +187,14 @@
           </form>
         </validation-observer>
       </div>
+      <viewQuestion :question="cloneQuestion" :showModal="showModal" @cancel="cancel($event)" />
     </div>
   </div>
 </template>
 <script>
+import viewQuestion from "@/components/Modules/ViewQuestionModal/index.vue";
+import ShowItem from "@/components/Shared/ShowItem/index.vue";
+
 import TextField from "@/components/Shared/TextField/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
@@ -197,8 +202,11 @@ import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import { debounce } from "lodash";
 import { getCompetitonQuestionNumberRequest, getRandomQuestionRequest } from "@/api/competition";
+import { getSingleQuestionRequest } from "@/api/question";
+
 export default {
   components: {
+    ShowItem,
     TextField,
     SelectSearch,
     Button,
@@ -217,6 +225,8 @@ export default {
   data() {
     return {
       loading: false,
+      showModal: false,
+      cloneQuestion: {},
       questionsNumbers: [],
       randomQuestions: [],
       actions: [],
@@ -348,7 +358,14 @@ export default {
       });
     },
     changeSingleRandomQuestion(questionId) {
-      // console.log(questionId);
+      console.log(questionId);
+    },
+    viewQuestion(questionId) {
+      this.showModal = true;
+      this.ApiService(getSingleQuestionRequest(questionId)).then((response) => {
+        this.cloneQuestion = response.data.data;
+      });
+      console.log(question);
     },
     getQuestionsNumbers() {
       const missionsIds = this.missions_ids.join(",");
@@ -360,6 +377,9 @@ export default {
       ).then((response) => {
         this.questionsNumbers = response.data;
       });
+    },
+    cancel($event) {
+      this.showModal = $event;
     },
   },
   mounted() {
