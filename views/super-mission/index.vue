@@ -162,6 +162,7 @@ import {
   getSTermsForSuperVisor,
   getStudyYearsForSuperVisor
 } from "@/services/dropdownService";
+import {log} from "video.js";
 
 export default {
   name: "index",
@@ -218,7 +219,8 @@ export default {
           rules: 'required'
         },
       ],
-      powerUpBoxList: []
+      powerUpBoxList: [],
+      missionWithPowerSend: []
     }
   },
   computed: {
@@ -279,7 +281,6 @@ export default {
             item,
             ...this.missionSaved
           ]
-          console.log('missionWithPower', missionWithPower)
           this.missionSaved = missionWithPower
         })
       })
@@ -323,44 +324,31 @@ export default {
     goToMission(missionId) {
       this.$router.push(`/dashboard/mission-detail/${missionId}`)
     },
-    async sortMissions() {
-      let missions = this.missionSaved.map((item, index) => {
-          return Object.assign({}, {
-            id: item.id,
-            order: index + 1,
-            is_selected: 1,
-            start_date: item.start_date,
-            end_date: item.end_date,
-            type: item.type
-          })
+    sortMissions() {
+      this.missionWithPowerSend = this.missionSaved.map((item, index) => {
+        return {
+          id: item.id,
+          order: index + 1,
+          is_selected: 1,
+          start_date: item.start_date,
+          end_date: item.end_date,
+          type: item.type
         }
-      )
-      m missions.forEach((item, index) => {
-        if (missions[index + 1].type && missions[index + 1]['type'] === 'power') {
-          return Object.assign({}, {
-            id: item.id,
-            order: index + 1,
-            is_selected: 1,
-            start_date: item.start_date,
-            end_date: item.end_date,
-            type: item.type,
-            power_up_box_id : item[index + 1].id
-          })
+      })
+      for (let index = 0; index < this.missionWithPowerSend.length; index++) {
+        if (this.missionWithPowerSend[index + 1]['type'] && this.missionWithPowerSend[index + 1]['type'] === 'power') {
+          this.missionWithPowerSend[index]['power_up_box_id'] = this.missionWithPowerSend[index + 1].id
         } else {
           index++
         }
-      })
-      for (let index = 0; index < missions.length; index++) {
-
       }
-      console.log('missions', missions)
-      missions = missions.filter((item) => {
+      this.missionWithPowerSend = this.missionWithPowerSend.filter((item) => {
         return item.type === 'mission'
       })
       axios.post('/rearrange-mission', {
         level_id: this.level_id,
         term_id: this.term_id,
-        missions: missions
+        missions: this.missionWithPowerSend
       }, {
         headers: {
           Authorization: `Bearer ${VueCookies.get("token")}`,
