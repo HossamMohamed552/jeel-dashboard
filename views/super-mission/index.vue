@@ -232,7 +232,7 @@ export default {
     handleInput(key, value, field) {
       if (key === 'term_id') {
         this.minMissions = field?.options ? field?.options.find(item => item.id === value)?.min_missions : null
-        this.term_id =  value
+        this.term_id = value
       } else if (key === 'level_id') {
         this.level_id = value
       }
@@ -265,12 +265,21 @@ export default {
         })
       }).then(() => {
         this.powerUpBoxList.forEach((item) => {
-          const index = item.appear_after_missions
+          let index;
+          if (item.mission_id) {
+            const getIndex = this.missionSaved.find(element => {
+              return element.id === item.mission_id
+            })
+            index = this.missionSaved.indexOf(getIndex) + 1
+          } else {
+            index = item.appear_after_missions
+          }
           let missionWithPower = [
             ...this.missionSaved.splice(0, index),
             item,
             ...this.missionSaved
           ]
+          console.log('missionWithPower', missionWithPower)
           this.missionSaved = missionWithPower
         })
       })
@@ -314,25 +323,38 @@ export default {
     goToMission(missionId) {
       this.$router.push(`/dashboard/mission-detail/${missionId}`)
     },
-    sortMissions() {
+    async sortMissions() {
       let missions = this.missionSaved.map((item, index) => {
-        return {
-          id: item.id,
-          order: index + 1,
-          is_selected: 1,
-          start_date: item.start_date,
-          end_date: item.end_date,
-          type: item.type
+          return Object.assign({}, {
+            id: item.id,
+            order: index + 1,
+            is_selected: 1,
+            start_date: item.start_date,
+            end_date: item.end_date,
+            type: item.type
+          })
         }
-      })
-      for (let index = 0; index < missions.length; index++) {
-        if (missions?.[index + 1]?.type && missions?.[index + 1]?.type === 'power') {
-          missions[index].power_up_box_id = missions[index + 1].id
+      )
+      m missions.forEach((item, index) => {
+        if (missions[index + 1].type && missions[index + 1]['type'] === 'power') {
+          return Object.assign({}, {
+            id: item.id,
+            order: index + 1,
+            is_selected: 1,
+            start_date: item.start_date,
+            end_date: item.end_date,
+            type: item.type,
+            power_up_box_id : item[index + 1].id
+          })
         } else {
           index++
         }
+      })
+      for (let index = 0; index < missions.length; index++) {
+
       }
-      missions = missions.filter((item)=>{
+      console.log('missions', missions)
+      missions = missions.filter((item) => {
         return item.type === 'mission'
       })
       axios.post('/rearrange-mission', {

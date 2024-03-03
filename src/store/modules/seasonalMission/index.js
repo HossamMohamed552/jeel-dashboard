@@ -32,8 +32,14 @@ export default {
     SET_VIDEOS_LIST(state, videos) {
       state.videosList = videos;
     },
+    SET_VIDEOS_ARRAY(state, list) {
+      state.videosList[list.index] = list.videos;
+    },
     SET_EXERCISES_LIST(state, exercisess) {
       state.exercisesList = exercisess;
+    },
+    SET_EXERCISES_ARRAY(state, list) {
+      state.exercisesList[list.index] = list.exercisess;
     },
   },
   actions: {
@@ -56,6 +62,12 @@ export default {
 
     addVideo({ commit }, newVideo) {
       commit("SET_VIDEOS_LIST", newVideo);
+    },
+    addVideoesInArray({ commit }, list) {
+      commit("SET_VIDEOS_ARRAY", list);
+    },
+    addExercisesInArray({ commit }, list) {
+      commit("SET_EXERCISES_ARRAY", list);
     },
 
     addExercises({ commit }, newExercises) {

@@ -158,7 +158,7 @@ export default {
           listen: "id",
           value: "",
           type: "date",
-          rules: "required|after:startDate",
+          rules: "required",
           placeholder: "أختر تاريخ نهاية المهمة",
         },
         {
@@ -385,7 +385,7 @@ export default {
       if (selectOptionsField) {
         if (Array.isArray(data)) {
           selectOptionsField.value = data;
-          selectOptionsField.name = data.map((item) => (item && item.name) || null);
+          selectOptionsField.name = data.map((item) => item.name);
         } else {
           selectOptionsField.value = data;
         }
@@ -396,6 +396,15 @@ export default {
       this.addNotificationById([]);
       this.addVideo([]);
       this.addExercises([]);
+    },
+    handleEditLearningpaths(learningPath) {
+      learningPath.map((id, index) => {
+        learningPath.learningpaths[index] = {
+          id,
+          videos: this.getVideosList[index],
+          quizzes: this.getExercisesList[index],
+        };
+      });
     },
   },
   beforeMount() {

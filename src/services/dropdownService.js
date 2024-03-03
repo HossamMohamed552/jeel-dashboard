@@ -1,6 +1,6 @@
 import ApiService from "@/api/ApiService";
-import {getAllCountryRequest} from "@/api/country"; // الدولة
-import {getAllSchoolGroupRequest, getSingleSchoolGroupRequest} from "@/api/schoolGroup";
+import { getAllCountryRequest } from "@/api/country"; // الدولة
+import { getAllSchoolGroupRequest, getSingleSchoolGroupRequest } from "@/api/schoolGroup";
 import {
   getAllRolesTypeRequest, // تصنيف الدور الوظيفي
   getAllRolesByTypeRequest, // الدور الوظيفي
@@ -17,31 +17,34 @@ import {
   geTermsRequest, // الترم الدراسي
   getStudyYearRequest, // العام الدراسى
 } from "@/api/academicYear";
-import {getSchoolsRequest} from "@/api/school";
-import {getSystemAudiosCategoriesRequest} from "@/api/system-audios"; //  تصنيف اصوات النظام
-import {getRolesRequest} from "@/api/role";
-import {getAllSeasonalMissionGroupsRequest} from "@/api/seasonal-mission-group"; // اسم المجموعة الموسمية
-import {getAllLearningPathsRequest} from "@/api/learningPath"; // المسار التعليمي
+import { getSchoolsRequest } from "@/api/school";
+import { getSystemAudiosCategoriesRequest } from "@/api/system-audios"; //  تصنيف اصوات النظام
+import { getRolesRequest } from "@/api/role";
+import { getAllSeasonalMissionGroupsRequest } from "@/api/seasonal-mission-group"; // اسم المجموعة الموسمية
+import { getAllLearningPathsRequest } from "@/api/learningPath"; // المسار التعليمي
 import {
   getAllLessonsRequest, // الدروس ( كل الدروس )
   getLessonsDepenseLearningPathRequest, // الدروس ( اعتماداَ المسار التعليمي )
 } from "@/api/lessons"; // الدرس
-import {getAllLevelsRequest, getLevelsForSuperVisorDropDownRequest} from "@/api/level"; // الصف الدراسي
-import {getLevelsForSuperVisorRequest} from "@/api/level"; // الصف الدراسي
-import {getQuizLevelPathRequest} from "@/api/quiz"; // التمارين
-import {getVideoPerLevelPathRequest} from "@/api/videos";
-import {getStudyYearsForSuperVisorRequest} from "@/api/school-info";
-import {getTermsForSupervisorRequest} from "@/api/term";
-import {getClassForSuperRequest} from "@/api/class"; // الفيديوهات
+import { getAllLevelsRequest } from "@/api/level"; // الصف الدراسي
+import { getQuizLevelPathRequest } from "@/api/quiz"; // التمارين
+import { getVideoPerLevelPathRequest } from "@/api/videos";
+
+// Super Visor Dropdowns
+import { getStudyYearsForSuperVisorRequest } from "@/api/school-info";
+import { getLevelsForSuperVisorDropDownRequest } from "@/api/level"; // المرحلة الدراسية
+import {
+  getMissionForCompetitonRequest, // المهام
+  getGoalsForCompetitonRequest, // الاهداف التعليمية
+  getOutcomesForCompetitonRequest, // مخرجات التعلم
+} from "@/api/competition";
+import { getTermsForSupervisorRequest } from "@/api/term"; // الفيديوهات
 
 // isSub = false
 export async function updateFieldOptions(array, key, data) {
   const selectOptionsField = array.find((field) => field.key === key);
   if (selectOptionsField) {
     if (key === "school_id") selectOptionsField.options = data.schools;
-    // if (key === "level_id" && isSub) selectOptionsField.options = data.map((item) => {
-    //   return item.level
-    // });
     else selectOptionsField.options = data;
   }
 }
@@ -81,7 +84,7 @@ export async function getAllRoles(array, key) {
 }
 
 export async function getAllRolesByType(array, key, id) {
-  await fetchDataAndUpdateOptions(array, getAllRolesByTypeRequest({"types[0]": id}), key);
+  await fetchDataAndUpdateOptions(array, getAllRolesByTypeRequest({ "types[0]": id }), key);
 }
 
 export async function getAllRolesType(array, key) {
@@ -163,6 +166,7 @@ export async function getSystemAudiosCategories(array, key) {
   await fetchDataAndUpdateOptions(array, getSystemAudiosCategoriesRequest(), key);
 }
 
+// Super Visor Dropdowns
 export async function getLevelsForSuperVisor(array, key) {
   await fetchDataAndUpdateOptions(array, getLevelsForSuperVisorDropDownRequest(), key);
 }
@@ -172,6 +176,12 @@ export async function getStudyYearsForSuperVisor(array, key) {
 export async function getSTermsForSuperVisor(array, key) {
   await fetchDataAndUpdateOptions(array, getTermsForSupervisorRequest(), key);
 }
-export async function getClasses(array, key) {
-  await fetchDataAndUpdateOptions(array, getClassForSuperRequest(), key);
+export async function getMissionForCompetiton(array, key, ids) {
+  await fetchDataAndUpdateOptions(array, getMissionForCompetitonRequest(ids), key);
+}
+export async function getOutcomesForCompetiton(array, key, ids) {
+  await fetchDataAndUpdateOptions(array, getOutcomesForCompetitonRequest(ids), key);
+}
+export async function getGoalsForCompetiton(array, key, ids) {
+  await fetchDataAndUpdateOptions(array, getGoalsForCompetitonRequest(ids), key);
 }

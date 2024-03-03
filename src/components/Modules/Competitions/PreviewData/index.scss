@@ -1,7 +1,7 @@
 @import "src/assets/style/scss/_variables";
 @import "src/assets/style/scss/_mixin";
 
-.add-edit-competition-form {
+.add-edit-form {
   background: #f9f9f9;
   border-radius: 1.56rem;
   padding: 3.375rem 2.375rem 0;
@@ -29,6 +29,17 @@
   .text-field .form-control {
     min-height: 50px;
   }
+  .btn {
+    min-width: 195px;
+    padding: 0 !important;
+    height: 55px;
+  }
+}
+
+.adding {
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
 }
 
 .buttons-container {

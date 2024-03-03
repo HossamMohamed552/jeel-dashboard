@@ -1,19 +1,10 @@
 <template>
-  <section>
-    <div class="container-fluid">
+  <div class="add-edit-competition">
+    <div class="container-fluid custom-container">
       <b-row>
         <b-col v-for="field in stepForm" :key="field.key" :lg="field.col">
-          <PreviewMedia
-            v-if="filesUploadedTypes.includes(field.type)"
-            :header="field.label"
-            :media-name="field.task_audio_name"
-            :file-size="field.task_audio_size"
-            :showRemoveButton="false"
-            :typeOfMedia="'image'"
-            :image-url="field.url"
-          />
           <ShowItem
-            v-else-if="field.type === 'select'"
+            v-if="field.type === 'select'"
             class="divider-show"
             :title="field?.label"
             :subtitle="Array.isArray(field?.name) ? field?.name.join(', ') : field?.name"
@@ -30,15 +21,7 @@
           >
           </ListItems>
         </b-col>
-        <b-col :lg="12" v-for="index in learningPathCount" :key="index">
-          <learningPathCollapse
-            :index="index"
-            :videosList="videosList[index - 1]"
-            :videosFieldsList="videosFieldsList"
-            :exercisesList="exercisesList[index - 1]"
-            :exercisesFieldsList="exercisesFieldsList"
-          />
-        </b-col>
+
         <b-col :lg="12">
           <ListItems
             class="seasonal-mission-custom-list-item"
@@ -65,27 +48,19 @@
         </b-col>
       </b-row>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import learningPathCollapse from "./learningPathCollapse.vue";
 import { mapGetters } from "vuex";
-import {
-  postCreateSeasonalMissionRequest,
-  putUpdateSeasonalMissionRequest,
-} from "@/api/seasonal-mission.js";
 import moment from "moment";
 
 export default {
   components: {
     ShowItem,
-    PreviewMedia,
     ListItems,
-    learningPathCollapse,
   },
   props: {
     currentStep: {
@@ -96,28 +71,11 @@ export default {
       type: Array,
       default: () => [],
     },
-    learningPathCount: {
-      type: Number,
-      default: () => 0,
-    },
   },
   data() {
     return {
-      filesUploadedTypes: ["image", "audio", "video"],
       prizesList: [],
       notificationsList: [],
-      videosList: [],
-      exercisesList: [],
-      videosFieldsList: [
-        { key: "id", label: "التسلسل" },
-        { key: "title", label: "عنوان الفيديو" },
-        { key: "actions", label: "الاجراء" },
-      ],
-      exercisesFieldsList: [
-        { key: "id", label: "التسلسل" },
-        { key: "name", label: "عنوان التمرين" },
-        { key: "actions", label: "الاجراء" },
-      ],
       prizeFieldsList: [
         { key: "id", label: "التسلسل" },
         { key: "main_percentage", label: "من نسبة" },
@@ -133,10 +91,6 @@ export default {
         { key: "description", label: "نص الإشعار" },
       ],
       submittedForm: {
-        learningpaths: {
-          videos: [],
-          quizzes: [],
-        },
       },
       loading: false,
     };
@@ -152,9 +106,8 @@ export default {
         this.$router.push("/dashboard/seasonal-mission");
       });
     },
-    async handleEditSeasonalMission() {
-      await this.handleDateToUpdate();
-      console.log(this.submittedForm);
+    handleEditSeasonalMission() {
+      this.handleDateToUpdate();
       this.submittedForm["_method"] = "PUT";
       this.ApiService(
         putUpdateSeasonalMissionRequest(this.submittedForm, this.$route.params.id)
@@ -166,6 +119,7 @@ export default {
       this.$emit("prevStep");
     },
     async updateFields() {
+      // Generic method to update createSchool object based on the fieldArray
       this.stepForm.forEach((field) => {
         try {
           if (field.type === "date")
@@ -182,54 +136,29 @@ export default {
       });
       this.submittedForm["prizes"] = this.prizesList;
       this.submittedForm["notifications"] = this.notificationsList;
-      this.submittedForm["learningpaths"] = this.getLearningPaths;
+      this.submittedForm.learningpaths.videos = this.videosList;
+      this.submittedForm.learningpaths.quizzes = this.exercisesList;
     },
 
     handleArray(key) {
       this.submittedForm[key] = this.submittedForm[key].map((item) => item.id);
+      console.log(this.submittedForm);
     },
     handleObject(key) {
-      this.submittedForm[key] = this.submittedForm[key].id;
+      this.submittedForm[key] = this.submittedForm[key].map((item) => item.id);
+      console.log(this.submittedForm);
     },
-    processArray(arr) {
-      // Check if the array is not empty
-      if (arr.length > 0) {
-        // Get the type of the first element
-        const firstElementType = typeof arr[0];
-        // Check if the first element is an object
-        if (firstElementType === "object") {
-          // Array of objects
-          return true;
-        } else if (firstElementType === "string") {
-          // Array of strings
-          return false;
-        } else {
-          return false;
-        }
-      } else {
-        // Handle empty array if needed
-        console.log("Empty array");
-      }
-    },
-
-    async handleDateToUpdate() {
-      if (this.processArray(this.submittedForm["countries"])) this.handleArray("countries");
-      if (this.processArray(this.submittedForm["lessons"])) this.handleArray("lessons");
-      if (this.processArray(this.submittedForm["religions"])) this.handleArray("religions");
-      if (this.processArray(this.submittedForm["types"])) this.handleArray("types");
+    handleDateToUpdate() {
+      this.handleArray("countries");
+      this.handleArray("lessons");
+      this.handleArray("religions");
+      this.handleArray("types");
       this.handleObject("seasonal_mission_group_id");
-      this.handleObject("level_id");
     },
   },
   async mounted() {},
   computed: {
-    ...mapGetters([
-      "getPrizesList",
-      "getNotificationsList",
-      "getVideosList",
-      "getExercisesList",
-      "getLearningPaths",
-    ]),
+    ...mapGetters(["getPrizesList", "getNotificationsList", "getVideosList", "getExercisesList"]),
 
     showValue(values) {
       if (typeof values == Array) {
@@ -253,7 +182,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../index.scss";
+@import "./index.scss";
 
 .adding {
   display: flex;

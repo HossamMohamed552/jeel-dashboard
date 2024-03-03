@@ -1,49 +1,52 @@
 <template>
-  <validation-observer v-slot="{ invalid }" ref="stepThreeForm">
-    <GenericForm
-      :schema="stepForm"
-      @handleInput="handleInput"
-      :loading="loading"
-      :submitedForm="false"
-      :invalid="invalid"
-    >
-      <template v-slot:customSubmit>
-        <b-col class="add-prize" lg="4">
-          <Button
-            :disabled="invalid"
-            type="submit"
-            :loading="loading"
-            @click="handleAdd"
-            custom-class="submit-btn"
+  <div class="container-fluid custom-container">
+    <div class="add-edit-form">
+      <validation-observer v-slot="{ invalid }" ref="stepThreeForm">
+        <GenericForm
+          :schema="stepForm"
+          @handleInput="handleInput"
+          :loading="loading"
+          :submitedForm="false"
+          :invalid="invalid"
+        >
+          <template v-slot:customSubmit>
+            <b-col class="add-prize" lg="4">
+              <Button
+                :disabled="invalid"
+                type="submit"
+                :loading="loading"
+                @click="handleAdd"
+                custom-class="submit-btn"
+              >
+                إضافة
+              </Button>
+            </b-col>
+          </template>
+          <ListItems
+            class="seasonal-mission-custom-list-item"
+            :tableItems="prizeGroup"
+            :headerName="'قائمة الجوائز'"
+            :fieldsList="fieldsList"
+            :showSortControls="false"
           >
-            إضافة
-          </Button>
-        </b-col>
-      </template>
-      <ListItems
-        class="seasonal-mission-custom-list-item"
-        :tableItems="prizeGroup"
-        :headerName="'قائمة الجوائز'"
-        :fieldsList="fieldsList"
-        :showSortControls="false"
-      >
-      </ListItems>
-      <div class="buttons-container">
-        <slot></slot>
-        <div class="steps">
-          <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
-            السابق
-          </Button>
+          </ListItems>
+          <div class="buttons-container">
+            <slot></slot>
+            <div class="steps">
+              <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
+                السابق
+              </Button>
 
-          <Button custom-class="submit-btn" @click="nextStep"> التالي </Button>
-        </div>
-      </div>
-    </GenericForm>
-  </validation-observer>
+              <Button custom-class="submit-btn" @click="nextStep"> التالي </Button>
+            </div>
+          </div>
+        </GenericForm>
+      </validation-observer>
+    </div>
+  </div>
 </template>
 
 <script>
-import Stepper from "@/components/Shared/Stepper/index.vue";
 import GenericForm from "@/components/Shared/GenericForm";
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
@@ -59,7 +62,6 @@ import _ from "lodash";
 
 export default {
   components: {
-    Stepper,
     GenericForm,
     Button,
     ListItems,
@@ -142,7 +144,6 @@ export default {
         }
       }
 
-
       if (key === "prizeable_type") {
         this.stepForm[4].disabled = false;
         if (this.prizeType == "المكتبة") {
@@ -208,7 +209,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../index.scss";
+@import "./index.scss";
 
 .add-prize {
   display: flex;

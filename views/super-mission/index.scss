@@ -72,7 +72,7 @@
 
 ::v-deep {
   .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
-    transform: translateX(-0.75rem);
+    transform: translateX(1.2rem);
   }
 
   .custom-switch .custom-control-input:disabled:checked ~ .custom-control-label::before {

@@ -66,6 +66,21 @@ export default {
     handleCancel() {
       this.$emit("onSubmit", this.stepForm);
     },
+    handleInputValueName(key, value, field) {
+      if (field.multiple) {
+        const selectedOptionNames = value.map((singleValue) => {
+          const selectedOption = field.options.find(
+            (option) => option[field.listen] === singleValue
+          );
+          return selectedOption ? selectedOption.name : "";
+        });
+        field.name = selectedOptionNames;
+      } else {
+        const selectedOption = field.options.find((option) => option[field.listen] === value);
+        const optionName = selectedOption ? selectedOption.name : "";
+        field.name = optionName;
+      }
+    },
     handleInput: _.debounce(function (key, value, field) {
       if (key === "image") {
         const imageObjectIndex = this.stepForm.findIndex((field) => field.key === "image");
@@ -76,27 +91,9 @@ export default {
       } else if (key === "learningpaths") {
         if (value != "") this.stepForm[7].disabled = false;
         getLessonsDepenseLearningPath(this.stepForm, "lessons", value);
+        this.handleInputValueName(key, value, field);
       } else {
-        if (field.multiple) {
-          field["learningpaths"] = [];
-          // If multiple, value is an array
-          const selectedOptionNames = value.map((singleValue) => {
-            if (key === "learningpaths") {
-              field["learningpaths"].push({
-                id: singleValue,
-              });
-            }
-            const selectedOption = field.options.find(
-              (option) => option[field.listen] === singleValue
-            );
-            return selectedOption ? selectedOption.name : "";
-          });
-          field.name = selectedOptionNames;
-        } else {
-          const selectedOption = field.options.find((option) => option[field.listen] === value);
-          const optionName = selectedOption ? selectedOption.name : "";
-          field.name = optionName;
-        }
+        this.handleInputValueName(key, value, field);
       }
     }, 300),
     removeFile(fileName, fileChange, fileRequest) {

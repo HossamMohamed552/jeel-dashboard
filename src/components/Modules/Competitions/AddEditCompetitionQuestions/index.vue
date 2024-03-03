@@ -8,8 +8,7 @@
               <b-row>
                 <h5 class="title">الاسئلة</h5>
                 <p v-if="disableRandomQuestionBtn" class="warning-error">
-                  * يجب ان يكون مجموع عدد انواع الاسئلة الثلاثة مساوى لعدد
-                  الاسئلة الكلى
+                  * يجب ان يكون مجموع عدد انواع الاسئلة الثلاثة مساوى لعدد الاسئلة الكلى
                 </p>
               </b-row>
 
@@ -69,7 +68,7 @@
                     :loading="loading"
                     :custom-class="'submit-btn'"
                     :disabled="disableRandomQuestionBtn"
-                    @click="generateRandomQuestions"
+                    @click="handleDataForgenerateRandomQuestions"
                   >
                     إنشاء الأسئلة
                   </Button>
@@ -129,22 +128,13 @@
                 :fields="fieldsList"
               >
                 <template #cell(question_difficulty.name)="data">
-                  <div
-                    v-if="data.item.question_difficulty.id == 1"
-                    class="easy"
-                  >
+                  <div v-if="data.item.question_difficulty.id == 1" class="easy">
                     {{ data.item.question_difficulty.name }}
                   </div>
-                  <div
-                    v-else-if="data.item.question_difficulty.id == 2"
-                    class="medium"
-                  >
+                  <div v-else-if="data.item.question_difficulty.id == 2" class="medium">
                     {{ data.item.question_difficulty.name }}
                   </div>
-                  <div
-                    v-else-if="data.item.question_difficulty.id == 3"
-                    class="hard"
-                  >
+                  <div v-else-if="data.item.question_difficulty.id == 3" class="hard">
                     {{ data.item.question_difficulty.name }}
                   </div>
                 </template>
@@ -174,8 +164,15 @@
 
             <b-row>
               <div class="action-holder">
+                <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
+                  {{ $t("GLOBAL_CANCEL") }}
+                </Button>
                 <div>
+                  <Button @click="handleBack" custom-class="submit-btn back-btn">
+                    {{ $t("GLOBAL_BACK") }}
+                  </Button>
                   <Button
+                    class="mx-3"
                     type="submit"
                     :loading="loading"
                     :disabled="invalid"
@@ -183,20 +180,7 @@
                   >
                     {{ $t("GLOBAL_NEXT") }}
                   </Button>
-                  <Button
-                    class="mx-3"
-                    @click="handleBack"
-                    custom-class="submit-btn back-btn"
-                  >
-                    {{ $t("GLOBAL_BACK") }}
-                  </Button>
                 </div>
-                <Button
-                  @click="handleCancel"
-                  :custom-class="'cancel-btn margin'"
-                >
-                  {{ $t("GLOBAL_CANCEL") }}
-                </Button>
               </div>
             </b-row>
           </form>
@@ -205,14 +189,14 @@
     </div>
   </div>
 </template>
-  <script>
+<script>
 import TextField from "@/components/Shared/TextField/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import { debounce } from "lodash";
-
+import { getCompetitonQuestionNumberRequest, getRandomQuestionRequest } from "@/api/competition";
 export default {
   components: {
     TextField,
@@ -222,18 +206,19 @@ export default {
     ImageUploader,
   },
   props: {
-    questionsNumbers: {
-      type: Object,
-      default: () => {},
-    },
-    randomQuestions: {
+    missions_ids: {
       type: Array,
       default: () => [],
+    },
+    level_id: {
+      type: Number,
     },
   },
   data() {
     return {
       loading: false,
+      questionsNumbers: [],
+      randomQuestions: [],
       actions: [],
       fieldsList: [
         {
@@ -293,8 +278,8 @@ export default {
   },
   methods: {
     onSubmit() {
-      const questionsIds = this.randomQuestions.map(obj => obj.id);
-      this.$emit("onSubmit", {'questions': questionsIds});
+      const questionsIds = this.randomQuestions.map((obj) => obj.id);
+      this.$emit("onSubmit", { questions: questionsIds });
     },
     handleCancel() {
       this.$emit("handleCancel");
@@ -325,7 +310,7 @@ export default {
         this.disableRandomQuestionBtn = true;
       else this.disableRandomQuestionBtn = false;
     }, 500),
-    generateRandomQuestions() {
+    handleDataForgenerateRandomQuestions() {
       let question_difficuly = [];
 
       const easy = {
@@ -349,18 +334,41 @@ export default {
 
       question_difficuly.push(hard);
 
-      this.$emit("generateRandomQuestions", question_difficuly);
+      this.generateRandomQuestions(question_difficuly);
+    },
+    generateRandomQuestions(questionDifficulties) {
+      const data = {
+        level_id: this.level_id,
+        missions: this.missions_ids,
+        question_difficuly: questionDifficulties,
+      };
+
+      this.ApiService(getRandomQuestionRequest(data)).then((response) => {
+        this.randomQuestions = response.data.data;
+      });
     },
     changeSingleRandomQuestion(questionId) {
       // console.log(questionId);
-    }
+    },
+    getQuestionsNumbers() {
+      const missionsIds = this.missions_ids.join(",");
+      this.ApiService(
+        getCompetitonQuestionNumberRequest({
+          missions: missionsIds,
+          level_id: this.level_id,
+        })
+      ).then((response) => {
+        this.questionsNumbers = response.data;
+      });
+    },
   },
   mounted() {
     // if (this.$route.params.id) {
     // }
+    this.getQuestionsNumbers();
   },
 };
 </script>
-  <style scoped lang="scss">
+<style scoped lang="scss">
 @import "./index";
 </style>
