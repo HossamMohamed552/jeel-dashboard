@@ -154,8 +154,6 @@ import {getSuperMissionsRequest, getSuperPowerUpBoxRequest} from "@/api/missios"
 import DatePicker from "vue2-datepicker";
 import 'vue2-datepicker/locale/en'
 import "vue2-datepicker/index.css";
-import axios from "axios";
-import VueCookies from "vue-cookies";
 import GenericForm from "@/components/Shared/GenericForm/index.vue";
 import {
   getLevelsForSuperVisor,
@@ -163,6 +161,8 @@ import {
   getStudyYearsForSuperVisor
 } from "@/services/dropdownService";
 import {log} from "video.js";
+import axios from "axios";
+import VueCookies from "vue-cookies";
 
 export default {
   name: "index",
@@ -220,7 +220,12 @@ export default {
         },
       ],
       powerUpBoxList: [],
-      missionWithPowerSend: []
+      missionSavedWithPower: [],
+    }
+  },
+  watch: {
+    missionSavedWithPower(newVal) {
+      return newVal
     }
   },
   computed: {
@@ -283,6 +288,8 @@ export default {
           ]
           this.missionSaved = missionWithPower
         })
+      }).then(() => {
+        this.missionWithPowerSend = this.missionSaved
       })
     },
     disabledBeforeToday(date) {
@@ -325,35 +332,46 @@ export default {
       this.$router.push(`/dashboard/mission-detail/${missionId}`)
     },
     sortMissions() {
-      this.missionWithPowerSend = this.missionSaved.map((item, index) => {
-        return {
-          id: item.id,
-          order: index + 1,
-          is_selected: 1,
-          start_date: item.start_date,
-          end_date: item.end_date,
-          type: item.type
-        }
-      })
-      for (let index = 0; index < this.missionWithPowerSend.length; index++) {
-        if (this.missionWithPowerSend[index + 1]['type'] && this.missionWithPowerSend[index + 1]['type'] === 'power') {
-          this.missionWithPowerSend[index]['power_up_box_id'] = this.missionWithPowerSend[index + 1].id
+      for (let index = 0; index < this.missionSaved.length; index++) {
+        let typeOfNextElement = this.missionSaved[index + 1]
+        if (typeOfNextElement?.type === 'power') {
+          this.missionSaved[index]['power_up_box_id'] = this.missionSaved[index + 1].id
         } else {
-          index++
+          delete this.missionSaved[index]['power_up_box_id']
         }
       }
-      this.missionWithPowerSend = this.missionWithPowerSend.filter((item) => {
+      this.missionSavedWithPower = this.missionSaved
+      let missionSavedWithPower = this.missionSavedWithPower.map((item, index) => {
+        if (item.power_up_box_id) {
+          return {
+            id: item.id,
+            order: index + 1,
+            is_selected: 1,
+            start_date: item.start_date,
+            end_date: item.end_date,
+            type: item.type,
+            power_up_box_id: item.power_up_box_id
+          }
+        } else {
+          return {
+            id: item.id,
+            order: index + 1,
+            is_selected: 1,
+            start_date: item.start_date,
+            end_date: item.end_date,
+            type: item.type,
+          }
+        }
+      })
+      missionSavedWithPower = missionSavedWithPower.filter((item) => {
         return item.type === 'mission'
       })
       axios.post('/rearrange-mission', {
         level_id: this.level_id,
         term_id: this.term_id,
-        missions: this.missionWithPowerSend
+        missions: missionSavedWithPower
       }, {
-        headers: {
-          Authorization: `Bearer ${VueCookies.get("token")}`,
-          locale: 'ar',
-        }
+        headers: {Authorization: `Bearer ${VueCookies.get("token")}`, locale: 'ar',}
       }).then(() => {
         this.showModal = true
         setTimeout(() => {
@@ -370,6 +388,7 @@ export default {
       this.$router.push('/');
     }
   },
+
   mounted() {
     // this.getLevelsBySchoolId()
     getLevelsForSuperVisor(this.missionSearch, 'level_id')
