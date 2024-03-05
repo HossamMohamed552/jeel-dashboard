@@ -15,7 +15,7 @@
                     :label="$t('OBJECTIVE.NAME')"
                     :name="$t('OBJECTIVE.NAME')"
                     placeholder="أدخل اسم الهدف التعليمي"
-                    :rules="'required|max:100'"
+                    :rules="'required|max:150'"
                   ></TextField>
                 </div>
               </b-col>

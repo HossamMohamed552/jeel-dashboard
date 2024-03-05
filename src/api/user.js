@@ -157,7 +157,7 @@ export const postResetPasswordRequest = (data) => ({
   },
 });
 
-// daily login for student
+// daily LoginAdmin for student
 export const getDailyLoginRequest = (id,params) => ({
   method: "get",
   url: `user/logins/${id}`,

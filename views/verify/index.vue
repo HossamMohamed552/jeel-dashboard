@@ -87,7 +87,7 @@ export default {
             type: "success",
           };
           setTimeout(() => {
-            this.$router.push("/login");
+            this.$router.push("/LoginAdmin");
           }, 4000);
         })
         .finally(() => {
@@ -108,7 +108,7 @@ export default {
             type: "success",
           };
           setTimeout(() => {
-            this.$router.push("/login");
+            this.$router.push("/LoginAdmin");
           }, 4000);
         })
         .catch((e) => {
@@ -125,7 +125,7 @@ export default {
             };
 
             setTimeout(() => {
-              this.$router.push("/login");
+              this.$router.push("/LoginAdmin");
             }, 4000);
           } else {
             this.message = {
@@ -133,7 +133,7 @@ export default {
               type: "error",
             };
             setTimeout(() => {
-              this.$router.push("/login");
+              this.$router.push("/LoginAdmin");
             }, 4000);
           }
         })

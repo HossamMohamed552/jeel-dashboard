@@ -1,6 +1,6 @@
 const publicRoutes = [
   {
-    path: "/login",
+    path: "/LoginAdmin",
     name: "login",
     meta:{
       breadcrumb: "تسجيل الدخول"

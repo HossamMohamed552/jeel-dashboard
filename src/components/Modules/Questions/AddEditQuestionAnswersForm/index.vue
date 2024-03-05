@@ -1873,7 +1873,7 @@
       </validation-observer>
     </slot>
     <!--        match_one_to_one-->
-    <slot v-if="questionSlug.slug.includes('match')">
+    <slot v-if="questionSlug.slug && questionSlug.slug.includes('match')">
       <validation-observer v-slot="{ invalid }" ref="addAnswer">
         <form @submit.prevent="onSubmit" class="mt-5">
           <b-row>

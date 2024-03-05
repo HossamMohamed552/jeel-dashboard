@@ -26,7 +26,7 @@ export default {
       commit("REMOVE_USER");
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      router.push("/login");
+      router.push("/LoginAdmin");
     },
   },
   mutations: {

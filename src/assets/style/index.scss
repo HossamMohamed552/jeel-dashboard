@@ -176,7 +176,7 @@ h3.heading {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: 1rem;
+  //gap: 1rem;
 }
 
 .add-edit-mission-form {
@@ -239,8 +239,10 @@ label {
 
 .fa-asterisk {
   color: #dc3545;
-  font-size: 1.2rem;
+  font-size: .7rem;
   font-weight: bold;
+  position: relative;
+  top: -0.3rem;
 }
 
 .custom-form-group {
