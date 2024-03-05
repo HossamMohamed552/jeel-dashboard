@@ -60,6 +60,9 @@
               <b-col lg="4" class="mb-5 showItem">
                 <ShowItem :title="$t('USERS.gender')" :subtitle="singleUser?.gender?.name" />
               </b-col>
+              <b-col lg="4" class="mb-5 showItem" v-if="singleUser && singleUser.roles">
+                <ShowItem :title="$t('USERS.DEPARTMENT')" :listItems="singleUser.roles" />
+              </b-col>
               <b-col lg="4" class="mb-5 showItem">
                 <ShowItem :title="$t('USERS.ACTIVE')" :subtitle="singleUser?.status?.name" />
               </b-col>

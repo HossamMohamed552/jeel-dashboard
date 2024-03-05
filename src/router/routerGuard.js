@@ -3,14 +3,14 @@ import store from "@/store";
 
 // export const handleRouteNavigation = (to, from, next) => {
 //   if (publicRoutesPaths.includes(to.path)) {
-//     (!store.getters.token) ? next() : next({ name: "login" });
+//     (!store.getters.token) ? next() : next({ name: "LoginAdmin" });
 //   }
 //
 //   if (store.getters.token) {
 //     return next()
 //   }else {
 //     store.dispatch("removeUser");
-//     next({ name: "login" });
+//     next({ name: "LoginAdmin" });
 //   }
 //
 // };

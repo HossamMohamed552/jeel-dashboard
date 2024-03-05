@@ -87,7 +87,7 @@ Example
 
 ```js
 
-// get request example in api/login.js
+// get request example in api/LoginAdmin.js
 
 export const getUserRequest = (params) => ({
   method: "get",

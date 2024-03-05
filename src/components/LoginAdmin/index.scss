@@ -1,0 +1,100 @@
+@import "src/assets/style/scss/_variables";
+@import "src/assets/style/scss/_mixin";
+.content {
+  width: 40%;
+  position: relative;
+  @media (max-width: 768px) {
+    width: 70%;
+  }
+}
+.login-form {
+  background: #ffffff;
+  box-shadow: 0 0 5px #dbdbdb;
+  border-radius: 5rem;
+  padding: 0 1rem 0.5rem 1rem;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+  @media (max-width: 1024px) and (min-width: 768px) {
+    border-radius: 3.25rem;
+    padding: 1rem 0 0.5rem 0;
+  }
+  @media (max-width: 768px) {
+    border-radius: 1.25rem;
+    padding: 1rem 0.5rem 0.25rem 0.5rem;
+  }
+  &__logo {
+    width: 247px;
+    height: 247px;
+    margin: 0 auto 0 auto;
+    @media (max-width: 1024px) and (min-width: 768px) {
+      width: 122.5px;
+      height: 150.6px;
+      margin: 0 auto 1rem auto;
+    }
+    @media (max-width: 768px) {
+      width: 82.5px;
+      height: 110.6px;
+    }
+    img {
+      @include image;
+    }
+  }
+  .hold-field,
+  .hold-button {
+    width: 80%;
+    margin: 1rem auto;
+    @media (max-width: 768px) {
+      width: 95%;
+    }
+  }
+  .password-input {
+    position: relative;
+    .icon-password {
+      position: absolute;
+      top: 55%;
+      left: 1rem;
+    }
+  }
+  .remember-me {
+    display: flex;
+    justify-content: space-between !important;
+    align-items: center;
+    flex-direction: row;
+    .forget {
+      color: $color-show-heading;
+      font-weight: bold;
+      text-decoration: underline;
+      cursor: pointer;
+      @media (max-width: 768px) {
+        font-size: 0.8rem;
+      }
+    }
+  }
+  &__help {
+    background: $color-primary-two;
+    color: #fff;
+    position: absolute;
+    top: 7.2rem;
+    left: -4.5rem;
+    transform: rotate(90deg);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    padding: 1rem 1.5rem;
+    z-index: 0;
+    cursor: pointer;
+    @media (max-width: 768px) {
+      border-bottom-left-radius: 0.2rem;
+      border-bottom-right-radius: 0.2rem;
+      padding: 0.5rem 1rem;
+      left: -3.5rem;
+    }
+  }
+}
+.text-field{
+  margin: 0;
+  font-family: "DiodrumArabic", sans-serif;
+}
+.custom-control-label{
+  margin-bottom: 0 !important;
+}

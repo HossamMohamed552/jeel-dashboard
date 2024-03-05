@@ -53,7 +53,7 @@
             <ShowItem :title="$t('superMission.learningPath')"/>
           </b-col>
           <b-col lg="12">
-            <div class="learning-path" v-for="learningPath in learningPaths" :key="learningPath.id">
+            <div class="learning-path" v-for="learningPath in learningPaths" :key="'learningPath'+learningPath.id">
               <div class="learning-path-header" @click="toggleContent(learningPath)">
                 <p>{{ learningPath.name }}</p>
                 <button class="show-hide"><img
@@ -81,14 +81,21 @@
                         <div ref="swiper" class="swiper">
                           <div class="swiper-wrapper">
                             <div class="swiper-slide" v-for="video in contentLearningPath.videos"
-                                 :id="video.id">
+                                 :id="'video'+video.id">
                               <div class="video-cont">
-                                <video-player :videoId="video.id" :options="{
-                            controls:true,
-                            poster: `${video.thumbnail ? video.thumbnail : 'https://picsum.photos/1000'}`,
-                            autoplay:false,
-                            sources:[ {src: video.url, type:'video/mp4'}  ]
-                          }"></video-player>
+                                <vimeo-player
+                                  v-if="video.vimeo_video_with_music_url"
+                                  class="vimeo-player"
+                                  ref="videoPlayer"
+                                  :video-url="video.vimeo_video_with_music_url"
+                                  :options="{'responsive':true}"
+                                ></vimeo-player>
+                                <!--                                <video-player :videoId="video.id" :options="{-->
+                                <!--                            controls:true,-->
+                                <!--                            poster: `${video.thumbnail ? video.thumbnail : 'https://picsum.photos/1000'}`,-->
+                                <!--                            autoplay:false,-->
+                                <!--                            sources:[ {src: video.url, type:'video/mp4'}  ]-->
+                                <!--                          }"></video-player>-->
                               </div>
                             </div>
                           </div>
@@ -102,34 +109,37 @@
                       </div>
                       <!--/-->
                       <div class="col-12  quizzes" :key="learningPath.id" v-show="activeTap === 2">
-                        <div class="row mb-4" v-for="quiz in contentLearningPath.quizzes" :key="quiz.id">
+                        <div class="row mb-4" v-for="quiz in contentLearningPath.quizzes"
+                             :key="'quiz'+quiz.id">
                           <div class="col-12">
                             <div class="content-quizzes">
                               <div class="content-quizzes-header" @click="getQuiz(quiz)">
                                 <p>{{ quiz.name }}</p>
                                 <button class="show-hide"><img
-                                  :src="quiz.is_selected === true? require('@/assets/images/icons/minus.png') : require('@/assets/images/icons/plus.png')"></button>
+                                  :src="quiz.is_selected === true? require('@/assets/images/icons/minus.png') : require('@/assets/images/icons/plus.png')">
+                                </button>
                               </div>
                               <div v-if="quiz.is_selected">
-                                <b-row class="divider"  v-for="question in quiz.questions"
-                                       :key="question.id">
+                                <b-row class="divider" v-for="question in quiz.questions"
+                                       :key="'question'+ question.id">
                                   <b-col lg="6" class="mt-4"
                                          v-if="question.question_pattern === 'text'">
                                     <ShowItem :title="$t('QUESTIONS.QUESTION')"
-                                              :subtitle="question.name"/>
+                                              :subtitle="question.question.question"/>
                                   </b-col>
                                   <b-col lg="6" class="mt-4"
                                          v-else-if="question.question_pattern === 'image'">
                                     <ShowItem :title="$t('QUESTIONS.QUESTION')"/>
                                     <div class="d-flex justify-content-start align-items-center">
-                                      <img class="question_img" :src="question.name">
+                                      <img class="question_img" :src="question.question.question">
                                     </div>
                                   </b-col>
                                   <b-col lg="6" class="mt-4"
                                          v-else-if="question.question_pattern === 'audio'">
                                     <ShowItem :title="$t('QUESTIONS.QUESTION')"/>
+
                                     <audio controls>
-                                      <source :src="question.name"/>
+                                      <source :src="question.question.question"/>
                                     </audio>
                                   </b-col>
                                   <b-col lg="3" class="mt-4">
@@ -173,10 +183,11 @@ import Swiper from "swiper/swiper-bundle";
 import "swiper/swiper-bundle.css"
 import ListItems from "@/components/ListItems/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
+import {vueVimeoPlayer} from 'vue-vimeo-player'
 
 export default {
   name: "index",
-  components: {Button, ListItems, ShowItem},
+  components: {Button, ListItems, ShowItem, VimeoPlayer: vueVimeoPlayer},
   data() {
     return {
       missionDetail: {},

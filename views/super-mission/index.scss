@@ -49,45 +49,53 @@
   border-radius: 1.75rem;
   margin: 1rem 0;
   color: $color-primary;
+
   span {
     font-weight: bold;
     font-size: 1.2rem;
+
     img {
       width: 24px;
       margin-left: .5rem;
     }
   }
 }
-.mission-header{
-  background: linear-gradient(to left, $color-primary,$color-notify);
+
+.mission-header {
+  background: linear-gradient(to left, $color-primary, $color-notify);
   color: #fff;
   padding: .7rem;
   border-radius: 1.2rem 1.2rem 0 0;
   margin: 1rem 0 0 0;
   font-weight: bold;
 }
-::v-deep{
-  .custom-switch .custom-control-input:checked~.custom-control-label::after{
-    transform: translateX(-0.75rem);
+
+::v-deep {
+  .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+    transform: translateX(1.2rem);
   }
-  .custom-switch .custom-control-input:disabled:checked~.custom-control-label::before{
+
+  .custom-switch .custom-control-input:disabled:checked ~ .custom-control-label::before {
     background-color: $color-primary;
   }
 }
-.list-group{
+
+.list-group {
   padding: 0;
 }
-.list-group-item{
+
+.list-group-item {
   padding: 1.5rem;
   border: 0;
   background: #F4EDF3;
 }
-.odd{
+.odd {
   background: #fff;
 }
-.sort{
+
+.sort {
   color: $color-primary;
-  background : rgba(118, 35, 108, 0.1);
+  background: rgba(118, 35, 108, 0.1);
   width: 30px;
   height: 30px;
   display: flex;
@@ -95,7 +103,8 @@
   align-items: center;
   margin: 0;
   border-radius: 50%;
-  span{
+
+  span {
     text-align: center;
     width: 100%;
     display: block;
@@ -103,25 +112,56 @@
     font-size: 1.2rem;
   }
 }
-.custom-border-left{
+
+.custom-border-left {
   border-left: 1px solid #DFDFDF;
 }
-.itemDisabled{
+
+.itemDisabled {
   background: rgba(244, 237, 243, 0.4);
 }
-.mission-started{
+
+.mission-started {
   background: rgba(255, 224, 184, 0.5);
 }
-.mission-name{
+
+.mission-name {
   color: $color-primary;
   font-weight: bold;
 }
-.detail{
+
+.detail {
   background: transparent;
-  border:1px solid $color-primary;
+  border: 1px solid $color-primary;
   border-radius: 1.50rem;
   padding: .5rem 1.8rem .8rem 1.8rem;
   color: $color-primary;
   font-weight: bold;
   width: 200px;
+}
+.power-up-list-group-item{
+  padding: 1.5rem;
+  background: linear-gradient(to left, #FFD891, #FFC93E);
+}
+.power-box {
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: contain;
+    object-position: center;
+  }
+}
+.main-image-power-box{
+  img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    object-position: center;
+  }
+}
+::v-deep{
+ .custom-switch .custom-control-input:checked ~ .custom-control-label::after{
+    transform: translateX(1.1rem);
+  }
 }

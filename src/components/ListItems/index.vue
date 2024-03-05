@@ -843,7 +843,7 @@ export default {
       this.$router.push("/dashboard/advertisements/add");
     },
     async downloadImg(item) {
-      window.open(item.url, "_blank", "noreferrer");
+      window.open(item.paper_work_with_color_full_url, "_blank", "noreferrer");
       // try {
       //   const response = await axios.get(`${item.url}`, {
       //     responseType: 'arraybuffer'

@@ -19,7 +19,6 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
-                    @input="getSchools"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -48,7 +47,7 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
-                    :disabled="!formValues.school_group_id"
+                    :disabled="!formValues.school_group_id || !formValues.country_id"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -93,6 +92,7 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
+                    :disabled="formValues.levels.length === 0"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -176,7 +176,7 @@
                         name="نسبة الخصم"
                         placeholder="أدخل نسبة الخصم"
                         type="number"
-                        min="0"
+                        :rules="'numeric|max_value:100'"
                         :disabled="!formValues.package_id"
                         @input="getFinalCost"
                       ></TextField>
@@ -248,6 +248,27 @@ export default {
     loading: {
       type: Boolean,
       default: false,
+    },
+  },
+  watch:{
+    "formValues.school_group_id"(){
+      let params = {
+        country_id : this.formValues.country_id,
+        school_group_id : this.formValues.school_group_id,
+      }
+      if (this.formValues.school_group_id && this.formValues.country_id){
+        this.getSchools(params)
+      }
+
+    },
+    "formValues.country_id"(){
+      let params = {
+        country_id : this.formValues.country_id,
+        school_group_id : this.formValues.school_group_id,
+      }
+      if (this.formValues.school_group_id && this.formValues.country_id){
+        this.getSchools(params)
+      }
     },
   },
   data() {
@@ -348,10 +369,7 @@ export default {
         this.schoolGroups = response.data.data;
       });
     },
-    getSchools: debounce(function () {
-      const param = {
-        school_group_id: this.formValues.school_group_id,
-      };
+    getSchools: debounce(function (param) {
       this.ApiService(getSchoolsRequest(param)).then((response) => {
         this.schoolsList = response.data.data;
       });
@@ -383,19 +401,20 @@ export default {
       const packageObj = this.packagesList.find(
         (obj) => obj.id === selectedPackageId
       );
-      this.selectedPrice = packageObj.price;
+      this.selectedPrice = packageObj.price ? packageObj.price : 0;
       this.selectedCurrency = packageObj.currency.name;
       this.discount_final = this.selectedPrice + " " + this.selectedCurrency;
     }, 500),
-    getFinalCost: debounce(function () {
-      const currencyName = this.selectedCurrency;
-      const price = this.selectedPrice;
-      const discountPercentage = this.formValues.package_discount;
-      const discountValue = (discountPercentage / 100) * price;
-      const costAfterDiscount = price - discountValue;
-
-      this.discount_final = costAfterDiscount + " " + currencyName;
-      this.formValues.price_after_discount = costAfterDiscount;
+    getFinalCost: debounce(function ($event) {
+      if ($event <= 100){
+        const currencyName = this.selectedCurrency;
+        const price = this.selectedPrice;
+        const discountPercentage = this.formValues.package_discount;
+        const discountValue = (discountPercentage / 100) * price;
+        const costAfterDiscount = price - discountValue;
+        this.discount_final = costAfterDiscount + " " + currencyName;
+        this.formValues.price_after_discount = costAfterDiscount;
+      }
     }, 1000),
   },
   mounted() {

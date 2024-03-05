@@ -1,6 +1,6 @@
 <template>
   <section class="login">
-    <Login @handleLogin="handleLogin($event)" :loading="loading"/>
+    <LoginComponent @handleLogin="handleLogin($event)" :loading="loading"/>
     <Modal
       :content-message="'يتم إرسال التحقيق إلى بريدك الإلكترونى'"
       :showModal="showModalVerify"
@@ -17,21 +17,24 @@
 </template>
 
 <script>
-import Login from "@/components/login/index.vue";
+import Login from "@/components/LoginAdmin/index.vue";
 import CopyRight from "@/components/Shared/CopyRight/index.vue";
 import {postLoginRequest, postVerifyRequest} from "@/api/register";
 import {mapActions} from "vuex";
 import Modal from "@/components/Shared/Modal/index.vue";
+import LoginComponent from "@/components/LoginAdmin/index.vue";
 
 export default {
   name: "login",
   components: {
+    LoginComponent,
     Modal,
     Login,
     CopyRight,
   },
   data() {
     return {
+      test:'',
       loading: false,
       showModalVerify: false,
       showModalVerifyCheck: false,
