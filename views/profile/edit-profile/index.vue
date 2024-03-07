@@ -90,7 +90,8 @@
                     </div>
                   </b-col>
                   <b-col lg="4">
-                    <div class="hold-field">
+<!--                    v-if="user.roles[0].type.key === 'system_administration'"-->
+                    <div class="hold-field" >
                       <SelectSearch
                         v-model="user.country_id"
                         :label="$t('USERS.NATIONALITY')"

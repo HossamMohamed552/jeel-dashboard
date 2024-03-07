@@ -477,7 +477,6 @@ let routesPrizes = [
     permission: "view-power-up-boxes",
   },
 ];
-
 let routesJeelStores = [
   {
     name: "مجموعة جيمز",
@@ -504,7 +503,64 @@ let routesJeelStores = [
     permission: "view-store-library",
   },
 ];
-
+let routesTeacher = [
+  {
+    name: "الصفوف الدراسية",
+    path: "/dashboard/teacher-level",
+    altImage: "teacher-level",
+    titleImage: "teacher-level",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-teacher-levels",
+  },
+  {
+    name: "الفصول",
+    path: "/dashboard/teacher-class",
+    altImage: "teacher-class",
+    titleImage: "teacher-class",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-teacher-classes",
+  },
+  {
+    name: "المهام",
+    path: "/dashboard/teacher-mission",
+    altImage: "missions-teacher",
+    titleImage: "missions-teacher",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-teacher-missions",
+  },
+  {
+    name: "تصحيح المهام",
+    path: "/dashboard/teacher-mission",
+    altImage: "missions-teacher",
+    titleImage: "missions-teacher",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-teacher-revision-missions",
+  },
+  {
+    name: "الطلاب",
+    path: "/dashboard/teacher-students",
+    altImage: "view-teacher-students",
+    titleImage: "view-teacher-students",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-teacher-students",
+  },
+  {
+    name: "المسابقات",
+    path: "/dashboard/teacher-competitions",
+    altImage: "view-competitions",
+    titleImage: "view-competitions",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-teacher-competitions",
+  },
+  {
+    name: "الرسائل",
+    path: "/dashboard/advertisements",
+    altImage: "view-announcements",
+    titleImage: "view-advertisements",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-teacher-announcements",
+  },
+];
 
 export {
   routesUsers,
@@ -517,5 +573,6 @@ export {
   routeSuperVisor,
   routesPrizes,
   routesJeelStores,
-  routeSchoolAdmin
+  routeSchoolAdmin,
+  routesTeacher
 };

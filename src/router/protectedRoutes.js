@@ -10,6 +10,7 @@ import supervisor from "@/router/modules/supervisor"
 import seasonalMissions from "@/router/modules/seasonalMissions";
 import systemAudios from "@/router/modules/systemAudios";
 import academicYear from "@/router/modules/academicYear";
+import parent from "@/router/modules/parent";
 const protectedRoutes = [
   {
     path: "/dashboard/home",
@@ -1567,6 +1568,7 @@ const protectedRoutes = [
       ...seasonalMissions,
       ...systemAudios,
       ...academicYear,
+      ...parent
     ],
   },
 ];

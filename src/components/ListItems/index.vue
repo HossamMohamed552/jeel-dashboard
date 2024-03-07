@@ -61,6 +61,9 @@
             <img class="image-in-table" :src="data.item.avatar" @error="altImage($event)"/>
           </div>
         </template>
+        <template #cell(internalId)="data">
+          {{ data.item.internalId }}
+        </template>
         <template #cell(status)="data">
           <span>{{ data.item.status === 1 ? "مفعل" : "غير مفعل" }}</span>
         </template>
@@ -225,7 +228,9 @@
         <template #cell(last_name)="data">
           {{ data.item.last_name | cutStringName }}
         </template>
-
+        <template #cell(name)="data">
+          {{ data.item.name | cutString }}
+        </template>
         <template #cell(time)="data">
           الدخول الساعة {{ data.item.time }}
         </template>
@@ -423,6 +428,7 @@ export default {
       },
     };
   },
+
   computed: {
     ...mapGetters(["user"]),
     activePage() {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-modal size="lg" centered  v-model="show" :no-close-on-backdrop="true" :clickToClose="false" hide-header hide-footer>
-      <h3 style="margin-bottom: 8%;text-align: center;direction: rtl;">{{`جاري رفع  ${title}`}}</h3>
+      <h3 style="margin-bottom: 8%;text-align: center;direction: rtl;word-break: break-all">{{`جاري رفع  ${title}`}}</h3>
       <b-progress :max="max" height="2rem">
         <b-progress-bar :value="value" :label="`${value}%`">
         </b-progress-bar>
@@ -15,7 +15,7 @@
      هل تريد ايقاف الإضافة؟
     </b-modal>
   </div>
-    
+
 </template>
 
 <script>
@@ -40,7 +40,7 @@ export default {
     }
   },
   computed: {
-    
+
   },
   methods: {
     cancel() {
@@ -53,7 +53,7 @@ export default {
     };
   },
   watch: {
-   
+
   },
 };
 </script>
