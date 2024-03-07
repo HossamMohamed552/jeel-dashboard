@@ -84,6 +84,7 @@
               :get-option-label="(option) => option.name"
               :rules="'required'"
               :disabled="!formValues.learning_path_id"
+
             ></SelectSearch>
           </div>
         </b-col>
@@ -142,7 +143,7 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
-              :disabled="!formValues.learning_path_id"
+              :disabled="!formValues.learning_path_id || !formValues.lesson_id"
             ></SelectSearch>
           </div>
         </b-col>
@@ -157,7 +158,7 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
-              :disabled="!formValues.learning_path_id"
+              :disabled="!formValues.learning_path_id || !formValues.lesson_id"
             ></SelectSearch>
           </div>
         </b-col>
@@ -296,6 +297,14 @@ export default {
       this.formValues.question_outcome_id = question.question_outcome_id.id
       this.formValues.level_id = question.level.id
       this.formValues.question_pattern = question.question_pattern
+    },
+    "formValues.lesson_id"(newVal){
+      let params = {
+        learning_path_id: this.formValues.learning_path_id,
+        lesson_id: newVal
+      }
+      this.getObjectivesRequest(params)
+      this.getOutcomesRequest(params)
     }
   },
   methods: {
@@ -329,16 +338,16 @@ export default {
         this.lessons = response.data.data
         this.formValues.lesson_id = null
       })
-      this.getObjectivesRequest($event)
-      this.getOutcomesRequest($event)
+      // this.getObjectivesRequest($event)
+      // this.getOutcomesRequest($event)
     },
-    getObjectivesRequest($event) {
-      this.ApiService(getAllObjectivesRequest({learning_path_id: $event})).then((response) => {
+    getObjectivesRequest(params) {
+      this.ApiService(getAllObjectivesRequest(params)).then((response) => {
         this.objectives = response.data.data
       })
     },
-    getOutcomesRequest($event) {
-      this.ApiService(getAllOutcomesRequest({learning_path_id: $event})).then((response) => {
+    getOutcomesRequest(params) {
+      this.ApiService(getAllOutcomesRequest(params)).then((response) => {
         this.outcomes = response.data.data
       })
     },
