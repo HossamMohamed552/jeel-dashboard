@@ -15,7 +15,7 @@
                     :label="$t('AUDIOS.AUDIO_TITLE')"
                     :name="$t('AUDIOS.AUDIO_TITLE')"
                     :placeholder="$t('AUDIOS.AUDIO_TITLE_PLACEHOLDER')"
-                    :rules="'required|min:3|max:30'"
+                    :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
               </b-col>

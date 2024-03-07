@@ -15,7 +15,7 @@ import VueCookies from "vue-cookies";
 
 export default {
   name: "index",
-  components: { Modal, AddEditSchoolYear },
+  components: {Modal, AddEditSchoolYear},
   data() {
     return {
       loading: false,
@@ -25,15 +25,14 @@ export default {
   methods: {
     handleEditSchoolYear($event) {
       this.loading = true;
-      const formData = new FormData();
-      formData.append("name", $event);
-      formData.append("method", "_put");
+      // const formData = new FormData();
+      // formData.append("name", );
+      // formData.append("method", "_put");
       axios
-        .post("/study_years", formData, {
+        .put(`/study_years/${this.$route.params.id}`, {name: $event}, {
           headers: {
             Authorization: `Bearer ${VueCookies.get("token")}`,
             locale: "ar",
-            "Content-Type": "multipart/form-data",
           },
         })
 
