@@ -204,7 +204,7 @@
           <div
             class="top"
             :class="
-              (isSuperVisor || !isSuperVisor) && $route.name === 'main' ? 'top-supervisor' : ''
+             (isSuperVisor || !isSuperVisor) && $route.name === 'main' ? 'top-supervisor' : ''
             "
           >
             <router-link to="/dashboard/home" tag="div" class="logo">
@@ -247,13 +247,7 @@
               </div>
             </div>
           </div>
-          <div
-            class="nav"
-            v-if="!isSuperVisor"
-            :class="
-              (isSuperVisor || !isSuperVisor) && $route.name === 'main' ? 'nav-supervisor' : ''
-            "
-          >
+          <div class="nav" v-if="!isSuperVisor" :class="  (isSuperVisor || !isSuperVisor) && $route.name === 'main' ? 'nav-supervisor' : ''">
             <router-link tag="div" to="/dashboard/home" class="nav-item"
               >{{ $t("MENU.main") }}
             </router-link>
@@ -270,6 +264,16 @@
                   >
                     {{ routeAdmin.name }}</router-link
                   >
+                </ul>
+              </div>
+            </div>
+            <!--/-->
+            <!-- routes for teacher -->
+            <div v-if="Array.from(routesTeacher).length >= 1">
+              <div>
+                <ul class="routes-school-admin">
+                  <router-link tag="li" :to="routeTeacher.path" v-for="(routeTeacher, index) in routesTeacher" :key="index" class="nav-item">
+                    {{ routeTeacher.name }}</router-link>
                 </ul>
               </div>
             </div>
@@ -447,11 +451,7 @@
             </div>
           </div>
 
-          <div
-            class="nav"
-            v-if="isSuperVisor"
-            :class="isSuperVisor && $route.name === 'main' ? 'nav-supervisor' : ''"
-          >
+          <div class="nav" v-if="isSuperVisor" :class="isSuperVisor && $route.name === 'main' ? 'nav-supervisor' : ''">
             <router-link tag="div" to="/dashboard/home" class="nav-item">{{
               $t("MENU.main")
             }}</router-link>
@@ -513,7 +513,7 @@ import {
   routeSuperVisor,
   routesPrizes,
   routesJeelStores,
-  routeSchoolAdmin
+  routeSchoolAdmin, routesTeacher
 } from "@/globalData";
 import { mapActions } from "vuex";
 
@@ -533,6 +533,7 @@ export default {
     routesPrizes: [],
     routesJeelStores: [],
     routeSchoolAdmin: [],
+    routesTeacher: [],
     collapseMode: false,
   }),
   watch: {
@@ -552,6 +553,7 @@ export default {
         this.routesJeelStores = this.getRoutes(routesJeelStores);
         this.routeSuperVisor = this.getRoutes(routeSuperVisor);
         this.routeSchoolAdmin = this.getRoutes(routeSchoolAdmin);
+        this.routesTeacher = this.getRoutes(routesTeacher);
       },
       immediate: true,
     },
