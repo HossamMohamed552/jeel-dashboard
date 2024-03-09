@@ -9,7 +9,13 @@
   margin: 1.5rem 0 4rem;
 
 }
-
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
 .action-holder {
   width: 100%;
   @include flexCenter(space-between);

@@ -21,7 +21,7 @@
           @click="goToAddCompetition"
           v-if="user.permissions.includes(`add-competition`)"
         >
-          <img src="@/assets/images/icons/plus.svg"/>
+          <img src="@/assets/images/icons/plus.svg" />
           <span>إضافة مسابقة</span>
         </Button>
       </template>
@@ -41,11 +41,11 @@
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import {mapGetters} from "vuex";
-import {deleteCompetitionRequest, getCompetitionRequest} from "@/api/competition";
+import { mapGetters } from "vuex";
+import { deleteCompetitionRequest, getCompetitionRequest } from "@/api/competition";
 
 export default {
-  components: {Modal, ListItems, Button},
+  components: { Modal, ListItems, Button },
   data() {
     return {
       loading: false,
@@ -58,9 +58,9 @@ export default {
           key: "id",
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
-        {key: "name", label: this.$i18n.t('COMPETITIONS.NAME')},
-        {key: "level.name", label: this.$i18n.t('COMPETITIONS.LEVEL')},
-        {key: "competition_duration", label: this.$i18n.t('COMPETITIONS.DURATION')},
+        { key: "name", label: this.$i18n.t("COMPETITIONS.NAME") },
+        { key: "level.name", label: this.$i18n.t("COMPETITIONS.LEVEL") },
+        { key: "competition_duration", label: this.$i18n.t("COMPETITIONS.DURATION") },
         {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
@@ -70,7 +70,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(["user"]),
   },
   methods: {
     goToAddCompetition() {

@@ -35,12 +35,12 @@ export const getMissionForCompetitonRequest = (params) => ({
 
 export const getGoalsForCompetitonRequest = (missions) => ({
   method: "get",
-  url: `mission/${missions}/objectives`,
+  url: `competition/mission/${missions}/objectives`,
 });
 
 export const getOutcomesForCompetitonRequest = (missions) => ({
   method: "get",
-  url: `mission/${missions}/outcomes`,
+  url: `competition/mission/${missions}/outcomes`,
 });
 
 export const getCompetitonQuestionNumberRequest = (params) => ({
@@ -57,6 +57,10 @@ export const getRandomQuestionRequest = (data) => ({
   config: {
     data,
   },
+});
+export const getSingleCompetitionQuestionRequest = (params) => ({
+  method: "get",
+  url: `competition/questions/${params}`,
 });
 
 export const getArrangmentListRequest = (params) => ({
@@ -75,9 +79,10 @@ export const getrewardListRequest = (params) => ({
   },
 });
 
-export const postCreateCompetitonRequest = (data) => ({
+
+export const postChangeQuestion = (data) => ({
   method: "post",
-  url: "competition",
+  url: "competition/change-question",
   config: {
     data,
   },

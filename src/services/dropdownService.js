@@ -12,6 +12,8 @@ import {
   getCharacterContentRequest, // المحتوى ( شخصيات )
   getLibraryTypeRequest, // نوع المحتوى ( مكتبة )
   getLibraryContentRequest, // المحتوى ( مكتبة )
+  getCompetitionLibraryContentRequest,
+  getCompetitionCharacterContentRequest,
 } from "@/api/system";
 import {
   geTermsRequest, // الترم الدراسي
@@ -140,10 +142,18 @@ export async function getCharacterContent(array, key, ids) {
   const paramsString = await separateIDs("type", ids);
   await fetchDataAndUpdateOptions(array, getCharacterContentRequest(paramsString), key);
 }
+export async function getCompetitionCharacterContent(array, key, ids) {
+  const paramsString = await separateIDs("type", ids);
+  await fetchDataAndUpdateOptions(array, getCompetitionCharacterContentRequest(paramsString), key);
+}
 
 export async function getLibraryContent(array, key, ids) {
   const paramsString = await separateIDs("type", ids);
   await fetchDataAndUpdateOptions(array, getLibraryContentRequest(paramsString), key);
+}
+export async function getCompetitionLibraryContent(array, key, ids) {
+  const paramsString = await separateIDs("type", ids);
+  await fetchDataAndUpdateOptions(array, getCompetitionLibraryContentRequest(paramsString), key);
 }
 
 export async function getQuizLevelPath(array, key) {

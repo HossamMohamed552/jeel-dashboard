@@ -19,9 +19,8 @@
       @handleBack="prevStep"
       @handleCancel="handleCancel"
       :level_id="competitionInfoForm[1].value"
-      :missions_ids="[1, 2]"
+      :missions_ids="competitionInfoForm[2].value"
     />
-    <!-- competitionInfoForm[1].value -->
     <AddEditPrizes
       v-if="currentStep === 2"
       :stepForm="prizeForm"
@@ -45,6 +44,7 @@
       :currentStep="currentStep"
       @prevStep="prevStep"
       :stepForm="[...competitionInfoForm]"
+      :questions_ids="questionsIds"
     >
       <Button @click="handleCancel" custom-class="cancel-btn margin"> إلغاء </Button>
     </PreviewData>
@@ -61,13 +61,7 @@ import AddEditNotification from "@/components/Modules/addEditNotification";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import Stepper from "@/components/Shared/Stepper/index.vue";
-import globalAssetData from "@/mixins/getData/globalAssetData";
 import {
-  getMissionForCompetitonRequest,
-  getOutcomesForCompetitonRequest,
-  getGoalsForCompetitonRequest,
-  getCompetitonQuestionNumberRequest,
-  getRandomQuestionRequest,
   getArrangmentListRequest,
   postCreateCompetitonRequest,
 } from "@/api/competition";
@@ -204,8 +198,9 @@ export default {
           label: "المدة الزمنية (بالساعات)",
           col: "4",
           value: "",
-          type: "number",
-          rules: "required|numeric",
+          placeholder: "22:00",
+          type: "text",
+          rules: "required",
         },
       ],
       prizeForm: [
@@ -305,13 +300,7 @@ export default {
           rules: "required",
         },
       ],
-      levels: [],
-      missions: [],
-      goals: [],
-      outcomes: [],
-      questionsNumbers: [],
-      randomQuestions: [],
-      arrangmentList: [],
+      questionsIds: [],
     };
   },
   computed: {
@@ -337,6 +326,8 @@ export default {
     },
 
     nextToStepThree(data) {
+      console.log(data);
+      this.questionsIds = data;
       this.handleAssignObject(data);
       this.nextStep();
     },
@@ -364,16 +355,6 @@ export default {
     },
     handleSaveCollectedData(data) {
       sessionStorage.setItem("collectData", data);
-    },
-
-    getGoalsAndOutcomes(missions) {
-      this.ApiService(getGoalsForCompetitonRequest(missions)).then((response) => {
-        this.goals = response.data.data;
-      });
-
-      this.ApiService(getOutcomesForCompetitonRequest(missions)).then((response) => {
-        this.outcomes = response.data.data;
-      });
     },
 
     getArrangmentList(data) {
