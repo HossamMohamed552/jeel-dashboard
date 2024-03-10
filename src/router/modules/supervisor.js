@@ -99,7 +99,6 @@ export default [
       preLink: "/dashboard/students",
     },
   },
-
   {
     path: "/dashboard/teachers/show/:id",
     name: "show-teacher",

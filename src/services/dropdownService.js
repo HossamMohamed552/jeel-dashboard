@@ -39,7 +39,7 @@ import {
   getOutcomesForCompetitonRequest, // مخرجات التعلم
 } from "@/api/competition";
 import { getTermsForSupervisorRequest } from "@/api/term"; // الفيديوهات
-
+import {getClassForSuperRequest} from "@/api/class";
 // isSub = false
 export async function updateFieldOptions(array, key, data) {
   const selectOptionsField = array.find((field) => field.key === key);
@@ -184,4 +184,7 @@ export async function getOutcomesForCompetiton(array, key, ids) {
 }
 export async function getGoalsForCompetiton(array, key, ids) {
   await fetchDataAndUpdateOptions(array, getGoalsForCompetitonRequest(ids), key);
+}
+export async function getClasses(array, key) {
+  await fetchDataAndUpdateOptions(array, getClassForSuperRequest(), key);
 }
