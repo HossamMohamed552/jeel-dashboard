@@ -29,17 +29,17 @@
         </b-row>
       </div>
     </div>
-<!--    <ListItems-->
-<!--      class="background-transparent"-->
-<!--      :show-sort-controls="false"-->
-<!--      :header-name="'قائمه طلاب الفصل'"-->
-<!--      :fieldsList="fieldsList"-->
-<!--      :table-items="singleClass.student"-->
-<!--      :loading="loading"-->
-<!--      :disableIt="true"-->
-<!--      :permission_view="'show-supervisor-students'"-->
-<!--    >-->
-<!--    </ListItems>-->
+    <ListItems
+      class="background-transparent p-0"
+      :show-sort-controls="false"
+      :header-name="'قائمه طلاب الفصل'"
+      :fieldsList="fieldsList"
+      :table-items="singleClass.student"
+      :loading="loading"
+      :disableIt="true"
+      :permission_view="'show-supervisor-students'"
+    >
+    </ListItems>
   </section>
 </template>
 <script>

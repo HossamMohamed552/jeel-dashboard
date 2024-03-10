@@ -48,7 +48,7 @@ export default {
       });
     },
     detailItem($event) {
-      this.$router.push(`/dashboard/super-class/show/${$event}`)
+      this.$router.push(`/dashboard/teacher-class/show/${$event}`)
     },
   },
   mounted() {
