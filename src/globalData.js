@@ -554,7 +554,7 @@ let routesTeacher = [
   },
   {
     name: "الرسائل",
-    path: "/dashboard/advertisements",
+    path: "/dashboard/teacher-advertisements",
     altImage: "view-announcements",
     titleImage: "view-advertisements",
     icon: require("@/assets/images/icons/steps.svg"),

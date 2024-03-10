@@ -31,7 +31,11 @@ export default {
       // formData.append('level_id',quiz.level_id);
       // formData.append('term_id',quiz.term_id);
       formData.append('_method','PUT');
-      formData.append(`blooms[0]`, quiz.blooms);
+      // formData.append(`blooms[0]`, quiz.blooms);
+      for (let blooms = 0; blooms < quiz.blooms.length;) {
+        formData.append(`blooms[${blooms}]`, quiz.blooms[blooms]);
+        blooms++
+      }
       for (let questions = 0; questions < quiz.questions.length;) {
         formData.append(`questions[${questions}]`, quiz.questions[questions]);
         questions++

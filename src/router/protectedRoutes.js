@@ -11,6 +11,7 @@ import seasonalMissions from "@/router/modules/seasonalMissions";
 import systemAudios from "@/router/modules/systemAudios";
 import academicYear from "@/router/modules/academicYear";
 import parent from "@/router/modules/parent";
+import teacher from "@/router/modules/teacher";
 const protectedRoutes = [
   {
     path: "/dashboard/home",
@@ -1568,7 +1569,8 @@ const protectedRoutes = [
       ...seasonalMissions,
       ...systemAudios,
       ...academicYear,
-      ...parent
+      ...parent,
+      ...teacher
     ],
   },
 ];

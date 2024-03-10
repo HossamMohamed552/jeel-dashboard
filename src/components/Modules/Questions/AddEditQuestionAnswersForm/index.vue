@@ -1304,8 +1304,6 @@
             <b-col lg="9" class="mb-3">
               <div class="hold-field">
                 <TextField
-                  @paste.prevent
-                  @drop.prevent
                   v-model="formValues.question"
                   :label="$t('QUESTIONS.QUESTION')"
                   :name="$t('QUESTIONS.QUESTION')"
