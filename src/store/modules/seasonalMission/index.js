@@ -26,6 +26,9 @@ export default {
     SET_PRIZES(state, prizes) {
       state.prizesList = prizes;
     },
+    SET_PRIZE_IN_EDIT_MISSION(state, prize) {
+      state.prizesList = prize;
+    },
     SET_LEARNING_PATH(state, paths) {
       state.learningpaths = paths;
     },
@@ -58,6 +61,10 @@ export default {
     },
     addPrizeById({ commit }, newPrize) {
       commit("SET_PRIZES", newPrize);
+    },
+
+    handlePrizeInEditMission({commit}, prize) {
+      commit("SET_PRIZE_IN_EDIT_MISSION", prize);
     },
 
     addVideo({ commit }, newVideo) {
