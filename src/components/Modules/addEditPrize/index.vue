@@ -54,9 +54,9 @@ import { mapActions, mapGetters } from "vuex";
 import {
   getAllPrizeSeasonalMissionType,
   getCharacterType,
-  getCharacterContent,
+  getCompetitionCharacterContent,
   getLibraryType,
-  getLibraryContent,
+  getCompetitionLibraryContent,
 } from "@/services/dropdownService";
 import _ from "lodash";
 
@@ -148,10 +148,10 @@ export default {
         this.stepForm[4].disabled = false;
         if (this.prizeType == "المكتبة") {
           field.models = "App\\Models\\Library";
-          getLibraryContent(this.stepForm, "prizeable_id", value);
+          getCompetitionLibraryContent(this.stepForm, "prizeable_id", value);
         } else if (this.prizeType == "شخصيات") {
           field.models = "App\\Models\\PrizeCharacter";
-          getCharacterContent(this.stepForm, "prizeable_id", value);
+          getCompetitionCharacterContent(this.stepForm, "prizeable_id", value);
         }
       }
     }, 300),

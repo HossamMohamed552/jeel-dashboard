@@ -74,6 +74,10 @@ export default {
       if (key === "level_id") {
         getMissionForCompetiton(this.stepForm, "missions", value);
         this.stepForm[2].disabled = false;
+        this.stepForm[2].value = [];
+        this.stepForm[3].value = [];
+        this.stepForm[4].value = [];
+
       }
       if (key === "missions") {
         getGoalsForCompetiton(this.stepForm, "objective_id", value);

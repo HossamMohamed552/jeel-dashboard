@@ -21,6 +21,10 @@ export const getStoreLibraryTypeRequest = (params) => ({
   config: { params },
 });
 
+export const getCompetitionLibraryContentRequest = (params) => ({
+  method: "get",
+  url: `competitions/library?${params}`,
+});
 export const getLibraryContentRequest = (params) => ({
   method: "get",
   url: `library?${params}`,
@@ -28,6 +32,10 @@ export const getLibraryContentRequest = (params) => ({
 export const getCharacterContentRequest = (params) => ({
   method: "get",
   url: `prize_character?${params}`,
+});
+export const getCompetitionCharacterContentRequest = (params) => ({
+  method: "get",
+  url: `competitions/prize_characters?${params}`,
 });
 
 export const getSortQuizTypeRequest = (params) => ({

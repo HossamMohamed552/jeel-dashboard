@@ -2,7 +2,7 @@
   <div class="add-edit-competition">
     <div class="container-fluid custom-container">
       <div class="add-edit-competition-form">
-        <validation-observer v-slot="{ invalid }" ref="addEditCompetitionForm">
+        <validation-observer ref="addEditCompetitionForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <div v-if="!isGeneratedQuestion" class="question-counter-container">
               <b-row>
@@ -119,22 +119,16 @@
             </div>
 
             <!--generated question table -->
-            <div v-if="isGeneratedQuestion" class="hold-table">
+            <div v-if="isGeneratedQuestion && tableLoading" class="hold-table">
               <b-table
                 striped
                 :head-variant="'gradient'"
                 :tbody-class="'custom-body'"
-                :items="actions"
+                :items="getQuestionsList"
                 :fields="fieldsList"
               >
                 <template #cell(question_difficulty.name)="data">
-                  <div v-if="data.item.question_difficulty.id == 1" class="easy">
-                    {{ data.item.question_difficulty.name }}
-                  </div>
-                  <div v-else-if="data.item.question_difficulty.id == 2" class="medium">
-                    {{ data.item.question_difficulty.name }}
-                  </div>
-                  <div v-else-if="data.item.question_difficulty.id == 3" class="hard">
+                  <div :class="data.item.question_difficulty.slug">
                     {{ data.item.question_difficulty.name }}
                   </div>
                 </template>
@@ -162,6 +156,9 @@
                 </template>
               </b-table>
             </div>
+            <div class="loadingContainer" v-if="!tableLoading">
+              <b-spinner label="Spinning"></b-spinner>
+            </div>
 
             <b-row>
               <div class="action-holder">
@@ -176,7 +173,7 @@
                     class="mx-3"
                     type="submit"
                     :loading="loading"
-                    :disabled="invalid"
+                    :disabled="!isGeneratedQuestion"
                     :custom-class="'submit-btn'"
                   >
                     {{ $t("GLOBAL_NEXT") }}
@@ -187,13 +184,16 @@
           </form>
         </validation-observer>
       </div>
-      <viewQuestion :question="cloneQuestion" :showModal="showModal" @cancel="cancel($event)" />
+      <viewQuestionModal
+        :question="cloneQuestion"
+        :showModal="showModal"
+        @cancel="cancel($event)"
+      />
     </div>
   </div>
 </template>
 <script>
-import viewQuestion from "@/components/Modules/ViewQuestionModal/index.vue";
-import ShowItem from "@/components/Shared/ShowItem/index.vue";
+import viewQuestionModal from "@/components/Modules/ViewQuestionModal/index.vue";
 
 import TextField from "@/components/Shared/TextField/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
@@ -201,12 +201,18 @@ import Button from "@/components/Shared/Button/index.vue";
 import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import { debounce } from "lodash";
-import { getCompetitonQuestionNumberRequest, getRandomQuestionRequest } from "@/api/competition";
-import { getSingleQuestionRequest } from "@/api/question";
+import { mapGetters, mapActions } from "vuex";
+
+import {
+  getCompetitonQuestionNumberRequest,
+  getRandomQuestionRequest,
+  getSingleCompetitionQuestionRequest,
+  postChangeQuestion,
+} from "@/api/competition";
 
 export default {
   components: {
-    ShowItem,
+    viewQuestionModal,
     TextField,
     SelectSearch,
     Button,
@@ -225,6 +231,7 @@ export default {
   data() {
     return {
       loading: false,
+      tableLoading: true,
       showModal: false,
       cloneQuestion: {},
       questionsNumbers: [],
@@ -274,22 +281,21 @@ export default {
       this.totalEsay = this.questionsNumbers.data[0].questions_count;
       this.totalMedium = this.questionsNumbers.data[1].questions_count;
       this.totalHard = this.questionsNumbers.data[2].questions_count;
-      // this.totalQuestionCount = 10;
-      // this.totalEsay = 3;
-      // this.totalMedium = 2;
-      // this.totalHard = 5;
-
       this.createTotalsLists();
     },
-    randomQuestions(val) {
-      this.actions = this.randomQuestions;
-      this.isGeneratedQuestion = true;
+    getQuestionsList() {
+      // this.actions = this.getQuestionsList;
+      this.randomQuestions = this.getQuestionsList;
+      if (this.getQuestionsList.length > 0) {
+        this.isGeneratedQuestion = true;
+      }
     },
   },
   methods: {
+    ...mapActions(["addQuestions", "changeQuestionByID"]),
     onSubmit() {
       const questionsIds = this.randomQuestions.map((obj) => obj.id);
-      this.$emit("onSubmit", { questions: questionsIds });
+      this.$emit("onSubmit", questionsIds);
     },
     handleCancel() {
       this.$emit("handleCancel");
@@ -354,18 +360,32 @@ export default {
       };
 
       this.ApiService(getRandomQuestionRequest(data)).then((response) => {
-        this.randomQuestions = response.data.data;
+        this.addQuestions(response.data.data);
       });
     },
-    changeSingleRandomQuestion(questionId) {
-      console.log(questionId);
+    changeSingleRandomQuestion(questionID) {
+      let questionsIDs = this.getQuestionsList.map((obj) => obj.id);
+      let payload = {
+        question_id: questionID,
+        question_same_type_ids: questionsIDs,
+      };
+      this.tableLoading = false;
+      this.ApiService(postChangeQuestion(payload)).then((response) => {
+        let payload = {
+          id: questionID,
+          question: response.data.data,
+        };
+        console.log(payload);
+        // this.changeQuestionByID(payload);
+        this.changeQuestionByID(payload);
+        this.tableLoading = true;
+      });
     },
     viewQuestion(questionId) {
-      this.showModal = true;
-      this.ApiService(getSingleQuestionRequest(questionId)).then((response) => {
+      this.ApiService(getSingleCompetitionQuestionRequest(questionId)).then((response) => {
+        this.showModal = true;
         this.cloneQuestion = response.data.data;
       });
-      console.log(question);
     },
     getQuestionsNumbers() {
       const missionsIds = this.missions_ids.join(",");
@@ -383,9 +403,10 @@ export default {
     },
   },
   mounted() {
-    // if (this.$route.params.id) {
-    // }
     this.getQuestionsNumbers();
+  },
+  computed: {
+    ...mapGetters(["getQuestionsList"]),
   },
 };
 </script>

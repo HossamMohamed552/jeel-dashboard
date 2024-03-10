@@ -369,7 +369,14 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addPrizeById", "addNotificationById", "addVideo", "addExercises"]),
+    ...mapActions([
+      "addPrize",
+      "addNotification",
+      "addPrizeById",
+      "addNotificationById",
+      "addVideo",
+      "addExercises",
+    ]),
 
     handleCancel() {
       this.$router.push("/dashboard/seasonal-mission");
@@ -406,6 +413,20 @@ export default {
         };
       });
     },
+    handlePrizesInEdit(prizes) {
+      prizes.map((prize) => {
+        prize["type_id"] = prize.type.id;
+        this.addPrize(prize);
+      });
+    },
+    handleNotificationInEdit(notifications) {
+      notifications.map((notification) => {
+        notification["uuid"] = notification.audio_uuid;
+        notification["audio"] = notification.audio_uuid;
+        notification["original_url"] = notification.audio;
+        this.addNotification(notification);
+      });
+    },
   },
   beforeMount() {
     this.emptyStore();
@@ -430,11 +451,13 @@ export default {
         mergedAllSteps[4].value = moment(seasonalMission.end_date).format("DD-MM-YYYY");
         mergedAllSteps[5].value = seasonalMission.level;
         mergedAllSteps[5].name = seasonalMission.level.name;
+        // Image
         mergedAllSteps[10].url = seasonalMission.image;
+        mergedAllSteps[10].value = seasonalMission.image_uuid;
         mergedAllSteps[10].task_audio_name = seasonalMission.image_name;
         mergedAllSteps[10].task_audio_size = seasonalMission.image_size;
-        this.addPrizeById(seasonalMission.prizes);
-        this.addNotificationById(seasonalMission.notifications);
+        this.handlePrizesInEdit(seasonalMission.prizes);
+        this.handleNotificationInEdit(seasonalMission.notifications);
         console.log(mergedAllSteps);
       });
     }

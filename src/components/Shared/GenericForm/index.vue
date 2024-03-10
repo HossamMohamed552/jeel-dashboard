@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="onSubmit">
-      <div class="container-fluid px-0">
-   <b-row>
+    <div class="container-fluid px-0">
+      <b-row>
         <b-col v-for="(field, index) in schema" :key="index" :lg="field.col">
           <h3 class="list-title" :class="field.classList" v-if="field.type == 'title'">
             {{ field.label }}
@@ -29,7 +29,7 @@
               :name="field.label"
               :rules="field.rules"
               :type="field.type"
-              :placeholder="'إدخل' + ' ' + field.label"
+              :placeholder="checkPlaceholder(field)"
               :disabled="field.disabled"
             ></TextField>
             <TextAreaField
@@ -197,6 +197,10 @@ export default {
   methods: {
     handleCancel() {
       this.$emit("handleCancel");
+    },
+    checkPlaceholder(field) {
+      if (field.placeholder) return field.placeholder;
+      else return "إدخل" + " " + field.label;
     },
     onSubmit() {
       this.updateFields();

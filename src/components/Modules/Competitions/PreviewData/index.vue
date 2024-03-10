@@ -54,6 +54,7 @@
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
+import { postAddCompetitionRequest, putEditCompetitionRequest } from "@/api/competition";
 import { mapGetters } from "vuex";
 import moment from "moment";
 
@@ -71,6 +72,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    questions_ids: {
+      type: Array,
+      default: () => [],
+    }
   },
   data() {
     return {
@@ -90,30 +95,30 @@ export default {
         { key: "original_url", label: "صوت الإشعار" },
         { key: "description", label: "نص الإشعار" },
       ],
-      submittedForm: {
-      },
+      submittedForm: {},
       loading: false,
     };
   },
   methods: {
     async submitForm() {
       await this.updateFields();
-      if (this.$route.params.id) this.handleEditSeasonalMission();
-      else this.handleAddSeasonalMission();
+      console.log(this.submittedForm);
+      if (this.$route.params.id) this.handleEditCompetition();
+      else this.handleAddCompetition();
     },
-    handleAddSeasonalMission() {
-      this.ApiService(postCreateSeasonalMissionRequest(this.submittedForm)).then(() => {
-        this.$router.push("/dashboard/seasonal-mission");
+    handleAddCompetition() {
+      this.ApiService(postAddCompetitionRequest(this.submittedForm)).then(() => {
+        this.$router.push("/dashboard/competitions");
       });
     },
-    handleEditSeasonalMission() {
+    handleEditCompetition() {
       this.handleDateToUpdate();
       this.submittedForm["_method"] = "PUT";
-      this.ApiService(
-        putUpdateSeasonalMissionRequest(this.submittedForm, this.$route.params.id)
-      ).then(() => {
-        this.$router.push("/dashboard/seasonal-mission");
-      });
+      this.ApiService(putEditCompetitionRequest(this.submittedForm, this.$route.params.id)).then(
+        () => {
+          this.$router.push("/dashboard/competitions");
+        }
+      );
     },
     prevStep() {
       this.$emit("prevStep");
@@ -128,16 +133,14 @@ export default {
               field.key,
               moment(field.value, "DD-MM-YYYY").format("YYYY-MM-DD")
             );
-          else if (field.key != "learningpaths")
-            this.$set(this.submittedForm, field.key, field.value);
+          else this.$set(this.submittedForm, field.key, field.value);
         } catch (error) {
           console.error(`Error updating field ${field.key}:`, error);
         }
       });
       this.submittedForm["prizes"] = this.prizesList;
       this.submittedForm["notifications"] = this.notificationsList;
-      this.submittedForm.learningpaths.videos = this.videosList;
-      this.submittedForm.learningpaths.quizzes = this.exercisesList;
+      this.submittedForm["questions"] = this.questions_ids;
     },
 
     handleArray(key) {
