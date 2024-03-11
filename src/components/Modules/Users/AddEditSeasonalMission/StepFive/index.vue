@@ -153,8 +153,7 @@ export default {
       });
     },
     async handleEditSeasonalMission() {
-      await this.handleDateToUpdate();
-      console.log(this.submittedForm);
+      await this.handleDataToUpdate();
       this.submittedForm["_method"] = "PUT";
       this.ApiService(
         putUpdateSeasonalMissionRequest(this.submittedForm, this.$route.params.id)
@@ -174,6 +173,7 @@ export default {
               field.key,
               moment(field.value, "DD-MM-YYYY").format("YYYY-MM-DD")
             );
+          else if (field.key == "image" && field.is_change == undefined)  return ""
           else if (field.key != "learningpaths")
             this.$set(this.submittedForm, field.key, field.value);
         } catch (error) {
@@ -212,7 +212,7 @@ export default {
       }
     },
 
-    async handleDateToUpdate() {
+    async handleDataToUpdate() {
       if (this.processArray(this.submittedForm["countries"])) this.handleArray("countries");
       if (this.processArray(this.submittedForm["lessons"])) this.handleArray("lessons");
       if (this.processArray(this.submittedForm["religions"])) this.handleArray("religions");

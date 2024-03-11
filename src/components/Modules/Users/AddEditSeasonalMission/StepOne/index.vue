@@ -31,7 +31,7 @@ import {
   getAllGender,
   getAllSeasonalMissionGroups,
   getAllLearningPaths,
-  getLessonsDepenseLearningPath,
+  getLessonsDepenseLearningPath, 
   getAllLevels,
 } from "@/services/dropdownService";
 import _ from "lodash";
@@ -88,6 +88,7 @@ export default {
         this.stepForm[imageObjectIndex].url = value.url;
         this.stepForm[imageObjectIndex].task_audio_name = value.file_name;
         this.stepForm[imageObjectIndex].task_audio_size = value.size / 1000;
+        this.stepForm[imageObjectIndex].is_change = true;
       } else if (key === "learningpaths") {
         if (value != "") this.stepForm[7].disabled = false;
         getLessonsDepenseLearningPath(this.stepForm, "lessons", value);

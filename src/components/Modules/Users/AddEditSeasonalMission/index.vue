@@ -422,7 +422,9 @@ export default {
     handleNotificationInEdit(notifications) {
       notifications.map((notification) => {
         notification["uuid"] = notification.audio_uuid;
-        notification["audio"] = notification.audio_uuid;
+        // notification["audio"] = notification.audio_uuid;
+        delete notification["audio"];
+        delete notification["uuid"];
         notification["original_url"] = notification.audio;
         this.addNotification(notification);
       });
