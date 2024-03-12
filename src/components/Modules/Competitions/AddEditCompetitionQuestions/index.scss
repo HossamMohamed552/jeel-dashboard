@@ -2,12 +2,11 @@
 @import "src/assets/style/scss/_mixin";
 
 .add-edit-competition-form {
-  background: #F9F9F9;
+  background: #f9f9f9;
   border-radius: 1.56rem;
   padding: 1rem 2.375rem 0;
   height: max-content;
   margin: 1.5rem 0 4rem;
-
 }
 .loadingContainer {
   display: flex;
@@ -25,7 +24,7 @@
   justify-content: flex-start;
   align-items: center;
 }
-::v-deep{
+::v-deep {
   .hold-field {
     width: 150px;
     label {
@@ -34,11 +33,15 @@
       margin: 0 0.7rem 0.7rem 0;
     }
   }
-  .text-field .form-control{
+  .text-field .form-control {
     min-height: 50px;
   }
 }
 
+.question-image {
+  max-width: 130px;
+  max-height: 100px;
+}
 
 .question-counter-holder {
   display: flex;
@@ -82,10 +85,6 @@ h5.title {
   font-size: 20px;
   font-weight: bold;
 }
-
-
-
-
 
 //table
 .hold-table {
@@ -171,11 +170,10 @@ h5.title {
   }
 
   table tbody tr:nth-child(odd) {
-    background: #F4EDF3 !important;
+    background: #f4edf3 !important;
     height: 1rem;
   }
 }
-
 
 .random-question-actions {
   display: flex;
@@ -185,29 +183,28 @@ h5.title {
 }
 
 .easy {
-padding: 0rem 1rem 0.3rem;
-background: #D4EDDA;
-color: #155724;
-border-radius: 20px;
-width: max-content
+  padding: 0rem 1rem 0.3rem;
+  background: #d4edda;
+  color: #155724;
+  border-radius: 20px;
+  width: max-content;
 }
 
 .medium {
   padding: 0rem 1rem 0.3rem;
-  background: #FFF3CD;
+  background: #fff3cd;
   color: #856404;
   border-radius: 20px;
-  width: max-content
+  width: max-content;
 }
 
 .hard {
   padding: 0rem 1rem 0.3rem;
-  background: #F8D7DA;
-  color: #721C24;
+  background: #f8d7da;
+  color: #721c24;
   border-radius: 20px;
-  width: max-content
+  width: max-content;
 }
-
 
 p.warning-error {
   color: $color-danger !important;

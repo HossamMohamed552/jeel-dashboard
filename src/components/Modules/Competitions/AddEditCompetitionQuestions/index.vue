@@ -127,10 +127,26 @@
                 :items="getQuestionsList"
                 :fields="fieldsList"
               >
-                <template #cell(question_difficulty.name)="data">
+                <template v-slot:cell(question_difficulty)="data">
                   <div :class="data.item.question_difficulty.slug">
                     {{ data.item.question_difficulty.name }}
                   </div>
+                </template>
+                <template v-slot:cell(question)="data">
+                  <div v-if="typeof data.item.question === 'object'">
+                    <audio v-if="isAudio(data.item.question.question)" controls>
+                      <source :src="data.item.question.question" type="audio/mp3" />
+                      Your browser does not support the audio tag.
+                    </audio>
+                    <img
+                      v-else-if="isImage(data.item.question.question)"
+                      class="question-image"
+                      :src="data.item.question.question"
+                      alt="Image"
+                    />
+                    <div v-else>{{ data.item.question.question }}</div>
+                  </div>
+                  <div v-else>{{ data.item.question }}</div>
                 </template>
                 <template #empty>
                   <div class="text-center p-5">لا يوجد اسئلة لعرضها</div>
@@ -140,6 +156,7 @@
                     {{ data.index + 1 }}
                   </div>
                 </template>
+
                 <template #cell(random_question_action)="data">
                   <div class="random-question-actions">
                     <img
@@ -255,7 +272,7 @@ export default {
           label: this.$i18n.t("QUESTION"),
         },
         {
-          key: "question_difficulty.name",
+          key: "question_difficulty",
           label: this.$i18n.t("QUESTION_DIFFICULTY_TABLE"),
         },
         {
@@ -293,6 +310,12 @@ export default {
   },
   methods: {
     ...mapActions(["addQuestions", "changeQuestionByID"]),
+    isAudio(url) {
+      return /\.(mp3|ogg|wav)$/i.test(url);
+    },
+    isImage(url) {
+      return /\.(png|jpg|jpeg|gif)$/i.test(url);
+    },
     onSubmit() {
       const questionsIds = this.randomQuestions.map((obj) => obj.id);
       this.$emit("onSubmit", questionsIds);

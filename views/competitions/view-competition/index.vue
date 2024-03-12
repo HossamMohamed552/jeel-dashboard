@@ -98,6 +98,7 @@
                 </audio>
                 <img
                   v-else-if="isImage(data.item.question.question)"
+                  class="question-image"
                   :src="data.item.question.question"
                   alt="Image"
                 />
