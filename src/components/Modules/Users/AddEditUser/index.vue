@@ -89,7 +89,7 @@
                         :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.PHONE_NUMBER')"
                         :rules="{ required: true }"
                       ></TextField>
-<!--                      /^01[0125][0-9]{8}$/-->
+                      <!--                      /^01[0125][0-9]{8}$/-->
                     </div>
                   </b-col>
                   <b-col lg="4">
@@ -138,7 +138,7 @@
                     <b-form-group class="mb-3">
                       <TextField
                         v-model="user.password"
-                        rules="required"
+                        :rules="{required:true, regex:'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{8,})'}"
                         :type="passwordType"
                         :label="$t('USERS.PASSWORD')"
                         :name="$t('USERS.PASSWORD')"
@@ -252,7 +252,7 @@ import Button from "@/components/Shared/Button/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import ImageUploader from "@/components/Shared/UploadImage/index.vue";
 
-import { TogglePasswordMixins } from "@/mixins/TogglePasswordMixins";
+import {TogglePasswordMixins} from "@/mixins/TogglePasswordMixins";
 // Dropdown
 import {
   getSingleUserRequest,
@@ -261,8 +261,8 @@ import {
   postChangeStatusRequest, getAllRolesOrganizationRequest,
 } from "@/api/user";
 
-import { getAllNationaltyRequest } from "@/api/country";
-import { getAllGenderRequest, getAllReligionRequest } from "@/api/system";
+import {getAllNationaltyRequest} from "@/api/country";
+import {getAllGenderRequest, getAllReligionRequest} from "@/api/system";
 
 import _ from "lodash";
 
@@ -336,7 +336,8 @@ export default {
         userStatus.is_active = 0;
       else userStatus.is_active = 1;
 
-      this.ApiService(postChangeStatusRequest(userStatus)).then(() => {});
+      this.ApiService(postChangeStatusRequest(userStatus)).then(() => {
+      });
     },
 
     onSubmit() {
@@ -389,7 +390,7 @@ export default {
       });
     },
     getAllDepartments() {
-      this.ApiService(getAllRolesOrganizationRequest({'types[]':126})).then((response) => {
+      this.ApiService(getAllRolesOrganizationRequest({'types[]': 126})).then((response) => {
         this.departmentsList = response.data.data;
       });
     },

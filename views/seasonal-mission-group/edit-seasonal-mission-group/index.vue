@@ -26,7 +26,6 @@ export default {
       this.loading = true;
       const id = this.$route.params.id;
       this.ApiService(putUpdateSeasonalMissionGroupRequest($event, id))
-
         .then(() => {
           this.$router.push("/dashboard/seasonal-mission-group");
         })

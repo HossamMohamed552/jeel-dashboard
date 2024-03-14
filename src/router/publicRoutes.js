@@ -8,6 +8,11 @@ const publicRoutes = [
     component: () => import("../../views/login/index.vue"),
   },
   {
+    path: "/choose-student",
+    name: "choose-student",
+    component: () => import("../../views/parent/choose-student/index.vue"),
+  },
+  {
     path: "/user-verification",
     name: "user-verification",
     meta:{

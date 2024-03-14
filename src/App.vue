@@ -11,7 +11,11 @@ export default {
   components: {
     Toast,
   },
-  created() {},
+  created() {
+    if (this.$store.getters?.user?.roles?.[0]?.type?.key === 'parent_management'){
+      this.$router.push('/choose-student')
+    }
+  },
   beforeCreate() {},
   mounted() {},
   watch: {},

@@ -33,6 +33,13 @@ export const addQuestionOnVideo = (data)=>({
     data
   }
 })
+export const editQuestionOnVideo = (data,id)=>({
+  method: 'put',
+  url:`/videos/quesitons/${id}`,
+  config: {
+    data
+  }
+})
 export const getSingleQuestionOnVideo = (params)=>({
   method: 'get',
   url:`/videos/quesiton/${params}`,

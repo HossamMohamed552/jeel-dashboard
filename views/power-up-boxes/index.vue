@@ -95,7 +95,7 @@
     <!------------------ nd search box --------------->
     <!------------------ st custom table section --------------->
     <ListItems
-      :header-name="'صناديق الطاقه'"
+      :header-name="'صناديق الطاقة'"
       :fieldsList="fieldsList"
       :table-items="powerUpBoxesList"
       :v-search-model="groupSearchWord"

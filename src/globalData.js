@@ -505,20 +505,20 @@ let routesJeelStores = [
 ];
 let routesTeacher = [
   {
-    name: "الصفوف الدراسية",
-    path: "/dashboard/teacher-level",
-    altImage: "teacher-level",
-    titleImage: "teacher-level",
-    icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-teacher-levels",
-  },
-  {
     name: "الفصول",
     path: "/dashboard/teacher-class",
     altImage: "teacher-class",
     titleImage: "teacher-class",
     icon: require("@/assets/images/icons/steps.svg"),
     permission: "view-teacher-classes",
+  },
+  {
+    name: "الصفوف الدراسية",
+    path: "/dashboard/teacher-level",
+    altImage: "teacher-level",
+    titleImage: "teacher-level",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-teacher-levels",
   },
   {
     name: "المهام",

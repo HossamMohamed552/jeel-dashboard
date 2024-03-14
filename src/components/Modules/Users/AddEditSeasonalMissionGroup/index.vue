@@ -59,7 +59,7 @@
         <template #modalBody>
           <div class="text-center">
             <div class="height-modal">
-              <img :src="url" class="image-modal" />
+              <img :src="url" class="image-modal"/>
             </div>
             <Button @click="hideModal" :custom-class="'rounded-btn transparent-btn'">
               {{ $t("BACK") }}
@@ -75,10 +75,11 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
-import { getSeasonalMissionGroupByIdRequest } from "@/api/seasonal-mission-group";
+import {getSeasonalMissionGroupByIdRequest} from "@/api/seasonal-mission-group";
 import UploadAttachment from "@/components/Shared/UploadAttachment";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
+
 export default {
   components: {
     Modal,
@@ -103,6 +104,7 @@ export default {
       logoSize: "",
       logoId: "",
       isLogoDeleted: false,
+      logoChangedRequest: false,
     };
   },
   methods: {
@@ -111,13 +113,18 @@ export default {
         if (!success) return;
       });
       if (this.$route.params.id) {
-        this.$emit("handleEditSeasonalMissionGroup", { name: this.name, logo: this.logoId });
+        if (this.logoChangedRequest) {
+          this.$emit("handleEditSeasonalMissionGroup", {name: this.name, logo: this.logoId});
+        } else {
+          this.$emit("handleEditSeasonalMissionGroup", {name: this.name});
+        }
       } else {
-        this.$emit("handleAddSeasonalMissionGroup", { name: this.name, logo: this.logoId });
+        this.$emit("handleAddSeasonalMissionGroup", {name: this.name, logo: this.logoId});
       }
     },
     setLogoId(event) {
       this.logoId = event;
+      this.logoChangedRequest = true
     },
     handleCancel() {
       this.$emit("handleCancel");
@@ -137,6 +144,7 @@ export default {
     },
     removeFile() {
       this.isLogoDeleted = true;
+      this.logoChangedRequest = false;
       this.logoId = "";
       this.fileName = "";
       this.url = "";

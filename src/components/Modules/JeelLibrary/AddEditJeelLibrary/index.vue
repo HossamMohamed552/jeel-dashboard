@@ -104,7 +104,7 @@
                     !attachment.audioChangedRequest
                   "
                   :header="$t('ملف الصوت')"
-                  :media-name="ttachment.audio_name"
+                  :media-name="attachment.audio_name"
                   :file-size="attachment.audio_size"
                   :typeOfMedia="'audio'"
                   :showRemoveButton="true"
@@ -230,7 +230,7 @@
                     :label="'رابط'"
                     :name="'رابط'"
                     placeholder="اكتب رابط"
-                    :rules="'required|url'"
+                    :rules="'required|urlLink'"
                   ></TextField>
                 </div>
               </b-col>
@@ -307,14 +307,14 @@
     <GeneralModal :id="'holdContent'" :size="'lg'" :hide-header="true">
       <template #modalBody>
         <div class="text-center">
-          <div class="height-modal" v-if=" typeOfAttachment=='logo' || typeOfAttachment =='image'">
+          <div class="height-modal" v-if="typeOfAttachment=='logo' || typeOfAttachment =='image'">
             <img :src="attachment.thumbnail" class="image-modal" />
           </div>
-          <div class="height-modal" v-if=" typeOfAttachment=='file'">
+          <div class="height-modal" v-if="typeOfAttachment=='file'">
             <input type="file" :value="attachment.file" class="image-modal" />
           </div>
 
-          <audio :src="audioUrl"  v-if=" typeOfAttachment =='audio'"
+          <audio :src="audioUrl"  v-if="typeOfAttachment =='audio'"
                  ref="player"
                  autoplay="autoplay"
                  controls="controls"></audio>
@@ -398,7 +398,7 @@ export default {
         video_without_music: "",
         audio: "",
         file: "",
-
+        type: ""
       },
       attachment:{
         //  thumbnail
@@ -545,13 +545,12 @@ export default {
 
           this.createItem = response.data.data;
           this.createItem.level_id = response.data.data.level.id;
-
+          this.createItem.type = response.data.data.type.id
           // logo: null,
           this.createItem.logo = response.data.data.file;
           this.attachment.thumbnail_name = response.data.data.logo_name;
           this.attachment.thumbnail_size = response.data.data.logo_size;
           this.attachment.thumbnail = response.data.data.logo;
-
         });
       }
     },

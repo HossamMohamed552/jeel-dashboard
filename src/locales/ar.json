@@ -843,5 +843,8 @@
     "date": "اليوم",
     "selectDate": "أختر اليوم",
     "studentData": "بيانات الطالب"
+  },
+  "PARENT": {
+    "myChildren": "أطفالى"
   }
 }
