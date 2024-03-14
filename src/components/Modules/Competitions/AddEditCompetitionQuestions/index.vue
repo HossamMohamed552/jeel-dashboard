@@ -427,6 +427,11 @@ export default {
   },
   mounted() {
     this.getQuestionsNumbers();
+    if (this.$route.params.id) {
+      this.isGeneratedQuestion = true;
+      this.tableLoading = true;
+    } else {
+    }
   },
   computed: {
     ...mapGetters(["getQuestionsList"]),

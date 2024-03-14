@@ -44,7 +44,19 @@ export default {
       type: Array,
       default: () => [],
     },
+    missions: {
+      type: Array,
+      default: () => [],
+    },
     currentStep: {
+      type: Number,
+      default: 0,
+    },
+    objective_id: {
+      type: Number,
+      default: 0,
+    },
+    outcome_id: {
       type: Number,
       default: 0,
     },
@@ -53,6 +65,8 @@ export default {
     return {
       loading: false,
       showDate: true,
+      isGettingMissionsValue: true,
+      isGettingOutcomesAndGoalsValue: true,
     };
   },
   methods: {
@@ -72,22 +86,30 @@ export default {
       }
 
       if (key === "level_id") {
-        getMissionForCompetiton(this.stepForm, "missions", value);
-        this.stepForm[2].disabled = false;
-        this.stepForm[2].value = [];
-        this.stepForm[3].value = [];
-        this.stepForm[4].value = [];
-
+        this.getMissionsValue(value);
       }
       if (key === "missions") {
-        getGoalsForCompetiton(this.stepForm, "objective_id", value);
-        this.stepForm[3].disabled = false;
-        getOutcomesForCompetiton(this.stepForm, "outcome_id", value);
-        this.stepForm[4].disabled = false;
+        this.getOutcomesAndGoalsValue(value);
       }
     }, 300),
 
-    handleValueName(field) {},
+    getMissionsValue(value) {
+      getMissionForCompetiton(this.stepForm, "missions", value);
+      this.stepForm[2].disabled = false;
+      this.stepForm[2].value = [];
+      this.stepForm[3].value = [];
+      this.stepForm[4].value = [];
+
+      this.isGettingMissionsValue = false;
+    },
+    getOutcomesAndGoalsValue(value) {
+      getGoalsForCompetiton(this.stepForm, "objective_id", value);
+      this.stepForm[3].disabled = false;
+      getOutcomesForCompetiton(this.stepForm, "outcome_id", value);
+      this.stepForm[4].disabled = false;
+
+      this.isGettingOutcomesAndGoalsValue = false;
+    },
 
     nextStep() {
       this.$emit("nextStep");
@@ -95,6 +117,26 @@ export default {
   },
   async mounted() {
     await getLevelsForSuperVisor(this.stepForm, "level_id");
+  },
+  watch: {
+    stepForm: {
+      deep: true,
+      handler: function (newVal) {
+        if (this.$route.params.id) {
+          if (newVal[1].value && this.isGettingMissionsValue) {
+            this.getMissionsValue(newVal[1].value);
+            console.log(newVal[1].key, newVal[1].value);
+          }
+          if (newVal[2].value && this.isGettingOutcomesAndGoalsValue) {
+            console.log(newVal[2].key, newVal[2].value);
+            newVal[2].value = this.missions;
+            this.getOutcomesAndGoalsValue(this.missions);
+            newVal[3].value = this.objective_id;
+            newVal[4].value = this.outcome_id;
+          }
+        }
+      },
+    },
   },
 };
 </script>

@@ -192,7 +192,6 @@ export default {
   },
   mounted() {
     this.ApiService(getCompetitionByIdRequest(this.$route.params.id)).then((response) => {
-      console.log(response.data.data);
       this.competition = response.data.data;
     });
   },
