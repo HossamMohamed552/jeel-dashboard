@@ -38,14 +38,13 @@ const router = new Router({
 });
 router.beforeEach((to, from, next) => {
   let tokenFound = !!store.getters.token
+  let isParent = store.getters.user ? store.getters.user.roles[0].type.key : ''
   if (!["login", "user-verification", "forget-password"].includes(to.name) && !tokenFound) {
-    next({name: "login"})
+    return next({name: "login"})
+  } else if (to.name === "login" && tokenFound) {
+    return next({name: "main"});
   } else {
-    if (to.name === "login" && tokenFound) {
-      next({name: "main"});
-    } else {
-      next();
-    }
+    return next();
   }
 });
 router.afterEach((to, from) => {

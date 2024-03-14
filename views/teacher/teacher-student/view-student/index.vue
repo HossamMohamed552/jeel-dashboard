@@ -102,11 +102,11 @@
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import {getStudentForSuperVisor} from "@/api/user";
 import ListItems from "@/components/ListItems/index.vue";
 import TextField from "@/components/Shared/TextField/index.vue";
 import ScholasticData from "@/components/SuperVisor/ScholasticData/index.vue";
 import DailyLogin from "@/components/SuperVisor/DailyLogin/index.vue";
+import {getStudentForTeacher} from "@/api/teacher-module";
 
 export default {
   name: "index",
@@ -134,7 +134,7 @@ export default {
     },
   },
   mounted() {
-    this.ApiService(getStudentForSuperVisor(this.$route.params.id)).then((response) => {
+    this.ApiService(getStudentForTeacher(this.$route.params.id)).then((response) => {
       this.studentObject = response.data.data;
     });
   },

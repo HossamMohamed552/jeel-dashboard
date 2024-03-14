@@ -76,6 +76,12 @@ export default {
       this.showModalVerifyCheck = false
     }
   },
+  beforeDestroy() {
+    if (this.$store.getters.user.roles[0].type.key === 'parent_management'){
+      console.log('user',this.$store.getters.user)
+      this.$router.push('/choose-student')
+    }
+  }
 };
 </script>
 

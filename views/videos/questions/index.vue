@@ -79,7 +79,7 @@
            @cancel="cancel($event)"
            :is-warning="true"
            @cancelWithConfirm="cancelWithConfirm($event)"/>
-    <QuestionModal :showModal="showModalQuestion" @addQuestion="addQuestion($event)"
+    <QuestionModal :showModal="showModalQuestion" @addQuestion="addQuestion($event)" @editQuestion="editQuestion($event)"
                    @cancelQuestion="cancelQuestion($event)" :totalDuration="totalDuration"
                    :currentTime="currentTime" :questionEdit="questionContent" :isEdit="isEdit"/>
     <GeneralModal id="questionContent" :size="'xl'" :hide-header="true">
@@ -209,7 +209,7 @@
 <script>
 import {
   addQuestionOnVideo,
-  deleteQuestionOfVideo,
+  deleteQuestionOfVideo, editQuestionOnVideo,
   getQuestionOfVideo,
   getSingleQuestionOnVideo,
   getSingleVideoRequest
@@ -251,6 +251,7 @@ export default {
       currentTime: null,
       questionContent:{},
       isEdit: false,
+      questionId: null,
     }
   },
   methods: {
@@ -279,6 +280,7 @@ export default {
       }).then(()=>this.showQuestionModal())
     },
     editItem($event) {
+      this.questionId = $event
       this.ApiService(getSingleQuestionOnVideo($event)).then((response) => {
         this.questionContent = response.data.data
       }).then(()=>{
@@ -318,9 +320,26 @@ export default {
       this.cancel()
     },
     addQuestion($event) {
-      delete $event['answers_id']
       // $event.question_time = Number($event.question_time)
       this.ApiService(addQuestionOnVideo($event)).then((response) => {
+        this.getQuestionOfVideo(this.$route.params.id)
+        this.showModalQuestion = false
+      })
+    },
+    editQuestion($event){
+      if (!$event['video_head_question_audioChangedRequest']){
+        delete $event['head_question_audio']
+      }
+      if (!$event['video_question_audioChangedRequest']){
+        delete $event['video_question_audio']
+      }
+      delete $event['video_head_question_audioChangedRequest']
+      delete $event['video_head_question_audio_name']
+      delete $event['video_head_question_audio_size']
+      delete $event['video_question_audioChangedRequest']
+      delete $event['video_question_audio_name']
+      delete $event['video_question_audio_size']
+      this.ApiService(editQuestionOnVideo($event,this.questionId)).then((response) => {
         this.getQuestionOfVideo(this.$route.params.id)
         this.showModalQuestion = false
       })

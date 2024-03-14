@@ -7,14 +7,8 @@
 </template>
 <script>
 import InnerRoutes from "@/components/InnerRoutes/index.vue";
-import store from "@/store";
 export default {
   name: "index",
-  data() {
-    return {
-      // isSuperVisor: false,
-    };
-  },
   components: {
     InnerRoutes,
   },
@@ -22,11 +16,6 @@ export default {
     user() {
       return this.$store.getters.user;
     },
-  },
-  created() {
-    if (this.$store.getters?.user?.roles?.[0]?.type?.key === 'parent_management'){
-      this.$router.push('/dashboard/choose-student/')
-    }
   },
   mounted() {
     // this.isSuperVisor = this.user.roles[0]?.code === "supervisor";

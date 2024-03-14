@@ -10,7 +10,7 @@ export const getAllTermsRequest = (params) => ({
 })
 export const getTermsForSupervisorRequest = (params) => ({
     method: 'get',
-    url: '/supervisor/terms',
+    url: 'supervisor/terms',
     config: {params}
   })
 export const getSingleTermsRequest = (params) => ({

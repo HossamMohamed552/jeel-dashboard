@@ -1,6 +1,5 @@
 import {configure, extend, localize} from "vee-validate";
 import * as rules from "vee-validate/dist/rules";
-import {url} from "vee-validate/dist/rules";
 import ar from "@/locales/ar-rules.json";
 import en from "@/locales/en-rules.json";
 import {urlRegex, passwordRegex} from "@/helpers";
@@ -17,11 +16,12 @@ configure({
 });
 localize(localStorage.getItem("lang") || "ar");
 
-extend("url", {
+extend("urlLink", {
   message:
-    localStorage.getItem("lang") === "ar" ? "من فضلك ادخل رابط صحيح" : "Please enter a valid URL",
+    localStorage.getItem("lang") === "ar" ? "من فضلك ادخل رابط صحيح" : "من فضلك ادخل رابط صحيح",
   validate: (value) => {
-    return urlRegex.test(value);
+    const urlRegex = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/
+    return urlRegex.test(value)
   },
 });
 

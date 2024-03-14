@@ -36,6 +36,26 @@ export default [
     },
   },
   {
+    path: "/dashboard/teacher-mission",
+    name: "teacher-mission",
+    component: () => import("../../../views/teacher/teacher-mission/index.vue"),
+    meta: {
+      breadcrumb: "المهام الدراسية",
+      preLabel: "المهام",
+      preLink: "/dashboard/teacher-mission",
+    },
+  },
+  {
+    path: "/dashboard/mission-detail/:id",
+    name: "mission-detail",
+    component: () => import("../../../views/teacher/teacher-mission/mission-detail/index.vue"),
+    meta: {
+      breadcrumb: " تفاصبل المهام الدراسية",
+      preLabel: "المهام",
+      preLink: "/dashboard/super-mission",
+    },
+  },
+  {
     path: "/dashboard/teacher-advertisements",
     name: "teacher-advertisements",
     component: () => import("../../../views/teacher/teacher-advertisement/index.vue"),

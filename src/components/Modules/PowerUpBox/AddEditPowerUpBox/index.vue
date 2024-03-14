@@ -6,7 +6,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditPowerUpBoxForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="6" class="mb-3">
+              <b-col lg="6" class="mt-3">
                 <div class="hold-field">
                   <TextField
                       v-model="createPowerUpBox.name"
@@ -60,7 +60,7 @@
                 </div>
               </b-col>
 
-              <b-col lg="4" class="mb-3">
+              <b-col lg="4" class="mt-3">
                 <div class="hold-field">
                   <TextField
                       v-model="createPowerUpBox.appear_after_missions"
@@ -291,11 +291,15 @@ export default {
         if (!success) return;
       });
       if (this.$route.params.id) {
-        if (this.createPowerUpBox.logo != null) {
+        if (this.createPowerUpBox.thumbnailChangedRequest) {
           this.$emit("handleEditBadge", this.createPowerUpBox);
         } else {
+          delete this.createPowerUpBox.thumbnail;
+          delete this.createPowerUpBox.thumbnailChangedRequest;
+          delete this.createPowerUpBox.thumbnail_name;
+          delete this.createPowerUpBox.thumbnail_size;
+          delete this.createPowerUpBox.thumbnailChanged;
           delete this.createPowerUpBox.logo;
-
           this.$emit("handleEditBadge", this.createPowerUpBox);
         }
       } else {

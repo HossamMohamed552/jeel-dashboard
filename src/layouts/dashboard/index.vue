@@ -1,19 +1,25 @@
 <template>
   <section>
-    <TopNav />
-    <BreadCrumb />
+    <TopNav/>
+    <BreadCrumb/>
     <transition name="router-view-fade" mode="in-out" appear>
       <router-view></router-view>
     </transition>
-    <CopyRight :isLayout="true" />
+    <CopyRight :isLayout="true"/>
   </section>
 </template>
 <script>
 import TopNav from "@/components/Layouts/TopNav/index.vue";
 import BreadCrumb from "@/components/Layouts/BreadCrumb/index.vue";
 import CopyRight from "@/components/Shared/CopyRight/index.vue";
+
 export default {
   name: "index",
+  data() {
+    return {
+      isParent: false,
+    };
+  },
   components: {
     TopNav,
     BreadCrumb,
@@ -31,4 +37,14 @@ export default {
 .router-view-fade-leave-to {
   opacity: 0;
 }
+//.holdParent{
+//  position: relative;
+//  .parent{
+//    position: absolute;
+//    top: 0;
+//    left: 0;
+//    right: 0;
+//    bottom: 0;
+//  }
+//}
 </style>

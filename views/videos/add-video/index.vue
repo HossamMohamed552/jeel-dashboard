@@ -54,7 +54,7 @@ export default {
       for (let learning=0; learning < $event.learning_styles.length; learning++){
         formData.append(`learning_styles[${learning}]`, $event.learning_styles[learning]);
       }
-      for (let languageSkill=0; languageSkill < $event.learning_styles.length; languageSkill++){
+      for (let languageSkill=0; languageSkill < $event.language_skills.length; languageSkill++){
         formData.append(`language_skills[${languageSkill}]`, $event.language_skills[languageSkill]);
       }
       this.loading = true;

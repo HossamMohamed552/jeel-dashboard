@@ -89,7 +89,6 @@ li {
 }
 .icon-password {
   position: absolute;
-  top: 53px;
   z-index: 10;
   right: 24px;
   display: flex !important;
@@ -99,6 +98,8 @@ li {
   width: 36px;
   padding: 8px;
   cursor: pointer;
+  top: 56px;
+  transform: translateY(-50%);
   &:lang(ar) {
     left: 24px;
     right: unset;

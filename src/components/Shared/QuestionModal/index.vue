@@ -46,15 +46,23 @@
                     ></TextField>
                   </b-col>
                   <b-col lg="12">
-                    <UploadAttachment :type-of-attachment="'audio'"
+                    <UploadAttachment
+                      v-if="!isEdit || questionVideo.video_head_question_audioChangedRequest"
+                                      :type-of-attachment="'audio'"
                                       :label="$t('QUESTIONS.QUESTION_header_AUDIO')"
                                       :name="'QUESTION_header_AUDIO'" :rules="'required'"
                                       :dropIdRef="'questionHeaderAUDIO'"
                                       :accept-files="'audio/*'"
-                                      @setFileId="setQuestionAudioFileId($event,'head_question_audio','headerQuestionAudioNotChange')"/>
-                    <p v-if="fileType.headerQuestionAudioNotChange"
-                       class="invalid-feedback d-block">مطلوب
-                      {{ $t('QUESTIONS.QUESTION_header_AUDIO') }}</p>
+                                      @setFileId="setQuestionAudioFileId($event,'head_question_audio','headerQuestionAudioNotChange','video_head_question_audioChangedRequest')"/>
+                    <p v-if="fileType.headerQuestionAudioNotChange" class="invalid-feedback d-block">مطلوب {{ $t('QUESTIONS.QUESTION_header_AUDIO') }}</p>
+                    <PreviewMedia
+                      v-if="isEdit  && !questionVideo.video_head_question_audioChangedRequest"
+                                  :header="$t('QUESTIONS.QUESTION_header_AUDIO')"
+                                  :media-name="questionVideo.video_head_question_audio_name"
+                                  :file-size="questionVideo.video_head_question_audio_size"
+                                  :typeOfMedia="'audio'"
+                                  @removeFile="removeFile('head_question_audio','headerQuestionAudioNotChange','video_head_question_audioChangedRequest')"
+                                  :show-remove-button="true"/>
                   </b-col>
                   <b-col lg="12">
                     <TextField
@@ -66,14 +74,24 @@
                     ></TextField>
                   </b-col>
                   <b-col lg="12">
-                    <UploadAttachment :type-of-attachment="'audio'"
+                    <UploadAttachment
+                      v-if="!isEdit || questionVideo.video_question_audioChangedRequest"
+                      :type-of-attachment="'audio'"
                                       :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
                                       :name="'QUESTION_TITLE_AUDIO'" :rules="'required'"
                                       :dropIdRef="'questionHeaderAUDIO'"
                                       :accept-files="'audio/*'"
-                                      @setFileId="setQuestionAudioFileId($event,'video_question_audio','questionAudioNotChange')"/>
+                                      @setFileId="setQuestionAudioFileId($event,'video_question_audio','questionAudioNotChange','video_question_audioChangedRequest')"/>
                     <p v-if="fileType.questionAudioNotChange" class="invalid-feedback d-block">مطلوب
                       {{ $t('QUESTIONS.QUESTION_TITLE_AUDIO') }}</p>
+                    <PreviewMedia
+                      v-if="isEdit  && !questionVideo.video_question_audioChangedRequest"
+                      :header="$t('QUESTIONS.QUESTION_header_AUDIO')"
+                      :media-name="questionVideo.video_question_audio_name"
+                      :file-size="questionVideo.video_question_audio_size"
+                      :typeOfMedia="'audio'"
+                      @removeFile="removeFile('video_question_audio','questionAudioNotChange','video_question_audioChangedRequest')"
+                      :show-remove-button="true"/>
                   </b-col>
                   <b-col lg="6" class="mt-3">
                     <SelectSearch
@@ -158,8 +176,13 @@
                       </Button>
                       <Button :custom-class="'submit-btn'" @click="addQuestion"
                               :disabled="invalid || fileType.headerQuestionAudioNotChange || fileType.questionAudioNotChange"
-                              v-if="answerSelected === 1">
+                              v-if="!isEdit && answerSelected === 1">
                         {{ $t("GLOBAL_SAVE") }}
+                      </Button>
+                      <Button :custom-class="'submit-btn'" @click="editQuestion"
+                              :disabled="invalid || fileType.headerQuestionAudioNotChange || fileType.questionAudioNotChange"
+                              v-if="isEdit && answerSelected === 1">
+                        {{ $t("GLOBAL_EDIT") }}
                       </Button>
                       <Button :custom-class="'submit-btn'" @click="addQuestion"
                               :disabled="invalid || answerHasNotAudio ||fileType.headerQuestionAudioNotChange || fileType.questionAudioNotChange"
@@ -186,10 +209,12 @@ import "vue2-datepicker/index.css";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import {getAllQuestionDifficultiesRequest} from "@/api/question";
 import UploadAttachment from "@/components/Shared/UploadAttachment/index.vue";
+import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 
 export default {
   name: "questionModal",
   components: {
+    PreviewMedia,
     UploadAttachment,
     SelectSearch,
     Button,
@@ -256,10 +281,19 @@ export default {
       ],
       questionVideo: {
         video_id: "",
-        question: "",
+
         head_question: "",
-        video_question_audio: null,
         head_question_audio: null,
+        video_head_question_audio_name: null,
+        video_head_question_audio_size: null,
+        video_head_question_audioChangedRequest: false,
+
+        question: "",
+        video_question_audio: null,
+        video_question_audio_name:'',
+        video_question_audio_size:'',
+        video_question_audioChangedRequest: false,
+
         question_slug: "true_false",
         question_type_id: 2,
         question_type_sub_id: 13,
@@ -358,14 +392,21 @@ export default {
     }
   },
   methods: {
-    setQuestionAudioFileId($event, fileName, fileChange) {
+    setQuestionAudioFileId($event, fileName, fileChange,fileRequest) {
       if ($event) {
         this.questionVideo[fileName] = $event
+        this.questionVideo[fileRequest] = true
         this.fileType[fileChange] = false
       } else {
         this.questionVideo[fileName] = null
+        this.questionVideo[fileRequest] = false
         this.fileType[fileChange] = true
       }
+    },
+    removeFile(fileName,fileChange,fileRequest){
+      this.fileType[fileChange] = true
+      this.questionVideo[fileName] = null
+      this.questionVideo[fileRequest] = true
     },
     async setAnswersAudioId($event, indexWillChange = 0) {
       if ($event) {
@@ -418,6 +459,9 @@ export default {
         },
       ]
     },
+    editQuestion(){
+      this.$emit('editQuestion', this.questionVideo)
+    },
     changeQuestionType($event) {
       if ($event === 'true_false') {
         this.questionVideo.question_slug = "true_false";
@@ -465,6 +509,18 @@ export default {
   updated() {
     if (this.isEdit) {
       this.questionVideo.question_time = this.questionEdit.question_time
+
+      this.questionVideo.head_question = this.questionEdit.head_question
+      this.questionVideo.head_question_audio = this.questionEdit.head_question_audio
+      this.questionVideo.video_head_question_audio_name = this.questionEdit.video_head_question_audio_name
+      this.fileType.headerQuestionAudioNotChange = false
+
+      this.questionVideo.question = this.questionEdit.question
+      this.questionVideo.video_question_audio = this.questionEdit.video_question_audio
+      this.questionVideo.video_question_audio_name = this.questionEdit.video_question_audio_name
+      this.questionVideo.video_question_audio_size = this.questionEdit.video_question_audio_size
+      this.fileType.questionAudioNotChange = false
+
       if (this.questionEdit?.question_type && this.questionEdit?.question_type?.id === 1) {
         this.questionVideo.question_slug = 'mcq'
         this.questionVideo.question_type_id = 1;

@@ -40,16 +40,9 @@ import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {mapGetters} from "vuex";
-import {
-  getAllStudentsForSuperVisorRequest,
-} from "@/api/user";
 import GenericForm from "@/components/Shared/GenericForm/index.vue";
-import {
-  getClasses,
-  getLevelsForSuperVisor,
-  getSTermsForSuperVisor,
-  getStudyYearsForSuperVisor
-} from "@/services/dropdownService";
+import {getClassesForTeacher, getLevelsForTeacher, getSTermsForTeacher, getStudyYearsForTeacher} from "@/services/dropdownService";
+import {getAllStudentsForTeacherRequest} from "@/api/teacher-module";
 
 export default {
   components: {GenericForm, Modal, ListItems, Button},
@@ -155,7 +148,7 @@ export default {
   },
   methods: {
     getAllStudents(values){
-      this.ApiService(getAllStudentsForSuperVisorRequest(values)).then((response)=>{
+      this.ApiService(getAllStudentsForTeacherRequest(values)).then((response)=>{
         this.students = response.data.data
         this.totalNumber = response.data.meta.total
       })
@@ -172,10 +165,10 @@ export default {
   },
   mounted() {
     this.getAllStudents();
-    getLevelsForSuperVisor(this.studentSearch, 'level_id')
-    getStudyYearsForSuperVisor(this.studentSearch, 'study_year_id')
-    getSTermsForSuperVisor(this.studentSearch, 'term_id')
-    getClasses(this.studentSearch, 'class_id')
+    getLevelsForTeacher(this.studentSearch, 'level_id')
+    getStudyYearsForTeacher(this.studentSearch, 'study_year_id')
+    getSTermsForTeacher(this.studentSearch, 'term_id')
+    getClassesForTeacher(this.studentSearch, 'class_id')
   },
 };
 </script>

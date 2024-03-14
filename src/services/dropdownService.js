@@ -42,6 +42,11 @@ import {
 } from "@/api/competition";
 import { getTermsForSupervisorRequest } from "@/api/term"; // الفيديوهات
 import {getClassForSuperRequest} from "@/api/class";
+import {
+  getClassForTeacherRequest,
+  getLevelsForTeacherDropDownRequest,
+  getStudyYearsForTeacherRequest, getTermsForTeacherRequest
+} from "@/api/teacher-module";
 // isSub = false
 export async function updateFieldOptions(array, key, data) {
   const selectOptionsField = array.find((field) => field.key === key);
@@ -197,4 +202,19 @@ export async function getGoalsForCompetiton(array, key, ids) {
 }
 export async function getClasses(array, key) {
   await fetchDataAndUpdateOptions(array, getClassForSuperRequest(), key);
+}
+export async function getClassesForTeacher(array, key) {
+  await fetchDataAndUpdateOptions(array, getClassForTeacherRequest(), key);
+}
+
+// teacher
+
+export async function getLevelsForTeacher(array, key) {
+  await fetchDataAndUpdateOptions(array, getLevelsForTeacherDropDownRequest(), key);
+}
+export async function getStudyYearsForTeacher(array, key) {
+  await fetchDataAndUpdateOptions(array, getStudyYearsForTeacherRequest(), key);
+}
+export async function getSTermsForTeacher(array, key) {
+  await fetchDataAndUpdateOptions(array, getTermsForTeacherRequest(), key);
 }
