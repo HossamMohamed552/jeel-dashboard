@@ -9,7 +9,7 @@ export const getCompetitionByIdRequest = (id) => ({
   method: "get",
   url: `competition/${id}`,
 });
-export const putEditCompetitionRequest = (id, data) => ({
+export const putEditCompetitionRequest = (data, id) => ({
   method: "put",
   url: `competition/${id}`,
   config: {
@@ -78,7 +78,6 @@ export const getrewardListRequest = (params) => ({
     params,
   },
 });
-
 
 export const postChangeQuestion = (data) => ({
   method: "post",

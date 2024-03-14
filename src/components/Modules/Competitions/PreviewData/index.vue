@@ -12,12 +12,59 @@
           <ShowItem v-else class="divider-show" :title="field?.label" :subtitle="field?.value" />
         </b-col>
         <b-col :lg="12">
+          <div class="list seasonal-mission-custom-list-item">
+            <div class="header">
+              <div class="list-of-item">
+                <p class="name-of-item">قائمة الاسئلة</p>
+              </div>
+            </div>
+            <b-table
+              striped
+              :head-variant="'gradient'"
+              :tbody-class="'custom-body'"
+              :items="questions"
+              :fields="questionsFieldsList"
+            >
+              <template v-slot:cell(question_difficulty)="data">
+                <div :class="data.item.question_difficulty.slug">
+                  {{ data.item.question_difficulty.name }}
+                </div>
+              </template>
+              <template v-slot:cell(question)="data">
+                <div v-if="typeof data.item.question === 'object'">
+                  <audio v-if="isAudio(data.item.question.question)" controls>
+                    <source :src="data.item.question.question" type="audio/mp3" />
+                    Your browser does not support the audio tag.
+                  </audio>
+                  <img
+                    v-else-if="isImage(data.item.question.question)"
+                    class="question-image"
+                    :src="data.item.question.question"
+                    alt="Image"
+                  />
+                  <div v-else>{{ data.item.question.question }}</div>
+                </div>
+                <div v-else>{{ data.item.question }}</div>
+              </template>
+              <template v-slot:empty>
+                <div class="text-center p-5">لا يوجد اسئلة لعرضها</div>
+              </template>
+              <template v-slot:cell(id)="data">
+                <div>
+                  {{ data.index + 1 }}
+                </div>
+              </template>
+            </b-table>
+          </div>
+        </b-col>
+        <b-col :lg="12">
           <ListItems
             class="seasonal-mission-custom-list-item"
             :tableItems="notificationsList"
             :headerName="'قائمة الإشعار'"
             :fieldsList="NotifacationFieldsList"
             :showSortControls="false"
+            :notHidePagination="false"
           >
           </ListItems>
         </b-col>
@@ -29,6 +76,7 @@
             :headerName="'قائمة الجوائز'"
             :fieldsList="prizeFieldsList"
             :showSortControls="false"
+            :notHidePagination="false"
           >
           </ListItems>
         </b-col>
@@ -75,11 +123,12 @@ export default {
     questions_ids: {
       type: Array,
       default: () => [],
-    }
+    },
   },
   data() {
     return {
       prizesList: [],
+      questions: [],
       notificationsList: [],
       prizeFieldsList: [
         { key: "id", label: "التسلسل" },
@@ -87,6 +136,28 @@ export default {
         { key: "max_percentage", label: "إلى نسبة" },
         { key: "prizeable_type_name", label: "نوع الجائزة" },
         { key: "prizeable_id_name", label: "الجائزة" },
+      ],
+      questionsFieldsList: [
+        {
+          key: "id",
+          label: this.$i18n.t("#"),
+        },
+        {
+          key: "question_type.name",
+          label: this.$i18n.t("QUESTION_TYPE"),
+        },
+        {
+          key: "sub_question_type.name",
+          label: this.$i18n.t("SUB_QUESTION_TYPE"),
+        },
+        {
+          key: "question",
+          label: this.$i18n.t("QUESTION"),
+        },
+        {
+          key: "question_difficulty",
+          label: this.$i18n.t("QUESTION_DIFFICULTY_TABLE"),
+        },
       ],
       NotifacationFieldsList: [
         { key: "id", label: "التسلسل" },
@@ -100,9 +171,14 @@ export default {
     };
   },
   methods: {
+    isAudio(url) {
+      return /\.(mp3|ogg|wav)$/i.test(url);
+    },
+    isImage(url) {
+      return /\.(png|jpg|jpeg|gif)$/i.test(url);
+    },
     async submitForm() {
       await this.updateFields();
-      console.log(this.submittedForm);
       if (this.$route.params.id) this.handleEditCompetition();
       else this.handleAddCompetition();
     },
@@ -112,8 +188,8 @@ export default {
       });
     },
     handleEditCompetition() {
-      this.handleDateToUpdate();
       this.submittedForm["_method"] = "PUT";
+      console.log(this.submittedForm);
       this.ApiService(putEditCompetitionRequest(this.submittedForm, this.$route.params.id)).then(
         () => {
           this.$router.push("/dashboard/competitions");
@@ -140,28 +216,14 @@ export default {
       });
       this.submittedForm["prizes"] = this.prizesList;
       this.submittedForm["notifications"] = this.notificationsList;
-      this.submittedForm["questions"] = this.questions_ids;
-    },
-
-    handleArray(key) {
-      this.submittedForm[key] = this.submittedForm[key].map((item) => item.id);
-      console.log(this.submittedForm);
-    },
-    handleObject(key) {
-      this.submittedForm[key] = this.submittedForm[key].map((item) => item.id);
-      console.log(this.submittedForm);
-    },
-    handleDateToUpdate() {
-      this.handleArray("countries");
-      this.handleArray("lessons");
-      this.handleArray("religions");
-      this.handleArray("types");
-      this.handleObject("seasonal_mission_group_id");
+      if (this.$route.params.id) {
+        this.submittedForm["questions"] = this.questions.map((item) => item.id);
+      } else this.submittedForm["questions"] = this.questions_ids;
     },
   },
   async mounted() {},
   computed: {
-    ...mapGetters(["getPrizesList", "getNotificationsList", "getVideosList", "getExercisesList"]),
+    ...mapGetters(["getPrizesList", "getNotificationsList", "getQuestionsList"]),
 
     showValue(values) {
       if (typeof values == Array) {
@@ -171,10 +233,9 @@ export default {
     },
   },
   mounted() {
-    this.videosList = this.getVideosList;
-    this.exercisesList = this.getExercisesList;
     this.prizesList = this.getPrizesList;
     this.notificationsList = this.getNotificationsList;
+    this.questions = this.getQuestionsList;
   },
   watch: {
     getPrizesList() {
