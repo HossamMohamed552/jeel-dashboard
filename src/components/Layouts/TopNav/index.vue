@@ -42,6 +42,7 @@
                       </div>
                     </template>
                     <b-dropdown-item to="/profile">{{ $t("MY_PROFILE") }}</b-dropdown-item>
+                    <b-dropdown-item to="/choose-student" v-if="this.$store.getters.user.roles[0].type.key === 'parent_management'">{{ $t("CHOOSE_ANOTHER_CHILD") }}</b-dropdown-item>
                     <b-dropdown-item @click="logout">{{ $t("GLOBAL_LOGOUT") }}</b-dropdown-item>
                   </b-dropdown>
                 </div>
@@ -241,6 +242,7 @@
                       </div>
                     </template>
                     <b-dropdown-item to="/view-profile">{{ $t("profile-page") }}</b-dropdown-item>
+                    <b-dropdown-item to="/choose-student" v-if="this.$store.getters.user.roles[0].type.key === 'parent_management'">{{ $t("CHOOSE_ANOTHER_CHILD") }}</b-dropdown-item>
                     <b-dropdown-item @click="logout">{{ $t("GLOBAL_LOGOUT") }}</b-dropdown-item>
                   </b-dropdown>
                 </div>
@@ -274,6 +276,16 @@
                 <ul class="routes-school-admin">
                   <router-link tag="li" :to="routeTeacher.path" v-for="(routeTeacher, index) in routesTeacher" :key="index" class="nav-item">
                     {{ routeTeacher.name }}</router-link>
+                </ul>
+              </div>
+            </div>
+            <!--/-->
+            <!-- routes for parent -->
+            <div v-if="Array.from(routesParent).length >= 1">
+              <div>
+                <ul class="routes-school-admin">
+                  <router-link tag="li" :to="routeParent.path" v-for="(routeParent, index) in routesParent" :key="index" class="nav-item">
+                    {{ routeParent.name }}</router-link>
                 </ul>
               </div>
             </div>
@@ -513,7 +525,7 @@ import {
   routeSuperVisor,
   routesPrizes,
   routesJeelStores,
-  routeSchoolAdmin, routesTeacher
+  routeSchoolAdmin, routesTeacher, routesParent
 } from "@/globalData";
 import { mapActions } from "vuex";
 
@@ -534,6 +546,7 @@ export default {
     routesJeelStores: [],
     routeSchoolAdmin: [],
     routesTeacher: [],
+    routesParent: [],
     collapseMode: false,
   }),
   watch: {
@@ -554,6 +567,7 @@ export default {
         this.routeSuperVisor = this.getRoutes(routeSuperVisor);
         this.routeSchoolAdmin = this.getRoutes(routeSchoolAdmin);
         this.routesTeacher = this.getRoutes(routesTeacher);
+        this.routesParent = this.getRoutes(routesParent);
       },
       immediate: true,
     },

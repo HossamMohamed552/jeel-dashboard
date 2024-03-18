@@ -561,7 +561,65 @@ let routesTeacher = [
     permission: "view-teacher-announcements",
   },
 ];
+let routesParent = [
+  {
+    name: "الدخول اليومى",
+    path: "/dashboard/daily-login",
+    altImage: "parent-daily-login",
+    titleImage: "parent-daily-login",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-studnet-parent-daily-login",
+  },
+  {
+    name: "المهام",
+    path: "/dashboard/parent-missions",
+    altImage: "parent-missions",
+    titleImage: "parent-missions",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-studnet-parent-missions",
+  },
+  {
+    name: "التعليقات",
+    path: "/dashboard/parent-comments",
+    altImage: "parent-comments",
+    titleImage: "parent-comments",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-studnet-parent-comments",
+  },
+  {
+    name: "الانجازات",
+    path: "/dashboard/parent-achievements",
+    altImage: "parent-achievements",
+    titleImage: "parent-achievements",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-studnet-parent-achievements",
+  },
+  {
+    name: "المنافسات",
+    path: "/dashboard/parent-competitions",
+    altImage: "parent-competitions",
+    titleImage: "parent-competitions",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-studnet-parent-competitions",
+  },
+  {
+    name: "المواسم",
+    path: "/dashboard/parent-seasonal-missions",
+    altImage: "parent-seasonal-missions",
+    titleImage: "parent-seasonal-missions",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-studnet-parent-seasonal-missions",
+  },
+  {
+    name: "لوحة الصدارة",
+    path: "/dashboard/parent-leaderboard",
+    altImage: "parent-leaderboard",
+    titleImage: "parent-leaderboard",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-studnet-parent-leaderboard",
+  },
 
+];
 export {
   routesUsers,
   routesSchool,
@@ -574,5 +632,6 @@ export {
   routesPrizes,
   routesJeelStores,
   routeSchoolAdmin,
-  routesTeacher
+  routesTeacher,
+  routesParent
 };

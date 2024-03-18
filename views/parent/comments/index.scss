@@ -1,0 +1,50 @@
+@import "src/assets/style/scss/_variables";
+.tabs{
+  color: $color-paragraph-alt;
+  display: flex;
+  border-bottom: 1px solid #8C8C8C;
+  margin-top: 2rem;
+  .tap{
+    padding: 0 1rem .5rem 1rem;
+    cursor: pointer;
+    transition: all ease-in-out .2s;
+    border-bottom: 2px solid transparent;
+    font-weight: bold;
+    width: 170px;
+    text-align: center;
+    &:first-of-type{
+      padding: 0 0 2rem 0;
+    }
+  }
+  .active{
+    color: $color-primary;
+    border-bottom: 2px solid $color-primary;
+    position: relative;
+    transition: all ease-in-out .2s;
+    &:after{
+      content: "";
+      display: block;
+      width: 0;
+      height: 0;
+      border-right: 20px solid transparent;
+      border-left: 20px solid transparent;
+      border-top: 20px solid transparent;
+      border-bottom: 20px solid $color-primary;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
+.title-content{
+  color: $color-paragraph-alt;
+  margin: 1rem 0;
+}
+.title{
+  font-size: 1.2rem !important;
+}
+.subtitle{
+  font-size: 1rem !important;
+  color: $color-paragraph-alt !important;
+}

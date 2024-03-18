@@ -9,12 +9,25 @@
       </div>
     </div>
     <div class="search-sort" v-if="showSortControls">
-      <div class="search">
-        <div v-if="showSearchInput">
-          <b-form-input v-model="inputValue" placeholder="بحث" class="search-input"/>
-          <img src="@/assets/images/icons/search.svg"/>
-        </div>
-      </div>
+     <div class="d-flex justify-content-between align-content-center">
+       <div class="search">
+         <div v-if="showSearchInput">
+           <b-form-input v-model="inputValue" placeholder="بحث" class="search-input"/>
+           <img src="@/assets/images/icons/search.svg"/>
+         </div>
+       </div>
+       <div v-if="showDateRange" class="ml-3">
+         <date-picker
+           v-model="dateRange"
+           type="date"
+           range
+           placeholder="حدد الفتره الزمنية"
+           valueType="format"
+           :disabled-date="disabledBeforeTodayAndAfterAWeek"
+           @change="setDate($event)"
+         ></date-picker>
+       </div>
+     </div>
       <div class="sort">
         <img src="@/assets/images/icons/sort.svg"/>
         <select @change="orderBy">
@@ -24,6 +37,9 @@
           </option>
         </select>
       </div>
+    </div>
+    <div class="tabs">
+      <slot name="tabs"></slot>
     </div>
     <div class="hold-table">
       <b-table
@@ -110,6 +126,9 @@
         </template>
         <template #cell(original_url)="data">
           <AudioFakePlayer :data="data"/>
+        </template>
+        <template #cell(percentage_mission)="data">
+          <span>{{data.item.percentage_mission}}%</span>
         </template>
         <template #cell(audio_ar)="data">
           <audio controls>
@@ -237,9 +256,13 @@
         <template #cell(edit)="data">
           <Button
             :custom-class="'transparent-btn rounded-btn'"
-            @click="goToMissionContent(data.item.id, data.item.mission_id)"
+            @click="editItem(data.item)"
             :disabled="data.item.is_selected === false"
           >تعديل المحتوى
+          </Button>
+        </template>
+        <template #cell(editActions)="data">
+          <Button :custom-class="'transparent-btn rounded-btn'" @click="detailItem(data.item)">تفاصيل
           </Button>
         </template>
         <template #cell(status.key)="data">
@@ -404,13 +427,15 @@ import Button from "@/components/Shared/Button/index.vue";
 import AudioFakePlayer from "@/components/Shared/AudioFakePlayer/index.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
-import {type} from "os";
-
+import DatePicker from "vue2-datepicker";
+import "vue2-datepicker/locale/en";
+import "vue2-datepicker/index.css";
 export default {
   name: "index",
   components: {
     Button,
     AudioFakePlayer,
+    DatePicker
   },
   data() {
     return {
@@ -418,6 +443,7 @@ export default {
       deleteIcon: require("@/assets/delete.svg"),
       inputValue: "",
       items: [],
+      dateRange: [],
       switchSort: "DESC",
       formValues: {
         per_page: 10,
@@ -425,10 +451,11 @@ export default {
         name: "",
         order: "",
         order_by: "",
+        startDate: "",
+        endDate: "",
       },
     };
   },
-
   computed: {
     ...mapGetters(["user"]),
     activePage() {
@@ -450,6 +477,10 @@ export default {
     },
   },
   props: {
+    showDateRange:{
+      type: Boolean,
+      default: false,
+    },
     showSearchInput: {
       type: Boolean,
       default: true,
@@ -603,7 +634,6 @@ export default {
     },
   },
   methods: {
-    type,
     goToMissionContent(pathId, missionId) {
       this.$router.push(`/dashboard/path-content/${pathId}/mission/${missionId}`);
     },
@@ -621,6 +651,17 @@ export default {
     }, 500),
     orderBy(event) {
       this.formValues.order = event.target.value;
+      this.$emit("refetch", this.formValues);
+    },
+    disabledBeforeTodayAndAfterAWeek(date) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      return date > today || date > new Date(today.getTime() + 7 * 24 * 3600 * 1000);
+    },
+    setDate($event) {
+      this.formValues.startDate = $event[0]
+      this.formValues.endDate = $event[1]
       this.$emit("refetch", this.formValues);
     },
     detailItem(item) {

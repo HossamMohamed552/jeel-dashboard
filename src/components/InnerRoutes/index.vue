@@ -3,7 +3,28 @@
     <div v-if="!isSuperVisor" class="supervisor-section">
       <b-row>
         <b-col lg="3">
-          <div class="user-info profile-card item-card">
+          <div class="user-info profile-card item-card" v-if="this.$store.getters.user.roles[0].type.key === 'parent_management'">
+            <div>
+              <div class="img-container">
+                <span>
+                  <img
+                    v-if="currentChild?.image"
+                    :src="currentChild?.image"
+                    alt="avatar"
+                    title="avatar"
+                    @error="altImage($event)"
+                  />
+                  <i v-else class="far fa-user"></i>
+                </span>
+              </div>
+              <div class="hold-info">
+                <p class="name">{{ currentChild.name }}</p>
+                <p class="role" v-if="currentChild?.level && currentChild?.level?.name">{{$t('PARENT.child_student')}}{{ currentChild.level.name }}</p>
+                <p class="school-name" v-if="currentChild?.school?.name">{{ currentChild.school.name }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="user-info profile-card item-card" v-else>
             <div>
               <div class="img-container">
                 <span>
@@ -208,6 +229,9 @@ export default {
     },
     user() {
       return this.$store.getters.user;
+    },
+    currentChild() {
+      return this.$store.getters.currentChild;
     },
   },
   mounted() {

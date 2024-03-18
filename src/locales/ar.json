@@ -131,7 +131,18 @@
     "schoolName": "اسم المدرسة",
     "date": "اليوم",
     "time": "النشاط",
-    "studentName": "اسم الطالب"
+    "studentName": "اسم الطالب",
+    "loginDate": "يوم السجل",
+    "enterTime": "وقت الدخول",
+    "missionName": "اسم المهمة",
+    "start_date": "تاريخ بداية المهمة",
+    "end_date": "تاريخ نهاية المهمة",
+    "percentage_mission": "التقدم فى المهمة",
+    "taskName": "اسم التسجيل الصوتى",
+    "paperWorkName": "اسم ورقة العمل",
+    "finalDegree": "الدرجة النهائية",
+    "correctionDegree": "درجة التصحيح",
+    "comment": "التعليق"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -634,6 +645,7 @@
   "MISSSION_DETAILS": "تفاصيل المرحلة",
   "BACK": "رجوع",
   "MY_PROFILE": "حسابي",
+  "CHOOSE_ANOTHER_CHILD": "اختيار ملف طفل اخر",
   "EDIT_MY_PROFILE": "تعديل الملف الشخصي",
   "CHANGE_PASSWORD": "تغيير كلمة المرور",
   "PERSONAL_INFO": "البيانات الشخصية",
@@ -845,6 +857,7 @@
     "studentData": "بيانات الطالب"
   },
   "PARENT": {
-    "myChildren": "أطفالى"
+    "myChildren": "أطفالى",
+    "child_student": "طالب"
   }
 }
