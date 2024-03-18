@@ -23,6 +23,7 @@ import {postLoginRequest, postVerifyRequest} from "@/api/register";
 import {mapActions} from "vuex";
 import Modal from "@/components/Shared/Modal/index.vue";
 import LoginComponent from "@/components/LoginAdmin/index.vue";
+import {log} from "video.js";
 
 export default {
   name: "login",
