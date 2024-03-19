@@ -25,7 +25,7 @@
               <!-- </div> -->
               <div class="info-admin">
                 <div class="name-role">
-                  <p class="name">{{ user.name }}</p>
+                  <p class="name"v-if="user">{{ user.name }}</p>
                   <!--                  <p class="role">جيل أدمن</p>-->
                 </div>
                 <div class="dropdown-container" :dir="$i18n.locale == 'ar' ? 'ltr' : 'rtl'">
@@ -42,7 +42,7 @@
                       </div>
                     </template>
                     <b-dropdown-item to="/profile">{{ $t("MY_PROFILE") }}</b-dropdown-item>
-                    <b-dropdown-item to="/choose-student" v-if="this.$store.getters.user.roles[0].type.key === 'parent_management'">{{ $t("CHOOSE_ANOTHER_CHILD") }}</b-dropdown-item>
+                    <b-dropdown-item to="/choose-student" v-if="$store.getters.user.roles[0].type.key === 'parent_management'">{{ $t("CHOOSE_ANOTHER_CHILD") }}</b-dropdown-item>
                     <b-dropdown-item @click="logout">{{ $t("GLOBAL_LOGOUT") }}</b-dropdown-item>
                   </b-dropdown>
                 </div>

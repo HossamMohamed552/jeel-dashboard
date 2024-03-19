@@ -60,6 +60,7 @@
       border-radius: 2rem;
       margin: 0 auto;
       cursor: pointer;
+      min-height: 230px;
     }
     .student-image{
       width: 100px;
@@ -78,11 +79,13 @@
     }
     .student-name{
       margin: 1rem 0;
-      font-size: 1.1rem;
+      font-size: 1rem;
+      font-weight: 600;
       color: #000;
     }
     .student-class{
       color: #3086CD;
+      font-weight: 600;
     }
   }
 }

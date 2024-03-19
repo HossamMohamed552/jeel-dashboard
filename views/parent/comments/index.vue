@@ -30,13 +30,19 @@
           </div>
           <div v-else>تفاصيل ورقة العمل</div>
           <b-row>
+            <b-col lg="12" v-if="activeTap === 1">
+              <AudioFakePlayer :url="detail.task_audio_student" :with-background="true"/>
+            </b-col>
+            <b-col lg="12" v-else>
+              <img :src="detail.paper_work_student" class="paperwork-img">
+            </b-col>
             <b-col lg="4">
               <h2 class="title">اسم المهمة</h2>
-              <p class="subtitle">{{detail.mission.name}}</p>
+              <p class="subtitle" v-if="detail.mission">{{detail.mission.name}}</p>
             </b-col>
             <b-col lg="4">
               <h2 class="title">المسار</h2>
-              <p class="subtitle">{{detail.learningPath.name}}</p>
+              <p class="subtitle" v-if="detail.learningPath">{{detail.learningPath.name}}</p>
             </b-col>
             <b-col lg="4">
               <h2 class="title" v-if="activeTap === 1">اسم التسجيل الصوتى</h2>
@@ -77,10 +83,11 @@ import {
 import {mapGetters} from "vuex";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
+import AudioFakePlayer from "@/components/Shared/AudioFakePlayer/index.vue";
 
 export default {
   name: "index",
-  components: {Button, GeneralModal, ListItems},
+  components: {Button, GeneralModal, ListItems,AudioFakePlayer},
   data() {
     return {
       taskFieldsList: [

@@ -19,8 +19,9 @@
               </div>
               <div class="hold-info">
                 <p class="name">{{ currentChild.name }}</p>
-                <p class="role" v-if="currentChild?.level && currentChild?.level?.name">{{$t('PARENT.child_student')}}{{ currentChild.level.name }}</p>
+                <p class="role" v-if="currentChild?.class && currentChild?.class?.name">{{$t('PARENT.child_student')}} - {{ currentChild.class.level.name }}</p>
                 <p class="school-name" v-if="currentChild?.school?.name">{{ currentChild.school.name }}</p>
+                <p class="school-name" v-if="currentChild?.class && currentChild?.class?.name">{{ currentChild?.class && currentChild?.class?.name }}</p>
               </div>
             </div>
           </div>
