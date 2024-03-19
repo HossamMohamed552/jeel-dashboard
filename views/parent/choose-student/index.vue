@@ -17,8 +17,8 @@
               <p class="student-name">
                 {{ child.name }}
               </p>
-              <p class="student-class" v-if="child.level">
-                {{ child.level.name }}
+              <p class="student-class" v-if="child?.class && child?.class?.name">
+                {{ child?.class.level.name }}
               </p>
             </div>
           </b-col>
