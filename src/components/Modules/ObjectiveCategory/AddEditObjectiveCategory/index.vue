@@ -86,7 +86,7 @@ import Modal from "@/components/Shared/Modal/index.vue";
 import { getObjectiveCategoryByIdRequest } from "@/api/objective";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import { getAllLearningPathsRequest } from "@/api/learningPath";
-import { getLessonsRequest } from "@/api/lessons";
+import {getAllLessonsRequest, getLessonsRequest} from "@/api/lessons";
 import { debounce } from "lodash";
 export default {
   components: {
@@ -144,7 +144,7 @@ export default {
     },
     getLessons: debounce(function () {
       this.selectedLearningPath = this.formValues.learning_path_id;
-      this.ApiService(getLessonsRequest({ learning_path_id: this.selectedLearningPath })).then(
+      this.ApiService(getAllLessonsRequest({ learning_path_id: this.selectedLearningPath })).then(
         (response) => {
           this.lessons = response.data.data;
         }

@@ -238,12 +238,12 @@ import {getAllLearningPathsRequest} from "@/api/learningPath";
 import {getAllLevelsRequest} from "@/api/level";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import {getAllTermsRequest} from "@/api/term";
-import {getLessonsRequest} from "@/api/lessons";
+import {getAllLessonsRequest, getLessonsRequest} from "@/api/lessons";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import UploadAttachment from "@/components/Shared/UploadAttachment";
-import {getBloomCategoriesRequest} from "@/api/bloom";
+import {getAllBloomCategoriesRequest, getBloomCategoriesRequest} from "@/api/bloom";
 import {getAllLearningMethodsRequest} from "@/api/question";
-import {getLearningSkillsRequest} from "@/api/learning-skill";
+import {getAllLearningSkillsRequest, getLearningSkillsRequest} from "@/api/learning-skill";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
 import {vueVimeoPlayer} from "vue-vimeo-player";
@@ -363,7 +363,7 @@ export default {
       this.createVideo[fileRequest] = true
     },
     getBloomCategories() {
-      this.ApiService(getBloomCategoriesRequest())
+      this.ApiService(getAllBloomCategoriesRequest())
         .then((response) => {
           this.bloom = response.data.data;
         })
@@ -429,7 +429,7 @@ export default {
     },
     getAllLessonBasedOnPath() {
       this.ApiService(
-        getLessonsRequest({learning_path_id: this.createVideo.learning_path_id})
+        getAllLessonsRequest({learning_path_id: this.createVideo.learning_path_id})
       ).then((response) => {
         this.lessons = response.data.data;
       });
@@ -452,7 +452,7 @@ export default {
         })
     },
     getLearningSkills() {
-      this.ApiService(getLearningSkillsRequest())
+      this.ApiService(getAllLearningSkillsRequest())
         .then((response) => {
           this.learningSkills = response.data.data;
         })

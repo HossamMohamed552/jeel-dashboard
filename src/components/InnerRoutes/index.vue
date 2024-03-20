@@ -3,7 +3,8 @@
     <div v-if="!isSuperVisor" class="supervisor-section">
       <b-row>
         <b-col lg="3">
-          <div class="user-info profile-card item-card" v-if="this.$store.getters.user.roles[0].type.key === 'parent_management'">
+          <div class="user-info profile-card item-card"
+               v-if="this.$store.getters.user.roles[0].type.key === 'parent_management'">
             <div>
               <div class="img-container">
                 <span>
@@ -19,9 +20,13 @@
               </div>
               <div class="hold-info">
                 <p class="name">{{ currentChild.name }}</p>
-                <p class="role" v-if="currentChild?.class && currentChild?.class?.name">{{$t('PARENT.child_student')}} - {{ currentChild.class.level.name }}</p>
-                <p class="school-name" v-if="currentChild?.school?.name">{{ currentChild.school.name }}</p>
-                <p class="school-name" v-if="currentChild?.class && currentChild?.class?.name">{{ currentChild?.class && currentChild?.class?.name }}</p>
+                <p class="role" v-if="currentChild?.class && currentChild?.class?.name">
+                  {{ $t('PARENT.child_student') }} - {{ currentChild.class.level.name }}</p>
+                <p class="school-name" v-if="currentChild?.school?.name">{{
+                    currentChild.school.name
+                  }}</p>
+                <p class="school-name" v-if="currentChild?.class && currentChild?.class?.name">
+                  {{ currentChild?.class && currentChild?.class?.name }}</p>
               </div>
             </div>
           </div>
@@ -169,7 +174,7 @@ import ChartCompetition from "@/components/ChartCompetitions/ChartCompetitions.v
 import LeaderBoard from "@/components/LeaderBoard/LeaderBoard.vue";
 import {
   getAllStatisticsRequest,
-  getAllStatisticsSchoolAdminRequest,
+  getAllStatisticsSchoolAdminRequest, getAllStatisticsStudentRequest,
   getAllStatisticsSuperVisorRequest
 } from "@/api/statistics";
 
@@ -246,6 +251,10 @@ export default {
       })
     } else if (this.user && this.user.roles && this.user.roles[0]?.type.key === "supervisors_management") {
       this.ApiService(getAllStatisticsSuperVisorRequest()).then((response) => {
+        this.statistics = response.data.data;
+      });
+    } else if (this.user && this.user.roles && this.user.roles[0]?.type.key === "parent_management") {
+      this.ApiService(getAllStatisticsStudentRequest(this.currentChild.id)).then((response) => {
         this.statistics = response.data.data;
       });
     }

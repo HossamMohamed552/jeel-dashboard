@@ -1,6 +1,5 @@
 <template>
   <div :class="withBackground ? 'withBackground' :''">
-    <p v-if="url" class="heading">التسجيل الصوتى</p>
     <audio v-show="false" @ended="handleAudioEnd" ref="audio" controls>
       <source v-if="data?.item?.original_url" :src="data?.item?.original_url"/>
       <source v-if="data?.item?.audio" :src="data?.item?.audio"/>
@@ -34,6 +33,7 @@ export default {
   methods: {
     handleFakePlay() {
       const audio = this.$refs.audio;
+      console.log('audio',audio)
       if (this.isPlaying) {
         audio.pause();
       } else {

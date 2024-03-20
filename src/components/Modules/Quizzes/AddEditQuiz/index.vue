@@ -521,7 +521,7 @@ import {
 } from "@/api/quiz";
 import draggable from "vuedraggable";
 import QuestionDetailsModal from "@/components/Shared/QuestionDetailsModal/index.vue";
-import {getLessonsRequest} from "@/api/lessons";
+import {getAllLessonsRequest, getLessonsRequest} from "@/api/lessons";
 import {getQuizTypeListRequest, getSortQuizTypeRequest} from "@/api/system";
 import {debounce} from "lodash";
 import {log} from "video.js";
@@ -854,7 +854,7 @@ export default {
       this.isEditable = true;
     },
     setLessonsBasedLearningPathId: debounce(function ($event) {
-      this.ApiService(getLessonsRequest({learning_path_id: $event})).then(
+      this.ApiService(getAllLessonsRequest({learning_path_id: $event})).then(
         (response) => {
           this.lessons = response.data.data;
           if (!this.$route.params.id) {

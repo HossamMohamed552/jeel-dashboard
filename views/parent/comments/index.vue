@@ -56,7 +56,8 @@
             </b-col>
             <b-col lg="4" class="my-2">
               <h2 class="title">الدرجة النهائية</h2>
-              <p class="subtitle">{{ detail.task_degree }}</p>
+              <p class="subtitle" v-if="activeTap === 1">{{ detail.task_degree }}</p>
+              <p class="subtitle" v-else>{{ detail.paperwork_degree}}</p>
             </b-col>
             <b-col lg="4" class="my-2">
               <h2 class="title">الدرجة</h2>
@@ -122,19 +123,19 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
-          key: "paperwork_degree",
+          key: "name",
           label: this.$i18n.t("TABLE_FIELDS.paperWorkName"),
         },
         {
-          key: "finalDegree",
+          key: "paper_work_degree",
           label: this.$i18n.t("TABLE_FIELDS.finalDegree"),
         },
         {
-          key: "correctionDegree",
+          key: "student_final_degree",
           label: this.$i18n.t("TABLE_FIELDS.correctionDegree"),
         },
         {
-          key: "comment",
+          key: "note",
           label: this.$i18n.t("TABLE_FIELDS.comment"),
         },
         {
