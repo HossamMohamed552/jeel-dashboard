@@ -8,6 +8,9 @@ export const getLessonsRequest = (params) => ({
 export const getAllLessonsRequest = (params) => ({
   method: "get",
   url: `lesson?list_all=true`,
+  config: {
+    params,
+  },
 });
 export const getLessonsDepenseLearningPathRequest = (params) => ({
   method: "get",

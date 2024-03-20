@@ -293,12 +293,12 @@ import {getSingleAudioRequest} from "@/api/audios";
 import {getAllLearningPathsRequest} from "@/api/learningPath";
 import {getAllLevelsRequest} from "@/api/level";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
-import {getLessonsRequest} from "@/api/lessons";
+import {getAllLessonsRequest, getLessonsRequest} from "@/api/lessons";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import UploadAttachment from "@/components/Shared/UploadAttachment";
-import {getBloomCategoriesRequest} from "@/api/bloom";
+import {getAllBloomCategoriesRequest, getBloomCategoriesRequest} from "@/api/bloom";
 import {getAllLearningMethodsRequest} from "@/api/question";
-import {getLearningSkillsRequest} from "@/api/learning-skill";
+import {getAllLearningSkillsRequest, getLearningSkillsRequest} from "@/api/learning-skill";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import {debounce} from "lodash";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
@@ -436,7 +436,7 @@ export default {
     //   this.formValues.video_without_music = $event;
     // },
     getBloomCategories() {
-      this.ApiService(getBloomCategoriesRequest())
+      this.ApiService(getAllBloomCategoriesRequest())
         .then((response) => {
           this.bloom = response.data.data;
         })
@@ -516,7 +516,7 @@ export default {
     },
     getAllLessonBasedOnPath: debounce(function (name) {
       this.ApiService(
-        getLessonsRequest({
+        getAllLessonsRequest({
           learning_path_id: this.formValues.learning_path_id,
         })
       ).then((response) => {
@@ -529,7 +529,7 @@ export default {
       });
     },
     getLearningSkills() {
-      this.ApiService(getLearningSkillsRequest()).then((response) => {
+      this.ApiService(getAllLearningSkillsRequest()).then((response) => {
         this.learningSkills = response.data.data;
       });
     },

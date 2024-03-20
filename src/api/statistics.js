@@ -12,9 +12,9 @@ export const getAllStatisticsSchoolAdminRequest = (params) => ({
     params,
   },
 });
-export const getAllStatisticsSuperVisorRequest = (params) => ({
+export const getAllStatisticsStudentRequest = (id,params) => ({
   method: "get",
-  url: "supervisor/statistics",
+  url: `/parent/student/${id}/statistics`,
   config: {
     params,
   },

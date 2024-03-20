@@ -291,10 +291,10 @@ import {getAllTermsRequest} from "@/api/term";
 import axios from "axios";
 import {decode} from "qs/lib/utils";
 import UploadAttachment from "@/components/Shared/UploadAttachment";
-import {getLessonsRequest} from "@/api/lessons";
+import {getAllLessonsRequest, getLessonsRequest} from "@/api/lessons";
 import {getAllLearningMethodsRequest} from "@/api/question";
-import {getLearningSkillsRequest} from "@/api/learning-skill";
-import {getBloomCategoriesRequest} from "@/api/bloom";
+import {getAllLearningSkillsRequest, getLearningSkillsRequest} from "@/api/learning-skill";
+import {getAllBloomCategoriesRequest, getBloomCategoriesRequest} from "@/api/bloom";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
@@ -521,7 +521,7 @@ export default {
       });
     },
     getBloomCategories() {
-      this.ApiService(getBloomCategoriesRequest())
+      this.ApiService(getAllBloomCategoriesRequest())
         .then((response) => {
           this.bloom = response.data.data;
         })
@@ -531,7 +531,7 @@ export default {
     },
     getAllLessonBasedOnPath() {
       this.ApiService(
-        getLessonsRequest({learning_path_id: this.createPaperWork.learning_path_id})
+        getAllLessonsRequest({learning_path_id: this.createPaperWork.learning_path_id})
       ).then((response) => {
         this.lessons = response.data.data;
       });
@@ -542,7 +542,7 @@ export default {
       });
     },
     getLearningSkills() {
-      this.ApiService(getLearningSkillsRequest()).then((response) => {
+      this.ApiService(getAllLearningSkillsRequest()).then((response) => {
         this.learningSkills = response.data.data;
       });
     },

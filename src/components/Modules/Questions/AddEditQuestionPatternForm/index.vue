@@ -334,7 +334,7 @@ export default {
       this.formValues[keyName] = $event
     },
     setLessonsBasedLearningPathId($event){
-      this.ApiService(getLessonsRequest({learning_path_id: $event})).then((response) => {
+      this.ApiService(getAllLessonsRequest({learning_path_id: $event})).then((response) => {
         this.lessons = response.data.data
         this.formValues.lesson_id = null
       })

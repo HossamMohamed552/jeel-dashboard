@@ -782,7 +782,13 @@
     "students": "عدد الطلاب",
     "parents": "عدد أولياء الأمور",
     "announcements": "الإعلانات",
-    "competitions": "المسابقات"
+    "competitions": "المسابقات",
+    "achievements": "الانجازات",
+    "jeel_coins": "عملات جيل",
+    "jeel_gems": "جميز جيل",
+    "leaderboard": "لوحة الصدارة",
+    "mission_completed": "المهام المكتملة",
+    "level": "الصفوف الدراسية"
   },
   "SOCIAL_MEDIA": {
     "FACEBOOK": "فيس بوك",

@@ -5,6 +5,13 @@ export const getBloomCategoriesRequest = (params) => ({
     params,
   },
 });
+export const getAllBloomCategoriesRequest = (params) => ({
+  method: "get",
+  url: `bloom_categories?list_all=true`,
+  config: {
+    params,
+  },
+});
 export const getBloomCategoryByIdRequest = (id) => ({
   method: "get",
   url: `bloom_categories/${id}`,
