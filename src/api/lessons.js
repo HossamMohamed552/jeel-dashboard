@@ -40,7 +40,7 @@ export const deleteLessonRequest = (id) => ({
 });
 export const getLessonsByLearningPathRequest = (params) => ({
   method: "get",
-  url: `lesson`,
+  url: `lesson?list_all=true`,
   config: {
     params,
   },

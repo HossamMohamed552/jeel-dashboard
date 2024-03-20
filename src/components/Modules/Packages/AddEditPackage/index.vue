@@ -254,7 +254,7 @@ export default {
       });
     },
     getCurrency() {
-      this.ApiService(getCurrencyRequest()).then((response) => {
+      this.ApiService(getCurrencyRequest({list_all:true})).then((response) => {
         this.currencyList = response.data.data;
       });
     },

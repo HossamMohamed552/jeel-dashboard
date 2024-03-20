@@ -158,14 +158,14 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import UploadAttachment from "@/components/Shared/UploadAttachment";
 import Button from "@/components/Shared/Button/index.vue";
-import { getSingleSchoolsRequest } from "@/api/school";
+import {getSingleSchoolsRequest} from "@/api/school";
 import Modal from "@/components/Shared/Modal/index.vue";
 // Dropdown List
-import { getAllSchoolGroupRequest } from "@/api/schoolGroup";
-import { getSchoolDepartmentTypesRequest } from "@/api/school-department-type";
-import { getAllCountryRequest } from "@/api/country";
-import { getSchoolDegreeTypesRequest } from "@/api/school-degree-type";
-import { getSchoolLanguagesRequest } from "@/api/school-languages";
+import {getAllSchoolGroupRequest} from "@/api/schoolGroup";
+import {getSchoolDepartmentTypesRequest} from "@/api/school-department-type";
+import {getAllCountryRequest} from "@/api/country";
+import {getSchoolDegreeTypesRequest} from "@/api/school-degree-type";
+import {getSchoolLanguagesRequest} from "@/api/school-languages";
 import {
   getAllMusicStatusRequest,
   getAllStatusRequest,
@@ -178,7 +178,7 @@ import "vue2-datepicker/index.css";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
   components: {
@@ -403,7 +403,7 @@ export default {
         }
       });
       if (this.$route.params.id)
-      formData.append("_method", "put")
+        formData.append("_method", "put")
       const requestConfig = {
         headers: {
           Authorization: `Bearer ${VueCookies.get("token")}`,
@@ -448,7 +448,7 @@ export default {
     async getSchoolToEdit() {
       if (this.$route.params.id) {
         const response = await this.ApiService(getSingleSchoolsRequest(this.$route.params.id));
-        const { data } = response.data;
+        const {data} = response.data;
 
         this.createSchool = {
           name: data.name,
@@ -493,19 +493,19 @@ export default {
     },
 
     async getSchoolDepartmentTypes() {
-      await this.fetchDataAndUpdateOptions(getSchoolDepartmentTypesRequest(), "SCHOOL.SCHOOL_TYPE");
+      await this.fetchDataAndUpdateOptions(getSchoolDepartmentTypesRequest({list_all:true}), "SCHOOL.SCHOOL_TYPE");
     },
 
     async getSchoolDegreeTypes() {
       await this.fetchDataAndUpdateOptions(
-        getSchoolDegreeTypesRequest(),
+        getSchoolDegreeTypesRequest({list_all: true}),
         "SCHOOL.SCHOOL_CERTIFICATE_TYPE"
       );
     },
 
     async getSchoolLanguages() {
       await this.fetchDataAndUpdateOptions(
-        getSchoolLanguagesRequest(),
+        getSchoolLanguagesRequest({list_all: true}),
         "SCHOOL.LEARNING_LANGAUAGE"
       );
     },
