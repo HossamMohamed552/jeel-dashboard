@@ -261,7 +261,7 @@ import {
   postChangeStatusRequest, getAllRolesOrganizationRequest,
 } from "@/api/user";
 
-import {getAllNationaltyRequest} from "@/api/country";
+import {getAllCountryRequest, getAllNationaltyRequest} from "@/api/country";
 import {getAllGenderRequest, getAllReligionRequest} from "@/api/system";
 
 import _ from "lodash";
@@ -375,7 +375,7 @@ export default {
 
     // All Dropdown
     getAllCountries() {
-      this.ApiService(getAllNationaltyRequest()).then((response) => {
+      this.ApiService(getAllCountryRequest()).then((response) => {
         this.countries = response.data.data;
       });
     },

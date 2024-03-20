@@ -255,6 +255,7 @@ export default {
       let params = {
         country_id : this.formValues.country_id,
         school_group_id : this.formValues.school_group_id,
+        list_all: true
       }
       if (this.formValues.school_group_id && this.formValues.country_id){
         this.getSchools(params)
@@ -360,7 +361,7 @@ export default {
       });
     },
     getCurrency() {
-      this.ApiService(getCurrencyRequest()).then((response) => {
+      this.ApiService(getCurrencyRequest({list_all:true})).then((response) => {
         this.currencyList = response.data.data;
       });
     },
@@ -375,12 +376,12 @@ export default {
       });
     }, 500),
     getSchoolYears() {
-      this.ApiService(getSchoolYearRequest()).then((response) => {
+      this.ApiService(getSchoolYearRequest({list_all:true})).then((response) => {
         this.schoolYearsList = response.data.data;
       });
     },
     getLevels() {
-      this.ApiService(getLevelsRequest(event)).then((response) => {
+      this.ApiService(getLevelsRequest({list_all:true})).then((response) => {
         this.levelsList = response.data.data;
       });
     },
@@ -390,7 +391,7 @@ export default {
       });
     },
     getPackages() {
-      this.ApiService(getPackagesRequest()).then((response) => {
+      this.ApiService(getPackagesRequest({list_all:true})).then((response) => {
         this.packagesList = response.data.data;
       });
     },

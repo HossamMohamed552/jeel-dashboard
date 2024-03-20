@@ -204,12 +204,12 @@ export default {
       });
     },
     getSchools() {
-      this.ApiService(getSchoolsRequest()).then((response) => {
+      this.ApiService(getSchoolsRequest({list_all:true})).then((response) => {
         this.schoolsOptions = response.data.data;
       });
     },
     getSchoolYears() {
-      this.ApiService(getSchoolYearRequest()).then((response) => {
+      this.ApiService(getSchoolYearRequest({list_all:true})).then((response) => {
         this.schoolYearsOptions = response.data.data;
       });
     },

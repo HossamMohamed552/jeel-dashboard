@@ -305,7 +305,7 @@ import { TogglePasswordMixins } from "@/mixins/TogglePasswordMixins";
 import { deleteProfileImageRequest, postChangeStatusRequest } from "@/api/user";
 import { getAllSchoolGroupRequest, getSingleSchoolGroupRequest } from "@/api/schoolGroup";
 
-import { getAllNationaltyRequest } from "@/api/country";
+import {getAllCountryRequest, getAllNationaltyRequest} from "@/api/country";
 import { postAddUserSchoolRequest } from "@/api/user";
 import {
   getAllGenderRequest,
@@ -410,7 +410,7 @@ export default {
 
     // All Dropdown
     getAllCountries() {
-      this.ApiService(getAllNationaltyRequest()).then((response) => {
+      this.ApiService(getAllCountryRequest()).then((response) => {
         this.countries = response.data.data;
       });
     },
