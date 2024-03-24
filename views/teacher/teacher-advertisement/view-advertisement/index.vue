@@ -11,18 +11,6 @@
           <b-col lg="4">
             <ShowItem :title="$t('ads.superLevel')" :subtitle="adObject.level.name"/>
           </b-col>
-          <b-col lg="4" v-if="adObject && adObject.teachers && typeof  adObject.teachers === 'object'">
-            <ShowItem
-              :title="$t('ads.superTeachersTo')"
-              :listItems="adObject.teachers"
-            />
-          </b-col>
-          <b-col lg="4" v-else>
-            <ShowItem
-              :title="$t('ads.superTeachersTo')"
-              :subtitle="adObject.teachers"
-            />
-          </b-col>
           <b-col lg="4">
             <ShowItem :title="$t('ads.subject')" :subtitle="adObject.subject"/>
           </b-col>
@@ -38,7 +26,7 @@
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import { getAnnouncementByIdRequest } from "@/api/announcement";
+import {getAnnouncementByIdForTeacherRequest} from "@/api/teacher-module";
 export default {
   name: "index",
   components: {
@@ -50,7 +38,7 @@ export default {
     };
   },
   mounted() {
-    this.ApiService(getAnnouncementByIdRequest(this.$route.params.id)).then((response) => {
+    this.ApiService(getAnnouncementByIdForTeacherRequest(this.$route.params.id)).then((response) => {
       this.adObject = response.data.data;
     });
   },

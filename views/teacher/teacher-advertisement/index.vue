@@ -9,7 +9,7 @@
       :loading="loading"
       @detailItem="detailItem($event)"
       @refetch="getAnnouncement"
-      :permission_view="'show-announcements'"
+      :permission_view="'show-teacher-announcements'"
     >
     </ListItems>
   </section>
@@ -36,8 +36,7 @@ export default {
           key: "id",
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
-        {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.superLevel')},
-        {key: "teachers", label: this.$i18n.t('TABLE_FIELDS.superTeachersTo')},
+        {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.levelTeacher')},
         {key: "subject", label: this.$i18n.t('TABLE_FIELDS.subject')},
         {key: "description", label: this.$i18n.t('ads.superDescription')},
         {
@@ -65,7 +64,7 @@ export default {
         });
     },
     detailItem($event) {
-      this.$router.push(`/dashboard/advertisements/show/${$event}`);
+      this.$router.push(`/dashboard/teacher-advertisements/show/${$event}`);
     },
   },
   mounted() {

@@ -48,11 +48,7 @@
             </div>
             <div class="col-12 px-0" v-if="activeTap === 2">
               <b-row>
-                <b-col
-                  lg="4"
-                  v-for="paperWork in paperWorkContent"
-                  :key="paperWork.id"
-                >
+                <b-col lg="4" v-for="paperWork in paperWorkContent" :key="paperWork.id">
                   <div class="hold-permissions">
                     <b-form-checkbox
                       v-model="paperWorkSelected"
@@ -79,12 +75,7 @@
             </div>
             <div class="col-12 px-0" v-if="activeTap === 3">
               <b-row>
-                <b-col
-                  lg="6"
-                  v-for="quiz in quizContent"
-                  :key="quiz.id"
-                  class="mb-5"
-                >
+                <b-col lg="6" v-for="quiz in quizContent" :key="quiz.id" class="mb-5">
                   <div class="hold-permissions">
                     <b-form-checkbox
                       v-model="quizSelected"
