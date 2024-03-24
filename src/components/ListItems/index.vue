@@ -265,6 +265,13 @@
           <Button :custom-class="'transparent-btn rounded-btn'" @click="detailItem(data.item)">تفاصيل
           </Button>
         </template>
+        <template #cell(showMissions)="data">
+          <Button :custom-class="'transparent-btn rounded-btn'" @click="detailItem(data.item)">عرض المهام
+          </Button>
+        </template>
+        <template #cell(missionContent)="data">
+          <Button :custom-class="'transparent-btn rounded-btn'" @click="detailItem(data.item)">محتوى المهمة</Button>
+        </template>
         <template #cell(status.key)="data">
           <b-form-checkbox
             v-model="data.value"

@@ -26,11 +26,20 @@ export const getSingleClassForTeacherRequest = (params) => ({
 })
 export const getAnnouncementForTeacherRequest = (params) => ({
   method: "get",
-  url: `teacher/announcement`,
+  url: `teacher/announcements`,
   config: {
     params,
   },
 });
+export const getAnnouncementByIdForTeacherRequest = (id) => ({
+  method: "get",
+  url: `teacher/announcement/${id}`,
+});
+export const getDetailMissionsWithLearningPathsForTeacher = (studentId,missionId) => ({
+  method: "get",
+  url: `teacher/student/${studentId}/mission/${missionId}`,
+});
+
 export const getStudyYearsForTeacherRequest = (data) => ({
   method: "get",
   url: `teacher/study_years`,
@@ -64,6 +73,21 @@ export const getAllStudentsForTeacherRequest = (params) => ({
     params,
   },
 });
+export const getAllMissionsCorrectionForTeacherRequest = (params) => ({
+  method: "get",
+  url: `teacher/missions/correction/students`,
+  config: {
+    params,
+  },
+});
+export const getMissionsPerStudentForTeacherRequest = (id,params) => ({
+  method: "get",
+  url: `teacher/students/${id}/missions`,
+  config: {
+    params,
+  },
+});
+
 export  const  getStudentForTeacher = (id) => ({
   method: "get",
   url: `teacher/student/${id}`,

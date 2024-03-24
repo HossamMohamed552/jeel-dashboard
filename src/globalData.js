@@ -530,9 +530,9 @@ let routesTeacher = [
   },
   {
     name: "تصحيح المهام",
-    path: "/dashboard/teacher-mission",
-    altImage: "missions-teacher",
-    titleImage: "missions-teacher",
+    path: "/dashboard/teacher-revision-mission",
+    altImage: "teacher-revision-mission",
+    titleImage: "teacher-revision-mission",
     icon: require("@/assets/images/icons/steps.svg"),
     permission: "view-teacher-revision-missions",
   },

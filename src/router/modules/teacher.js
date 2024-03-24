@@ -46,13 +46,33 @@ export default [
     },
   },
   {
-    path: "/dashboard/mission-detail/:id",
+    path: "/dashboard/teacher-revision-mission",
+    name: "teacher-revision-mission",
+    component: () => import("../../../views/teacher/teacher-mission-revision/index.vue"),
+    meta: {
+      breadcrumb: "تصحيح المهام",
+      preLabel: "المهام",
+      preLink: "/dashboard/teacher-mission",
+    },
+  },
+  {
+    path: "/dashboard/teacher/missions-student/show/:id",
+    name: "teacher-revision-mission",
+    component: () => import("../../../views/teacher/teacher-mission-revision/view-mission/index.vue"),
+    meta: {
+      breadcrumb: "المهام الدراسية",
+      preLabel: "المهام",
+      preLink: "/dashboard/teacher-mission",
+    },
+  },
+  {
+    path: "/dashboard/teacher/missions-student/show/:studentId/:missionId",
     name: "mission-detail",
-    component: () => import("../../../views/teacher/teacher-mission/mission-detail/index.vue"),
+    component: () => import("../../../views/teacher/teacher-mission-revision/view-mission-content/index.vue"),
     meta: {
       breadcrumb: " تفاصبل المهام الدراسية",
-      preLabel: "المهام",
-      preLink: "/dashboard/super-mission",
+      preLabel: "المهام الدراسية",
+      preLink: "/dashboard/teacher-mission",
     },
   },
   {
@@ -70,7 +90,7 @@ export default [
     meta: {
       breadcrumb: "تفاصيل الرسالة",
       preLabel: "قائمة الرسائل",
-      preLink: "/teacher-advertisements",
+      preLink: "/dashboard/teacher-advertisements",
     },
   },
   //

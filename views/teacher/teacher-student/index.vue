@@ -29,9 +29,10 @@
       :show-sort-controls="false"
       @detailItem="detailItem($event)"
       @refetch="getAllStudents"
-      :permission_view="'show-teacher-students'"
+      :permission_view="'show-users'"
     >
     </ListItems>
+    <!--      show-teacher-students-->
   </section>
 </template>
 
