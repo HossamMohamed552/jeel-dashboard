@@ -700,7 +700,12 @@
     "email": "البريد الالكترونى",
     "social_media": "روابط التواصل الإجتماعى",
     "school": "المدرسة",
-    "enrollment_school_date": "تاريخ الإنضمام"
+    "enrollment_school_date": "تاريخ الإنضمام",
+    "final_degree": "الدرجة النهائية",
+    "student_degree" : "الدرجة",
+    "student_degree_placeholder": "اكتب الدرجة هنا",
+    "note": "التعليق",
+    "note_placeholder": "اكتب التعليق هنا"
   },
   "superMission": {
     "missionDetail": "تفاصيل المهام الدراسية",
