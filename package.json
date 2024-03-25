@@ -6,7 +6,7 @@
     "start": "npm run serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:jeel": "vue-cli-service build --mode build_jeel",
+    "build:jeel": "vue-cli-service build --mode jeel",
     "build:sure": "vue-cli-service build --mode sure",
     "lint": "vue-cli-service lint"
   },
