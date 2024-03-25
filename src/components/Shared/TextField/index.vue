@@ -5,7 +5,7 @@
     :rules="rules"
     class="p-relative text-field"
   >
-    <label v-if="label" :class="isRequired && 'required-flag'">
+    <label v-if="label" :class="[isRequired ? 'required-flag':'',customClass]">
       <!-- <span v-if="typeof rules === 'string' && rules.includes('required')"><i class="fa-solid fa-asterisk"></i></span>
       <span v-else-if="typeof rules === 'object' && rules.required"><i class="fa-solid fa-asterisk"></i></span> -->
       {{ label }}
@@ -40,6 +40,10 @@ export default {
       default: false,
     },
     placeholder: {
+      type: String,
+      default: ""
+    },
+    customClass:{
       type: String,
       default: ""
     }

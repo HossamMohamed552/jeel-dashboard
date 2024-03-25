@@ -272,6 +272,10 @@
         <template #cell(missionContent)="data">
           <Button :custom-class="'transparent-btn rounded-btn'" @click="detailItem(data.item)">محتوى المهمة</Button>
         </template>
+        <template #cell(teacher_review)="data">
+          <Button :custom-class="'transparent-btn rounded-btn'" @click="detailItemCorrection(data.item)">
+            {{ data.item.teacher_review.teacher_correction.name }}</Button>
+        </template>
         <template #cell(status.key)="data">
           <b-form-checkbox
             v-model="data.value"
@@ -678,6 +682,9 @@ export default {
         this.$emit("detailItem", item.id);
       }
     },
+    detailItemCorrection(item) {
+      this.$emit("detailItemCorrection", item);
+    },
     editItem(item) {
       this.$emit("editItem", item.id);
     },
@@ -897,7 +904,13 @@ export default {
       this.$router.push("/dashboard/advertisements/add");
     },
     async downloadImg(item) {
-      window.open(item.paper_work_with_color_full_url, "_blank", "noreferrer");
+      if (item.paper_work_with_color_full_url){
+        window.open(item.paper_work_with_color_full_url, "_blank", "noreferrer");
+      } else if (item.paper_work_student){
+        window.open(item.paper_work_student, "_blank", "noreferrer");
+      } else if(item.task_audio){
+        window.open(item.task_audio, "_blank", "noreferrer");
+      }
       // try {
       //   const response = await axios.get(`${item.url}`, {
       //     responseType: 'arraybuffer'

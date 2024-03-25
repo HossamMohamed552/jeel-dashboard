@@ -92,3 +92,18 @@ export  const  getStudentForTeacher = (id) => ({
   method: "get",
   url: `teacher/student/${id}`,
 })
+export  const  correctionTask = (data) => ({
+  method: "put",
+  url: `teacher/task/correction`,
+  config:{
+    data
+  }
+})
+export  const  correctionPaperWork = (data) => ({
+  method: "put",
+  url: `teacher/paperwork/correction`,
+  config:{
+    data
+  }
+})
+
