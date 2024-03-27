@@ -175,7 +175,7 @@ import LeaderBoard from "@/components/LeaderBoard/LeaderBoard.vue";
 import {
   getAllStatisticsRequest,
   getAllStatisticsSchoolAdminRequest, getAllStatisticsStudentRequest,
-  getAllStatisticsSuperVisorRequest
+  getAllStatisticsSuperVisorRequest, getAllStatisticsTeacherRequest
 } from "@/api/statistics";
 
 export default {
@@ -256,6 +256,10 @@ export default {
       });
     } else if (this.user && this.user.roles && this.user.roles[0]?.type.key === "parent_management") {
       this.ApiService(getAllStatisticsStudentRequest(this.currentChild.id)).then((response) => {
+        this.statistics = response.data.data;
+      });
+    } else if (this.user && this.user.roles && this.user.roles[0]?.type.key === "teachers_management") {
+      this.ApiService(getAllStatisticsTeacherRequest()).then((response) => {
         this.statistics = response.data.data;
       });
     }
