@@ -369,9 +369,12 @@
               {{ $t("CONTROLS.AddVideo") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkAddStudent(data) === 'show'"></b-dropdown-divider>
-            <b-dropdown-item v-if="checkAddStudent(data) === 'show'"
-                             @click="addStudentOnClassItem(data.item)">
+            <b-dropdown-item v-if="checkAddStudent(data) === 'show'" @click="addStudentOnClassItem(data.item)">
               {{ $t("CONTROLS.addStudentOnClassBtn") }}
+            </b-dropdown-item>
+            <b-dropdown-divider v-if="checkAddStudentForGroup(data) === 'show'"></b-dropdown-divider>
+            <b-dropdown-item v-if="checkAddStudentForGroup(data) === 'show'" @click="addStudentOnGroupItem(data.item)">
+              {{ $t("CONTROLS.addStudentOnGroupBtn") }}
             </b-dropdown-item>
             <b-dropdown-divider v-if="checkDelete(data) === 'show'"></b-dropdown-divider>
             <b-dropdown-item v-if="checkDelete(data) === 'show'" @click="deleteItem(data.item)">
@@ -525,6 +528,10 @@ export default {
       default: "",
     },
     permission_addStudent: {
+      type: String,
+      default: "",
+    },
+    permission_add_studentForGroup:{
       type: String,
       default: "",
     },
@@ -682,6 +689,9 @@ export default {
         this.$emit("detailItem", item.id);
       }
     },
+    addStudentOnGroupItem(item){
+      this.$emit('addStudentOnGroupItem',item)
+    },
     detailItemCorrection(item) {
       this.$emit("detailItemCorrection", item);
     },
@@ -789,6 +799,13 @@ export default {
     },
     checkAddParent() {
       if (this.user.permissions.includes(`${this.add_parent}`)) {
+        return "show";
+      } else {
+        return "hide";
+      }
+    },
+    checkAddStudentForGroup(){
+      if (this.user.permissions.includes(`${this.permission_add_studentForGroup}`)) {
         return "show";
       } else {
         return "hide";

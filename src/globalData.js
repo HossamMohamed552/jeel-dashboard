@@ -366,6 +366,14 @@ let routeSuperVisor = [
     icon: require("@/assets/images/icons/steps.svg"),
     permission: "view-announcements",
   },
+  {
+    name: "لوحة الصدارة",
+    path: "/dashboard/super-leaderboard",
+    altImage: "view-leaderboard",
+    titleImage: "view-leaderboard",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-super-leaderboard",
+  },
 ];
 let routeSchoolAdmin =[
   {
@@ -505,20 +513,20 @@ let routesJeelStores = [
 ];
 let routesTeacher = [
   {
-    name: "الفصول",
-    path: "/dashboard/teacher-class",
-    altImage: "teacher-class",
-    titleImage: "teacher-class",
-    icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-teacher-classes",
-  },
-  {
     name: "الصفوف الدراسية",
     path: "/dashboard/teacher-level",
     altImage: "teacher-level",
     titleImage: "teacher-level",
     icon: require("@/assets/images/icons/steps.svg"),
     permission: "view-teacher-levels",
+  },
+  {
+    name: "الفصول",
+    path: "/dashboard/teacher-class",
+    altImage: "teacher-class",
+    titleImage: "teacher-class",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-teacher-classes",
   },
   {
     name: "المهام",
@@ -559,6 +567,14 @@ let routesTeacher = [
     titleImage: "view-advertisements",
     icon: require("@/assets/images/icons/steps.svg"),
     permission: "view-teacher-announcements",
+  },
+  {
+    name: "لوحة الصدارة",
+    path: "/dashboard/teacher-leaderboard",
+    altImage: "view-leaderboard",
+    titleImage: "view-leaderboard",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-teacher-leaderboard",
   },
 ];
 let routesParent = [

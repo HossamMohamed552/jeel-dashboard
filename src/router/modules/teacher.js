@@ -26,6 +26,36 @@ export default [
     },
   },
   {
+    path: "/dashboard/teacher-group/add",
+    name: "teacher-group-add",
+    component: () => import("../../../views/teacher/teacher-group/add-teacher-group/index.vue"),
+    meta: {
+      breadcrumb: "إضافة مجموعة",
+      preLabel: "الفصول",
+      preLink: "/dashboard/teacher-class",
+    },
+  },
+  {
+    path: "/dashboard/teacher-group/edit/:id",
+    name: "teacher-group-edit",
+    component: () => import("../../../views/teacher/teacher-group/edit-teacher-group/index.vue"),
+    meta: {
+      breadcrumb: "تعديل المجموعة",
+      preLabel: "الفصول",
+      preLink: "/dashboard/teacher-class",
+    },
+  },
+  {
+    path: "/dashboard/teacher-group/show/:id",
+    name: "teacher-group-view",
+    component: () => import("../../../views/teacher/teacher-group/view-teacher-group/index.vue"),
+    meta: {
+      breadcrumb: "تفاصيل المجموعة",
+      preLabel: "الفصول",
+      preLink: "/dashboard/teacher-class",
+    },
+  },
+  {
     path: "/dashboard/teacher-class/show/:id",
     name: "show-teacher-class",
     component: () => import("../../../views/teacher/teacher-class/view-teacher-class/index.vue"),
@@ -110,6 +140,22 @@ export default [
       breadcrumb: "تفاصيل الطالب",
       preLabel: "قائمة الطلاب",
       preLink: "/dashboard/teacher-students",
+    },
+  },
+  {
+    path: "/dashboard/teacher-students",
+    name: "view-teacher-students",
+    component: () => import("../../../views/teacher/teacher-student/index.vue"),
+    meta: {
+      breadcrumb: "الطلاب",
+    },
+  },
+  {
+    path: "/dashboard/teacher-leaderboard",
+    name: "view-teacher-leaderboard",
+    component: () => import("../../../views/teacher/teacher-leaderboard/index.vue"),
+    meta: {
+      breadcrumb: "لوحة الصدارة",
     },
   },
 ]

@@ -6,6 +6,7 @@ import teacher from "./modules/teacher";
 import welcomeModal from "./modules/welcomeModal";
 import seasonalMission from "./modules/seasonalMission";
 import competition from "./modules/competition";
+import group from "@/store/modules/group";
 
 Vue.use(Vuex);
 
@@ -17,5 +18,6 @@ export default new Vuex.Store({
     welcomeModal,
     seasonalMission,
     competition,
+    group
   },
 });
