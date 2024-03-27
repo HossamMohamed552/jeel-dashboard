@@ -1,64 +1,72 @@
 export const getLevelsForTeacherRequest = (params) => ({
-  method: 'get',
-  url: 'teacher/levels',
-  config: {params}
-})
+  method: "get",
+  url: "teacher/levels",
+  config: { params },
+});
 export const getSingleLevelForTeacherRequest = (params) => ({
-  method: 'get',
+  method: "get",
   url: `teacher/levels/${params}`,
-})
+});
 export const getLevelsForTeacherDropDownRequest = (params) => ({
-  method: 'get',
-  url: 'teacher/list/levels',
-  config: {params}
-})
+  method: "get",
+  url: "teacher/list/levels",
+  config: { params },
+});
+export const getClassesForTeacherDropDownRequest = (id) => ({
+  method: "get",
+  url: `teacher/classes?list_all=true&level_id=${id}`,
+});
+export const getGroupsForTeacherDropDownRequest = (id) => ({
+  method: "get",
+  url: `teacher/groups/${id}`,
+});
 
 export const getClassForTeacherRequest = (params) => ({
-  method: 'get',
-  url: 'teacher/classes',
+  method: "get",
+  url: "teacher/classes",
   config: {
-    params
-  }
-})
+    params,
+  },
+});
 export const getSingleClassForTeacherRequest = (params) => ({
-  method: 'get',
+  method: "get",
   url: `teacher/classes/${params}`,
-})
-export const getStudentsForClassTeacherRequest = (classId,params) => ({
-  method: 'get',
+});
+export const getStudentsForClassTeacherRequest = (classId, params) => ({
+  method: "get",
   url: `teacher/classes/${classId}/students`,
-  config:{
-    params
-  }
-})
-export const getGroupsOfClassTeacherRequest = (classId,params) => ({
-    method: 'get',
-    url: `teacher/groups/${classId}`,
-    config:{
-      params
-    }
-  })
-export const getClassGroupIdByIdRequest = (classId,params) => ({
-  method: 'get',
-  url: `teacher/group/${classId}`,
-  config:{
-    params
-  }
-})
-export const putClassGroupRequest = (classId,data) => ({
-  method: 'put',
+  config: {
+    params,
+  },
+});
+export const getGroupsOfClassTeacherRequest = (classId, params) => ({
+  method: "get",
   url: `teacher/groups/${classId}`,
-  config:{
-    data
-  }
-})
+  config: {
+    params,
+  },
+});
+export const getClassGroupIdByIdRequest = (classId, params) => ({
+  method: "get",
+  url: `teacher/group/${classId}`,
+  config: {
+    params,
+  },
+});
+export const putClassGroupRequest = (classId, data) => ({
+  method: "put",
+  url: `teacher/groups/${classId}`,
+  config: {
+    data,
+  },
+});
 export const postAddStudentForGroupRequest = (data) => ({
-  method: 'post',
+  method: "post",
   url: `teacher/groups/students`,
-  config:{
-    data
-  }
-})
+  config: {
+    data,
+  },
+});
 
 export const getAnnouncementForTeacherRequest = (params) => ({
   method: "get",
@@ -71,7 +79,7 @@ export const getAnnouncementByIdForTeacherRequest = (id) => ({
   method: "get",
   url: `teacher/announcement/${id}`,
 });
-export const getDetailMissionsWithLearningPathsForTeacher = (studentId,missionId) => ({
+export const getDetailMissionsWithLearningPathsForTeacher = (studentId, missionId) => ({
   method: "get",
   url: `teacher/student/${studentId}/mission/${missionId}`,
 });
@@ -84,24 +92,24 @@ export const getStudyYearsForTeacherRequest = (data) => ({
   },
 });
 export const getTermsForTeacherRequest = (params) => ({
-  method: 'get',
-  url: 'teacher/terms',
-  config: {params}
-})
+  method: "get",
+  url: "teacher/terms",
+  config: { params },
+});
 export const getTeacherMissionsRequest = (params) => ({
   method: "get",
   url: `teacher/missions`,
   config: {
-    params
-  }
-})
+    params,
+  },
+});
 export const getTeacherPowerUpBoxRequest = (params) => ({
-  method: 'get',
+  method: "get",
   url: `teacher/power-up-boxes`,
   config: {
-    params
-  }
-})
+    params,
+  },
+});
 export const getAllStudentsForTeacherRequest = (params) => ({
   method: "get",
   url: `teacher/students/users`,
@@ -109,7 +117,7 @@ export const getAllStudentsForTeacherRequest = (params) => ({
     params,
   },
 });
-export const getAllStudentsInGroupForTeacherRequest = (groupId,params) => ({
+export const getAllStudentsInGroupForTeacherRequest = (groupId, params) => ({
   method: "get",
   url: `/teacher/group/${groupId}/students`,
   config: {
@@ -124,7 +132,7 @@ export const getAllMissionsCorrectionForTeacherRequest = (params) => ({
     params,
   },
 });
-export const getMissionsPerStudentForTeacherRequest = (id,params) => ({
+export const getMissionsPerStudentForTeacherRequest = (id, params) => ({
   method: "get",
   url: `teacher/students/${id}/missions`,
   config: {
@@ -132,29 +140,28 @@ export const getMissionsPerStudentForTeacherRequest = (id,params) => ({
   },
 });
 
-export  const  getStudentForTeacher = (id) => ({
+export const getStudentForTeacher = (id) => ({
   method: "get",
   url: `teacher/student/${id}`,
-})
-export  const  correctionTask = (data) => ({
+});
+export const correctionTask = (data) => ({
   method: "put",
   url: `teacher/task/correction`,
-  config:{
-    data
-  }
-})
-export  const  correctionPaperWork = (data) => ({
+  config: {
+    data,
+  },
+});
+export const correctionPaperWork = (data) => ({
   method: "put",
   url: `teacher/paperwork/correction`,
-  config:{
-    data
-  }
-})
-export  const  postClassGroupRequest = (data) => ({
+  config: {
+    data,
+  },
+});
+export const postClassGroupRequest = (data) => ({
   method: "post",
   url: `teacher/groups`,
-  config:{
-    data
-  }
-})
-
+  config: {
+    data,
+  },
+});

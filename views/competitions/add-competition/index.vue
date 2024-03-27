@@ -61,10 +61,7 @@ import AddEditNotification from "@/components/Modules/addEditNotification";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import Stepper from "@/components/Shared/Stepper/index.vue";
-import {
-  getArrangmentListRequest,
-  postCreateCompetitonRequest,
-} from "@/api/competition";
+import { getArrangmentListRequest, postCreateCompetitonRequest } from "@/api/competition";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -131,6 +128,7 @@ export default {
           rules: "required",
           multiple: false,
         },
+
         {
           key: "missions",
           disabled: true,
@@ -174,6 +172,33 @@ export default {
           multiple: false,
         },
         {
+          key: "class_id",
+          disabled: true,
+          col: "4",
+          listen: "id",
+          type: "select",
+          optionValue: "name",
+          label: "الفصل الدراسي",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+        },
+        {
+          key: "groups",
+          disabled: true,
+          col: "4",
+          listen: "id",
+          type: "select",
+          optionValue: "name",
+          label: "المجموعات",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+          multiple: true,
+        },
+        {
           key: "start_date",
           label: "بداية المسابقة",
           col: "2",
@@ -200,7 +225,7 @@ export default {
           value: "",
           placeholder: "22:00",
           type: "text",
-          rules: "required",
+          rules: { required: true, regex: /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/ },
         },
       ],
       prizeForm: [
@@ -363,7 +388,12 @@ export default {
       });
     },
   },
-  mounted() {},
+
+  mounted() {
+    if (!this.user.permissions.includes("add-teacher-competitions")) {
+      this.competitionInfoForm.splice(6, 2);
+    }
+  },
   beforeMount() {
     this.emptyStore();
   },

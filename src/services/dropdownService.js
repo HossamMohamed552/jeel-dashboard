@@ -41,11 +41,14 @@ import {
   getOutcomesForCompetitonRequest, // مخرجات التعلم
 } from "@/api/competition";
 import { getTermsForSupervisorRequest } from "@/api/term"; // الفيديوهات
-import {getClassForSuperRequest} from "@/api/class";
+import { getClassForSuperRequest } from "@/api/class";
 import {
   getClassForTeacherRequest,
-  getLevelsForTeacherDropDownRequest,
-  getStudyYearsForTeacherRequest, getTermsForTeacherRequest
+  getLevelsForTeacherDropDownRequest, //  الصفوف المدرسية
+  getStudyYearsForTeacherRequest,
+  getTermsForTeacherRequest,
+  getClassesForTeacherDropDownRequest, // الفصل الدراسي
+  getGroupsForTeacherDropDownRequest, // المجموعات
 } from "@/api/teacher-module";
 // isSub = false
 export async function updateFieldOptions(array, key, data) {
@@ -214,6 +217,12 @@ export async function getLevelsForTeacher(array, key) {
 }
 export async function getStudyYearsForTeacher(array, key) {
   await fetchDataAndUpdateOptions(array, getStudyYearsForTeacherRequest(), key);
+}
+export async function getClassesForTeacherDropDown(array, key, id) {
+  await fetchDataAndUpdateOptions(array, getClassesForTeacherDropDownRequest(id), key);
+}
+export async function getGroupsForTeacherDropDown(array, key, id) {
+  await fetchDataAndUpdateOptions(array, getGroupsForTeacherDropDownRequest(id), key);
 }
 export async function getSTermsForTeacher(array, key) {
   await fetchDataAndUpdateOptions(array, getTermsForTeacherRequest(), key);

@@ -10,6 +10,8 @@
       :missions="mission_ids"
       :objective_id="this.objective_id"
       :outcome_id="this.outcome_id"
+      :class_id="this.class_id"
+      :groups="this.groups_ids"
       @nextStep="nextStep"
       @handleCancel="handleCancel"
     >
@@ -178,6 +180,33 @@ export default {
           multiple: false,
         },
         {
+          key: "class_id",
+          disabled: true,
+          col: "4",
+          listen: "id",
+          type: "select",
+          optionValue: "name",
+          label: "الفصل الدراسي",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+        },
+        {
+          key: "groups",
+          disabled: true,
+          col: "4",
+          listen: "id",
+          type: "select",
+          optionValue: "name",
+          label: "المجموعات",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "required",
+          multiple: true,
+        },
+        {
           key: "start_date",
           label: "بداية المسابقة",
           col: "2",
@@ -204,7 +233,7 @@ export default {
           value: "",
           placeholder: "22:00",
           type: "text",
-          rules: "required",
+          rules: { required: true, regex: /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/ },
         },
       ],
       prizeForm: [
@@ -306,7 +335,9 @@ export default {
       ],
       questionsIds: [],
       mission_ids: [],
+      groups_ids: [],
       questions: [],
+      class_id: 0,
       objective_id: 0,
       outcome_id: 0,
     };
@@ -329,7 +360,9 @@ export default {
     },
 
     handleCancel() {
-      this.$router.push("/dashboard/competitions");
+      if (!this.user.permissions.includes("add-teacher-competitions"))
+        this.$router.push("/dashboard/teacher-competitions");
+      else this.$router.push("/dashboard/competitions");
     },
 
     nextStep() {
@@ -358,7 +391,9 @@ export default {
           }, 1500);
         })
         .then(() => {
-          this.$router.push("/dashboard/competitions");
+          if (!this.user.permissions.includes("add-teacher-competitions"))
+            this.$router.push("/dashboard/teacher-competitions");
+          else this.$router.push("/dashboard/competitions");
         });
     },
 
@@ -410,6 +445,8 @@ export default {
       this.mission_ids = competition?.mission.map((item) => item.id);
       this.objective_id = competition?.objective?.id;
       this.outcome_id = competition?.outcome?.id;
+      this.class_id = competition?.class?.id;
+      this.groups_ids = competition?.groups?.map((item) => item.id);
       Object.entries(competition).forEach(([key, value]) => {
         this.updateFieldOptions(this.competitionInfoForm, key, value);
       });
@@ -422,8 +459,18 @@ export default {
       this.competitionInfoForm[3].name = competition?.objective?.name;
       this.competitionInfoForm[4].value = competition?.outcome?.id;
       this.competitionInfoForm[4].name = competition?.outcome?.name;
-      this.competitionInfoForm[5].value = moment(competition?.start_date).format("DD-MM-YYYY");
-      this.competitionInfoForm[6].value = moment(competition?.end_date).format("DD-MM-YYYY");
+
+      if (!this.user.permissions.includes("edit-teacher-competitions")) {
+        this.competitionInfoForm.splice(6, 2);
+        this.competitionInfoForm[5].value = moment(competition?.start_date).format("DD-MM-YYYY");
+        this.competitionInfoForm[6].value = moment(competition?.end_date).format("DD-MM-YYYY");
+      } else {
+        this.competitionInfoForm[5].value = competition?.class?.id;
+        this.competitionInfoForm[5].name = competition?.class?.name;
+
+        this.competitionInfoForm[7].value = moment(competition?.start_date).format("DD-MM-YYYY");
+        this.competitionInfoForm[8].value = moment(competition?.end_date).format("DD-MM-YYYY");
+      }
 
       this.addQuestions(competition?.questions);
       this.handlePrizesInEdit(competition?.prizes);

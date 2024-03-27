@@ -30,9 +30,13 @@ import {
   getMissionForCompetiton,
   getGoalsForCompetiton,
   getOutcomesForCompetiton,
+  getLevelsForTeacher,
+  getClassesForTeacherDropDown,
+  getGroupsForTeacherDropDown,
 } from "@/services/dropdownService";
 import Button from "@/components/Shared/Button/index.vue";
 import _ from "lodash";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -48,6 +52,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    groups: {
+      type: Array,
+      default: () => [],
+    },
     currentStep: {
       type: Number,
       default: 0,
@@ -56,17 +64,24 @@ export default {
       type: Number,
       default: 0,
     },
+    class_id: {
+      type: Number,
+      default: 0,
+    },
     outcome_id: {
       type: Number,
       default: 0,
     },
   },
+
   data() {
     return {
       loading: false,
       showDate: true,
       isGettingMissionsValue: true,
       isGettingOutcomesAndGoalsValue: true,
+      isGettingClassesValue: true,
+      isGettingGroupsValue: true,
     };
   },
   methods: {
@@ -87,6 +102,10 @@ export default {
 
       if (key === "level_id") {
         this.getMissionsValue(value);
+        if (this.user.permissions.includes("add-teacher-competitions")) this.getClassesValue(value);
+      }
+      if (key === "class_id" && typeof value == "number") {
+        this.getGroupsValue(value);
       }
       if (key === "missions") {
         this.getOutcomesAndGoalsValue(value);
@@ -102,6 +121,18 @@ export default {
 
       this.isGettingMissionsValue = false;
     },
+    getClassesValue(value) {
+      getClassesForTeacherDropDown(this.stepForm, "class_id", value);
+      this.stepForm[5].disabled = false;
+      this.stepForm[5].value = [];
+      this.isGettingClassesValue = false;
+    },
+    getGroupsValue(value) {
+      getGroupsForTeacherDropDown(this.stepForm, "groups", value);
+      this.stepForm[6].disabled = false;
+      this.stepForm[6].value = [];
+      this.isGettingGroupsValue = false;
+    },
     getOutcomesAndGoalsValue(value) {
       getGoalsForCompetiton(this.stepForm, "objective_id", value);
       this.stepForm[3].disabled = false;
@@ -115,8 +146,13 @@ export default {
       this.$emit("nextStep");
     },
   },
+  computed: {
+    ...mapGetters(["user"]),
+  },
   async mounted() {
-    await getLevelsForSuperVisor(this.stepForm, "level_id");
+    if (this.user.permissions.includes("add-teacher-competitions"))
+      await getLevelsForTeacher(this.stepForm, "level_id");
+    else await getLevelsForSuperVisor(this.stepForm, "level_id");
   },
   watch: {
     stepForm: {
@@ -125,14 +161,21 @@ export default {
         if (this.$route.params.id) {
           if (newVal[1].value && this.isGettingMissionsValue) {
             this.getMissionsValue(newVal[1].value);
-            console.log(newVal[1].key, newVal[1].value);
+            if (this.user.permissions.includes("edit-teacher-competitions"))
+              this.getClassesValue(newVal[1].value);
           }
           if (newVal[2].value && this.isGettingOutcomesAndGoalsValue) {
-            console.log(newVal[2].key, newVal[2].value);
             newVal[2].value = this.missions;
+            newVal[5].value = this.class_id;
             this.getOutcomesAndGoalsValue(this.missions);
             newVal[3].value = this.objective_id;
             newVal[4].value = this.outcome_id;
+          }
+          if (this.user.permissions.includes("edit-teacher-competitions")) {
+            if (newVal[5].value && this.isGettingGroupsValue) {
+              this.getGroupsValue(this.class_id);
+              newVal[6].value = this.groups;
+            }
           }
         }
       },
