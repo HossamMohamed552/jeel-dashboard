@@ -8,17 +8,29 @@
                @detailItem="detailItem($event)"
                @refetch="getClasses"
                :loading="loading"
-               :permission_view="'show-teacher-classes'"
-               />
+               :permission_view="'show-teacher-classes'">
+      <template #buttons>
+        <Button
+          :custom-class="'btn-add rounded-btn big-padding'"
+          @click="goToAddGroup"
+          v-if="user.permissions.includes(`add-teacher-groups`)"
+        >
+          <img src="@/assets/images/icons/plus.svg"/>
+          <span>إضافة مجموعه</span>
+        </Button>
+      </template>
+    </ListItems>
   </section>
 </template>
 <script>
 import ListItems from "@/components/ListItems/index.vue";
 import {getClassForTeacherRequest} from "@/api/teacher-module";
+import Button from "@/components/Shared/Button/index.vue";
+import {mapGetters} from "vuex";
 
 export default {
   name: "index",
-  components: {ListItems},
+  components: {Button, ListItems},
   data() {
     return {
       loading: false,
@@ -36,16 +48,22 @@ export default {
       ],
     }
   },
+  computed: {
+    ...mapGetters(["user"]),
+  },
   methods: {
     getClasses(event) {
       this.loading = true
-      const params = !event ? { per_page: 10 } : event;
+      const params = !event ? {per_page: 10} : event;
       this.ApiService(getClassForTeacherRequest(params)).then((response) => {
         this.classesList = response.data.data
         this.totalNumber = response.data.meta.total
-      }) .finally(() => {
+      }).finally(() => {
         this.loading = false;
       });
+    },
+    goToAddGroup() {
+      this.$router.push(`/dashboard/teacher-group/add`)
     },
     detailItem($event) {
       this.$router.push(`/dashboard/teacher-class/show/${$event}`)

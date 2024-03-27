@@ -1,6 +1,6 @@
 <template>
   <section class="inner-routes p-0" :class="isSuperVisor ? 'mt-0' : ''">
-    <div v-if="!isSuperVisor" class="supervisor-section">
+    <div v-if="!isSuperVisor && !isTeacher" class="supervisor-section">
       <b-row>
         <b-col lg="3">
           <div class="user-info profile-card item-card"
@@ -79,7 +79,7 @@
         </b-col>
       </b-row>
     </div>
-    <div v-if="isSuperVisor" class="supervisor-section">
+    <div v-if="isSuperVisor || isTeacher" class="supervisor-section">
       <b-row>
         <b-col lg="3">
           <div class="user-info profile-card item-card">
@@ -175,7 +175,7 @@ import LeaderBoard from "@/components/LeaderBoard/LeaderBoard.vue";
 import {
   getAllStatisticsRequest,
   getAllStatisticsSchoolAdminRequest, getAllStatisticsStudentRequest,
-  getAllStatisticsSuperVisorRequest
+  getAllStatisticsSuperVisorRequest, getAllStatisticsTeacherRequest
 } from "@/api/statistics";
 
 export default {
@@ -189,6 +189,7 @@ export default {
       routeBasicData: [],
       statistics: [],
       isSuperVisor: false,
+      isTeacher: false,
     };
   },
 
@@ -257,6 +258,10 @@ export default {
       this.ApiService(getAllStatisticsStudentRequest(this.currentChild.id)).then((response) => {
         this.statistics = response.data.data;
       });
+    } else if (this.user && this.user.roles && this.user.roles[0]?.type.key === "teachers_management") {
+      this.ApiService(getAllStatisticsTeacherRequest()).then((response) => {
+        this.statistics = response.data.data;
+      });
     }
     setTimeout(() => {
       this.hideModal();
@@ -271,6 +276,7 @@ export default {
       this.activeTapActive(3);
     }
     this.isSuperVisor = this.user.roles[0]?.code === "supervisor";
+    this.isTeacher = this.user.roles[0]?.code === "teacher";
   },
 };
 </script>

@@ -146,7 +146,8 @@
     "comment": "التعليق",
     "mission_count": "عدد المهام",
     "showMissions": "الاجراء",
-    "missionContent": "الاجراء"
+    "missionContent": "الاجراء",
+    "students": "عدد الطلاب"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -164,7 +165,8 @@
     "addStudentInClass": "تسجيل الصف الدراسى",
     "addParent": "أولياء الأمور",
     "addStudentOnClassBtn": "طلاب الفصل",
-    "classes": "الفصول الدراسية"
+    "classes": "الفصول الدراسية",
+    "addStudentOnGroupBtn": "إضافة طلاب"
   },
   "ROLES": {
     "ADD_NEW": "إضافة صلاحية",
@@ -707,6 +709,17 @@
     "note": "التعليق",
     "note_placeholder": "اكتب التعليق هنا"
   },
+  "classGroup": {
+    "ADD": "إضافة مجموعه جديدة",
+    "EDIT": "تعديل المجموعة",
+    "classGroup_name": "اسم المجموعة",
+    "classGroup_name_PLACEHOLDER": "ادخل اسم المجموعة",
+    "class": "الفصل الدراسى",
+    "class_name": "اسم الفصل",
+    "class_PLACEHOLDER": "اختر الفصل الدراسى",
+    "detail": "تفاصيل المجموعة",
+    "addStudentOnGroup": "إضافة طالب للمجموعة"
+  },
   "superMission": {
     "missionDetail": "تفاصيل المهام الدراسية",
     "missionName": "اسم المهمة",
@@ -791,14 +804,15 @@
     "teachers": "عدد المدرسين",
     "students": "عدد الطلاب",
     "parents": "عدد أولياء الأمور",
-    "announcements": "الإعلانات",
+    "announcements": "الرسائل",
     "competitions": "المسابقات",
     "achievements": "الانجازات",
     "jeel_coins": "عملات جيل",
     "jeel_gems": "جميز جيل",
     "leaderboard": "لوحة الصدارة",
     "mission_completed": "المهام المكتملة",
-    "level": "الصفوف الدراسية"
+    "level": "الصفوف الدراسية",
+    "groups": "المجموعات"
   },
   "SOCIAL_MEDIA": {
     "FACEBOOK": "فيس بوك",
@@ -875,5 +889,11 @@
   "PARENT": {
     "myChildren": "أطفالى",
     "child_student": "طالب"
+  },
+  "leaderboard": {
+    "name": "اسم الطالب",
+    "className": "اسم الفصل",
+    "typeName": "النوع",
+    "missionName": "المهمة"
   }
 }
