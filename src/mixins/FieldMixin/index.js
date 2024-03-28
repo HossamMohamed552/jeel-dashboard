@@ -22,7 +22,7 @@ export const FieldMixin = {
   },
   data: () => ({
     innerValue: null,
-    customFormat: "DD-MM-YYYY"
+    customFormat: "DD-MM-YYYY",
   }),
   watch: {
     // Handles internal model changes.
@@ -36,9 +36,9 @@ export const FieldMixin = {
   },
   computed: {
     isRequired() {
-      if (typeof this.rules === "string") return !!this.rules.includes("required")
-      else return this.rules.hasOwnProperty("required") ? this.rules.required : false
-    }
+      if (typeof this.rules === "string") return !!this.rules.includes("required");
+      else return this.rules.hasOwnProperty("required") ? this.rules.required : false;
+    },
   },
   created() {
     if (this.value !== null) {

@@ -11,15 +11,18 @@
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
       @refetch="getCompetition"
-      :permission_delete="'delete-competition'"
-      :permission_edit="'edit-competition'"
-      :permission_view="'show-competition'"
+      :permission_delete="['delete-competition', 'delete-teacher-competitions']"
+      :permission_edit="['edit-competition', 'edit-teacher-competitions']"
+      :permission_view="['show-competition', 'show-teacher-competitions']"
     >
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
           @click="goToAddCompetition"
-          v-if="user.permissions.includes(`add-competition`)"
+          v-if="
+            user.permissions.includes('add-competition') ||
+            user.permissions.includes('add-teacher-competitions')
+          "
         >
           <img src="@/assets/images/icons/plus.svg" />
           <span>إضافة مسابقة</span>

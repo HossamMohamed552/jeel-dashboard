@@ -179,8 +179,16 @@ export default {
     },
     async submitForm() {
       await this.updateFields();
-      if (this.$route.params.id) this.handleEditCompetition();
-      else this.handleAddCompetition();
+      console.log(this.user.permissions.includes("add-teacher-competitions"));
+      if (this.user.permissions.includes("add-teacher-competitions")) {
+        this.submittedForm["competition_creator"] = "teacher";
+        if (this.$route.params.id) this.handleEditCompetition();
+        else this.handleAddCompetition();
+      } else {
+        this.submittedForm["competition_creator"] = "supervisor";
+        if (this.$route.params.id) this.handleEditCompetition();
+        else this.handleAddCompetition();
+      }
     },
     handleAddCompetition() {
       this.ApiService(postAddCompetitionRequest(this.submittedForm)).then(() => {
@@ -223,7 +231,7 @@ export default {
   },
   async mounted() {},
   computed: {
-    ...mapGetters(["getPrizesList", "getNotificationsList", "getQuestionsList"]),
+    ...mapGetters(["user", "getPrizesList", "getNotificationsList", "getQuestionsList"]),
 
     showValue(values) {
       if (typeof values == Array) {

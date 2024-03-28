@@ -88,7 +88,8 @@ export default [
   {
     path: "/dashboard/teacher/missions-student/show/:id",
     name: "teacher-revision-mission",
-    component: () => import("../../../views/teacher/teacher-mission-revision/view-mission/index.vue"),
+    component: () =>
+      import("../../../views/teacher/teacher-mission-revision/view-mission/index.vue"),
     meta: {
       breadcrumb: "المهام الدراسية",
       preLabel: "المهام",
@@ -98,7 +99,8 @@ export default [
   {
     path: "/dashboard/teacher/missions-student/show/:studentId/:missionId",
     name: "mission-detail",
-    component: () => import("../../../views/teacher/teacher-mission-revision/view-mission-content/index.vue"),
+    component: () =>
+      import("../../../views/teacher/teacher-mission-revision/view-mission-content/index.vue"),
     meta: {
       breadcrumb: " تفاصبل المهام الدراسية",
       preLabel: "المهام الدراسية",
@@ -116,7 +118,8 @@ export default [
   {
     path: "/dashboard/teacher-advertisements/show/:id",
     name: "show-teacher-advertisements",
-    component: () => import("../../../views/teacher/teacher-advertisement/view-advertisement/index.vue"),
+    component: () =>
+      import("../../../views/teacher/teacher-advertisement/view-advertisement/index.vue"),
     meta: {
       breadcrumb: "تفاصيل الرسالة",
       preLabel: "قائمة الرسائل",
@@ -158,4 +161,12 @@ export default [
       breadcrumb: "لوحة الصدارة",
     },
   },
-]
+  {
+    path: "/dashboard/teacher-competitions",
+    name: "view-teacher-competitions",
+    component: () => import("../../../views/competitions/index.vue"),
+    meta: {
+      breadcrumb: "المسابقات",
+    },
+  },
+];
