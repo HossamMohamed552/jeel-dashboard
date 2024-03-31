@@ -25,15 +25,16 @@
     </div>
     <div class="list">
       <b-row>
-        <b-col lg="4" v-for="item in 3">
+        <b-col lg="4" v-for="(item,index) in topStudents" :key="item.id">
           <div class="leader-item leader-board">
             <div class="leader-item-img">
-              <img src="@/assets/images/icons/user-avatar.png">
-              <div class="leader-item-rank"><span>#1</span></div>
+              <img :src="item.image">
+              <div class="leader-item-rank"><span>#{{ index + 1 }}</span></div>
             </div>
-            <p class="leader-item-name">حمزه عمر</p>
-            <p class="leader-item-class">الصف الأول الأبتدائى</p>
-            <p class="leader-item-point"><span>989</span><span>نقطة</span></p>
+            <p class="leader-item-name">{{ item.name }}</p>
+            <p class="leader-item-class">{{ item.class.level.name }}</p>
+            <p class="leader-item-point"><span>{{ item.missions_points }}</span><span>نقطة</span>
+            </p>
           </div>
         </b-col>
       </b-row>
@@ -42,6 +43,7 @@
         :header-name="'قائمة الطلاب'"
         :fieldsList="fieldsList"
         :table-items="students"
+        :number-of-item="totalNumber"
         :loading="loading"
         :disable-it="true"
         :show-sort-controls="false"
@@ -54,6 +56,8 @@
 import GenericForm from "@/components/Shared/GenericForm/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
+import {getLeaderBoardRequest} from "@/api/teacher-module";
+
 
 export default {
   name: "index",
@@ -146,10 +150,11 @@ export default {
       ],
       loading: false,
       students: [],
+      topStudents: [],
       fieldsList: [
         {
-          key: "id",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
+          key: "position",
+          label: this.$i18n.t("TABLE_FIELDS.position"),
         },
         {
           key: "image",
@@ -163,7 +168,21 @@ export default {
           key: "middle_name",
           label: this.$i18n.t("TABLE_FIELDS.middle_name"),
         },
-      ]
+        {
+          key: "class.level.name",
+          label: this.$i18n.t("schoolAdmin.level"),
+        },
+        {
+          key: "class.name",
+          label: this.$i18n.t("schoolAdmin.class"),
+        },
+        {
+          key: "missions_points",
+          label: this.$i18n.t("TABLE_FIELDS.points"),
+        },
+
+      ],
+      totalNumber: 0
     }
   },
   methods: {
@@ -173,6 +192,20 @@ export default {
     toggleCollapsed() {
       this.collapsed = !this.collapsed;
     },
+    getLeaderBoard() {
+      this.ApiService(getLeaderBoardRequest()).then((response) => {
+        this.topStudents = response.data.data.slice(0, 3)
+        this.students = response.data.data.slice(3)
+        this.students = this.students.map((item,index) => {
+          console.log('index',index)
+          return {position: index + 4, ...item}
+        })
+        this.totalNumber = response.data.meta.total
+      })
+    }
+  },
+  mounted() {
+    this.getLeaderBoard()
   }
 }
 </script>

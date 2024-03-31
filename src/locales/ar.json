@@ -147,7 +147,9 @@
     "mission_count": "عدد المهام",
     "showMissions": "الاجراء",
     "missionContent": "الاجراء",
-    "students": "عدد الطلاب"
+    "students": "عدد الطلاب",
+    "points": "النقاط",
+    "position": "المركز"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",

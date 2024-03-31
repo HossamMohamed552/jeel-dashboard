@@ -165,3 +165,11 @@ export const postClassGroupRequest = (data) => ({
     data,
   },
 });
+export const getLeaderBoardRequest = (data) => ({
+  method: "get",
+  url: `teacher/leaderboard`,
+  config: {
+    data,
+  },
+});
+
