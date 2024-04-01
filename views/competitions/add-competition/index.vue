@@ -225,7 +225,7 @@ export default {
           value: "",
           placeholder: "22:00",
           type: "text",
-          rules: { required: true, regex: /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/ },
+          rules: { required: true, regex: /^([01][0-9]|2[0-3]):[0-5][0-9]$/ },
         },
       ],
       prizeForm: [

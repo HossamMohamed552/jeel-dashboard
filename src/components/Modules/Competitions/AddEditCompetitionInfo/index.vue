@@ -13,7 +13,9 @@
             <div class="buttons-container">
               <slot></slot>
               <div class="steps">
-                <Button :custom-class="'submit-btn'" @click="nextStep"> التالي </Button>
+                <Button :disabled="invalid" :custom-class="'submit-btn'" @click="nextStep">
+                  التالي
+                </Button>
               </div>
             </div>
           </GenericForm>
