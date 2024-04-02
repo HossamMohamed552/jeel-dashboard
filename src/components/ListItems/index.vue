@@ -296,7 +296,7 @@
           </b-form-checkbox>
         </template>
         <template #cell(status.name)="data">
-          <span class="blocked-user" v-if="checkBlockUser(data) == 'show'">محظور</span>
+          <span class="blocked-user" v-if="checkBlockUser(data) === 'show'">محظور</span>
         </template>
         <template #cell(status)="data">
           <span>{{ data.item.status.name }}</span>
@@ -358,13 +358,13 @@
             <!--            <b-dropdown-item @click="addUser(data.item.id)" v-if="checkUsersAdd() === 'show'">-->
             <!--              {{ $t("CONTROLS.users") }}-->
             <!--            </b-dropdown-item>-->
-            <b-dropdown-divider v-if="checkEditClass() === 'show'"></b-dropdown-divider>
-            <b-dropdown-item
-              v-if="checkEditClass() === 'show'"
-              @click="$router.push(`/dashboard/level-classes/${data.item.id}`)"
-            >
-              {{ $t("CONTROLS.ManageClasses") }}
-            </b-dropdown-item>
+<!--            <b-dropdown-divider v-if="checkEditClass() === 'show'"></b-dropdown-divider>-->
+<!--            <b-dropdown-item-->
+<!--              v-if="checkEditClass() === 'show'"-->
+<!--              @click="$router.push(`/dashboard/level-classes/${data.item.id}`)"-->
+<!--            >-->
+<!--              {{ $t("CONTROLS.ManageClasses") }}-->
+<!--            </b-dropdown-item>-->
             <b-dropdown-divider v-if="checkAddQuestionVideo() === 'show'"></b-dropdown-divider>
             <b-dropdown-item
               v-if="checkAddQuestionVideo() === 'show'"
@@ -858,7 +858,7 @@ export default {
     },
 
     checkBlockUser(data) {
-      if (this.activePage === "userAdmin" && data.item.status.key == "blocked") {
+      if ((this.activePage === "userAdmin" ||  this.activePage === 'userSchoolAdmin' ) && data.item.status.key === "blocked") {
         return "show";
       } else {
         return "hide";
@@ -915,16 +915,16 @@ export default {
       }
     },
 
-    checkEditClass() {
-      if (
-        this.user.permissions.includes("manage-learningpath") &&
-        this.$route.path.includes("levels")
-      ) {
-        return "show";
-      } else {
-        return "hide";
-      }
-    },
+    // checkEditClass() {
+    //   if (
+    //     this.user.permissions.includes("manage-learningpath") &&
+    //     this.$route.path.includes("levels")
+    //   ) {
+    //     return "show";
+    //   } else {
+    //     return "hide";
+    //   }
+    // },
     checkAddAd(data) {
       if (
         this.user.permissions.includes("add-announcements") &&

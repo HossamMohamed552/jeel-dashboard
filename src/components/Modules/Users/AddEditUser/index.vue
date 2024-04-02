@@ -138,7 +138,7 @@
                     <b-form-group class="mb-3">
                       <TextField
                         v-model="user.password"
-                        :rules="{required:true, regex:'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{8,})'}"
+                        :rules="'required|verify_password'"
                         :type="passwordType"
                         :label="$t('USERS.PASSWORD')"
                         :name="$t('USERS.PASSWORD')"

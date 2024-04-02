@@ -165,11 +165,31 @@ export const postClassGroupRequest = (data) => ({
     data,
   },
 });
-export const getLeaderBoardRequest = (data) => ({
+export const getLeaderBoardRequest = (params) => ({
   method: "get",
   url: `teacher/leaderboard`,
   config: {
-    data,
+    params,
   },
 });
-
+export const getStudyYearForTeacherRequest = (params) => ({
+  method: "get",
+  url: `teacher/study-years`,
+  config: {
+    params,
+  },
+});
+export const getLevelsForTeacherBasedStudyYearRequest = (params) => ({
+  method: "get",
+  url: `teacher/list/levels`,
+  config: {
+    params,
+  },
+});
+export const getClassForTeacherBasedStudyYearLevelRequest = (params) => ({
+  method: "get",
+  url: `teacher/classes`,
+  config: {
+    params,
+  },
+});
