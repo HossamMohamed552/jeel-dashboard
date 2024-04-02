@@ -34,6 +34,7 @@
         :table-items="usersSchoolList"
         :v-search-model="userSearchWord"
         :loading="loading"
+        :disable-it="true"
         :is-user-page="true"
         :permission_view="'show-school-users'"
         :permission_delete="'show-school-users'"
@@ -121,6 +122,10 @@ export default {
         {
           key: "roles",
           label: this.$i18n.t("USERS.DEPARTMENT"),
+        },
+        {
+          key: "status.name",
+          label: this.$i18n.t("TABLE_FIELDS.block"),
         },
         {
           key: "status.key",
@@ -252,11 +257,14 @@ export default {
       this.cancel();
     },
   },
-
   mounted() {
     this.getAllSchoolUsers();
     getAllRolesByType(this.userSearch, "role_id");
     getAllUserStatus(this.userSearch, "status");
+    window.localStorage.setItem("page", "userSchoolAdmin");
+  },
+  beforeDestroy() {
+    window.localStorage.setItem("page", "");
   },
 };
 </script>

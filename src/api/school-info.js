@@ -14,9 +14,19 @@ export const getSingleSchoolUserRequest = (params) => ({
   method: "get",
   url: `school-admin/users/${params}`,
 });
-export const addEditSchoolUserRequest = (endpoint, data) => ({
+export const addSchoolUserRequest = (data) => ({
   method: "post",
-  url: `${endpoint}`,
+  url: `school-admin/user/create`,
+  config: {
+    data,
+  },
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+});
+export const updateSchoolUserRequest = (id,data) => ({
+  method: "put",
+  url: `/users/${id}`,
   config: {
     data,
   },
@@ -124,11 +134,11 @@ export const deleteSchoolAdminClassRequest = (id) => ({
   method: "delete",
   url: `classes/${id}`,
 });
-export const getStudyYearsRequest = (data) => ({
+export const getStudyYearsRequest = (params) => ({
   method: "get",
   url: `school/study_years`,
   config: {
-    data,
+    params,
   },
 });
 export const getStudyYearsForSuperVisorRequest = (data) => ({
@@ -139,11 +149,11 @@ export const getStudyYearsForSuperVisorRequest = (data) => ({
   },
 });
 
-export const getLevelsRequest = (data) => ({
+export const getLevelsRequest = (params) => ({
   method: "get",
   url: `school/levels`,
   config: {
-    data,
+    params,
   },
 });
 export const getSchoolAdminUserRequest = (id, data) => ({

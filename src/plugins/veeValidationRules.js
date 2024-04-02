@@ -26,11 +26,9 @@ extend("urlLink", {
 });
 
 extend("verify_password", {
-  message:
-    localStorage.getItem("lang") === "ar"
-      ? "كلمه المرور يجب أن تحتوى على 8 حروف على الأقل (حرف كبير و حرف صغير ورقم واحد و حرف مختلف  (! @ # $ % ^ & * إلخ))  "
-      : "The Password must contain at least 8 characters (1 uppercase letter, 1 lowercase letter, 1 number , and one special character (! @ # $ % ^ & * etc))",
+  message: "كلمه المرور يجب أن تحتوى على 8 حروف على الأقل (حرف كبير و حرف صغير ورقم واحد و حرف مختلف  (! @ # $ % ^ & * إلخ))  ",
   validate: (value) => {
+    const passwordRegex = /^(?=.*[a-z]{1,})(?=.*[A-Z]{1,})(?=.*[0-9]{1,})(?=.*[!@#\$%\^&\*]).{8,}$/
     return passwordRegex.test(value);
   },
 });

@@ -108,7 +108,7 @@
                         :label="$t('USERS.EMAIL')"
                         :name="$t('USERS.EMAIL')"
                         :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.EMAIL')"
-                        :rules="'required|email'"
+                        :rules="!isStudent?'required|email':''"
                       ></TextField>
                     </div>
                   </b-col>
@@ -121,7 +121,7 @@
                         :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.PHONE_NUMBER')"
                         :rules="{ required: true }"
                       ></TextField>
-<!--                      /^01[0125][0-9]{8}$/-->
+                      <!--                      /^01[0125][0-9]{8}$/-->
                     </div>
                   </b-col>
                   <b-col lg="4">
@@ -170,7 +170,7 @@
                     <b-form-group class="mb-3">
                       <TextField
                         v-model="user.password"
-                        rules="required"
+                        rules="required|verify_password"
                         :type="passwordType"
                         :label="$t('USERS.PASSWORD')"
                         :name="$t('USERS.PASSWORD')"
@@ -270,13 +270,13 @@ import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import ImageUploader from "@/components/Shared/UploadImage/index.vue";
 import _ from "lodash";
 
-import { TogglePasswordMixins } from "@/mixins/TogglePasswordMixins";
+import {TogglePasswordMixins} from "@/mixins/TogglePasswordMixins";
 // Dropdown
-import { getAllNationaltyRequest } from "@/api/country";
+import {getAllNationaltyRequest} from "@/api/country";
 import {
   addEditSchoolUserRequest,
   postChangeStatusSchoolUserRequest,
-  getSingleSchoolUserRequest,
+  getSingleSchoolUserRequest, addSchoolUserRequest, updateSchoolUserRequest,
 } from "@/api/school-info";
 import {
   getAllGenderRequest,
@@ -312,10 +312,10 @@ export default {
       indexType: 0,
       user: {
         image: null,
+        email:"",
         first_name: "",
         middle_name: "",
         last_name: "",
-        email: "",
         password: "",
         password_confirmation: "",
         mobile: "",
@@ -363,24 +363,23 @@ export default {
         userStatus.is_active = 0;
       else userStatus.is_active = 1;
 
-      this.ApiService(postChangeStatusSchoolUserRequest(userStatus)).then(() => {});
+      this.ApiService(postChangeStatusSchoolUserRequest(userStatus)).then(() => {
+      });
     },
 
     onSubmit() {
       if (this.isStudent) this.user.email = "";
       this.$refs.addEditUserForm.validate().then((success) => {
         if (!success) return;
-
-        let endpoint;
         if (this.$route.params.id) {
-          this.user["_method"] = "PUT";
-          endpoint = `/school-admin/user/create/${this.$route.params.id}`;
+          this.ApiService(updateSchoolUserRequest(this.$route.params.id,this.user)).then(() => {
+            this.$router.push("/dashboard/all-school-users");
+          });
         } else {
-          endpoint = `/school-admin/user/create`;
+          this.ApiService(addSchoolUserRequest(this.user)).then(() => {
+            this.$router.push("/dashboard/all-school-users");
+          });
         }
-        this.ApiService(addEditSchoolUserRequest(endpoint, this.user)).then(() => {
-          this.$router.push("/dashboard/all-school-users");
-        });
       });
     },
 
@@ -418,6 +417,7 @@ export default {
         } else {
           this.isManagementStudent = false;
         }
+        this.filterWith = []
         for (let type = 0; type < value.length; type++) {
           this.filterWith[`types[${type}]`] = value[type];
         }
@@ -450,9 +450,7 @@ export default {
 
     onSelectRoleCategories: async function (value) {
       try {
-        const studentRoleType = this.rolesTypeList.find(
-          (type) => type.key.toLowerCase() === "student_management"
-        );
+        const studentRoleType = this.rolesTypeList.find((type) => type.key.toLowerCase() === "student_management");
         if (value.includes(studentRoleType.id)) this.isStudent = true;
         else this.isStudent = false;
         if (value.includes(studentRoleType.id) && this.indexType == 0) {
@@ -463,7 +461,8 @@ export default {
           this.getAllDepartments(value);
           this.indexType = 0;
         }
-      } catch (e) {}
+      } catch (e) {
+      }
     },
   },
   mounted() {

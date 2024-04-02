@@ -14,10 +14,12 @@
               class="w-100"
               :schema="leaderBoardSearch"
               @onSubmit="onSubmit"
+              @handleCancel="handleCancel"
               :loading="loading"
               :submitButton="$t('BUTTONS.SEARCH')"
               :cancelButton="$t('BUTTONS.RECOVERY')"
               :invalid="invalid"
+              @handleInput="handleInput"
             ></GenericForm>
           </validation-observer>
         </div>
@@ -57,6 +59,11 @@ import GenericForm from "@/components/Shared/GenericForm/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import {getLeaderBoardRequest} from "@/api/teacher-module";
+import {
+  getClassForTeacherBasedStudyYearLevel,
+  getLevelByStudyYearForTeacher, getMissionForTeacherBasedStudyYearLevelTerm,
+  getStudyYearForTeacher, getTermsForTeacherBasedStudyYear, getTypeForTeacher
+} from "@/services/dropdownService";
 
 
 export default {
@@ -96,6 +103,7 @@ export default {
           label: this.$t("TABLE_FIELDS.levelSchoolAdmin"),
           options: [],
           deselectFromDropdown: true,
+          disabled: true,
           value: "",
           rules: 'required'
         },
@@ -109,6 +117,7 @@ export default {
           options: [],
           deselectFromDropdown: true,
           value: "",
+          disabled: true,
           rules: 'required'
         },
         {
@@ -121,6 +130,7 @@ export default {
           options: [],
           deselectFromDropdown: true,
           value: "",
+          disabled: true,
           rules: 'required'
         },
         {
@@ -144,6 +154,7 @@ export default {
           label: this.$t("leaderboard.missionName"),
           options: [],
           deselectFromDropdown: true,
+          disabled: true,
           value: "",
           rules: 'required'
         },
@@ -186,18 +197,40 @@ export default {
     }
   },
   methods: {
+    handleInput(key, value) {
+      if (key === 'study_year_id' && value !== '') {
+        this.leaderBoardSearch[2].disabled = false;
+        this.leaderBoardSearch[3].disabled = false;
+        getLevelByStudyYearForTeacher(this.leaderBoardSearch, 'level_id', value)
+        getTermsForTeacherBasedStudyYear(this.leaderBoardSearch, 'term_id', value)
+      } else if (key === 'level_id' && value !== ''){
+        this.leaderBoardSearch[4].disabled = false;
+        getClassForTeacherBasedStudyYearLevel(this.leaderBoardSearch,'class_id',this.leaderBoardSearch[1].value,this.leaderBoardSearch[2].value)
+      } else if(this.leaderBoardSearch[1].value !== '' && this.leaderBoardSearch[2].value !== '' && this.leaderBoardSearch[3].value !== ''){
+        this.leaderBoardSearch[6].disabled = false;
+        getMissionForTeacherBasedStudyYearLevelTerm(this.leaderBoardSearch,'mission_id',this.leaderBoardSearch[1].value,this.leaderBoardSearch[2].value,this.leaderBoardSearch[3].value)
+      }
+    },
     onSubmit(values) {
-
+      this.getLeaderBoard(values)
+    },
+    handleCancel(){
+      this.leaderBoardSearch.forEach((item)=>{
+        item.value = ''
+      })
+      this.$nextTick(()=>{
+        this.$refs.schoolsUsersSearch.reset()
+      })
+      this.getLeaderBoard()
     },
     toggleCollapsed() {
       this.collapsed = !this.collapsed;
     },
-    getLeaderBoard() {
-      this.ApiService(getLeaderBoardRequest()).then((response) => {
+    getLeaderBoard(params) {
+      this.ApiService(getLeaderBoardRequest(params)).then((response) => {
         this.topStudents = response.data.data.slice(0, 3)
         this.students = response.data.data.slice(3)
-        this.students = this.students.map((item,index) => {
-          console.log('index',index)
+        this.students = this.students.map((item, index) => {
           return {position: index + 4, ...item}
         })
         this.totalNumber = response.data.meta.total
@@ -206,6 +239,8 @@ export default {
   },
   mounted() {
     this.getLeaderBoard()
+    getStudyYearForTeacher(this.leaderBoardSearch, 'study_year_id')
+    getTypeForTeacher(this.leaderBoardSearch, 'type_id')
   }
 }
 </script>

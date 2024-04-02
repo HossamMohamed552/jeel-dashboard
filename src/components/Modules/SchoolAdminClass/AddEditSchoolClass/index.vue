@@ -8,7 +8,7 @@
         <validation-observer v-slot="{ invalid }" ref="addEditSchoolClassForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
-              <b-col lg="4" class="mt-3 mb-3">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field" v-if="studyYears">
                   <SelectSearch
                     v-model="classItem.study_year_id"
@@ -22,7 +22,7 @@
                   ></SelectSearch>
                 </div>
               </b-col>
-              <b-col lg="4" class="mt-3 mb-3">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field" v-if="levels">
                   <SelectSearch
                     v-model="classItem.level_id"
@@ -97,12 +97,12 @@ export default {
   },
   methods:{
     getAllStudyYear(){
-      this.ApiService(getStudyYearsRequest()).then((response)=>{
+      this.ApiService(getStudyYearsRequest({list_all:true})).then((response)=>{
         this.studyYears = response.data.data
       })
     },
     getAllLevels(){
-      this.ApiService(getLevelsRequest()).then((response)=>{
+      this.ApiService(getLevelsRequest({list_all:true})).then((response)=>{
         this.levels = response.data.data
       })
     },

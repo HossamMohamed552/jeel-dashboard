@@ -8,13 +8,12 @@
       :v-search-model="userSearchWord"
       :loading="loading"
       :disableIt="true"
-      @refetch="getAllTeachersUsers"
       :is-user-page="true"
       :add_role="'add-enrollment-teachers-users'"
       :permission_view="'show-school-users'"
       @addRole="addRole($event)"
       @detailItem="detailItem($event)"
-    >
+      @refetch="getAllTeachersUsers">
     </ListItems>
   </section>
 </template>
