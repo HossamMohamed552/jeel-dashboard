@@ -87,7 +87,7 @@ export default {
         { key: "id", label: "التسلسل" },
         { key: "main_percentage", label: "من نسبة" },
         { key: "max_percentage", label: "إلى نسبة" },
-        { key: "prizeable_type_name", label: "نوع الجائزة" },
+        { key: "type_id_name", label: "نوع الجائزة" },
         { key: "prizeable_id_name", label: "الجائزة" },
       ],
     };
@@ -125,6 +125,8 @@ export default {
       if (key === "type_id") {
         let selected = this.stepForm[2].options.find((option) => option.id === value);
         this.prizeType = selected.name;
+        console.log(selected)
+
         this.stepForm[3].disabled = false;
         if (selected.name == "المكتبة" || selected.name == "شخصيات") {
           this.stepForm[3].type = "select";
@@ -168,6 +170,8 @@ export default {
               else this.$set(this.entry, field.key, field.value);
               this.$set(this.entry, `${field.key}_name`, field.name.join(", "));
             } else {
+              console.log("test",`${field.key}_name`)
+
               this.$set(this.entry, `${field.key}_name`, field.name);
               this.$set(this.entry, field.key, field.value);
             }
@@ -177,7 +181,6 @@ export default {
           console.error(`Error updating field ${field.key}:`, error);
         }
       });
-      console.log(this.prizeGroup);
       if (this.prizeGroup.length == 0) this.prizeIndex++;
       else this.prizeIndex = this.prizeGroup[this.prizeGroup.length - 1].id + 1;
       this.entry.id = this.prizeIndex;
@@ -194,7 +197,7 @@ export default {
     this.prizeGroup = this.getPrizesList;
     if (this.$route.params.id) {
       this.prizeGroup.forEach((prize) => {
-        prize["prizeable_type_name"] = prize.type.name;
+        prize["type_id_name"] = prize.type.name;
         if (prize?.type?.key == "characters") prize["prizeable_id_name"] = prize.character.name;
         if (prize?.type?.key == "library") prize["prizeable_id_name"] = prize.library.name;
       });

@@ -90,7 +90,7 @@ export default {
     return {
       loading: false,
       showModal: false,
-      currentStep: 0,
+      currentStep: 2,
       collectData: {},
       steps: [
         {
@@ -233,7 +233,7 @@ export default {
           value: "",
           placeholder: "22:00",
           type: "text",
-          rules: { required: true, regex: /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/ },
+          rules: { required: true, regex: /^([01][0-9]|2[0-3]):[0-5][0-9]$/ },
         },
       ],
       prizeForm: [

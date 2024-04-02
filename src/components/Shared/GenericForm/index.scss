@@ -47,6 +47,11 @@
       color: $color-primary !important;
     }
   }
+  .form-control {
+    &::placeholder {
+      font-weight: 400;
+    }
+  }
 
   .mx-datepicker {
     .mx-input-wrapper {
@@ -87,6 +92,6 @@
     position: relative;
   }
 }
-.margin-button{
+.margin-button {
   margin-top: 2.2rem;
 }
