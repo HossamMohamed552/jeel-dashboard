@@ -41,7 +41,7 @@
               :rules="field.rules"
             ></TextAreaField>
             <DatePicker
-              v-if="field.type === 'date' || field.type === 'datetime'"
+              v-if="field.type === 'date'"
               v-model="field.value"
               :label="field.label"
               :placeholder="'إدخل' + ' ' + field.label"
@@ -49,8 +49,23 @@
               valueType="format"
               :name="field.label"
               :rules="field.rules"
+              :type="field.type"
               @input="handleInput(field.key, field.value, field)"
             ></DatePicker>
+            <DateTimePicker
+              v-if="field.type === 'datetime' || field.type === 'time'"
+              v-model="field.value"
+              :format="field.format"
+              :label="field.label"
+              :placeholder="'إدخل' + ' ' + field.label"
+              :refValue="field.ref"
+              valueType="format"
+              :name="field.label"
+              :rules="field.rules"
+              :type="field.type"
+              @input="handleInput(field.key, field.value, field)"
+            >
+            </DateTimePicker>
             <div class="hold-field" v-if="filesUploadedTypes.includes(field.type)">
               <UploadAttachment
                 v-if="!$route.params.id"
@@ -138,6 +153,7 @@ import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import TextField from "@/components/Shared/TextField/index.vue";
 import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 import DatePicker from "@/components/Shared/DatePicker/index.vue";
+import DateTimePicker from "@/components/Shared/DateTimePicker/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import UploadAttachment from "@/components/Shared/UploadAttachment";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
@@ -149,6 +165,7 @@ export default {
     SelectSearch,
     TextAreaField,
     DatePicker,
+    DateTimePicker,
     UploadAttachment,
     PreviewMedia,
     Button,
