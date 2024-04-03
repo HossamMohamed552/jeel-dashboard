@@ -21,6 +21,7 @@
             v-model="dateRange"
             type="date"
             range
+            :lang="en"
             placeholder="حدد الفتره الزمنية"
             valueType="format"
             :disabled-date="disabledBeforeTodayAndAfterAWeek"
@@ -279,7 +280,7 @@
             :custom-class="'transparent-btn rounded-btn'"
             @click="detailItemCorrection(data.item)"
           >
-            {{ data.item.teacher_review.teacher_correction.name }}</Button
+            {{ data.item?.teacher_review?.teacher_correction?.name }}</Button
           >
         </template>
         <template #cell(status.key)="data">
@@ -473,6 +474,7 @@ export default {
       items: [],
       dateRange: [],
       switchSort: "DESC",
+      en: "en",
       formValues: {
         per_page: 10,
         page: 1,

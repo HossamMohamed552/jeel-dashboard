@@ -60,6 +60,13 @@ export const putClassGroupRequest = (classId, data) => ({
     data,
   },
 });
+export const getStudentForClassRequest = (id,data) => ({
+  method: "get",
+  url: `classes/${id}/students`,
+  config: {
+    data,
+  },
+});
 export const postAddStudentForGroupRequest = (data) => ({
   method: "post",
   url: `teacher/groups/students`,

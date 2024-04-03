@@ -200,7 +200,7 @@ export default {
       paperWorkFieldsList: [
         {key: "id", label: "التسلسل"},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
-        {key: "type", label: this.$i18n.t('TABLE_FIELDS.type')},
+        {key: "type.name", label: this.$i18n.t('TABLE_FIELDS.type')},
         {key: "final_degree", label: this.$i18n.t('TABLE_FIELDS.finalDegree')},
         {
           key: "teacher_review.student_final_degree",
@@ -212,7 +212,7 @@ export default {
       tasksFieldsList: [
         {key: "id", label: "التسلسل"},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
-        {key: "type", label: this.$i18n.t('TABLE_FIELDS.type')},
+        {key: "type.name", label: this.$i18n.t('TABLE_FIELDS.type')},
         {key: "final_degree", label: this.$i18n.t('TABLE_FIELDS.finalDegree')},
         {
           key: "teacher_review.student_final_degree",
