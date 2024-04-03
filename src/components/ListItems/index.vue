@@ -21,6 +21,7 @@
             v-model="dateRange"
             type="date"
             range
+            :lang="en"
             placeholder="حدد الفتره الزمنية"
             valueType="format"
             :disabled-date="disabledBeforeTodayAndAfterAWeek"
@@ -473,6 +474,7 @@ export default {
       items: [],
       dateRange: [],
       switchSort: "DESC",
+      en: "en",
       formValues: {
         per_page: 10,
         page: 1,
