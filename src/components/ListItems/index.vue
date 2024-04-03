@@ -279,7 +279,7 @@
             :custom-class="'transparent-btn rounded-btn'"
             @click="detailItemCorrection(data.item)"
           >
-            {{ data.item.teacher_review.teacher_correction.name }}</Button
+            {{ data.item?.teacher_review?.teacher_correction?.name }}</Button
           >
         </template>
         <template #cell(status.key)="data">

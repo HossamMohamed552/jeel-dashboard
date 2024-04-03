@@ -75,7 +75,7 @@
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import {
   getAllStudentsForTeacherRequest, getAllStudentsInGroupForTeacherRequest,
-  getClassGroupIdByIdRequest,
+  getClassGroupIdByIdRequest, getStudentForClassRequest,
   postAddStudentForGroupRequest
 } from "@/api/teacher-module";
 import ListItems from "@/components/ListItems/index.vue";
@@ -140,7 +140,7 @@ export default {
       this.$router.push(`/dashboard/teacher-student/show/${$event}`);
     },
     getAllStudents() {
-      this.ApiService(getAllStudentsForTeacherRequest()).then((response) => {
+      this.ApiService(getStudentForClassRequest(this.groupDetail.class.id)).then((response) => {
         this.students = response.data.data
       })
     },
@@ -170,8 +170,9 @@ export default {
   mounted() {
     this.ApiService(getClassGroupIdByIdRequest(this.$route.params.id)).then((response) => {
       this.groupDetail = response.data.data;
-    });
-    this.getAllStudents()
+    }).then(()=>{
+      this.getAllStudents()
+    })
     this.getStudentsInGroup()
   },
 };
