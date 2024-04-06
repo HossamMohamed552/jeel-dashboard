@@ -414,7 +414,8 @@ export default {
     },
     handlePrizesInEdit(prizes) {
       prizes.map((prize) => {
-        prize["type_id"] = prize.type.id;
+        prize["type_id"] = prize.type?.id;
+        prize["type_id_name"] = prize.type?.name;
         this.addPrize(prize);
       });
     },

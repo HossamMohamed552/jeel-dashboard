@@ -111,7 +111,7 @@ export default {
         if (
           this.$route.params.id &&
           formElement.key === "video_id" &&
-          this.videoGenerateIndex <= 5
+          this.videoGenerateIndex <= 9
         ) {
           this.videoGenerateIndex = this.videoGenerateIndex + 1;
 
