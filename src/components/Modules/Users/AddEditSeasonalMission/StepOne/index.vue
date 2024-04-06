@@ -31,7 +31,7 @@ import {
   getAllGender,
   getAllSeasonalMissionGroups,
   getAllLearningPaths,
-  getLessonsDepenseLearningPath, 
+  getLessonsDepenseLearningPath,
   getAllLevels,
 } from "@/services/dropdownService";
 import _ from "lodash";
@@ -91,7 +91,8 @@ export default {
         this.stepForm[imageObjectIndex].is_change = true;
       } else if (key === "learningpaths") {
         if (value != "") this.stepForm[7].disabled = false;
-        getLessonsDepenseLearningPath(this.stepForm, "lessons", value);
+        const idsArray = value.map((obj) => obj.id);
+        getLessonsDepenseLearningPath(this.stepForm, "lessons", idsArray);
         this.handleInputValueName(key, value, field);
       } else {
         this.handleInputValueName(key, value, field);

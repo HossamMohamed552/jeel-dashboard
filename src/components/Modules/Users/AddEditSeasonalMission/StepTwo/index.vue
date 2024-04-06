@@ -3,7 +3,7 @@
     <div v-for="index in learningPath?.value?.length" :key="index">
       <GenericForm
         @handleInput="handleInput"
-        :schema="getStepTwoForm(index)"
+        :schema="computedStepTwoForm[index]"
         :index="index"
         :loading="loading"
         :submitedForm="false"
@@ -55,6 +55,8 @@ export default {
       loading: false,
       videoLists: [],
       exerciseLists: [],
+      examGenerateIndex: 0,
+      videoGenerateIndex: 0,
     };
   },
   methods: {
@@ -86,45 +88,60 @@ export default {
         this.addExercisesInArray(exercisesPayload);
       }
     }, 300),
+
     getStepTwoForm(index) {
       const duplicatedForm = JSON.parse(JSON.stringify(this.stepForm));
       duplicatedForm.forEach((formElement) => {
         if (formElement.type === "title") {
-          if (index == 1) formElement.label = "اسم المسار الأول";
-          else if (index == 2) formElement.label = "اسم المسار الثاني";
-          else if (index == 3) formElement.label = "اسم المسار الثالث";
-          else formElement.label = "اسم المسار الأخير";
-        }
-
-        if (this.$route.params.id) {
-          let i;
-          if (formElement.key === "video_id") {
-            if (index == 1) i = 0;
-            else if (index == 2) i = 1;
-            else if (index == 3) i = 2;
-            else i = 3;
-            let videoesPayload = {
-              videos: this.learningPath.value[i].videos,
-              index: i,
-            };
-            this.addVideoesInArray(videoesPayload);
-            formElement.value = this.learningPath.value[i].videos;
-          } else if (formElement.key === "exams_id") {
-            if (index == 1) i = 0;
-            else if (index == 2) i = 1;
-            else if (index == 3) i = 2;
-            else i = 3;
-            let exercisesPayload = {
-              exercisess: this.learningPath.value[i].quizzes,
-              index: i,
-            };
-            this.addExercisesInArray(exercisesPayload);
-            formElement.value = this.learningPath.value[i].quizzes;
+          switch (index) {
+            case 1:
+              formElement.label = "اسم المسار الأول";
+              break;
+            case 2:
+              formElement.label = "اسم المسار الثاني";
+              break;
+            case 3:
+              formElement.label = "اسم المسار الثالث";
+              break;
+            default:
+              formElement.label = "اسم المسار الأخير";
           }
+        }
+        let i;
+        if (
+          this.$route.params.id &&
+          formElement.key === "video_id" &&
+          this.videoGenerateIndex <= 5
+        ) {
+          this.videoGenerateIndex = this.videoGenerateIndex + 1;
+
+          if (index == 1) i = 0;
+          else if (index == 2) i = 1;
+          else if (index == 3) i = 2;
+          let videoesPayload = {
+            videos: this.learningPath.value[i].videos,
+            index: i,
+          };
+          this.addVideoesInArray(videoesPayload);
+          formElement.value = this.learningPath.value[i].videos;
+        } else if (formElement.key === "exams_id") {
+          this.examGenerateIndex = this.examGenerateIndex + 1;
+
+          if (index == 1) i = 0;
+          else if (index == 2) i = 1;
+          else if (index == 3) i = 2;
+
+          let exercisesPayload = {
+            exercisess: this.learningPath.value[i].quizzes,
+            index: i,
+          };
+          this.addExercisesInArray(exercisesPayload);
+          formElement.value = this.learningPath.value[i].quizzes;
         }
       });
       return duplicatedForm;
     },
+
     async nextStep() {
       if (this.$route.params.id) await this.handleEditLearningPaths();
       else await this.handleLearningPaths();
@@ -156,7 +173,7 @@ export default {
     async handleLearningPaths() {
       this.learningPath.value.map((id, index) => {
         this.learningPath.learningpaths[index] = {
-          id,
+          id: id.id,
           videos: this.getVideosList[index],
           quizzes: this.getExercisesList[index],
         };
@@ -181,6 +198,16 @@ export default {
   },
   computed: {
     ...mapGetters(["getVideosList", "getExercisesList"]),
+    learningPathLength() {
+      return this.learningPath?.value?.length || 0;
+    },
+    computedStepTwoForm() {
+      const computedForms = [];
+      for (let index = 1; index <= this.learningPathLength; index++) {
+        computedForms[index] = this.getStepTwoForm(index);
+      }
+      return computedForms;
+    },
   },
   async mounted() {
     getQuizLevelPath(this.stepForm, "exams_id");
