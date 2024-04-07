@@ -54,6 +54,13 @@ import {
   getClassForTeacherBasedStudyYearLevelRequest,
   getTeacherMissionsRequest, // المجموعات
 } from "@/api/teacher-module";
+import {
+  getClassForSupervisorBasedStudyYearLevelRequest,
+  getLevelsForSupervisorBasedStudyYearRequest,
+  getStudyYearForSupervisorRequest,
+  getSupervisorMissionsRequest,
+  getTermsForSupervisorDropDownRequest
+} from "@/api/supervisor-module";
 
 // isSub = false
 export async function updateFieldOptions(array, key, data) {
@@ -250,6 +257,9 @@ export async function getSTermsForTeacher(array, key) {
 export async function getStudyYearForTeacher(array, key) {
   await fetchDataAndUpdateOptions(array, getStudyYearForTeacherRequest({list_all: true}), key);
 }
+export async function getStudyYearForSupervisor(array, key) {
+  await fetchDataAndUpdateOptions(array, getStudyYearForSupervisorRequest({list_all: true}), key);
+}
 
 export async function getLevelByStudyYearForTeacher(array, key, id) {
   await fetchDataAndUpdateOptions(array, getLevelsForTeacherBasedStudyYearRequest({
@@ -257,6 +267,13 @@ export async function getLevelByStudyYearForTeacher(array, key, id) {
     list_all: true
   }), key);
 }
+export async function getLevelByStudyYearForSupervisor(array, key, id) {
+  await fetchDataAndUpdateOptions(array, getLevelsForSupervisorBasedStudyYearRequest({
+    "study_year_id": id,
+    list_all: true
+  }), key);
+}
+
 export async function getTypeForTeacher(array, key) {
   await fetchDataAndUpdateOptions(array, getAllGenderRequest(), key);
 }
@@ -267,6 +284,14 @@ export async function getTermsForTeacherBasedStudyYear(array, key, studyYearId,l
     list_all: true
   }), key);
 }
+export async function getTermsForSupervisorBasedStudyYear(array, key, studyYearId,leveId) {
+  await fetchDataAndUpdateOptions(array, getTermsForSupervisorDropDownRequest({
+    "study_year_id": studyYearId,
+    list_all: true
+  }), key);
+}
+
+
 export async function getClassForTeacherBasedStudyYearLevel(array, key, studyYearId,leveId) {
   await fetchDataAndUpdateOptions(array, getClassForTeacherBasedStudyYearLevelRequest({
     "study_year_id": studyYearId,
@@ -274,8 +299,23 @@ export async function getClassForTeacherBasedStudyYearLevel(array, key, studyYea
     list_all: true
   }), key);
 }
+export async function getClassForSupervisorBasedStudyYearLevel(array, key, studyYearId,leveId) {
+  await fetchDataAndUpdateOptions(array, getClassForSupervisorBasedStudyYearLevelRequest({
+    "study_year_id": studyYearId,
+    "level_id": leveId,
+    list_all: true
+  }), key);
+}
 export async function getMissionForTeacherBasedStudyYearLevelTerm(array, key, studyYearId,leveId,termId) {
   await fetchDataAndUpdateOptions(array, getTeacherMissionsRequest({
+    "study_year_id": studyYearId,
+    "level_id": leveId,
+    "term_id": termId,
+    list_all: true
+  }), key);
+}
+export async function getMissionForSuperBasedStudyYearLevelTerm(array, key, studyYearId,leveId,termId) {
+  await fetchDataAndUpdateOptions(array, getSupervisorMissionsRequest({
     "study_year_id": studyYearId,
     "level_id": leveId,
     "term_id": termId,

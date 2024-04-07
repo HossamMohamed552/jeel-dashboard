@@ -170,4 +170,12 @@ export default [
       preLink: "/dashboard/competitions",
     },
   },
+  {
+    path: "/dashboard/super-leaderboard",
+    name: "view-super-leaderboard",
+    component: () => import("../../../views/super-leaderboard/index.vue"),
+    meta: {
+      breadcrumb: "لوحة الصدارة",
+    },
+  },
 ]

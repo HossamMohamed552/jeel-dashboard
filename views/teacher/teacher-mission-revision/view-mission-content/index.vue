@@ -109,10 +109,14 @@
     <GeneralModal :id="'holdContent'" :size="'lg'" :hide-header="true">
       <template #modalBody>
         <div class="p-3">
-          <div v-if="activeTap === 1" class="title-content">
-            تصحيح التسجيل الصوتى
+          <div v-if="activeTap === 1" class="title-content d-flex justify-content-between align-items-center">
+            <span>تصحيح {{ detail.name }}</span>
+            <span>النوع : {{ detail.type.name }}</span>
           </div>
-          <div v-else>تصحيح ورقة العمل</div>
+          <div v-else class="d-flex justify-content-between align-items-center">
+            <span>تصحيح {{ detail.name }}</span>
+            <span>النوع : {{ detail.type.name }}</span>
+          </div>
           <b-row>
             <b-col lg="12" v-if="activeTap === 1">
               <AudioFakePlayer :url="detail?.task_audio_student" :with-background="true"/>
@@ -129,7 +133,7 @@
           <validation-observer v-slot="{ invalid }" ref="correctionForm">
             <form @submit.prevent="onSubmit">
               <b-row>
-                <b-col lg="2">
+                <b-col lg="6">
                   <TextField
                     :custom-class="'altLabel'"
                     v-model="detail.final_degree"
@@ -140,7 +144,7 @@
                     :rules="'required'"
                   ></TextField>
                 </b-col>
-                <b-col lg="3">
+                <b-col lg="6">
                   <TextField
                     :custom-class="'altLabel'"
                     v-model="correctionObject.student_final_degree"
@@ -150,15 +154,15 @@
                     :rules="`required|numeric|max_value:${detail.final_degree}`"
                   ></TextField>
                 </b-col>
-                <b-col lg="5">
-                  <TextField
+                <b-col lg="10">
+                  <TextAreaField
                     :custom-class="'altLabel'"
                     v-model="correctionObject.note"
                     :label="$t('teacher.note')"
                     :name="$t('teacher.note')"
                     :placeholder="$t('teacher.note_placeholder')"
                     :rules="'required'"
-                  ></TextField>
+                  ></TextAreaField>
                 </b-col>
                 <b-col lg="2" class="d-flex justify-content-center align-items-center">
                   <button  type="submit" :loading="loading" :disabled="invalid" class="save-btn">
@@ -185,10 +189,11 @@ import {
 import AudioFakePlayer from "@/components/Shared/AudioFakePlayer/index.vue";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
 import TextField from "@/components/Shared/TextField/index.vue";
+import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 
 export default {
   name: "index",
-  components: {TextField, GeneralModal, AudioFakePlayer, Button, ListItems, ShowItem},
+  components: {TextField,TextAreaField, GeneralModal, AudioFakePlayer, Button, ListItems, ShowItem},
   data() {
     return {
       missionDetail: {},
