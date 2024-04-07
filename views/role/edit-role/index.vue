@@ -26,6 +26,7 @@ export default {
   },
   methods: {
     handleEditRole($event) {
+      if ($event.description == "") delete $event.description
       this.ApiService(putRoleRequest(this.$route.params.id, $event)).then((response) => {
         this.$router.push("/dashboard/role");
       });

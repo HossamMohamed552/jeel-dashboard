@@ -144,7 +144,6 @@ export default {
         this.$emit("handleAddRole", this.createRole);
       }
 
-      console.log(this.createRole);
     },
     handleCancel() {
       this.$emit("handleCancel");
