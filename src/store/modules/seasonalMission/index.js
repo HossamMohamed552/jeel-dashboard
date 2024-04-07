@@ -63,7 +63,7 @@ export default {
       commit("SET_PRIZES", newPrize);
     },
 
-    handlePrizeInEditMission({commit}, prize) {
+    handlePrizeInEditMission({ commit }, prize) {
       commit("SET_PRIZE_IN_EDIT_MISSION", prize);
     },
 

@@ -176,7 +176,6 @@ export default {
         {
           key: "learningpaths",
           col: "6",
-          listen: "id",
           type: "select",
           optionValue: "name",
           label: "المسار التعليمي",
@@ -415,7 +414,8 @@ export default {
     },
     handlePrizesInEdit(prizes) {
       prizes.map((prize) => {
-        prize["type_id"] = prize.type.id;
+        prize["type_id"] = prize.type?.id;
+        prize["type_id_name"] = prize.type?.name;
         this.addPrize(prize);
       });
     },
@@ -460,7 +460,6 @@ export default {
         mergedAllSteps[10].task_audio_size = seasonalMission.image_size;
         this.handlePrizesInEdit(seasonalMission.prizes);
         this.handleNotificationInEdit(seasonalMission.notifications);
-        console.log(mergedAllSteps);
       });
     }
   },

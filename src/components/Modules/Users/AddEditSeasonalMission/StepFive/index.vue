@@ -122,7 +122,7 @@ export default {
         { key: "id", label: "التسلسل" },
         { key: "main_percentage", label: "من نسبة" },
         { key: "max_percentage", label: "إلى نسبة" },
-        { key: "prizeable_type_name", label: "نوع الجائزة" },
+        { key: "type_id_name", label: "نوع الجائزة" },
         { key: "prizeable_id_name", label: "الجائزة" },
       ],
       NotifacationFieldsList: [

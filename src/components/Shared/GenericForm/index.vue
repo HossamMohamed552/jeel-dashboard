@@ -13,7 +13,7 @@
               :label="field.label"
               :name="field.label"
               :options="field.options"
-              :reduce="(option) => option[field.listen]"
+              :reduce="field.listen ? (option) => option[field.listen] : (option) => option"
               :get-option-label="(option) => option[field.optionValue]"
               :rules="field.rules"
               :deselectFromDropdown="field.deselectFromDropdown"
