@@ -68,7 +68,7 @@
             </DateTimePicker>
             <div class="hold-field" v-if="filesUploadedTypes.includes(field.type)">
               <UploadAttachment
-                v-if="!$route.params.id"
+                v-if="!$route.params.id || isRemoved"
                 :type-of-attachment="field.type"
                 :label="field.label"
                 :dropImage="true"
@@ -80,7 +80,7 @@
                 @setFileInfo="handleInput(field.key, $event)"
               />
               <PreviewMedia
-                v-if="$route.params.id"
+                v-else
                 :header="field.label"
                 :media-name="field.task_audio_name"
                 :file-size="field.task_audio_size"
@@ -175,6 +175,7 @@ export default {
       values: {},
       filesUploadedTypes: ["image", "video"],
       formInvalid: false,
+      isRemoved: false,
     };
   },
   props: {
@@ -237,7 +238,8 @@ export default {
       });
     },
     removeFile(fileName, fileChange, fileRequest) {
-      console.log("File removed in parent component:", fileName, fileChange, fileRequest);
+      this.$emit("removeFile", fileName, fileChange, fileRequest);
+      this.isRemoved = true;
     },
   },
 };
