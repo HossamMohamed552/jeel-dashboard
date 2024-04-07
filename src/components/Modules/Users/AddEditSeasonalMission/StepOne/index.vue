@@ -99,8 +99,13 @@ export default {
       }
     }, 300),
     removeFile(fileName, fileChange, fileRequest) {
+      console.log("File removed in parent component:", fileName, fileChange, fileRequest);
       const imageObjectIndex = this.stepForm.findIndex((field) => field.key === "image");
-      this.stepForm[imageObjectIndex].value = "";
+      console.log(imageObjectIndex)
+      this.stepForm[imageObjectIndex].url = null;
+      this.stepForm[imageObjectIndex].value = null;
+      this.stepForm[imageObjectIndex].task_audio_name = null;
+      this.stepForm[imageObjectIndex].task_audio_size = null;
     },
   },
   async mounted() {
