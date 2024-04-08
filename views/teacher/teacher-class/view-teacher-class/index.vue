@@ -76,6 +76,7 @@
             @addStudentOnGroupItem="addStudentOnGroupItem"
             @editItem="editItem($event)"
             @detailItem="detailItem($event)"
+            @deleteItem="deleteItem($event)"
             :permission_view="'show-teacher-groups'"
             :permission_edit="'edit-teacher-groups'"
             :permission_add_studentForGroup="'add-teacher-student-groups'"
@@ -85,23 +86,38 @@
         </div>
       </div>
     </div>
+    <Modal
+      :content-message="'حذف المجموعة الدراسية'"
+      :content-message-question="'هل انت متأكد من حذف المجموعة الدراسية'"
+      :showModal="showModal"
+      @cancel="cancel($event)"
+      :is-warning="true"
+      @cancelWithConfirm="cancelWithConfirm($event)"
+    />
   </section>
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import {getSingleClassForSuperVisorRequest, getSingleClassRequest} from "@/api/class.js";
+import {
+  deleteClassRequest,
+  getSingleClassForSuperVisorRequest,
+  getSingleClassRequest
+} from "@/api/class.js";
 import ListItems from "@/components/ListItems/index.vue";
 import {
+  deleteClassTeacherRequest,
   getGroupsOfClassTeacherRequest,
   getSingleClassForTeacherRequest,
   getStudentsForClassTeacherRequest
 } from "@/api/teacher-module";
 import Button from "@/components/Shared/Button/index.vue";
 import {mapGetters} from "vuex";
+import Modal from "@/components/Shared/Modal/index.vue";
 
 export default {
   name: "index",
   components: {
+    Modal,
     Button,
     ListItems,
     ShowItem,
@@ -109,7 +125,9 @@ export default {
   data() {
     return {
       loading: false,
+      showModal: false,
       userSearchWord: "",
+      itemId: "",
       singleClass: {},
       activeTap: 1,
       fieldsList: [
@@ -182,6 +200,19 @@ export default {
     },
     editItem($event){
       this.$router.push(`/dashboard/teacher-group/edit/${$event}`);
+    },
+    deleteItem($event) {
+      this.itemId = $event;
+      this.showModal = true;
+    },
+    cancel($event) {
+      this.showModal = $event;
+    },
+    cancelWithConfirm() {
+      this.ApiService(deleteClassTeacherRequest(this.itemId)).then((response) => {
+       this.getGroupsForClass()
+      })
+      this.cancel();
     },
     goToStudentDetail($event){
       this.$router.push(`/dashboard/teacher-student/show/${$event}`);

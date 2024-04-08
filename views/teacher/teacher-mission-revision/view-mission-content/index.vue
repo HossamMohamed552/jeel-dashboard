@@ -109,7 +109,8 @@
     <GeneralModal :id="'holdContent'" :size="'lg'" :hide-header="true">
       <template #modalBody>
         <div class="p-3">
-          <div v-if="activeTap === 1" class="title-content d-flex justify-content-between align-items-center">
+          <div v-if="activeTap === 1"
+               class="title-content d-flex justify-content-between align-items-center">
             <span>تصحيح {{ detail.name }}</span>
             <span>النوع : {{ detail.type.name }}</span>
           </div>
@@ -119,6 +120,13 @@
           </div>
           <b-row>
             <b-col lg="12" v-if="activeTap === 1">
+
+              <div v-if="detail.task" class="mb-3"
+                   :class="detail.type.key === 'text'? 'd-flex justify-content-center align-items-center':''">
+                <span>  السؤال : </span>
+                <span v-if="detail.type.key === 'text'" class="ml-2">{{ detail.task }} </span>
+                <img v-else :src="detail.task" class="task-question-img ">
+              </div>
               <AudioFakePlayer :url="detail?.task_audio_student" :with-background="true"/>
             </b-col>
             <b-col lg="12" v-else>
@@ -165,7 +173,7 @@
                   ></TextAreaField>
                 </b-col>
                 <b-col lg="2" class="d-flex justify-content-center align-items-center">
-                  <button  type="submit" :loading="loading" :disabled="invalid" class="save-btn">
+                  <button type="submit" :loading="loading" :disabled="invalid" class="save-btn">
                     {{ $t("GLOBAL_SAVE") }}
                   </button>
                 </b-col>
@@ -193,7 +201,15 @@ import TextAreaField from "@/components/Shared/TextAreaField/index.vue";
 
 export default {
   name: "index",
-  components: {TextField,TextAreaField, GeneralModal, AudioFakePlayer, Button, ListItems, ShowItem},
+  components: {
+    TextField,
+    TextAreaField,
+    GeneralModal,
+    AudioFakePlayer,
+    Button,
+    ListItems,
+    ShowItem
+  },
   data() {
     return {
       missionDetail: {},
@@ -201,7 +217,7 @@ export default {
       firstLearningPathId: null,
       contentLearningPath: {},
       activeTap: 1,
-      loading:false,
+      loading: false,
       paperWorkFieldsList: [
         {key: "id", label: "التسلسل"},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
@@ -226,13 +242,13 @@ export default {
         {key: "download", label: "المرفق"},
         {key: "teacher_review", label: "الاجراء"},
       ],
-      detail:{},
-      correctionObject:{
+      detail: {},
+      correctionObject: {
         user_id: this.$route.params.studentId,
-        learning_path_id:'',
-        mission_id:'',
-        student_final_degree:"",
-        note:''
+        learning_path_id: '',
+        mission_id: '',
+        student_final_degree: "",
+        note: ''
       }
     }
   },
@@ -268,21 +284,21 @@ export default {
       this.correctionObject.note = item.teacher_review.note
       this.correctionObject.learning_path_id = this.contentLearningPath.id
       this.correctionObject.mission_id = this.missionDetail.id
-      delete  this.correctionObject.task_id
-      delete  this.correctionObject.paper_work_id
-      if (this.activeTap === 1){
+      delete this.correctionObject.task_id
+      delete this.correctionObject.paper_work_id
+      if (this.activeTap === 1) {
         this.correctionObject.task_id = this.detail.id
       } else {
         this.correctionObject.paper_work_id = this.detail.id
       }
       this.$bvModal.show('holdContent')
     },
-    onSubmit(){
+    onSubmit() {
       this.$refs.correctionForm.validate().then((success) => {
         if (!success) return;
       });
-      if (this.activeTap === 1){
-        this.ApiService(correctionTask(this.correctionObject)).then(()=>{
+      if (this.activeTap === 1) {
+        this.ApiService(correctionTask(this.correctionObject)).then(() => {
           this.$bvModal.hide('holdContent')
           this.getMissionContent()
         })
