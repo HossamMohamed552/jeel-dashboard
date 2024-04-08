@@ -53,6 +53,14 @@ export const getClassGroupIdByIdRequest = (classId, params) => ({
     params,
   },
 });
+export const deleteClassTeacherRequest = (groupId) => ({
+  method: "delete",
+  url: `teacher/groups/${groupId}`,
+  config: {
+  },
+});
+
+1
 export const putClassGroupRequest = (classId, data) => ({
   method: "put",
   url: `teacher/groups/${classId}`,

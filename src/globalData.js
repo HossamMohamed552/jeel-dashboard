@@ -372,7 +372,7 @@ let routeSuperVisor = [
     altImage: "view-leaderboard",
     titleImage: "view-leaderboard",
     icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-super-leaderboard",
+    permission: "view-supervisor-leaderboard",
   },
 ];
 let routeSchoolAdmin =[
