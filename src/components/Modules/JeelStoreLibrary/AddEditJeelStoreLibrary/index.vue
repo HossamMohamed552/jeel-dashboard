@@ -55,7 +55,7 @@
                     :rules="'required'"
                     :label="'لوجو المحتوى'"
                     :type-of-attachment="'image'"
-                    :accept-files="'image/*'"
+                    :accept-files="'image/jpeg,image/png,image/jpg,image/gif'"
                     @setFileId="setThumbnailId"
                 />
                 <PreviewMedia
@@ -83,6 +83,7 @@
                 <div class="hold-field">
                   <TextAreaField
                       :label="'الوصف'"
+                      :name="'الوصف'"
                       :rules="'required|min:3|max:250'"
                       v-model="createItem.description"
                   />
@@ -96,30 +97,29 @@
                     <span><i class="fa-solid fa-asterisk"></i></span>
                   </label>
                   <SelectSearch
-                    isRequired="true"
                     v-model="createItem.type"
                     name="نوع الملف"
                     placeholder="أختر نوع الملف"
                     :options="types"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
+                    :rules="'required'"
                   ></SelectSearch>
                 </div>
               </b-col>
 
               <!------------------- start file audio --------------------------------->
-              <b-col lg="6" v-if="createItem.type==145" class="mb-3 mt-4">
+              <b-col lg="8" v-if="createItem.type==145" class="mb-3 mt-4">
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.audioChangedRequest"
                   :type-of-attachment="'audio'"
                   :dropIdRef="'audioFile'"
-                  :accept-files="'audio/*'"
+                  :accept-files="'audio/mpeg,audio/mpga,audio/mp3,audio/wav'"
                   :label="'ملف الصوت'"
                   :name="'audioFile'"
                   :rules="'required'"
                   @setFileId="setAudioId($event)"
                 />
-
                 <PreviewMedia
                   v-if="
                     $route.params.id &&
@@ -127,7 +127,7 @@
                     !attachment.audioChangedRequest
                   "
                   :header="$t('ملف الصوت')"
-                  :media-name="ttachment.audio_name"
+                  :media-name="attachment.audio_name"
                   :file-size="attachment.audio_size"
                   :typeOfMedia="'audio'"
                   :showRemoveButton="true"
@@ -135,17 +135,16 @@
                   @removeFile="removeFile('audio','audioChanged','audioChangedRequest')
                   "
                 />
-
               </b-col>
               <!------------------- end  file audio --------------------------------->
               <!------------------- start file image --------------------------------->
-              <b-col lg="6" v-if="createItem.type==146" class="mb-3 mt-4">
+              <b-col lg="8" v-if="createItem.type==146" class="mb-3 mt-4">
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.imageChangedRequest"
                   :rules="'required'"
                   :label="'ملف صورة '"
                   :type-of-attachment="'image'"
-                  :accept-files="'image/*'"
+                  :accept-files="'image/jpeg,image/png,image/jpg,image/gif'"
                   @setFileId="setImageId"
                 />
                 <PreviewMedia
@@ -169,12 +168,12 @@
               <!------------------- end file image --------------------------------->
 
               <!------------------- start video 1  --------------------------------->
-              <b-col lg="6"  v-if="createItem.type==147" class="mb-3 mt-4">
+              <b-col lg="8"  v-if="createItem.type==147" class="mb-3 mt-4">
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.videoWithOutMuiscChangedRequest"
                   :type-of-attachment="'video'"
                   :dropIdRef="'VideFile'"
-                  :accept-files="'.mp4'"
+                  :accept-files="'video/mp4,video/avi,video/mov'"
                   :name="'VideoWithout'"
                   :rules="'required'"
                   @setFileId="setVideoWithOutMuiscFileId($event)"
@@ -202,18 +201,16 @@
               <!------------------- end video 1 --------------------------------->
 
               <!------------------- start video 2 --------------------------------->
-              <b-col lg="6"  v-if="createItem.type==147" class="mb-3 mt-4">
+              <b-col lg="12"  v-if="createItem.type==147" class="mb-3 mt-4">
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.videoWithMuiscChangedRequest"
                   :type-of-attachment="'video'"
-                  :label="'ملف الفيديو '"
+                  :label="'ملف الفيديو'"
                   :name="'VideFile'"
                   :dropIdRef="'VideFile'"
-                  :accept-files="'.mp4'"
+                  :accept-files="'video/mp4,video/avi,video/mov'"
                   @setFileId="setVideoWithMuiscFileId"
                 />
-
-
                 <PreviewMedia
                   v-if="
                     $route.params.id &&
@@ -235,18 +232,16 @@
               <!------------------- end 2 --------------------------------->
 
               <!------------------- start pdf --------------------------------->
-              <b-col lg="6"  v-if="createItem.type==148" class="mb-3 mt-4">
+              <b-col lg="8"  v-if="createItem.type==148" class="mb-3 mt-4">
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.fileChangedRequest"
                   :type-of-attachment="'file'"
-                  :label="'ملف المحتوي '"
+                  :label="'ملف المحتوي'"
                   :name="'File'"
                   :dropIdRef="'File'"
-                  :accept-files="'.pdf'"
+                  :accept-files="'application/pdf'"
                   @setFileId="setFileId"
                 />
-
-
                 <PreviewMedia
                   v-if="
                     $route.params.id &&
@@ -274,19 +269,20 @@
                     :label="'اكتب ملحوظة'"
                     :rules="'required|min:3|max:250'"
                     v-model="createItem.note"
+                    :name="'الملحوظة'"
                   />
 
                 </div>
               </b-col>
 
-              <b-col lg="6" class="mb-3" v-if="createItem.type == 151 || createItem.type == 149">
+              <b-col lg="8" class="mb-3" v-if="createItem.type == 151 || createItem.type == 149">
                 <div class="hold-field">
                   <TextField
                     v-model="createItem.link"
                     :label="'رابط'"
                     :name="'رابط'"
                     placeholder="اكتب رابط"
-                    :rules="'required|url'"
+                    :rules="'required|urlLink'"
                   ></TextField>
                 </div>
               </b-col>
@@ -304,7 +300,7 @@
                       v-if="!$route.params.id"
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || checkLogo"
+                      :disabled='invalid || checkLogo || (checkAudioCustomInput && checkImageCustomInput && checkVideoCustomInput && checkFileCustomInput && createItem.link === "" && createItem.note === "" )'
                       custom-class="submit-btn"
                     >
                       {{ $t("GLOBAL_SAVE") }}
@@ -417,13 +413,13 @@ export default {
         gems: "",
         link: "",
         type: null,
-        image: "",
+        image: null,
         logo: "",
-        video_with_muisc: "",
-        video_without_music: "",
-        audio: "",
-        file: "",
-
+        video_with_muisc: null,
+        video_without_music: null,
+        audio: null,
+        file: null,
+        description:"",
         // note
         note: null
       },
@@ -463,7 +459,6 @@ export default {
     };
   },
   methods: {
-
     setThumbnailId(id) {
       this.attachment.thumbnail = id;
       this.createItem.logo = id;
@@ -507,7 +502,7 @@ export default {
     },
 
     removeFile(fileName, fileChange, fileRequest) {
-      this.createItem[fileName] = null;
+      this.createItem[fileName] = "";
       this.createItem[fileChange] = true;
       this.createItem[fileRequest] = true;
     },
@@ -596,11 +591,19 @@ export default {
   },
   computed: {
     checkLogo() {
-      if (this.attachment.thumbnail === null) {
-        return true;
-      } else {
-        return false;
-      }
+      return this.attachment.thumbnail === null;
+    },
+    checkAudioCustomInput(){
+      return this.createItem.audio === null;
+    },
+    checkImageCustomInput(){
+      return this.createItem.image === null;
+    },
+    checkVideoCustomInput(){
+      return this.createItem.video_with_muisc === null || this.createItem.video_without_music === null;
+    },
+    checkFileCustomInput(){
+      return this.createItem.file === null;
     },
   },
   mounted() {

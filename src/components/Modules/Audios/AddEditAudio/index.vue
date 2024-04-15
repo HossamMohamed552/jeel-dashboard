@@ -132,6 +132,7 @@
                     :file-size="formValues.task_file_size"
                     :image-url="formValues.task"
                     :typeOfMedia="'image'"
+                    @showModal="showModal(formValues,$event)"
                     :showRemoveButton="true"
                     @removeFile="
                       removeFile(
@@ -466,6 +467,8 @@ export default {
       this.mediaType = $event
       if (this.mediaType === 'audio') {
         this.url = audio.task_audio
+      } else {
+        this.url = audio.task
       }
     },
     hideModal() {
@@ -535,8 +538,7 @@ export default {
   },
   computed: {
     checkAudioInput() {
-      if (this.formValues.task_audio === "" || (this.questionType[0]?.name === "images" && this.formValues.task_image === "")
-      ) {
+      if (this.formValues.task_audio === "" || (this.questionType[0]?.name === "images" && this.formValues.task_image === "")) {
         return true;
       } else {
         return false;
