@@ -58,14 +58,14 @@
           </b-col>
         </b-row>
         <b-row class="mt-5 mb-5">
-          <b-col md="4" sm="12">
+          <b-col md="4" sm="12" v-if="powerUpBox.jeel_xp">
             <ShowItem
                 class="divider-show"
                 :title="'عدد النقاط'"
                 :subtitle="powerUpBox.jeel_xp"
             />
           </b-col>
-          <b-col md="4" sm="12">
+          <b-col md="4" sm="12" v-if="powerUpBox.jeel_coins">
             <ShowItem
                 class="divider-show"
                 :title="'عدد عملات جيل'"
