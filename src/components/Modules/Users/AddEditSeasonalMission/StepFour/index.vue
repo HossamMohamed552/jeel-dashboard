@@ -134,11 +134,7 @@ export default {
   },
   async mounted() {
     this.notifactionGroup = this.getNotificationsList;
-    if (this.$route.params.id) {
-      this.notifactionGroup.forEach((notifaction) => {
-        notifaction["original_url"] = notifaction.audio;
-      });
-    }
+    
   },
   watch: {
     getNotificationsList() {
