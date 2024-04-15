@@ -77,6 +77,7 @@
                 :media-name="seasonalMissing.image_name"
                 :file-size="seasonalMissing.image_size"
                 :showRemoveButton="false"
+                :showDownloadButton="true"
                 :typeOfMedia="'image'"
                 :image-url="seasonalMissing.image"
               />

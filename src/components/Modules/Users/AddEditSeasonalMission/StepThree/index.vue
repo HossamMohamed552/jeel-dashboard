@@ -142,7 +142,6 @@ export default {
         }
       }
 
-
       if (key === "prizeable_type") {
         this.stepForm[4].disabled = false;
         if (this.prizeType == "المكتبة") {
@@ -184,6 +183,23 @@ export default {
       this.entry = {};
       this.resetInput();
     },
+    validateForm(val) {
+      // Find the rule for the max_percentage field
+      const maxPercentageRule = this.stepForm.find((rule) => rule.key === "max_percentage");
+
+      // If the rule is found, construct the new rules string with val
+      if (maxPercentageRule) {
+        // Split existing rules by "|" and filter out any occurrences of "custom_greater_than:"
+        const existingRules = maxPercentageRule.rules
+          .split("|")
+          .filter((rule) => !rule.includes("min_value:"));
+
+        // Concatenate the existing rules with the new rule containing val
+        maxPercentageRule.rules = existingRules.concat(`min_value:${val}`).join("|");
+      }
+
+      console.log("stepForm", maxPercentageRule);
+    },
   },
   computed: {
     ...mapGetters(["getPrizesList"]),
@@ -198,7 +214,16 @@ export default {
         if (prize?.type?.key == "library") prize["prizeable_id_name"] = prize.library.name;
       });
     }
+    this.$watch(
+      () => {
+        return this.$refs.stepThreeForm.refs["من نسبة"].value;
+      },
+      (val) => {
+        this.validateForm(val);
+      }
+    );
   },
+
   watch: {
     getPrizesList() {
       this.prizeGroup = this.getPrizesList;
