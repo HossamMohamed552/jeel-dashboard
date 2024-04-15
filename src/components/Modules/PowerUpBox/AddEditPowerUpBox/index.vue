@@ -116,11 +116,10 @@
 
               <b-col lg="6" class="mt-3">
                 <b-row>
-                  <b-col lg="6">
+                  <b-col lg="6" v-if="jeelXpStatus">
                     <div class="hold-field">
                       <TextField
                           v-model="createPowerUpBox.jeel_xp"
-                          v-if="jeelXpStatus"
                           :label="'عدد النقاط'"
                           :name="' عدد النقاط'"
                           placeholder="ادخل عدد النقاط"
@@ -130,11 +129,10 @@
                       ></TextField>
                     </div>
                   </b-col>
-                  <b-col lg="6">
+                  <b-col lg="6" v-if="jeelCoinsStatus">
                     <div class="hold-field">
                       <TextField
                           v-model="createPowerUpBox.jeel_coins"
-                          v-if="jeelCoinsStatus"
                           :label="'عدد عملات جيل'"
                           :name="'عدد عملات جيل'"
                           placeholder=" أدخل عدد عملات جيل"

@@ -1,5 +1,5 @@
 <template>
-  <section class="container-fluid custom-container">
+  <div>
     <section class="container-fluid custom-container" v-if="audio">
       <div class="show-group">
         <div class="hold-fields">
@@ -42,7 +42,7 @@
               />
             </b-col>
           </b-row>
-          <b-row v-if="audio.type == 'image'">
+          <b-row v-if="audio?.type?.key === 'images'">
             <b-col>
               <PreviewMedia
                 header="صورة السؤال"
@@ -50,11 +50,12 @@
                 :file-size="audio.task_file_size"
                 :image-url="audio.task"
                 :typeOfMedia="'image'"
+                @showModal="showModal(audio,$event)"
               />
             </b-col>
           </b-row>
-          <b-row v-if="audio.type == 'text'">
-            <b-col class="mt-4">
+          <b-row v-if="audio?.type?.key === 'text'">
+            <b-col lg="12" class="mt-4">
               <ShowItem
                 class="divider-show"
                 title="نص السؤال"
@@ -125,7 +126,7 @@
         </div>
       </template>
     </GeneralModal>
-  </section>
+  </div>
 </template>
 <script>
 import { getSingleAudioRequest } from "@/api/audios";
@@ -166,8 +167,11 @@ export default {
     showModal(audio, $event) {
       this.$bvModal.show('holdContent')
       this.mediaType = $event
+      console.log('this.mediaType',this.mediaType)
       if (this.mediaType === 'audio'){
         this.url = audio.task_audio
+      } else {
+        this.url = audio.task
       }
     },
     hideModal() {

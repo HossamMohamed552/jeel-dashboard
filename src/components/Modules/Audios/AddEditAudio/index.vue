@@ -76,7 +76,7 @@
                     :name="$t('AUDIOS.QUESTION_TYPE')"
                     :placeholder="$t('AUDIOS.QUESTION_TYPE_PLACEHOLDER')"
                     :options="questionTypes"
-                    :get-option-label="(option) => option.key"
+                    :get-option-label="(option) => option.name"
                     :reduce="(option) => option.id"
                     :rules="'required'"
                     @input="setQuestionType($event)"
@@ -85,7 +85,7 @@
               </b-col>
             </b-row>
             <b-row>
-              <b-col v-if="questionType && questionType[0]?.name === 'text'" lg="12" class="mb-3">
+              <b-col v-if="questionType && questionType[0]?.key === 'text'" lg="12" class="mb-3">
                 <div class="hold-field">
                   <b-form-group
                     v-slot="{ ariaDescribedby }"
@@ -106,7 +106,7 @@
                   </b-form-group>
                 </div>
               </b-col>
-              <b-col v-if="questionType && questionType[0]?.name === 'images'" lg="12" class="mb-3">
+              <b-col v-if="questionType && questionType[0]?.key === 'images'" lg="12" class="mb-3">
                 <div class="hold-field mt-4">
                   <UploadAttachment
                     v-if="
@@ -387,14 +387,13 @@ export default {
       this.isPlaying = true;
     },
     setQuestionType: debounce(function ($event) {
-      console.log('type', $event)
       this.questionType = this.questionTypes.filter((item)=>{
         return item.id === $event
       })
-      this.formValues.typeName = this.questionType[0]?.name
+      this.formValues.typeName = this.questionType[0]?.key
       // this.questionType = type;
       if (this.$route.params.id) {
-        if (this.questionType[0]?.name === "text") {
+        if (this.questionType[0]?.key === "text") {
           // this.formValues.task_file_name = ""
           // this.formValues.task_file_size = ""
           // this.formValues.taskImageChanged = false
@@ -544,7 +543,7 @@ export default {
       }
     },
     checkAudioInputsUpdate() {
-      if (this.formValues.taskAudioChanged === true || (this.questionType[0]?.name === "images" && this.formValues.taskImageChanged === true)) {
+      if (this.formValues.taskAudioChanged === true || (this.questionType[0]?.key === "images" && this.formValues.taskImageChanged === true)) {
         return true;
       } else {
         return false;
