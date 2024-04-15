@@ -82,6 +82,7 @@ export default {
       }
     },
     handleInput: _.debounce(function (key, value, field) {
+      if (key === "start_date") this.validateForm(value);
       if (key === "image") {
         const imageObjectIndex = this.stepForm.findIndex((field) => field.key === "image");
         this.stepForm[imageObjectIndex].value = value.uuid;
@@ -98,10 +99,15 @@ export default {
         this.handleInputValueName(key, value, field);
       }
     }, 300),
+    validateForm(val) {
+      const endDateRule = this.stepForm.find((rule) => rule.key === "end_date");
+      if (endDateRule) {
+        endDateRule.rules = `required|afterDate:${val}`;
+      }
+    },
     removeFile(fileName, fileChange, fileRequest) {
       console.log("File removed in parent component:", fileName, fileChange, fileRequest);
       const imageObjectIndex = this.stepForm.findIndex((field) => field.key === "image");
-      console.log(imageObjectIndex)
       this.stepForm[imageObjectIndex].url = null;
       this.stepForm[imageObjectIndex].value = null;
       this.stepForm[imageObjectIndex].task_audio_name = null;
