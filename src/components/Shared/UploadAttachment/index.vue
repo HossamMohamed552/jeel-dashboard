@@ -22,8 +22,10 @@
         </h3>
         <div class="subtitle">
           <p class="d-inline-block mr-1">نوع الملفات</p>
-          <p class="d-inline-block m-0" v-if="typeOfAttachment === 'video'">(mp4.)</p>
-          <p class="d-inline-block m-0" v-if="typeOfAttachment === 'audio'">(mp3.)</p>
+          <p class="d-inline-block m-0" v-if="typeOfAttachment === 'video'">('mp4', 'avi', 'mov')</p>
+          <p class="d-inline-block m-0" v-if="typeOfAttachment === 'audio'">('mpeg','mpga','mp3','wav')</p>
+          <p class="d-inline-block m-0" v-if="typeOfAttachment === 'image'">('jpeg','png','jpg','gif')</p>
+          <p class="d-inline-block m-0" v-if="typeOfAttachment === 'file'">('pdf')</p>
           <div class="subtitle">
             <p>اكبر حجم للملف : {{ dropzoneOptions.maxFilesize }} ميجابايت</p>
           </div>
@@ -211,7 +213,7 @@ export default {
   .dropzone .dz-preview.dz-error .dz-error-message {
     opacity: 1;
     top: auto;
-    bottom: -3.6rem;
+    bottom: -0.6rem;
     transform: translateY(-50%);
   }
 

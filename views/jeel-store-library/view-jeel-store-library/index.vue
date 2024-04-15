@@ -12,7 +12,7 @@
             <ShowItem
                 class="divider-show"
                 :title="'اسم المحتوي'"
-                :subtitle="jeelStoreLibrary.name"
+                :subtitle="jeelStoreLibrary.file_name"
             />
           </b-col>
           <b-col md="4" sm="12">
@@ -35,7 +35,7 @@
           <b-col lg="6" class="mb-5 mt-4">
             <PreviewMedia
               :header="'لوجو المحتوى'"
-              :media-name="jeelStoreLibrary.file_name"
+              :media-name="jeelStoreLibrary.file_orginal_name"
               :file-size="jeelStoreLibrary.file_size"
               :image-url="jeelStoreLibrary.file"
               :typeOfMedia="'image'"

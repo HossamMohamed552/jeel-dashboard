@@ -21,6 +21,7 @@
               :options="schoolGroupOptions"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
+              @input="getSchools"
             ></SelectSearch>
           </b-col>
           <b-col cols="4">
@@ -32,6 +33,7 @@
               :options="schoolsOptions"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
+              :disabled="!searchValues.school_group_id"
             ></SelectSearch>
           </b-col>
           <b-col cols="4">
@@ -87,7 +89,7 @@
           @click="goToAddSubscription"
           v-if="user.permissions.includes(`add-subscription`)"
         >
-          <img src="@/assets/images/icons/plus.svg" />
+          <img src="@/assets/images/icons/plus.svg"/>
           <span>تسجيل إشتراك</span>
         </Button>
       </template>
@@ -106,16 +108,16 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { deleteSubscriptionsRequest, getSubscriptionsRequest } from "@/api/subscription.js";
+import {deleteSubscriptionsRequest, getSubscriptionsRequest} from "@/api/subscription.js";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
-import { getAllSchoolGroupRequest } from "@/api/schoolGroup";
-import { getSchoolsRequest } from "@/api/school";
-import { getSchoolYearRequest } from "@/api/school-year";
+import {getAllSchoolGroupRequest} from "@/api/schoolGroup";
+import {getSchoolsRequest} from "@/api/school";
+import {getSchoolYearRequest} from "@/api/school-year";
 
 export default {
-  components: { Modal, ListItems, Button, SelectSearch },
+  components: {Modal, ListItems, Button, SelectSearch},
   computed: {
     ...mapGetters(["user"]),
   },
@@ -204,12 +206,15 @@ export default {
       });
     },
     getSchools() {
-      this.ApiService(getSchoolsRequest({list_all:true})).then((response) => {
+      this.ApiService(getSchoolsRequest({
+        school_group_id: this.searchValues.school_group_id,
+        list_all: true
+      })).then((response) => {
         this.schoolsOptions = response.data.data;
       });
     },
     getSchoolYears() {
-      this.ApiService(getSchoolYearRequest({list_all:true})).then((response) => {
+      this.ApiService(getSchoolYearRequest({list_all: true})).then((response) => {
         this.schoolYearsOptions = response.data.data;
       });
     },
@@ -230,7 +235,6 @@ export default {
   mounted() {
     this.getSubscriptions();
     this.getSchoolGroups();
-    this.getSchools();
     this.getSchoolYears();
   },
 };
