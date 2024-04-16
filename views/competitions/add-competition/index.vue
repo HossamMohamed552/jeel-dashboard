@@ -4,8 +4,14 @@
     <!-- <pre>{{ user.school.id }}</pre> -->
     <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
     <Stepper class="mt-5 mb-3" :steps="steps" :current-step="currentStep" />
+    <AddEditTeacherCompetitionInfo
+      v-if="currentStep === 0 && this.user.permissions.includes('add-teacher-competitions')"
+      :stepForm="competitionInfoForm"
+      @nextStep="nextStep"
+      @handleCancel="handleCancel"
+    />
     <AddEditCompetitionInfo
-      v-if="currentStep === 0"
+      v-if="currentStep === 0 && this.user.permissions.includes('add-competition')"
       :stepForm="competitionInfoForm"
       @nextStep="nextStep"
       @handleCancel="handleCancel"
@@ -21,6 +27,7 @@
       :level_id="competitionInfoForm[1].value"
       :missions_ids="competitionInfoForm[2].value"
     />
+
     <AddEditPrizes
       v-if="currentStep === 2"
       :stepForm="prizeForm"
@@ -53,6 +60,7 @@
 <script>
 // Steps
 import AddEditCompetitionInfo from "@/components/Modules/Competitions/AddEditCompetitionInfo/index.vue";
+import AddEditTeacherCompetitionInfo from "@/components/Modules/Competitions/AddEditTeacherCompetitionInfo/index.vue";
 import AddEditCompetitionQuestions from "@/components/Modules/Competitions/AddEditCompetitionQuestions/index.vue";
 import PreviewData from "@/components/Modules/Competitions/PreviewData";
 import AddEditPrizes from "@/components/Modules/addEditPrize";
@@ -71,6 +79,7 @@ export default {
     Modal,
     Button,
     AddEditCompetitionInfo,
+    AddEditTeacherCompetitionInfo,
     AddEditPrizes,
     AddEditNotification,
     AddEditCompetitionQuestions,
@@ -121,7 +130,7 @@ export default {
           listen: "id",
           type: "select",
           optionValue: "name",
-          label: "الصفوف المدرسية",
+          label: "الصفوف الدراسية",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -336,7 +345,6 @@ export default {
   },
   methods: {
     ...mapActions(["addPrizeById", "addNotificationById"]),
-
     emptyStore() {
       this.addPrizeById([]);
       this.addNotificationById([]);
@@ -376,7 +384,6 @@ export default {
         });
     },
 
-    addCompetition() {},
     handleAssignObject(data) {
       Object.assign(this.collectData, { ...data });
       this.handleSaveCollectedData(data);
@@ -393,9 +400,7 @@ export default {
   },
 
   mounted() {
-    if (!this.user.permissions.includes("add-teacher-competitions")) {
-      this.competitionInfoForm.splice(6, 2);
-    }
+
   },
   beforeMount() {
     this.emptyStore();
