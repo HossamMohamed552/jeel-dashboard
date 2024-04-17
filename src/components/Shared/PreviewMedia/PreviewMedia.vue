@@ -3,11 +3,14 @@
     <p class="header">{{ header }}</p>
     <div class="preview-content" :class="typeOfMedia === 'image' ? 'contentImage' : ''">
       <div class="type-media">
-        <div class="video" v-if="typeOfMedia === 'video'" @click="showModal">
+        <div class="video" v-if="typeOfMedia === 'video' || typeOfMedia === 'videoWithOutMusic'" @click="showModal">
           <div class="skeleton-video"><img src="@/assets/images/icons/play.png" /></div>
         </div>
         <div class="video" v-else-if="typeOfMedia === 'audio'" @click="showModal">
           <div class="skeleton-video"><img src="@/assets/images/icons/audio.png" /></div>
+        </div>
+        <div class="video" v-else-if="typeOfMedia === 'file'" @click="showModal">
+          <div class="skeleton-video"><img src="@/assets/images/icons/file.png" /></div>
         </div>
         <div class="image" v-else @click="showModal">
           <img :src="imageUrl" />
