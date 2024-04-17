@@ -1,6 +1,6 @@
 import ApiService from "@/api/ApiService";
-import {getAllCountryRequest} from "@/api/country"; // الدولة
-import {getAllSchoolGroupRequest, getSingleSchoolGroupRequest} from "@/api/schoolGroup";
+import { getAllCountryRequest } from "@/api/country"; // الدولة
+import { getAllSchoolGroupRequest, getSingleSchoolGroupRequest } from "@/api/schoolGroup";
 import {
   getAllRolesTypeRequest, // تصنيف الدور الوظيفي
   getAllRolesByTypeRequest, // الدور الوظيفي
@@ -19,29 +19,29 @@ import {
   geTermsRequest, // الترم الدراسي
   getStudyYearRequest, // العام الدراسى
 } from "@/api/academicYear";
-import {getSchoolsRequest} from "@/api/school";
-import {getSystemAudiosCategoriesRequest} from "@/api/system-audios"; //  تصنيف اصوات النظام
-import {getRolesRequest} from "@/api/role";
-import {getAllSeasonalMissionGroupsRequest} from "@/api/seasonal-mission-group"; // اسم المجموعة الموسمية
-import {getAllLearningPathsRequest} from "@/api/learningPath"; // المسار التعليمي
+import { getSchoolsRequest } from "@/api/school";
+import { getSystemAudiosCategoriesRequest } from "@/api/system-audios"; //  تصنيف اصوات النظام
+import { getRolesRequest } from "@/api/role";
+import { getAllSeasonalMissionGroupsRequest } from "@/api/seasonal-mission-group"; // اسم المجموعة الموسمية
+import { getAllLearningPathsRequest } from "@/api/learningPath"; // المسار التعليمي
 import {
   getAllLessonsRequest, // الدروس ( كل الدروس )
   getLessonsDepenseLearningPathRequest, // الدروس ( اعتماداَ المسار التعليمي )
 } from "@/api/lessons"; // الدرس
-import {getAllLevelsRequest} from "@/api/level"; // الصف الدراسي
-import {getQuizLevelPathRequest} from "@/api/quiz"; // التمارين
-import {getVideoPerLevelPathRequest} from "@/api/videos";
+import { getAllLevelsRequest } from "@/api/level"; // الصف الدراسي
+import { getQuizLevelPathRequest } from "@/api/quiz"; // التمارين
+import { getVideoPerLevelPathRequest } from "@/api/videos";
 
 // Super Visor Dropdowns
-import {getStudyYearsForSuperVisorRequest} from "@/api/school-info";
-import {getLevelsForSuperVisorDropDownRequest} from "@/api/level"; // المرحلة الدراسية
+import { getStudyYearsForSuperVisorRequest } from "@/api/school-info";
+import { getLevelsForSuperVisorDropDownRequest } from "@/api/level"; // المرحلة الدراسية
 import {
   getMissionForCompetitonRequest, // المهام
   getGoalsForCompetitonRequest, // الاهداف التعليمية
   getOutcomesForCompetitonRequest, // مخرجات التعلم
 } from "@/api/competition";
-import {getTermsForSupervisorRequest} from "@/api/term"; // الفيديوهات
-import {getClassForSuperRequest} from "@/api/class";
+import { getTermsForSupervisorRequest } from "@/api/term"; // الفيديوهات
+import { getClassForSuperRequest } from "@/api/class";
 import {
   getClassForTeacherRequest,
   getLevelsForTeacherDropDownRequest, //  الصفوف المدرسية
@@ -59,7 +59,7 @@ import {
   getLevelsForSupervisorBasedStudyYearRequest,
   getStudyYearForSupervisorRequest,
   getSupervisorMissionsRequest,
-  getTermsForSupervisorDropDownRequest
+  getTermsForSupervisorDropDownRequest,
 } from "@/api/supervisor-module";
 
 // isSub = false
@@ -107,7 +107,7 @@ export async function getAllRoles(array, key) {
 }
 
 export async function getAllRolesByType(array, key, id) {
-  await fetchDataAndUpdateOptions(array, getAllRolesByTypeRequest({"types[0]": id}), key);
+  await fetchDataAndUpdateOptions(array, getAllRolesByTypeRequest({ "types[0]": id }), key);
 }
 
 export async function getAllRolesType(array, key) {
@@ -179,12 +179,12 @@ export async function getCompetitionLibraryContent(array, key, ids) {
   await fetchDataAndUpdateOptions(array, getCompetitionLibraryContentRequest(paramsString), key);
 }
 
-export async function getQuizLevelPath(array, key) {
-  await fetchDataAndUpdateOptions(array, getQuizLevelPathRequest(), key);
+export async function getQuizLevelPath(array, key,id) {
+  await fetchDataAndUpdateOptions(array, getQuizLevelPathRequest(id), key);
 }
 
-export async function getVideoPerLevelPath(array, key) {
-  await fetchDataAndUpdateOptions(array, getVideoPerLevelPathRequest(), key);
+export async function getVideoPerLevelPath(array, key, id) {
+  await fetchDataAndUpdateOptions(array, getVideoPerLevelPathRequest(id), key);
 }
 
 export async function geAllTerms(array, key) {
@@ -255,72 +255,113 @@ export async function getSTermsForTeacher(array, key) {
 }
 
 export async function getStudyYearForTeacher(array, key) {
-  await fetchDataAndUpdateOptions(array, getStudyYearForTeacherRequest({list_all: true}), key);
+  await fetchDataAndUpdateOptions(array, getStudyYearForTeacherRequest({ list_all: true }), key);
 }
 export async function getStudyYearForSupervisor(array, key) {
-  await fetchDataAndUpdateOptions(array, getStudyYearForSupervisorRequest({list_all: true}), key);
+  await fetchDataAndUpdateOptions(array, getStudyYearForSupervisorRequest({ list_all: true }), key);
 }
 
 export async function getLevelByStudyYearForTeacher(array, key, id) {
-  await fetchDataAndUpdateOptions(array, getLevelsForTeacherBasedStudyYearRequest({
-    "study_year_id": id,
-    list_all: true
-  }), key);
+  await fetchDataAndUpdateOptions(
+    array,
+    getLevelsForTeacherBasedStudyYearRequest({
+      study_year_id: id,
+      list_all: true,
+    }),
+    key
+  );
 }
 export async function getLevelByStudyYearForSupervisor(array, key, id) {
-  await fetchDataAndUpdateOptions(array, getLevelsForSupervisorBasedStudyYearRequest({
-    "study_year_id": id,
-    list_all: true
-  }), key);
+  await fetchDataAndUpdateOptions(
+    array,
+    getLevelsForSupervisorBasedStudyYearRequest({
+      study_year_id: id,
+      list_all: true,
+    }),
+    key
+  );
 }
 
 export async function getTypeForTeacher(array, key) {
   await fetchDataAndUpdateOptions(array, getAllGenderRequest(), key);
 }
 
-export async function getTermsForTeacherBasedStudyYear(array, key, studyYearId,leveId) {
-  await fetchDataAndUpdateOptions(array, getTermsForTeacherRequest({
-    "study_year_id": studyYearId,
-    list_all: true
-  }), key);
+export async function getTermsForTeacherBasedStudyYear(array, key, studyYearId, leveId) {
+  await fetchDataAndUpdateOptions(
+    array,
+    getTermsForTeacherRequest({
+      study_year_id: studyYearId,
+      list_all: true,
+    }),
+    key
+  );
 }
-export async function getTermsForSupervisorBasedStudyYear(array, key, studyYearId,leveId) {
-  await fetchDataAndUpdateOptions(array, getTermsForSupervisorDropDownRequest({
-    "study_year_id": studyYearId,
-    list_all: true
-  }), key);
-}
-
-
-export async function getClassForTeacherBasedStudyYearLevel(array, key, studyYearId,leveId) {
-  await fetchDataAndUpdateOptions(array, getClassForTeacherBasedStudyYearLevelRequest({
-    "study_year_id": studyYearId,
-    "level_id": leveId,
-    list_all: true
-  }), key);
-}
-export async function getClassForSupervisorBasedStudyYearLevel(array, key, studyYearId,leveId) {
-  await fetchDataAndUpdateOptions(array, getClassForSupervisorBasedStudyYearLevelRequest({
-    "study_year_id": studyYearId,
-    "level_id": leveId,
-    list_all: true
-  }), key);
-}
-export async function getMissionForTeacherBasedStudyYearLevelTerm(array, key, studyYearId,leveId,termId) {
-  await fetchDataAndUpdateOptions(array, getTeacherMissionsRequest({
-    "study_year_id": studyYearId,
-    "level_id": leveId,
-    "term_id": termId,
-    list_all: true
-  }), key);
-}
-export async function getMissionForSuperBasedStudyYearLevelTerm(array, key, studyYearId,leveId,termId) {
-  await fetchDataAndUpdateOptions(array, getSupervisorMissionsRequest({
-    "study_year_id": studyYearId,
-    "level_id": leveId,
-    "term_id": termId,
-    list_all: true
-  }), key);
+export async function getTermsForSupervisorBasedStudyYear(array, key, studyYearId, leveId) {
+  await fetchDataAndUpdateOptions(
+    array,
+    getTermsForSupervisorDropDownRequest({
+      study_year_id: studyYearId,
+      list_all: true,
+    }),
+    key
+  );
 }
 
-
+export async function getClassForTeacherBasedStudyYearLevel(array, key, studyYearId, leveId) {
+  await fetchDataAndUpdateOptions(
+    array,
+    getClassForTeacherBasedStudyYearLevelRequest({
+      study_year_id: studyYearId,
+      level_id: leveId,
+      list_all: true,
+    }),
+    key
+  );
+}
+export async function getClassForSupervisorBasedStudyYearLevel(array, key, studyYearId, leveId) {
+  await fetchDataAndUpdateOptions(
+    array,
+    getClassForSupervisorBasedStudyYearLevelRequest({
+      study_year_id: studyYearId,
+      level_id: leveId,
+      list_all: true,
+    }),
+    key
+  );
+}
+export async function getMissionForTeacherBasedStudyYearLevelTerm(
+  array,
+  key,
+  studyYearId,
+  leveId,
+  termId
+) {
+  await fetchDataAndUpdateOptions(
+    array,
+    getTeacherMissionsRequest({
+      study_year_id: studyYearId,
+      level_id: leveId,
+      term_id: termId,
+      list_all: true,
+    }),
+    key
+  );
+}
+export async function getMissionForSuperBasedStudyYearLevelTerm(
+  array,
+  key,
+  studyYearId,
+  leveId,
+  termId
+) {
+  await fetchDataAndUpdateOptions(
+    array,
+    getSupervisorMissionsRequest({
+      study_year_id: studyYearId,
+      level_id: leveId,
+      term_id: termId,
+      list_all: true,
+    }),
+    key
+  );
+}

@@ -4,10 +4,9 @@ export const getQuizzesRequest = (params) => ({
   config: { params },
 });
 
-export const getQuizLevelPathRequest = (params) => ({
+export const getQuizLevelPathRequest = (id) => ({
   method: "get",
-  url: `quizzes`,
-  config: {params},
+  url: `quizzes?learning_path_id=${id}`,
   // per_page=200&level_id=${params.levelId}&learning_path_id=${params.learnPathId}&term_id=${params.termId}
 });
 export const getGeneralQuestionRequest = (params) => ({
