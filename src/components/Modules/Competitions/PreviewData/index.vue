@@ -131,7 +131,7 @@ export default {
       questions: [],
       notificationsList: [],
       prizeFieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "main_percentage", label: "من نسبة" },
         { key: "max_percentage", label: "إلى نسبة" },
         { key: "type_id_name", label: "نوع الجائزة" },
@@ -139,7 +139,7 @@ export default {
       ],
       questionsFieldsList: [
         {
-          key: "id",
+          key: "vid",
           label: this.$i18n.t("#"),
         },
         {
@@ -160,7 +160,7 @@ export default {
         },
       ],
       NotifacationFieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "name", label: "عنوان اللإشعار" },
         { key: "start_date", label: "تاريخ ووقت الإشعار" },
         { key: "original_url", label: "صوت الإشعار" },

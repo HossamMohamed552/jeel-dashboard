@@ -58,7 +58,10 @@ export default {
       LearningSkillsList: [],
       totalNumber: null,
       fieldsList: [
-        { key: "id", label: "التسلسل" },
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
         { key: "name", label: "نوع المهارة" },
         { key: "actions", label: "الإجراء" },
       ],

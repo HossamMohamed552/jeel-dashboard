@@ -54,7 +54,10 @@ export default {
       audiosList: [],
       totalNumber: 0,
       fieldsList: [
-        {key: "id", label: "التسلسل"},
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
         {key: "name", label: this.$i18n.t('AUDIOS.AUDIO_NAME')},
         {key: "learningPath.name", label: this.$i18n.t('AUDIOS.LEARNING_PATH')},
         {key: "lesson.name", label: this.$i18n.t('AUDIOS.LESSION_NAME')},

@@ -61,7 +61,7 @@ export default {
       schoolAdminList: [],
       totalNumber: 0,
       fieldsList: [
-        {key: "id", label: "التسلسل"},
+        {key: "vid", label: "التسلسل"},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
         {key: "email", label: this.$i18n.t('TABLE_FIELDS.email')},
         {key: "actions", label: "الإجراء"},

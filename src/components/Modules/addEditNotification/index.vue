@@ -75,7 +75,7 @@ export default {
       notifactionGroup: [],
       notifactionIndex: 0,
       fieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "name", label: "عنوان الإشعار" },
         { key: "start_date", label: "تاريخ ووقت الإشعار" },
         { key: "original_url", label: "صوت الإشعار" },

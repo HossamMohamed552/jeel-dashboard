@@ -82,7 +82,7 @@ export default {
       prizeGroup: [],
       prizeType: "",
       fieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "main_percentage", label: "من نسبة" },
         { key: "max_percentage", label: "إلى نسبة" },
         { key: "type_id_name", label: "نوع الجائزة" },

@@ -109,24 +109,24 @@ export default {
       videosList: [],
       exercisesList: [],
       videosFieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "title", label: "عنوان الفيديو" },
         { key: "actions", label: "الاجراء" },
       ],
       exercisesFieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "name", label: "عنوان التمرين" },
         { key: "actions", label: "الاجراء" },
       ],
       prizeFieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "main_percentage", label: "من نسبة" },
         { key: "max_percentage", label: "إلى نسبة" },
         { key: "type_id_name", label: "نوع الجائزة" },
         { key: "prizeable_id_name", label: "الجائزة" },
       ],
       NotifacationFieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "name", label: "عنوان اللإشعار" },
         { key: "start_date", label: "تاريخ ووقت الإشعار" },
         { key: "original_url", label: "صوت الإشعار" },

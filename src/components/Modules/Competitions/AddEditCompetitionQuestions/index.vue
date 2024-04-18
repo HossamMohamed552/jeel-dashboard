@@ -256,7 +256,7 @@ export default {
       actions: [],
       fieldsList: [
         {
-          key: "id",
+          key: "vid",
           label: this.$i18n.t("#"),
         },
         {

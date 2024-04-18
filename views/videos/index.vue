@@ -54,7 +54,10 @@ export default {
       videosList: [],
       totalNumber: 0,
       fieldsList: [
-        {key: "id", label: "التسلسل"},
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
         {key: "title", label: this.$i18n.t('TABLE_FIELDS.videoTitle')},
         {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
         {key: "lesson.name", label: this.$i18n.t('TABLE_FIELDS.lesson')},

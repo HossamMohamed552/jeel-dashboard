@@ -55,7 +55,10 @@ export default {
       totalNumber: 0,
       refreshIt: false,
       fieldsList: [
-        {key: "id", label: "التسلسل"},
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
         {key: "question", label: "نص السؤال"},
         {key: "questionType.name", label: "نوع السؤال"},
         {key: "subQuestionType.name", label: "نوع السؤال الفرعى"},
@@ -99,7 +102,7 @@ export default {
         this.showModalFailed = error.response.data.code === 23000;
       }).finally(() => {
         this.cancel();
-      })()
+      })
     }
   },
   mounted() {

@@ -61,7 +61,7 @@ export default {
       degreeTypesList: [],
       totalNumber: null,
       fieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "name", label: "نوع الشهادة" },
         { key: "actions", label: "الإجراء" },
       ],

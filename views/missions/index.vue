@@ -49,7 +49,7 @@ export default {
       missionsList: [],
       totalNumber: 0,
       fieldsList: [
-        {key: "id", label: "التسلسل"},
+        {key: "vid", label: "التسلسل"},
         {key: "name", label: "الإسم"},
         {key: "level", label: "المرحله الدراسية"},
         {key: "description", label: "الوصف"},

@@ -138,7 +138,7 @@ export default {
       loading: false,
       seasonalMissing: {},
       NotifacationFieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "name", label: "عنوان اللإشعار" },
         { key: "start_date", label: "تاريخ ووقت الإشعار" },
         { key: "audio", label: "صوت الإشعار" },

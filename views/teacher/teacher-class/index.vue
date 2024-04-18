@@ -39,7 +39,7 @@ export default {
       classesList: [],
       totalNumber: null,
       fieldsList: [
-        {key: "id", label: "التسلسل"},
+        {key: "vid", label: "التسلسل"},
         {key: "studyYear.name", label: this.$i18n.t('TABLE_FIELDS.studyYearName')},
         {key: "level", label: this.$i18n.t('TABLE_FIELDS.levelSchoolAdmin')},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.className')},

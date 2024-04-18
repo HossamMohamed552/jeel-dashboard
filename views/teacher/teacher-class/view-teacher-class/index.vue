@@ -132,7 +132,7 @@ export default {
       activeTap: 1,
       fieldsList: [
         {
-          key: "id",
+          key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
@@ -166,7 +166,7 @@ export default {
       ],
       groupFieldsList: [
         {
-          key: "id",
+          key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {

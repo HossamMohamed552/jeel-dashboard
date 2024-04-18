@@ -50,7 +50,10 @@ export default {
       quizzesList: [],
       totalNumber: null,
       fieldsList: [
-        {key: "id", label: "التسلسل"},
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
         {key: "name", label: "اسم التمرين"},
         {key: "type.name", label: "نوع التمرين"},
         {key: "learning_path.name", label: "المسار التعليمي"},

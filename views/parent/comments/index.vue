@@ -93,7 +93,7 @@ export default {
     return {
       taskFieldsList: [
         {
-          key: "id",
+          key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
@@ -119,7 +119,7 @@ export default {
       ],
       paperWorkFieldsList: [
         {
-          key: "id",
+          key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {

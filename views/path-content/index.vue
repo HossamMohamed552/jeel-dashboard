@@ -27,7 +27,7 @@ export default {
       showModal: false,
       groupSearchWord: "",
       fieldsList: [
-        {key: "id", label: "التسلسل"},
+        {key: "vid", label: "التسلسل"},
         {key: "name", label: "اسم المرحلة"},
         {key: "allowEdit", label: "إمكانيه التعديل"},
         {key: "edit", label: "تعديل"},

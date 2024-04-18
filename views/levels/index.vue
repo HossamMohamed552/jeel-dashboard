@@ -58,7 +58,7 @@ export default {
       levelsList: [],
       totalNumber: 0,
       fieldsList: [
-        {key: "id", label: "التسلسل"},
+        {key: "vid", label: "التسلسل"},
         {key: "name", label: "اسم الصف الدراسي"},
         {key: "actions", label: "الإجراء"},
       ],

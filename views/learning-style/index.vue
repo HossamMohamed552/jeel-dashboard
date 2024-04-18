@@ -58,7 +58,10 @@ export default {
       schoolYearsList: [],
       totalNumber: null,
       fieldsList: [
-        { key: "id", label: "التسلسل" },
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
         { key: "name", label: "اسم إسلوب التعلم" },
         { key: "actions", label: "الإجراء" },
       ],

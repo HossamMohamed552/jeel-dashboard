@@ -58,7 +58,7 @@ export default {
       termsList: [],
       totalNumber: null,
       fieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "name", label: "اسم الترم الدراسي" },
         { key: "min_missions", label: "الحد الآدنى من المهام" },
         { key: "actions", label: "الإجراء" },
@@ -111,7 +111,7 @@ export default {
     this.getTerms();
     if (this.user.roles[0].code === "supervisor") {
       this.fieldsList = [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "name", label: "اسم الترم الدراسي" },
         { key: "classes_count", label: "عدد الفصول" },
         { key: "actions", label: "الإجراء" },
