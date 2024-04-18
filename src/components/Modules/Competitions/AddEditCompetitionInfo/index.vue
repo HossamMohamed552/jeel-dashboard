@@ -118,8 +118,6 @@ export default {
   async mounted() {
     await getLevelsForSuperVisor(this.stepForm, "level_id");
     this.stepForm.splice(5, 2);
-    console.log(this.stepForm);
-    console.log("done");
   },
   watch: {
     stepForm: {
@@ -128,10 +126,8 @@ export default {
         if (this.$route.params.id) {
           if (newVal[1].value && this.isGettingMissionsValue) {
             this.getMissionsValue(newVal[1].value);
-            console.log(newVal[1].key, newVal[1].value);
           }
           if (newVal[2].value && this.isGettingOutcomesAndGoalsValue) {
-            console.log(newVal[2].key, newVal[2].value);
             newVal[2].value = this.missions;
             this.getOutcomesAndGoalsValue(this.missions);
             newVal[3].value = this.objective_id;

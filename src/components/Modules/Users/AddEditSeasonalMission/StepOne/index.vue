@@ -14,7 +14,13 @@
           <Button :custom-class="'cancel-btn margin'" v-if="currentStep > 0" @click="prevStep">
             السابق
           </Button>
-          <Button :custom-class="'submit-btn'" :disabled="invalid" @click="nextStep"> التالي </Button>
+          <Button
+            :custom-class="'submit-btn'"
+            :disabled="invalid || imageUplpaded"
+            @click="nextStep"
+          >
+            التالي
+          </Button>
         </div>
       </div>
     </GenericForm>
@@ -53,6 +59,7 @@ export default {
   },
   data() {
     return {
+      imageUplpaded: true,
       loading: false,
     };
   },
@@ -84,6 +91,7 @@ export default {
     handleInput: _.debounce(function (key, value, field) {
       if (key === "start_date") this.validateForm(value);
       if (key === "image") {
+        this.imageUplpaded = false;
         const imageObjectIndex = this.stepForm.findIndex((field) => field.key === "image");
         this.stepForm[imageObjectIndex].value = value.uuid;
         this.stepForm[imageObjectIndex].url = value.url;
@@ -107,7 +115,9 @@ export default {
     },
     removeFile(fileName, fileChange, fileRequest) {
       console.log("File removed in parent component:", fileName, fileChange, fileRequest);
+      this.imageUplpaded = true;
       const imageObjectIndex = this.stepForm.findIndex((field) => field.key === "image");
+
       this.stepForm[imageObjectIndex].url = null;
       this.stepForm[imageObjectIndex].value = null;
       this.stepForm[imageObjectIndex].task_audio_name = null;
