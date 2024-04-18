@@ -4,7 +4,7 @@ export default [
     name: "seasonal-mission",
     component: () => import("../../../views/seasonal-mission/index.vue"),
     meta: {
-      breadcrumb: "المهام الموسيمية",
+      breadcrumb: "المهام الموسمية",
     },
   },
   {
@@ -13,7 +13,7 @@ export default [
     component: () => import("../../../views/seasonal-mission/add-seasonal-mission/index.vue"),
     meta: {
       breadcrumb: "إضافة مهمة موسمية",
-      preLabel: "المهام الموسيمية",
+      preLabel: "المهام الموسمية",
       preLink: "/dashboard/seasonal-mission",
     },
   },
@@ -23,7 +23,7 @@ export default [
     component: () => import("../../../views/seasonal-mission/edit-seasonal-mission/index.vue"),
     meta: {
       breadcrumb: "تعديل المهمة الموسمية",
-      preLabel: "المهام الموسيمية",
+      preLabel: "المهام الموسمية",
       preLink: "/dashboard/seasonal-mission",
     },
   },
@@ -33,7 +33,7 @@ export default [
     component: () => import("../../../views/seasonal-mission/view-seasonal-mission/index.vue"),
     meta: {
       breadcrumb: "تفاصيل المهمة الموسمية",
-      preLabel: "المهام الموسيمية",
+      preLabel: "المهام الموسمية",
       preLink: "/dashboard/seasonal-mission",
     },
   },

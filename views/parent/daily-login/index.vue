@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'سجل الدوخل اليومى'"
+      :header-name="'سجل الدخول اليومى'"
       :fieldsList="fieldsList"
       :table-items="dailyLogin"
       :v-search-model="dailySearchWord"
