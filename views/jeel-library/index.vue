@@ -65,16 +65,16 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
+          key: "name",
+          label: this.$i18n.t("TABLE_FIELDS.jeel_library_name"),
+        },
+        {
           key: "level",
           label: this.$i18n.t("TABLE_FIELDS.jeel_library_level"),
         },
         {
           key: "type",
           label: this.$i18n.t("TABLE_FIELDS.jeel_library_type"),
-        },
-        {
-          key: "name",
-          label: this.$i18n.t("TABLE_FIELDS.jeel_library_name"),
         },
         {
           key: "actions",

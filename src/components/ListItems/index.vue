@@ -839,14 +839,8 @@ export default {
       }
     },
     checkEdit() {
-      const permissions = Array.isArray(this.permission_edit)
-        ? this.permission_edit
-        : [this.permission_edit];
-
-      if (
-        !this.user.permissions.includes("manage-learningpath") &&
-        !(this.activePage === "schoolAdmin")
-      ) {
+      const permissions = Array.isArray(this.permission_edit) ? this.permission_edit : [this.permission_edit];
+      if (!this.user.permissions.includes("manage-learningpath") && !(this.activePage === "schoolAdmin") && permissions.some((permission) => this.user.permissions.includes(permission))) {
         return "show";
       } else if (this.activePage === "schoolAdmin") {
         return "hide";

@@ -9,11 +9,11 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
-                      v-model="createItem.file_name"
-                      :label="'اسم المحتوى'"
-                      :name="'اسم المحتوى'"
-                      placeholder="أختر المحتوى"
-                      :rules="'required|min:3|max:100'"
+                    v-model="createItem.file_name"
+                    :label="'اسم المحتوى'"
+                    :name="'اسم المحتوى'"
+                    placeholder="أختر المحتوى"
+                    :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
               </b-col>
@@ -25,12 +25,12 @@
                     <span><i class="fa-solid fa-asterisk"></i></span>
                   </label>
                   <SelectSearch
-                      v-model="createItem.level_id"
-                      :name="'أختر الصف الدراسى'"
-                      placeholder="أختر الصف الدراسى"
-                      :options="levels"
-                      :reduce="(option) => option.id"
-                      :get-option-label="(option) => option.name"
+                    v-model="createItem.level_id"
+                    :name="'أختر الصف الدراسى'"
+                    placeholder="أختر الصف الدراسى"
+                    :options="levels"
+                    :reduce="(option) => option.id"
+                    :get-option-label="(option) => option.name"
                   ></SelectSearch>
                 </div>
               </b-col>
@@ -38,12 +38,12 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <TextField
-                      type="number"
-                      v-model="createItem.gems"
-                      :label="'عدد الجيمز'"
-                      :name="'عدد الجيمز'"
-                      placeholder="أختر عدد الجيمز"
-                      :rules="'required'"
+                    type="number"
+                    v-model="createItem.gems"
+                    :label="'عدد الجيمز'"
+                    :name="'عدد الجيمز'"
+                    placeholder="أختر عدد الجيمز"
+                    :rules="'required'"
                   ></TextField>
                 </div>
               </b-col>
@@ -51,30 +51,23 @@
               <!------------------- start logo uploader --------------------------------->
               <b-col lg="12" class="mb-3 mt-4">
                 <UploadAttachment
-                    v-if="!$route.params.id || attachment.thumbnailChangedRequest"
-                    :rules="'required'"
-                    :label="'لوجو المحتوى'"
-                    :type-of-attachment="'image'"
-                    :accept-files="'image/jpeg,image/png,image/jpg,image/gif'"
-                    @setFileId="setThumbnailId"
+                  v-if="!$route.params.id || attachment.logoChangedRequest"
+                  :rules="'required'"
+                  :label="'لوجو المحتوى'"
+                  :type-of-attachment="'image'"
+                  :accept-files="'image/jpeg,image/png,image/jpg,image/gif'"
+                  @setFileId="setThumbnailId"
                 />
                 <PreviewMedia
-                    v-if="
-                    $route.params.id &&
-                    attachment.thumbnailChanged === false &&
-                    !attachment.thumbnailChangedRequest
-                  "
-                    :header="`${$t('BADGE.bade_logo')}`"
-                    :media-name="attachment.thumbnail_name"
-                    :file-size="attachment.thumbnail_size"
-                    :image-url="attachment.thumbnail"
-                    :typeOfMedia="'image'"
-                    :show-remove-button="true"
-                    @removeFile="
-                    removeFile('thumbnail', 'thumbnailChanged', 'thumbnailChangedRequest')
-                  "
-                    @showModal="showModal(createItem,'logo')"
-
+                  v-if="$route.params.id && attachment.logoChanged === false && !attachment.logoChangedRequest"
+                  :header="`${$t('BADGE.bade_logo')}`"
+                  :media-name="attachment.thumbnail_name"
+                  :file-size="attachment.thumbnail_size"
+                  :image-url="attachment.thumbnail"
+                  :typeOfMedia="'logo'"
+                  :show-remove-button="true"
+                  @removeFile="removeFile('logo', 'logoChanged', 'logoChangedRequest')"
+                  @showModal="showModal(createItem,'logo')"
                 />
               </b-col>
               <!------------------- end uploader --------------------------------->
@@ -82,10 +75,10 @@
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <TextAreaField
-                      :label="'الوصف'"
-                      :name="'الوصف'"
-                      :rules="'required|min:3|max:250'"
-                      v-model="createItem.description"
+                    :label="'الوصف'"
+                    :name="'الوصف'"
+                    :rules="'required|min:3|max:250'"
+                    v-model="createItem.description"
                   />
                 </div>
               </b-col>
@@ -104,12 +97,14 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
+                    @input="resetValues($event)"
+                    :disabled="!!$route.params.id"
                   ></SelectSearch>
                 </div>
               </b-col>
 
               <!------------------- start file audio --------------------------------->
-              <b-col lg="8" v-if="createItem.type==145" class="mb-3 mt-4">
+              <b-col lg="8" v-if="createItem.type===145" class="mb-3">
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.audioChangedRequest"
                   :type-of-attachment="'audio'"
@@ -138,7 +133,7 @@
               </b-col>
               <!------------------- end  file audio --------------------------------->
               <!------------------- start file image --------------------------------->
-              <b-col lg="8" v-if="createItem.type==146" class="mb-3 mt-4">
+              <b-col lg="8" v-if="createItem.type===146" class="mb-3">
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.imageChangedRequest"
                   :rules="'required'"
@@ -168,7 +163,7 @@
               <!------------------- end file image --------------------------------->
 
               <!------------------- start video 1  --------------------------------->
-              <b-col lg="8"  v-if="createItem.type==147" class="mb-3 mt-4">
+              <b-col lg="8" v-if="createItem.type === 147" class="mb-3 mt-4">
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.videoWithOutMuiscChangedRequest"
                   :type-of-attachment="'video'"
@@ -186,9 +181,9 @@
                     attachment.videoWithOutMuiscChanged === false &&
                     !attachment.videoWithOutMuiscChangedRequest
                   "
-                  :header="`${$t('BADGE.bade_logo')}`"
-                  :media-name="attachment.videoWithOutMuisc_name"
-                  :file-size="attachment.videoWithOutMuisc_size"
+                  :header="`ملف الفيديو بدون موسيقى`"
+                  :media-name="attachment.video_without_music_name"
+                  :file-size="attachment.video_without_music_size"
                   :image-url="attachment.videoWithOutMuisc"
                   :typeOfMedia="'video'"
                   :show-remove-button="true"
@@ -201,7 +196,7 @@
               <!------------------- end video 1 --------------------------------->
 
               <!------------------- start video 2 --------------------------------->
-              <b-col lg="12"  v-if="createItem.type==147" class="mb-3 mt-4">
+              <b-col lg="12" v-if="createItem.type === 147" class="mb-3 mt-4">
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.videoWithMuiscChangedRequest"
                   :type-of-attachment="'video'"
@@ -217,9 +212,9 @@
                     attachment.videoWithMuiscChanged === false &&
                     !attachment.videoWithMuiscChangedRequest
                   "
-                  :header="`${$t('BADGE.bade_logo')}`"
-                  :media-name="attachment.videoWithMuisc_name"
-                  :file-size="attachment.videoWithMuisc_size"
+                  :header="`ملف الفيديو`"
+                  :media-name="attachment.video_with_music_name"
+                  :file-size="attachment.video_with_music_size"
                   :image-url="attachment.videoWithMuisc"
                   :typeOfMedia="'video'"
                   :show-remove-button="true"
@@ -232,10 +227,10 @@
               <!------------------- end 2 --------------------------------->
 
               <!------------------- start pdf --------------------------------->
-              <b-col lg="8"  v-if="createItem.type==148" class="mb-3 mt-4">
+              <b-col lg="8" v-if="createItem.type === 148" class="mb-3 mt-4">
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.fileChangedRequest"
-                  :type-of-attachment="'file'"
+                  :type-of-attachment="'pdf'"
                   :label="'ملف المحتوي'"
                   :name="'File'"
                   :dropIdRef="'File'"
@@ -248,7 +243,7 @@
                     attachment.fileChanged === false &&
                     !attachment.fileChangedRequest
                   "
-                  :header="`${$t('BADGE.bade_logo')}`"
+                  :header="`ملف المحتوي`"
                   :media-name="attachment.file_name"
                   :file-size="attachment.file_size"
                   :image-url="attachment.file"
@@ -262,10 +257,10 @@
               </b-col>
               <!------------------- end --------------------------------->
 
-              <b-col lg="12" class="mb-3" v-if="createItem.type==150">
+              <b-col lg="12" class="mb-3" v-if="createItem.type===150">
                 <div class="hold-field">
                   <TextAreaField
-                    v-if="createItem.type==150"
+                    v-if="createItem.type===150"
                     :label="'اكتب ملحوظة'"
                     :rules="'required|min:3|max:250'"
                     v-model="createItem.note"
@@ -275,7 +270,7 @@
                 </div>
               </b-col>
 
-              <b-col lg="8" class="mb-3" v-if="createItem.type == 151 || createItem.type == 149">
+              <b-col lg="8" class="mb-3" v-if="createItem.type === 151 || createItem.type === 149">
                 <div class="hold-field">
                   <TextField
                     v-model="createItem.link"
@@ -286,9 +281,6 @@
                   ></TextField>
                 </div>
               </b-col>
-
-
-
               <b-col lg="12">
                 <b-row>
                   <div class="hold-btns-form">
@@ -300,7 +292,7 @@
                       v-if="!$route.params.id"
                       type="submit"
                       :loading="loading"
-                      :disabled='invalid || checkLogo || (checkAudioCustomInput && checkImageCustomInput && checkVideoCustomInput && checkFileCustomInput && createItem.link === "" && createItem.note === "" )'
+                      :disabled='invalid || checkLogo || (checkAudioCustomInput && checkImageCustomInput && checkVideoCustomInput && checkFileCustomInput && checkLinkCustomInput && checkNoteCustomInput) '
                       custom-class="submit-btn"
                     >
                       {{ $t("GLOBAL_SAVE") }}
@@ -309,7 +301,7 @@
                       v-if="$route.params.id"
                       type="submit"
                       :loading="loading"
-                      :disabled="invalid || checkLogo"
+                      :disabled="invalid"
                       custom-class="submit-btn"
                     >
                       {{ $t("GLOBAL_EDIT") }}
@@ -326,36 +318,24 @@
     <GeneralModal :id="'holdContent'" :size="'lg'" :hide-header="true">
       <template #modalBody>
         <div class="text-center">
-          <div class="height-modal" v-if=" typeOfAttachment=='logo' || typeOfAttachment =='image'">
-            <img :src="attachment.thumbnail" class="image-modal" />
+          <div class="height-modal"
+               v-if="typeOfAttachment === 'logo' || typeOfAttachment === 'image'">
+            <img :src="imageUrl" class="image-modal" alt="logo"/>
+          </div>
+          <div v-if="typeOfAttachment ==='audio'">
+            <audio :src="audioUrl" ref="player" autoplay="autoplay" controls="controls"></audio>
+          </div>
+          <div
+            v-if="typeOfAttachment ==='videoWithMusic' || typeOfAttachment ==='videoWithOutMusic'">
+            <video controls class="w-100 video" autoplay="autoplay">
+              <source :src="videoUrl"/>
+              Your browser does not support the video tag.
+            </video>
           </div>
 
-          <div class="height-modal" v-if=" typeOfAttachment=='file'">
-            <input type="file" :value="attachment.file" class="image-modal" />
-          </div>
-
-          <audio :src="audioUrl"  v-if=" typeOfAttachment =='audio'"
-                 ref="player"
-                 autoplay="autoplay"
-                 controls="controls"></audio>
-
-          <vimeo-player
-            v-if="typeOfAttachment=='videoWithMusic' || typeOfAttachment =='videoWithOutMusic'"
-            class="vimeo-player my-3"
-            ref="videoPlayer"
-            :video-url="`${videoUrl}`"
-            :options="{'responsive':true}"
-          ></vimeo-player>
-          <video v-else width="90%"
-                 class="my-3"
-                 :src="videoUrl"
-                 ref="player"
-                 autoplay="autoplay"
-                 controls="controls"
-          />
-
-          <Button @click="hideModal" :custom-class="'rounded-btn transparent-btn'">
-            {{ $t("BACK") }}
+          <Button @click="hideModal" :custom-class="'rounded-btn transparent-btn'">{{
+              $t("BACK")
+            }}
           </Button>
         </div>
       </template>
@@ -402,10 +382,10 @@ export default {
     return {
       levels: [],
       types: [],
-      typeOfAttachment:null,
-      imageUrl:null,
-      audioUrl:null,
-      videoUrl:null,
+      typeOfAttachment: null,
+      imageUrl: null,
+      audioUrl: null,
+      videoUrl: null,
       fileUrl: null,
       createItem: {
         level_id: "",
@@ -419,18 +399,19 @@ export default {
         video_without_music: null,
         audio: null,
         file: null,
-        description:"",
-        // note
+        description: "",
         note: null
       },
-      attachment:{
+      attachment: {
         //  thumbnail
-        thumbnail: null,
-        thumbnailChanged: false,
-        thumbnailChangedRequest: false,
+        logo: null,
+        logoChanged: false,
+        logoChangedRequest: false,
 
         //  image
         image: null,
+        image_name: "",
+        image_size: "",
         imageChanged: false,
         imageChangedRequest: false,
 
@@ -441,16 +422,22 @@ export default {
 
         //  file
         file: null,
+        file_name: "",
+        file_size: "",
         fileChanged: false,
         fileChangedRequest: false,
 
         //  video_with_muisc
         videoWithMuisc: null,
+        video_with_music_name: "",
+        video_with_music_size: "",
         videoWithMuiscChanged: false,
         videoWithMuiscChangedRequest: false,
 
         //  video_without_music
         videoWithOutMuisc: null,
+        videoWithOutMuisc_name: "",
+        videoWithOutMuisc_size: "",
         videoWithOutMuiscChanged: false,
         videoWithOutMuiscChangedRequest: false,
 
@@ -462,17 +449,15 @@ export default {
     setThumbnailId(id) {
       this.attachment.thumbnail = id;
       this.createItem.logo = id;
-      this.attachment.thumbnailChanged = false;
-      this.attachment.thumbnailChangedRequest = true;
+      this.attachment.logoChanged = false;
+      this.attachment.logoChangedRequest = true;
     },
-
     setImageId(id) {
       this.attachment.image = id;
       this.createItem.image = id;
       this.attachment.imageChanged = false;
       this.attachment.imageChangedRequest = true;
     },
-
     setAudioId(id) {
       this.attachment.audio = id;
       this.createItem.audio = id;
@@ -490,7 +475,7 @@ export default {
     setVideoWithMuiscFileId(id) {
       this.attachment.videoWithMuisc = id;
       this.createItem.video_with_muisc = id;
-      this.attachment.videoWithMuiscChanged= false;
+      this.attachment.videoWithMuiscChanged = false;
       this.attachment.videoWithMuiscChangedRequest = true;
     },
 
@@ -502,38 +487,37 @@ export default {
     },
 
     removeFile(fileName, fileChange, fileRequest) {
-      this.createItem[fileName] = "";
-      this.createItem[fileChange] = true;
-      this.createItem[fileRequest] = true;
+      this.createItem[fileName] = null;
+      this.attachment[fileChange] = true;
+      this.attachment[fileRequest] = true;
     },
 
     showModal(item, typeOfAttachment) {
-      this.$bvModal.show('holdContent');
-
       this.typeOfAttachment = typeOfAttachment;
-      //videoWithMusic , logo ,videoWithOutMusic ,image ,audio
-
+      if(this.typeOfAttachment !== 'file') {
+        this.$bvModal.show('holdContent')
+      }
       if (typeOfAttachment === 'videoWithMusic') {
-        this.videoUrl = this.attachment.videoWithMuisc
-      }
-      else if (typeOfAttachment === 'videoWithOutMusic') {
-        this.videoUrl = this.attachment.videoWithOutMuisc
-      }
-      else if (typeOfAttachment === 'audio') {
+        this.videoUrl = this.attachment.video_with_music
+      } else if (typeOfAttachment === 'videoWithOutMusic') {
+        this.videoUrl = this.attachment.video_without_music
+      } else if (typeOfAttachment === 'audio') {
         this.audioUrl = this.attachment.audio
-      }
-      else if (typeOfAttachment === 'logo') {
+      } else if (typeOfAttachment === 'logo') {
         this.imageUrl = this.attachment.thumbnail
-      }
-      else if (typeOfAttachment === 'image') {
+      } else if (typeOfAttachment === 'image') {
         this.imageUrl = this.attachment.image
-      }
-      else if (typeOfAttachment === 'file') {
+      } else if (typeOfAttachment === 'file') {
         this.fileUrl = this.attachment.file
+        window.open(this.fileUrl, "_blank", "noreferrer")
       }
-
     },
-
+    resetValues($event) {
+      if ($event !== 151 || $event !== 149 || $event !== 150) {
+        this.createItem.link = ""
+        this.createItem.note = ""
+      }
+    },
     hideModal() {
       this.$bvModal.hide("holdContent");
     },
@@ -543,13 +527,25 @@ export default {
         if (!success) return;
       });
       if (this.$route.params.id) {
-        if (this.createItem.logo != null) {
-          this.$emit("handleEditItem", this.createItem);
-        } else {
-          delete this.createItem.logo;
-
-          this.$emit("handleEditItem", this.createItem);
+        if (!this.createItem.logo) {
+          delete this.createItem.logo
         }
+        if (!this.createItem.image) {
+          delete this.createItem.image
+        }
+        if (!this.createItem.audio) {
+          delete this.createItem.audio
+        }
+        if (!this.createItem.video_with_muisc) {
+          delete this.createItem.video_with_muisc
+        }
+        if (!this.createItem.video_without_music) {
+          delete this.createItem.video_without_music
+        }
+        if (!this.createItem.file){
+          delete this.createItem.file
+        }
+        this.$emit("handleEditJeelStoreLibrary", this.createItem);
       } else {
         this.$emit("handleAddJeelStoreLibrary", this.createItem);
       }
@@ -561,17 +557,41 @@ export default {
     getJeelStoreLibraryToEdit() {
       if (this.$route.params.id) {
         this.ApiService(getJeelStoreLibraryByIdRequest(this.$route.params.id)).then((response) => {
-
-          this.createItem = response.data.data;
-          this.createItem.level_id= response.data.data.level.id;
-
-          //
-          // logo: null,
-          // this.createItem.logo = response.data.data.logo_uuid;
+          this.createItem.level_id = response.data.data.level.id;
+          this.createItem.type = response.data.data.type.id
+          this.createItem.description = response.data.data.description
+          this.createItem.file_name = response.data.data.file_name
+          this.createItem.gems = response.data.data.gems
+          // logo
           this.attachment.thumbnail_name = response.data.data.logo_name;
           this.attachment.thumbnail_size = response.data.data.logo_size;
           this.attachment.thumbnail = response.data.data.logo;
-
+          // image
+          if (this.createItem.type === 145) {
+            this.attachment.audio_name = response.data.data.audio_orginal_name
+            this.attachment.audio_size = response.data.data.audio_size
+            this.attachment.audio = response.data.data.audio
+          } else if (this.createItem.type === 146) {
+            this.attachment.image = response.data.data.image
+            this.attachment.image_name = response.data.data.image_orginal_name
+            this.attachment.image_size = response.data.data.image_size
+          } else if (this.createItem.type === 147) {
+            this.attachment.video_with_music_name = response.data.data.video_with_music_name
+            this.attachment.video_with_music_size = response.data.data.video_with_music_size
+            this.attachment.video_with_music = response.data.data.video_with_music
+            this.attachment.video_without_music_name = response.data.data.video_without_music_name
+            this.attachment.video_without_music_size = response.data.data.video_without_music_size
+            this.attachment.video_without_music = response.data.data.video_without_music
+          } else if (this.createItem.type === 148) {
+            this.attachment.file = response.data.data.file
+            this.attachment.file_name = response.data.data.file_orginal_name
+            this.attachment.file_size = response.data.data.file_size
+          }
+          else if (this.createItem.type === 151 || this.createItem.type === 149) {
+            this.createItem.link = response.data.data.link
+          } else if (this.createItem.type === 150) {
+            this.createItem.note = response.data.data.note
+          }
         });
       }
     },
@@ -593,17 +613,26 @@ export default {
     checkLogo() {
       return this.attachment.thumbnail === null;
     },
-    checkAudioCustomInput(){
+    checkLogoUpdate() {
+      return this.attachment.logoChanged === true;
+    },
+    checkAudioCustomInput() {
       return this.createItem.audio === null;
     },
-    checkImageCustomInput(){
+    checkImageCustomInput() {
       return this.createItem.image === null;
     },
-    checkVideoCustomInput(){
+    checkVideoCustomInput() {
       return this.createItem.video_with_muisc === null || this.createItem.video_without_music === null;
     },
-    checkFileCustomInput(){
+    checkFileCustomInput() {
       return this.createItem.file === null;
+    },
+    checkLinkCustomInput() {
+      return this.createItem.link === null || this.createItem.link === "";
+    },
+    checkNoteCustomInput() {
+      return this.createItem.note === null || this.createItem.note === ""
     },
   },
   mounted() {

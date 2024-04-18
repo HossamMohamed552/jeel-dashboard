@@ -42,6 +42,7 @@
         :loading="loading"
         :change_password="'change-password'"
         :permission_view="'show-schools'"
+        :permission_edit="'hide-it'"
         :cancel_block="'cancel-block'"
         :showSortControls="false"
       >
