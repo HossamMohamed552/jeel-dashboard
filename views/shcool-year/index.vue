@@ -54,7 +54,7 @@ export default {
       schoolYearsList: [],
       totalNumber: null,
       fieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "name", label: "اسم العام الدراسي" },
         { key: "actions", label: "الإجراء" },
       ],
@@ -103,7 +103,7 @@ export default {
     this.getSchoolYears();
     if (this.user.roles[0].code === "supervisor") {
       this.fieldsList = [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "name", label: "اسم hguhl الدراسي" },
         { key: "classes_count", label: "عدد الفصول" },
         { key: "actions", label: "الإجراء" },

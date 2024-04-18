@@ -580,7 +580,7 @@ export default {
           label: "",
         },
         {
-          key: "id",
+          key: "vid",
           label: "التسلسل",
         },
         {

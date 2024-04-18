@@ -110,7 +110,7 @@ export default {
       },
       fieldsList: [
         {
-          key: "id",
+          key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {

@@ -196,7 +196,7 @@ export default {
       contentLearningPath: {},
       activeTap: 1,
       paperWorkFieldsList: [
-        {key: "id", label: "التسلسل"},
+        {key: "vid", label: "التسلسل"},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
         {key: "type", label: this.$i18n.t('TABLE_FIELDS.type')},
         {key: "description", label: this.$i18n.t('TABLE_FIELDS.description')},

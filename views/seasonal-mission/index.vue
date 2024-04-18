@@ -95,7 +95,7 @@ export default {
       seasonalMission: [],
       totalNumber: null,
       fieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "logo", label: "اسم الموسم" },
         { key: "name", label: "اسم المجموعة" },
         { key: "level.name", label: "الصف الدراسي" },

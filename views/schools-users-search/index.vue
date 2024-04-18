@@ -179,7 +179,7 @@ export default {
       totalNumber: 0,
       fieldsList: [
         {
-          key: "id",
+          key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
@@ -215,7 +215,6 @@ export default {
       if (key == "school_group_id" && value != "")
         getAllSchoolsBySchoolGroup(this.userSearch, "school_id", value);
       if (key == "category_id" && value != "") getAllRolesByType(this.userSearch, "role_id", value);
-      console.log("handleInput", key, value);
     }, 300),
 
     handleCancel() {

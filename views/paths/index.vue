@@ -60,7 +60,10 @@ export default {
       pathsList: [],
       totalNumber: null,
       fieldsList: [
-        { key: "id", label: "التسلسل" },
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
         { key: "name", label: this.$i18n.t("TABLE_FIELDS.learning_path_name") },
         {key: "audio", label: this.$i18n.t('TABLE_FIELDS.audio')},
         { key: "actions", label: "الإجراء" },

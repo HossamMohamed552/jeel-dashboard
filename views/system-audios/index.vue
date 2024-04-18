@@ -90,7 +90,7 @@ export default {
         },
       ],
       fieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "category.name", label: "التصنيف" },
         { key: "name.ar", label: "الاسم بالعربية" },
         { key: "name.en", label: "الاسم بالانجليزية" },

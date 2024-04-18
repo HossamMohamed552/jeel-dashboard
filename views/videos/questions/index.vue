@@ -237,7 +237,7 @@ export default {
       showModalQuestion: false,
       url: null,
       fieldsList: [
-        {key: "id", label: "التسلسل"},
+        {key: "vid", label: "التسلسل"},
         {key: "questionName", label: "نص السؤال"},
         {key: "question_time", label: "التوقيت"},
         {key: "question_type.name", label: "نوع السؤال"},

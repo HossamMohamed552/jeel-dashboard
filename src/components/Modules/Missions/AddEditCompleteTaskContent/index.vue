@@ -107,13 +107,13 @@ export default {
     SelectSearch,
   },
   props: {
-   
+
   },
   data() {
     return {
       badges: [],
       fieldsList: [
-        {key: "id", label: "التسلسل"},
+        {key: "vid", label: "التسلسل"},
         {key: "badgeContentType", label: "نوع المحتوى"},
         {key: "badgeContent", label: "المحتوى"},
         {key: "actions", label: "الإجراء"},
@@ -124,11 +124,11 @@ export default {
     }
   },
   methods: {
-    getAllBadges() { 
-      this.ApiService(getAllBadgesRequest()).then(res => { 
+    getAllBadges() {
+      this.ApiService(getAllBadgesRequest()).then(res => {
         this.badges = res.data.data;
-        this.badges = this.badges.map(badge => { 
-          return { 
+        this.badges = this.badges.map(badge => {
+          return {
               ...badge,
               selectedBadgeContentType: null,
               badgeContentTypes: this.badgeContentTypes,
@@ -139,22 +139,22 @@ export default {
         })
       })
     },
-    getLibraryTypesRequest() { 
-      this.ApiService(getLibraryTypesRequest()).then(res => { 
+    getLibraryTypesRequest() {
+      this.ApiService(getLibraryTypesRequest()).then(res => {
         this.badgeContentTypes = res.data.data;
         this.getLibraryContentRequest();
       })
     },
-    getLibraryContentRequest() { 
+    getLibraryContentRequest() {
       let obj = {
         list_all:true
       };
-      this.badgeContentTypes.forEach((contentType,index) => { 
+      this.badgeContentTypes.forEach((contentType,index) => {
         obj[`type[${index}]`] = contentType.id;
       })
-      this.ApiService(getLibraryContentRequest(obj)).then(res => { 
-        this.listOfAllContent = res.data.data.map(content => { 
-          return { 
+      this.ApiService(getLibraryContentRequest(obj)).then(res => {
+        this.listOfAllContent = res.data.data.map(content => {
+          return {
            ...content,
            selectable: true,
           }
@@ -169,46 +169,46 @@ export default {
         const filtered = this.badges[index].tableItems.filter(tableItem => tableItem.id === content.id)
         if (filtered.length > 0) {
           content.selectable = false;
-        } else { 
+        } else {
           content.selectable = true;
         }
         return content;
       });
     }, 500),
-    addBadgeContent(badgeIndex) { 
+    addBadgeContent(badgeIndex) {
       /*
         Update the badge table items
-      */ 
+      */
       this.badges[badgeIndex].tableItems.push({
         id: this.badges[badgeIndex].selectedBadgeContent.id,
         badgeContent: this.badges[badgeIndex].selectedBadgeContent.file_name,
         badgeContentType: this.badges[badgeIndex].selectedBadgeContentType.name
       });
       /*
-        Disable Item from @BadgeContentSelect 
-      */ 
-      this.badges[badgeIndex].badgeContent.map(badgeContent => { 
-        if (badgeContent.id === this.badges[badgeIndex].selectedBadgeContent.id) { 
+        Disable Item from @BadgeContentSelect
+      */
+      this.badges[badgeIndex].badgeContent.map(badgeContent => {
+        if (badgeContent.id === this.badges[badgeIndex].selectedBadgeContent.id) {
           badgeContent.selectable = false;
         }
       });
       /*
        Reset Selected Item
-      */ 
+      */
       this.badges[badgeIndex].selectedBadgeContent = null;
     },
-    deleteBadgeContent(badgeRow,badgeIndex) { 
+    deleteBadgeContent(badgeRow,badgeIndex) {
       this.badges[badgeIndex].tableItems = this.badges[badgeIndex].tableItems.filter(tableItem => tableItem.id != badgeRow.item.id);
       /*
-        Enable Item from @BadgeContentSelect 
+        Enable Item from @BadgeContentSelect
       */
-      this.badges[badgeIndex].badgeContent.map(badgeContent => { 
-        if (badgeContent.id === badgeRow.item.id) { 
+      this.badges[badgeIndex].badgeContent.map(badgeContent => {
+        if (badgeContent.id === badgeRow.item.id) {
           badgeContent.selectable = true;
         }
       });
     },
-    createBadgeRowForApi() { 
+    createBadgeRowForApi() {
       const badgesRows = []
       this.badges.forEach(badge => {
         badge.tableItems.forEach(tableItem => {

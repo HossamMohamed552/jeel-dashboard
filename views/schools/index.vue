@@ -57,7 +57,7 @@ export default {
       schoolsList: [],
       totalNumber: 0,
       fieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "name", label: this.$i18n.t("SCHOOL.name") },
         { key: "country.name", label: this.$i18n.t("MISSIONS.country") },
         { key: "status", label: this.$i18n.t("TABLE_FIELDS.status") },

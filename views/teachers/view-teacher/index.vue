@@ -135,7 +135,7 @@ export default {
       totalNumber: 0,
       loading: false,
       fieldsList: [
-        {key: "id", label: this.$i18n.t("TABLE_FIELDS.id"),},
+        {key: "vid", label: this.$i18n.t("TABLE_FIELDS.id"),},
         {key: "studyYear.name", label: this.$i18n.t('TABLE_FIELDS.studyYearName')},
         {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.levelSchoolAdmin')},
         {key: "class.name", label: this.$i18n.t('TABLE_FIELDS.className')},

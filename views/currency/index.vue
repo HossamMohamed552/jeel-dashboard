@@ -54,7 +54,7 @@ export default {
       currencyList: [],
       totalNumber: null,
       fieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "name", label: "اسم العملة" },
         { key: "actions", label: "الإجراء" },
       ],

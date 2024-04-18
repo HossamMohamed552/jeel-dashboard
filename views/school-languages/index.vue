@@ -55,7 +55,7 @@ export default {
       schoolLanguagesList: [],
       totalNumber: null,
       fieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "name", label: "اسم اللغة" },
         { key: "actions", label: "الإجراء" },
       ],
