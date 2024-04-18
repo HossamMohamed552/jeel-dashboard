@@ -195,7 +195,7 @@
                     </div>
                   </b-col>
                   <b-col lg="4" v-if="!$route.params.id">
-                    <b-form-group class="mb-3">
+                    <b-form-group class="mb-3 mt-3">
                       <TextField
                         v-model="user.password"
                         rules="required"
@@ -209,13 +209,13 @@
                         <b-icon
                           :icon="passwordIcon"
                           @click="hideShowPassword"
-                          class="icon-password"
+                          class="icon-password mt-3"
                         />
                       </TextField>
                     </b-form-group>
                   </b-col>
                   <b-col lg="4" v-if="!$route.params.id">
-                    <b-form-group class="mb-3">
+                    <b-form-group class="mb-3 mt-3">
                       <TextField
                         v-model="user.password_confirmation"
                         :rules="`required|confirmed:${$t('USERS.PASSWORD')}`"
@@ -228,7 +228,7 @@
                         <b-icon
                           :icon="confirmPasswordIcon"
                           @click="hideShowPassword('confirm')"
-                          class="icon-password"
+                          class="icon-password mt-3"
                         />
                       </TextField>
                     </b-form-group>

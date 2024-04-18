@@ -14,7 +14,7 @@
             <ShowItem
                 class="divider-show"
                 :title="'الصف الدراسى'"
-                :subtitle="jeelStoreLibrary.level.name"
+                :subtitle="jeelStoreLibrary?.level?.name"
             />
           </b-col>
           <b-col md="4" sm="12">
@@ -41,9 +41,9 @@
             <ShowItem class="divider-show" :title="'الوصف'" :subtitle="jeelStoreLibrary.description ? jeelStoreLibrary.description : '----'"/>
           </b-col>
           <b-col lg="6" class="mt-2 mb-2">
-            <ShowItem class="divider-show" :title="'نوع المحتوى'" :subtitle="jeelStoreLibrary.type.name"/>
+            <ShowItem class="divider-show" :title="'نوع المحتوى'" :subtitle="jeelStoreLibrary?.type?.name"/>
           </b-col>
-          <b-col lg="12" class="mb-2 mt-2" v-if="jeelStoreLibrary.type.key === 'voice'">
+          <b-col lg="12" class="mb-2 mt-2" v-if="jeelStoreLibrary?.type?.key === 'voice'">
             <PreviewMedia
               :header="'ملف صوت'"
               :media-name="jeelStoreLibrary.audio_orginal_name"
@@ -53,7 +53,7 @@
               @showModal="showModal(jeelStoreLibrary,$event)"
             />
           </b-col>
-          <b-col lg="12" class="mb-2 mt-2" v-if="jeelStoreLibrary.type.key === 'image'">
+          <b-col lg="12" class="mb-2 mt-2" v-if="jeelStoreLibrary?.type?.key === 'image'">
             <PreviewMedia
               :header="'ملف صورة'"
               :media-name="jeelStoreLibrary.image_orginal_name"
@@ -63,7 +63,7 @@
               @showModal="showModal(jeelStoreLibrary,$event)"
             />
           </b-col>
-          <b-col lg="12" class="mb-2 mt-2" v-if="jeelStoreLibrary.type.key === 'video'">
+          <b-col lg="12" class="mb-2 mt-2" v-if="jeelStoreLibrary?.type?.key === 'video'">
             <PreviewMedia
               :header="'ملف الفيديو بدون موسيقى'"
               :media-name="jeelStoreLibrary.video_without_music_name"
@@ -73,7 +73,7 @@
               @showModal="showModal(jeelStoreLibrary,$event)"
             />
           </b-col>
-          <b-col lg="12" class="mb-2 mt-2" v-if="jeelStoreLibrary.type.key === 'video'">
+          <b-col lg="12" class="mb-2 mt-2" v-if="jeelStoreLibrary?.type?.key === 'video'">
             <PreviewMedia
               :header="'ملف الفيديو'"
               :media-name="jeelStoreLibrary.video_with_music_name"
@@ -83,7 +83,7 @@
               @showModal="showModal(jeelStoreLibrary,$event)"
             />
           </b-col>
-          <b-col lg="12" class="mb-2 mt-2" v-if="jeelStoreLibrary.type.key === 'file'">
+          <b-col lg="12" class="mb-2 mt-2" v-if="jeelStoreLibrary?.type?.key === 'file'">
             <PreviewMedia
               :header="'ملف المحتوي'"
               :media-name="jeelStoreLibrary.file_orginal_name"
@@ -93,10 +93,10 @@
               @showModal="showModal(jeelStoreLibrary,$event)"
             />
           </b-col>
-          <b-col lg="12" class="mt-2 mb-2" v-if="jeelStoreLibrary.type.key === 'game' || jeelStoreLibrary.type.key === 'read_with_jeel'">
+          <b-col lg="12" class="mt-2 mb-2" v-if="jeelStoreLibrary?.type?.key === 'game' || jeelStoreLibrary?.type?.key === 'read_with_jeel'">
             <ShowItem class="divider-show" :title="'الرابط'" :subtitle="jeelStoreLibrary.link ? jeelStoreLibrary.link : '----'"/>
           </b-col>
-          <b-col lg="12" class="mt-2 mb-2" v-if="jeelStoreLibrary.type.key === 'note'">
+          <b-col lg="12" class="mt-2 mb-2" v-if="jeelStoreLibrary?.type?.key === 'note'">
             <ShowItem class="divider-show" :title="'الملحوظة'" :subtitle="jeelStoreLibrary.note ? jeelStoreLibrary.note : '----'"/>
           </b-col>
         </b-row>

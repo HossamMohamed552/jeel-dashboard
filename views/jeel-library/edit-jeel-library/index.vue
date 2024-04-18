@@ -2,7 +2,7 @@
   <section class="edit-role">
     <AddEditJeelLibrary
       :loading="loading"
-      @handleEditItem="handleEditJeelLibrary($event)"
+      @handleEditJeelLibrary="handleEditJeelLibrary($event)"
       @handleCancel="handleCancel"
     />
   </section>
@@ -10,7 +10,7 @@
 <script>
 
 import AddEditJeelLibrary from "@/components/Modules/JeelLibrary/AddEditJeelLibrary/index.vue";
-import { putEditJeelLibraryRequest } from "@/api/jeel-library";
+import {putEditJeelLibraryRequest} from "@/api/jeel-library";
 
 
 export default {

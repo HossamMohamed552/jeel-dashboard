@@ -7,16 +7,15 @@
     />
     <AddEditJeelLibrary
       :loading="loading"
-      @handleAddItem="handleAddItem($event)"
+      @handleAddJeelLibrary="handleAddJeelLibrary($event)"
       @handleCancel="handleCancel"
     />
   </div>
 </template>
 <script>
-import AddEditJeelLibrary from "@/components/Modules/JeelLibrary/AddEditJeelLibrary/index.vue";
 import { postAddJeelLibraryRequest } from "@/api/jeel-library";
 import Modal from "@/components/Shared/Modal/index.vue";
-import store from "@/store";
+import AddEditJeelLibrary from "@/components/Modules/JeelLibrary/AddEditJeelLibrary/index.vue";
 
 export default {
   components: {
@@ -31,7 +30,8 @@ export default {
   },
   mounted() {},
   methods: {
-    handleAddItem($event) {
+    handleAddJeelLibrary($event) {
+      console.log('$event',$event)
       this.loading = true;
       this.ApiService(postAddJeelLibraryRequest($event))
         .then((response) => {

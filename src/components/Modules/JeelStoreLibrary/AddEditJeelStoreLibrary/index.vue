@@ -181,9 +181,9 @@
                     attachment.videoWithOutMuiscChanged === false &&
                     !attachment.videoWithOutMuiscChangedRequest
                   "
-                  :header="`${$t('BADGE.bade_logo')}`"
-                  :media-name="attachment.videoWithOutMuisc_name"
-                  :file-size="attachment.videoWithOutMuisc_size"
+                  :header="`ملف الفيديو بدون موسيقى`"
+                  :media-name="attachment.video_without_music_name"
+                  :file-size="attachment.video_without_music_size"
                   :image-url="attachment.videoWithOutMuisc"
                   :typeOfMedia="'video'"
                   :show-remove-button="true"
@@ -212,9 +212,9 @@
                     attachment.videoWithMuiscChanged === false &&
                     !attachment.videoWithMuiscChangedRequest
                   "
-                  :header="`${$t('BADGE.bade_logo')}`"
-                  :media-name="attachment.videoWithMuisc_name"
-                  :file-size="attachment.videoWithMuisc_size"
+                  :header="`ملف الفيديو`"
+                  :media-name="attachment.video_with_music_name"
+                  :file-size="attachment.video_with_music_size"
                   :image-url="attachment.videoWithMuisc"
                   :typeOfMedia="'video'"
                   :show-remove-button="true"
@@ -243,7 +243,7 @@
                     attachment.fileChanged === false &&
                     !attachment.fileChangedRequest
                   "
-                  :header="`${$t('BADGE.bade_logo')}`"
+                  :header="`ملف المحتوي`"
                   :media-name="attachment.file_name"
                   :file-size="attachment.file_size"
                   :image-url="attachment.file"
@@ -318,17 +318,25 @@
     <GeneralModal :id="'holdContent'" :size="'lg'" :hide-header="true">
       <template #modalBody>
         <div class="text-center">
-          <div class="height-modal" v-if="typeOfAttachment === 'logo' || typeOfAttachment === 'image'">
+          <div class="height-modal"
+               v-if="typeOfAttachment === 'logo' || typeOfAttachment === 'image'">
             <img :src="imageUrl" class="image-modal" alt="logo"/>
           </div>
           <div v-if="typeOfAttachment ==='audio'">
             <audio :src="audioUrl" ref="player" autoplay="autoplay" controls="controls"></audio>
           </div>
-          <div v-if="typeOfAttachment ==='videoWithMusic' || typeOfAttachment ==='videoWithOutMusic'">
-            <video controls class="w-100 video" autoplay="autoplay"><source :src="videoUrl"/>Your browser does not support the video tag.</video>
+          <div
+            v-if="typeOfAttachment ==='videoWithMusic' || typeOfAttachment ==='videoWithOutMusic'">
+            <video controls class="w-100 video" autoplay="autoplay">
+              <source :src="videoUrl"/>
+              Your browser does not support the video tag.
+            </video>
           </div>
 
-          <Button @click="hideModal" :custom-class="'rounded-btn transparent-btn'">{{ $t("BACK") }}</Button>
+          <Button @click="hideModal" :custom-class="'rounded-btn transparent-btn'">{{
+              $t("BACK")
+            }}
+          </Button>
         </div>
       </template>
     </GeneralModal>
@@ -392,7 +400,6 @@ export default {
         audio: null,
         file: null,
         description: "",
-        // note
         note: null
       },
       attachment: {
@@ -415,16 +422,22 @@ export default {
 
         //  file
         file: null,
+        file_name: "",
+        file_size: "",
         fileChanged: false,
         fileChangedRequest: false,
 
         //  video_with_muisc
         videoWithMuisc: null,
+        video_with_music_name: "",
+        video_with_music_size: "",
         videoWithMuiscChanged: false,
         videoWithMuiscChangedRequest: false,
 
         //  video_without_music
         videoWithOutMuisc: null,
+        videoWithOutMuisc_name: "",
+        videoWithOutMuisc_size: "",
         videoWithOutMuiscChanged: false,
         videoWithOutMuiscChangedRequest: false,
 
@@ -480,15 +493,14 @@ export default {
     },
 
     showModal(item, typeOfAttachment) {
-      this.$bvModal.show('holdContent');
-
       this.typeOfAttachment = typeOfAttachment;
-      //videoWithMusic , logo ,videoWithOutMusic ,image ,audio
-
+      if(this.typeOfAttachment !== 'file') {
+        this.$bvModal.show('holdContent')
+      }
       if (typeOfAttachment === 'videoWithMusic') {
-        this.videoUrl = this.attachment.videoWithMuisc
+        this.videoUrl = this.attachment.video_with_music
       } else if (typeOfAttachment === 'videoWithOutMusic') {
-        this.videoUrl = this.attachment.videoWithOutMuisc
+        this.videoUrl = this.attachment.video_without_music
       } else if (typeOfAttachment === 'audio') {
         this.audioUrl = this.attachment.audio
       } else if (typeOfAttachment === 'logo') {
@@ -515,14 +527,23 @@ export default {
         if (!success) return;
       });
       if (this.$route.params.id) {
-        if (!this.createItem.logo){
+        if (!this.createItem.logo) {
           delete this.createItem.logo
         }
-        if (!this.createItem.image){
+        if (!this.createItem.image) {
           delete this.createItem.image
         }
-        if (!this.createItem.audio){
+        if (!this.createItem.audio) {
           delete this.createItem.audio
+        }
+        if (!this.createItem.video_with_muisc) {
+          delete this.createItem.video_with_muisc
+        }
+        if (!this.createItem.video_without_music) {
+          delete this.createItem.video_without_music
+        }
+        if (!this.createItem.file){
+          delete this.createItem.file
         }
         this.$emit("handleEditJeelStoreLibrary", this.createItem);
       } else {
@@ -546,19 +567,30 @@ export default {
           this.attachment.thumbnail_size = response.data.data.logo_size;
           this.attachment.thumbnail = response.data.data.logo;
           // image
-          if(this.createItem.type === 146){
-            this.attachment.image = response.data.data.image
-            this.attachment.image_name = response.data.data.image_orginal_name
-            this.attachment.image_size = response.data.data.image_size
-          } else if ( this.createItem.type === 145 ){
+          if (this.createItem.type === 145) {
             this.attachment.audio_name = response.data.data.audio_orginal_name
             this.attachment.audio_size = response.data.data.audio_size
             this.attachment.audio = response.data.data.audio
-          } else if (this.createItem.type === 150){
-            this.createItem.note = response.data.data.note
+          } else if (this.createItem.type === 146) {
+            this.attachment.image = response.data.data.image
+            this.attachment.image_name = response.data.data.image_orginal_name
+            this.attachment.image_size = response.data.data.image_size
+          } else if (this.createItem.type === 147) {
+            this.attachment.video_with_music_name = response.data.data.video_with_music_name
+            this.attachment.video_with_music_size = response.data.data.video_with_music_size
+            this.attachment.video_with_music = response.data.data.video_with_music
+            this.attachment.video_without_music_name = response.data.data.video_without_music_name
+            this.attachment.video_without_music_size = response.data.data.video_without_music_size
+            this.attachment.video_without_music = response.data.data.video_without_music
+          } else if (this.createItem.type === 148) {
+            this.attachment.file = response.data.data.file
+            this.attachment.file_name = response.data.data.file_orginal_name
+            this.attachment.file_size = response.data.data.file_size
           }
-          else if (this.createItem.type === 151 || this.createItem.type === 149 ){
+          else if (this.createItem.type === 151 || this.createItem.type === 149) {
             this.createItem.link = response.data.data.link
+          } else if (this.createItem.type === 150) {
+            this.createItem.note = response.data.data.note
           }
         });
       }
