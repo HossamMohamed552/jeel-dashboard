@@ -3,14 +3,11 @@ export const getVideosRequest = (params) => ({
   url: 'videos',
   config: {params}
 })
-export const getVideoPerLevelPathRequest = (params) => ({
-  method: 'get',
-  url: `videos`,
-  config: {
-    params
-  }
+export const getVideoPerLevelPathRequest = (id) => ({
+  method: "get",
+  url: `videos?learning_path_id=${id}`,
   // level_id=${params.levelId}&learning_path_id=${params.learnPathId}&term_id=${params.termId}
-})
+});
 export const getSingleVideoRequest = (params) => ({
   method: 'get',
   url: `videos/${params}`,

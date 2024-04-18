@@ -239,6 +239,7 @@ export default {
         {
           label: "اسم المسار الأول",
           type: "title",
+          key: "title",
           col: "12",
         },
         {

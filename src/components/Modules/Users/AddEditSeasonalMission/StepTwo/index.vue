@@ -28,6 +28,8 @@ import Stepper from "@/components/Shared/Stepper/index.vue";
 import GenericForm from "@/components/Shared/GenericForm";
 import { getQuizLevelPath, getVideoPerLevelPath } from "@/services/dropdownService";
 import _ from "lodash";
+import { getVideoPerLevelPathRequest } from "@/api/videos";
+import { getQuizLevelPathRequest } from "@/api/quiz"; // التمارين
 
 import { mapActions, mapGetters } from "vuex";
 
@@ -57,6 +59,7 @@ export default {
       exerciseLists: [],
       examGenerateIndex: 0,
       videoGenerateIndex: 0,
+      testForm: [],
     };
   },
   methods: {
@@ -90,53 +93,55 @@ export default {
     }, 300),
 
     getStepTwoForm(index) {
+      console.log(this.learningPath?.value);
       const duplicatedForm = JSON.parse(JSON.stringify(this.stepForm));
       duplicatedForm.forEach((formElement) => {
-        if (formElement.type === "title") {
-          switch (index) {
-            case 1:
-              formElement.label = "اسم المسار الأول";
-              break;
-            case 2:
-              formElement.label = "اسم المسار الثاني";
-              break;
-            case 3:
-              formElement.label = "اسم المسار الثالث";
-              break;
-            default:
-              formElement.label = "اسم المسار الأخير";
+        if (this.$route.params.id) {
+          let i;
+          if (formElement.key === "video_id" && this.videoGenerateIndex <= 9) {
+            this.videoGenerateIndex = this.videoGenerateIndex + 1;
+
+            if (index == 1) i = 0;
+            else if (index == 2) i = 1;
+            else if (index == 3) i = 2;
+            let videoesPayload = {
+              videos: this.learningPath.value[i].videos,
+              index: i,
+            };
+            this.addVideoesInArray(videoesPayload);
+            formElement.value = this.learningPath.value[i].videos;
+          } else if (formElement.key === "exams_id") {
+            this.examGenerateIndex = this.examGenerateIndex + 1;
+
+            if (index == 1) i = 0;
+            else if (index == 2) i = 1;
+            else if (index == 3) i = 2;
+
+            let exercisesPayload = {
+              exercisess: this.learningPath.value[i].quizzes,
+              index: i,
+            };
+            this.addExercisesInArray(exercisesPayload);
+            formElement.value = this.learningPath.value[i].quizzes;
           }
         }
-        let i;
-        if (
-          this.$route.params.id &&
-          formElement.key === "video_id" &&
-          this.videoGenerateIndex <= 9
-        ) {
-          this.videoGenerateIndex = this.videoGenerateIndex + 1;
 
-          if (index == 1) i = 0;
-          else if (index == 2) i = 1;
-          else if (index == 3) i = 2;
-          let videoesPayload = {
-            videos: this.learningPath.value[i].videos,
-            index: i,
-          };
-          this.addVideoesInArray(videoesPayload);
-          formElement.value = this.learningPath.value[i].videos;
+        if (formElement.key === "title") {
+          formElement.label = this.learningPath?.value[index - 1].name;
         } else if (formElement.key === "exams_id") {
-          this.examGenerateIndex = this.examGenerateIndex + 1;
-
-          if (index == 1) i = 0;
-          else if (index == 2) i = 1;
-          else if (index == 3) i = 2;
-
-          let exercisesPayload = {
-            exercisess: this.learningPath.value[i].quizzes,
-            index: i,
-          };
-          this.addExercisesInArray(exercisesPayload);
-          formElement.value = this.learningPath.value[i].quizzes;
+          this.ApiService(getQuizLevelPathRequest(this.learningPath?.value[index - 1].id)).then(
+            (response) => {
+              formElement.options = response.data.data;
+              console.log("formElement", formElement);
+            }
+          );
+        } else if (formElement.key === "video_id") {
+          this.ApiService(getVideoPerLevelPathRequest(this.learningPath?.value[index - 1].id)).then(
+            (response) => {
+              formElement.options = response.data.data;
+              console.log("formElement", formElement);
+            }
+          );
         }
       });
       return duplicatedForm;
@@ -206,12 +211,18 @@ export default {
       for (let index = 1; index <= this.learningPathLength; index++) {
         computedForms[index] = this.getStepTwoForm(index);
       }
+      console.log("computedForms", computedForms.flat());
+      this.testForm = computedForms.flat();
       return computedForms;
     },
   },
   async mounted() {
-    getQuizLevelPath(this.stepForm, "exams_id");
-    getVideoPerLevelPath(this.stepForm, "video_id");
+    // this.ApiService(getQuizLevelPathRequest(2)).then((response) => {
+    //   let quizzesOptions = response.data.data;
+    // });
+    // let vidioesOptions = getVideoPerLevelPath(this.stepForm, "video_id", 1);
+    // formElement.options = vidioesOptions
+    // console.log("vidioesOptions", vidioesOptions);
   },
 };
 </script>
