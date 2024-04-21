@@ -35,7 +35,7 @@
             السابق
           </Button>
 
-          <Button custom-class="submit-btn" @click="nextStep"> التالي </Button>
+          <Button custom-class="submit-btn" :disabled="!isNextStep" @click="nextStep"> التالي </Button>
         </div>
       </div>
     </GenericForm>
@@ -76,6 +76,7 @@ export default {
   },
   data() {
     return {
+      isNextStep: false,
       loading: false,
       entry: {},
       prizeIndex: 0,
@@ -175,13 +176,13 @@ export default {
           console.error(`Error updating field ${field.key}:`, error);
         }
       });
-      console.log(this.prizeGroup);
       if (this.prizeGroup.length == 0) this.prizeIndex++;
       else this.prizeIndex = this.prizeGroup[this.prizeGroup.length - 1].id + 1;
       this.entry.id = this.prizeIndex;
       this.addPrize(this.entry);
       this.entry = {};
       this.resetInput();
+      this.isNextStep = true;
     },
     validateForm(val) {
       // Find the rule for the max_percentage field
@@ -198,7 +199,6 @@ export default {
         maxPercentageRule.rules = existingRules.concat(`min_value:${val}`).join("|");
       }
 
-      console.log("stepForm", maxPercentageRule);
     },
   },
   computed: {

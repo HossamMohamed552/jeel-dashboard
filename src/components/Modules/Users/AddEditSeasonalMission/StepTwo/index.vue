@@ -93,7 +93,6 @@ export default {
     }, 300),
 
     getStepTwoForm(index) {
-      console.log(this.learningPath?.value);
       const duplicatedForm = JSON.parse(JSON.stringify(this.stepForm));
       duplicatedForm.forEach((formElement) => {
         if (this.$route.params.id) {
@@ -139,7 +138,6 @@ export default {
           this.ApiService(getVideoPerLevelPathRequest(this.learningPath?.value[index - 1].id)).then(
             (response) => {
               formElement.options = response.data.data;
-              console.log("formElement", formElement);
             }
           );
         }
@@ -211,18 +209,11 @@ export default {
       for (let index = 1; index <= this.learningPathLength; index++) {
         computedForms[index] = this.getStepTwoForm(index);
       }
-      console.log("computedForms", computedForms.flat());
       this.testForm = computedForms.flat();
       return computedForms;
     },
   },
   async mounted() {
-    // this.ApiService(getQuizLevelPathRequest(2)).then((response) => {
-    //   let quizzesOptions = response.data.data;
-    // });
-    // let vidioesOptions = getVideoPerLevelPath(this.stepForm, "video_id", 1);
-    // formElement.options = vidioesOptions
-    // console.log("vidioesOptions", vidioesOptions);
   },
 };
 </script>

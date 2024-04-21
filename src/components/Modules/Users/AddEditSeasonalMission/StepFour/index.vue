@@ -10,7 +10,7 @@
       <template v-slot:customSubmit>
         <b-col class="adding" lg="12">
           <Button
-            :disabled="invalid"
+            :disabled="invalid || !voiceUploaded"
             type="submit"
             :loading="loading"
             @click="handleAdd"
@@ -35,7 +35,7 @@
             السابق
           </Button>
 
-          <Button custom-class="submit-btn" @click="nextStep"> التالي </Button>
+          <Button custom-class="submit-btn" :disabled="!isNextStep" @click="nextStep"> التالي </Button>
         </div>
       </div>
     </GenericForm>
@@ -65,6 +65,8 @@ export default {
   },
   data() {
     return {
+      isNextStep: false,
+      voiceUploaded: false,
       loading: false,
       entry: {},
       watchedField: ["name", "start_date", "description"],
@@ -95,6 +97,7 @@ export default {
         this.entry["uuid"] = value.uuid;
         this.entry["audio"] = value.uuid;
         this.entry["original_url"] = value.url;
+                this.imageUplpaded = true;
       } else {
         this.entry[key] = value;
       }
@@ -127,6 +130,8 @@ export default {
       this.addNotification(this.entry);
       this.entry = {};
       this.removeFile();
+      this.isNextStep = true;
+
     },
   },
   computed: {
