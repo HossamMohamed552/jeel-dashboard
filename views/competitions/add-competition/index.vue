@@ -89,7 +89,7 @@ export default {
     return {
       loading: false,
       showModal: false,
-      currentStep: 2,
+      currentStep: 0,
       collectData: {},
       steps: [
         {
@@ -257,7 +257,7 @@ export default {
           listen: "id",
           value: "",
           type: "number",
-          rules: "required|numeric|max_value:100|min_value:0",
+          rules: "required|numeric|max_value:100|min_value:",
         },
         {
           key: "type_id",
