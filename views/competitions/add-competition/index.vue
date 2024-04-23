@@ -69,7 +69,7 @@ import AddEditNotification from "@/components/Modules/addEditNotification";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import Stepper from "@/components/Shared/Stepper/index.vue";
-import { getArrangmentListRequest, postCreateCompetitonRequest } from "@/api/competition";
+import { getArrangmentListRequest, postAddCompetitionRequest } from "@/api/competition";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -373,7 +373,7 @@ export default {
       this.collectData.school_id = this.user.school.id;
 
       this.showModal = true;
-      this.ApiService(postCreateCompetitonRequest(this.collectData))
+      this.ApiService(postAddCompetitionRequest(this.collectData))
         .then((response) => {
           setTimeout(() => {
             this.showModal = false;

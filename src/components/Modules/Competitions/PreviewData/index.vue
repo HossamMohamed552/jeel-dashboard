@@ -258,7 +258,7 @@ export default {
 
 .adding {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: flex-end;
 }
 </style>

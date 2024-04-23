@@ -125,8 +125,6 @@ export default {
       if (key === "type_id") {
         let selected = this.stepForm[2].options.find((option) => option.id === value);
         this.prizeType = selected.name;
-        console.log(selected)
-
         this.stepForm[3].disabled = false;
         if (selected.name == "المكتبة" || selected.name == "شخصيات") {
           this.stepForm[3].type = "select";
@@ -170,8 +168,6 @@ export default {
               else this.$set(this.entry, field.key, field.value);
               this.$set(this.entry, `${field.key}_name`, field.name.join(", "));
             } else {
-              console.log("test",`${field.key}_name`)
-
               this.$set(this.entry, `${field.key}_name`, field.name);
               this.$set(this.entry, field.key, field.value);
             }
@@ -216,7 +212,7 @@ export default {
 
 .add-prize {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: flex-end;
 }
 </style>

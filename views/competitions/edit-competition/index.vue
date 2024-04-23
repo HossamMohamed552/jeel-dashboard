@@ -69,7 +69,7 @@ import Stepper from "@/components/Shared/Stepper/index.vue";
 import {
   getCompetitionByIdRequest,
   getArrangmentListRequest,
-  postCreateCompetitonRequest,
+  putEditCompetitionRequest,
 } from "@/api/competition";
 import { mapGetters, mapActions } from "vuex";
 import moment from "moment";
@@ -90,7 +90,7 @@ export default {
     return {
       loading: false,
       showModal: false,
-      currentStep: 2,
+      currentStep: 0,
       collectData: {},
       steps: [
         {
@@ -387,7 +387,7 @@ export default {
       this.collectData.school_id = this.user.school.id;
 
       this.showModal = true;
-      this.ApiService(postCreateCompetitonRequest(this.collectData))
+      this.ApiService(putEditCompetitionRequest(this.collectData))
         .then((response) => {
           setTimeout(() => {
             this.showModal = false;

@@ -35,7 +35,9 @@
             السابق
           </Button>
 
-          <Button custom-class="submit-btn" :disabled="!isNextStep" @click="nextStep"> التالي </Button>
+          <Button custom-class="submit-btn" :disabled="!isNextStep" @click="nextStep">
+            التالي
+          </Button>
         </div>
       </div>
     </GenericForm>
@@ -97,7 +99,7 @@ export default {
         this.entry["uuid"] = value.uuid;
         this.entry["audio"] = value.uuid;
         this.entry["original_url"] = value.url;
-                this.imageUplpaded = true;
+        this.imageUplpaded = true;
       } else {
         this.entry[key] = value;
       }
@@ -131,7 +133,6 @@ export default {
       this.entry = {};
       this.removeFile();
       this.isNextStep = true;
-
     },
   },
   computed: {
@@ -139,7 +140,6 @@ export default {
   },
   async mounted() {
     this.notifactionGroup = this.getNotificationsList;
-
   },
   watch: {
     getNotificationsList() {
@@ -154,7 +154,7 @@ export default {
 
 .adding {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: flex-end;
 }
 </style>
