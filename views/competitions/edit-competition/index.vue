@@ -215,7 +215,7 @@ export default {
           type: "datetime",
           rules: "required",
           placeholder: "من",
-          format: "DD-MM-YYYY HH:mm",
+          format: "YYYY-MM-DD HH:mm",
         },
         {
           key: "end_date",
@@ -226,7 +226,7 @@ export default {
           type: "datetime",
           rules: "required",
           placeholder: "الى",
-          format: "DD-MM-YYYY HH:mm",
+          format: "YYYY-MM-DD HH:mm",
         },
         {
           key: "competition_time",
