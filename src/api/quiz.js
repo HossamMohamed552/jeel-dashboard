@@ -3,7 +3,12 @@ export const getQuizzesRequest = (params) => ({
   url: `quizzes`,
   config: { params },
 });
-
+export const getQuizLevelPathMissionRequest = (params) => ({
+  method: 'get',
+  url: `quizzes`,
+  config: {params}
+  // level_id=${params.levelId}&learning_path_id=${params.learnPathId}&term_id=${params.termId}
+});
 export const getQuizLevelPathRequest = (id) => ({
   method: "get",
   url: `quizzes?learning_path_id=${id}`,

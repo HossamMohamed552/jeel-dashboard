@@ -88,9 +88,9 @@
 </template>
 <script>
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
-import {getVideoPerLevelPathRequest} from "@/api/videos";
+import {getVideoPerLevelPathMissionRequest, getVideoPerLevelPathRequest} from "@/api/videos";
 import {getPaperWorkPerLevelPathRequest} from "@/api/paperWork";
-import {getQuizLevelPathRequest} from "@/api/quiz";
+import {getQuizLevelPathMissionRequest, getQuizLevelPathRequest} from "@/api/quiz";
 import {getAudioPerLevelPathRequest} from "@/api/audios";
 import Button from "@/components/Shared/Button/index.vue";
 import {getSingleMissionsRequest} from "@/api/missios";
@@ -157,7 +157,7 @@ export default {
       }).finally(() => {
         let learnPathsVideoPaperWokQuizWithFilter = this.learnPathsVideoPaperWokQuiz.filter(item => this.watchLearningPathSelected.map(itemMap => itemMap.id).includes(item.id))
         learnPathsVideoPaperWokQuizWithFilter.forEach((item) => {
-          this.ApiService(getVideoPerLevelPathRequest({
+          this.ApiService(getVideoPerLevelPathMissionRequest({
             learning_path_id: item.id,
             ...this.filterWith,
             'list_all': 'true'
@@ -213,7 +213,7 @@ export default {
         })
         let learnPathsVideoPaperWokQuizWithOutFilter = this.watchLearningPathSelected.filter(item => !this.learnPathsVideoPaperWokQuiz.map(itemMap => itemMap.id).includes(item.id))
         learnPathsVideoPaperWokQuizWithOutFilter.forEach((item) => {
-          this.ApiService(getVideoPerLevelPathRequest({
+          this.ApiService(getVideoPerLevelPathMissionRequest({
             learning_path_id: item.id,
             ...this.filterWith,
             'list_all': 'true'
@@ -233,7 +233,7 @@ export default {
               paperWorkIds: []
             })
           })
-          this.ApiService(getQuizLevelPathRequest({
+          this.ApiService(getQuizLevelPathMissionRequest({
             learning_path_id: item.id,
             ...this.filterWith,
             'list_all': 'true'
@@ -271,7 +271,8 @@ export default {
         this.filterWith[`lessons[${lesson}]`] = this.lessonsSelectedWithEdit[lesson]
       }
       this.watchLearningPathSelected.forEach((item) => {
-        this.ApiService(getVideoPerLevelPathRequest({
+
+        this.ApiService(getVideoPerLevelPathMissionRequest({
           learning_path_id: item.id,
           ...this.filterWith,
           'list_all': 'true'
@@ -281,6 +282,7 @@ export default {
             videoIds: []
           })
         })
+
         this.ApiService(getPaperWorkPerLevelPathRequest({
           learning_path_id: item.id,
           ...this.filterWith,
@@ -291,7 +293,7 @@ export default {
             paperWorkIds: []
           })
         })
-        this.ApiService(getQuizLevelPathRequest({
+        this.ApiService(getQuizLevelPathMissionRequest({
           learning_path_id: item.id,
           ...this.filterWith,
           'list_all': 'true'
