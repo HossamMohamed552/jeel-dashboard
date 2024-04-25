@@ -173,7 +173,7 @@ export default {
               field.key,
               moment(field.value, "DD-MM-YYYY").format("YYYY-MM-DD")
             );
-          else if (field.key == "image" && field.is_change == undefined)  return ""
+          else if (field.key == "image" && field.is_change == undefined) return "";
           else if (field.key != "learningpaths")
             this.$set(this.submittedForm, field.key, field.value);
         } catch (error) {
@@ -257,7 +257,7 @@ export default {
 
 .adding {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: flex-end;
 }
 </style>

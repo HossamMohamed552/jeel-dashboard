@@ -37,7 +37,9 @@
                 السابق
               </Button>
 
-              <Button custom-class="submit-btn" @click="nextStep"> التالي </Button>
+              <Button custom-class="submit-btn" :disabled="!isNextStep" @click="nextStep">
+                التالي
+              </Button>
             </div>
           </div>
         </GenericForm>
@@ -78,6 +80,7 @@ export default {
   },
   data() {
     return {
+      isNextStep: false,
       loading: false,
       entry: {},
       prizeIndex: 0,
@@ -125,8 +128,6 @@ export default {
       if (key === "type_id") {
         let selected = this.stepForm[2].options.find((option) => option.id === value);
         this.prizeType = selected.name;
-        console.log(selected)
-
         this.stepForm[3].disabled = false;
         if (selected.name == "المكتبة" || selected.name == "شخصيات") {
           this.stepForm[3].type = "select";
@@ -170,8 +171,6 @@ export default {
               else this.$set(this.entry, field.key, field.value);
               this.$set(this.entry, `${field.key}_name`, field.name.join(", "));
             } else {
-              console.log("test",`${field.key}_name`)
-
               this.$set(this.entry, `${field.key}_name`, field.name);
               this.$set(this.entry, field.key, field.value);
             }
@@ -187,6 +186,22 @@ export default {
       this.addPrize(this.entry);
       this.entry = {};
       this.resetInput();
+      this.isNextStep = true;
+    },
+    validateForm(val) {
+      // Find the rule for the max_percentage field
+      const maxPercentageRule = this.stepForm.find((rule) => rule.key === "max_percentage");
+
+      // If the rule is found, construct the new rules string with val
+      if (maxPercentageRule) {
+        // Split existing rules by "|" and filter out any occurrences of "custom_greater_than:"
+        const existingRules = maxPercentageRule.rules
+          .split("|")
+          .filter((rule) => !rule.includes("min_value:"));
+
+        // Concatenate the existing rules with the new rule containing val
+        maxPercentageRule.rules = existingRules.concat(`min_value:${val}`).join("|");
+      }
     },
   },
   computed: {
@@ -196,12 +211,22 @@ export default {
     getAllPrizeSeasonalMissionType(this.stepForm, "type_id");
     this.prizeGroup = this.getPrizesList;
     if (this.$route.params.id) {
+      this.isNextStep = true;
+
       this.prizeGroup.forEach((prize) => {
         prize["type_id_name"] = prize.type.name;
         if (prize?.type?.key == "characters") prize["prizeable_id_name"] = prize.character.name;
         if (prize?.type?.key == "library") prize["prizeable_id_name"] = prize.library.name;
       });
     }
+    this.$watch(
+      () => {
+        return this.$refs.stepThreeForm.refs["من نسبة"].value;
+      },
+      (val) => {
+        this.validateForm(val);
+      }
+    );
   },
   watch: {
     getPrizesList() {
@@ -216,7 +241,7 @@ export default {
 
 .add-prize {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: flex-end;
 }
 </style>

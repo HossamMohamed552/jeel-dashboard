@@ -152,9 +152,7 @@ export default {
     ...mapGetters(["user"]),
   },
   async mounted() {
-    if (this.user.permissions.includes("add-teacher-competitions"))
-      await getLevelsForTeacher(this.stepForm, "level_id");
-    else await getLevelsForSuperVisor(this.stepForm, "level_id");
+    await getLevelsForTeacher(this.stepForm, "level_id");
   },
   watch: {
     stepForm: {

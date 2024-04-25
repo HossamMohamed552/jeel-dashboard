@@ -69,7 +69,7 @@ import AddEditNotification from "@/components/Modules/addEditNotification";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import Stepper from "@/components/Shared/Stepper/index.vue";
-import { getArrangmentListRequest, postCreateCompetitonRequest } from "@/api/competition";
+import { getArrangmentListRequest, postAddCompetitionRequest } from "@/api/competition";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -216,7 +216,7 @@ export default {
           type: "datetime",
           rules: "required",
           placeholder: "من",
-          format: "DD-MM-YYYY HH:mm",
+          format: "YYYY-MM-DD HH:mm",
         },
         {
           key: "end_date",
@@ -227,7 +227,7 @@ export default {
           type: "datetime",
           rules: "required",
           placeholder: "الى",
-          format: "DD-MM-YYYY HH:mm",
+          format: "YYYY-MM-DD HH:mm",
         },
         {
           key: "competition_time",
@@ -257,7 +257,7 @@ export default {
           listen: "id",
           value: "",
           type: "number",
-          rules: "required|numeric|max_value:100|min_value:0",
+          rules: "required|numeric|max_value:100|min_value:",
         },
         {
           key: "type_id",
@@ -373,7 +373,7 @@ export default {
       this.collectData.school_id = this.user.school.id;
 
       this.showModal = true;
-      this.ApiService(postCreateCompetitonRequest(this.collectData))
+      this.ApiService(postAddCompetitionRequest(this.collectData))
         .then((response) => {
           setTimeout(() => {
             this.showModal = false;

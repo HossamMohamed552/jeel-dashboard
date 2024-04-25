@@ -34,7 +34,6 @@
           <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
             السابق
           </Button>
-
           <Button custom-class="submit-btn" :disabled="!isNextStep && notifactionGroup.length  === 0" @click="nextStep"> التالي </Button>
         </div>
       </div>
@@ -134,7 +133,6 @@ export default {
       this.entry = {};
       this.removeFile();
       this.isNextStep = true;
-
     },
   },
   computed: {
@@ -142,7 +140,6 @@ export default {
   },
   async mounted() {
     this.notifactionGroup = this.getNotificationsList;
-
   },
   watch: {
     getNotificationsList() {
@@ -157,7 +154,7 @@ export default {
 
 .adding {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: flex-end;
 }
 </style>
