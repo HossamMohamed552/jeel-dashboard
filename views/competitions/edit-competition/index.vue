@@ -4,8 +4,19 @@
     <!-- <pre>{{ user.school.id }}</pre> -->
     <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
     <Stepper class="mt-5 mb-3" :steps="steps" :current-step="currentStep" />
+    <AddEditTeacherCompetitionInfo
+      v-if="currentStep === 0 && this.user.permissions.includes('edit-teacher-competitions')"
+      :stepForm="competitionInfoForm"
+      :missions="mission_ids"
+      :objective_id="this.objective_id"
+      :outcome_id="this.outcome_id"
+      :class_id="this.class_id"
+      :groups="this.groups_ids"
+      @nextStep="nextStep"
+      @handleCancel="handleCancel"
+    />
     <AddEditCompetitionInfo
-      v-if="currentStep === 0"
+      v-if="currentStep === 0 && this.user.permissions.includes('edit-competition')"
       :stepForm="competitionInfoForm"
       :missions="mission_ids"
       :objective_id="this.objective_id"
@@ -58,6 +69,7 @@
 <script>
 // Steps
 import AddEditCompetitionInfo from "@/components/Modules/Competitions/AddEditCompetitionInfo/index.vue";
+import AddEditTeacherCompetitionInfo from "@/components/Modules/Competitions/AddEditTeacherCompetitionInfo/index.vue";
 import AddEditCompetitionQuestions from "@/components/Modules/Competitions/AddEditCompetitionQuestions/index.vue";
 import PreviewData from "@/components/Modules/Competitions/PreviewData";
 import AddEditPrizes from "@/components/Modules/addEditPrize";
@@ -85,6 +97,7 @@ export default {
     AddEditNotification,
     AddEditCompetitionQuestions,
     PreviewData,
+    AddEditTeacherCompetitionInfo,
   },
   data() {
     return {
@@ -428,21 +441,23 @@ export default {
     },
     handlePrizesInEdit(prizes) {
       prizes.map((prize) => {
-        prize["type_id"] = prize.type.id;
+        prize["type_id"] = prize.type?.id;
+        prize["type_id_name"] = prize.type?.name;
         this.addPrize(prize);
       });
     },
-
     handleNotificationInEdit(notifications) {
       notifications.map((notification) => {
+        console.log(notification);
         notification["uuid"] = notification.audio_uuid;
-        notification["audio"] = notification.audio_uuid;
-        notification["original_url"] = notification.audio;
+        // delete notification["audio_uuid"];
+        notification.original_url = notification.audio;
+        delete notification.audio;
         this.addNotification(notification);
       });
     },
   },
-  async mounted() {
+  async created() {
     await this.ApiService(getCompetitionByIdRequest(this.$route.params.id)).then((response) => {
       let competition = response.data.data;
       this.mission_ids = competition?.mission.map((item) => item.id);
@@ -462,22 +477,30 @@ export default {
       this.competitionInfoForm[3].name = competition?.objective?.name;
       this.competitionInfoForm[4].value = competition?.outcome?.id;
       this.competitionInfoForm[4].name = competition?.outcome?.name;
-
-      if (!this.user.permissions.includes("edit-teacher-competitions")) {
-        this.competitionInfoForm.splice(6, 2);
-        this.competitionInfoForm[5].value = moment(competition?.start_date).format("DD-MM-YYYY");
-        this.competitionInfoForm[6].value = moment(competition?.end_date).format("DD-MM-YYYY");
-      } else {
+      if (this.user.permissions.includes("edit-teacher-competitions")) {
+        this.competitionInfoForm[5].value = moment(competition?.start_date).format(
+          "YYYY-MM-DD HH:mm"
+        );
+        this.competitionInfoForm[6].value = moment(competition?.end_date).format(
+          "YYYY-MM-DD HH:mm"
+        );
         this.competitionInfoForm[5].value = competition?.class?.id;
         this.competitionInfoForm[5].name = competition?.class?.name;
-
-        this.competitionInfoForm[7].value = moment(competition?.start_date).format("DD-MM-YYYY");
-        this.competitionInfoForm[8].value = moment(competition?.end_date).format("DD-MM-YYYY");
+      } else if (this.user.permissions.includes("edit-competition")) {
+        this.competitionInfoForm[5].value = moment(competition?.start_date).format(
+          "YYYY-MM-DD HH:mm"
+        );
+        this.competitionInfoForm[6].value = moment(competition?.end_date).format(
+          "YYYY-MM-DD HH:mm"
+        );
+        this.competitionInfoForm[7].value = competition?.competition_time;
       }
 
       this.addQuestions(competition?.questions);
       this.handlePrizesInEdit(competition?.prizes);
       this.handleNotificationInEdit(competition?.notifications);
+
+      console.log();
     });
   },
   beforeMount() {

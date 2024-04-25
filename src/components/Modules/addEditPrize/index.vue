@@ -37,7 +37,9 @@
                 السابق
               </Button>
 
-              <Button custom-class="submit-btn" @click="nextStep"> التالي </Button>
+              <Button custom-class="submit-btn" :disabled="!isNextStep" @click="nextStep">
+                التالي
+              </Button>
             </div>
           </div>
         </GenericForm>
@@ -78,6 +80,7 @@ export default {
   },
   data() {
     return {
+      isNextStep: false,
       loading: false,
       entry: {},
       prizeIndex: 0,
@@ -183,6 +186,7 @@ export default {
       this.addPrize(this.entry);
       this.entry = {};
       this.resetInput();
+      this.isNextStep = true;
     },
     validateForm(val) {
       // Find the rule for the max_percentage field
@@ -207,6 +211,8 @@ export default {
     getAllPrizeSeasonalMissionType(this.stepForm, "type_id");
     this.prizeGroup = this.getPrizesList;
     if (this.$route.params.id) {
+      this.isNextStep = true;
+
       this.prizeGroup.forEach((prize) => {
         prize["type_id_name"] = prize.type.name;
         if (prize?.type?.key == "characters") prize["prizeable_id_name"] = prize.character.name;

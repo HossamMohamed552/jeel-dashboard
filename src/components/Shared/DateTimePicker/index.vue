@@ -48,9 +48,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "./index";
-::v-deep {
-  .mx-time-columns {
-    direction: ltr;
-  }
-}
 </style>

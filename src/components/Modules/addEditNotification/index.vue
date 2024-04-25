@@ -37,7 +37,9 @@
                 السابق
               </Button>
 
-              <Button custom-class="submit-btn" @click="nextStep"> التالي </Button>
+              <Button custom-class="submit-btn" :disabled="!isNextStep" @click="nextStep">
+                التالي
+              </Button>
             </div>
           </div>
         </GenericForm>
@@ -69,6 +71,8 @@ export default {
   },
   data() {
     return {
+      isNextStep: false,
+      voiceUploaded: false,
       loading: false,
       entry: {},
       watchedField: ["name", "start_date", "description"],
@@ -99,6 +103,7 @@ export default {
         this.entry["uuid"] = value.uuid;
         this.entry["audio"] = value.uuid;
         this.entry["original_url"] = value.url;
+        this.imageUplpaded = true;
       } else {
         this.entry[key] = value;
       }
@@ -131,18 +136,15 @@ export default {
       this.addNotification(this.entry);
       this.entry = {};
       this.removeFile();
+      this.isNextStep = true;
     },
   },
   computed: {
     ...mapGetters(["getNotificationsList"]),
   },
   async mounted() {
+    if (this.$route.params.id) this.isNextStep = true;
     this.notifactionGroup = this.getNotificationsList;
-    if (this.$route.params.id) {
-      this.notifactionGroup.forEach((notifaction) => {
-        notifaction["original_url"] = notifaction.audio;
-      });
-    }
   },
   watch: {
     getNotificationsList() {

@@ -29,7 +29,7 @@
     overflow: hidden;
 
     .dropdown-menu {
-       transform: translate3d(147px, 31px, 0px) !important;
+      transform: translate3d(147px, 31px, 0px) !important;
     }
   }
 
@@ -114,7 +114,9 @@
     border-color: $color-primary;
     box-shadow: none;
   }
-  .custom-control-label .custom-control-input:checked~.custom-control-label::after{
+  .custom-control-label
+    .custom-control-input:checked
+    ~ .custom-control-label::after {
     transform: translateX(-0.1rem);
     right: -1.5rem !important;
   }
@@ -145,15 +147,19 @@
     }
   }
 }
-.custom-switch .custom-control-input:checked~.custom-control-label::after{
+.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
   right: 0.5rem;
 }
-.custom-switch .custom-control-input:disabled:checked~.custom-control-label::before{
+.custom-switch
+  .custom-control-input:disabled:checked
+  ~ .custom-control-label::before {
   background: $color-primary;
   border-color: $color-primary;
   cursor: not-allowed;
 }
-.custom-switch .custom-control-input:disabled:checked~.custom-control-label::after{
+.custom-switch
+  .custom-control-input:disabled:checked
+  ~ .custom-control-label::after {
   cursor: not-allowed;
 }
 h2.heading,
@@ -239,7 +245,7 @@ label {
 
 .fa-asterisk {
   color: #dc3545;
-  font-size: .7rem;
+  font-size: 0.7rem;
   font-weight: bold;
   position: relative;
   top: -0.3rem;
@@ -334,7 +340,7 @@ label {
 
   .vs__selected {
     margin: 7px 2px 5px !important;
-    padding: 0 .5rem;
+    padding: 0 0.5rem;
   }
 }
 .hold-progress {
@@ -347,19 +353,19 @@ label {
 .success-status {
   color: #1c7430;
 }
-.height-modal{
+.height-modal {
   height: 75vh;
   margin-bottom: 1rem;
 }
-.image-modal{
+.image-modal {
   width: 100%;
   height: 100%;
   object-position: center;
   object-fit: contain;
   margin-bottom: 1rem;
 }
-.hold-answers{
-  background: #F1E8F0;
+.hold-answers {
+  background: #f1e8f0;
   border-radius: 1rem;
   padding: 1rem;
   margin-top: 2rem;
@@ -368,4 +374,8 @@ label {
   &:lang(ar) {
     font-family: "DiodrumArabic", sans-serif;
   }
+}
+
+.mx-time-columns {
+  direction: ltr !important;
 }

@@ -13,7 +13,9 @@
             <div class="buttons-container">
               <slot></slot>
               <div class="steps">
-                <Button :custom-class="'submit-btn'" :disabled="invalid" @click="nextStep"> التالي </Button>
+                <Button :custom-class="'submit-btn'" :disabled="invalid" @click="nextStep">
+                  التالي
+                </Button>
               </div>
             </div>
           </GenericForm>
@@ -117,7 +119,7 @@ export default {
   },
   async mounted() {
     await getLevelsForSuperVisor(this.stepForm, "level_id");
-    this.stepForm.splice(5, 2);
+    if (this.stepForm.length > 8) this.stepForm.splice(5, 2);
   },
   watch: {
     stepForm: {
