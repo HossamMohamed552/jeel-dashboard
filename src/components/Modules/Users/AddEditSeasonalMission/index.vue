@@ -14,7 +14,7 @@
           <Button @click="handleCancel" custom-class="cancel-btn margin"> إلغاء </Button>
         </StepOne>
         <StepTwo
-          v-if="currentStep === 1"
+          v-show="currentStep === 1"
           :stepForm="stepTwoForm"
           :learningPath="stepOneForm[6]"
           @nextStep="nextStep"

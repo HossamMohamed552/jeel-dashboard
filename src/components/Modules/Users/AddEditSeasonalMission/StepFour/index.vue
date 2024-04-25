@@ -35,7 +35,7 @@
             السابق
           </Button>
 
-          <Button custom-class="submit-btn" :disabled="!isNextStep" @click="nextStep"> التالي </Button>
+          <Button custom-class="submit-btn" :disabled="!isNextStep && notifactionGroup.length  === 0" @click="nextStep"> التالي </Button>
         </div>
       </div>
     </GenericForm>
@@ -97,7 +97,7 @@ export default {
         this.entry["uuid"] = value.uuid;
         this.entry["audio"] = value.uuid;
         this.entry["original_url"] = value.url;
-                this.imageUplpaded = true;
+        this.voiceUploaded = true;
       } else {
         this.entry[key] = value;
       }
@@ -124,8 +124,11 @@ export default {
         }
       });
 
-      if (this.notifactionGroup.length == 0) this.notifactionIndex++;
-      else this.notifactionIndex = this.notifactionGroup[this.notifactionGroup.length - 1].id + 1;
+      if (this.notifactionGroup.length === 0){
+        this.notifactionIndex++;
+      } else{
+        this.notifactionIndex = this.notifactionGroup[this.notifactionGroup.length - 1].id + 1;
+      }
       this.entry.id = this.notifactionIndex;
       this.addNotification(this.entry);
       this.entry = {};

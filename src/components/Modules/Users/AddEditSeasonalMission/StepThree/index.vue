@@ -34,8 +34,7 @@
           <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
             السابق
           </Button>
-
-          <Button custom-class="submit-btn" :disabled="!isNextStep" @click="nextStep"> التالي </Button>
+          <Button custom-class="submit-btn" :disabled="!isNextStep && prizeGroup.length  === 0" @click="nextStep"> التالي </Button>
         </div>
       </div>
     </GenericForm>
@@ -172,6 +171,9 @@ export default {
             }
           } else this.$set(this.entry, field.key, field.value);
           field.value = "";
+          this.$nextTick(()=>{
+            this.$refs.stepThreeForm.reset()
+          })
         } catch (error) {
           console.error(`Error updating field ${field.key}:`, error);
         }
