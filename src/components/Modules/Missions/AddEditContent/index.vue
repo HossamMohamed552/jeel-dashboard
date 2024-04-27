@@ -178,7 +178,7 @@ export default {
               paperWorkIds: [...item.papersWork.filter(itemData => this.lessonsSelectedWithEdit.includes(itemData?.lesson?.id)).map(item => item.id)]
             })
           })
-          this.ApiService(getQuizLevelPathRequest({
+          this.ApiService(getQuizLevelPathMissionRequest({
             learning_path_id: item.id,
             ...this.filterWith,
             'list_all': 'true'
