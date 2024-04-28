@@ -204,7 +204,7 @@ export default {
           options: [],
           deselectFromDropdown: true,
           value: "",
-          rules: "required",
+          rules: "",
           multiple: true,
         },
         {
@@ -217,6 +217,8 @@ export default {
           rules: "required",
           placeholder: "من",
           format: "YYYY-MM-DD HH:mm",
+          preventDateBefore: new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
+          preventTimeBefore: new Date(),
         },
         {
           key: "end_date",
@@ -399,9 +401,7 @@ export default {
     },
   },
 
-  mounted() {
-
-  },
+  mounted() {},
   beforeMount() {
     this.emptyStore();
   },

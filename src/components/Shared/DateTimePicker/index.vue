@@ -8,6 +8,8 @@
       :format="$attrs.format"
       :type="$attrs.type"
       :ref="refValue"
+      :disabled-date="disableDate"
+      :disabled-time="disableTime"
       :lang="en"
       :class="{
         'input-disabled': $attrs.disabled,
@@ -38,11 +40,26 @@ export default {
       type: String,
       default: "",
     },
+    preventTimeBefore: {
+      type: Date,
+    },
+    preventDateBefore: {
+      type: Date,
+    },
   },
   components: {
     DatePicker,
   },
-  methods: {},
+  methods: {
+    disableDate(date) {
+      const disabledDate = this.preventDateBefore;
+      return date < disabledDate;
+    },
+    disableTime(date) {
+      const currentDate = this.preventTimeBefore;
+      return date < currentDate;
+    },
+  },
 };
 </script>
 

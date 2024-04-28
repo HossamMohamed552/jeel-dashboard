@@ -59,6 +59,8 @@
               :label="field.label"
               :placeholder="'إدخل' + ' ' + field.label"
               :refValue="field.ref"
+              :preventDateBefore="field.preventDateBefore"
+              :preventTimeBefore="field.preventTimeBefore"
               valueType="format"
               :name="field.label"
               :rules="field.rules"
