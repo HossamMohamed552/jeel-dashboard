@@ -9,7 +9,7 @@
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
-      @refetch="getMissions"
+      @refetch="getAcademicYear"
       :loading="loading"
       :permission_delete="'delete-school-study-years'"
       :permission_edit="'edit-school-study-years'"
@@ -40,7 +40,7 @@
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { getAcademicYearRequest } from "@/api/academicYear";
+import {deleteAcademicYearRequest, getAcademicYearRequest} from "@/api/academicYear";
 import { mapGetters } from "vuex";
 
 export default {
@@ -57,7 +57,7 @@ export default {
       acadamicList: [],
       totalNumber: 0,
       fieldsList: [
-        { key: "id", label: "التسلسل" },
+        { key: "vid", label: "التسلسل" },
         { key: "studyYear.name", label: "العام الدراسى" },
         { key: "term.name", label: "الترم الدراسى" },
         { key: "start_date", label: "تاريخ البداية" },
@@ -97,7 +97,7 @@ export default {
       this.showModal = $event;
     },
     cancelWithConfirm() {
-      this.ApiService(deleteMissionsRequest(this.itemId)).then(() => {
+      this.ApiService(deleteAcademicYearRequest(this.itemId)).then(() => {
         this.getAcademicYear();
       });
       this.cancel();

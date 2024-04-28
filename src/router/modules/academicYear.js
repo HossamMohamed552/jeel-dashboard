@@ -15,7 +15,7 @@ export default [
     component: () =>
       import("../../../views/management-academic-year/add-management-academic-year/index.vue"),
     meta: {
-      breadcrumb: "تعديل الترم الدراسى",
+      breadcrumb: "إضافة ترم الدراسى",
       preLabel: "إدارة العام الدراسى",
       preLink: "management-academic-year",
     },

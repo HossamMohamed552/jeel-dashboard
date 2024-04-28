@@ -23,3 +23,7 @@ export const postAcademicYearRequest = (data) => ({
     data,
   },
 });
+export const deleteAcademicYearRequest = (params) => ({
+  method: "delete",
+  url: `school-manage/study_year/${params}`,
+});
