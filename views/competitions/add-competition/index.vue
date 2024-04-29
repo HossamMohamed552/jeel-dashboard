@@ -300,6 +300,15 @@ export default {
           rules: "required",
           disabled: true,
         },
+        {
+          key: "jeel_coins",
+          label: "عملات جيل",
+          col: "4",
+          value: "",
+          type: "number",
+          rules: "required|numeric",
+          disabled: true,
+        },
       ],
       notificationForm: [
         {

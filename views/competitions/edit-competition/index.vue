@@ -216,7 +216,6 @@ export default {
           options: [],
           deselectFromDropdown: true,
           value: "",
-          rules: "required",
           multiple: true,
         },
         {

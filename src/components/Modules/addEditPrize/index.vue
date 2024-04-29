@@ -10,7 +10,7 @@
           :invalid="invalid"
         >
           <template v-slot:customSubmit>
-            <b-col class="add-prize" lg="4">
+            <b-col class="add-prize" lg="12">
               <Button
                 :disabled="invalid"
                 type="submit"
@@ -133,6 +133,8 @@ export default {
           this.stepForm[3].type = "select";
           this.stepForm[4].type = "select";
           this.stepForm[3].value = "";
+          this.stepForm[5].type = "hidden";
+          this.stepForm[5].value = "";
 
           if (selected.name == "المكتبة") {
             this.stepForm[4].optionValue = "file_name";
@@ -144,6 +146,8 @@ export default {
         } else {
           this.stepForm[3].type = "hidden";
           this.stepForm[4].type = "hidden";
+          this.stepForm[5].type = "number";
+          this.stepForm[5].disabled = false;
         }
       }
 
@@ -161,6 +165,7 @@ export default {
     resetInput() {
       this.stepForm[3].disabled = true;
       this.stepForm[4].disabled = true;
+      this.stepForm[5].disabled = true;
     },
     handleAdd() {
       this.stepForm.forEach((field) => {
@@ -174,6 +179,9 @@ export default {
               this.$set(this.entry, `${field.key}_name`, field.name);
               this.$set(this.entry, field.key, field.value);
             }
+          } else if (field.type == "number" && field.key == "jeel_coins") {
+            this.$set(this.entry, `prizeable_id_name`, field.value);
+            this.$set(this.entry, field.key, field.value);
           } else this.$set(this.entry, field.key, field.value);
           field.value = "";
         } catch (error) {
@@ -216,7 +224,7 @@ export default {
       this.prizeGroup.forEach((prize) => {
         prize["type_id_name"] = prize.type.name;
         if (prize?.type?.key == "characters") prize["prizeable_id_name"] = prize.character.name;
-        if (prize?.type?.key == "library") prize["prizeable_id_name"] = prize.library.name;
+        if (prize?.type?.key == "library") prize["prizeable_id_name"] = prize.library.file_name;
       });
     }
     this.$watch(

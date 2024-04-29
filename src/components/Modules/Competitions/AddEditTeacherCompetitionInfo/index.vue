@@ -10,14 +10,13 @@
             :submitedForm="false"
             :invalid="invalid"
           >
-            <div class="buttons-container">
-              <slot></slot>
-              <div class="steps">
+            <b-row>
+              <b-col class="d-flex justify-content-end" lg="12">
                 <Button :disabled="invalid" :custom-class="'submit-btn'" @click="nextStep">
                   التالي
                 </Button>
-              </div>
-            </div>
+              </b-col>
+            </b-row>
           </GenericForm>
         </validation-observer>
       </div>

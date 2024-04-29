@@ -179,8 +179,8 @@ export default {
     },
     async submitForm() {
       await this.updateFields();
-      console.log(this.user.permissions.includes("add-teacher-competitions"));
       if (this.user.permissions.includes("add-teacher-competitions")) {
+        if (this.submittedForm["groups"].length == 0) delete this.submittedForm["groups"];
         this.submittedForm["competition_creator"] = "teacher";
         if (this.$route.params.id) this.handleEditCompetition();
         else this.handleAddCompetition();
