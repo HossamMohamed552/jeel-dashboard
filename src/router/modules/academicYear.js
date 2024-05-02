@@ -17,7 +17,7 @@ export default [
     meta: {
       breadcrumb: "إضافة ترم الدراسى",
       preLabel: "إدارة العام الدراسى",
-      preLink: "management-academic-year",
+      preLink: "/dashboard/management-academic-year",
     },
   },
   {
@@ -28,7 +28,7 @@ export default [
     meta: {
       breadcrumb: "تعديل الترم الدراسى",
       preLabel: "إدارة العام الدراسى",
-      preLink: "management-academic-year",
+      preLink: "/dashboard/management-academic-year",
     },
   },
   {
@@ -39,7 +39,7 @@ export default [
     meta: {
       breadcrumb: "تفاصيل الترم الدراسى",
       preLabel: "الاصوات",
-      preLink: "management-academic-year",
+      preLink: "/dashboard/management-academic-year",
     },
   },
 ];

@@ -41,7 +41,7 @@
             ></SelectSearch>
           </div>
         </b-col>
-
+<!--        @option:selected="selectAll($event)"-->
         <b-col lg="4" class="mb-3">
           <div class="hold-field">
             <SelectSearch
@@ -55,6 +55,7 @@
               :rules="'required'"
               :deselectFromDropdown="true"
               multiple
+              @option:deselecting="mission.lessons_ids = []"
             ></SelectSearch>
           </div>
         </b-col>
