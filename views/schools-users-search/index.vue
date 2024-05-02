@@ -38,7 +38,7 @@
         @changeStatus="changeStatus($event)"
         @cancelBlock="cancelBlock($event)"
         @changePassword="changePassword($event)"
-        @refetch="getAllUsers"
+        @refetch="getAllUsers($event)"
         :loading="loading"
         :change_password="'change-password'"
         :permission_view="'show-schools'"
@@ -52,7 +52,7 @@
             @click="handleAddUser"
             v-if="user.permissions.includes(`add-users`)"
           >
-            <img src="@/assets/images/icons/plus.svg" />
+            <img src="@/assets/images/icons/plus.svg"/>
             <span>إضافة مستخدم</span>
           </Button>
         </template>
@@ -64,9 +64,9 @@
 import Button from "@/components/Shared/Button/index.vue";
 import GenericForm from "@/components/Shared/GenericForm";
 import ListItems from "@/components/ListItems/index.vue";
-import { mapGetters } from "vuex";
-import { postChangeStatusRequest, postCancelBlockRequest, getSchoolUsersRequest } from "@/api/user";
-import { getUsersSearch } from "@/api/school";
+import {mapGetters} from "vuex";
+import {postChangeStatusRequest, postCancelBlockRequest, getSchoolUsersRequest} from "@/api/user";
+import {getUsersSearch} from "@/api/school";
 import _ from "lodash";
 
 import {
@@ -77,6 +77,7 @@ import {
   getAllSchoolsBySchoolGroup,
   getAllRolesByType,
 } from "@/services/dropdownService";
+
 export default {
   name: "index",
   components: {
@@ -93,6 +94,7 @@ export default {
       loading: false,
       showModal: false,
       usersList: [],
+      searchWithPagination: {},
       userSearch: [
         {
           key: "email",
@@ -209,6 +211,7 @@ export default {
   methods: {
     onSubmit(values) {
       this.loading = true;
+      this.searchWithPagination = values;
       this.getAllUsers(values);
     },
     handleInput: _.debounce(function (key, value) {
@@ -237,7 +240,7 @@ export default {
       this.$router.push(`/dashboard/users/change-password/${$event}`);
     },
     cancelBlock($event) {
-      this.ApiService(postCancelBlockRequest({ user_id: $event })).then(() => {
+      this.ApiService(postCancelBlockRequest({user_id: $event})).then(() => {
         this.getAllUsers();
       });
     },
@@ -254,9 +257,9 @@ export default {
         // this.getAllUsers();
       });
     },
-    getAllUsers(event) {
+    getAllUsers($event) {
       this.loading = true;
-      const params = event;
+      const params = {...$event, ...this.searchWithPagination};
       this.ApiService(getSchoolUsersRequest(params))
         .then((response) => {
           this.usersList = response.data.data;
