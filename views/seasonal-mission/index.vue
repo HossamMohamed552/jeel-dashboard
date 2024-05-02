@@ -217,4 +217,11 @@ export default {
 
 <style scoped lang="scss">
 @import "./index";
+
+::v-deep {
+  .vs__dropdown-menu {
+    overflow-y: scroll !important;
+    max-height: 180px !important;
+  }
+}
 </style>
