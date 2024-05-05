@@ -8,7 +8,7 @@
       :invalid="invalid"
     >
       <template v-slot:customSubmit>
-        <b-col class="add-prize" lg="4">
+        <b-col class="add-prize" lg="12">
           <Button
             :disabled="invalid"
             type="submit"
@@ -34,7 +34,13 @@
           <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
             السابق
           </Button>
-          <Button custom-class="submit-btn" :disabled="!isNextStep && prizeGroup.length  === 0" @click="nextStep"> التالي </Button>
+          <Button
+            custom-class="submit-btn"
+            :disabled="!isNextStep && prizeGroup.length === 0"
+            @click="nextStep"
+          >
+            التالي
+          </Button>
         </div>
       </div>
     </GenericForm>
@@ -128,6 +134,8 @@ export default {
           this.stepForm[3].type = "select";
           this.stepForm[4].type = "select";
           this.stepForm[3].value = "";
+          this.stepForm[5].type = "hidden";
+          this.stepForm[5].value = "";
 
           if (selected.name == "المكتبة") {
             this.stepForm[4].optionValue = "file_name";
@@ -139,6 +147,8 @@ export default {
         } else {
           this.stepForm[3].type = "hidden";
           this.stepForm[4].type = "hidden";
+          this.stepForm[5].type = "number";
+          this.stepForm[5].disabled = false;
         }
       }
 
@@ -169,11 +179,11 @@ export default {
               this.$set(this.entry, `${field.key}_name`, field.name);
               this.$set(this.entry, field.key, field.value);
             }
+          } else if (field.type == "number" && field.key == "jeel_coins") {
+            this.$set(this.entry, `prizeable_id_name`, field.value);
+            this.$set(this.entry, field.key, field.value);
           } else this.$set(this.entry, field.key, field.value);
           field.value = "";
-          this.$nextTick(()=>{
-            this.$refs.stepThreeForm.reset()
-          })
         } catch (error) {
           console.error(`Error updating field ${field.key}:`, error);
         }
@@ -200,7 +210,6 @@ export default {
         // Concatenate the existing rules with the new rule containing val
         maxPercentageRule.rules = existingRules.concat(`min_value:${val}`).join("|");
       }
-
     },
   },
   computed: {
