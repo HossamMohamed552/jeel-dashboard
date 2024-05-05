@@ -40,6 +40,9 @@
     "ENTER_LINK": "ادخل الرابط",
     "religion": "الديانة"
   },
+  "ROUTE": {
+    "home": "الصفحة الرئيسية"
+  },
   "MENU": {
     "main": "الرئيسية",
     "permissionsSystemUsers": "صلاحيات النظام",
@@ -149,7 +152,9 @@
     "missionContent": "الاجراء",
     "students": "عدد الطلاب",
     "points": "النقاط",
-    "position": "المركز"
+    "position": "المركز",
+    "skillType":"نوع المهارة",
+    "learningStyle":"اسم إسلوب التعلم"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -168,7 +173,21 @@
     "addParent": "أولياء الأمور",
     "addStudentOnClassBtn": "طلاب الفصل",
     "classes": "الفصول الدراسية",
-    "addStudentOnGroupBtn": "إضافة طلاب"
+    "addStudentOnGroupBtn": "إضافة طلاب",
+    "search": "بحث",
+    "select_date_range":"حدد الفتره الزمنية",
+    "sort_by": "ترتيب حسب",
+    "add_successfully": "تمت الإضافة بنجاح",
+    "already_exists": "هذا السجل موجود من قبل",
+    "Browse_files": "تصفح الملفات",
+    "drag": "قم بسحب الملف هنا او",
+    "File_type": "نوع الملفات",
+    "file_size:": "اكبر حجم للملف :",
+    "Megabyte": "ميجابايت",
+    "one_file": "يجب إضافة ملف واحد فقط",
+    "sizeOfFile": "حجم الملف ",
+    "removeFile": "حذف الملف",
+    "download_file": "تحميل الملف"
   },
   "ROLES": {
     "ADD_NEW": "إضافة صلاحية",
@@ -370,14 +389,7 @@
     "languageMethods": "إسلوب التعلم",
     "audioFile": "ملف الصوت"
   },
-  "PATH": {
-    "Name": "اسم المسار",
-    "Name_PLACEHOLDER": "أدخل اسم المسار",
-    "Description": "وصف المسار",
-    "ADD_NEW": "إضافة مسار تعليمي",
-    "EDIT": "تعديل المسار",
-    "ShowDetails": "تفاصيل المسار التعليمي"
-  },
+
   "QUESTIONS": {
     "QUESTIONS": "الأسئلة",
     "ADD_NEW": "إضافة سؤال",
@@ -526,7 +538,41 @@
     "ADD": "اضافة بلوم",
     "EDIT": "تعديل بلوم",
     "BLOOM_NAME": "اسم بلوم",
-    "BLOOM_NAME_PLACEHOLDER": "ادخل اسم بلوم"
+    "BLOOM_NAME_PLACEHOLDER": "ادخل اسم بلوم",
+    "delete_bloom": "حذف بلوم",
+    "confirm_delete_bloom":"هل انت متأكد من حذف بلوم ؟"
+  },
+  "learningSkill": {
+    "learningSkill": "قائمة أنواع المهارات",
+    "DETAILS": "تفاصيل نوع مهارة",
+    "ADD": "إضافة نوع مهارة",
+    "EDIT": "تعديل مهارة",
+    "delete_learningSkill": "حذف المهارة",
+    "confirm_delete_learningSkill":"هل انت متأكد من حذف المهارة ؟",
+    "name": "نوع المهارة",
+    "placeholderLearningSkill": "أدخل نوع المهارة"
+  },
+  "learningStyle": {
+    "learningStyle": "قائمة أساليب التعلم",
+    "DETAILS": "تفاصيل إسلوب التعلم",
+    "ADD": "إضافة إسلوب التعلم ",
+    "EDIT": "تعديل إسلوب التعلم",
+    "delete_learningStyle": "حذف إسلوب التعلم",
+    "confirm_delete_learningStyle":"هل انت متأكد من حذف إسلوب التعلم ؟",
+    "name": "إسلوب التعلم",
+    "placeholderLearningStyle": "أدخل اسم إسلوب التعلم"
+  },
+  "PATH": {
+    "Name": "اسم المسار",
+    "Name_PLACEHOLDER": "أدخل اسم المسار",
+    "Description": "وصف المسار",
+    "ADD_NEW": "إضافة مسار تعليمي",
+    "EDIT": "تعديل المسار",
+    "ShowDetails": "تفاصيل المسار التعليمي",
+    "learning_path": "قائمة المسارات التعليمية",
+    "delete_learning_path": "حذف المسار التعليمي",
+    "confirm_delete_learning_path":"هل انت متأكد من حذف المسار التعليمي ؟",
+    "audio": "ملف الصوتى للمسار"
   },
   "OBJECTIVE": {
     "OBJECTIVE": "الأهداف التعليمية",
@@ -897,5 +943,18 @@
     "className": "اسم الفصل",
     "typeName": "النوع",
     "missionName": "المهمة"
-  }
+  },
+  "DEFAULT": {
+    "no_data": "لا توجد بيانات",
+    "active": "مفعل",
+    "deActive": "غير مفعل",
+    "acabila": "أكابيلا",
+    "bymusic": "بموسيقى",
+    "videoUploaded": "تم رفع الفيديو",
+    "videoNotUploaded": "لم يتم رفع الفيديو بعد",
+    "entryTime": "الدخول الساعة",
+    "show": "عرض",
+    "of": "من أصل"
+  },
+  "can_not_delete": "لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى"
 }

@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'بلوم'"
+      :header-name="$t('BLOOM.BLOOM')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="bloomCategories"
@@ -22,19 +22,19 @@
           v-if="user.permissions.includes(`add-bloomCategory`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة بلوم</span>
+          <span>{{ $t('BLOOM.ADD') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف بلوم'"
-      :content-message-question="'هل انت متأكد من حذف بلوم ؟'"
+      :content-message="$t('BLOOM.delete_bloom')"
+      :content-message-question="$t('BLOOM.delete_bloom')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+    <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>

@@ -2,7 +2,7 @@
   <div class="container-fluid custom-container">
     <div class="add-edit-learning-skill">
       <div class="add-edit-term-form">
-        <h3>{{ $route.params.id ? "تعديل المهارة" : "اضافة نوع مهارة" }}</h3>
+        <h3>{{ $route.params.id ? $t('learningSkill.EDIT') : $t('learningSkill.ADD') }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditLearningSkill">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -10,9 +10,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="name"
-                    label="نوع المهارة"
-                    name="نوع المهارة"
-                    placeholder="أدخل نوع المهارة"
+                    :label="$t('learningSkill.name')"
+                    :name="$t('learningSkill.name')"
+                    :placeholder="$t('learningSkill.placeholderLearningSkill')"
                     :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>

@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة المسارات التعليمية'"
+      :header-name="$t('PATH.learning_path')"
       :number-of-item="totalNumber"
       :tableItems="pathsList"
       :fields-list="fieldsList"
@@ -22,19 +22,19 @@
           v-if="user.permissions.includes(`add-learningpath`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span> إضافة مسار تعليمي</span>
+          <span>{{ $t('PATH.ADD_NEW') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف المسار'"
-      :content-message-question="'هل انت متأكد من حذف المسار'"
+      :content-message="$t('PATH.delete_learning_path')"
+      :content-message-question="$t('PATH.confirm_delete_learning_path')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'" :showModal="showModalFailed" :alarm="true"
+    <Modal :content-message="$t('can_not_delete')" :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>
 </template>
@@ -66,7 +66,7 @@ export default {
         },
         { key: "name", label: this.$i18n.t("TABLE_FIELDS.learning_path_name") },
         {key: "audio", label: this.$i18n.t('TABLE_FIELDS.audio')},
-        { key: "actions", label: "الإجراء" },
+        { key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions') },
       ],
     };
   },

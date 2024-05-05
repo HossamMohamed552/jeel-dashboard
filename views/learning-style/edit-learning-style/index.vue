@@ -1,6 +1,7 @@
 <template>
   <div class="edit-term">
-    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="$t('CONTROLS.already_exists')" :showModal="showModalFailed" :isUsed="true"
            @cancelWithConfirm="showModalFailed=false"/>
     <AddEditLearningStyle
       :loading="loading"
@@ -30,11 +31,13 @@ export default {
       const id = this.$route.params.id;
       this.ApiService(putUpdateLearningStyleRequest({name: $event}, id))
         .then(() => {
-          this.$router.push("/dashboard/learning-style");
+          this.showModal = true
         }).catch((error) => {
         this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
       }).finally(() => {
         this.loading = false;
+        this.showModal = true;
+        this.$router.push("/dashboard/learning-style");
       });
     },
     handleCancel() {

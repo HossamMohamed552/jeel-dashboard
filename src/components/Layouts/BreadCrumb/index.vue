@@ -23,7 +23,7 @@
               </li>
             </ul>
             <p class="my-0 currentRoute" v-if="currentRoute && !(currentRoute.name === 'main')">
-              {{ currentRoute.meta.breadcrumb }}</p>
+              {{ $i18n.locale === 'ar' ?  currentRoute.meta.breadcrumb : currentRoute.meta.breadcrumbEn}}</p>
           </div>
         </div>
         <div class="navigation-back" v-if="currentRoute && !(currentRoute.name === 'main')" @click="$router.back()">
@@ -58,9 +58,9 @@ export default {
     breadcrumbItems() {
       const matchedRoutes = this.$route.matched
       return matchedRoutes.map(route => ({
-        preLabel: route.meta.preLabel,
+        preLabel: this.$i18n.locale === 'ar' ? route.meta.preLabel : route.meta.preLabelEn,
         preLink: route.meta.preLink,
-        label: route.meta.breadcrumb,
+        label: this.$i18n.locale === 'ar' ? route.meta.breadcrumb : route.meta.breadcrumbEn,
         link: route.path,
         routerName: route.name
       }));

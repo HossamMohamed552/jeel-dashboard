@@ -1,8 +1,9 @@
 import store from "@/store";
-
+import i18n from "@/plugins/i18n";
 let routesUsers = [
   {
     name: "الأدوار الوظيفية",
+    nameEn: "Job roles",
     path: "/dashboard/role",
     altImage: "roles",
     titleImage: "roles",
@@ -11,6 +12,7 @@ let routesUsers = [
   },
   {
     name: "المستخدمين إدارة المنظومة",
+    nameEn: "Users manage system",
     path: "/dashboard/users",
     altImage: "users",
     titleImage: "users",
@@ -19,6 +21,7 @@ let routesUsers = [
   },
   {
     name: "مستخدمين المدارس",
+    nameEn: "School users",
     path: "/dashboard/schools-users-search/",
     altImage: "schools-users-search",
     titleImage: "schools-users-search",
@@ -29,6 +32,7 @@ let routesUsers = [
 let routesSchool = [
   {
     name: "نوع الادارة",
+    nameEn: "management types",
     path: "/dashboard/school-department-types",
     altImage: "management-types",
     titleImage: "management-types",
@@ -38,6 +42,7 @@ let routesSchool = [
   },
   {
     name: "نوع الشهادة",
+    nameEn: "certificates",
     path: "/dashboard/school-degree-types",
     altImage: "certificates",
     titleImage: "certificates",
@@ -47,6 +52,7 @@ let routesSchool = [
   },
   {
     name: "اللغات",
+    nameEn: "languages",
     path: "/dashboard/school-languages",
     altImage: "languages",
     titleImage: "languages",
@@ -56,6 +62,7 @@ let routesSchool = [
   },
   {
     name: "مجموعات المدارس",
+    nameEn: "school groups",
     path: "/dashboard/school-group",
     altImage: "schoolGroups",
     titleImage: "schoolGroups",
@@ -64,6 +71,7 @@ let routesSchool = [
   },
   {
     name: "المدارس",
+    nameEn: "schools",
     path: "/dashboard/schools",
     altImage: "schools",
     titleImage: "schools",
@@ -82,6 +90,7 @@ let routesSchool = [
 let routesContent = [
   {
     name: "الفيديوهات",
+    nameEn: "videos",
     path: "/dashboard/video",
     altImage: "video",
     titleImage: "video",
@@ -90,6 +99,7 @@ let routesContent = [
   },
   {
     name: "الاسئلة",
+    nameEn: "questions",
     path: "/dashboard/questions",
     altImage: "questions",
     titleImage: "questions",
@@ -98,6 +108,7 @@ let routesContent = [
   },
   {
     name: "التمارين",
+    nameEn: "practices",
     path: "/dashboard/practices",
     altImage: "practices",
     titleImage: "practices",
@@ -106,6 +117,7 @@ let routesContent = [
   },
   {
     name: "التسجيلات الصوتية",
+    nameEn: "tasks",
     path: "/dashboard/audio",
     altImage: "audio",
     titleImage: "audio",
@@ -114,6 +126,7 @@ let routesContent = [
   },
   {
     name: "أوراق العمل",
+    nameEn: "Worksheets",
     path: "/dashboard/paper-work",
     altImage: "paperWork",
     titleImage: "paperWork",
@@ -124,6 +137,7 @@ let routesContent = [
 let routesMissions = [
   {
     name: "الدول",
+    nameEn: "countries",
     path: "/dashboard/country",
     altImage: "countries",
     titleImage: "countries",
@@ -132,6 +146,7 @@ let routesMissions = [
   },
   {
     name: "الصفوف الدراسية",
+    nameEn: "levels",
     path: "/dashboard/levels",
     altImage: "levels",
     titleImage: "levels",
@@ -140,6 +155,7 @@ let routesMissions = [
   },
   {
     name: "الترم الدراسي",
+    nameEn: "terms",
     path: "/dashboard/terms",
     altImage: "terms",
     titleImage: "terms",
@@ -148,6 +164,7 @@ let routesMissions = [
   },
   {
     name: "المهام",
+    nameEn: "missions",
     path: "/dashboard/missions",
     altImage: "missions",
     titleImage: "missions",
@@ -156,6 +173,7 @@ let routesMissions = [
   },
   {
     name: "مجموعة المهام الموسمية",
+    nameEn: "seasonal mission group",
     path: "/dashboard/seasonal-mission-group",
     altImage: "seasonal-mission-group",
     titleImage: "seasonal-mission-group",
@@ -164,6 +182,7 @@ let routesMissions = [
   },
   {
     name: "المهام الموسمية",
+    nameEn: "seasonal mission",
     path: "/dashboard/seasonal-mission",
     altImage: "seasonal-mission",
     titleImage: "seasonal-mission",
@@ -174,6 +193,7 @@ let routesMissions = [
 let routeSettings = [
   {
     name: "مستوى السؤال",
+    nameEn: "question difficulty",
     path: "/dashboard/question-difficulty",
     altImage: "questionDifficulty",
     titleImage: "questionDifficulty",
@@ -182,6 +202,7 @@ let routeSettings = [
   },
   {
     name: "نقاط المستوى",
+    nameEn: "student levels",
     path: "/dashboard/student-levels",
     altImage: "student-levels",
     titleImage: "student-levels",
@@ -190,6 +211,7 @@ let routeSettings = [
   },
   {
     name: "جوائز التفاعل",
+    nameEn: "rewarding actions",
     path: "/dashboard/rewarding-actions",
     altImage: "rewarding-actions",
     titleImage: "rewarding-actions",
@@ -198,6 +220,7 @@ let routeSettings = [
   },
   {
     name: "أصوات المنصة",
+    nameEn: "system audios",
     path: "/dashboard/system-audios",
     altImage: "system-audios",
     titleImage: "system-audios",
@@ -216,6 +239,7 @@ let routeSettings = [
 let routeBasicData = [
   {
     name: "بلوم",
+    nameEn: "bloom",
     path: "/dashboard/bloom",
     altImage: "bloom",
     titleImage: "bloom",
@@ -224,6 +248,7 @@ let routeBasicData = [
   },
   {
     name: "أنواع المهارات",
+    nameEn: "learning skill",
     path: "/dashboard/learning-skill",
     altImage: "learning-skill",
     titleImage: "learning-skill",
@@ -233,6 +258,7 @@ let routeBasicData = [
   },
   {
     name: "أساليب التعلم",
+    nameEn: "learning style",
     path: "/dashboard/learning-style",
     altImage: "learning-style",
     titleImage: "learning-style",
@@ -242,6 +268,7 @@ let routeBasicData = [
   },
   {
     name: "المسارات التعليمية",
+    nameEn: "learning path",
     path: "/dashboard/path",
     altImage: "learning-path",
     titleImage: "learning-path",
@@ -250,6 +277,7 @@ let routeBasicData = [
   },
   {
     name: "الدروس",
+    nameEn: "lessons",
     path: "/dashboard/lessons",
     altImage: "lessons",
     titleImage: "lessons",
@@ -258,6 +286,7 @@ let routeBasicData = [
   },
   {
     name: "أهداف التعلم",
+    nameEn: "objective",
     path: "/dashboard/objective",
     altImage: "objective",
     titleImage: "objective",
@@ -266,6 +295,7 @@ let routeBasicData = [
   },
   {
     name: "مخرجات التعلم",
+    nameEn: "outcome",
     path: "/dashboard/outcome",
     altImage: "outcome",
     titleImage: "outcome",
@@ -276,6 +306,7 @@ let routeBasicData = [
 let routesSubscribes = [
   {
     name: "العملات",
+    nameEn: "currency",
     path: "/dashboard/currency",
     altImage: "currency",
     titleImage: "currency",
@@ -285,6 +316,7 @@ let routesSubscribes = [
   },
   {
     name: "الباقات",
+    nameEn: "packages",
     path: "/dashboard/package",
     altImage: "packages",
     titleImage: "packages",
@@ -293,6 +325,7 @@ let routesSubscribes = [
   },
   {
     name: "العام الدراسي",
+    nameEn: "school year",
     path: "/dashboard/school-year",
     altImage: "school-year",
     titleImage: "school-year",
@@ -302,6 +335,7 @@ let routesSubscribes = [
   },
   {
     name: "الإشتراكات",
+    nameEn: "packages",
     path: "/dashboard/subscription",
     altImage: "packages",
     titleImage: "packages",
@@ -312,6 +346,7 @@ let routesSubscribes = [
 let routeSuperVisor = [
   {
     name: "الصفوف الدراسية",
+    nameEn: "levels",
     path: "/dashboard/super-level",
     altImage: "super-level",
     titleImage: "super-level",
@@ -320,6 +355,7 @@ let routeSuperVisor = [
   },
   {
     name: "الفصول",
+    nameEn: "classes",
     path: "/dashboard/super-class",
     altImage: "super-class",
     titleImage: "super-class",
@@ -328,6 +364,7 @@ let routeSuperVisor = [
   },
   {
     name: "المهام",
+    nameEn: "missions",
     path: "/dashboard/super-mission",
     altImage: "missions-supervisor",
     titleImage: "missions-supervisor",
@@ -336,6 +373,7 @@ let routeSuperVisor = [
   },
   {
     name: "المدرسين",
+    nameEn: "teachers",
     path: "/dashboard/teachers",
     altImage: "view-teachers",
     titleImage: "view-teachers",
@@ -344,6 +382,7 @@ let routeSuperVisor = [
   },
   {
     name: "الطلاب",
+    nameEn: "students",
     path: "/dashboard/students",
     altImage: "view-students",
     titleImage: "view-students",
@@ -352,6 +391,7 @@ let routeSuperVisor = [
   },
   {
     name: "المسابقات",
+    nameEn: "competitions",
     path: "/dashboard/competitions",
     altImage: "view-competitions",
     titleImage: "view-competitions",
@@ -360,6 +400,7 @@ let routeSuperVisor = [
   },
   {
     name: "الرسائل",
+    nameEn: "announcements",
     path: "/dashboard/advertisements",
     altImage: "view-announcements",
     titleImage: "view-advertisements",
@@ -368,6 +409,7 @@ let routeSuperVisor = [
   },
   {
     name: "لوحة الصدارة",
+    nameEn: "leaderboard",
     path: "/dashboard/super-leaderboard",
     altImage: "view-leaderboard",
     titleImage: "view-leaderboard",
@@ -378,6 +420,7 @@ let routeSuperVisor = [
 let routeSchoolAdmin =[
   {
     name: "المستخدمين",
+    nameEn: "users",
     path: "/dashboard/all-school-users",
     altImage: "users",
     titleImage: "users",
@@ -386,6 +429,7 @@ let routeSchoolAdmin =[
   },
   {
     name: "بيانات المدرسة",
+    nameEn: "school info",
     path: "/dashboard/school-info",
     altImage: "school-info",
     titleImage: "school-info",
@@ -395,6 +439,7 @@ let routeSchoolAdmin =[
   //TODO
   {
     name: "إدارة العام الدراسي",
+    nameEn: "management academic year",
     path: "/dashboard/management-academic-year",
     altImage: "management-academic-year",
     titleImage: "management-academic-year",
@@ -403,6 +448,7 @@ let routeSchoolAdmin =[
   },
   {
     name: "الفصول",
+    nameEn: "classes",
     path: "/dashboard/school-admin-classes",
     altImage: "classes",
     titleImage: "classes",
@@ -411,6 +457,7 @@ let routeSchoolAdmin =[
   },
   {
     name: "مديري المدرسة",
+    nameEn: "school admins users",
     path: "/dashboard/school-admins-users",
     altImage: "schooladmins-users",
     titleImage: "schooladmins-users",
@@ -419,6 +466,7 @@ let routeSchoolAdmin =[
   },
   {
     name: "المشرفين",
+    nameEn: "supervisors",
     path: "/dashboard/supervisors-users",
     altImage: "supervisors-users",
     titleImage: "supervisors-users",
@@ -427,6 +475,7 @@ let routeSchoolAdmin =[
   },
   {
     name: "المدرسين",
+    nameEn: "teachers",
     path: "/dashboard/teachers-users",
     altImage: "teachers-users",
     titleImage: "teachers-users",
@@ -435,6 +484,7 @@ let routeSchoolAdmin =[
   },
   {
     name: "الطلاب",
+    nameEn: "students",
     path: "/dashboard/students-users",
     altImage: "students-users",
     titleImage: "students-users",
@@ -444,6 +494,7 @@ let routeSchoolAdmin =[
   //TODO
   {
     name: "أولياء الأمور",
+    nameEn: "parents",
     path: "/dashboard/parents-users",
     altImage: "parents-users",
     titleImage: "parents-users",
@@ -454,6 +505,7 @@ let routeSchoolAdmin =[
 let routesPrizes = [
   {
     name: "شارات جيل",
+    nameEn: "jeel-badge",
     path: "/dashboard/jeel-badge",
     altImage: "jeel-badge",
     titleImage: "jeel-badge",
@@ -462,6 +514,7 @@ let routesPrizes = [
   },
   {
     name: "الشخصيات",
+    nameEn: "characters",
     path: "/dashboard/characters",
     altImage: "characters",
     titleImage: "characters",
@@ -470,6 +523,7 @@ let routesPrizes = [
   },
   {
     name: "مكتبة جيل",
+    nameEn: "jeel library",
     path: "/dashboard/jeel-library",
     altImage: "jeel-library",
     titleImage: "jeel-library",
@@ -478,6 +532,7 @@ let routesPrizes = [
   },
   {
     name: "صناديق الطاقة",
+    nameEn: "power up boxes",
     path: "/dashboard/power-up-boxes",
     altImage: "power-up-boxes",
     titleImage: "power-up-boxes",
@@ -488,6 +543,7 @@ let routesPrizes = [
 let routesJeelStores = [
   {
     name: "مجموعة جيمز",
+    nameEn: "jeel store games",
     path: "/dashboard/jeel-store-games",
     altImage: "jeel-store-games",
     titleImage: "jeel-store-games",
@@ -496,6 +552,7 @@ let routesJeelStores = [
   },
   {
     name: "شخصيات الشراء",
+    nameEn: "jeel store character",
     path: "/dashboard/jeel-store-character",
     altImage: "jeel-store-character",
     titleImage: "jeel-store-character",
@@ -504,6 +561,7 @@ let routesJeelStores = [
   },
   {
     name: "مكتبة الشراء",
+    nameEn: "jeel store library",
     path: "/dashboard/jeel-store-library",
     altImage: "jeel-store-library",
     titleImage: "jeel-store-library",
@@ -514,6 +572,7 @@ let routesJeelStores = [
 let routesTeacher = [
   {
     name: "الصفوف الدراسية",
+    nameEn: "levels",
     path: "/dashboard/teacher-level",
     altImage: "teacher-level",
     titleImage: "teacher-level",
@@ -522,6 +581,7 @@ let routesTeacher = [
   },
   {
     name: "الفصول",
+    nameEn: "classes",
     path: "/dashboard/teacher-class",
     altImage: "teacher-class",
     titleImage: "teacher-class",
@@ -530,6 +590,7 @@ let routesTeacher = [
   },
   {
     name: "المهام",
+    nameEn: "missions",
     path: "/dashboard/teacher-mission",
     altImage: "missions-teacher",
     titleImage: "missions-teacher",
@@ -538,6 +599,7 @@ let routesTeacher = [
   },
   {
     name: "تصحيح المهام",
+    nameEn: "revision mission",
     path: "/dashboard/teacher-revision-mission",
     altImage: "teacher-revision-mission",
     titleImage: "teacher-revision-mission",
@@ -546,6 +608,7 @@ let routesTeacher = [
   },
   {
     name: "الطلاب",
+    nameEn: "students",
     path: "/dashboard/teacher-students",
     altImage: "view-teacher-students",
     titleImage: "view-teacher-students",
@@ -554,6 +617,7 @@ let routesTeacher = [
   },
   {
     name: "المسابقات",
+    nameEn: "competitions",
     path: "/dashboard/teacher-competitions",
     altImage: "view-competitions",
     titleImage: "view-competitions",
@@ -562,6 +626,7 @@ let routesTeacher = [
   },
   {
     name: "الرسائل",
+    nameEn: "announcements",
     path: "/dashboard/teacher-advertisements",
     altImage: "view-announcements",
     titleImage: "view-advertisements",
@@ -570,6 +635,7 @@ let routesTeacher = [
   },
   {
     name: "لوحة الصدارة",
+    nameEn: "leaderboard",
     path: "/dashboard/teacher-leaderboard",
     altImage: "view-leaderboard",
     titleImage: "view-leaderboard",
@@ -580,6 +646,7 @@ let routesTeacher = [
 let routesParent = [
   {
     name: "الدخول اليومى",
+    nameEn: "daily login",
     path: "/dashboard/daily-login",
     altImage: "parent-daily-login",
     titleImage: "parent-daily-login",
@@ -588,6 +655,7 @@ let routesParent = [
   },
   {
     name: "المهام",
+    nameEn: "missions",
     path: "/dashboard/parent-missions",
     altImage: "parent-missions",
     titleImage: "parent-missions",
@@ -596,6 +664,7 @@ let routesParent = [
   },
   {
     name: "التعليقات",
+    nameEn: "comments",
     path: "/dashboard/parent-comments",
     altImage: "parent-comments",
     titleImage: "parent-comments",
@@ -604,6 +673,7 @@ let routesParent = [
   },
   {
     name: "الانجازات",
+    nameEn: "achievements",
     path: "/dashboard/parent-achievements",
     altImage: "parent-achievements",
     titleImage: "parent-achievements",
@@ -612,6 +682,7 @@ let routesParent = [
   },
   {
     name: "المنافسات",
+    nameEn: "competitions",
     path: "/dashboard/parent-competitions",
     altImage: "parent-competitions",
     titleImage: "parent-competitions",
@@ -620,6 +691,7 @@ let routesParent = [
   },
   {
     name: "المواسم",
+    nameEn: "seasonal missions",
     path: "/dashboard/parent-seasonal-missions",
     altImage: "parent-seasonal-missions",
     titleImage: "parent-seasonal-missions",
@@ -628,6 +700,7 @@ let routesParent = [
   },
   {
     name: "لوحة الصدارة",
+    nameEn: "leaderboard",
     path: "/dashboard/parent-leaderboard",
     altImage: "parent-leaderboard",
     titleImage: "parent-leaderboard",

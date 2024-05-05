@@ -70,7 +70,7 @@
                       v-for="(routeUser, index) in routesUsers"
                       :key="index"
                     >
-                      <router-link :to="routeUser.path">{{ routeUser.name }}</router-link>
+                      <router-link :to="routeUser.path">{{ $i18n.locale === 'ar' ? routeUser.name : routeUser.nameEn  }}</router-link>
                     </b-dropdown-item>
                     <b-dropdown-item
                       v-if="routeUser.permission !== 'view-roles'"
@@ -79,7 +79,7 @@
                       :href="routeUser.path"
                     >
                       <router-link :to="routeUser.path">
-                        {{ routeUser.name }}
+                        {{ $i18n.locale === 'ar' ? routeUser.name : routeUser.nameEn }}
                       </router-link>
                     </b-dropdown-item>
                   </b-nav-item-dropdown>
@@ -92,7 +92,7 @@
                       <img src="@/assets/images/icons/arrow.svg" />
                     </template>
                     <b-dropdown-item v-for="(routeSchool, index) in routesSchool" :key="index">
-                      <router-link :to="routeSchool.path">{{ routeSchool.name }}</router-link>
+                      <router-link :to="routeSchool.path">{{ $i18n.locale === 'ar' ? routeSchool.name : routeSchool.nameEn }}</router-link>
                     </b-dropdown-item>
                   </b-nav-item-dropdown>
                 </b-nav-item>
@@ -104,7 +104,7 @@
                       <img src="@/assets/images/icons/arrow.svg" />
                     </template>
                     <b-dropdown-item v-for="(routeContent, index) in routesContent" :key="index">
-                      <router-link :to="routeContent.path">{{ routeContent.name }}</router-link>
+                      <router-link :to="routeContent.path">{{$i18n.locale === 'ar' ? routeContent.name : routeContent.nameEn}}</router-link>
                     </b-dropdown-item>
                   </b-nav-item-dropdown>
                 </b-nav-item>
@@ -116,7 +116,7 @@
                       <img src="@/assets/images/icons/arrow.svg" />
                     </template>
                     <b-dropdown-item v-for="(routeBasic, index) in routeBasicData" :key="index">
-                      <router-link :to="routeBasic.path">{{ routeBasic.name }}</router-link>
+                      <router-link :to="routeBasic.path">{{ $i18n.locale === 'ar' ? routeBasic.name : routeBasic.nameEn }}</router-link>
                     </b-dropdown-item>
                   </b-nav-item-dropdown>
                 </b-nav-item>
@@ -128,7 +128,7 @@
                       <img src="@/assets/images/icons/arrow.svg" />
                     </template>
                     <b-dropdown-item v-for="(route, index) in routeSettings" :key="index">
-                      <router-link :to="route.path">{{ route.name }}</router-link>
+                      <router-link :to="route.path">{{ $i18n.locale === 'ar' ? route.name : route.nameEn}}</router-link>
                     </b-dropdown-item>
                   </b-nav-item-dropdown>
                 </b-nav-item>
@@ -163,7 +163,7 @@
               v-for="(routeUser, index) in routesUsers"
               :key="index"
             >
-              <router-link tag="li" :to="routeUser.path">{{ routeUser.name }}</router-link>
+              <router-link tag="li" :to="routeUser.path">{{ $i18n.locale === 'ar' ? routeUser.name : routeUser.nameEn }}</router-link>
             </b-nav-item>
             <b-nav-item
               class="nav-item"
@@ -171,7 +171,7 @@
               v-for="(routeSchool, index) in routesSchool"
               :key="index"
             >
-              <router-link tag="li" :to="routeSchool.path">{{ routeSchool.name }}</router-link>
+              <router-link tag="li" :to="routeSchool.path">{{ $i18n.locale === 'ar' ? routeSchool.name : routeSchool.nameEn }}</router-link>
             </b-nav-item>
             <b-nav-item
               class="nav-item"
@@ -179,7 +179,7 @@
               v-for="(routeContent, index) in routesContent"
               :key="index"
             >
-              <router-link tag="li" :to="routeContent.path">{{ routeContent.name }}</router-link>
+              <router-link tag="li" :to="routeContent.path">{{ $i18n.locale === 'ar' ? routeContent.name : routeContent.nameEn }}</router-link>
             </b-nav-item>
             <b-nav-item
               class="nav-item"
@@ -187,7 +187,7 @@
               v-for="(routeBasic, index) in routeBasicData"
               :key="index"
             >
-              <router-link tag="li" :to="routeBasic.path">{{ routeBasic.name }}</router-link>
+              <router-link tag="li" :to="routeBasic.path">{{ $i18n.locale === 'ar' ? routeBasic.name : routeBasic.nameEn }}</router-link>
             </b-nav-item>
             <b-nav-item
               class="nav-item"
@@ -195,24 +195,25 @@
               v-for="(routeSuper, index) in routeSuperVisor"
               :key="index"
             >
-              <router-link tag="li" :to="routeSuper.path">{{ routeSuper.name }}</router-link>
+              <router-link tag="li" :to="routeSuper.path">{{ $i18n.locale === 'ar' ? routeSuper.name : routeSuper.nameEn}}</router-link>
             </b-nav-item>
           </b-navbar>
         </div>
       </div>
       <div class="row" v-else>
         <div class="col-12">
-          <div
-            class="top"
-            :class="
-             (isSuperVisor || !isSuperVisor) && $route.name === 'main' ? 'top-supervisor' : ''
-            "
-          >
+          <div class="top" :class="(isSuperVisor || !isSuperVisor) && $route.name === 'main' ? 'top-supervisor' : ''">
             <router-link to="/dashboard/home" tag="div" class="logo">
               <img src="@/assets/images/logo-header.svg" alt="logo" title="geel logo" />
             </router-link>
             <div class="notification-info-admin">
               <div class="notification">
+                <span v-if="$i18n.locale === 'ar'" @click="setLang('en')" class="lang-icon">
+                  <img src="@/assets/images/icons/english-lang.png">
+                </span>
+                <span v-else @click="setLang('ar')" class="lang-icon">
+                  <img src="@/assets/images/icons/arabic-lang.png">
+                </span>
                 <!--                <div class="bill">-->
                 <!--                  <img-->
                 <!--                    src="@/assets/images/icons/notification.svg"-->
@@ -264,7 +265,7 @@
                     :key="index"
                     class="nav-item"
                   >
-                    {{ routeAdmin.name }}</router-link
+                    {{ $i18n.locale === 'ar' ? routeAdmin.name : routeAdmin.nameEn}}</router-link
                   >
                 </ul>
               </div>
@@ -275,7 +276,7 @@
               <div>
                 <ul class="routes-school-admin">
                   <router-link tag="li" :to="routeTeacher.path" v-for="(routeTeacher, index) in routesTeacher" :key="index" class="nav-item">
-                    {{ routeTeacher.name }}</router-link>
+                    {{ $i18n.locale === 'ar' ? routeTeacher.name : routeTeacher.nameEn}}</router-link>
                 </ul>
               </div>
             </div>
@@ -285,7 +286,7 @@
               <div>
                 <ul class="routes-school-admin">
                   <router-link tag="li" :to="routeParent.path" v-for="(routeParent, index) in routesParent" :key="index" class="nav-item">
-                    {{ routeParent.name }}</router-link>
+                    {{ $i18n.locale === 'ar' ? routeParent.name : routeParent.nameEn}}</router-link>
                 </ul>
               </div>
             </div>
@@ -303,7 +304,7 @@
                     v-for="(routeBasic, index) in routeBasicData"
                     :key="index"
                   >
-                    {{ routeBasic.name }}</router-link
+                    {{ $i18n.locale === 'ar' ? routeBasic.name : routeBasic.nameEn }}</router-link
                   >
                 </ul>
               </div>
@@ -321,7 +322,7 @@
                     v-for="(routeContent, index) in routesContent"
                     :key="index"
                   >
-                    {{ routeContent.name }}</router-link
+                    {{ $i18n.locale === 'ar' ? routeContent.name : routeContent.nameEn }}</router-link
                   >
                 </ul>
               </div>
@@ -339,7 +340,7 @@
                     v-for="(routesMission, index) in routesMissions"
                     :key="index"
                   >
-                    {{ routesMission.name }}</router-link
+                    {{ $i18n.locale === 'ar' ? routesMission.name : routesMission.nameEn }}</router-link
                   >
                 </ul>
               </div>
@@ -357,7 +358,7 @@
                     v-for="(routeSchool, index) in routesSchool"
                     :key="index"
                   >
-                    {{ routeSchool.name }}</router-link
+                    {{ $i18n.locale === 'ar' ? routeSchool.name : routeSchool.nameEn}}</router-link
                   >
                 </ul>
               </div>
@@ -375,7 +376,7 @@
                     v-for="(routesSubscribe, index) in routesSubscribes"
                     :key="index"
                   >
-                    {{ routesSubscribe.name }}</router-link
+                    {{ $i18n.locale === 'ar' ? routesSubscribe.name : routesSubscribe.nameEn}}</router-link
                   >
                 </ul>
               </div>
@@ -392,7 +393,7 @@
                     :to="routeUser.path"
                     v-for="(routeUser, index) in routesUsers"
                     :key="index"
-                    >{{ routeUser.name }}</router-link
+                    >{{ $i18n.locale === 'ar' ? routeUser.name : routeUser.nameEn}}</router-link
                   >
                 </ul>
               </div>
@@ -411,7 +412,7 @@
                     v-for="(routesPrize, index) in routesPrizes"
                     :key="index"
                   >
-                    {{ routesPrize.name }}</router-link
+                    {{$i18n.locale === 'ar' ? routesPrize.name : routesPrize.nameEn}}</router-link
                   >
                 </ul>
               </div>
@@ -431,7 +432,7 @@
                     v-for="(routesJeelStore, index) in routesJeelStores"
                     :key="index"
                   >
-                    {{ routesJeelStore.name }}</router-link
+                    {{ $i18n.locale === 'ar' ? routesJeelStore.name : routesJeelStore.nameEn}}</router-link
                   >
                 </ul>
               </div>
@@ -450,7 +451,7 @@
                     :to="route.path"
                     v-for="(route, index) in routeSettings"
                     :key="index"
-                    >{{ route.name }}</router-link
+                    >{{ $i18n.locale === 'ar' ? route.name : route.nameEn }}</router-link
                   >
                 </ul>
               </div>
@@ -462,7 +463,6 @@
               <router-link tag="p" to="/dashboard/home">{{ $t("MENU.reports") }}</router-link>
             </div>
           </div>
-
           <div class="nav" v-if="isSuperVisor" :class="isSuperVisor && $route.name === 'main' ? 'nav-supervisor' : ''">
             <router-link tag="div" to="/dashboard/home" class="nav-item">{{
               $t("MENU.main")
@@ -473,7 +473,7 @@
               v-for="(routeUser, index) in routesUsers"
               :key="index"
             >
-              <router-link tag="li" :to="routeUser.path">{{ routeUser.name }}</router-link>
+              <router-link tag="li" :to="routeUser.path">{{ $i18n.locale === 'ar' ? routeUser.name : routeUser.nameEn}}</router-link>
             </div>
             <div
               class="nav-item"
@@ -481,7 +481,7 @@
               v-for="(routeSchool, index) in routesSchool"
               :key="index"
             >
-              <router-link tag="li" :to="routeSchool.path">{{ routeSchool.name }}</router-link>
+              <router-link tag="li" :to="routeSchool.path">{{ $i18n.locale === 'ar' ? routeSchool.name : routeSchool.nameEn}}</router-link>
             </div>
             <div
               class="nav-item"
@@ -489,7 +489,7 @@
               v-for="(routeContent, index) in routesContent"
               :key="index"
             >
-              <router-link tag="li" :to="routeContent.path">{{ routeContent.name }}</router-link>
+              <router-link tag="li" :to="routeContent.path">{{ $i18n.locale === 'ar' ? routeContent.name : routeContent.nameEn }}</router-link>
             </div>
             <div
               class="nav-item"
@@ -497,7 +497,7 @@
               v-for="(routeBasic, index) in routeBasicData"
               :key="index"
             >
-              <router-link tag="li" :to="routeBasic.path">{{ routeBasic.name }}</router-link>
+              <router-link tag="li" :to="routeBasic.path">{{ $i18n.locale === 'ar' ? routeBasic.name : routeBasic.nameEn }}</router-link>
             </div>
             <div
               class="nav-item"
@@ -505,7 +505,7 @@
               v-for="(routeSuper, index) in routeSuperVisor"
               :key="index"
             >
-              <router-link tag="li" :to="routeSuper.path">{{ routeSuper.name }}</router-link>
+              <router-link tag="li" :to="routeSuper.path">{{ $i18n.locale === 'ar' ? routeSuper.name : routeSuper.nameEn}}</router-link>
             </div>
           </div>
         </div>
@@ -601,6 +601,10 @@ export default {
         this.collapseMode = true;
       }
     },
+    setLang(lang){
+      this.$i18n.locale = lang
+      localStorage.setItem("lang", lang);
+    }
   },
   mounted() {
     this.checkRoutes();

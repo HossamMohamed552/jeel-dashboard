@@ -3,6 +3,7 @@ import Router from "vue-router";
 import protectedRoutes from "./protectedRoutes";
 import publicRoutes from "./publicRoutes";
 import store from "@/store";
+import i18n from "../plugins/i18n"
 // import { handleRouteNavigation } from "./routerGuard";
 const originalPush = Router.prototype.push;
 Router.prototype.push = function push(location) {
@@ -19,6 +20,7 @@ const router = new Router({
       path: "/",
       meta: {
         breadcrumb: "الصفحة الرئيسية",
+        breadcrumbEn: "home",
       },
       redirect: {path: "/dashboard/home"}
     },
@@ -26,11 +28,13 @@ const router = new Router({
       path: "/dashboard",
       meta: {
         breadcrumb: "الصفحة الرئيسية",
+        breadcrumbEn: "home",
       },
       redirect: {
         path: "/dashboard/home",
         meta: {
-          breadcrumb: "الرئيسية",
+          breadcrumb: "الصفحة الرئيسية",
+          breadcrumbEn: "home"
         },
       }
     },
@@ -49,7 +53,11 @@ router.beforeEach((to, from, next) => {
 });
 router.afterEach((to, from) => {
   Vue.nextTick(() => {
-    document.title = to.meta.breadcrumb || "Jeel dashBoard"
+    if (i18n.locale === 'ar') {
+      document.title = to.meta.breadcrumb || "جيل المدرسى"
+    } else {
+      document.title = to.meta.breadcrumbEn || "Jeel DashBoard"
+    }
   })
 })
 export default router;
