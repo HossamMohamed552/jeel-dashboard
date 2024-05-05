@@ -4,13 +4,13 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h3 class="heading">تفاصيل نوع مهارة</h3>
+            <h3 class="heading">{{ $t('learningSkill.DETAILS') }}</h3>
           </b-col>
         </b-row>
         <b-row>
           <b-col cols="12" md="6" lg="4">
             <ShowItem
-              title="نوع المهارة"
+              :title="$t('learningSkill.name')"
               :subtitle="LearningSkill.name"
               class="with-border-bottom"
             />

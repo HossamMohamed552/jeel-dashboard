@@ -1,25 +1,40 @@
 <template>
-  <div :class="$i18n.locale === 'en' ? '' : 'rtl'">
-    <router-view />
-    <Toast />
+  <div :class="$i18n.locale === 'en' ? 'ltr' : 'rtl'">
+    <router-view/>
+    <Toast/>
   </div>
 </template>
 
 <script>
 import Toast from "@/components/Shared/Toast/index.vue";
+
 export default {
   components: {
     Toast,
   },
-
-  beforeCreate() {},
-  mounted() {},
-  watch: {},
+  beforeCreate() {
+    document.querySelector('body').setAttribute('lang',this.$i18n.locale);
+    document.querySelector('html').setAttribute('lang',this.$i18n.locale);
+    document.querySelector('body').setAttribute('dir',this.$i18n.locale === 'en' ? 'ltr' : 'rtl')
+    document.querySelector('html').setAttribute('dir',this.$i18n.locale === 'en' ? 'ltr' : 'rtl')
+  },
+  mounted() {
+  },
+  watch: {
+    "$i18n.locale"(newValue) {
+      document.querySelector('body').setAttribute('lang',newValue)
+      document.querySelector('html').setAttribute('lang',this.$i18n.locale);
+      document.querySelector('body').setAttribute('dir',newValue === 'en' ? 'ltr' : 'rtl')
+      document.querySelector('html').setAttribute('dir',this.$i18n.locale === 'en' ? 'ltr' : 'rtl')
+      document.title = newValue === 'en' ? this.$route.meta.breadcrumbEn : this.$route.meta.breadcrumb
+    }
+  },
 };
 </script>
 
 <style lang="scss">
 @import "@/assets/style/scss/__variables";
+
 *:not(.fa-solid) {
   font-family: "DiodrumArabic", sans-serif !important;
 }
@@ -43,6 +58,7 @@ export default {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(118, 35, 108, 0.75);
 }
+
 @media (max-width: 991px) {
   .table th {
     display: none;

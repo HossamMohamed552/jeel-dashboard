@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة أنواع المهارات'"
+      :header-name="$t('learningSkill.learningSkill')"
       :number-of-item="totalNumber"
       :tableItems="LearningSkillsList"
       :fieldsList="fieldsList"
@@ -22,19 +22,19 @@
           v-if="user.permissions.includes(`add-languageSkill`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة مهارة </span>
+          <span>{{$t('learningSkill.ADD')}}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف المهارة'"
-      :content-message-question="'هل انت متأكد من حذف المهارة '"
+      :content-message="$t('learningSkill.delete_learningSkill')"
+      :content-message-question="$t('learningSkill.confirm_delete_learningSkill')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+    <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>
@@ -62,8 +62,8 @@ export default {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
-        { key: "name", label: "نوع المهارة" },
-        { key: "actions", label: "الإجراء" },
+        { key: "name", label: this.$i18n.t("TABLE_FIELDS.skillType")  },
+        { key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions") },
       ],
     };
   },

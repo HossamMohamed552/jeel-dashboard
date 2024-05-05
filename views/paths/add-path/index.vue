@@ -1,9 +1,9 @@
 <template>
   <div class="add-group">
-    <Modal :content-message="'تمت الإضافة بنجاح'"
+    <Modal :content-message="$t('CONTROLS.add_successfully')"
            :showModal="showModal"
            :is-success="true"/>
-    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+    <Modal :content-message="$t('CONTROLS.already_exists')" :showModal="showModalFailed" :isUsed="true"
            @cancelWithConfirm="showModalFailed=false"/>
     <AddEditPath
       :loading="loading"

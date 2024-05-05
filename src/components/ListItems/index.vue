@@ -12,7 +12,7 @@
       <div class="d-flex justify-content-between align-content-center">
         <div class="search">
           <div v-if="showSearchInput">
-            <b-form-input v-model="inputValue" placeholder="بحث" class="search-input"/>
+            <b-form-input v-model="inputValue" :placeholder="$t('CONTROLS.search')" class="search-input"/>
             <img src="@/assets/images/icons/search.svg"/>
           </div>
         </div>
@@ -22,7 +22,7 @@
             type="date"
             range
             :lang="en"
-            placeholder="حدد الفتره الزمنية"
+            :placeholder="$t('CONTROLS.select_date_range')"
             valueType="format"
             :disabled-date="disabledBeforeTodayAndAfterAWeek"
             @change="setDate($event)"
@@ -32,9 +32,9 @@
       <div class="sort">
         <img src="@/assets/images/icons/sort.svg"/>
         <select @change="orderBy">
-          <option value="" selected disabled>ترتيب حسب</option>
+          <option value="" selected disabled>{{$t('CONTROLS.sort_by')}}</option>
           <option v-for="(item, index) in sortArray" :id="item.id" :value="item.value" :key="index">
-            {{ item.name }}
+            {{ $i18n.locale === 'ar' ? item.name : item.nameEn}}
           </option>
         </select>
       </div>
@@ -55,7 +55,7 @@
         show-empty
       >
         <template #empty>
-          <div class="mt-5 pt-5 text-center">لا توجد بيانات</div>
+          <div class="mt-5 pt-5 text-center">{{ $t('DEFAULT.no_data') }}</div>
         </template>
         <template #emptyfiltered="scope">
           <h4>{{ scope.emptyFilteredText }}</h4>
@@ -82,10 +82,10 @@
           {{ data.item.vid }}
         </template>
         <template #cell(status)="data">
-          <span>{{ data.item.status === 1 ? "مفعل" : "غير مفعل" }}</span>
+          <span>{{ data.item.status === 1 ? $t('DEFAULT.active') : $t('DEFAULT.deActive') }}</span>
         </template>
         <template #cell(music_status)="data">
-          <span>{{ data.item.music_status === 1 ? "بموسيقى" : "أكابيلا" }}</span>
+          <span>{{ data.item.music_status === 1 ? $t('DEFAULT.acabila') : $t('DEFAULT.bymusic')  }}</span>
         </template>
         <template #cell(country)="data">
           <span>{{ data.value.name | cutString }}</span>
@@ -175,7 +175,7 @@
         </template>
         <template #cell(video_with_music_transcode)="data">
           <span>{{
-              data.item.video_with_music_transcode ? "تم رفع الفيديو" : "لم يتم رفع الفيديو بعد"
+              data.item.video_with_music_transcode ? $t('DEFAULT.videoNotUploaded'): $t('DEFAULT.videoUploaded')
             }}</span>
         </template>
         <template #cell(learningpaths)="data">
@@ -251,7 +251,7 @@
         <template #cell(name)="data">
           {{ data.item.name | cutString }}
         </template>
-        <template #cell(time)="data"> الدخول الساعة {{ data.item.time }}</template>
+        <template #cell(time)="data"> {{ $t('DEFAULT.entryTime')}} {{ data.item.time }}</template>
         <template #cell(edit)="data">
           <Button
             :custom-class="'transparent-btn rounded-btn'"
@@ -616,11 +616,13 @@ export default {
             id: 1,
             value: "ASC",
             name: "تصاعديا",
+            nameEn: "ascending",
           },
           {
             id: 2,
             value: "DESC",
             name: "تنازليا",
+            nameEn: "descending",
           },
         ];
       },

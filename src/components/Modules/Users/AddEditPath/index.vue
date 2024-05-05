@@ -22,7 +22,7 @@
                                   :type-of-attachment="'audio'"
                                   :dropIdRef="'audioFile'"
                                   :accept-files="'.mp3'"
-                                  :label="'ملف الصوتى للمسار'" :name="'audioFile'"
+                                  :label="$t('PATH.audio')" :name="'audioFile'"
                                   :rules="'required'"
                                   @setFileId="setAudioFileId($event)"/>
                 <PreviewMedia v-if="$route.params.id && createPath.audioChanged === false && !createPath.audioChangedRequest" :header="'ملف الصوتى للمسار'"

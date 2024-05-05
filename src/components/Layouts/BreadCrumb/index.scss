@@ -12,6 +12,11 @@
   .back {
     width: 20px;
     margin-right: .5rem;
+    &:lang(en){
+      margin-right: auto;
+      margin-left: .5rem;
+      transform: rotate(180deg);
+    }
   }
 
   .navigation-back {
@@ -55,3 +60,4 @@
 .hideBreadCrumbSuperVisorHome{
   display: none;
 }
+

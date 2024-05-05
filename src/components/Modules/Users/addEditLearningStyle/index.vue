@@ -2,7 +2,7 @@
   <div class="add-edit-learning-style">
     <div class="container-fluid custom-container">
       <div class="add-edit-term-form">
-        <h3>{{ $route.params.id ? "تعديل الأسلوب" : "إضافة إسلوب التعلم" }}</h3>
+        <h3>{{ $route.params.id ? $t('learningStyle.EDIT') : $t('learningStyle.ADD') }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditLearningStyle">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -10,9 +10,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="name"
-                    label="إسلوب التعلم"
-                    name="إسلوب التعلم"
-                    placeholder="أدخل اسم إسلوب التعلم"
+                    :label="$t('learningStyle.name')"
+                    :name="$t('learningStyle.name')"
+                    :placeholder="$t('placeholderLearningStyle')"
                     :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>

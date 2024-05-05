@@ -30,6 +30,11 @@
 
     .dropdown-menu {
       transform: translate3d(147px, 31px, 0px) !important;
+      &:lang(en){
+        transform: translate3d(-30px, 31px, 0px) !important;
+        left: auto !important;
+        right: 0 !important;
+      }
     }
   }
 

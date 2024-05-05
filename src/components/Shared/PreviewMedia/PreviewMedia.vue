@@ -18,12 +18,12 @@
         <div class="info-media">
           <p>{{ mediaName }}</p>
           <p v-if="fileSize != ''">
-            <span>حجم الملف </span> <span>{{ fileSize }}</span>
+            <span>{{ $t('CONTROLS.sizeOfFile')}}</span> <span>{{ fileSize }}</span>
           </p>
         </div>
-        <div class="removeBtn" v-if="showRemoveButton" @click="removeFile">حذف الملف</div>
+        <div class="removeBtn" v-if="showRemoveButton" @click="removeFile">{{$t('CONTROLS.removeFile')}}</div>
         <div class="download-button" v-if="showDownloadButton" @click="downloadFile">
-          تحميل الملف
+          {{$t('CONTROLS.download_file')}}
         </div>
       </div>
     </div>

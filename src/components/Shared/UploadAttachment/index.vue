@@ -18,21 +18,26 @@
     >
       <div class="dropzone-custom-content">
         <h3 class="dropzone-custom-title">
-          <p>قم بسحب الملف هنا او<span class="browse">تصفح الملفات</span></p>
+          <p>{{ $t('CONTROLS.drag') }}<span class="browse">{{ $t('CONTROLS.Browse_files') }}</span>
+          </p>
         </h3>
         <div class="subtitle">
-          <p class="d-inline-block mr-1">نوع الملفات</p>
-          <p class="d-inline-block m-0" v-if="typeOfAttachment === 'video'">('mp4', 'avi', 'mov')</p>
-          <p class="d-inline-block m-0" v-if="typeOfAttachment === 'audio'">('mpeg','mpga','mp3','wav')</p>
-          <p class="d-inline-block m-0" v-if="typeOfAttachment === 'image'">('jpeg','png','jpg','gif')</p>
+          <p class="d-inline-block mr-1">{{ $t('CONTROLS.File_type') }}</p>
+          <p class="d-inline-block m-0" v-if="typeOfAttachment === 'video'">('mp4', 'avi',
+            'mov')</p>
+          <p class="d-inline-block m-0" v-if="typeOfAttachment === 'audio'">
+            ('mpeg','mpga','mp3','wav')</p>
+          <p class="d-inline-block m-0" v-if="typeOfAttachment === 'image'">
+            ('jpeg','png','jpg','gif')</p>
           <p class="d-inline-block m-0" v-if="typeOfAttachment === 'file'">('pdf')</p>
           <div class="subtitle">
-            <p>اكبر حجم للملف : {{ dropzoneOptions.maxFilesize }} ميجابايت</p>
+            <p>{{ $t('CONTROLS.file_size') }} {{ dropzoneOptions.maxFilesize }}
+              {{ $t('CONTROLS.Megabyte') }}</p>
           </div>
         </div>
       </div>
     </vue2Dropzone>
-    <p v-if="ShowError" class="invalid-feedback d-block">يجب إضافة ملف واحد فقط</p>
+    <p v-if="ShowError" class="invalid-feedback d-block">{{ $t('CONTROLS.one_file') }}</p>
     <b-form-invalid-feedback v-for="(error, index) in errors" :key="index">
       {{ error }}
     </b-form-invalid-feedback>
@@ -44,7 +49,7 @@ import vue2Dropzone from "vue2-dropzone";
 
 export default {
   name: "index",
-  components: { vue2Dropzone },
+  components: {vue2Dropzone},
   computed: {
     isRequired() {
       if (typeof this.rules === "string") return !!this.rules.includes("required");
@@ -90,7 +95,7 @@ export default {
       dropzoneOptions: {
         acceptedFiles: "",
         url: "",
-        timeout: null ,
+        timeout: null,
         // chunking: true,
         // chunkSize: 50,
         maxFiles: 1,
@@ -121,11 +126,11 @@ export default {
               <span data-dz-errormessage></span>
             </div>
             <a id="removeFile" class="dz-remove" href="javascript:undefined;" data-dz-remove>
-              حذف الملف
+          ${this.$i18n.locale === 'en' ? 'remove file' : ' حذف الملف'}
             </a>
           </div>
         `,
-        headers: { Authorization: `Bearer ${VueCookies.get("token")}` },
+        headers: {Authorization: `Bearer ${VueCookies.get("token")}`},
         paramName: "attachment",
       },
       ShowError: false,
@@ -133,6 +138,11 @@ export default {
       fileId: null,
       fileInfo: null,
     };
+  },
+  watch: {
+    "dropzoneOptions.previewTemplate"(newVal) {
+      console.log('newVal', newVal)
+    }
   },
   methods: {
     sendFile(file, xhr, formData) {
@@ -147,8 +157,8 @@ export default {
       this.fileId = this.fileInfo.uuid;
       this.$emit("setFileId", this.fileId);
       this.$emit("setFileUrl", this.fileUrl);
-      this.$emit("setFile", { uuid: this.fileId, url: this.fileUrl });
-      this.$emit("setFileInfo", { uuid: this.fileId, url: this.fileUrl , ...this.fileInfo});
+      this.$emit("setFile", {uuid: this.fileId, url: this.fileUrl});
+      this.$emit("setFileInfo", {uuid: this.fileId, url: this.fileUrl, ...this.fileInfo});
     },
     removeFile() {
       this.$emit("setFileId", null);
@@ -162,7 +172,8 @@ export default {
       });
     },
   },
-  mounted() {},
+  mounted() {
+  },
   created() {
     this.dropzoneOptions.acceptedFiles = this.acceptFiles;
     this.dropzoneOptions.url = `${process.env.VUE_APP_ADMIN_URL}/attachment`;
@@ -231,6 +242,11 @@ export default {
     text-decoration: none;
     letter-spacing: 0;
     font-size: 1.5rem;
+
+    &:lang(en) {
+      left: auto;
+      right: 0;
+    }
   }
 
   .dropzone .dz-preview .dz-image {
@@ -273,8 +289,18 @@ export default {
       min-width: unset;
       max-height: unset;
 
+      &:lang(en) {
+        text-align: left;
+      }
+
       .dz-filename {
         margin-bottom: 1rem;
+
+        span {
+          &:lang(en) {
+            padding: 0;
+          }
+        }
       }
 
       .dz-size {
@@ -309,6 +335,11 @@ export default {
     left: 35%;
     top: 60%;
     width: 120px;
+
+    &:lang(en) {
+      left: auto;
+      right: 35%;
+    }
   }
 
   .dropzone .dz-preview.dz-complete .dz-progress {
@@ -324,6 +355,11 @@ export default {
     background: rgba(255, 255, 255, 0.9);
     border-radius: 8px;
     overflow: hidden;
+
+    &:lang(en) {
+      left: auto;
+      right: 35%;
+    }
   }
 
   .vue-dropzone > .dz-preview .dz-progress .dz-upload {
