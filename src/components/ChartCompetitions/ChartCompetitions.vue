@@ -80,7 +80,6 @@ export default defineComponent({
       type: Number,
       default: 200
     },
-
   },
 })
 </script>

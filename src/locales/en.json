@@ -291,6 +291,15 @@
     "show": "show",
     "of": "Out of"
   },
+  "REPORTS": {
+    "tables": "tables",
+    "flowChart": "flow Chart",
+    "generalHeading": "Platform general report",
+    "export_to": "Export to",
+    "schoolGroup": "school Group",
+    "subscriptionHeading": "subscriptions report",
+    "missionsHeading": "missions report"
+  },
   "WELCOME": "Welcome",
   "BACK": "Back",
   "can_not_delete": "This item cannot be deleted because it is linked to other items",

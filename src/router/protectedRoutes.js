@@ -12,6 +12,7 @@ import systemAudios from "@/router/modules/systemAudios";
 import academicYear from "@/router/modules/academicYear";
 import parent from "@/router/modules/parent";
 import teacher from "@/router/modules/teacher";
+import reports from "@/router/modules/reports";
 const protectedRoutes = [
   {
     path: "/dashboard/home",
@@ -1619,7 +1620,8 @@ const protectedRoutes = [
       ...systemAudios,
       ...academicYear,
       ...parent,
-      ...teacher
+      ...teacher,
+      ...reports
     ],
   },
 ];

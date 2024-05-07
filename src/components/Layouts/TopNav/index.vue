@@ -438,7 +438,6 @@
               </div>
             </div>
             <!------------- end routesPrizes section ---------------->
-
             <div class="nav-item" v-if="Array.from(routeSettings).length >= 1">
               <p>
                 <span>{{ $t("MENU.system_settings") }}</span
@@ -459,8 +458,8 @@
             <!--            <div class="nav-item" v-if="user.is_super_admin === 1">-->
             <!--              <router-link tag="p" to="/dashboard/home">{{ $t("MENU.infoDashBoard") }}</router-link>-->
             <!--            </div>-->
-            <div class="nav-item" v-if="user.is_super_admin === 1">
-              <router-link tag="p" to="/dashboard/home">{{ $t("MENU.reports") }}</router-link>
+            <div class="nav-item">
+              <router-link tag="p" to="/dashboard/reports">{{ $t("MENU.reports") }}</router-link>
             </div>
           </div>
           <div class="nav" v-if="isSuperVisor" :class="isSuperVisor && $route.name === 'main' ? 'nav-supervisor' : ''">
