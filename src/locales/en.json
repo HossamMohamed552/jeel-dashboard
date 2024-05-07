@@ -125,7 +125,8 @@
     "points": "points",
     "position": "position",
     "skillType": "learning skill Type",
-    "learningStyle":"learningStyle"
+    "learningStyle":"learningStyle",
+    "schoolGroup": "school Group"
   },
   "CONTROLS": {
     "detailBtn": "details",
@@ -264,6 +265,34 @@
     "confirm_delete_learning_path":"Are you sure to delete the learning path?",
     "audio": "audio for path"
   },
+  "STATISTICS": {
+    "school_group": "school group",
+    "school": "school",
+    "subscription": "subscription",
+    "missions": "mission",
+    "seasonal_missions": "seasonal mission",
+    "jeel_admins_user": "jeel admins user",
+    "package": "package",
+    "library": "library",
+    "store_library": "store library",
+    "all_users": "all users",
+    "classes": "classes",
+    "levels": "levels",
+    "schooladmins": "school admin",
+    "supervisors": "supervisors",
+    "teachers": "teachers",
+    "students": "students",
+    "parents": "parents",
+    "announcements": "announcements",
+    "competitions": "competitions",
+    "achievements": "achievements",
+    "jeel_coins": "jeel coins",
+    "jeel_gems": "jeel gems",
+    "leaderboard": "leaderboard",
+    "mission_completed": "mission completed",
+    "level": "level",
+    "groups": "groups"
+  },
   "permissions": "permissions",
   "showDetails": "showDetails",
   "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الآمن {year}",
@@ -291,6 +320,23 @@
     "show": "show",
     "of": "Out of"
   },
+  "REPORTS": {
+    "tables": "tables",
+    "flowChart": "flow Chart",
+    "generalHeading": "Platform general report",
+    "export_to": "Export to",
+    "schoolGroup": "school Group",
+    "subscriptionHeading": "subscriptions report",
+    "missionsHeading": "missions report",
+    "school": "school",
+    "levels": "levels",
+    "classes": "classes",
+    "schoolAdmin": "school Admin",
+    "supervisors": "supervisors",
+    "teachers": "teachers",
+    "students": "students",
+    "parents": "parents"
+  },
   "WELCOME": "Welcome",
   "BACK": "Back",
   "can_not_delete": "This item cannot be deleted because it is linked to other items",
@@ -302,5 +348,6 @@
   "GLOBALAddAll": "add all",
   "GLOBALRemoveAll": "remove all",
   "GLOBAL_NAME": "name",
-  "SLUG": "slug"
+  "SLUG": "slug",
+  "lastAttempt":"Last login"
 }

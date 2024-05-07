@@ -707,8 +707,36 @@ let routesParent = [
     icon: require("@/assets/images/icons/steps.svg"),
     permission: "view-studnet-parent-leaderboard",
   },
-
 ];
+let routesJeelAdminReports = [
+  {
+    name: "تقرير عام المنصة",
+    nameEn: "Platform general report",
+    path: "/dashboard/reports/general-report",
+    altImage: "general-report",
+    titleImage: "general-report",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-learningpath",
+  },
+  {
+    name: "الإشتراكات",
+    nameEn: "Subscriptions",
+    path: "/dashboard/reports/subscriptions",
+    altImage: "subscriptions",
+    titleImage: "subscriptions",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-learningpath",
+  },
+  {
+    name: "المهام",
+    nameEn: "missions",
+    path: "/dashboard/reports/missions",
+    altImage: "missions",
+    titleImage: "missions",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-learningpath",
+  },
+]
 export {
   routesUsers,
   routesSchool,
@@ -722,5 +750,6 @@ export {
   routesJeelStores,
   routeSchoolAdmin,
   routesTeacher,
-  routesParent
+  routesParent,
+  routesJeelAdminReports
 };

@@ -59,7 +59,7 @@
               <img src="@/assets/images/icons/last-attempt.svg" alt="last-attempt">
             </div>
             <div>
-              <p>آخر عملية تسجيل دخول</p>
+              <p>{{$t('lastAttempt')}}</p>
               <p>{{ user.last_attempt }}</p>
             </div>
           </div>
