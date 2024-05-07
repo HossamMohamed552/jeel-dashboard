@@ -154,7 +154,8 @@
     "points": "النقاط",
     "position": "المركز",
     "skillType":"نوع المهارة",
-    "learningStyle":"اسم إسلوب التعلم"
+    "learningStyle":"اسم إسلوب التعلم",
+    "schoolGroup": "مجموعة المدارس"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -681,7 +682,15 @@
     "export_to": "تصدير ل",
     "schoolGroup": "مجموعة المدارس",
     "subscriptionHeading": "تقرير الإشتراكات",
-    "missionsHeading": "تقرير المهام"
+    "missionsHeading": "تقرير المهام",
+    "school": "المدارس",
+    "levels": "الصفوف الدراسية",
+    "classes": "الفصول",
+    "schoolAdmin": "المديرين",
+    "supervisors": "المشرفين",
+    "teachers": "المدرسين",
+    "students": "الطلاب",
+    "parents": "أولياء الأمور"
   },
   "permissions": "الصلاحيات",
   "showDetails": "عرض تفاصيل المستخدم",
@@ -965,5 +974,6 @@
     "show": "عرض",
     "of": "من أصل"
   },
-  "can_not_delete": "لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى"
+  "can_not_delete": "لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى",
+  "lastAttempt":"آخر عملية تسجيل دخول"
 }

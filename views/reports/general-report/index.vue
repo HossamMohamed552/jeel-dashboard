@@ -53,21 +53,21 @@
                 </div>
               </div>
               <b-row>
-                <b-col v-for="item in 9" lg="3">
-                  <div class="report-card">
+                <b-col v-for="item in generalStatistics" lg="3">
+                  <div class="report-card" :class="checkType(item)">
                     <div class="icon">
-                      <img src="../../../src/assets/images/icons/home.png" alt="home" title="home">
+                      <img :src="item.icon" :alt="item.name" :title="item.name">
                     </div>
                     <div class="info">
-                      <p class="name">{{ $t('REPORTS.schoolGroup') }}</p>
-                      <p class="number">45</p>
+                      <p class="name">{{ $t(`REPORTS.${item.name}`) }}</p>
+                      <p class="number">{{ item.number }}</p>
                     </div>
                   </div>
                 </b-col>
               </b-row>
             </div>
             <div class="col-12" key="2" v-show="activeTap === 2">
-              <Bar :chart-data="chartData" :options="chartOptions"/>
+              <Bar v-if="loadingChart" :chart-data="chartData" :chart-options="chartOptions"/>
             </div>
           </transition-group>
         </div>
@@ -99,6 +99,7 @@ export default {
     return {
       collapsed: false,
       loading: false,
+      loadingChart: false,
       activeTap: 1,
       generalReportSearch: [
         {
@@ -164,27 +165,148 @@ export default {
           nameEn: "Export to pdf",
         },
       ],
-      chartData: {
-        labels: ['test', 'fcb', 'mad', 'alhaly', '2014-2015', '2015-2016', '2015-2017', '2015-2018'],
+      dataForChart: [
+        {study_year: '2010-2011', country: 100, schoolGroup: 50, school: 50}, {
+          study_year: '2011-2012',
+          country: 100,
+          schoolGroup: 55,
+          school: 75
+        }, {study_year: ' 2012-2013', country: 120, schoolGroup: 55, school: 75}],
+      generalStatistics: [
+        {
+          icon: require("../../../src/assets/images/icons/home.png"),
+          name: "schoolGroup",
+          number: 45
+        },
+        {
+          icon: require("../../../src/assets/images/icons/home.png"),
+          name: "school",
+          number: 8
+        },
+        {
+          icon: require("../../../src/assets/images/icons/home.png"),
+          name: "levels",
+          number: 1058
+        },
+        {
+          icon: require("../../../src/assets/images/icons/home.png"),
+          name: "classes",
+          number: 1028
+        },
+        {
+          icon: require("../../../src/assets/images/icons/home.png"),
+          name: "schoolAdmin",
+          number: 45
+        },
+        {
+          icon: require("../../../src/assets/images/icons/home.png"),
+          name: "supervisors",
+          number: 102
+        },
+        {
+          icon: require("../../../src/assets/images/icons/home.png"),
+          name: "teachers",
+          number: 90
+        },
+        {
+          icon: require("../../../src/assets/images/icons/home.png"),
+          name: "students",
+          number: 65
+        },
+        {
+          icon: require("../../../src/assets/images/icons/home.png"),
+          name: "parents",
+          number: 30
+        }
+      ]
+    }
+  },
+  methods: {
+    onSubmit(values) {
+
+    },
+    toggleCollapsed() {
+      this.collapsed = !this.collapsed;
+    },
+    checkType(item) {
+      return {
+        schoolGroupClass: item.name === "schoolGroup" ,
+        schoolClass: item.name === "school",
+        levelsClass: item.name === "levels",
+        classesClass: item.name === "classes",
+        schoolAdminClass: item.name === "schoolAdmin",
+        supervisorsClass: item.name === "supervisors",
+        teachersClass: item.name === "teachers",
+        studentsClass: item.name === "students",
+        parentsClass: item.name === "parents",
+      }
+    },
+    setData(){
+      this.loadingChart = false
+      this.chartData.datasets.forEach((item) => {
+        return Object.assign(item, {data: this.dataForChart})
+      })
+      this.loadingChart = true
+    }
+  },
+  watch: {
+    chartData: {
+      handler(newVal) {
+        return newVal
+      },
+      immediate: true,
+    },
+    chartOptions: {
+      handler(newVal) {
+        return newVal
+      },
+      immediate: true,
+    },
+    "$i18n.locale"(newVal){
+      if (newVal){
+        this.setData()
+      }
+    }
+  },
+  computed: {
+    chartData() {
+      return {
         datasets: [
           {
-            label: 'الدول',
-            backgroundColor: '#f87979',
-            data: [30, 20, 12, 80, 10, 40, 30, 40]
+            label: this.$i18n.t('TABLE_FIELDS.country'),
+            backgroundColor: '#F04771',
+            borderRadius: 5,
+            barThickness: 10,
+            parsing: {
+              yAxisKey: 'country',
+              xAxisKey: 'study_year'
+            }
           },
           {
-            label: 'مجموعة المدارس',
-            backgroundColor: '#e1ff26',
-            data: [30, 50, 30, 70, 20, 70, 60, 30]
+            label: this.$i18n.t('TABLE_FIELDS.schoolGroup'),
+            backgroundColor: '#FFC700',
+            borderRadius: 5,
+            barThickness: 10,
+            parsing: {
+              yAxisKey: 'schoolGroup',
+              xAxisKey: 'study_year'
+            }
           },
           {
-            label: 'المدارس',
-            backgroundColor: '#063eb6',
-            data: [30, 50, 30, 60, 30, 90, 50, 10]
-          },
+            label: this.$i18n.t('TABLE_FIELDS.school'),
+            backgroundColor: '#039FF7',
+            borderRadius: 5,
+            barThickness: 10,
+            parsing: {
+              yAxisKey: 'school',
+              xAxisKey: 'study_year'
+            }
+          }
         ]
-      },
-      chartOptions: {
+      }
+    },
+    chartOptions() {
+      return {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
@@ -209,15 +331,12 @@ export default {
           }
         }
       }
-    }
+    },
   },
-  methods: {
-    onSubmit(values) {
-
-    },
-    toggleCollapsed() {
-      this.collapsed = !this.collapsed;
-    },
+  mounted() {
+    this.$nextTick(() => {
+     this.setData()
+    })
   }
 }
 </script>
