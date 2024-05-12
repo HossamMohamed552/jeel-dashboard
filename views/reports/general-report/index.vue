@@ -15,6 +15,8 @@
                 <GenericForm
                   :schema="generalReportSearch"
                   @onSubmit="onSubmit"
+                  @handleCancel="handleCancel"
+                  @handleInput="handleInput"
                   :loading="loading"
                   :submitButton="$t('BUTTONS.SEARCH')"
                   :cancelButton="$t('BUTTONS.RECOVERY')"
@@ -53,7 +55,7 @@
                 </div>
               </div>
               <b-row>
-                <b-col v-for="item in generalStatistics" lg="3">
+                <b-col v-for="(item,index) in generalStatistics" lg="3" :key="index">
                   <div class="report-card" :class="checkType(item)">
                     <div class="icon">
                       <img :src="item.icon" :alt="item.name" :title="item.name">
@@ -68,6 +70,25 @@
             </div>
             <div class="col-12" key="2" v-show="activeTap === 2">
               <Bar v-if="loadingChart" :chart-data="chartData" :chart-options="chartOptions"/>
+              <b-row class="mt-5">
+                <b-col v-for="(role,index) in roleStatistics" :key="index">
+                  <div class="role-statistic">
+                    <h4>{{ $t(`REPORTS.${role.name}`) }}</h4>
+                    <div class="svg-item">
+                      <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut">
+                        <circle class="donut-hole" cx="20" cy="20" r="15.91549430918954" fill="#fff"></circle>
+                        <circle class="donut-ring" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5"></circle>
+                        <circle class="donut-segment donut-segment-2" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" :stroke-dasharray="`${role.percentage} ${100-role.percentage}` " stroke-dashoffset="25"></circle>
+                        <g class="donut-text donut-text-1">
+                          <text y="50%" transform="translate(0, 2)">
+                            <tspan x="50%" text-anchor="middle" class="donut-percent">{{ role.percentage }}%</tspan>
+                          </text>
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+                </b-col>
+              </b-row>
             </div>
           </transition-group>
         </div>
@@ -90,6 +111,19 @@ import {
   CategoryScale,
   LinearScale
 } from 'chart.js'
+import {
+  getALLCountries, getALLCountriesForReports, getALLSchoolGroupsForReports, getAllSchools,
+  getClassForTeacherBasedStudyYearLevel,
+  getLevelByStudyYearForTeacher,
+  getMissionForTeacherBasedStudyYearLevelTerm, getStudyYear,
+  getStudyYearForTeacher,
+  getTermsForTeacherBasedStudyYear
+} from "@/services/dropdownService";
+import {
+  getJeelAdminReportChartRequest,
+  getJeelAdminReportRolesRequest,
+  getJeelAdminReportStatisticsRequest
+} from "@/api/reports";
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 export default {
@@ -108,11 +142,11 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("studyYear.name"),
+          label: this.$t("TABLE_FIELDS.studyYear"),
           options: [],
           deselectFromDropdown: true,
           value: "",
-          rules: "",
+          rules: ''
         },
         {
           key: "country_id",
@@ -120,9 +154,10 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("country.name"),
+          label: this.$t("TABLE_FIELDS.countryName"),
           options: [],
           deselectFromDropdown: true,
+          disabled: true,
           value: "",
           rules: "",
         },
@@ -132,9 +167,10 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("schoolGroup.name"),
+          label: this.$t("TABLE_FIELDS.schoolGroups"),
           options: [],
           deselectFromDropdown: true,
+          disabled: true,
           value: "",
           rules: "",
         },
@@ -144,9 +180,10 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("school.name"),
+          label: this.$t("TABLE_FIELDS.schools"),
           options: [],
           deselectFromDropdown: true,
+          disabled: true,
           value: "",
           rules: "",
         },
@@ -165,13 +202,7 @@ export default {
           nameEn: "Export to pdf",
         },
       ],
-      dataForChart: [
-        {study_year: '2010-2011', country: 100, schoolGroup: 50, school: 50}, {
-          study_year: '2011-2012',
-          country: 100,
-          schoolGroup: 55,
-          school: 75
-        }, {study_year: ' 2012-2013', country: 120, schoolGroup: 55, school: 75}],
+      dataForChart: [],
       generalStatistics: [
         {
           icon: require("../../../src/assets/images/icons/home.png"),
@@ -218,19 +249,38 @@ export default {
           name: "parents",
           number: 30
         }
-      ]
+      ],
+      roleStatistics:[]
     }
   },
   methods: {
+    handleCancel() {
+      this.generalReportSearch.map((field) => (field.value = ""));
+      this.getJeelAdminReportStatistics()
+      this.getJeelAdminReportChart()
+    },
     onSubmit(values) {
-
+      this.getJeelAdminReportStatistics(values)
+      this.getJeelAdminReportChart(values)
+    },
+    handleInput(key, value) {
+      if (key === 'study_year_id' && value !== '') {
+        this.generalReportSearch[1].disabled = false;
+        getALLCountriesForReports(this.generalReportSearch, 'country_id', value)
+      } else if (key === 'country_id' && value !== '') {
+        this.generalReportSearch[2].disabled = false;
+        getALLSchoolGroupsForReports(this.generalReportSearch, 'school_group_id', this.generalReportSearch[0].value, this.generalReportSearch[1].value)
+      } else if (key === 'school_group_id' && value !== '') {
+        this.generalReportSearch[3].disabled = false;
+        getAllSchools(this.generalReportSearch, 'school_id', this.generalReportSearch[0].value, this.generalReportSearch[1].value, this.generalReportSearch[2].value)
+      }
     },
     toggleCollapsed() {
       this.collapsed = !this.collapsed;
     },
     checkType(item) {
       return {
-        schoolGroupClass: item.name === "schoolGroup" ,
+        schoolGroupClass: item.name === "schoolGroup",
         schoolClass: item.name === "school",
         levelsClass: item.name === "levels",
         classesClass: item.name === "classes",
@@ -241,13 +291,42 @@ export default {
         parentsClass: item.name === "parents",
       }
     },
-    setData(){
-      this.loadingChart = false
+    setData() {
       this.chartData.datasets.forEach((item) => {
         return Object.assign(item, {data: this.dataForChart})
       })
-      this.loadingChart = true
-    }
+    },
+    getJeelAdminReportStatistics(params) {
+      this.ApiService(getJeelAdminReportStatisticsRequest(params)).then((response) => {
+        let data = response.data.data
+        this.generalStatistics[0].number = data.school_group
+        this.generalStatistics[1].number = data.school
+        this.generalStatistics[2].number = data.levels
+        this.generalStatistics[3].number = data.classes
+        this.generalStatistics[4].number = data.admins
+        this.generalStatistics[5].number = data.supervisors
+        this.generalStatistics[6].number = data.teachers
+        this.generalStatistics[7].number = data.students
+        this.generalStatistics[8].number = data.paretns
+      })
+    },
+    getJeelAdminReportChart(params) {
+      this.loadingChart = false
+      this.ApiService(getJeelAdminReportChartRequest(params)).then((response) => {
+        this.dataForChart = response.data.data
+      }).then(() => {
+        this.setData()
+      }).then(() => {
+        this.loadingChart = true
+      })
+    },
+    getJeelAdminReportRoles(params) {
+      this.ApiService(getJeelAdminReportRolesRequest(params)).then((response) => {
+        for (const [key, value] of Object.entries(response.data.data)) {
+          this.roleStatistics.push({name: key, percentage: value})
+        }
+      })
+    },
   },
   watch: {
     chartData: {
@@ -262,8 +341,8 @@ export default {
       },
       immediate: true,
     },
-    "$i18n.locale"(newVal){
-      if (newVal){
+    "$i18n.locale"(newVal) {
+      if (newVal) {
         this.setData()
       }
     }
@@ -277,9 +356,11 @@ export default {
             backgroundColor: '#F04771',
             borderRadius: 5,
             barThickness: 10,
+            categoryPercentage: 1,
+            barPercentage: 1,
             parsing: {
-              yAxisKey: 'country',
-              xAxisKey: 'study_year'
+              yAxisKey: 'countries',
+              xAxisKey: 'name'
             }
           },
           {
@@ -287,9 +368,11 @@ export default {
             backgroundColor: '#FFC700',
             borderRadius: 5,
             barThickness: 10,
+            categoryPercentage: 1,
+            barPercentage: 1,
             parsing: {
-              yAxisKey: 'schoolGroup',
-              xAxisKey: 'study_year'
+              yAxisKey: 'school_groups',
+              xAxisKey: 'name'
             }
           },
           {
@@ -297,9 +380,11 @@ export default {
             backgroundColor: '#039FF7',
             borderRadius: 5,
             barThickness: 10,
+            categoryPercentage: 1,
+            barPercentage: 1,
             parsing: {
-              yAxisKey: 'school',
-              xAxisKey: 'study_year'
+              yAxisKey: 'schools',
+              xAxisKey: 'name'
             }
           }
         ]
@@ -329,14 +414,23 @@ export default {
             backgroundColor: "#fff",
             bodyColor: '#000',
           }
+        },
+        scales: {
+          yAxes: {
+            ticks: {
+              min: 0,
+              stepSize: 1
+            }
+          }
         }
       }
     },
   },
   mounted() {
-    this.$nextTick(() => {
-     this.setData()
-    })
+    getStudyYear(this.generalReportSearch, 'study_year_id')
+    this.getJeelAdminReportStatistics()
+    this.getJeelAdminReportChart()
+    this.getJeelAdminReportRoles()
   }
 }
 </script>

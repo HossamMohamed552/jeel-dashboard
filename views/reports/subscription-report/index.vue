@@ -13,8 +13,10 @@
             <b-col lg="12">
               <validation-observer v-slot="{ invalid }" ref="schoolsUsersSearch">
                 <GenericForm
-                  :schema="generalReportSearch"
+                  :schema="subscriptionReportSearch"
                   @onSubmit="onSubmit"
+                  @handleCancel="handleCancel"
+                  @handleInput="handleInput"
                   :loading="loading"
                   :submitButton="$t('BUTTONS.SEARCH')"
                   :cancelButton="$t('BUTTONS.RECOVERY')"
@@ -56,8 +58,10 @@
                 <b-col lg="12">
                   <ListItems
                     class="m-0 p-0"
-                    :fieldsList="subscriptionReportList"
-                    @refetch="getSubscriptionReport"
+                    :fieldsList="subscriptionReportListHeaders"
+                    :tableItems="subscriptionReportList"
+                    :number-of-item="totalNumber"
+                    @refetch="getSubscriptionReport($event)"
                     :loading="loading"
                     :showSortControls="false"
                   >
@@ -66,7 +70,7 @@
               </b-row>
             </div>
             <div class="col-12" key="2" v-show="activeTap === 2">
-              <Bar :chart-data="chartData" :options="chartOptions"/>
+              <Bar v-if="loadingChart" :chart-data="chartData" :options="chartOptions"/>
             </div>
           </transition-group>
         </div>
@@ -89,6 +93,17 @@ import {
   CategoryScale,
   LinearScale
 } from 'chart.js'
+import {
+  geAllTermsForReports,
+  getALLCountriesForReports, getAllLevelsForReports,
+  getALLSchoolGroupsForReports,
+  getAllSchools, getPackage, getStudyYear
+} from "@/services/dropdownService";
+import {
+  getJeelAdminReportChartRequest,
+  getSubscriptionsChartRequest,
+  getSubscriptionsRequest
+} from "@/api/reports";
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 export default {
@@ -99,18 +114,18 @@ export default {
       collapsed: false,
       loading: false,
       activeTap: 1,
-      generalReportSearch: [
+      subscriptionReportSearch: [
         {
           key: "study_year_id",
           col: "3",
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("studyYear.name"),
+          label: this.$t("TABLE_FIELDS.studyYear"),
           options: [],
           deselectFromDropdown: true,
           value: "",
-          rules: "",
+          rules: ''
         },
         {
           key: "country_id",
@@ -118,9 +133,10 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("country.name"),
+          label: this.$t("TABLE_FIELDS.countryName"),
           options: [],
           deselectFromDropdown: true,
+          disabled: true,
           value: "",
           rules: "",
         },
@@ -130,9 +146,10 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("schoolGroup.name"),
+          label: this.$t("TABLE_FIELDS.schoolGroups"),
           options: [],
           deselectFromDropdown: true,
+          disabled: true,
           value: "",
           rules: "",
         },
@@ -142,9 +159,65 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("school.name"),
+          label: this.$t("TABLE_FIELDS.schools"),
           options: [],
           deselectFromDropdown: true,
+          disabled: true,
+          value: "",
+          rules: "",
+        },
+        {
+          key: "package_id",
+          col: "3",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: this.$t("TABLE_FIELDS.package"),
+          options: [],
+          deselectFromDropdown: true,
+          disabled: true,
+          value: "",
+          rules: "",
+        },
+        {
+          key: "level_id",
+          col: "3",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: this.$t("REPORTS.levels"),
+          options: [],
+          deselectFromDropdown: true,
+          disabled: true,
+          value: "",
+          rules: "",
+        },
+        {
+          key: "term_id",
+          col: "3",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: this.$t("MISSIONS.terms"),
+          options: [],
+          deselectFromDropdown: true,
+          disabled: true,
+          value: "",
+          rules: "",
+        },
+        {
+          key: "start_date",
+          col: "3",
+          type: "date",
+          label: this.$t("TABLE_FIELDS.start_date_subscription"),
+          value: "",
+          rules: "",
+        },
+        {
+          key: "end_date",
+          col: "3",
+          type: "date",
+          label: this.$t("TABLE_FIELDS.end_date_subscription"),
           value: "",
           rules: "",
         },
@@ -163,17 +236,92 @@ export default {
           nameEn: "Export to pdf",
         },
       ],
-      chartData: {
-        labels: ['test', 'fcb', 'mad', 'alhaly', '2014-2015', '2015-2016', '2015-2017', '2015-2018'],
+      dataForChart: [],
+      subscriptionReportList: [],
+      totalNumber: null,
+      searchWithPagination: {},
+      subscriptionReportListHeaders: [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "studyYear.name",
+          label: this.$i18n.t("TABLE_FIELDS.studyYear"),
+        },
+        {
+          key: "country.name",
+          label: this.$i18n.t("TABLE_FIELDS.country"),
+        },
+        {
+          key: "schoolGroup.name",
+          label: this.$i18n.t("TABLE_FIELDS.school_group"),
+        },
+        {
+          key: "school.name",
+          label: this.$i18n.t("TABLE_FIELDS.school"),
+        },
+        {
+          key: "package.name",
+          label: this.$i18n.t("TABLE_FIELDS.package"),
+        },
+        {
+          key: "levels",
+          label: this.$i18n.t("TABLE_FIELDS.jeel_library_level"),
+        },
+        {
+          key: "terms",
+          label: this.$i18n.t("TABLE_FIELDS.jeel_library_level"),
+        },
+        {
+          key: "start_subscription",
+          label: this.$i18n.t("TABLE_FIELDS.start_subscription"),
+        },
+        {
+          key: "end_subscription",
+          label: this.$i18n.t("TABLE_FIELDS.end_subscription"),
+        },
+      ],
+      loadingChart: false,
+    }
+  },
+  watch: {
+    chartData: {
+      handler(newVal) {
+        return newVal
+      },
+      immediate: true,
+    },
+    chartOptions: {
+      handler(newVal) {
+        return newVal
+      },
+      immediate: true,
+    },
+    "$i18n.locale"(newVal) {
+      if (newVal) {
+        this.setData()
+      }
+    }
+  },
+  computed: {
+    chartData() {
+      return {
         datasets: [
           {
-            label: 'الباقة',
-            backgroundColor: '#f87979',
-            data: [30, 10, 40, 80, 70, 45, 60, 30]
+            label: this.$i18n.t('TABLE_FIELDS.packages'),
+            backgroundColor: '#F04771',
+            borderRadius: 5,
+            barThickness: 10,
+            categoryPercentage: 1,
+            barPercentage: 1,
+            data: []
           },
         ]
-      },
-      chartOptions: {
+      }
+    },
+    chartOptions() {
+      return {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
@@ -196,58 +344,93 @@ export default {
             backgroundColor: "#fff",
             bodyColor: '#000',
           }
+        },
+        scales: {
+          yAxes: {
+            ticks: {
+              min: 0,
+              stepSize: 1
+            }
+          }
         }
-      },
-      subscriptionReportList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "country.name",
-          label: this.$i18n.t("TABLE_FIELDS.country"),
-        },
-        {
-          key: "school_group.name",
-          label: this.$i18n.t("TABLE_FIELDS.school_group"),
-        },
-        {
-          key: "school.name",
-          label: this.$i18n.t("TABLE_FIELDS.school"),
-        },
-        {
-          key: "package.name",
-          label: this.$i18n.t("TABLE_FIELDS.package"),
-        },
-        {
-          key: "level.name",
-          label: this.$i18n.t("TABLE_FIELDS.jeel_library_level"),
-        },
-        {
-          key: "study_year.name",
-          label: this.$i18n.t("TABLE_FIELDS.studyYear"),
-        },
-        {
-          key: "start_subscription",
-          label: this.$i18n.t("TABLE_FIELDS.start_subscription"),
-        },
-        {
-          key: "end_subscription",
-          label: this.$i18n.t("TABLE_FIELDS.end_subscription"),
-        },
-      ]
-    }
+      }
+    },
   },
   methods: {
-    onSubmit(values) {
-
+    handleCancel() {
+      this.getSubscriptionReport()
+      this.getSubscriptionsReportChart()
     },
-    getSubscriptionReport() {
-
+    onSubmit(values) {
+      this.searchWithPagination = values;
+      this.getSubscriptionReport()
+      this.getSubscriptionsReportChart()
+    },
+    handleInput(key, value) {
+      if (key === 'study_year_id' && value !== '') {
+        this.subscriptionReportSearch[1].disabled = false;
+        getALLCountriesForReports(this.subscriptionReportSearch, 'country_id', value)
+      } else if (key === 'country_id' && value !== '') {
+        this.subscriptionReportSearch[2].disabled = false;
+        this.subscriptionReportSearch[4].disabled = false;
+        getALLSchoolGroupsForReports(this.subscriptionReportSearch, 'school_group_id', this.subscriptionReportSearch[0].value, this.subscriptionReportSearch[1].value)
+        getPackage(this.subscriptionReportSearch, 'package_id', this.subscriptionReportSearch[1].value, this.subscriptionReportSearch[2].value, this.subscriptionReportSearch[4].value)
+      } else if (key === 'school_group_id' && value !== '') {
+        this.subscriptionReportSearch[3].disabled = false;
+        this.subscriptionReportSearch[4].disabled = false;
+        getAllSchools(this.subscriptionReportSearch, 'school_id', this.subscriptionReportSearch[0].value, this.subscriptionReportSearch[1].value, this.subscriptionReportSearch[2].value)
+        getPackage(this.subscriptionReportSearch, 'package_id', this.subscriptionReportSearch[1].value, this.subscriptionReportSearch[2].value, this.subscriptionReportSearch[4].value)
+      } else if (key === 'school_id' && value !== '') {
+        this.subscriptionReportSearch[4].disabled = false;
+        getPackage(this.subscriptionReportSearch, 'package_id', this.subscriptionReportSearch[1].value, this.subscriptionReportSearch[2].value, this.subscriptionReportSearch[3].value)
+      } else if (key === 'package_id' && value !== '') {
+        this.subscriptionReportSearch[5].disabled = false;
+        this.subscriptionReportSearch[6].disabled = false;
+        getAllLevelsForReports(this.subscriptionReportSearch, 'level_id', this.subscriptionReportSearch[4].value, this.subscriptionReportSearch[3].value)
+        geAllTermsForReports(this.subscriptionReportSearch, 'term_id', this.subscriptionReportSearch[4].value, this.subscriptionReportSearch[3].value)
+      }
+    },
+    getSubscriptionReport(paramsWithSearch) {
+      const params = {...paramsWithSearch, ...this.searchWithPagination};
+      this.ApiService(getSubscriptionsRequest(params)).then(response => {
+        this.subscriptionReportList = response.data.data;
+        this.totalNumber = response.data.meta.total;
+      })
+    },
+    setData() {
+      let charDataWithPackage = [];
+      this.dataForChart.forEach((studyYearItem) => {
+        let studyYearName = studyYearItem.name
+        if (studyYearItem.packages) {
+          studyYearItem.packages.forEach((packageItem) => {
+            charDataWithPackage.push(Object.assign({}, {
+              x: studyYearName,
+              y: packageItem.total
+            }))
+          })
+        }
+        this.chartData.datasets[0].data = charDataWithPackage
+      })
+    },
+    getSubscriptionsReportChart(paramsWithSearch) {
+      this.loadingChart = false
+      const params = {...paramsWithSearch, ...this.searchWithPagination};
+      this.ApiService(getSubscriptionsChartRequest(params)).then((response) => {
+        this.dataForChart = response.data.data
+      }).then(() => {
+        this.setData()
+      }).then(() => {
+        this.loadingChart = true
+      })
     },
     toggleCollapsed() {
       this.collapsed = !this.collapsed;
     },
+  },
+  mounted() {
+    getStudyYear(this.subscriptionReportSearch, 'study_year_id')
+    this.getSubscriptionReport()
+    this.getSubscriptionsReportChart()
   }
 }
 </script>

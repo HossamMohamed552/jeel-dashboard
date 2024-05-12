@@ -89,6 +89,7 @@
     "role": "الدور",
     "user": "المستخدم",
     "school": "المدرسة",
+    "schools": "المدارس",
     "mobile": "الهاتف",
     "status": "الحالة",
     "music_status": "حالة الموسيقى",
@@ -140,7 +141,9 @@
     "enterTime": "وقت الدخول",
     "missionName": "اسم المهمة",
     "start_date": "تاريخ بداية المهمة",
+    "start_date_subscription": "تاريخ بداية",
     "end_date": "تاريخ نهاية المهمة",
+    "end_date_subscription": "تاريخ نهاية",
     "percentage_mission": "التقدم فى المهمة",
     "taskName": "اسم التسجيل الصوتى",
     "paperWorkName": "اسم ورقة العمل",
@@ -155,7 +158,11 @@
     "position": "المركز",
     "skillType":"نوع المهارة",
     "learningStyle":"اسم إسلوب التعلم",
-    "schoolGroup": "مجموعة المدارس"
+    "schoolGroup": "مجموعة المدارس",
+    "schoolGroups": "مجموعات المدارس",
+    "learning_paths": "المسارات التعليمية",
+    "supervisor": "أسماء المشرفين",
+    "missions_count": "عدد المهام"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -687,6 +694,7 @@
     "levels": "الصفوف الدراسية",
     "classes": "الفصول",
     "schoolAdmin": "المديرين",
+    "admins": "المديري المدارس",
     "supervisors": "المشرفين",
     "teachers": "المدرسين",
     "students": "الطلاب",
