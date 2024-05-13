@@ -75,6 +75,7 @@
     "logo": "الشعار",
     "school_type": "نوع المدرسة",
     "package": "الباقة",
+    "packages": "الباقات",
     "start_subscription": "بداية التعاقد",
     "end_subscription": "نهاية التعاقد",
     "year": "السنه",
@@ -89,6 +90,7 @@
     "role": "الدور",
     "user": "المستخدم",
     "school": "المدرسة",
+    "schools": "المدارس",
     "mobile": "الهاتف",
     "status": "الحالة",
     "music_status": "حالة الموسيقى",
@@ -140,7 +142,9 @@
     "enterTime": "وقت الدخول",
     "missionName": "اسم المهمة",
     "start_date": "تاريخ بداية المهمة",
+    "start_date_subscription": "تاريخ بداية",
     "end_date": "تاريخ نهاية المهمة",
+    "end_date_subscription": "تاريخ نهاية",
     "percentage_mission": "التقدم فى المهمة",
     "taskName": "اسم التسجيل الصوتى",
     "paperWorkName": "اسم ورقة العمل",
@@ -153,9 +157,13 @@
     "students": "عدد الطلاب",
     "points": "النقاط",
     "position": "المركز",
-    "skillType":"نوع المهارة",
-    "learningStyle":"اسم إسلوب التعلم",
-    "schoolGroup": "مجموعة المدارس"
+    "skillType": "نوع المهارة",
+    "learningStyle": "اسم إسلوب التعلم",
+    "schoolGroup": "مجموعة المدارس",
+    "schoolGroups": "مجموعات المدارس",
+    "learning_paths": "المسارات التعليمية",
+    "supervisor": "أسماء المشرفين",
+    "missions_count": "عدد المهام"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -176,7 +184,7 @@
     "classes": "الفصول الدراسية",
     "addStudentOnGroupBtn": "إضافة طلاب",
     "search": "بحث",
-    "select_date_range":"حدد الفتره الزمنية",
+    "select_date_range": "حدد الفتره الزمنية",
     "sort_by": "ترتيب حسب",
     "add_successfully": "تمت الإضافة بنجاح",
     "already_exists": "هذا السجل موجود من قبل",
@@ -390,7 +398,6 @@
     "languageMethods": "إسلوب التعلم",
     "audioFile": "ملف الصوت"
   },
-
   "QUESTIONS": {
     "QUESTIONS": "الأسئلة",
     "ADD_NEW": "إضافة سؤال",
@@ -541,7 +548,7 @@
     "BLOOM_NAME": "اسم بلوم",
     "BLOOM_NAME_PLACEHOLDER": "ادخل اسم بلوم",
     "delete_bloom": "حذف بلوم",
-    "confirm_delete_bloom":"هل انت متأكد من حذف بلوم ؟"
+    "confirm_delete_bloom": "هل انت متأكد من حذف بلوم ؟"
   },
   "learningSkill": {
     "learningSkill": "قائمة أنواع المهارات",
@@ -549,7 +556,7 @@
     "ADD": "إضافة نوع مهارة",
     "EDIT": "تعديل مهارة",
     "delete_learningSkill": "حذف المهارة",
-    "confirm_delete_learningSkill":"هل انت متأكد من حذف المهارة ؟",
+    "confirm_delete_learningSkill": "هل انت متأكد من حذف المهارة ؟",
     "name": "نوع المهارة",
     "placeholderLearningSkill": "أدخل نوع المهارة"
   },
@@ -559,7 +566,7 @@
     "ADD": "إضافة إسلوب التعلم ",
     "EDIT": "تعديل إسلوب التعلم",
     "delete_learningStyle": "حذف إسلوب التعلم",
-    "confirm_delete_learningStyle":"هل انت متأكد من حذف إسلوب التعلم ؟",
+    "confirm_delete_learningStyle": "هل انت متأكد من حذف إسلوب التعلم ؟",
     "name": "إسلوب التعلم",
     "placeholderLearningStyle": "أدخل اسم إسلوب التعلم"
   },
@@ -572,7 +579,7 @@
     "ShowDetails": "تفاصيل المسار التعليمي",
     "learning_path": "قائمة المسارات التعليمية",
     "delete_learning_path": "حذف المسار التعليمي",
-    "confirm_delete_learning_path":"هل انت متأكد من حذف المسار التعليمي ؟",
+    "confirm_delete_learning_path": "هل انت متأكد من حذف المسار التعليمي ؟",
     "audio": "ملف الصوتى للمسار"
   },
   "OBJECTIVE": {
@@ -687,10 +694,13 @@
     "levels": "الصفوف الدراسية",
     "classes": "الفصول",
     "schoolAdmin": "المديرين",
+    "admins": "المديري المدارس",
     "supervisors": "المشرفين",
     "teachers": "المدرسين",
     "students": "الطلاب",
-    "parents": "أولياء الأمور"
+    "parents": "أولياء الأمور",
+    "exportExcel": "تصدير ل أكسيل",
+    "exportPdf": "تصدير ل pdf"
   },
   "permissions": "الصلاحيات",
   "showDetails": "عرض تفاصيل المستخدم",
@@ -770,7 +780,7 @@
     "school": "المدرسة",
     "enrollment_school_date": "تاريخ الإنضمام",
     "final_degree": "الدرجة النهائية",
-    "student_degree" : "الدرجة",
+    "student_degree": "الدرجة",
     "student_degree_placeholder": "اكتب الدرجة هنا",
     "note": "التعليق",
     "note_placeholder": "اكتب التعليق هنا"
@@ -895,7 +905,7 @@
     "schoolInfoDetail": "بيانات المدرسة",
     "schoolName": "اسم المدرسة",
     "country": "الدولة",
-    "schoolGroup":"مجموعة المدارس",
+    "schoolGroup": "مجموعة المدارس",
     "managementType": "نوع إدارة المدرسة",
     "certificate": "نوع شهادة المدرسة",
     "teachingLanguage": "لغة التدريس",
@@ -912,15 +922,15 @@
     "ResponsibleAddress": "العنوان",
     "address": "عنوان المدرسة",
     "notes": "الملاحظات",
-    "addClass" : "إضافة فصل جديد",
+    "addClass": "إضافة فصل جديد",
     "editClass": "تعديل الفصل",
     "studyYear": "العام الدراسي",
     "level": "الصف الدراسي",
     "className": "اسم الفصل",
     "className_PLACEHOLDER": "أدخل اسم الفصل",
     "role": "الصلاحيات",
-    "firstName":"الاسم الأول",
-    "midName":"الاسم الثاني",
+    "firstName": "الاسم الأول",
+    "midName": "الاسم الثاني",
     "lastName": "اسم العائلة",
     "email": "البريد الإلكترونى (اسم المستخدم)",
     "mobile": "رقم الهاتف",
@@ -935,8 +945,8 @@
     "addParent": "بيانات أولياء الأمور",
     "studyYearsList": "قائمة الأعوام الدراسية",
     "rolesList": "قائمة الصلاحيات",
-    "showDetailsTeacher":"تفاصيل المدرس",
-    "showDetailsParent":"تفاصيل ولى الأمر",
+    "showDetailsTeacher": "تفاصيل المدرس",
+    "showDetailsParent": "تفاصيل ولى الأمر",
     "roleStudentOnClass": "تسجيل الصف الدراسى",
     "addStudentOnClass": "بيانات الصف الدراسى",
     "classList": "قائمة الصفوف الدراسية",
@@ -975,5 +985,5 @@
     "of": "من أصل"
   },
   "can_not_delete": "لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى",
-  "lastAttempt":"آخر عملية تسجيل دخول"
+  "lastAttempt": "آخر عملية تسجيل دخول"
 }

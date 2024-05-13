@@ -41,22 +41,32 @@
             <div class="col-12" key="1" v-show="activeTap === 1">
               <div class="d-flex justify-content-between align-items-center">
                 <h3>{{ $t('REPORTS.missionsHeading') }}</h3>
-                <div class="sort">
-                  <img src="../../../src/assets/images/icons/sort.svg"/>
-                  <select>
-                    <option value="" selected disabled>{{ $t('REPORTS.export_to') }}</option>
-                    <option v-for="(item, index) in exportArray" :id="item.id" :value="item.value"
-                            :key="index">
-                      {{ $i18n.locale === 'ar' ? item.name : item.nameEn }}
-                    </option>
-                  </select>
-                </div>
+                <b-dropdown no-caret>
+                  <template #button-content>
+                    <div class="sort">
+                      <img src="../../../src/assets/images/icons/sort.svg"/>
+                      <div>
+                        {{ $t('REPORTS.export_to') }}
+                      </div>
+                    </div>
+                  </template>
+                  <b-dropdown-item>
+                    <export-excel
+                      ref="exportExcel"
+                      :fields="missionsReportFields"
+                      :data="missionsReportList">
+                      <img src="@/assets/images/icons/xls.png">{{ $t('REPORTS.exportExcel') }}
+                    </export-excel>
+                  </b-dropdown-item>
+                </b-dropdown>
               </div>
               <b-row>
                 <b-col lg="12">
                   <ListItems
                     class="m-0 p-0"
                     :fieldsList="subMissionsReportList"
+                    :tableItems="missionsReportList"
+                    :number-of-item="totalNumber"
                     @refetch="getMissionsReport"
                     :loading="loading"
                     :showSortControls="false"
@@ -66,7 +76,7 @@
               </b-row>
             </div>
             <div class="col-12" key="2" v-show="activeTap === 2">
-              <Bar :chart-data="chartData" :options="chartOptions"/>
+              <Bar v-if="loadingChart" :chart-data="chartData" :options="chartOptions"/>
             </div>
           </transition-group>
         </div>
@@ -89,6 +99,11 @@ import {
   CategoryScale,
   LinearScale
 } from 'chart.js'
+import {
+  getMissionsChartRequest, getMissionsRequest,
+  getSubscriptionsChartRequest,
+  getSubscriptionsRequest
+} from "@/api/reports";
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 export default {
@@ -98,6 +113,7 @@ export default {
     return {
       collapsed: false,
       loading: false,
+      loadingChart: false,
       activeTap: 1,
       generalReportSearch: [
         {
@@ -163,17 +179,125 @@ export default {
           nameEn: "Export to pdf",
         },
       ],
-      chartData: {
-        labels: ['test', 'fcb', 'mad', 'alhaly', '2014-2015', '2015-2016', '2015-2017', '2015-2018'],
+      subMissionsReportList: [
+        {
+          key: "studyYear.name",
+          label: this.$i18n.t("TABLE_FIELDS.studyYear"),
+        },
+        {
+          key: "country.name",
+          label: this.$i18n.t("TABLE_FIELDS.country"),
+        },
+        {
+          key: "schoolGroup.name",
+          label: this.$i18n.t("TABLE_FIELDS.school_group"),
+        },
+        {
+          key: "school.name",
+          label: this.$i18n.t("TABLE_FIELDS.school"),
+        },
+        {
+          key: "levels",
+          label: this.$i18n.t("TABLE_FIELDS.jeel_library_level"),
+        },
+        {
+          key: "terms",
+          label: this.$i18n.t("MISSIONS.terms"),
+        },
+        {
+          key: "learning_paths",
+          label: this.$i18n.t("TABLE_FIELDS.learning_paths"),
+        },
+        {
+          key: "supervisors",
+          label: this.$i18n.t("TABLE_FIELDS.supervisor"),
+        },
+        {
+          key: "missions_count",
+          label: this.$i18n.t("TABLE_FIELDS.missions_count"),
+        },
+      ],
+      missionsReportList: [],
+      missionsReportFields: {
+        "country": "country.name",
+        "school": "school.name",
+        "school group": "schoolGroup.name",
+        "study year": "studyYear.name",
+        "levels": {
+          field: "levels",
+          callback: (value) => {
+            let levelNames = []
+            levelNames.push(...value)
+            levelNames = levelNames.map((item) => {
+              return item.name
+            })
+            return [...levelNames]
+          }
+        },
+        "terms": {
+          field: "terms",
+          callback: (value) => {
+            let termsNames = []
+            termsNames.push(...value)
+            termsNames = termsNames.map((item) => {
+              return item.name
+            })
+            return [...termsNames]
+          }
+        },
+        "learning paths": {
+          field: "learning_paths",
+          callback: (value) => {
+            let learning_pathsNames = []
+            learning_pathsNames.push(...value)
+            learning_pathsNames = learning_pathsNames.map((item) => {
+              return item.name
+            })
+            return [...learning_pathsNames]
+          }
+        },
+        "missions count": "missions_count",
+      },
+      totalNumber: 0
+    }
+  },
+  watch: {
+    chartData: {
+      handler(newVal) {
+        return newVal
+      },
+      immediate: true,
+    },
+    chartOptions: {
+      handler(newVal) {
+        return newVal
+      },
+      immediate: true,
+    },
+    "$i18n.locale"(newVal) {
+      if (newVal) {
+        this.setData()
+      }
+    }
+  },
+  computed: {
+    chartData() {
+      return {
         datasets: [
           {
-            label: 'الباقة',
-            backgroundColor: '#f87979',
-            data: [30, 10, 40, 80, 70, 45, 60, 30]
+            label: this.$i18n.t('STATISTICS.missions'),
+            backgroundColor: '#76236C',
+            borderRadius: 5,
+            barThickness: 10,
+            categoryPercentage: 1,
+            barPercentage: 1,
+            data: []
           },
         ]
-      },
-      chartOptions: {
+      }
+    },
+    chartOptions() {
+      return {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
@@ -196,58 +320,52 @@ export default {
             backgroundColor: "#fff",
             bodyColor: '#000',
           }
+        },
+        scales: {
+          yAxes: {
+            ticks: {
+              min: 0,
+              stepSize: 1
+            }
+          }
         }
-      },
-      subMissionsReportList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "country.name",
-          label: this.$i18n.t("TABLE_FIELDS.country"),
-        },
-        {
-          key: "school_group.name",
-          label: this.$i18n.t("TABLE_FIELDS.school_group"),
-        },
-        {
-          key: "school.name",
-          label: this.$i18n.t("TABLE_FIELDS.school"),
-        },
-        {
-          key: "package.name",
-          label: this.$i18n.t("TABLE_FIELDS.package"),
-        },
-        {
-          key: "level.name",
-          label: this.$i18n.t("TABLE_FIELDS.jeel_library_level"),
-        },
-        {
-          key: "study_year.name",
-          label: this.$i18n.t("TABLE_FIELDS.studyYear"),
-        },
-        {
-          key: "start_subscription",
-          label: this.$i18n.t("TABLE_FIELDS.start_subscription"),
-        },
-        {
-          key: "end_subscription",
-          label: this.$i18n.t("TABLE_FIELDS.end_subscription"),
-        },
-      ]
-    }
+      }
+    },
   },
   methods: {
     onSubmit(values) {
 
     },
-    getMissionsReport() {
-
+    getMissionsReport(paramsWithSearch) {
+      const params = {...paramsWithSearch, ...this.searchWithPagination};
+      this.ApiService(getMissionsRequest(params)).then(response => {
+        this.missionsReportList = response.data.data;
+        this.totalNumber = response.data.meta.total;
+      })
+    },
+    getMissionsReportChart(paramsWithSearch) {
+      this.loadingChart = false
+      const params = {...paramsWithSearch, ...this.searchWithPagination};
+      this.ApiService(getMissionsChartRequest(params)).then((response) => {
+        this.dataForChart = response.data.data
+      }).then(() => {
+        this.setData()
+      }).then(() => {
+        this.loadingChart = true
+      })
+    },
+    setData() {
+      this.chartData.datasets[0].data = this.dataForChart.map((item) => {
+        return {x: item.name, y: item.missions_count}
+      })
     },
     toggleCollapsed() {
       this.collapsed = !this.collapsed;
     },
+  },
+  mounted() {
+    this.getMissionsReportChart()
+    this.getMissionsReport()
   }
 }
 </script>

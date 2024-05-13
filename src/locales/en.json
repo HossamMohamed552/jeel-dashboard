@@ -74,6 +74,7 @@
     "role": "role",
     "user": "user",
     "school": "school",
+    "schools": "schools",
     "mobile": "mobile",
     "status": "status",
     "music_status": "music status",
@@ -126,7 +127,9 @@
     "position": "position",
     "skillType": "learning skill Type",
     "learningStyle":"learningStyle",
-    "schoolGroup": "school Group"
+    "schoolGroup": "school Group",
+    "schoolGroups": "school Groups",
+    "learning_paths": "learning paths"
   },
   "CONTROLS": {
     "detailBtn": "details",

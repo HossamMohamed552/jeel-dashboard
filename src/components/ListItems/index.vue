@@ -183,9 +183,29 @@
               path.name | cutString
             }}</span>
         </template>
+        <template #cell(learning_paths)="data">
+          <span v-for="(path, ind) in data.item.learning_paths" :key="ind" class="path">{{
+              path.name | cutString
+            }}</span>
+        </template>
+        <template #cell(levels)="data">
+          <span v-for="(level, ind) in data.item.levels" :key="ind" class="path">{{
+              level.name | cutString
+            }}</span>
+        </template>
+        <template #cell(terms)="data">
+          <span v-for="(term, ind) in data.item.terms" :key="ind" class="path">{{
+              term.name | cutString
+            }}</span>
+        </template>
         <template #cell(lessons)="data">
           <span v-for="(lesson, ind) in data.item.lessons" :key="ind" class="path">{{
               lesson.name | cutString
+            }}</span>
+        </template>
+        <template #cell(supervisors)="data">
+          <span v-for="(singleSupervisor, ind) in data.item.supervisors" :key="ind" class="path">{{
+              singleSupervisor.name | cutString
             }}</span>
         </template>
         <template #cell(teachers)="data">

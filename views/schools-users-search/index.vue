@@ -221,7 +221,7 @@ export default {
     }, 300),
 
     handleCancel() {
-      this.userSearch.map((field) => (field.value = ""));
+      this.searchWithPagination = this.userSearch.map((field) => (field.value = ""));
       this.getAllUsers()
     },
     toggleCollapsed() {
