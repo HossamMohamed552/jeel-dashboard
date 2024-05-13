@@ -57,13 +57,15 @@
 .sort {
   @extend %search-sort;
   width: 19rem;
-  @include flexCenter(space-between);
+  @include flexCenter(flex-start);
   background: #fff;
-
+  position: relative;
+  padding: 1rem;
+  cursor: pointer;
   img {
     width: 1.5rem;
+    margin-left: 2rem;
   }
-
   select {
     width: 100%;
     cursor: pointer;
@@ -80,8 +82,20 @@
       font-weight: bold;
     }
   }
+  .export-options{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translateY(100%);
+    background: #fff;
+    border-radius: .5rem;
+    padding: .5rem;
+    min-height: 100px;
+    width: 100%;
+    z-index: 5;
+    box-shadow: 0 3px 16px #82828229;
+  }
 }
-
 .reports-tabs {
   color: $color-paragraph-alt;
   display: flex;
@@ -355,5 +369,11 @@
   h4 {
     border-bottom: 1px solid #DDDDDD;
     padding: 1rem;
+  }
+}
+::v-deep{
+  .b-dropdown button{
+    background: transparent !important;
+    border: none !important;
   }
 }

@@ -237,8 +237,8 @@ export default {
       return {
         datasets: [
           {
-            label: this.$i18n.t('TABLE_FIELDS.packages'),
-            backgroundColor: '#F04771',
+            label: this.$i18n.t('STATISTICS.missions'),
+            backgroundColor: '#76236C',
             borderRadius: 5,
             barThickness: 10,
             categoryPercentage: 1,
@@ -304,6 +304,11 @@ export default {
         this.setData()
       }).then(() => {
         this.loadingChart = true
+      })
+    },
+    setData() {
+      this.chartData.datasets[0].data = this.dataForChart.map((item) => {
+        return {x: item.name, y: item.missions_count}
       })
     },
     toggleCollapsed() {

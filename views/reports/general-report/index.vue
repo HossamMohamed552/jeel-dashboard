@@ -43,16 +43,32 @@
             <div class="col-12" key="1" v-show="activeTap === 1">
               <div class="d-flex justify-content-between align-items-center">
                 <h3>{{ $t('REPORTS.generalHeading') }}</h3>
-                <div class="sort">
-                  <img src="../../../src/assets/images/icons/sort.svg"/>
-                  <select>
-                    <option value="" selected disabled>{{ $t('REPORTS.export_to') }}</option>
-                    <option v-for="(item, index) in exportArray" :id="item.id" :value="item.value"
-                            :key="index">
-                      {{ $i18n.locale === 'ar' ? item.name : item.nameEn }}
-                    </option>
-                  </select>
-                </div>
+                <b-dropdown no-caret>
+                  <template #button-content>
+                    <div class="sort">
+                      <img src="../../../src/assets/images/icons/sort.svg"/>
+                      <div>
+                        {{$t('REPORTS.export_to')}}
+                      </div>
+                    </div>
+                  </template>
+                  <b-dropdown-item>
+                    <export-excel
+                      ref="exportExcel"
+                      :data="generalStatisticsExport">
+                      <img src="@/assets/images/icons/xls.png">{{$t('REPORTS.exportExcel')}}
+                    </export-excel>
+                  </b-dropdown-item>
+                </b-dropdown>
+<!--                <div class="sort">-->
+<!--                  <img src="../../../src/assets/images/icons/sort.svg"/>-->
+<!--                  <div>-->
+<!--                    {{$t('REPORTS.export_to')}}-->
+<!--                  </div>-->
+<!--                  <div class="export-options">-->
+<!--                   -->
+<!--                  </div>-->
+<!--                </div>-->
               </div>
               <b-row>
                 <b-col v-for="(item,index) in generalStatistics" lg="3" :key="index">
@@ -76,12 +92,19 @@
                     <h4>{{ $t(`REPORTS.${role.name}`) }}</h4>
                     <div class="svg-item">
                       <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut">
-                        <circle class="donut-hole" cx="20" cy="20" r="15.91549430918954" fill="#fff"></circle>
-                        <circle class="donut-ring" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5"></circle>
-                        <circle class="donut-segment donut-segment-2" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" :stroke-dasharray="`${role.percentage} ${100-role.percentage}` " stroke-dashoffset="25"></circle>
+                        <circle class="donut-hole" cx="20" cy="20" r="15.91549430918954"
+                                fill="#fff"></circle>
+                        <circle class="donut-ring" cx="20" cy="20" r="15.91549430918954"
+                                fill="transparent" stroke-width="3.5"></circle>
+                        <circle class="donut-segment donut-segment-2" cx="20" cy="20"
+                                r="15.91549430918954" fill="transparent" stroke-width="3.5"
+                                :stroke-dasharray="`${role.percentage} ${100-role.percentage}` "
+                                stroke-dashoffset="25"></circle>
                         <g class="donut-text donut-text-1">
                           <text y="50%" transform="translate(0, 2)">
-                            <tspan x="50%" text-anchor="middle" class="donut-percent">{{ role.percentage }}%</tspan>
+                            <tspan x="50%" text-anchor="middle" class="donut-percent">
+                              {{ role.percentage }}%
+                            </tspan>
                           </text>
                         </g>
                       </svg>
@@ -112,18 +135,15 @@ import {
   LinearScale
 } from 'chart.js'
 import {
-  getALLCountries, getALLCountriesForReports, getALLSchoolGroupsForReports, getAllSchools,
-  getClassForTeacherBasedStudyYearLevel,
-  getLevelByStudyYearForTeacher,
-  getMissionForTeacherBasedStudyYearLevelTerm, getStudyYear,
-  getStudyYearForTeacher,
-  getTermsForTeacherBasedStudyYear
+  getALLCountriesForReports, getALLSchoolGroupsForReports, getAllSchools,
+  getStudyYear,
 } from "@/services/dropdownService";
 import {
   getJeelAdminReportChartRequest,
   getJeelAdminReportRolesRequest,
   getJeelAdminReportStatisticsRequest
 } from "@/api/reports";
+
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 export default {
@@ -250,7 +270,9 @@ export default {
           number: 30
         }
       ],
-      roleStatistics:[]
+      reportFields: {},
+      generalStatisticsExport: [],
+      roleStatistics: []
     }
   },
   methods: {
@@ -299,6 +321,7 @@ export default {
     getJeelAdminReportStatistics(params) {
       this.ApiService(getJeelAdminReportStatisticsRequest(params)).then((response) => {
         let data = response.data.data
+        this.generalStatisticsExport.push(data)
         this.generalStatistics[0].number = data.school_group
         this.generalStatistics[1].number = data.school
         this.generalStatistics[2].number = data.levels
@@ -308,6 +331,10 @@ export default {
         this.generalStatistics[6].number = data.teachers
         this.generalStatistics[7].number = data.students
         this.generalStatistics[8].number = data.paretns
+
+        for (const [key, value] of Object.entries(response.data.data)) {
+          this.reportFields[key] = value
+        }
       })
     },
     getJeelAdminReportChart(params) {
