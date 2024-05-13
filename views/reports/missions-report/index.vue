@@ -41,16 +41,24 @@
             <div class="col-12" key="1" v-show="activeTap === 1">
               <div class="d-flex justify-content-between align-items-center">
                 <h3>{{ $t('REPORTS.missionsHeading') }}</h3>
-                <div class="sort">
-                  <img src="../../../src/assets/images/icons/sort.svg"/>
-                  <select>
-                    <option value="" selected disabled>{{ $t('REPORTS.export_to') }}</option>
-                    <option v-for="(item, index) in exportArray" :id="item.id" :value="item.value"
-                            :key="index">
-                      {{ $i18n.locale === 'ar' ? item.name : item.nameEn }}
-                    </option>
-                  </select>
-                </div>
+                <b-dropdown no-caret>
+                  <template #button-content>
+                    <div class="sort">
+                      <img src="../../../src/assets/images/icons/sort.svg"/>
+                      <div>
+                        {{ $t('REPORTS.export_to') }}
+                      </div>
+                    </div>
+                  </template>
+                  <b-dropdown-item>
+                    <export-excel
+                      ref="exportExcel"
+                      :fields="missionsReportFields"
+                      :data="missionsReportList">
+                      <img src="@/assets/images/icons/xls.png">{{ $t('REPORTS.exportExcel') }}
+                    </export-excel>
+                  </b-dropdown-item>
+                </b-dropdown>
               </div>
               <b-row>
                 <b-col lg="12">
@@ -210,6 +218,46 @@ export default {
         },
       ],
       missionsReportList: [],
+      missionsReportFields: {
+        "country": "country.name",
+        "school": "school.name",
+        "school group": "schoolGroup.name",
+        "study year": "studyYear.name",
+        "levels": {
+          field: "levels",
+          callback: (value) => {
+            let levelNames = []
+            levelNames.push(...value)
+            levelNames = levelNames.map((item) => {
+              return item.name
+            })
+            return [...levelNames]
+          }
+        },
+        "terms": {
+          field: "terms",
+          callback: (value) => {
+            let termsNames = []
+            termsNames.push(...value)
+            termsNames = termsNames.map((item) => {
+              return item.name
+            })
+            return [...termsNames]
+          }
+        },
+        "learning paths": {
+          field: "learning_paths",
+          callback: (value) => {
+            let learning_pathsNames = []
+            learning_pathsNames.push(...value)
+            learning_pathsNames = learning_pathsNames.map((item) => {
+              return item.name
+            })
+            return [...learning_pathsNames]
+          }
+        },
+        "missions count": "missions_count",
+      },
       totalNumber: 0
     }
   },

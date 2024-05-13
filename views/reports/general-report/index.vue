@@ -60,15 +60,6 @@
                     </export-excel>
                   </b-dropdown-item>
                 </b-dropdown>
-<!--                <div class="sort">-->
-<!--                  <img src="../../../src/assets/images/icons/sort.svg"/>-->
-<!--                  <div>-->
-<!--                    {{$t('REPORTS.export_to')}}-->
-<!--                  </div>-->
-<!--                  <div class="export-options">-->
-<!--                   -->
-<!--                  </div>-->
-<!--                </div>-->
               </div>
               <b-row>
                 <b-col v-for="(item,index) in generalStatistics" lg="3" :key="index">
@@ -177,7 +168,6 @@ export default {
           label: this.$t("TABLE_FIELDS.countryName"),
           options: [],
           deselectFromDropdown: true,
-          disabled: true,
           value: "",
           rules: "",
         },
@@ -190,7 +180,6 @@ export default {
           label: this.$t("TABLE_FIELDS.schoolGroups"),
           options: [],
           deselectFromDropdown: true,
-          disabled: true,
           value: "",
           rules: "",
         },
@@ -272,7 +261,7 @@ export default {
       ],
       reportFields: {},
       generalStatisticsExport: [],
-      roleStatistics: []
+      roleStatistics: [],
     }
   },
   methods: {
@@ -286,13 +275,7 @@ export default {
       this.getJeelAdminReportChart(values)
     },
     handleInput(key, value) {
-      if (key === 'study_year_id' && value !== '') {
-        this.generalReportSearch[1].disabled = false;
-        getALLCountriesForReports(this.generalReportSearch, 'country_id', value)
-      } else if (key === 'country_id' && value !== '') {
-        this.generalReportSearch[2].disabled = false;
-        getALLSchoolGroupsForReports(this.generalReportSearch, 'school_group_id', this.generalReportSearch[0].value, this.generalReportSearch[1].value)
-      } else if (key === 'school_group_id' && value !== '') {
+      if (key === 'school_group_id' && value !== '') {
         this.generalReportSearch[3].disabled = false;
         getAllSchools(this.generalReportSearch, 'school_id', this.generalReportSearch[0].value, this.generalReportSearch[1].value, this.generalReportSearch[2].value)
       }
@@ -455,6 +438,8 @@ export default {
   },
   mounted() {
     getStudyYear(this.generalReportSearch, 'study_year_id')
+    getALLCountriesForReports(this.generalReportSearch, 'country_id')
+    getALLSchoolGroupsForReports(this.generalReportSearch, 'school_group_id')
     this.getJeelAdminReportStatistics()
     this.getJeelAdminReportChart()
     this.getJeelAdminReportRoles()

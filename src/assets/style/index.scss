@@ -384,3 +384,9 @@ label {
 .mx-time-columns {
   direction: ltr !important;
 }
+::v-deep{
+  .b-dropdown button{
+    background: transparent !important;
+    border: none !important;
+  }
+}

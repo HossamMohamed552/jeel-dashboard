@@ -43,16 +43,24 @@
             <div class="col-12" key="1" v-show="activeTap === 1">
               <div class="d-flex justify-content-between align-items-center">
                 <h3>{{ $t('REPORTS.subscriptionHeading') }}</h3>
-                <div class="sort">
-                  <img src="../../../src/assets/images/icons/sort.svg"/>
-                  <select>
-                    <option value="" selected disabled>{{ $t('REPORTS.export_to') }}</option>
-                    <option v-for="(item, index) in exportArray" :id="item.id" :value="item.value"
-                            :key="index">
-                      {{ $i18n.locale === 'ar' ? item.name : item.nameEn }}
-                    </option>
-                  </select>
-                </div>
+                <b-dropdown no-caret>
+                  <template #button-content>
+                    <div class="sort">
+                      <img src="../../../src/assets/images/icons/sort.svg"/>
+                      <div>
+                        {{ $t('REPORTS.export_to') }}
+                      </div>
+                    </div>
+                  </template>
+                  <b-dropdown-item>
+                    <export-excel
+                      ref="exportExcel"
+                      :fields="subscriptionReportFields"
+                      :data="subscriptionReportList">
+                      <img src="@/assets/images/icons/xls.png">{{ $t('REPORTS.exportExcel') }}
+                    </export-excel>
+                  </b-dropdown-item>
+                </b-dropdown>
               </div>
               <b-row>
                 <b-col lg="12">
@@ -114,6 +122,40 @@ export default {
       collapsed: false,
       loading: false,
       activeTap: 1,
+      subscriptionsExport: [],
+      subscriptionReportFields: {
+        "country": "country.name",
+        "package": "package.name",
+        "school": "school.name",
+        "school group": "schoolGroup.name",
+        "study year": "studyYear.name",
+        "package discount": "package_discount",
+        "price after discount": "price_after_discount",
+        "levels": {
+          field: "levels",
+          callback: (value) => {
+            let levelNames = []
+            levelNames.push(...value)
+            levelNames = levelNames.map((item)=>{
+              return item.name
+            })
+            return [...levelNames]
+          }
+        },
+        "terms": {
+          field: "terms",
+          callback: (value) => {
+            let termsNames = []
+            termsNames.push(...value)
+            termsNames = termsNames.map((item)=>{
+              return item.name
+            })
+            return [...termsNames]
+          }
+        },
+        "start subscription":"start_subscription",
+        "end subscription":"end_subscription",
+      },
       subscriptionReportSearch: [
         {
           key: "study_year_id",
@@ -136,7 +178,6 @@ export default {
           label: this.$t("TABLE_FIELDS.countryName"),
           options: [],
           deselectFromDropdown: true,
-          disabled: true,
           value: "",
           rules: "",
         },
@@ -149,7 +190,6 @@ export default {
           label: this.$t("TABLE_FIELDS.schoolGroups"),
           options: [],
           deselectFromDropdown: true,
-          disabled: true,
           value: "",
           rules: "",
         },
@@ -188,7 +228,6 @@ export default {
           label: this.$t("REPORTS.levels"),
           options: [],
           deselectFromDropdown: true,
-          disabled: true,
           value: "",
           rules: "",
         },
@@ -201,7 +240,6 @@ export default {
           label: this.$t("MISSIONS.terms"),
           options: [],
           deselectFromDropdown: true,
-          disabled: true,
           value: "",
           rules: "",
         },
@@ -367,27 +405,12 @@ export default {
       this.getSubscriptionsReportChart()
     },
     handleInput(key, value) {
-      if (key === 'study_year_id' && value !== '') {
-        this.subscriptionReportSearch[1].disabled = false;
-        getALLCountriesForReports(this.subscriptionReportSearch, 'country_id', value)
-      } else if (key === 'country_id' && value !== '') {
-        this.subscriptionReportSearch[2].disabled = false;
+      if (key === 'country_id' && value !== '') {
         this.subscriptionReportSearch[4].disabled = false;
-        getALLSchoolGroupsForReports(this.subscriptionReportSearch, 'school_group_id', this.subscriptionReportSearch[0].value, this.subscriptionReportSearch[1].value)
         getPackage(this.subscriptionReportSearch, 'package_id', this.subscriptionReportSearch[1].value, this.subscriptionReportSearch[2].value, this.subscriptionReportSearch[4].value)
       } else if (key === 'school_group_id' && value !== '') {
         this.subscriptionReportSearch[3].disabled = false;
-        this.subscriptionReportSearch[4].disabled = false;
         getAllSchools(this.subscriptionReportSearch, 'school_id', this.subscriptionReportSearch[0].value, this.subscriptionReportSearch[1].value, this.subscriptionReportSearch[2].value)
-        getPackage(this.subscriptionReportSearch, 'package_id', this.subscriptionReportSearch[1].value, this.subscriptionReportSearch[2].value, this.subscriptionReportSearch[4].value)
-      } else if (key === 'school_id' && value !== '') {
-        this.subscriptionReportSearch[4].disabled = false;
-        getPackage(this.subscriptionReportSearch, 'package_id', this.subscriptionReportSearch[1].value, this.subscriptionReportSearch[2].value, this.subscriptionReportSearch[3].value)
-      } else if (key === 'package_id' && value !== '') {
-        this.subscriptionReportSearch[5].disabled = false;
-        this.subscriptionReportSearch[6].disabled = false;
-        getAllLevelsForReports(this.subscriptionReportSearch, 'level_id', this.subscriptionReportSearch[4].value, this.subscriptionReportSearch[3].value)
-        geAllTermsForReports(this.subscriptionReportSearch, 'term_id', this.subscriptionReportSearch[4].value, this.subscriptionReportSearch[3].value)
       }
     },
     getSubscriptionReport(paramsWithSearch) {
@@ -429,6 +452,10 @@ export default {
   },
   mounted() {
     getStudyYear(this.subscriptionReportSearch, 'study_year_id')
+    getALLCountriesForReports(this.subscriptionReportSearch, 'country_id')
+    getALLSchoolGroupsForReports(this.subscriptionReportSearch, 'school_group_id')
+    getAllLevelsForReports(this.subscriptionReportSearch, 'level_id')
+    geAllTermsForReports(this.subscriptionReportSearch, 'term_id')
     this.getSubscriptionReport()
     this.getSubscriptionsReportChart()
   }
