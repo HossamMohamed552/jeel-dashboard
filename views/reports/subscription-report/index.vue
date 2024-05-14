@@ -56,6 +56,7 @@
                     <export-excel
                       ref="exportExcel"
                       :fields="subscriptionReportFields"
+                      :fetch="getAllSubscriptionReports"
                       :data="subscriptionReportList">
                       <img src="@/assets/images/icons/xls.png">{{ $t('REPORTS.exportExcel') }}
                     </export-excel>
@@ -105,7 +106,7 @@ import {
   geAllTermsForReports,
   getALLCountriesForReports, getAllLevelsForReports,
   getALLSchoolGroupsForReports,
-  getAllSchools, getPackage, getStudyYear
+  getAllSchools, getAllSubscriptionsType, getPackage, getStudyYear
 } from "@/services/dropdownService";
 import {
   getJeelAdminReportChartRequest,
@@ -136,7 +137,7 @@ export default {
           callback: (value) => {
             let levelNames = []
             levelNames.push(...value)
-            levelNames = levelNames.map((item)=>{
+            levelNames = levelNames.map((item) => {
               return item.name
             })
             return [...levelNames]
@@ -147,14 +148,14 @@ export default {
           callback: (value) => {
             let termsNames = []
             termsNames.push(...value)
-            termsNames = termsNames.map((item)=>{
+            termsNames = termsNames.map((item) => {
               return item.name
             })
             return [...termsNames]
           }
         },
-        "start subscription":"start_subscription",
-        "end subscription":"end_subscription",
+        "start subscription": "start_subscription",
+        "end subscription": "end_subscription",
       },
       subscriptionReportSearch: [
         {
@@ -238,6 +239,18 @@ export default {
           optionValue: "name",
           listen: "id",
           label: this.$t("MISSIONS.terms"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "",
+        },
+        {
+          key: "status",
+          col: "3",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: this.$t("REPORTS.status"),
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -396,6 +409,8 @@ export default {
   },
   methods: {
     handleCancel() {
+      this.subscriptionReportSearch.map(field => field.value = "")
+      this.searchWithPagination = {}
       this.getSubscriptionReport()
       this.getSubscriptionsReportChart()
     },
@@ -415,9 +430,18 @@ export default {
     },
     getSubscriptionReport(paramsWithSearch) {
       const params = {...paramsWithSearch, ...this.searchWithPagination};
+      this.filterParams = params
       this.ApiService(getSubscriptionsRequest(params)).then(response => {
         this.subscriptionReportList = response.data.data;
         this.totalNumber = response.data.meta.total;
+      })
+    },
+    getAllSubscriptionReports() {
+      return this.ApiService(getSubscriptionsRequest({
+        ...this.filterParams,
+        list_all: true
+      })).then(response => {
+        return this.subscriptionReportList = response.data.data;
       })
     },
     setData() {
@@ -456,6 +480,7 @@ export default {
     getALLSchoolGroupsForReports(this.subscriptionReportSearch, 'school_group_id')
     getAllLevelsForReports(this.subscriptionReportSearch, 'level_id')
     geAllTermsForReports(this.subscriptionReportSearch, 'term_id')
+    getAllSubscriptionsType(this.subscriptionReportSearch, 'status')
     this.getSubscriptionReport()
     this.getSubscriptionsReportChart()
   }

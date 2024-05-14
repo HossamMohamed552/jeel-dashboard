@@ -62,6 +62,7 @@ export default {
         {key: "question", label: "نص السؤال"},
         {key: "questionType.name", label: "نوع السؤال"},
         {key: "subQuestionType.name", label: "نوع السؤال الفرعى"},
+        {key: "lesson.name", label: this.$i18n.t("TABLE_FIELDS.lesson")},
         {key: "questionDifficulty", label: "مستوى الصعوبة"},
         {key: "actions", label: "الإجراء"},
       ],

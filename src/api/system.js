@@ -103,3 +103,8 @@ export const getAllPrizeSeasonalMissionTypeRequest = (params) => ({
   url: `system_codes/prize_seasonal_mission/type`,
   config: { params },
 });
+export const getAllSubscriptionsTypeRequest = (params) => ({
+  method: "get",
+  url: `system_codes/subscriptions_type/type`,
+  config: { params },
+});

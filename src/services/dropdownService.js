@@ -13,7 +13,7 @@ import {
   getLibraryTypeRequest, // نوع المحتوى ( مكتبة )
   getLibraryContentRequest, // المحتوى ( مكتبة )
   getCompetitionLibraryContentRequest,
-  getCompetitionCharacterContentRequest,
+  getCompetitionCharacterContentRequest, getAllSubscriptionsTypeRequest,
 } from "@/api/system";
 import {
   geTermsRequest, // الترم الدراسي
@@ -138,6 +138,9 @@ export async function geAllTermsForReports(array, key,packageId,schoolId) {
     package_id: packageId,
     school_id: schoolId,
   }), key);
+}
+export async function getAllSubscriptionsType(array, key,packageId,schoolId) {
+  await fetchDataAndUpdateOptions(array, getAllSubscriptionsTypeRequest(), key);
 }
 export async function getAllSchoolsBySchoolGroup(array, key, id) {
   await fetchDataAndUpdateOptions(array, getSingleSchoolGroupRequest(id), key);

@@ -102,7 +102,7 @@ export default [
     component: () =>
       import("../../../views/teacher/teacher-mission-revision/view-mission-content/index.vue"),
     meta: {
-      breadcrumb: " تفاصبل المهام الدراسية",
+      breadcrumb: " تفاصيل المهام الدراسية",
       preLabel: "المهام الدراسية",
       preLink: "/dashboard/teacher-mission",
     },

@@ -266,13 +266,16 @@ export default {
   },
   methods: {
     handleCancel() {
-      this.generalReportSearch.map((field) => (field.value = ""));
+      this.generalReportSearch.map(field => field.value = "")
+      this.searchWithPagination = {}
       this.getJeelAdminReportStatistics()
       this.getJeelAdminReportChart()
+      this.getJeelAdminReportRoles()
     },
     onSubmit(values) {
       this.getJeelAdminReportStatistics(values)
       this.getJeelAdminReportChart(values)
+      this.getJeelAdminReportRoles(values)
     },
     handleInput(key, value) {
       if (key === 'school_group_id' && value !== '') {
@@ -301,7 +304,8 @@ export default {
         return Object.assign(item, {data: this.dataForChart})
       })
     },
-    getJeelAdminReportStatistics(params) {
+    getJeelAdminReportStatistics(paramsWithSearch) {
+      const params = {...paramsWithSearch, ...this.searchWithPagination};
       this.ApiService(getJeelAdminReportStatisticsRequest(params)).then((response) => {
         let data = response.data.data
         this.generalStatisticsExport.push(data)
@@ -320,7 +324,8 @@ export default {
         }
       })
     },
-    getJeelAdminReportChart(params) {
+    getJeelAdminReportChart(paramsWithSearch) {
+      const params = {...paramsWithSearch, ...this.searchWithPagination};
       this.loadingChart = false
       this.ApiService(getJeelAdminReportChartRequest(params)).then((response) => {
         this.dataForChart = response.data.data
@@ -330,7 +335,8 @@ export default {
         this.loadingChart = true
       })
     },
-    getJeelAdminReportRoles(params) {
+    getJeelAdminReportRoles(paramsWithSearch) {
+      const params = {...paramsWithSearch, ...this.searchWithPagination};
       this.ApiService(getJeelAdminReportRolesRequest(params)).then((response) => {
         for (const [key, value] of Object.entries(response.data.data)) {
           this.roleStatistics.push({name: key, percentage: value})
