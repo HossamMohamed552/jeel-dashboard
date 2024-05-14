@@ -124,7 +124,7 @@ export default [
     name: "mission-detail",
     component: () => import("../../../views/super-mission/mission-detail/index.vue"),
     meta: {
-      breadcrumb: " تفاصبل المهام الدراسية",
+      breadcrumb: " تفاصيل المهام الدراسية",
       preLabel: "المهام",
       preLink: "/dashboard/super-mission",
     },

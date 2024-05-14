@@ -15,7 +15,7 @@
                     :label="$t('OUTCOME.NAME_2')"
                     :name="$t('OUTCOME.NAME_2')"
                     placeholder="أدخل اسم المخرج التعليمي"
-                    :rules="'required|max:100'"
+                    :rules="'required|max:150'"
                   ></TextField>
                 </div>
               </b-col>
