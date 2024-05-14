@@ -13,8 +13,9 @@
             <b-col lg="12">
               <validation-observer v-slot="{ invalid }" ref="schoolsUsersSearch">
                 <GenericForm
-                  :schema="generalReportSearch"
+                  :schema="missionsReportSearch"
                   @onSubmit="onSubmit"
+                  @handleCancel="handleCancel"
                   :loading="loading"
                   :submitButton="$t('BUTTONS.SEARCH')"
                   :cancelButton="$t('BUTTONS.RECOVERY')"
@@ -54,7 +55,7 @@
                     <export-excel
                       ref="exportExcel"
                       :fields="missionsReportFields"
-                      :data="missionsReportList">
+                      :fetch="getAllMissionsReports">
                       <img src="@/assets/images/icons/xls.png">{{ $t('REPORTS.exportExcel') }}
                     </export-excel>
                   </b-dropdown-item>
@@ -104,6 +105,13 @@ import {
   getSubscriptionsChartRequest,
   getSubscriptionsRequest
 } from "@/api/reports";
+import {
+  geAllTermsForReports,
+  getALLCountriesForReports, getAllLevelsForReports, getALLSchoolGroupsForReports,
+  getAllSchools,
+  getPackage,
+  getStudyYear
+} from "@/services/dropdownService";
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 export default {
@@ -115,18 +123,18 @@ export default {
       loading: false,
       loadingChart: false,
       activeTap: 1,
-      generalReportSearch: [
+      missionsReportSearch: [
         {
           key: "study_year_id",
           col: "3",
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("studyYear.name"),
+          label: this.$t("TABLE_FIELDS.studyYear"),
           options: [],
           deselectFromDropdown: true,
           value: "",
-          rules: "",
+          rules: ''
         },
         {
           key: "country_id",
@@ -134,7 +142,7 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("country.name"),
+          label: this.$t("TABLE_FIELDS.countryName"),
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -146,7 +154,7 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("schoolGroup.name"),
+          label: this.$t("TABLE_FIELDS.schoolGroups"),
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -158,7 +166,32 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("school.name"),
+          label: this.$t("TABLE_FIELDS.schools"),
+          options: [],
+          deselectFromDropdown: true,
+          disabled: true,
+          value: "",
+          rules: "",
+        },
+        {
+          key: "level_id",
+          col: "3",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: this.$t("REPORTS.levels"),
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "",
+        },
+        {
+          key: "term_id",
+          col: "3",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: this.$t("MISSIONS.terms"),
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -218,6 +251,7 @@ export default {
         },
       ],
       missionsReportList: [],
+      missionsSearchFields: [],
       missionsReportFields: {
         "country": "country.name",
         "school": "school.name",
@@ -258,7 +292,8 @@ export default {
         },
         "missions count": "missions_count",
       },
-      totalNumber: 0
+      totalNumber: 0,
+      searchWithPagination:{},
     }
   },
   watch: {
@@ -278,7 +313,7 @@ export default {
       if (newVal) {
         this.setData()
       }
-    }
+    },
   },
   computed: {
     chartData() {
@@ -333,14 +368,37 @@ export default {
     },
   },
   methods: {
+    handleCancel() {
+      this.missionsReportSearch.map(field => field.value = "")
+      this.searchWithPagination = {}
+      this.getMissionsReport()
+      this.getMissionsReportChart()
+    },
+    handleInput(key, value) {
+      if (key === 'school_group_id' && value !== '') {
+        this.missionsReportSearch[3].disabled = false;
+        getAllSchools(this.missionsReportSearch, 'school_id', this.missionsReportSearch[0].value, this.missionsReportSearch[1].value, this.missionsReportSearch[2].value)
+      }
+    },
     onSubmit(values) {
-
+      this.searchWithPagination = values;
+      this.getMissionsReport()
+      this.getMissionsReportChart()
     },
     getMissionsReport(paramsWithSearch) {
       const params = {...paramsWithSearch, ...this.searchWithPagination};
+      this.filterParams = params
       this.ApiService(getMissionsRequest(params)).then(response => {
         this.missionsReportList = response.data.data;
         this.totalNumber = response.data.meta.total;
+      })
+    },
+    getAllMissionsReports(){
+      return this.ApiService(getMissionsRequest({
+        ...this.filterParams,
+        list_all: true
+      })).then(response => {
+        return this.missionsReportList = response.data.data;
       })
     },
     getMissionsReportChart(paramsWithSearch) {
@@ -364,6 +422,11 @@ export default {
     },
   },
   mounted() {
+    getStudyYear(this.missionsReportSearch, 'study_year_id')
+    getALLCountriesForReports(this.missionsReportSearch, 'country_id')
+    getALLSchoolGroupsForReports(this.missionsReportSearch, 'school_group_id')
+    getAllLevelsForReports(this.missionsReportSearch, 'level_id')
+    geAllTermsForReports(this.missionsReportSearch, 'term_id')
     this.getMissionsReportChart()
     this.getMissionsReport()
   }

@@ -700,7 +700,8 @@
     "students": "الطلاب",
     "parents": "أولياء الأمور",
     "exportExcel": "تصدير ل أكسيل",
-    "exportPdf": "تصدير ل pdf"
+    "exportPdf": "تصدير ل pdf",
+    "status": "حالة الإشتراك"
   },
   "permissions": "الصلاحيات",
   "showDetails": "عرض تفاصيل المستخدم",
