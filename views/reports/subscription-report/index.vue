@@ -61,6 +61,11 @@
                       <img src="@/assets/images/icons/xls.png">{{ $t('REPORTS.exportExcel') }}
                     </export-excel>
                   </b-dropdown-item>
+                  <b-dropdown-item @click="generatePdf">
+                    <div class="mt-3">
+                      <img src="@/assets/images/icons/pdf.png">{{ $t('REPORTS.exportPdf') }}
+                    </div>
+                  </b-dropdown-item>
                 </b-dropdown>
               </div>
               <b-row>
@@ -83,6 +88,46 @@
             </div>
           </transition-group>
         </div>
+        <VueHtml2pdf
+          :show-layout="false"
+          :float-layout="true"
+          :enable-download="true"
+          :preview-modal="false"
+          :paginate-elements-by-height="50"
+          filename="myPDF"
+          :pdf-quality="2"
+          :manual-pagination="true"
+          pdf-format="a4"
+          pdf-orientation="landscape"
+          pdf-content-width="100%"
+          ref="html2Pdf"
+        >
+          <section slot="pdf-content" class="pdf-content">
+            <!-- PDF Content Here -->
+            <div class="header">
+              <b-row>
+                <b-col v-for="headerItem in subscriptionReportListHeaders">
+                  <span>{{headerItem.label}}</span>
+                </b-col>
+              </b-row>
+            </div>
+            <b-row v-for="(subscription,index) in subscriptionReportList" :key="subscription.id" class="table-item" :class="index+1 % 5 === 5 ? 'html2pdf__page-break':''">
+              <b-col><span>{{subscription.studyYear.name}}</span></b-col>
+              <b-col><span>{{subscription.country.name}}</span></b-col>
+              <b-col><span>{{subscription.schoolGroup.name}}</span></b-col>
+              <b-col><span>{{subscription.school.name}}</span></b-col>
+              <b-col><span>{{subscription.package.name}}</span></b-col>
+              <b-col><span v-for="level in subscription.levels">{{level.name}}</span></b-col>
+              <b-col class="terms"><span v-for="term in subscription.terms">{{term.name}}</span></b-col>
+              <b-col><span>{{subscription.start_subscription}}</span></b-col>
+              <b-col><span>{{subscription.end_subscription}}</span></b-col>
+            </b-row>
+            <div class="html2pdf__page-break"/>
+            <div class="chart">
+              <Bar v-if="loadingChart" :chart-data="chartData" :options="chartOptions"/>
+            </div>
+          </section>
+        </VueHtml2pdf>
       </div>
     </section>
   </section>
@@ -293,10 +338,6 @@ export default {
       searchWithPagination: {},
       subscriptionReportListHeaders: [
         {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
           key: "studyYear.name",
           label: this.$i18n.t("TABLE_FIELDS.studyYear"),
         },
@@ -322,7 +363,7 @@ export default {
         },
         {
           key: "terms",
-          label: this.$i18n.t("TABLE_FIELDS.jeel_library_level"),
+          label: this.$i18n.t("MISSIONS.terms"),
         },
         {
           key: "start_subscription",
@@ -408,16 +449,8 @@ export default {
     },
   },
   methods: {
-    handleCancel() {
-      this.subscriptionReportSearch.map(field => field.value = "")
-      this.searchWithPagination = {}
-      this.getSubscriptionReport()
-      this.getSubscriptionsReportChart()
-    },
-    onSubmit(values) {
-      this.searchWithPagination = values;
-      this.getSubscriptionReport()
-      this.getSubscriptionsReportChart()
+    toggleCollapsed() {
+      this.collapsed = !this.collapsed;
     },
     handleInput(key, value) {
       if (key === 'country_id' && value !== '') {
@@ -428,20 +461,23 @@ export default {
         getAllSchools(this.subscriptionReportSearch, 'school_id', this.subscriptionReportSearch[0].value, this.subscriptionReportSearch[1].value, this.subscriptionReportSearch[2].value)
       }
     },
+    onSubmit(values) {
+      this.searchWithPagination = values;
+      this.getSubscriptionReport()
+      this.getSubscriptionsReportChart()
+    },
+    handleCancel() {
+      this.subscriptionReportSearch.map(field => field.value = "")
+      this.searchWithPagination = {}
+      this.getSubscriptionReport()
+      this.getSubscriptionsReportChart()
+    },
     getSubscriptionReport(paramsWithSearch) {
       const params = {...paramsWithSearch, ...this.searchWithPagination};
       this.filterParams = params
       this.ApiService(getSubscriptionsRequest(params)).then(response => {
         this.subscriptionReportList = response.data.data;
         this.totalNumber = response.data.meta.total;
-      })
-    },
-    getAllSubscriptionReports() {
-      return this.ApiService(getSubscriptionsRequest({
-        ...this.filterParams,
-        list_all: true
-      })).then(response => {
-        return this.subscriptionReportList = response.data.data;
       })
     },
     setData() {
@@ -470,8 +506,16 @@ export default {
         this.loadingChart = true
       })
     },
-    toggleCollapsed() {
-      this.collapsed = !this.collapsed;
+    getAllSubscriptionReports() {
+      return this.ApiService(getSubscriptionsRequest({
+        ...this.filterParams,
+        list_all: true
+      })).then(response => {
+        return this.subscriptionReportList = response.data.data;
+      })
+    },
+    generatePdf() {
+      this.$refs.html2Pdf.generatePdf()
     },
   },
   mounted() {
