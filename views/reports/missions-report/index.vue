@@ -15,6 +15,7 @@
                 <GenericForm
                   :schema="missionsReportSearch"
                   @onSubmit="onSubmit"
+                  @handleInput="handleInput"
                   @handleCancel="handleCancel"
                   :loading="loading"
                   :submitButton="$t('BUTTONS.SEARCH')"
@@ -59,6 +60,11 @@
                       <img src="@/assets/images/icons/xls.png">{{ $t('REPORTS.exportExcel') }}
                     </export-excel>
                   </b-dropdown-item>
+                  <b-dropdown-item @click="generatePdf">
+                    <div class="mt-3">
+                      <img src="@/assets/images/icons/pdf.png">{{ $t('REPORTS.exportPdf') }}
+                    </div>
+                  </b-dropdown-item>
                 </b-dropdown>
               </div>
               <b-row>
@@ -81,6 +87,183 @@
             </div>
           </transition-group>
         </div>
+        <VueHtml2pdf
+          :show-layout="false"
+          :float-layout="true"
+          :enable-download="true"
+          :preview-modal="false"
+          :paginate-elements-by-height="50"
+          :filename="pdfName"
+          :pdf-quality="2"
+          :manual-pagination="true"
+          pdf-format="a4"
+          pdf-orientation="landscape"
+          pdf-content-width="100%"
+          ref="html2Pdf"
+        >
+          <section slot="pdf-content" class="pdf-content">
+            <!-- PDF Content Here -->
+            <div class="filter">
+              <b-row>
+                <b-col lg="12" class="d-flex justify-content-center align-items-center my-2">
+                  <h5>{{ $t('REPORTS.missionsHeading') }}</h5>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{
+                      missionReportListHeaders[0].label
+                    }}: {{ valuesOfAdvancedSearch.study_year_id }}</span>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{
+                      missionReportListHeaders[1].label
+                    }}: {{ valuesOfAdvancedSearch.country_id }}</span>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{
+                      missionReportListHeaders[2].label
+                    }}: {{ valuesOfAdvancedSearch.school_group_id }}</span>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{
+                      missionReportListHeaders[3].label
+                    }}: {{ valuesOfAdvancedSearch.school_id }}</span>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{
+                      missionReportListHeaders[4].label
+                    }} : {{ valuesOfAdvancedSearch.level_id }}</span>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{
+                      missionReportListHeaders[5].label
+                    }} : {{ valuesOfAdvancedSearch.term_id }}</span>
+                </b-col>
+              </b-row>
+            </div>
+            <div class="header">
+              <b-row>
+                <b-col>
+                  <span>{{ missionReportListHeaders[0].label }}</span>
+                </b-col>
+                <b-col lg="1">
+                  <span>{{ missionReportListHeaders[1].label }}</span>
+                </b-col>
+                <b-col>
+                  <span>{{ missionReportListHeaders[2].label }}</span>
+                </b-col>
+                <b-col>
+                  <span>{{ missionReportListHeaders[3].label }}</span>
+                </b-col>
+                <b-col>
+                  <span>{{ missionReportListHeaders[4].label }}</span>
+                </b-col>
+                <b-col>
+                  <span>{{ missionReportListHeaders[5].label }}</span>
+                </b-col>
+                <b-col>
+                  <span>{{ missionReportListHeaders[6].label }}</span>
+                </b-col>
+                <b-col>
+                  <span>{{ missionReportListHeaders[7].label }}</span>
+                </b-col>
+                <b-col>
+                  <span>{{ missionReportListHeaders[8].label }}</span>
+                </b-col>
+              </b-row>
+            </div>
+            <div v-for="(mission,index) in missionsReportList" :key="mission.id"
+                 class="table-item" :class="index+1 % 7 === 7 ? 'html2pdf__page-break':''">
+              <div v-if="index+1 % 8 === 8">
+                <div class="filter">
+                  <b-row>
+                    <b-col lg="12" class="d-flex justify-content-center align-items-center my-2">
+                      <h5>{{ $t('REPORTS.missionsHeading') }}</h5>
+                    </b-col>
+                    <b-col lg="3">
+                  <span>{{
+                      missionReportListHeaders[0].label
+                    }}: {{ valuesOfAdvancedSearch.study_year_id }}</span>
+                    </b-col>
+                    <b-col lg="3">
+                  <span>{{
+                      missionReportListHeaders[1].label
+                    }}: {{ valuesOfAdvancedSearch.country_id }}</span>
+                    </b-col>
+                    <b-col lg="3">
+                  <span>{{
+                      missionReportListHeaders[2].label
+                    }}: {{ valuesOfAdvancedSearch.school_group_id }}</span>
+                    </b-col>
+                    <b-col lg="3">
+                  <span>{{
+                      missionReportListHeaders[3].label
+                    }}: {{ valuesOfAdvancedSearch.school_id }}</span>
+                    </b-col>
+                    <b-col lg="3">
+                  <span>{{
+                      missionReportListHeaders[4].label
+                    }} : {{ valuesOfAdvancedSearch.level_id }}</span>
+                    </b-col>
+                    <b-col lg="3">
+                  <span>{{
+                      missionReportListHeaders[5].label
+                    }} : {{ valuesOfAdvancedSearch.term_id }}</span>
+                    </b-col>
+                  </b-row>
+                </div>
+                <div class="header">
+                  <b-row>
+                    <b-col>
+                      <span>{{ missionReportListHeaders[0].label }}</span>
+                    </b-col>
+                    <b-col lg="1">
+                      <span>{{ missionReportListHeaders[1].label }}</span>
+                    </b-col>
+                    <b-col>
+                      <span>{{ missionReportListHeaders[2].label }}</span>
+                    </b-col>
+                    <b-col>
+                      <span>{{ missionReportListHeaders[3].label }}</span>
+                    </b-col>
+                    <b-col>
+                      <span>{{ missionReportListHeaders[4].label }}</span>
+                    </b-col>
+                    <b-col>
+                      <span>{{ missionReportListHeaders[5].label }}</span>
+                    </b-col>
+                    <b-col>
+                      <span>{{ missionReportListHeaders[6].label }}</span>
+                    </b-col>
+                    <b-col>
+                      <span>{{ missionReportListHeaders[7].label }}</span>
+                    </b-col>
+                    <b-col>
+                      <span>{{ missionReportListHeaders[8].label }}</span>
+                    </b-col>
+                  </b-row>
+                </div>
+              </div>
+              <b-row>
+                <b-col><span>{{ mission.studyYear.name }}</span></b-col>
+                <b-col lg="1"><span>{{ mission.country.name }}</span></b-col>
+                <b-col><span>{{ mission.schoolGroup.name }}</span></b-col>
+                <b-col><span>{{ mission.school.name }}</span></b-col>
+                <b-col><span v-for="level in mission.levels">{{ level.name }}</span></b-col>
+                <b-col class="terms"><span v-for="term in mission.terms">{{ term.name }}</span>
+                </b-col>
+                <b-col class="terms"><span
+                  v-for="learning in mission.learning_paths">{{ learning.name }}</span></b-col>
+                <b-col class="terms"><span
+                  v-for="supervisor in mission.supervisors">{{ supervisor.name }}</span></b-col>
+                <b-col><span>{{ mission.missions_count }}</span></b-col>
+              </b-row>
+            </div>
+            <div class="html2pdf__page-break"></div>
+            <div class="chart">
+              <Bar v-if="loadingChart" :chart-data="chartData" :options="chartOptions"/>
+            </div>
+          </section>
+        </VueHtml2pdf>
       </div>
     </section>
   </section>
@@ -102,14 +285,11 @@ import {
 } from 'chart.js'
 import {
   getMissionsChartRequest, getMissionsRequest,
-  getSubscriptionsChartRequest,
-  getSubscriptionsRequest
 } from "@/api/reports";
 import {
   geAllTermsForReports,
   getALLCountriesForReports, getAllLevelsForReports, getALLSchoolGroupsForReports,
   getAllSchools,
-  getPackage,
   getStudyYear
 } from "@/services/dropdownService";
 
@@ -123,6 +303,44 @@ export default {
       loading: false,
       loadingChart: false,
       activeTap: 1,
+      missionReportListHeaders: [
+        {
+          key: "studyYear.name",
+          label: this.$i18n.t("TABLE_FIELDS.studyYear"),
+        },
+        {
+          key: "country.name",
+          label: this.$i18n.t("TABLE_FIELDS.country"),
+        },
+        {
+          key: "schoolGroup.name",
+          label: this.$i18n.t("TABLE_FIELDS.school_group"),
+        },
+        {
+          key: "school.name",
+          label: this.$i18n.t("TABLE_FIELDS.school"),
+        },
+        {
+          key: "levels",
+          label: this.$i18n.t("TABLE_FIELDS.jeel_library_level"),
+        },
+        {
+          key: "terms",
+          label: this.$i18n.t("MISSIONS.terms"),
+        },
+        {
+          key: "learning_paths",
+          label: this.$i18n.t("TABLE_FIELDS.learning_paths"),
+        },
+        {
+          key: "supervisors",
+          label: this.$i18n.t("TABLE_FIELDS.supervisor"),
+        },
+        {
+          key: "missions_count",
+          label: this.$i18n.t("TABLE_FIELDS.missions_count"),
+        },
+      ],
       missionsReportSearch: [
         {
           key: "study_year_id",
@@ -198,6 +416,14 @@ export default {
           rules: "",
         },
       ],
+      valuesOfAdvancedSearch: {
+        study_year_id: "",
+        country_id: "",
+        school_group_id: "",
+        school_id: "",
+        level_id: "",
+        term_id: "",
+      },
       exportArray: [
         {
           id: 1,
@@ -293,7 +519,7 @@ export default {
         "missions count": "missions_count",
       },
       totalNumber: 0,
-      searchWithPagination:{},
+      searchWithPagination: {},
     }
   },
   watch: {
@@ -316,6 +542,9 @@ export default {
     },
   },
   computed: {
+    pdfName() {
+      return `${this.$t('REPORTS.missionsHeading')} - ${new Date().toLocaleString()}`
+    },
     chartData() {
       return {
         datasets: [
@@ -334,7 +563,7 @@ export default {
     chartOptions() {
       return {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         plugins: {
           legend: {
             display: true,
@@ -374,10 +603,19 @@ export default {
       this.getMissionsReport()
       this.getMissionsReportChart()
     },
-    handleInput(key, value) {
+    handleInput(key, value, _, options) {
+      console.log('hey')
       if (key === 'school_group_id' && value !== '') {
         this.missionsReportSearch[3].disabled = false;
         getAllSchools(this.missionsReportSearch, 'school_id', this.missionsReportSearch[0].value, this.missionsReportSearch[1].value, this.missionsReportSearch[2].value)
+      }
+      if (options) {
+        const itemValue = options?.filter((item) => {
+          return item.id === value
+        })
+        this.valuesOfAdvancedSearch[key] = itemValue ? itemValue[0]?.name : ""
+      } else {
+        this.valuesOfAdvancedSearch[key] = value
       }
     },
     onSubmit(values) {
@@ -393,7 +631,7 @@ export default {
         this.totalNumber = response.data.meta.total;
       })
     },
-    getAllMissionsReports(){
+    getAllMissionsReports() {
       return this.ApiService(getMissionsRequest({
         ...this.filterParams,
         list_all: true
@@ -411,6 +649,10 @@ export default {
       }).then(() => {
         this.loadingChart = true
       })
+    },
+    generatePdf() {
+      this.getAllMissionsReports()
+      this.$refs.html2Pdf.generatePdf()
     },
     setData() {
       this.chartData.datasets[0].data = this.dataForChart.map((item) => {

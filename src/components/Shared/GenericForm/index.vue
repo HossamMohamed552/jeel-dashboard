@@ -18,7 +18,7 @@
               :rules="field.rules"
               :deselectFromDropdown="field.deselectFromDropdown"
               :multiple="field.multiple"
-              @input="handleInput(field.key, field.value, field)"
+              @input="handleInput(field.key, field.value, field, field.options)"
               :placeholder="'إختر' + ' ' + field.label"
               :disabled="field.disabled"
             ></SelectSearch>
@@ -226,8 +226,8 @@ export default {
       this.updateFields();
       this.$emit("onSubmit", this.values);
     },
-    handleInput(key, value, field) {
-      this.$emit("handleInput", key, value, field, this.index);
+    handleInput(key, value, field, options) {
+      this.$emit("handleInput", key, value, field, options, this.index);
     },
     updateFields() {
       // Generic method to update createSchool object based on the fieldArray
