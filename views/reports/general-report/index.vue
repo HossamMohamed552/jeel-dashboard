@@ -59,6 +59,11 @@
                       <img src="@/assets/images/icons/xls.png">{{$t('REPORTS.exportExcel')}}
                     </export-excel>
                   </b-dropdown-item>
+                  <b-dropdown-item @click="generatePdf">
+                    <div class="mt-3">
+                      <img src="@/assets/images/icons/pdf.png">{{ $t('REPORTS.exportPdf') }}
+                    </div>
+                  </b-dropdown-item>
                 </b-dropdown>
               </div>
               <b-row>
@@ -106,6 +111,57 @@
             </div>
           </transition-group>
         </div>
+        <VueHtml2pdf
+          :show-layout="false"
+          :float-layout="true"
+          :enable-download="true"
+          :preview-modal="false"
+          :paginate-elements-by-height="50"
+          :filename="pdfName"
+          :pdf-quality="2"
+          :manual-pagination="true"
+          pdf-format="a4"
+          pdf-orientation="landscape"
+          pdf-content-width="100%"
+          ref="html2Pdf"
+        >
+          <section slot="pdf-content" class="pdf-content">
+            <!-- PDF Content Here -->
+            <div class="filter">
+              <b-row>
+                <b-col lg="12" class="d-flex justify-content-center align-items-center my-2">
+                  <h5>{{ $t('REPORTS.generalHeading') }}</h5>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{ $t(`TABLE_FIELDS.studyYear`) }}: {{ valuesOfAdvancedSearch.study_year_id }}</span>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{ $t(`TABLE_FIELDS.countryName`)}}: {{ valuesOfAdvancedSearch.country_id }}</span>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{ $t(`TABLE_FIELDS.schoolGroups`)}}: {{ valuesOfAdvancedSearch.school_group_id }}</span>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{ $t(`TABLE_FIELDS.schools`)}}: {{ valuesOfAdvancedSearch.school_id }}</span>
+                </b-col>
+              </b-row>
+            </div>
+            <b-row>
+              <b-col v-for="(item,index) in generalStatistics" lg="4" :key="index">
+                <div class="report-card mb-2" :class="checkType(item)">
+                  <div class="info">
+                    <p class="name">{{ $t(`REPORTS.${item.name}`) }}</p>
+                    <p class="number">{{ item.number }}</p>
+                  </div>
+                </div>
+              </b-col>
+            </b-row>
+            <div class="html2pdf__page-break"></div>
+            <div class="chart">
+              <Bar v-if="loadingChart" :chart-data="chartData" :chart-options="chartOptions"/>
+            </div>
+          </section>
+        </VueHtml2pdf>
       </div>
     </section>
   </section>
@@ -197,6 +253,12 @@ export default {
           rules: "",
         },
       ],
+      valuesOfAdvancedSearch: {
+        study_year_id: "",
+        country_id: "",
+        school_group_id: "",
+        school_id: "",
+      },
       exportArray: [
         {
           id: 1,
@@ -277,10 +339,18 @@ export default {
       this.getJeelAdminReportChart(values)
       this.getJeelAdminReportRoles(values)
     },
-    handleInput(key, value) {
+    handleInput(key, value,_,options) {
       if (key === 'school_group_id' && value !== '') {
         this.generalReportSearch[3].disabled = false;
         getAllSchools(this.generalReportSearch, 'school_id', this.generalReportSearch[0].value, this.generalReportSearch[1].value, this.generalReportSearch[2].value)
+      }
+      if (options) {
+        const itemValue = options?.filter((item) => {
+          return item.id === value
+        })
+        this.valuesOfAdvancedSearch[key] = itemValue ? itemValue[0]?.name : ""
+      } else {
+        this.valuesOfAdvancedSearch[key] = value
       }
     },
     toggleCollapsed() {
@@ -305,6 +375,7 @@ export default {
       })
     },
     getJeelAdminReportStatistics(paramsWithSearch) {
+      this.generalStatisticsExport = []
       const params = {...paramsWithSearch, ...this.searchWithPagination};
       this.ApiService(getJeelAdminReportStatisticsRequest(params)).then((response) => {
         let data = response.data.data
@@ -343,6 +414,9 @@ export default {
         }
       })
     },
+    generatePdf() {
+      this.$refs.html2Pdf.generatePdf()
+    },
   },
   watch: {
     chartData: {
@@ -364,6 +438,9 @@ export default {
     }
   },
   computed: {
+    pdfName() {
+      return `${this.$t('REPORTS.subscriptionHeading')} - ${new Date().toLocaleString()}`
+    },
     chartData() {
       return {
         datasets: [
@@ -409,7 +486,7 @@ export default {
     chartOptions() {
       return {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         plugins: {
           legend: {
             display: true,

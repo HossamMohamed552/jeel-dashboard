@@ -61,6 +61,11 @@
                       <img src="@/assets/images/icons/xls.png">{{ $t('REPORTS.exportExcel') }}
                     </export-excel>
                   </b-dropdown-item>
+                  <b-dropdown-item @click="generatePdf">
+                    <div class="mt-3">
+                      <img src="@/assets/images/icons/pdf.png">{{ $t('REPORTS.exportPdf') }}
+                    </div>
+                  </b-dropdown-item>
                 </b-dropdown>
               </div>
               <b-row>
@@ -83,6 +88,211 @@
             </div>
           </transition-group>
         </div>
+        <VueHtml2pdf
+          :show-layout="false"
+          :float-layout="true"
+          :enable-download="true"
+          :preview-modal="false"
+          :paginate-elements-by-height="50"
+          :filename="pdfName"
+          :pdf-quality="2"
+          :manual-pagination="true"
+          pdf-format="a4"
+          pdf-orientation="landscape"
+          pdf-content-width="100%"
+          ref="html2Pdf"
+        >
+          <section slot="pdf-content" class="pdf-content">
+            <!-- PDF Content Here -->
+            <div class="filter">
+              <b-row>
+                <b-col lg="12" class="d-flex justify-content-center align-items-center my-2">
+                  <h5>{{ $t('REPORTS.subscriptionHeading') }}</h5>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{
+                      subscriptionReportListHeaders[0].label
+                    }}: {{ valuesOfAdvancedSearch.study_year_id }}</span>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{
+                      subscriptionReportListHeaders[1].label
+                    }}: {{ valuesOfAdvancedSearch.country_id }}</span>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{
+                      subscriptionReportListHeaders[2].label
+                    }}: {{ valuesOfAdvancedSearch.school_group_id }}</span>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{
+                      subscriptionReportListHeaders[3].label
+                    }}: {{ valuesOfAdvancedSearch.school_id }}</span>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{
+                      subscriptionReportListHeaders[4].label
+                    }} : {{ valuesOfAdvancedSearch.package_id }}</span>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{
+                      subscriptionReportListHeaders[5].label
+                    }} : {{ valuesOfAdvancedSearch.level_id }}</span>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{
+                      subscriptionReportListHeaders[6].label
+                    }} : {{ valuesOfAdvancedSearch.term_id }}</span>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{
+                      subscriptionReportListHeaders[7].label
+                    }} : {{ valuesOfAdvancedSearch.start_date }}</span>
+                </b-col>
+                <b-col lg="3">
+                  <span>{{
+                      subscriptionReportListHeaders[8].label
+                    }} : {{ valuesOfAdvancedSearch.end_date }}</span>
+                </b-col>
+              </b-row>
+            </div>
+            <div class="header">
+              <b-row>
+                <b-col>
+                  <span>{{ subscriptionReportListHeaders[0].label }}</span>
+                </b-col>
+                <b-col lg="1">
+                  <span>{{ subscriptionReportListHeaders[1].label }}</span>
+                </b-col>
+                <b-col>
+                  <span>{{ subscriptionReportListHeaders[2].label }}</span>
+                </b-col>
+                <b-col lg="1">
+                  <span>{{ subscriptionReportListHeaders[3].label }}</span>
+                </b-col>
+                <b-col lg="1">
+                  <span>{{ subscriptionReportListHeaders[4].label }}</span>
+                </b-col>
+                <b-col>
+                  <span>{{ subscriptionReportListHeaders[5].label }}</span>
+                </b-col>
+                <b-col>
+                  <span>{{ subscriptionReportListHeaders[6].label }}</span>
+                </b-col>
+                <b-col>
+                  <span>{{ subscriptionReportListHeaders[7].label }}</span>
+                </b-col>
+                <b-col>
+                  <span>{{ subscriptionReportListHeaders[8].label }}</span>
+                </b-col>
+              </b-row>
+            </div>
+            <div v-for="(subscription,index) in subscriptionReportList" :key="subscription.id"
+                 class="table-item" :class="index+1 % 9 === 9 ? 'html2pdf__page-break':''">
+              <div v-if="index+1 % 10 === 10">
+                <div class="filter">
+                  <b-row>
+                    <b-col lg="12" class="d-flex justify-content-center align-items-center my-2">
+                      <h5>{{ $t('REPORTS.subscriptionHeading') }}</h5>
+                    </b-col>
+                    <b-col lg="3">
+                      <span>{{
+                          subscriptionReportListHeaders[0].label
+                        }}: {{ valuesOfAdvancedSearch.study_year_id }}</span>
+                    </b-col>
+                    <b-col lg="3">
+                      <span>{{
+                          subscriptionReportListHeaders[1].label
+                        }}: {{ valuesOfAdvancedSearch.country_id }}</span>
+                    </b-col>
+                    <b-col lg="3">
+                      <span>{{
+                          subscriptionReportListHeaders[2].label
+                        }}: {{ valuesOfAdvancedSearch.school_group_id }}</span>
+                    </b-col>
+                    <b-col lg="3">
+                      <span>{{
+                          subscriptionReportListHeaders[3].label
+                        }}: {{ valuesOfAdvancedSearch.school_id }}</span>
+                    </b-col>
+                    <b-col lg="3">
+                      <span>{{
+                          subscriptionReportListHeaders[4].label
+                        }} : {{ valuesOfAdvancedSearch.package_id }}</span>
+                    </b-col>
+                    <b-col lg="3">
+                      <span>{{
+                          subscriptionReportListHeaders[5].label
+                        }} : {{ valuesOfAdvancedSearch.level_id }}</span>
+                    </b-col>
+                    <b-col lg="3">
+                      <span>{{
+                          subscriptionReportListHeaders[6].label
+                        }} : {{ valuesOfAdvancedSearch.term_id }}</span>
+                    </b-col>
+                    <b-col lg="3">
+                      <span>{{
+                          subscriptionReportListHeaders[7].label
+                        }} : {{ valuesOfAdvancedSearch.start_date }}</span>
+                    </b-col>
+                    <b-col lg="3">
+                      <span>{{
+                          subscriptionReportListHeaders[8].label
+                        }} : {{ valuesOfAdvancedSearch.end_date }}</span>
+                    </b-col>
+                  </b-row>
+                </div>
+                <div class="header">
+                  <b-row>
+                    <b-col>
+                      <span>{{ subscriptionReportListHeaders[0].label }}</span>
+                    </b-col>
+                    <b-col lg="1">
+                      <span>{{ subscriptionReportListHeaders[1].label }}</span>
+                    </b-col>
+                    <b-col>
+                      <span>{{ subscriptionReportListHeaders[2].label }}</span>
+                    </b-col>
+                    <b-col lg="1">
+                      <span>{{ subscriptionReportListHeaders[3].label }}</span>
+                    </b-col>
+                    <b-col lg="1">
+                      <span>{{ subscriptionReportListHeaders[4].label }}</span>
+                    </b-col>
+                    <b-col>
+                      <span>{{ subscriptionReportListHeaders[5].label }}</span>
+                    </b-col>
+                    <b-col>
+                      <span>{{ subscriptionReportListHeaders[6].label }}</span>
+                    </b-col>
+                    <b-col>
+                      <span>{{ subscriptionReportListHeaders[7].label }}</span>
+                    </b-col>
+                    <b-col>
+                      <span>{{ subscriptionReportListHeaders[8].label }}</span>
+                    </b-col>
+                  </b-row>
+                </div>
+              </div>
+              <b-row>
+                <b-col><span>{{ subscription.studyYear.name }}</span></b-col>
+                <b-col lg="1"><span>{{ subscription.country.name }}</span></b-col>
+                <b-col><span>{{ subscription.schoolGroup.name }}</span></b-col>
+                <b-col lg="1"><span>{{ subscription.school.name }}</span></b-col>
+                <b-col lg="1"><span>{{ subscription.package.name }}</span></b-col>
+                <b-col><span v-for="level in subscription.levels">{{ level.name }}</span></b-col>
+                <b-col class="terms"><span v-for="term in subscription.terms">{{ term.name }}</span>
+                </b-col>
+                <b-col><span>{{ subscription.start_subscription }}</span></b-col>
+                <b-col><span>{{ subscription.end_subscription }}</span></b-col>
+              </b-row>
+            </div>
+            <div class="html2pdf__page-break"></div>
+            <div class="chart">
+              <Bar v-if="loadingChart" :chart-data="chartData" :options="chartOptions"/>
+            </div>
+          </section>
+        </VueHtml2pdf>
       </div>
     </section>
   </section>
@@ -109,7 +319,6 @@ import {
   getAllSchools, getAllSubscriptionsType, getPackage, getStudyYear
 } from "@/services/dropdownService";
 import {
-  getJeelAdminReportChartRequest,
   getSubscriptionsChartRequest,
   getSubscriptionsRequest
 } from "@/api/reports";
@@ -293,10 +502,6 @@ export default {
       searchWithPagination: {},
       subscriptionReportListHeaders: [
         {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
           key: "studyYear.name",
           label: this.$i18n.t("TABLE_FIELDS.studyYear"),
         },
@@ -322,7 +527,7 @@ export default {
         },
         {
           key: "terms",
-          label: this.$i18n.t("TABLE_FIELDS.jeel_library_level"),
+          label: this.$i18n.t("MISSIONS.terms"),
         },
         {
           key: "start_subscription",
@@ -334,6 +539,18 @@ export default {
         },
       ],
       loadingChart: false,
+      valuesOfAdvancedSearch: {
+        study_year_id: "",
+        country_id: "",
+        school_group_id: "",
+        school_id: "",
+        package_id: "",
+        level_id: "",
+        term_id: "",
+        status: "",
+        start_date: "",
+        end_date: ""
+      }
     }
   },
   watch: {
@@ -374,7 +591,7 @@ export default {
     chartOptions() {
       return {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         plugins: {
           legend: {
             display: true,
@@ -406,20 +623,15 @@ export default {
         }
       }
     },
+    pdfName() {
+      return `${this.$t('REPORTS.subscriptionHeading')} - ${new Date().toLocaleString()}`
+    }
   },
   methods: {
-    handleCancel() {
-      this.subscriptionReportSearch.map(field => field.value = "")
-      this.searchWithPagination = {}
-      this.getSubscriptionReport()
-      this.getSubscriptionsReportChart()
+    toggleCollapsed() {
+      this.collapsed = !this.collapsed;
     },
-    onSubmit(values) {
-      this.searchWithPagination = values;
-      this.getSubscriptionReport()
-      this.getSubscriptionsReportChart()
-    },
-    handleInput(key, value) {
+    handleInput(key, value, _, options) {
       if (key === 'country_id' && value !== '') {
         this.subscriptionReportSearch[4].disabled = false;
         getPackage(this.subscriptionReportSearch, 'package_id', this.subscriptionReportSearch[1].value, this.subscriptionReportSearch[2].value, this.subscriptionReportSearch[4].value)
@@ -427,6 +639,26 @@ export default {
         this.subscriptionReportSearch[3].disabled = false;
         getAllSchools(this.subscriptionReportSearch, 'school_id', this.subscriptionReportSearch[0].value, this.subscriptionReportSearch[1].value, this.subscriptionReportSearch[2].value)
       }
+      if (options) {
+        const itemValue = options?.filter((item) => {
+          return item.id === value
+        })
+        this.valuesOfAdvancedSearch[key] = itemValue ? itemValue[0]?.name : ""
+      } else {
+        this.valuesOfAdvancedSearch[key] = value
+      }
+
+    },
+    onSubmit(values) {
+      this.searchWithPagination = values;
+      this.getSubscriptionReport()
+      this.getSubscriptionsReportChart()
+    },
+    handleCancel() {
+      this.subscriptionReportSearch.map(field => field.value = "")
+      this.searchWithPagination = {}
+      this.getSubscriptionReport()
+      this.getSubscriptionsReportChart()
     },
     getSubscriptionReport(paramsWithSearch) {
       const params = {...paramsWithSearch, ...this.searchWithPagination};
@@ -434,14 +666,6 @@ export default {
       this.ApiService(getSubscriptionsRequest(params)).then(response => {
         this.subscriptionReportList = response.data.data;
         this.totalNumber = response.data.meta.total;
-      })
-    },
-    getAllSubscriptionReports() {
-      return this.ApiService(getSubscriptionsRequest({
-        ...this.filterParams,
-        list_all: true
-      })).then(response => {
-        return this.subscriptionReportList = response.data.data;
       })
     },
     setData() {
@@ -470,8 +694,17 @@ export default {
         this.loadingChart = true
       })
     },
-    toggleCollapsed() {
-      this.collapsed = !this.collapsed;
+    getAllSubscriptionReports() {
+      return this.ApiService(getSubscriptionsRequest({
+        ...this.filterParams,
+        list_all: true
+      })).then(response => {
+        return this.subscriptionReportList = response.data.data;
+      })
+    },
+    generatePdf() {
+      this.getAllSubscriptionReports()
+      this.$refs.html2Pdf.generatePdf()
     },
   },
   mounted() {

@@ -1,6 +1,6 @@
 <template>
   <section class="list">
-    <div class="header">
+    <div :class="hasHeader? 'header' : ''">
       <div class="list-of-item">
         <p class="name-of-item" v-if="headerName">{{ headerName }}</p>
       </div>
@@ -531,6 +531,10 @@ export default {
     },
   },
   props: {
+    hasHeader:{
+      type: Boolean,
+      default: true,
+    },
     showDateRange: {
       type: Boolean,
       default: false,
