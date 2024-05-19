@@ -12,6 +12,7 @@
   }
   .header,
   .search-sort {
+    margin-bottom: 1.5rem;
     @include flexCenter(space-between);
 
     .list-of-item {
