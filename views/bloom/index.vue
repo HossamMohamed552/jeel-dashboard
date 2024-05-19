@@ -21,7 +21,7 @@
           @click="goToAddBloomCategoryRequest"
           v-if="user.permissions.includes(`add-bloomCategory`)"
         >
-          <img src="@/assets/images/icons/plus.svg" />
+          <img src="@/assets/images/icons/plus.svg"/>
           <span>{{ $t('BLOOM.ADD') }}</span>
         </Button>
       </template>
@@ -43,11 +43,12 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { getBloomCategoriesRequest, deleteBloomRequest } from "@/api/bloom.js";
+import {getBloomCategoriesRequest, deleteBloomRequest} from "@/api/bloom.js";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
+
 export default {
-  components: { Modal, ListItems, Button },
+  components: {Modal, ListItems, Button},
   data() {
     return {
       loading: false,
@@ -56,7 +57,12 @@ export default {
       packageSearchWord: "",
       bloomCategories: [],
       totalNumber: 0,
-      fieldsList: [
+      itemId: 0,
+    };
+  },
+  computed: {
+    fieldsList() {
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -69,11 +75,8 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-      itemId: 0,
-    };
-  },
-  computed: {
+      ]
+    },
     ...mapGetters(["user"]),
   },
   methods: {

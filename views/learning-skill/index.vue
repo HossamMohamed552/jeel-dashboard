@@ -21,8 +21,8 @@
           @click="goToAddLearningSkills"
           v-if="user.permissions.includes(`add-languageSkill`)"
         >
-          <img src="@/assets/images/icons/plus.svg" />
-          <span>{{$t('learningSkill.ADD')}}</span>
+          <img src="@/assets/images/icons/plus.svg"/>
+          <span>{{ $t('learningSkill.ADD') }}</span>
         </Button>
       </template>
     </ListItems>
@@ -43,12 +43,12 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { getLearningSkillsRequest, deleteLearningSkillRequest } from "@/api/learning-skill";
+import {getLearningSkillsRequest, deleteLearningSkillRequest} from "@/api/learning-skill";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
-  components: { Modal, ListItems, Button },
+  components: {Modal, ListItems, Button},
   data() {
     return {
       loading: false,
@@ -57,14 +57,6 @@ export default {
       groupSearchWord: "",
       LearningSkillsList: [],
       totalNumber: null,
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        { key: "name", label: this.$i18n.t("TABLE_FIELDS.skillType")  },
-        { key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions") },
-      ],
     };
   },
   methods: {
@@ -107,6 +99,13 @@ export default {
     },
   },
   computed: {
+    fieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t("TABLE_FIELDS.id")},
+        {key: "name", label: this.$i18n.t("TABLE_FIELDS.skillType")},
+        {key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions")},
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {

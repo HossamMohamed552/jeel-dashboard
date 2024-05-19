@@ -188,6 +188,9 @@ h3.heading {
   flex-direction: column;
   justify-content: flex-end;
   //gap: 1rem;
+  label{
+    text-transform: capitalize;
+  }
 }
 
 .add-edit-mission-form {
@@ -287,6 +290,7 @@ label {
 
   .heading {
     margin-bottom: 3.125rem;
+    text-transform: capitalize;
   }
 
   .hold-fields {
@@ -378,6 +382,9 @@ label {
 * {
   &:lang(ar) {
     font-family: "DiodrumArabic", sans-serif;
+  }
+  &:lang(en){
+    font-family: "Roboto", sans-serif !important;
   }
 }
 

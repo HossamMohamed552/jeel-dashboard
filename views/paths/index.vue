@@ -21,7 +21,7 @@
           @click="goToAddPath()"
           v-if="user.permissions.includes(`add-learningpath`)"
         >
-          <img src="@/assets/images/icons/plus.svg" />
+          <img src="@/assets/images/icons/plus.svg"/>
           <span>{{ $t('PATH.ADD_NEW') }}</span>
         </Button>
       </template>
@@ -42,13 +42,21 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { deleteLearningPathRequest, getLearningPathsRequest } from "@/api/learningPath";
+import {deleteLearningPathRequest, getLearningPathsRequest} from "@/api/learningPath";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
-  components: { Modal, ListItems, Button },
+  components: {Modal, ListItems, Button},
   computed: {
+    fieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t("TABLE_FIELDS.id")},
+        {key: "name", label: this.$i18n.t("TABLE_FIELDS.learning_path_name")},
+        {key: "audio", label: this.$i18n.t('TABLE_FIELDS.audio')},
+        {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
+      ]
+    },
     ...mapGetters(["user"]),
   },
   data() {
@@ -59,15 +67,6 @@ export default {
       groupSearchWord: "",
       pathsList: [],
       totalNumber: null,
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        { key: "name", label: this.$i18n.t("TABLE_FIELDS.learning_path_name") },
-        {key: "audio", label: this.$i18n.t('TABLE_FIELDS.audio')},
-        { key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions') },
-      ],
     };
   },
   methods: {
@@ -76,7 +75,7 @@ export default {
     },
     getPaths(event) {
       this.loading = true;
-      const params = !event ? { per_page: 10 } : event;
+      const params = !event ? {per_page: 10} : event;
       this.ApiService(getLearningPathsRequest(params))
         .then((response) => {
           this.pathsList = response.data.data;
@@ -102,9 +101,9 @@ export default {
     cancelWithConfirm() {
       this.ApiService(deleteLearningPathRequest(this.itemId)).then(() => {
         this.getPaths();
-      }).catch((error)=>{
+      }).catch((error) => {
         this.showModalFailed = error.response.data.code === 23000;
-      }).finally(()=>{
+      }).finally(() => {
         this.cancel();
       })
     },

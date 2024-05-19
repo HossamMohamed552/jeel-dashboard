@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة أهداف التعلم'"
+      :header-name="$t('OBJECTIVE.OBJECTIVE')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="objectiveCategories"
@@ -22,19 +22,19 @@
           v-if="user.permissions.includes(`add-objective`)"
         >
           <img src="@/assets/images/icons/plus.svg"/>
-          <span>إضافة هدف تعليمى</span>
+          <span>{{ $t('OBJECTIVE.ADD') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف الهدف التعليمى'"
-      :content-message-question="'هل انت متأكد من حذف الهدف التعليمى ؟'"
+      :content-message="$t('OBJECTIVE.delete_OBJECTIVE')"
+      :content-message-question="$t('OBJECTIVE.confirm_delete_OBJECTIVE')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+    <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>

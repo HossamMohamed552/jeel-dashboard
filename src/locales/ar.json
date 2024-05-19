@@ -497,7 +497,9 @@
     "videoNAME": "الدرس",
     "ENTER_LESSON_NAME": "أدخل اسم الدرس",
     "NAME_OF_LESSON": "الدرس التعليمي",
-    "selectLesson": "أختر الدرس"
+    "selectLesson": "أختر الدرس",
+    "delete_lesson": "حذف الدرس",
+    "confirm_delete_lesson": "هل انت متأكد من حذف الدرس ؟"
   },
   "QUIZZES": {
     "EDIT": "تعديل التمرين",
@@ -582,13 +584,19 @@
     "confirm_delete_learning_path": "هل انت متأكد من حذف المسار التعليمي ؟",
     "audio": "ملف الصوتى للمسار"
   },
+  "LESSON": {
+    "lesson": "قائمة الدروس التعليمية",
+    "ADD_NEW": "إضافة درس تعليمي"
+  },
   "OBJECTIVE": {
     "OBJECTIVE": "الأهداف التعليمية",
     "DETAILS": "تفاصيل الهدف التعليمى",
     "ADD": "اضافة هدف تعليمي",
     "EDIT": "تعديل هدف التعليمى",
     "NAME": "اسم الهدف",
-    "selectOBJECTIVE": "أختر هدف التعليمى"
+    "selectOBJECTIVE": "أختر هدف التعليمى",
+    "delete_OBJECTIVE": "حذف الهدف التعليمى",
+    "confirm_delete_OBJECTIVE": "هل انت متأكد من حذف الهدف التعليمى ؟"
   },
   "OUTCOME": {
     "OUTCOME": "مخرجات التعلم",

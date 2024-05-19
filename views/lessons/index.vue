@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة الدروس التعليمية'"
+      :header-name="$t('LESSONS.LESSONS')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="lessonsList"
@@ -22,13 +22,13 @@
           v-if="user.permissions.includes(`add-lesson`)"
         >
           <img src="@/assets/images/icons/plus.svg"/>
-          <span>إضافة درس تعليمي</span>
+          <span>{{$t('LESSONS.ADD')}}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف درس'"
-      :content-message-question="'هل انت متأكد من حذف الدرس؟'"
+      :content-message="$t('LESSONS.delete_lesson')"
+      :content-message-question="$t('LESSONS.confirm_delete_lesson')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -57,25 +57,18 @@ export default {
       lessonSearchWord: "",
       lessonsList: [],
       totalNumber: 0,
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "name",
-          label: this.$i18n.t("LESSONS.NAME"),
-        },
-        {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
       itemId: 0,
     };
   },
   computed: {
+    fieldsList(){
+      return [
+        {key: "vid", label: this.$i18n.t("TABLE_FIELDS.id")},
+        {key: "name", label: this.$i18n.t("LESSONS.NAME")},
+        {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
+        {key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions")},
+      ]
+    },
     ...mapGetters(['user'])
   },
   methods: {

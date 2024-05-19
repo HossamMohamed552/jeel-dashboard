@@ -52,9 +52,11 @@
   .router-link-exact-active,.currentRoute {
     color: #000 !important;
     font-weight: bold;
+    text-transform: capitalize;
   }
   .currentRoute{
     font-size: 1.9rem;
+    text-transform: capitalize;
   }
 }
 .hideBreadCrumbSuperVisorHome{
