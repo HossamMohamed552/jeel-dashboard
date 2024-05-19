@@ -71,7 +71,7 @@
                           <h6>المسار</h6>
                           <p>{{ path.name }}</p>
                         </b-col>
-                        <b-col lg="4">
+                        <b-col lg="3">
                           <div>
                             <h6>الفيديوهات</h6>
                             <span
@@ -83,13 +83,13 @@
                             >
                           </div>
                         </b-col>
-                        <b-col lg="4">
+                        <b-col lg="3">
                           <div>
                             <h6>اوراق العمل</h6>
                             <span v-for="(paperWork, index) in Array.from(path.paperWorks).filter((item) => path.paperWorkIds.includes(item.id) )" :key="`${paperWork.id} ${index}`">{{ paperWork.name }}</span>
                           </div>
                         </b-col>
-                        <b-col lg="4">
+                        <b-col lg="3">
                           <div>
                             <h6>التمارين</h6>
                             <span
@@ -99,6 +99,12 @@
                               :key="`${quiz.id} ${index}`"
                             >{{ quiz.name }}</span
                             >
+                          </div>
+                        </b-col>
+                        <b-col lg="3" v-if="Array.from(path.quizzes).filter((item) => path.quizzesIds.includes(item.id)).length>0">
+                          <div>
+                            <h6>النسجيلات الصوتية</h6>
+                            <span v-for="(task, index) in Array.from(path.tasks).filter((item) =>  path.tasksIds.includes(item.id)  )" :key="`${task.id} ${index}`">{{ task.name }}</span>
                           </div>
                         </b-col>
                       </b-row>

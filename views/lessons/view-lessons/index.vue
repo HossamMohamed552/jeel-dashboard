@@ -10,7 +10,7 @@
         <b-row>
           <b-col lg="4">
             <ShowItem
-              title="اسم الدرس"
+              :title="$t('LESSONS.NAME')"
               :subtitle="LessonData.name"
               class="with-border-bottom"
             />
@@ -31,7 +31,7 @@
           </b-col>
           <b-col lg="4" v-if="LessonData.learningPath">
             <ShowItem
-              title="اسم المسار"
+              :title="$t('PATH.Name')"
               :subtitle="LessonData.learningPath.name"
               class="with-border-bottom"
             />

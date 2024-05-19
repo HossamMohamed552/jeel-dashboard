@@ -57,14 +57,6 @@ export default {
       groupSearchWord: "",
       schoolYearsList: [],
       totalNumber: null,
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        { key: "name", label: this.$i18n.t("TABLE_FIELDS.learningStyle") },
-        { key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions") },
-      ],
     };
   },
   methods: {
@@ -107,6 +99,13 @@ export default {
     },
   },
   computed: {
+    fieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t("TABLE_FIELDS.id")},
+        { key: "name", label: this.$i18n.t("TABLE_FIELDS.learningStyle")},
+        { key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions")},
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {

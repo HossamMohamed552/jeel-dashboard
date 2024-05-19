@@ -64,44 +64,24 @@
               :subtitle="path.name"
             />
           </b-col>
-          <b-col lg="3">
+          <b-col lg="6" v-if="path.videos.length > 0">
             <ShowItem :title="$t('MISSIONS.videos')" />
-            <div
-              v-for="videoPath in path.videos"
-              :key="videoPath.id"
-              class="icon-play-holder"
-            >
-              <ShowItem :subtitle="videoPath.original_name" />
-              <b-icon
-                class="cursor-pointer mt-4"
-                icon="play-circle"
-                variant="info"
-                @click="handlePlayVideo(videoPath.url)"
-              />
-            </div>
-            <!--
-              you can add configuration to the video
-              ----------------------------
-              :muted="muted"
-              :autoplay="autoplay"
-              :controls="controls"
-              :loop="loop"
-              :width="width"
-              :height="height"
-              :poster="poster"
-              :preload="preload"
-              :playsinline="true"
-              -->
-            <div v-if="videoPlayed" class="video-container">
-              <video
-                :src="selecedVideoSource"
-                ref="player"
-                autoplay="autoplay"
-                controls="controls"
-              />
-            </div>
+           <div v-for="videoPath in path.videos" :key="videoPath.id">
+             <div class="icon-play-holder">
+               <ShowItem :subtitle="videoPath.title" />
+               <b-icon class="cursor-pointer mt-4" icon="play-circle" variant="info" @click="handlePlayVideo(videoPath.video_with_muisc,videoPath.id)"/>
+             </div>
+             <div v-if="videoPlayed && videoIdPlayed === videoPath.id" class="video-container">
+               <video
+                 :src="selecedVideoSource"
+                 ref="player"
+                 autoplay="autoplay"
+                 controls="controls"
+               />
+             </div>
+           </div>
           </b-col>
-          <b-col lg="3">
+          <b-col lg="6" v-if="path.papersWork.length > 0">
             <ShowItem :title="$t('MISSIONS.paperWork')" />
             <div
               v-for="papersWorkPath in path.papersWork"
@@ -117,7 +97,7 @@
               />
             </div>
           </b-col>
-          <b-col lg="6" class="quizzes">
+          <b-col lg="6" v-if="path.quizzes.length > 0" class="my-4 quizzes">
             <ShowItem :title="$t('MISSIONS.quizzes')" />
             <div v-for="quizPath in path.quizzes" :key="quizPath.id">
               <ShowItem :subtitle="quizPath.name" />
@@ -125,9 +105,9 @@
               <div v-for="question in quizPath.questions" :key="question.id">
                 <div class="icon-play-holder">
                   <ShowItem :subtitle="question.question" v-if="question.question_pattern === 'text'" class="my-3"/>
-                  <img class="question_img my-3" :src="question.question" v-if="question.question_pattern === 'image'">
+                  <img class="question_img my-3" :src="question.question.question" v-if="question.question_pattern === 'image'">
                   <audio controls v-if="question.question_pattern === 'audio'" class="my-3">
-                    <source :src="question.question" />
+                    <source :src="question.question.question" />
                   </audio>
                   <b-icon
                     class="cursor-pointer"
@@ -137,6 +117,15 @@
                   />
                 </div>
               </div>
+            </div>
+          </b-col>
+          <b-col lg="6" v-if="path.tasks.length > 0" class="my-4 quizzes">
+            <ShowItem :title="$t('MISSIONS.tasks')" />
+            <div v-for="task in path.tasks" :key="task.id">
+              <ShowItem :subtitle="task.name" />
+              <audio controls class="my-3">
+                <source :src="task.task_audio" />
+              </audio>
             </div>
           </b-col>
         </b-row>
@@ -161,7 +150,8 @@ export default {
       mission: {},
       selectedQuestion: null,
       selecedVideoSource: "",
-      videoPlayed: false
+      videoPlayed: false,
+      videoIdPlayed: null
     };
   },
   mounted() {
@@ -190,8 +180,9 @@ export default {
       link.click();
       document.body.removeChild(link);
     },
-    handlePlayVideo(url) {
+    handlePlayVideo(url,id) {
       this.videoPlayed = true
+      this.videoIdPlayed = id
       this.selecedVideoSource = url;
     },
   },

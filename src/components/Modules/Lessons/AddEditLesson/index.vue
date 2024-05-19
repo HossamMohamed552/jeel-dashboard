@@ -23,13 +23,13 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <label>
-                    {{ $t("LEARNING_PATH.LEARNING_PATH") }}
+                    {{ $t("PATH.Name") }}
                     <span><i class="fa-solid fa-asterisk"></i></span>
                   </label>
                   <SelectSearch
                     v-model="formValues.learning_path_id"
-                    :name="$t('LEARNING_PATH.LEARNING_PATH')"
-                    :placeholder="$t('LEARNING_PATH.CHOOSE_LEARNING_PATH')"
+                    :name="$t('PATH.Name')"
+                    :placeholder="$t('PATH.Name_PLACEHOLDER')"
                     :options="learningPaths"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"

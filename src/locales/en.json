@@ -259,6 +259,7 @@
   },
   "PATH": {
     "Name": "Path Name",
+    "Name_PLACEHOLDER": "Enter Path Name",
     "Description": "description",
     "ADD_NEW": "Add New Path",
     "EDIT": "Edit Path",
@@ -267,6 +268,29 @@
     "delete_learning_path": "delete learning path",
     "confirm_delete_learning_path":"Are you sure to delete the learning path?",
     "audio": "audio for path"
+  },
+  "LESSONS": {
+    "LESSONS": "lessons",
+    "DETAILS": "lesson details",
+    "ADD": "add new lesson",
+    "EDIT": "edit lesson",
+    "NAME": "lesson name",
+    "videoNAME": "lesson",
+    "ENTER_LESSON_NAME": "enter lesson name",
+    "NAME_OF_LESSON": "lessons",
+    "selectLesson": "select lesson",
+    "delete_lesson": "delete lesson",
+    "confirm_delete_lesson": "Are you sure you want to delete lesson?"
+  },
+  "OBJECTIVE": {
+    "OBJECTIVE": "objective",
+    "DETAILS": "objective details",
+    "ADD": "add new objective",
+    "EDIT": "edit objective",
+    "NAME": "objective name",
+    "selectOBJECTIVE": "select objective",
+    "delete_OBJECTIVE": "delete objective",
+    "confirm_delete_OBJECTIVE": "Are you sure you want to delete objective?"
   },
   "STATISTICS": {
     "school_group": "school group",
@@ -298,7 +322,7 @@
   },
   "permissions": "permissions",
   "showDetails": "showDetails",
-  "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الآمن {year}",
+  "copyRight": "All rights reserved © to jeel {year}",
   "GLOBAL_NEXT": "Next",
   "GLOBAL_BACK": "Back",
   "GLOBAL_LOGOUT": "Logout",
@@ -352,5 +376,6 @@
   "GLOBALRemoveAll": "remove all",
   "GLOBAL_NAME": "name",
   "SLUG": "slug",
-  "lastAttempt":"Last login"
+  "lastAttempt":"Last login",
+  "profile-page": "profile page"
 }

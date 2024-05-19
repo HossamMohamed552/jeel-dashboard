@@ -25,7 +25,7 @@
                                   :label="$t('PATH.audio')" :name="'audioFile'"
                                   :rules="'required'"
                                   @setFileId="setAudioFileId($event)"/>
-                <PreviewMedia v-if="$route.params.id && createPath.audioChanged === false && !createPath.audioChangedRequest" :header="'ملف الصوتى للمسار'"
+                <PreviewMedia v-if="$route.params.id && createPath.audioChanged === false && !createPath.audioChangedRequest" :header="`${$t('PATH.audio')}`"
                               :media-name="createPath.audio_name"
                               :file-size="createPath.audio_size"
                               :image-url="createPath.audio"
@@ -34,19 +34,6 @@
                               @removeFile="removeFile('audio','audioChanged','audioChangedRequest')"
                 />
               </b-col>
-              <!-- <b-col lg="12" class="mb-3">
-                <div class="hold-field">
-                  <b-form-group v-slot="{ ariaDescribedby }" class="description">
-                    <TextAreaField
-                      v-model="createPath.description"
-                      :label="$t('PATH.Description')"
-                      :rules="'required|max:250'"
-                      rows="5"
-                      :name="$t('VIDEO.Description')"
-                    ></TextAreaField>
-                  </b-form-group>
-                </div>
-              </b-col> -->
             </b-row>
             <b-row>
               <div class="hold-btns-form">

@@ -1,7 +1,7 @@
 <template>
   <validation-observer v-slot="{ invalid }" ref="addEditContentForm">
     <form @submit.prevent="goToMissionContentStep" class="mt-5">
-      <b-row v-for="learnPath in learnPathsVideoPaperWokQuiz" :key="learnPath.id"
+      <b-row v-for="(learnPath,index) in learnPathsVideoPaperWokQuiz" :key="learnPath.id"
              class="hold-path">
         <b-col lg="12" class="mb-3">
           <h3>{{ learnPath.name }}</h3>
@@ -10,11 +10,11 @@
           <SelectSearch
             v-model="learnPath.videoIds"
             :label="$t('MISSIONS.videos')"
-            :name="$t('MISSIONS.videos')"
+            :name="`${$t('MISSIONS.videos')}${index}`"
             :options="learnPath.videos"
             :reduce="(option) => option.id"
             :get-option-label="(option) => option.title"
-            :rules="learnPath.slug === 'behavior'?'':'required'"
+            :rules="learnPath.slug !== 'behavior' ? 'required' : ''"
             :deselectFromDropdown="true"
             multiple
           ></SelectSearch>
@@ -23,7 +23,7 @@
           <SelectSearch
             v-model="learnPath.paperWorkIds"
             :label="$t('MISSIONS.paperWork')"
-            :name="$t('MISSIONS.paperWork')"
+            :name="`${$t('MISSIONS.paperWork')}${index}`"
             :options="learnPath.paperWorks"
             :reduce="(option) => option.id"
             :get-option-label="(option) => option.name"
@@ -36,11 +36,11 @@
           <SelectSearch
             v-model="learnPath.quizzesIds"
             :label="$t('MISSIONS.quizzes')"
-            :name="$t('MISSIONS.quizzes')"
+            :name="`${$t('MISSIONS.quizzes')}${index}`"
             :options="learnPath.quizzes"
             :reduce="(option) => option.id"
             :get-option-label="(option) => option.name"
-            :rules="learnPath.slug === 'behavior'?'':'required'"
+            :rules="learnPath.slug !== 'behavior' ? 'required' : ''"
             :deselectFromDropdown="true"
             multiple
           ></SelectSearch>
@@ -49,11 +49,11 @@
           <SelectSearch
             v-model="learnPath.tasksIds"
             :label="$t('MISSIONS.tasks')"
-            :name="$t('MISSIONS.tasks')"
+            :name="`${$t('MISSIONS.tasks')}${index}`"
             :options="learnPath.tasks"
             :reduce="(option) => option.id"
             :get-option-label="(option) => option.name"
-            :rules="learnPath.slug === 'behavior'?'':'required'"
+            :rules="learnPath.slug !== 'behavior' ? 'required' : ''"
             :deselectFromDropdown="true"
             multiple
           ></SelectSearch>
@@ -164,7 +164,10 @@ export default {
           })).then((response) => {
             Object.assign(item, {
               videos: response.data.data,
-              videoIds: [...item.videos.filter(itemData => this.lessonsSelectedWithEdit.includes(itemData?.lesson?.id)).map(item => item.id)]
+              videoIds: [
+                ...item.videos.map(item=> item.id)
+                // ...item.videos.filter(itemData => this.lessonsSelectedWithEdit.includes(itemData?.lesson?.id)).map(item => item.id)
+              ]
             })
           })
           this.ApiService(getPaperWorkPerLevelPathRequest({
@@ -175,7 +178,10 @@ export default {
           })).then((response) => {
             Object.assign(item, {
               paperWorks: response.data.data,
-              paperWorkIds: [...item.papersWork.filter(itemData => this.lessonsSelectedWithEdit.includes(itemData?.lesson?.id)).map(item => item.id)]
+              paperWorkIds: [
+                ...item.papersWork.map(item=> item.id)
+                // ...item.papersWork.filter(itemData => this.lessonsSelectedWithEdit.includes(itemData?.lesson?.id)).map(item => item.id)
+              ]
             })
           })
           this.ApiService(getQuizLevelPathMissionRequest({
@@ -186,7 +192,11 @@ export default {
             Object.assign(item, {
               quizzes: response.data.data,
               quizzesIds: [
-                ...item.quizzes.filter(itemData => this.lessonsSelectedWithEdit.includes(...itemData.lessons)).map(item => item.id)
+                ...item.quizzes.map(item=> item.id)
+                // ...item.quizzes.filter(itemData => {
+                //   this.lessonsSelectedWithEdit.includes(...itemData.lessons)
+                //   console.log('...itemData.lessons',...itemData.lessons)
+                // }).map(item => item.id)
               ]
             })
           })
@@ -197,19 +207,12 @@ export default {
           })).then((response) => {
             Object.assign(item, {
               tasks: response.data.data,
-              tasksIds: [...item.tasks.filter(itemData => this.lessonsSelectedWithEdit.includes(itemData?.lesson?.id)).map(item => item.id)]
+              tasksIds: [
+                ...item.tasks.map(item=> item.id)
+                // ...item.tasks.filter(itemData => this.lessonsSelectedWithEdit.includes(itemData?.lesson?.id)).map(item => item.id)
+              ]
             })
           })
-          // this.ApiService(getAudioPerLevelPathRequest({
-          //   // levelId: this.levelMission.id,
-          //   learnPathId: item.id,
-          //   // termId: this.term
-          // })).then((response) => {
-          //   Object.assign(item, {
-          //     audio: response.data.data,
-          //     tasksIds: [...item.quizzes.map(item => item.id)]
-          //   })
-          // })
         })
         let learnPathsVideoPaperWokQuizWithOutFilter = this.watchLearningPathSelected.filter(item => !this.learnPathsVideoPaperWokQuiz.map(itemMap => itemMap.id).includes(item.id))
         learnPathsVideoPaperWokQuizWithOutFilter.forEach((item) => {

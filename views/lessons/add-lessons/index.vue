@@ -1,11 +1,11 @@
 <template>
   <div class="add-country">
     <Modal
-      :content-message="'تمت الإضافة بنجاح'"
+      :content-message="$t('CONTROLS.add_successfully')"
       :showModal="showModal"
       :is-success="true"
     />
-    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+    <Modal :content-message="$t('CONTROLS.already_exists')" :showModal="showModalFailed" :isUsed="true"
            @cancelWithConfirm="showModalFailed=false"/>
     <AddEditLesson
       :loading="loading"
