@@ -407,6 +407,7 @@ export default {
       })
     },
     getJeelAdminReportRoles(paramsWithSearch) {
+      this.roleStatistics = []
       const params = {...paramsWithSearch, ...this.searchWithPagination};
       this.ApiService(getJeelAdminReportRolesRequest(params)).then((response) => {
         for (const [key, value] of Object.entries(response.data.data)) {

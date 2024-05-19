@@ -70,19 +70,17 @@
                       <h6>المسار</h6>
                       <p>{{ path.name }}</p>
                     </b-col>
-                    <b-col lg="4">
+                    <b-col lg="4"
+                           v-if="Array.from(path.videos).filter((item) => path.videoIds.includes(item.id)).length>0">
                       <div>
-                        <h6>المهمات</h6>
+                        <h6>الفيديوهات</h6>
                         <span
-                          v-for="(video, index) in Array.from(path.videos).filter((item) =>
-                          path.videoIds.includes(item.id)
-                        )"
+                          v-for="(video, index) in Array.from(path.videos).filter((item) => path.videoIds.includes(item.id))"
                           :key="`${video.id} ${index}`"
-                        >{{ video.title }}</span
-                        >
+                        >{{ video.title }}</span>
                       </div>
                     </b-col>
-                    <b-col lg="4">
+                    <b-col lg="4" v-if="Array.from(path.paperWorks).filter((item) => path.paperWorkIds.includes(item.id) ).length>0">
                       <div>
                         <h6>اوراق العمل</h6>
                         <span
@@ -94,7 +92,7 @@
                         >
                       </div>
                     </b-col>
-                    <b-col lg="4">
+                    <b-col lg="4" v-if="Array.from(path.quizzes).filter((item) => path.quizzesIds.includes(item.id)).length>0">
                       <div>
                         <h6>التمارين</h6>
                         <span
@@ -184,7 +182,7 @@ export default {
       ],
       currentStep: 0,
       learningPathSelected: [],
-      lessonsSelected:[],
+      lessonsSelected: [],
     };
   },
   methods: {
@@ -211,7 +209,7 @@ export default {
       this.handleNavigation(1);
     },
     goToMissionContentStep(data) {
-      Object.assign(this.collectData, { paths: [...data] });
+      Object.assign(this.collectData, {paths: [...data]});
       this.handleSaveCollectedData(data);
       this.handleNavigation(2);
     },
@@ -221,7 +219,7 @@ export default {
       this.handleNavigation(2);
     },
     goToFinalWithContentStep(completeTaskContent) {
-      Object.assign(this.collectData, { completeTaskContent: [...completeTaskContent] });
+      Object.assign(this.collectData, {completeTaskContent: [...completeTaskContent]});
       this.handleSaveCollectedData(this.collectData);
       this.handleNavigation(3);
     },
@@ -275,7 +273,7 @@ export default {
           formData.append(`learningpaths[${learnPath}][quizzes][${quiz}][is_selected]`, 1);
           quiz++;
         }
-        for (let task = 0; task < this.collectData.paths[learnPath].tasksIds.length; ) {
+        for (let task = 0; task < this.collectData.paths[learnPath].tasksIds.length;) {
           formData.append(`learningpaths[${learnPath}][tasks][${task}][id]`, this.collectData.paths[learnPath].tasksIds[task]);
           formData.append(`learningpaths[${learnPath}][tasks][${task}][order]`, task + 1);
           formData.append(`learningpaths[${learnPath}][tasks][${task}][is_selected]`, 1);
@@ -283,25 +281,25 @@ export default {
         }
         learnPath++;
       }
-      this.collectData.completeTaskContent.forEach((content,index) => {
+      this.collectData.completeTaskContent.forEach((content, index) => {
         formData.append(`badge_rewards[${index}][badge_id]`, content.badgeId);
         formData.append(`badge_rewards[${index}][library_id]`, content.badgeRewardId);
       });
       this.loading = true;
       this.showModal = true;
       axios.post(`/missions/${this.$route.params.id}`, formData, {
-          headers: {
-            Authorization: `Bearer ${VueCookies.get("token")}`,
-            locale: "ar",
-            "Content-Type": "multipart/form-data",
-          },
-        }).then((res) => {
-          this.loading = false;
-          setTimeout(() => {
-            this.showModal = false;
-          }, 1500);
-          this.$router.push("/dashboard/missions");
-        }).catch(()=>{
+        headers: {
+          Authorization: `Bearer ${VueCookies.get("token")}`,
+          locale: "ar",
+          "Content-Type": "multipart/form-data",
+        },
+      }).then((res) => {
+        this.loading = false;
+        setTimeout(() => {
+          this.showModal = false;
+        }, 1500);
+        this.$router.push("/dashboard/missions");
+      }).catch(() => {
         this.loading = false
       })
     },

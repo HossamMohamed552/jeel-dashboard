@@ -86,13 +86,7 @@
                         <b-col lg="4">
                           <div>
                             <h6>اوراق العمل</h6>
-                            <span
-                              v-for="(paperWork, index) in Array.from(path.paperWorks).filter((item) =>
-                          path.paperWorkIds.includes(item.id)
-                        )"
-                              :key="`${paperWork.id} ${index}`"
-                            >{{ paperWork.name }}</span
-                            >
+                            <span v-for="(paperWork, index) in Array.from(path.paperWorks).filter((item) => path.paperWorkIds.includes(item.id) )" :key="`${paperWork.id} ${index}`">{{ paperWork.name }}</span>
                           </div>
                         </b-col>
                         <b-col lg="4">

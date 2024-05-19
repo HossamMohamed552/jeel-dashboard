@@ -14,7 +14,7 @@
             :options="learnPath.videos"
             :reduce="(option) => option.id"
             :get-option-label="(option) => option.title"
-            :rules="'required'"
+            :rules="learnPath.slug === 'behavior'?'':'required'"
             :deselectFromDropdown="true"
             multiple
           ></SelectSearch>
@@ -40,7 +40,7 @@
             :options="learnPath.quizzes"
             :reduce="(option) => option.id"
             :get-option-label="(option) => option.name"
-            :rules="'required'"
+            :rules="learnPath.slug === 'behavior'?'':'required'"
             :deselectFromDropdown="true"
             multiple
           ></SelectSearch>
@@ -53,7 +53,7 @@
             :options="learnPath.tasks"
             :reduce="(option) => option.id"
             :get-option-label="(option) => option.name"
-            :rules="'required'"
+            :rules="learnPath.slug === 'behavior'?'':'required'"
             :deselectFromDropdown="true"
             multiple
           ></SelectSearch>
