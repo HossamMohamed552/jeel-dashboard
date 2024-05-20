@@ -65,7 +65,8 @@ export default {
   },
   methods: {
     ...mapActions(["addVideoesInArray", "addExercisesInArray", "addLearningPath"]),
-    handleInput: _.debounce(function (key, value, field, index) {
+    handleInput: _.debounce(function (key, value, field, options, index) {
+      console.log("options", options);
       if (field.multiple) {
         const selectedOptionNames = value.map((singleValue) => {
           const selectedOption = field.options.find((option) => option[field.listen] === singleValue);
@@ -130,7 +131,6 @@ export default {
           this.ApiService(getQuizLevelPathRequest(this.learningPath?.value[index - 1].id)).then(
             (response) => {
               formElement.options = response.data.data;
-              console.log("formElement", formElement);
             }
           );
         } else if (formElement.key === "video_id") {
