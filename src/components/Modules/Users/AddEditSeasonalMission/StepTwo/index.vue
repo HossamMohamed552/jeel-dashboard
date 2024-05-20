@@ -12,12 +12,12 @@
       </GenericForm>
     </div>
     <div class="buttons-container">
-      <Button @click="handleCancel" custom-class="cancel-btn margin"> الغاء </Button>
+      <Button @click="handleCancel" custom-class="cancel-btn margin"> الغاء</Button>
       <div class="steps">
         <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
           السابق
         </Button>
-        <Button custom-class="submit-btn" :disabled="invalid" @click="nextStep"> التالي </Button>
+        <Button custom-class="submit-btn" :disabled="invalid" @click="nextStep"> التالي</Button>
       </div>
     </div>
   </validation-observer>
@@ -26,12 +26,12 @@
 <script>
 import Stepper from "@/components/Shared/Stepper/index.vue";
 import GenericForm from "@/components/Shared/GenericForm";
-import { getQuizLevelPath, getVideoPerLevelPath } from "@/services/dropdownService";
+import {getQuizLevelPath, getVideoPerLevelPath} from "@/services/dropdownService";
 import _ from "lodash";
-import { getVideoPerLevelPathRequest } from "@/api/videos";
-import { getQuizLevelPathRequest } from "@/api/quiz"; // التمارين
+import {getVideoPerLevelPathRequest} from "@/api/videos";
+import {getQuizLevelPathRequest} from "@/api/quiz"; // التمارين
 
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   components: {
@@ -49,7 +49,8 @@ export default {
     },
     learningPath: {
       type: Object,
-      default: () => {},
+      default: () => {
+      },
     },
   },
   data() {
@@ -67,23 +68,21 @@ export default {
     handleInput: _.debounce(function (key, value, field, index) {
       if (field.multiple) {
         const selectedOptionNames = value.map((singleValue) => {
-          const selectedOption = field.options.find(
-            (option) => option[field.listen] === singleValue
-          );
+          const selectedOption = field.options.find((option) => option[field.listen] === singleValue);
           return selectedOption ? selectedOption : "";
         });
         field.name = selectedOptionNames;
       }
       this.learningPath.learningpaths = [];
       if (key === "video_id") {
-        const videoObjects = field.name.map((video) => ({ ...video }));
+        const videoObjects = field.name.map((video) => ({...video}));
         let videoesPayload = {
           videos: videoObjects,
           index: index - 1,
         };
         this.addVideoesInArray(videoesPayload);
       } else {
-        const exerciseObjects = field.name.map((exercise) => ({ ...exercise }));
+        const exerciseObjects = field.name.map((exercise) => ({...exercise}));
         let exercisesPayload = {
           exercisess: exerciseObjects,
           index: index - 1,
