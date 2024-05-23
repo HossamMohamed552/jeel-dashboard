@@ -16,7 +16,7 @@
             />
           </b-col>
           <b-col lg="6">
-            <ShowItem class="divider-show" :title="$t('ROLES.DEPARTMENT')" :subtitle="role.name" />
+            <ShowItem class="divider-show" :title="$t('ROLES.DEPARTMENT')" :subtitle="role.name"/>
           </b-col>
           <b-col lg="12">
             <ShowItem
@@ -29,10 +29,11 @@
       </div>
       <div class="permissions">
         <div class="search-sort">
-          <h2 class="heading">إدارة الصلاحيات</h2>
+          <h2 class="heading">{{ $t('ROLES.permissionsManagement') }}</h2>
           <div class="search">
-            <b-form-input v-model="inputValue" placeholder="بحث" class="search-input" />
-            <img src="@/assets/images/icons/search.svg" />
+            <b-form-input v-model="inputValue" :placeholder="$t('BUTTONS.SEARCH')"
+                          class="search-input"/>
+            <img src="@/assets/images/icons/search.svg"/>
           </div>
         </div>
         <b-table
@@ -83,13 +84,14 @@
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { debounce } from "lodash";
-import { getPermissionRequest } from "@/api/permission";
+import {debounce} from "lodash";
+import {getPermissionRequest} from "@/api/permission";
 import {
   getSingleRoleRequest,
   getRolePermissionsRequest,
   putRolePermissionsRequest,
 } from "@/api/role";
+
 export default {
   name: "index",
   components: {
@@ -108,24 +110,7 @@ export default {
         order: "",
         order_by: "",
       },
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "role",
-          label: "اسم القائمة",
-        },
-        {
-          key: "name",
-          label: "اسم الصلاحية",
-        },
-        {
-          key: "is_active",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
+
       loading: false,
       items: [],
       cloneItems: [],
@@ -137,6 +122,26 @@ export default {
     };
   },
   computed: {
+    fieldsList() {
+      return [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "role",
+          label: this.$i18n.t("ROLES.role"),
+        },
+        {
+          key: "name",
+          label: this.$i18n.t("ROLES.name"),
+        },
+        {
+          key: "is_active",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ]
+    },
     activeItems() {
       return this.items.filter((item) => item.is_active);
     },
@@ -193,7 +198,7 @@ export default {
     flattenDataWithRole(data) {
       // Flatten the nested arrays and add the role property to each object
       const flattenedData = Object.entries(data).flatMap(([role, items]) =>
-        items.map((item) => ({ ...item, role }))
+        items.map((item) => ({...item, role}))
       );
       this.items = flattenedData;
       this.cloneItems = JSON.parse(JSON.stringify(this.items));

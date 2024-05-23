@@ -15,9 +15,9 @@
       <Button @click="handleCancel" custom-class="cancel-btn margin"> الغاء</Button>
       <div class="steps">
         <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
-          السابق
+          {{ $t('GLOBAL_BACK') }}
         </Button>
-        <Button custom-class="submit-btn" :disabled="invalid" @click="nextStep"> التالي</Button>
+        <Button custom-class="submit-btn" :disabled="invalid" @click="nextStep"> {{ $t('GLOBAL_NEXT') }}</Button>
       </div>
     </div>
   </validation-observer>

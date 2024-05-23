@@ -13,7 +13,7 @@
             <b-row>
               <b-col class="d-flex justify-content-end" lg="12">
                 <Button :disabled="invalid" :custom-class="'submit-btn'" @click="nextStep">
-                  التالي
+                  {{ $t('GLOBAL_NEXT') }}
                 </Button>
               </b-col>
             </b-row>

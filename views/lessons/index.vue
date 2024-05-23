@@ -34,7 +34,7 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+    <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>

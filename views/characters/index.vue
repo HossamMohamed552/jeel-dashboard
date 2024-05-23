@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة الشخصيات'"
+      :header-name="$t('CHARACTER.list')"
       :fieldsList="fieldsList"
       :table-items="charactersList"
       :v-search-model="groupSearchWord"
@@ -21,14 +21,14 @@
           @click="goToAddCharacter"
           v-if="user.permissions.includes(`add-prize-characters`)"
         >
-          <img src="../../src/assets/images/icons/plus.svg" />
-          <span>إضافة شخصية جديدة </span>
+          <img src="../../src/assets/images/icons/plus.svg"/>
+          <span>{{ $t('CHARACTER.ADD_NEW') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف الشخصية'"
-      :content-message-question="'هل انت متأكد من حذف الشخصية'"
+      :content-message="$t('CHARACTER.delete')"
+      :content-message-question="$t('CHARACTER.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -40,12 +40,12 @@
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { getCharactersRequest, deleteCharacterRequest } from "@/api/character";
-import { mapGetters } from "vuex";
+import {getCharactersRequest, deleteCharacterRequest} from "@/api/character";
+import {mapGetters} from "vuex";
 
 export default {
   name: "index",
-  components: { ListItems, Button, Modal },
+  components: {ListItems, Button, Modal},
   data() {
     return {
       loading: false,
@@ -53,32 +53,6 @@ export default {
       groupSearchWord: "",
       totalNumber: 0,
       charactersList: [],
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "name",
-          label: this.$i18n.t("TABLE_FIELDS.character_name"),
-        },
-        {
-          key: "image",
-          label: this.$i18n.t("TABLE_FIELDS.character_logo"),
-        },
-        {
-          key: "country",
-          label: this.$i18n.t("TABLE_FIELDS.countryName"),
-        },
-        {
-          key: "chracter_type",
-          label: this.$i18n.t("TABLE_FIELDS.character_type"),
-        },
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
       itemId: 0,
     };
   },
@@ -120,6 +94,34 @@ export default {
     },
   },
   computed: {
+    fieldsList(){
+      return [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "name",
+          label: this.$i18n.t("TABLE_FIELDS.character_name"),
+        },
+        {
+          key: "image",
+          label: this.$i18n.t("TABLE_FIELDS.character_logo"),
+        },
+        {
+          key: "country",
+          label: this.$i18n.t("TABLE_FIELDS.countryName"),
+        },
+        {
+          key: "chracter_type",
+          label: this.$i18n.t("TABLE_FIELDS.character_type"),
+        },
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {

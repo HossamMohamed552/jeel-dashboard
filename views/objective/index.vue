@@ -57,7 +57,12 @@ export default {
       objectiveSearchWord: "",
       objectiveCategories: [],
       totalNumber: 0,
-      fieldsList: [
+      itemId: 0,
+    };
+  },
+  computed: {
+    fieldsList() {
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -72,11 +77,8 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-      itemId: 0,
-    };
-  },
-  computed: {
+      ]
+    },
     ...mapGetters(['user'])
   },
   methods: {

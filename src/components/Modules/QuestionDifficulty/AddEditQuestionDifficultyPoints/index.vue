@@ -15,7 +15,7 @@
                     v-model="points.name"
                     label="اسم مستوى السؤال"
                     name="اسم مستوى السؤال"
-                    placeholder="ادخل اسم مستوى السؤال"
+                    placeholder="أدخل اسم مستوى السؤال"
                     :rules="'required'"
                   ></TextField>
                 </div>
@@ -26,7 +26,7 @@
                     v-model="points.grade_points"
                     label="عدد النقاط"
                     name="عدد النقاط"
-                    placeholder="ادخل عدد النقاط"
+                    placeholder="أدخل عدد النقاط"
                     type="number"
                     min="0"
                     :rules="'required'"

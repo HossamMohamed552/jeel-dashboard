@@ -19,16 +19,16 @@
               v-model="searchValues.name"
               :label="'اسم الشخصية'"
               :name="'اسم الشخصية'"
-              placeholder="أختر إسم الشخصية"
+              placeholder="اختر اسم الشخصية"
             ></TextField>
           </b-col>
 
           <b-col cols="4" class="mt-3">
             <SelectSearch
               v-model="searchValues.level_id"
-              :label="'الصف الدراسى'"
-              :name="'أختر الصف الدراسى'"
-              placeholder="أختر الصف الدراسى"
+              :label="'الصف الدراسي'"
+              :name="'اختر الصف الدراسي'"
+              placeholder="اختر الصف الدراسي"
               :options="levels"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
@@ -39,7 +39,7 @@
               v-model="searchValues.country_id"
               label="الدولة"
               name="الدولة"
-              placeholder="أختر الدولة"
+              placeholder="اختر الدولة"
               :options="countries"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
@@ -50,7 +50,7 @@
               v-model="characterSelected"
               label="النوع"
               name="النوع"
-              placeholder="أختر النوع"
+              placeholder="اختر النوع"
               :options="types"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
@@ -108,7 +108,7 @@
     </ListItems>
     <Modal
       :content-message="'حذف الشخصية'"
-      :content-message-question="'هل انت متأكد من حذف الشخصية'"
+      :content-message-question="'هل أنت متأكد من حذف الشخصية؟'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"

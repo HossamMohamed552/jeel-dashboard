@@ -30,6 +30,10 @@ h3 {
   .icon-password {
     left: 24px;
     right: unset;
+    &:lang(en){
+      left: unset;
+      right: 24px;
+    }
   }
   .btn {
     min-width: 195px;

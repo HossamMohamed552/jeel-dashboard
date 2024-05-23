@@ -2,7 +2,7 @@
   <section class="container-fluid custom-container">
     <!------------------ st custom table section --------------->
     <ListItems
-      :header-name="'مكتبة جيل'"
+      :header-name="$t('library.jeelLibrary')"
       :fieldsList="fieldsList"
       :table-items="jeelLibraryList"
       :v-search-model="groupSearchWord"
@@ -23,15 +23,15 @@
           v-if="user.permissions.includes(`add-prize-library`)"
         >
           <img src="../../src/assets/images/icons/plus.svg" />
-          <span>إضافة عنصر للمكتبة </span>
+          <span>{{$t('library.add')}}</span>
         </Button>
       </template>
     </ListItems>
     <!------------------ nd custom table section --------------->
     <!------------------ st delete model --------------->
     <Modal
-      :content-message="'حذف عنصر من المكتبة'"
-      :content-message-question="'هل انت متأكد من حذف صندوق الطاقة'"
+      :content-message="$t('library.delete')"
+      :content-message-question="$t('library.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -59,28 +59,6 @@ export default {
       groupSearchWord: "",
       totalNumber: 0,
       jeelLibraryList: [],
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "name",
-          label: this.$i18n.t("TABLE_FIELDS.jeel_library_name"),
-        },
-        {
-          key: "level",
-          label: this.$i18n.t("TABLE_FIELDS.jeel_library_level"),
-        },
-        {
-          key: "type",
-          label: this.$i18n.t("TABLE_FIELDS.jeel_library_type"),
-        },
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
       itemId: 0,
     };
   },
@@ -132,6 +110,30 @@ export default {
 
   },
   computed: {
+    fieldsList(){
+      return [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "name",
+          label: this.$i18n.t("TABLE_FIELDS.jeel_library_name"),
+        },
+        {
+          key: "level",
+          label: this.$i18n.t("TABLE_FIELDS.jeel_library_level"),
+        },
+        {
+          key: "type",
+          label: this.$i18n.t("TABLE_FIELDS.jeel_library_type"),
+        },
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {

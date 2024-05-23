@@ -1,6 +1,6 @@
 <template>
   <div class="add-question">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true"/>
     <AddEditQuestionPatternForm
       v-show="currentStep === -1"
       :loading="loading"

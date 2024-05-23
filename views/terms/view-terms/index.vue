@@ -12,7 +12,7 @@
             <ShowItem class="with-border-bottom" :title="$t('TERM.name')" :subtitle="term.name" />
           </b-col>
           <b-col cols="4" md="4" v-if="term.min_missions">
-            <ShowItem class="with-border-bottom" title="الحد الادني للمهام" :subtitle="`${term.min_missions}`" />
+            <ShowItem class="with-border-bottom" :title="$t('TERM.min_mission')" :subtitle="`${term.min_missions}`" />
           </b-col>
           <!-- <b-col lg="4" v-if="term.levels">
             <ShowItem :title="$t('TERM.phases')" :list-items="term.levels" />

@@ -29,7 +29,7 @@
     </ListItems>
     <Modal
       :content-message="'حذف مدير مسجل'"
-      :content-message-question="'هل انت متأكد من حذف المدير'"
+      :content-message-question="'هل أنت متأكد من حذف المدير؟'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -61,7 +61,7 @@ export default {
       schoolAdminList: [],
       totalNumber: 0,
       fieldsList: [
-        {key: "vid", label: "التسلسل"},
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
         {key: "email", label: this.$i18n.t('TABLE_FIELDS.email')},
         {key: "actions", label: "الإجراء"},

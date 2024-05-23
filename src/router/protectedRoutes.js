@@ -13,6 +13,7 @@ import academicYear from "@/router/modules/academicYear";
 import parent from "@/router/modules/parent";
 import teacher from "@/router/modules/teacher";
 import reports from "@/router/modules/reports";
+import jeelAdmin from "@/router/modules/jeelAdmin";
 const protectedRoutes = [
   {
     path: "/dashboard/home",
@@ -33,191 +34,8 @@ const protectedRoutes = [
         },
       },
 
-      // role
-      {
-        path: "/dashboard/role",
-        name: "role",
-        component: () => import("../../views/role/index.vue"),
-        meta: {
-          breadcrumb: "الأدوار الوظيفية",
-          breadcrumbEn: "Job roles",
-          preLabel: "",
-          preLink: "",
-        },
-      },
-      {
-        path: "/dashboard/role/add",
-        name: "add-role",
-        component: () => import("../../views/role/add-role/index.vue"),
-        meta: {
-          breadcrumb: "إضافة دور وظيفي",
-          preLabel: "صلاحيات النظام",
-          preLink: "/dashboard/role",
-        },
-      },
-      {
-        path: "/dashboard/role/permission/:id",
-        name: "permission",
-        component: () => import("../../views/role/permission/index.vue"),
-        meta: {
-          breadcrumb: "الصلاحيات",
-          preLabel: "صلاحيات النظام",
-          preLink: "/dashboard/role",
-        },
-      },
-      {
-        path: "/dashboard/role/show/:id",
-        name: "show-role",
-        component: () => import("../../views/role/view-role/index.vue"),
-        meta: {
-          breadcrumb: "تفاصيل صلاحية المستخدم",
-          preLabel: "صلاحيات النظام",
-          preLink: "/dashboard/role",
-        },
-      },
-      {
-        path: "/dashboard/role/edit/:id",
-        name: "edit-role",
-        component: () => import("../../views/role/edit-role/index.vue"),
-        meta: {
-          breadcrumb: "تعديل دور وظيفي",
-          preLabel: "صلاحيات النظام",
-          preLink: "/dashboard/role",
-        },
-      },
-      // users
-      {
-        path: "/dashboard/users",
-        name: "users",
-        component: () => import("../../views/users/index.vue"),
-        meta: {
-          breadcrumb: "مستخدمي إدارة المنظومة",
-          preLabel: "",
-          preLink: "",
-        },
-      },
-      {
-        path: "/dashboard/users/add",
-        name: "add-users",
-        component: () => import("../../views/users/add-user/index.vue"),
-        meta: {
-          breadcrumb: "إضافة مستخدم جديد",
-          preLabel: "قائمة المستخدمين",
-          preLink: "/dashboard/users",
-        },
-      },
-      {
-        path: "/dashboard/users/edit/:id",
-        name: "edit-users",
-        component: () => import("../../views/users/edit-user/index.vue"),
-        meta: {
-          breadcrumb: "تعديل بيانات المستخدم",
-          preLabel: "قائمة المستخدمين",
-          preLink: "/dashboard/users",
-        },
-      },
-      {
-        path: "/dashboard/users/change-password/:id",
-        name: "change-password",
-        component: () => import("../../views/users/change-password/index.vue"),
-        meta: {
-          breadcrumb: "تغيير كلمة المرور",
-          preLabel: "قائمة المستخدمين",
-          preLink: "/dashboard/users",
-        },
-      },
-      {
-        path: "/dashboard/users/show/:id",
-        name: "show-users",
-        component: () => import("../../views/users/view-user/index.vue"),
-        meta: {
-          breadcrumb: "تفاصيل المستخدم",
-          preLabel: "قائمة المستخدمين",
-          preLink: "/dashboard/users",
-        },
-      },
-      // package
-      {
-        path: "/dashboard/package",
-        name: "package",
-        component: () => import("../../views/package/index.vue"),
-        meta: {
-          breadcrumb: "الباقات",
-          preLabel: "",
-          preLink: "",
-        },
-      },
-      {
-        path: "/dashboard/package/add",
-        name: "add-package",
-        component: () => import("../../views/package/add-package/index.vue"),
-        meta: {
-          breadcrumb: "إضافة باقة جديدة",
-          preLabel: "الباقات",
-          preLink: "/dashboard/package",
-        },
-      },
-      {
-        path: "/dashboard/package/edit/:id",
-        name: "edit-package",
-        component: () => import("../../views/package/edit-package/index.vue"),
-        meta: {
-          breadcrumb: "تعديل الباقة",
-          preLabel: "الباقات",
-          preLink: "/dashboard/package",
-        },
-      },
-      {
-        path: "/dashboard/package/show/:id",
-        name: "show-package",
-        component: () => import("../../views/package/view-package/index.vue"),
-        meta: {
-          breadcrumb: "تفاصيل الباقة",
-          preLabel: "الباقات",
-          preLink: "/dashboard/package",
-        },
-      },
-      // subscription
-      {
-        path: "/dashboard/subscription",
-        name: "subscription",
-        component: () => import("../../views/subscription/index.vue"),
-        meta: {
-          breadcrumb: "الإشتراكات",
-          preLabel: "",
-          preLink: "",
-        },
-      },
-      {
-        path: "/dashboard/subscription/add",
-        name: "add-subscription",
-        component: () => import("../../views/subscription/add-subscription/index.vue"),
-        meta: {
-          breadcrumb: "تسجيل إشتراك",
-          preLabel: "الإشتراكات",
-          preLink: "/dashboard/subscription",
-        },
-      },
-      {
-        path: "/dashboard/subscription/edit/:id",
-        name: "edit-subscription",
-        component: () => import("../../views/subscription/edit-subscription/index.vue"),
-        meta: {
-          breadcrumb: "تعديل الإشتراك",
-          preLabel: "الإشتراكات",
-          preLink: "/dashboard/subscription",
-        },
-      },
-      {
-        path: "/dashboard/subscription/show/:id",
-        name: "show-subscription",
-        component: () => import("../../views/subscription/view-subscription/index.vue"),
-        meta: {
-          breadcrumb: "تفاصيل الإشتراك",
-          preLabel: "الإشتراكات",
-          preLink: "/dashboard/subscription",
-        },
-      },
+
+
       // school group
       {
         path: "/dashboard/school-group",
@@ -225,7 +43,9 @@ const protectedRoutes = [
         component: () => import("../../views/school-group/index.vue"),
         meta: {
           breadcrumb: "مجموعات المدارس",
+          breadcrumbEn: "school groups",
           preLabel: "",
+          preLabelEn: "",
           preLink: "",
         },
       },
@@ -235,7 +55,9 @@ const protectedRoutes = [
         component: () => import("../../views/school-group/add-school-group/index.vue"),
         meta: {
           breadcrumb: "إضافة مجموعة مدارس",
+          breadcrumbEn: "add school group",
           preLabel: "مجموعات المدارس",
+          preLabelEn: "school groups",
           preLink: "/dashboard/school-group",
         },
       },
@@ -245,7 +67,9 @@ const protectedRoutes = [
         component: () => import("../../views/school-group/edit-school-group/index.vue"),
         meta: {
           breadcrumb: "تعديل مجموعة مدارس",
+          breadcrumbEn: "edit school group",
           preLabel: "مجموعات المدارس",
+          preLabelEn: "school groups",
           preLink: "/dashboard/school-group",
         },
       },
@@ -255,7 +79,9 @@ const protectedRoutes = [
         component: () => import("../../views/school-group/view-school-group/index.vue"),
         meta: {
           breadcrumb: "تفاصيل مجموعة مدارس",
+          breadcrumbEn: "show school group",
           preLabel: "مجموعات المدارس",
+          preLabelEn: "school groups",
           preLink: "/dashboard/school-group",
         },
       },
@@ -266,28 +92,9 @@ const protectedRoutes = [
         component: () => import("../../views/schools/index.vue"),
         meta: {
           breadcrumb: "المدارس",
+          breadcrumbEn: "schools",
           preLabel: "",
           preLink: "",
-        },
-      },
-      {
-        path: "/dashboard/schools-users-search",
-        name: "schools-users-search",
-        component: () => import("../../views/schools-users-search/index.vue"),
-        meta: {
-          breadcrumb: "مستخدمين المدارس",
-          preLabel: "المدارس",
-          preLink: "/dashboard/schools",
-        },
-      },
-      {
-        path: "/dashboard/schools-users-search/add",
-        name: "add-schools-users-search",
-        component: () => import("../../views/schools-users-search/add-user/index.vue"),
-        meta: {
-          breadcrumb: "إضافة مستخدم للمدرسة",
-          preLabel: "المدارس",
-          preLink: "/dashboard/schools",
         },
       },
       {
@@ -296,7 +103,9 @@ const protectedRoutes = [
         component: () => import("../../views/schools/add-schools/index.vue"),
         meta: {
           breadcrumb: "إضافة مدرسة",
+          breadcrumbEn: "add school",
           preLabel: "المدارس",
+          preLabelEn: "schools",
           preLink: "/dashboard/schools",
         },
       },
@@ -306,7 +115,9 @@ const protectedRoutes = [
         component: () => import("../../views/schools/edit-schools/index.vue"),
         meta: {
           breadcrumb: "تعديل المدرسة",
+          breadcrumbEn: "edit school",
           preLabel: "المدارس",
+          preLabelEn: "schools",
           preLink: "/dashboard/schools",
         },
       },
@@ -316,18 +127,23 @@ const protectedRoutes = [
         component: () => import("../../views/schools/view-schools/index.vue"),
         meta: {
           breadcrumb: "تفاصيل المدرسة",
+          breadcrumbEn: "view school",
           preLabel: "المدارس",
+          preLabelEn: "schools",
           preLink: "/dashboard/schools",
         },
       },
+
       // school department type
       {
         path: "/dashboard/school-department-types",
         name: "school-department-type",
         component: () => import("../../views/school-department-type/index.vue"),
         meta: {
-          breadcrumb: "نوع الادارة",
+          breadcrumb: "نوع الإدارة",
+          breadcrumbEn: "Management type",
           preLabel: "",
+          preLabelEn: "",
           preLink: "",
         },
       },
@@ -338,18 +154,22 @@ const protectedRoutes = [
           import("../../views/school-department-type/add-school-department-type/index.vue"),
         meta: {
           breadcrumb: "إضافة نوع ادارة",
+          breadcrumbEn: "add school department type",
           preLabel: "",
+          preLabelEn: "Management type",
           preLink: "",
         },
       },
       {
         path: "/dashboard/school-department-types/edit/:id",
-        name: "edit-schools",
+        name: "edit-school-department-type",
         component: () =>
           import("../../views/school-department-type/edit-school-department-type/index.vue"),
         meta: {
-          breadcrumb: "تعديل نوع الادارة",
+          breadcrumb: "تعديل نوع الإدارة",
+          breadcrumbEn: "edit school department type",
           preLabel: "",
+          preLabelEn: "Management type",
           preLink: "",
         },
       },
@@ -359,8 +179,10 @@ const protectedRoutes = [
         component: () =>
           import("../../views/school-department-type/view-school-department-type/index.vue"),
         meta: {
-          breadcrumb: "تفاصيل نوع الادارة",
+          breadcrumb: "تفاصيل نوع الإدارة",
+          breadcrumbEn: "view school department type",
           preLabel: "",
+          preLabelEn: "Management type",
           preLink: "",
         },
       },
@@ -371,7 +193,9 @@ const protectedRoutes = [
         component: () => import("../../views/school-degree-type/index.vue"),
         meta: {
           breadcrumb: "نوع الشهادة",
+          breadcrumbEn: "school degree type",
           preLabel: "",
+          preLabelEn: "",
           preLink: "",
         },
       },
@@ -381,7 +205,9 @@ const protectedRoutes = [
         component: () => import("../../views/school-degree-type/add-school-degree-type/index.vue"),
         meta: {
           breadcrumb: "إضافة نوع شهادة",
-          preLabel: "",
+          breadcrumbEn: "add school degree type",
+          preLabel: "نوع الشهادة",
+          preLabelEn: "school degree type",
           preLink: "",
         },
       },
@@ -391,7 +217,9 @@ const protectedRoutes = [
         component: () => import("../../views/school-degree-type/edit-school-degree-type/index.vue"),
         meta: {
           breadcrumb: "تعديل نوع الشهادة",
-          preLabel: "",
+          breadcrumbEn: "edit school degree type",
+          preLabel: "نوع الشهادة",
+          preLabelEn: "school degree type",
           preLink: "",
         },
       },
@@ -401,7 +229,9 @@ const protectedRoutes = [
         component: () => import("../../views/school-degree-type/view-school-degree-type/index.vue"),
         meta: {
           breadcrumb: "تفاصيل نوع الشهادة",
-          preLabel: "",
+          breadcrumbEn: "view school degree type",
+          preLabel: "نوع الشهادة",
+          preLabelEn: "school degree type",
           preLink: "",
         },
       },
@@ -412,7 +242,9 @@ const protectedRoutes = [
         component: () => import("../../views/school-languages/index.vue"),
         meta: {
           breadcrumb: "اللغات",
+          breadcrumbEn: "school language",
           preLabel: "",
+          preLabelEn: "",
           preLink: "",
         },
       },
@@ -422,18 +254,22 @@ const protectedRoutes = [
         component: () => import("../../views/school-languages/add-school-language/index.vue"),
         meta: {
           breadcrumb: "إضافة لغة",
-          preLabel: "",
-          preLink: "",
+          breadcrumbEn: "add school language",
+          preLabel: "اللغات",
+          preLabelEn: "school language",
+          preLink: "/dashboard/school-languages",
         },
       },
       {
         path: "/dashboard/school-languages/edit/:id",
-        name: "edit-schools",
+        name: "edit-school-language",
         component: () => import("../../views/school-languages/edit-school-language/index.vue"),
         meta: {
           breadcrumb: "تعديل لغة",
-          preLabel: "",
-          preLink: "",
+          breadcrumbEn: "edit school language",
+          preLabel: "اللغات",
+          preLabelEn: "school language",
+          preLink: "/dashboard/school-languages",
         },
       },
       {
@@ -442,8 +278,10 @@ const protectedRoutes = [
         component: () => import("../../views/school-languages/view-school-language/index.vue"),
         meta: {
           breadcrumb: "تفاصيل اللغة",
-          preLabel: "",
-          preLink: "",
+          breadcrumbEn: "edit school language",
+          preLabel: "اللغات",
+          preLabelEn: "school language",
+          preLink: "/dashboard/school-languages",
         },
       },
       // school type
@@ -494,7 +332,9 @@ const protectedRoutes = [
         component: () => import("../../views/levels/index.vue"),
         meta: {
           breadcrumb: "الصفوف الدراسية",
+          breadcrumbEn: "levels",
           preLabel: "",
+          preLabelEn: "",
           preLink: "",
         },
       },
@@ -505,7 +345,9 @@ const protectedRoutes = [
         component: () => import("../../views/levels/add-level/index.vue"),
         meta: {
           breadcrumb: "إضافة صف دراسي",
+          breadcrumbEn: "add levels",
           preLabel: "الصفوف الدراسية",
+          preLabelEn: "levels",
           preLink: "/dashboard/levels",
         },
       },
@@ -515,7 +357,9 @@ const protectedRoutes = [
         component: () => import("../../views/levels/edit-level/index.vue"),
         meta: {
           breadcrumb: "تعديل المرحلة الدراسية",
+          breadcrumbEn: "edit levels",
           preLabel: "الصفوف الدراسية",
+          preLabelEn: "levels",
           preLink: "/dashboard/levels",
         },
       },
@@ -525,7 +369,9 @@ const protectedRoutes = [
         component: () => import("../../views/levels/view-level/index.vue"),
         meta: {
           breadcrumb: "تفاصيل الصف الدراسي",
+          breadcrumbEn: "show levels",
           preLabel: "الصفوف الدراسية",
+          preLabelEn: "levels",
           preLink: "/dashboard/levels",
         },
       },
@@ -536,7 +382,9 @@ const protectedRoutes = [
         component: () => import("../../views/terms/index.vue"),
         meta: {
           breadcrumb: "الترم الدراسي",
+          breadcrumbEn: "terms",
           preLabel: "",
+          preLabelEn: "",
           preLink: "",
         },
       },
@@ -546,7 +394,9 @@ const protectedRoutes = [
         component: () => import("../../views/terms/add-terms/index.vue"),
         meta: {
           breadcrumb: "إضافة ترم دراسي",
+          breadcrumbEn: "add terms",
           preLabel: "الترم الدراسي",
+          preLabelEn: "terms",
           preLink: "/dashboard/terms",
         },
       },
@@ -556,7 +406,9 @@ const protectedRoutes = [
         component: () => import("../../views/terms/edit-terms/index.vue"),
         meta: {
           breadcrumb: "تعديل  الترم الدراسي",
+          breadcrumbEn: "edit term",
           preLabel: "الترم الدراسي",
+          preLabelEn: "terms",
           preLink: "/dashboard/terms",
         },
       },
@@ -566,92 +418,13 @@ const protectedRoutes = [
         component: () => import("../../views/terms/view-terms/index.vue"),
         meta: {
           breadcrumb: "تفاصيل الترم الدراسي",
+          breadcrumbEn: "show term",
           preLabel: "الترم الدراسي",
+          preLabelEn: "terms",
           preLink: "/dashboard/terms",
         },
       },
-      // school year
-      {
-        path: "/dashboard/school-year",
-        name: "school-year",
-        component: () => import("../../views/shcool-year/index.vue"),
-        meta: {
-          breadcrumb: "الأعوام الدراسية",
-          preLabel: "",
-          preLink: "",
-        },
-      },
-      {
-        path: "/dashboard/school-year/add",
-        name: "add-school-year",
-        component: () => import("../../views/shcool-year/add-school-year/index.vue"),
-        meta: {
-          breadcrumb: "إضافة عام دراسي",
-          preLabel: "العام الدراسي",
-          preLink: "/dashboard/school-year",
-        },
-      },
-      {
-        path: "/dashboard/school-year/edit/:id",
-        name: "edit-school-year",
-        component: () => import("../../views/shcool-year/edit-school-year/index.vue"),
-        meta: {
-          breadcrumb: "تعديل العام الدراسي",
-          preLabel: "العام الدراسي",
-          preLink: "/dashboard/school-year",
-        },
-      },
-      {
-        path: "/dashboard/school-year/show/:id",
-        name: "show-school-year",
-        component: () => import("../../views/shcool-year/view-school-year/index.vue"),
-        meta: {
-          breadcrumb: "تفاصيل العام الدراسي",
-          preLabel: "العام الدراسي",
-          preLink: "/dashboard/school-year",
-        },
-      },
-      // currency
-      {
-        path: "/dashboard/currency",
-        name: "currency",
-        component: () => import("../../views/currency/index.vue"),
-        meta: {
-          breadcrumb: "العملات",
-          preLabel: "",
-          preLink: "",
-        },
-      },
-      {
-        path: "/dashboard/currency/add",
-        name: "add-currency",
-        component: () => import("../../views/currency/add-currency/index.vue"),
-        meta: {
-          breadcrumb: "إضافة عملة",
-          preLabel: "العملة",
-          preLink: "/dashboard/currency",
-        },
-      },
-      {
-        path: "/dashboard/currency/edit/:id",
-        name: "edit-currency",
-        component: () => import("../../views/currency/edit-currency/index.vue"),
-        meta: {
-          breadcrumb: "تعديل العملة",
-          preLabel: "العملة",
-          preLink: "/dashboard/currency",
-        },
-      },
-      {
-        path: "/dashboard/currency/show/:id",
-        name: "show-currency",
-        component: () => import("../../views/currency/view-currency/index.vue"),
-        meta: {
-          breadcrumb: "تفاصيل العملة",
-          preLabel: "العملة",
-          preLink: "/dashboard/currency",
-        },
-      },
+
       // learning-style
       {
         path: "/dashboard/learning-style",
@@ -669,7 +442,7 @@ const protectedRoutes = [
         name: "add-learning-style",
         component: () => import("../../views/learning-style/add-learning-style/index.vue"),
         meta: {
-          breadcrumb: "إضافة إسلوب التعلم",
+          breadcrumb: "إضافة أسلوب التعلم",
           breadcrumbEn: "add learning style",
           preLabel: "أساليب التعلم",
           preLabelEn: "learning style",
@@ -681,9 +454,9 @@ const protectedRoutes = [
         name: "edit-learning-style",
         component: () => import("../../views/learning-style/edit-learning-style/index.vue"),
         meta: {
-          breadcrumb: "تعديل إسلوب التعلم",
+          breadcrumb: "تعديل أسلوب التعلم",
           breadcrumbEn: "edit learning style",
-          preLabel: "إسلوب التعلم",
+          preLabel: "أسلوب التعلم",
           preLabelEn: "learning style",
           preLink: "/dashboard/learning-style",
         },
@@ -693,9 +466,9 @@ const protectedRoutes = [
         name: "show-learning-style",
         component: () => import("../../views/learning-style/view-learning-style/index.vue"),
         meta: {
-          breadcrumb: "تفاصيل إسلوب التعلم",
+          breadcrumb: "تفاصيل أسلوب التعلم",
           breadcrumbEn: "show learning style",
-          preLabel: "إسلوب التعلم",
+          preLabel: "أسلوب التعلم",
           preLabelEn: "learning style",
           preLink: "/dashboard/learning-style",
         },
@@ -755,7 +528,9 @@ const protectedRoutes = [
         component: () => import("../../views/country/index.vue"),
         meta: {
           breadcrumb: "الدول",
+          breadcrumbEn: "countries",
           preLabel: "",
+          preLabelEn: "",
           preLink: "",
         },
       },
@@ -765,7 +540,9 @@ const protectedRoutes = [
         component: () => import("../../views/country/add-country/index.vue"),
         meta: {
           breadcrumb: "إضافة دولة جديدة",
+          breadcrumbEn: "add country",
           preLabel: "الدول",
+          preLabelEn: "country",
           preLink: "/dashboard/country",
         },
       },
@@ -775,7 +552,9 @@ const protectedRoutes = [
         component: () => import("../../views/country/edit-country/index.vue"),
         meta: {
           breadcrumb: "تعديل الدولة",
+          breadcrumbEn: "edit country",
           preLabel: "الدول",
+          preLabelEn: "country",
           preLink: "/dashboard/country",
         },
       },
@@ -785,7 +564,9 @@ const protectedRoutes = [
         component: () => import("../../views/country/view-country/index.vue"),
         meta: {
           breadcrumb: "تفاصيل الدولة",
+          breadcrumbEn: "show country",
           preLabel: "الدول",
+          preLabelEn: "country",
           preLink: "/dashboard/country",
         },
       },
@@ -840,7 +621,9 @@ const protectedRoutes = [
         component: () => import("../../views/videos/index.vue"),
         meta: {
           breadcrumb: "الفيديوهات",
+          breadcrumbEn: "videos",
           preLabel: "",
+          preLabelEn: "",
           preLink: "",
         },
       },
@@ -851,6 +634,8 @@ const protectedRoutes = [
         meta: {
           breadcrumb: "إضافة فيديو",
           preLabel: "الفيديوهات",
+          breadcrumbEn: "add videos",
+          preLabelEn: "videos",
           preLink: "/dashboard/video",
         },
       },
@@ -860,7 +645,9 @@ const protectedRoutes = [
         component: () => import("../../views/videos/edit-video/index.vue"),
         meta: {
           breadcrumb: "تعديل الفيديو",
+          breadcrumbEn: "edit videos",
           preLabel: "الفيديوهات",
+          preLabelEn: "videos",
           preLink: "/dashboard/video",
         },
       },
@@ -870,7 +657,9 @@ const protectedRoutes = [
         component: () => import("../../views/videos/view-video/index.vue"),
         meta: {
           breadcrumb: "تفاصيل الفيديو",
+          breadcrumbEn: "show video",
           preLabel: "الفيديوهات",
+          preLabelEn: "videos",
           preLink: "/dashboard/video",
         },
       },
@@ -880,7 +669,9 @@ const protectedRoutes = [
         component: () => import("../../views/videos/questions/index.vue"),
         meta: {
           breadcrumb: "إضافة أسئلة للفيديو",
+          breadcrumbEn: "Add questions to the video",
           preLabel: "قائمة الفيديوهات",
+          preLabelEn: "videos",
           preLink: "/dashboard/video",
         },
       },
@@ -891,7 +682,9 @@ const protectedRoutes = [
         component: () => import("../../views/audios/index.vue"),
         meta: {
           breadcrumb: "التسجيلات الصوتية",
+          breadcrumbEn: "tasks",
           preLabel: "",
+          preLabelEn: "",
           preLink: "",
         },
       },
@@ -901,7 +694,9 @@ const protectedRoutes = [
         component: () => import("../../views/audios/add-audio/index.vue"),
         meta: {
           breadcrumb: "إضافة تسجيل صوتى",
+          breadcrumbEn: "add task",
           preLabel: "التسجيلات الصوتية",
+          preLabelEn: "tasks",
           preLink: "/dashboard/audio",
         },
       },
@@ -910,8 +705,10 @@ const protectedRoutes = [
         name: "edit-audios",
         component: () => import("../../views/audios/edit-audio/index.vue"),
         meta: {
-          breadcrumb: "تعديل التسجيل الصوتى",
+          breadcrumb: "تعديل التسجيل الصوتي",
+          breadcrumbEn: "edit task",
           preLabel: "التسجيلات الصوتية",
+          preLabelEn: "tasks",
           preLink: "/dashboard/audio",
         },
       },
@@ -920,8 +717,10 @@ const protectedRoutes = [
         name: "show-audio",
         component: () => import("../../views/audios/view-audio/index.vue"),
         meta: {
-          breadcrumb: "تفاصيل التسجيل الصوتى",
+          breadcrumb: "تفاصيل التسجيل الصوتي",
+          breadcrumbEn: "show task",
           preLabel: "التسجيلات الصوتية",
+          preLabelEn: "tasks",
           preLink: "/dashboard/audio",
         },
       },
@@ -932,8 +731,11 @@ const protectedRoutes = [
         component: () => import("../../views/questions/index.vue"),
         meta: {
           breadcrumb: "بنك الأسئلة",
+          breadcrumbEn: "Question bank",
+          preLabelEn: "",
           preLabel: "",
           preLink: "",
+
         },
       },
       {
@@ -942,7 +744,9 @@ const protectedRoutes = [
         component: () => import("../../views/questions/add-questions/index.vue"),
         meta: {
           breadcrumb: "إضافة سؤال",
+          breadcrumbEn: "add questions",
           preLabel: "بنك الأسئلة",
+          preLabelEn: "Question bank",
           preLink: "/dashboard/questions",
         },
       },
@@ -952,7 +756,9 @@ const protectedRoutes = [
         component: () => import("../../views/questions/edit-questions/index.vue"),
         meta: {
           breadcrumb: "تعديل السؤال",
+          breadcrumbEn: "edit questions",
           preLabel: "بنك الأسئلة",
+          preLabelEn: "Question bank",
           preLink: "/dashboard/questions",
         },
       },
@@ -962,7 +768,9 @@ const protectedRoutes = [
         component: () => import("../../views/questions/view-questions/index.vue"),
         meta: {
           breadcrumb: "تفاصيل السؤال",
+          breadcrumbEn: "view questions",
           preLabel: "بنك الأسئلة",
+          preLabelEn: "Question bank",
           preLink: "/dashboard/questions",
         },
       },
@@ -1032,7 +840,7 @@ const protectedRoutes = [
         name: "add-objective",
         component: () => import("../../views/objective/add-objective/index.vue"),
         meta: {
-          breadcrumb: "إضافة هدف تعليمى",
+          breadcrumb: "إضافة هدف تعليمي",
           breadcrumbEn: "add objective",
           preLabel: "الأهداف التعليمية",
           preLabelEn: "objective",
@@ -1044,7 +852,7 @@ const protectedRoutes = [
         name: "edit-objective",
         component: () => import("../../views/objective/edit-objective/index.vue"),
         meta: {
-          breadcrumb: "تعديل الهدف تعليمى",
+          breadcrumb: "تعديل الهدف تعليمي",
           breadcrumbEn: "edit objective",
           preLabel: "الأهداف التعليمية",
           preLabelEn: "objective",
@@ -1056,7 +864,7 @@ const protectedRoutes = [
         name: "show-objective",
         component: () => import("../../views/objective/view-objective/index.vue"),
         meta: {
-          breadcrumb: "تفاصيل الهدف تعليمى",
+          breadcrumb: "تفاصيل الهدف تعليمي",
           breadcrumbEn: "show objective",
           preLabel: "الأهداف التعليمية",
           preLabelEn: "objective",
@@ -1166,7 +974,9 @@ const protectedRoutes = [
         component: () => import("../../views/practices/index.vue"),
         meta: {
           breadcrumb: "التمارين",
+          breadcrumbEn: "practices",
           preLabel: "",
+          preLabelEn: "",
           preLink: "",
         },
       },
@@ -1176,7 +986,9 @@ const protectedRoutes = [
         component: () => import("../../views/practices/add-practices/index.vue"),
         meta: {
           breadcrumb: "إضافة تمرين",
+          breadcrumbEn: "add practices",
           preLabel: "التمارين",
+          preLabelEn: "practices",
           preLink: "/dashboard/practices",
         },
       },
@@ -1186,7 +998,9 @@ const protectedRoutes = [
         component: () => import("../../views/practices/edit-practices/index.vue"),
         meta: {
           breadcrumb: "تعديل التمرين",
+          breadcrumbEn: "edit practices",
           preLabel: "التمارين",
+          preLabelEn: "practices",
           preLink: "/dashboard/practices",
         },
       },
@@ -1196,7 +1010,9 @@ const protectedRoutes = [
         component: () => import("../../views/practices/view-practices/index.vue"),
         meta: {
           breadcrumb: "تفاصيل التمرين",
+          breadcrumbEn: "show practices",
           preLabel: "التمارين",
+          preLabelEn: "practices",
           preLink: "/dashboard/practices",
         },
       },
@@ -1207,7 +1023,9 @@ const protectedRoutes = [
         component: () => import("../../views/paper-work/index.vue"),
         meta: {
           breadcrumb: "أوراق العمل",
+          breadcrumbEn: "paper work",
           preLabel: "",
+          preLabelEn: "",
           preLink: "",
         },
       },
@@ -1217,7 +1035,9 @@ const protectedRoutes = [
         component: () => import("../../views/paper-work/add-paper-work/index.vue"),
         meta: {
           breadcrumb: "إضافة ورقة عمل",
+          breadcrumbEn: "add paper work",
           preLabel: "أوراق العمل",
+          preLabelEn: "paper work",
           preLink: "/dashboard/paper-work",
         },
       },
@@ -1227,7 +1047,9 @@ const protectedRoutes = [
         component: () => import("../../views/paper-work/edit-paper-work/index.vue"),
         meta: {
           breadcrumb: "تعديل ورقة عمل",
+          breadcrumbEn: "edit paper work",
           preLabel: "أوراق العمل",
+          preLabelEn: "paper work",
           preLink: "/dashboard/paper-work",
         },
       },
@@ -1237,7 +1059,9 @@ const protectedRoutes = [
         component: () => import("../../views/paper-work/view-paper-work/index.vue"),
         meta: {
           breadcrumb: "تفاصيل ورقة عمل",
+          breadcrumbEn: "show paper work",
           preLabel: "أوراق العمل",
+          preLabelEn: "paper work",
           preLink: "/dashboard/paper-work",
         },
       },
@@ -1248,7 +1072,9 @@ const protectedRoutes = [
         component: () => import("../../views/missions/index.vue"),
         meta: {
           breadcrumb: "المهام",
+          breadcrumbEn: "missions",
           preLabel: "",
+          preLabelEn: "",
           preLink: "",
         },
       },
@@ -1258,7 +1084,9 @@ const protectedRoutes = [
         component: () => import("../../views/missions/add-missions/index.vue"),
         meta: {
           breadcrumb: "إضافة مهمة",
+          breadcrumbEn: "add mission",
           preLabel: "المهام",
+          preLabelEn: "missions",
           preLink: "/dashboard/missions",
         },
       },
@@ -1268,7 +1096,9 @@ const protectedRoutes = [
         component: () => import("../../views/missions/edit-missions/index.vue"),
         meta: {
           breadcrumb: "تعديل المهمة",
+          breadcrumbEn: "edit mission",
           preLabel: "المهام",
+          preLabelEn: "missions",
           preLink: "/dashboard/missions",
         },
       },
@@ -1278,7 +1108,9 @@ const protectedRoutes = [
         component: () => import("../../views/missions/view-missions/index.vue"),
         meta: {
           breadcrumb: "تفاصيل المهمة",
+          breadcrumbEn: "view mission",
           preLabel: "المهام",
+          preLabelEn: "missions",
           preLink: "/dashboard/missions",
         },
       },
@@ -1289,7 +1121,9 @@ const protectedRoutes = [
         component: () => import("../../views/seasonal-mission-group/index.vue"),
         meta: {
           breadcrumb: "مجموعة المهام المدرسية",
+          breadcrumbEn: "seasonal mission group",
           preLabel: "",
+          preLabelEn: "",
           preLink: "",
         },
       },
@@ -1300,7 +1134,9 @@ const protectedRoutes = [
           import("../../views/seasonal-mission-group/add-seasonal-mission-group/index.vue"),
         meta: {
           breadcrumb: "إضافة مجموعة جديدة",
+          breadcrumbEn: "add seasonal mission group",
           preLabel: "مجموعة المهام المدرسية",
+          preLabelEn: "seasonal mission group",
           preLink: "/dashboard/seasonal-mission-group",
         },
       },
@@ -1311,7 +1147,9 @@ const protectedRoutes = [
           import("../../views/seasonal-mission-group/edit-seasonal-mission-group/index.vue"),
         meta: {
           breadcrumb: "تعديل المجموعة",
+          breadcrumbEn: "edit seasonal mission group",
           preLabel: "مجموعة المهام المدرسية",
+          preLabelEn: "seasonal mission group",
           preLink: "/dashboard/seasonal-mission-group",
         },
       },
@@ -1322,7 +1160,9 @@ const protectedRoutes = [
           import("../../views/seasonal-mission-group/view-seasonal-mission-group/index.vue"),
         meta: {
           breadcrumb: "تفاصيل المجموعة",
+          breadcrumbEn: "show seasonal mission group",
           preLabel: "مجموعة المهام المدرسية",
+          preLabelEn: "seasonal mission group",
           preLink: "/dashboard/seasonal-mission-group",
         },
       },
@@ -1534,7 +1374,7 @@ const protectedRoutes = [
         name: "path-content",
         component: () => import("../../views/path-content/index.vue"),
         meta: {
-          breadcrumb: "مسارات الصف الدراسى",
+          breadcrumb: "مسارات الصف الدراسي",
           preLabel: "",
           preLink: "",
         },
@@ -1567,7 +1407,7 @@ const protectedRoutes = [
         name: "path-content",
         component: () => import("../../views/path-content/index.vue"),
         meta: {
-          breadcrumb: "مسارات الصف الدراسى",
+          breadcrumb: "مسارات الصف الدراسي",
           preLabel: "",
           preLink: "",
         },
@@ -1621,7 +1461,8 @@ const protectedRoutes = [
       ...academicYear,
       ...parent,
       ...teacher,
-      ...reports
+      ...reports,
+      ...jeelAdmin
     ],
   },
 ];

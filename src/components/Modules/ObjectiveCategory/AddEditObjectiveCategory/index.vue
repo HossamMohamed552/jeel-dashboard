@@ -14,7 +14,7 @@
                     v-model="formValues.name"
                     :label="$t('OBJECTIVE.NAME')"
                     :name="$t('OBJECTIVE.NAME')"
-                    placeholder="أدخل اسم الهدف التعليمي"
+                    :placeholder="$t('OBJECTIVE.enterObjectiveName')"
                     :rules="'required|max:150'"
                   ></TextField>
                 </div>
@@ -22,13 +22,13 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <label>
-                    {{ $t("LEARNING_PATH.LEARNING_PATH") }}
+                    {{ $t("PATH.Name") }}
                     <span><i class="fa-solid fa-asterisk"></i></span>
                   </label>
                   <SelectSearch
                     v-model="formValues.learning_path_id"
-                    :name="$t('LEARNING_PATH.LEARNING_PATH')"
-                    placeholder="اختر المسار التعليمي"
+                    :name="$t('PATH.Name')"
+                    :placeholder="$t('PATH.enterPathName')"
                     :options="learningPaths"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -48,7 +48,7 @@
                     :disabled="!formValues.learning_path_id"
                     v-model="formValues.lesson_id"
                     :name="$t('LESSONS.NAME')"
-                    placeholder="اختر اسم الدرس"
+                    :placeholder="$t('LESSONS.selectLesson')"
                     :options="lessons"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"

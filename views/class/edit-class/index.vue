@@ -1,7 +1,7 @@
 <template>
   <div class="add-country">
     <Modal
-      :content-message="'تم التعديل بنجاح'"
+      :content-message="$t('CONTROLS.edit_successfully')"
       :showModal="showModal"
       :is-success="true"
     />

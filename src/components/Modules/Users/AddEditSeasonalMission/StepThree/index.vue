@@ -16,14 +16,14 @@
             @click="handleAdd"
             custom-class="submit-btn"
           >
-            إضافة
+            {{ $t('ADD_ANSWER') }}
           </Button>
         </b-col>
       </template>
       <ListItems
         class="seasonal-mission-custom-list-item"
         :tableItems="prizeGroup"
-        :headerName="'قائمة الجوائز'"
+        :headerName="$t('seasonalMission.prize')"
         :fieldsList="fieldsList"
         :showSortControls="false"
       >
@@ -32,14 +32,14 @@
         <slot></slot>
         <div class="steps">
           <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
-            السابق
+            {{ $t('GLOBAL_BACK') }}
           </Button>
           <Button
             custom-class="submit-btn"
             :disabled="!isNextStep && prizeGroup.length === 0"
             @click="nextStep"
           >
-            التالي
+            {{ $t('GLOBAL_NEXT') }}
           </Button>
         </div>
       </div>
@@ -87,13 +87,6 @@ export default {
       prizeIndex: 0,
       prizeGroup: [],
       prizeType: "",
-      fieldsList: [
-        { key: "vid", label: "التسلسل" },
-        { key: "main_percentage", label: "من نسبة" },
-        { key: "max_percentage", label: "إلى نسبة" },
-        { key: "type_id_name", label: "نوع الجائزة" },
-        { key: "prizeable_id_name", label: "الجائزة" },
-      ],
     };
   },
   methods: {
@@ -213,6 +206,15 @@ export default {
     },
   },
   computed: {
+    fieldsList(){
+      return  [
+        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
+        { key: "main_percentage", label: this.$i18n.t('seasonalMission.minPercentage') },
+        { key: "max_percentage", label: this.$i18n.t('seasonalMission.maxPercentage') },
+        { key: "type_id_name", label: this.$i18n.t('seasonalMission.prizeType') },
+        { key: "prizeable_id_name", label: this.$i18n.t('seasonalMission.singlePrize') },
+      ]
+    },
     ...mapGetters(["getPrizesList"]),
   },
   async mounted() {
@@ -225,13 +227,10 @@ export default {
         if (prize?.type?.key == "library") prize["prizeable_id_name"] = prize.library.name;
       });
     }
-    this.$watch(
-      () => {
-        return this.$refs.stepThreeForm.refs["من نسبة"].value;
-      },
-      (val) => {
-        this.validateForm(val);
-      }
+    this.$watch(() => {
+        return this.$refs.stepThreeForm.refs["نسبة من"].value;
+        },
+      (val) => {this.validateForm(val);}
     );
   },
 

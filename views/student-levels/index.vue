@@ -1,7 +1,7 @@
 <template>
   <div class="add-edit-school">
     <Modal
-      :content-message="'تم التعديل بنجاح'"
+      :content-message="$t('CONTROLS.edit_successfully')"
       :showModal="showModal"
       :is-success="true"
     />
@@ -20,7 +20,7 @@
                     v-model="xp"
                     label="عدد نقاط المستوى"
                     name="عدد نقاط المستوى"
-                    placeholder="ادخل عدد نقاط المستوى"
+                    placeholder="أدخل عدد نقاط المستوى"
                     type="number"
                     min="0"
                     :rules="'required'"

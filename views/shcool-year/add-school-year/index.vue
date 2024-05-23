@@ -1,6 +1,6 @@
 <template>
   <div class="add-country">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true" />
     <AddEditSchoolYear
       :loading="loading"
       @handleAddSchoolYear="handleAddSchoolYear($event)"

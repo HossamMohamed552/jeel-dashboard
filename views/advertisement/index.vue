@@ -28,7 +28,7 @@
     </ListItems>
     <Modal
       :content-message="'حذف الرسالة'"
-      :content-message-question="'هل انت متأكد من حذف الرسالة ؟'"
+      :content-message-question="'هل أنت متأكد من حذف الرسالة ؟'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"

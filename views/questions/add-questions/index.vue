@@ -1,6 +1,6 @@
 <template>
   <div class="add-question">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true"/>
     <div class="add-edit-user">
       <div class="container-fluid custom-container">
         <div class="add-edit-question-form">
@@ -187,7 +187,7 @@
         </div>
       </div>
     </div>
-    <ProgressModal :show="loading" :value="progress" :title="'السؤال'"
+    <ProgressModal :show="loading" :value="progress" :title="$t('QUESTION')"
                    @cancel="cancelUpload()"></ProgressModal>
   </div>
 </template>
@@ -213,8 +213,6 @@ import axios from "axios";
 import VueCookies from "vue-cookies";
 import globalAssetData from "@/mixins/getData/globalAssetData";
 import ProgressModal from "@/components/Shared/ProgressModal/index.vue";
-import {getAllObjectivesRequest} from "@/api/objective";
-import {getAllOutcomesRequest} from "@/api/outcome";
 export default {
   mixins: [globalAssetData],
   components: {
@@ -231,20 +229,6 @@ export default {
   },
   data() {
     return {
-      steps: [
-        {
-          icon: "1",
-          title: this.$t("QUESTIONS.STEP_ONE"),
-        },
-        {
-          icon: "2",
-          title: this.$t("QUESTIONS.STEP_TWO"),
-        },
-        {
-          icon: "3",
-          title: this.$t("QUESTIONS.STEP_THREE"),
-        },
-      ],
       questionPattern: "",
       loading: false,
       showModal: false,
@@ -267,6 +251,24 @@ export default {
       answerPattern: '',
       progress: 0
     };
+  },
+  computed:{
+    steps(){
+      return [
+        {
+          icon: "1",
+          title: this.$t("QUESTIONS.STEP_ONE"),
+        },
+        {
+          icon: "2",
+          title: this.$t("QUESTIONS.STEP_TWO"),
+        },
+        {
+          icon: "3",
+          title: this.$t("QUESTIONS.STEP_THREE"),
+        },
+      ]
+    }
   },
   mounted() {
     this.getQuestionTypes();

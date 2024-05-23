@@ -2,78 +2,79 @@
   <div class="container-fluid custom-container">
     <div class="add-edit-learning-skill">
       <div class="add-edit-term-form">
-        <h3>تفاصيل المهمة الموسمية</h3>
+        <h3>{{ $t('seasonalMission.seasonalMissionDetails') }}</h3>
         <div class="container-fluid">
           <b-row>
             <b-col lg="8">
-              <ShowItem class="divider-show" title="اسم المهمة" :subtitle="seasonalMissing?.name" />
+              <ShowItem class="divider-show" :title="$t('seasonalMission.missionName')"
+                        :subtitle="seasonalMissing?.name"/>
             </b-col>
             <b-col lg="4">
               <ShowItem
                 class="divider-show"
-                title="الدولة"
+                :title="$t('seasonalMission.country')"
                 :subtitle="seasonalMissing?.countries?.map((row) => row.name).join(', ')"
               />
             </b-col>
             <b-col lg="4">
               <ShowItem
                 class="divider-show"
-                title="اسم المجموعة الموسمية"
+                :title="$t('seasonalMission.seasonalGroupName')"
                 :subtitle="seasonalMissing?.sesonalMissionGroup?.name"
               />
             </b-col>
             <b-col lg="4">
               <ShowItem
                 class="divider-show"
-                title="تاريخ بدء المهمة"
+                :title="$t('seasonalMission.missionStart_date')"
                 :subtitle="seasonalMissing?.start_date"
               />
             </b-col>
             <b-col lg="4">
               <ShowItem
                 class="divider-show"
-                title="تاريخ نهاية المهمة"
+                :title="$t('seasonalMission.missionEnd_date')"
                 :subtitle="seasonalMissing?.end_date"
               />
             </b-col>
             <b-col lg="6">
               <ShowItem
                 class="divider-show"
-                title="الصف الدراسي"
+                :title="$t('seasonalMission.level')"
                 :subtitle="seasonalMissing?.level?.name"
               />
             </b-col>
             <b-col lg="6">
               <ShowItem
                 class="divider-show"
-                title="المسار التعليمي"
+                :title="$t('QUESTIONS.questionLearningPath')"
                 :subtitle="seasonalMissing?.learningpaths?.map((row) => row.name).join(', ')"
               />
             </b-col>
             <b-col lg="6">
               <ShowItem
                 class="divider-show"
-                title="الدرس"
+                :title="$t('MISSIONS.lesson')"
                 :subtitle="seasonalMissing?.lessons?.map((row) => row.name).join(', ')"
               />
             </b-col>
             <b-col lg="3">
               <ShowItem
                 class="divider-show"
-                title="الديانة"
+                :title="$t('USERS.religion')"
                 :subtitle="seasonalMissing?.religions?.map((row) => row.name).join(', ')"
               />
             </b-col>
             <b-col lg="3">
               <ShowItem
                 class="divider-show"
-                title="النوع"
+                :title="$t('TABLE_FIELDS.type')"
                 :subtitle="seasonalMissing?.types?.map((row) => row.name).join(', ')"
               />
             </b-col>
             <b-col lg="12">
               <PreviewMedia
-                header="لوجو المهمة"
+                :header="$t('seasonalMission.logoMission')"
                 :media-name="seasonalMissing.image_name"
                 :file-size="seasonalMissing.image_size"
                 :showRemoveButton="false"
@@ -86,7 +87,7 @@
               <ListItems
                 class="seasonal-mission-custom-list-item"
                 :tableItems="seasonalMissing.notifications"
-                :headerName="'قائمة الإشعار'"
+                :headerName="$t('seasonalMission.notification')"
                 :fieldsList="NotifacationFieldsList"
                 :showSortControls="false"
               >
@@ -105,7 +106,7 @@
               <ListItems
                 class="seasonal-mission-custom-list-item"
                 :tableItems="seasonalMissing.prizes"
-                :headerName="'قائمة الجوائز'"
+                :headerName="$t('seasonalMission.prize')"
                 :fieldsList="prizeFieldsList"
                 :showSortControls="false"
               >
@@ -119,11 +120,12 @@
 </template>
 
 <script>
-import { getSeasonalMissionByIdRequest } from "@/api/seasonal-mission";
+import {getSeasonalMissionByIdRequest} from "@/api/seasonal-mission";
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import learningPathCollapse from "@/components/Modules/Users/AddEditSeasonalMission/StepFive/learningPathCollapse.vue";
+import learningPathCollapse
+  from "@/components/Modules/Users/AddEditSeasonalMission/StepFive/learningPathCollapse.vue";
 
 export default {
   name: "index",
@@ -137,30 +139,41 @@ export default {
     return {
       loading: false,
       seasonalMissing: {},
-      NotifacationFieldsList: [
-        { key: "vid", label: "التسلسل" },
-        { key: "name", label: "عنوان اللإشعار" },
-        { key: "start_date", label: "تاريخ ووقت الإشعار" },
-        { key: "audio", label: "صوت الإشعار" },
-        { key: "description", label: "نص الإشعار" },
-      ],
-      prizeFieldsList: [
-        { key: "id", label: "التسلسل" },
-        { key: "main_percentage", label: "من نسبة" },
-        { key: "max_percentage", label: "إلى نسبة" },
-        { key: "type.name", label: "نوع الجائزة" },
-      ],
-      videosFieldsList: [
-        { key: "id", label: "التسلسل" },
-        { key: "title", label: "عنوان الفيديو" },
-      ],
-      exercisesFieldsList: [
-        { key: "id", label: "التسلسل" },
-        { key: "name", label: "عنوان التمرين" },
-      ],
     };
   },
-  created() {},
+  created() {
+  },
+  computed: {
+    NotifacationFieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "name", label: this.$i18n.t('seasonalMission.NoticeTitle')},
+        {key: "start_date", label: this.$i18n.t('seasonalMission.DateTimeNotification')},
+        {key: "audio", label: this.$i18n.t('seasonalMission.NotificationSound')},
+        {key: "description", label: this.$i18n.t('seasonalMission.NotificationText')},
+      ]
+    },
+    prizeFieldsList() {
+      return [
+        {key: "id", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "main_percentage", label: this.$i18n.t('seasonalMission.minPercentage')},
+        {key: "max_percentage", label: this.$i18n.t('seasonalMission.maxPercentage')},
+        {key: "type.name", label: this.$i18n.t('seasonalMission.prizeType')},
+      ]
+    },
+    videosFieldsList(){
+      return [
+        {key: "id", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "title", label: this.$i18n.t('TABLE_FIELDS.videoTitle')},
+      ]
+    },
+    exercisesFieldsList(){
+      return  [
+        {key: "id", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "name", label: this.$i18n.t('TABLE_FIELDS.titleQuiz')},
+      ]
+    },
+  },
   mounted() {
     this.ApiService(getSeasonalMissionByIdRequest(this.$route.params.id)).then((response) => {
       this.seasonalMissing = response.data.data;

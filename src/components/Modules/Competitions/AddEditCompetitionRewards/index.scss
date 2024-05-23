@@ -176,6 +176,10 @@ h5.title {
     left: 2rem;
     transform: translateY(-50%);
     width: 1.5rem;
+    &:lang(en){
+      left: auto;
+      right: 2rem;
+    }
   }
 }
 

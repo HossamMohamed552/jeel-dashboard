@@ -9,7 +9,7 @@
               <form @submit.prevent="addQuestion">
                 <b-row>
                   <b-col lg="12">
-                    <p class="text-right add-title">إضافة سؤال</p>
+                    <p class="add-title">{{ $t('QUESTIONS.ADD_NEW') }}</p>
                   </b-col>
                   <b-col lg="6">
                     <TextField
@@ -229,29 +229,6 @@ export default {
         headerQuestionAudioNotChange: true,
         questionAudioNotChange: true,
       },
-      // question_time: '',
-      // questionTypeSlug: 'true_false',
-      // // questionTypeSlug: 'mcq',
-      // question_type_id: 2,
-      // // question_type_id mcq 1
-      // question_type_sub_id: 13,
-      // // question_type_sub_id: 14,
-      // question_difficulty_id: '',
-      // answers_id: 1,
-      // answers: [
-      //   {
-      //     id: 1,
-      //     answer: "صح",
-      //     correct: 0,
-      //     order: 1
-      //   },
-      //   {
-      //     id: 2,
-      //     answer: "خطأ",
-      //     correct: 0,
-      //     order: 2
-      //   },
-      // ],
       questionType: [
         {
           id: 'true_false',
@@ -281,19 +258,16 @@ export default {
       ],
       questionVideo: {
         video_id: "",
-
         head_question: "",
         head_question_audio: null,
         video_head_question_audio_name: null,
         video_head_question_audio_size: null,
         video_head_question_audioChangedRequest: false,
-
         question: "",
         video_question_audio: null,
         video_question_audio_name:'',
         video_question_audio_size:'',
         video_question_audioChangedRequest: false,
-
         question_slug: "true_false",
         question_type_id: 2,
         question_type_sub_id: 13,

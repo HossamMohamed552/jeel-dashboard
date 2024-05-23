@@ -22,37 +22,39 @@
                                   :type-of-attachment="'video'"
                                   :dropIdRef="'VideFile'"
                                   :accept-files="'.mp4'"
-                                  :label="'ملف الفيديو'" :name="'VideFile'"
+                                  :label="$t('VIDEO.videoWithMusic')" :name="'VideFile'"
                                   :rules="'required'"
                                   @setFileId="setVideoFileId($event)"/>
-                <PreviewMedia v-if="$route.params.id && createVideo.videoChanged === false && !createVideo.videoChangedRequest" :header="'ملف الفيديو'"
+                <PreviewMedia v-if="$route.params.id && createVideo.videoChanged === false && !createVideo.videoChangedRequest" :header="$t('VIDEO.videoWithMusic')"
                               :media-name="createVideo.videoPreview_name"
                               :file-size="createVideo.videoPreview_size"
                               :typeOfMedia="'video'"
                               :show-remove-button="true"
                               @removeFile="removeFile('video','videoChanged','videoChangedRequest')"
                               @showModal="showModal(videoDetail,'withMusic')"/>
-                <p v-if="$route.params.id && createVideo.videoChangedRequest" class="invalid-feedback d-block">ملف الفيديو مطلوب</p>
+                <p v-if="$route.params.id && createVideo.videoChangedRequest" class="invalid-feedback d-block">
+                  {{ $t('VIDEO.videoRequired') }}</p>
               </b-col>
               <b-col lg="6">
-                <UploadAttachment v-if="!$route.params.id || createVideo.video_without_musicChangedRequest" :type-of-attachment="'video'" :label="'ملف الفيديو بدون موسيقى'"
+                <UploadAttachment v-if="!$route.params.id || createVideo.video_without_musicChangedRequest" :type-of-attachment="'video'" :label="$t('VIDEO.videoWithoutMusic')"
                                   :name="'VideoWithout'" :rules="'required'"
                                   :dropIdRef="'VideoWithout'"
                                   :accept-files="'.mp4'"
                                   @setFileId="setVideoWithoutFileId($event)"/>
-                <PreviewMedia v-if="$route.params.id && createVideo.video_without_musicChanged === false && !createVideo.video_without_musicChangedRequest" :header="'ملف الفيديو بدون موسيقى'"
+                <PreviewMedia v-if="$route.params.id && createVideo.video_without_musicChanged === false && !createVideo.video_without_musicChangedRequest" :header="$t('VIDEO.videoWithoutMusic')"
                               :media-name="createVideo.video_without_musicPreview_name"
                               :file-size="createVideo.video_without_musicPreview_size"
                               :typeOfMedia="'video'"
                               :show-remove-button="true"
                               @removeFile="removeFile('video_without_music','video_without_musicChanged','video_without_musicChangedRequest')"
                               @showModal="showModal(videoDetail,'withOutMusic')"/>
-                <p v-if="createVideo.video_without_musicChangedRequest" class="invalid-feedback d-block">ملف الفيديو بدون موسيقى مطلوب</p>
+                <p v-if="createVideo.video_without_musicChangedRequest" class="invalid-feedback d-block">
+                  {{ $t('VIDEO.videoWithOutRequired') }}</p>
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field mt-4">
                   <UploadAttachment v-if="!$route.params.id || createVideo.thumbnailChangedRequest" :type-of-attachment="'image'"
-                                    :label="'صورة الفيديو'"
+                                    :label="$t('VIDEO.videoWithThumbnail')"
                                     :dropImage="true" :name="'image'" :rules="'required'"
                                     :dropIdRef="'VideImage'"
                                     :accept-files="'image/*'" @setFileId="setFileImageId($event)"/>
@@ -64,7 +66,8 @@
                                 :showRemoveButton="true"
                                 @removeFile="removeFile('thumbnail','thumbnailChanged','thumbnailChangedRequest')"
                   />
-                  <p v-if="createVideo.thumbnailChangedRequest" class="invalid-feedback d-block">صورة الفيديو مطلوب</p>
+                  <p v-if="createVideo.thumbnailChangedRequest" class="invalid-feedback d-block">
+                    {{ $t('VIDEO.videoWithThumbnailRequired') }}</p>
                 </div>
               </b-col>
             </b-row>

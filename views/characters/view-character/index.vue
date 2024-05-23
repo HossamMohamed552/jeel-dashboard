@@ -33,7 +33,7 @@
         <b-row>
           <b-col lg="12" class="mb-5 mt-4">
             <PreviewMedia
-              :header="$t('BADGE.character_logo')"
+              :header="$t('CHARACTER.character_logo')"
               :media-name="characters.image_name"
               :file-size="characters.image_size"
               :image-url="characters.image"

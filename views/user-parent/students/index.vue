@@ -102,7 +102,7 @@
     </div>
     <Modal
       :content-message="'حذف العنصر'"
-      :content-message-question="'هل انت متأكد من حذف العنصر ؟'"
+      :content-message-question="'هل أنت متأكد من حذف العنصر؟'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"

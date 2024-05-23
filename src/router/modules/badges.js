@@ -5,6 +5,7 @@ export default [
     component: () => import("../../../views/badge/index.vue"),
     meta: {
       breadcrumb: "شارات جيل",
+      breadcrumbEn: "jeel badge",
       preLabel: "",
       preLink: "",
     },
@@ -15,7 +16,9 @@ export default [
     component: () => import("../../../views/badge/add-badge/index.vue"),
     meta: {
       breadcrumb: "إضافة شارة جيل",
+      breadcrumbEn: "add badge",
       preLabel: "شارات جيل",
+      preLabelEn: "jeel badge",
       preLink: "/dashboard/jeel-badge",
     },
   },
@@ -25,7 +28,9 @@ export default [
     component: () => import("../../../views/badge/edit-badge/index.vue"),
     meta: {
       breadcrumb: "تعديل شارة جيل",
+      breadcrumbEn: "edit badge",
       preLabel: "شارات جيل",
+      preLabelEn: "jeel badge",
       preLink: "/dashboard/jeel-badge",
     },
   },
@@ -35,7 +40,9 @@ export default [
     component: () => import("../../../views/badge/view-badge/index.vue"),
     meta: {
       breadcrumb: "تفاصيل شارة جيل",
+      breadcrumbEn: "show badge",
       preLabel: "شارات جيل",
+      preLabelEn: "jeel badge",
       preLink: "/dashboard/jeel-badge",
     },
   },

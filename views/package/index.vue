@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة الباقات'"
+      :header-name="$t('PACKAGE.list')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="packagesList"
@@ -22,13 +22,13 @@
           v-if="user.permissions.includes(`add-packages`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة باقة</span>
+          <span>{{$t('PACKAGE.ADD_NEW')}}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف الباقة'"
-      :content-message-question="'هل انت متأكد من حذف الباقة'"
+      :content-message="$t('PACKAGE.delete')"
+      :content-message-question="$t('PACKAGE.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -47,16 +47,8 @@ import { mapGetters } from "vuex";
 export default {
   components: { Modal, ListItems, Button },
   computed: {
-    ...mapGetters(["user"]),
-  },
-  data() {
-    return {
-      loading: false,
-      showModal: false,
-      packageSearchWord: "",
-      packagesList: [],
-      totalNumber: 0,
-      fieldsList: [
+    fieldsList(){
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -106,7 +98,17 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
+      ]
+    },
+    ...mapGetters(["user"]),
+  },
+  data() {
+    return {
+      loading: false,
+      showModal: false,
+      packageSearchWord: "",
+      packagesList: [],
+      totalNumber: 0,
       itemId: 0,
     };
   },

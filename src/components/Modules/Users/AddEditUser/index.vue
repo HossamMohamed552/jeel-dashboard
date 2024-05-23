@@ -14,7 +14,7 @@
                   @image-cleared="handleImageCleared"
                 />
                 <div v-if="$route.params.id" class="user-active">
-                  <label for="">الحالة</label>
+                  <label for="">{{ $t("USERS.status") }}</label>
                   <div>
                     <label for="">{{ $t("USERS.ACTIVE") }}</label>
                     <b-form-checkbox
@@ -33,7 +33,7 @@
               <b-col lg="8">
                 <b-row>
                   <b-col lg="4">
-                    <div class="hold-field">
+                    <div class="hold-field mb-2">
                       <TextField
                         v-model="user.first_name"
                         :label="$t('USERS.FIRST_NAME')"
@@ -44,7 +44,7 @@
                     </div>
                   </b-col>
                   <b-col lg="4">
-                    <div class="hold-field">
+                    <div class="hold-field mb-2">
                       <TextField
                         v-model="user.middle_name"
                         :label="$t('USERS.SECOND_NAME')"
@@ -55,7 +55,7 @@
                     </div>
                   </b-col>
                   <b-col lg="4">
-                    <div class="hold-field">
+                    <div class="hold-field mb-2">
                       <TextField
                         v-model="user.last_name"
                         :label="$t('USERS.LAST_NAME')"
@@ -65,12 +65,8 @@
                       ></TextField>
                     </div>
                   </b-col>
-                  <b-col
-                    lg="8"
-                    :class="isStudent && 'd-none'"
-                    v-if="!$route.params.id || !isStudent"
-                  >
-                    <div class="hold-field">
+                  <b-col lg="8" :class="isStudent && 'd-none'" v-if="!$route.params.id || !isStudent">
+                    <div class="hold-field mb-2">
                       <TextField
                         v-model="user.email"
                         :label="$t('USERS.EMAIL')"
@@ -81,7 +77,7 @@
                     </div>
                   </b-col>
                   <b-col lg="4">
-                    <div class="hold-field">
+                    <div class="hold-field mb-2">
                       <TextField
                         v-model="user.mobile"
                         :label="$t('USERS.PHONE_NUMBER')"
@@ -93,7 +89,7 @@
                     </div>
                   </b-col>
                   <b-col lg="4">
-                    <div class="hold-field">
+                    <div class="hold-field mb-2">
                       <SelectSearch
                         v-model="user.country_id"
                         :label="$t('USERS.NATIONALITY')"
@@ -107,7 +103,7 @@
                     </div>
                   </b-col>
                   <b-col lg="4">
-                    <div class="hold-field">
+                    <div class="hold-field mb-2">
                       <SelectSearch
                         v-model="user.religion_id"
                         :label="$t('USERS.religion')"
@@ -121,7 +117,7 @@
                     </div>
                   </b-col>
                   <b-col lg="4">
-                    <div class="hold-field">
+                    <div class="hold-field mb-2">
                       <SelectSearch
                         v-model="user.gender"
                         :label="$t('USERS.gender')"
@@ -135,7 +131,7 @@
                     </div>
                   </b-col>
                   <b-col lg="4" v-if="!$route.params.id">
-                    <b-form-group class="mb-3">
+                    <b-form-group class="mb-2">
                       <TextField
                         v-model="user.password"
                         :rules="'required|verify_password'"
@@ -155,7 +151,7 @@
                     </b-form-group>
                   </b-col>
                   <b-col lg="4" v-if="!$route.params.id">
-                    <b-form-group class="mb-3">
+                    <b-form-group class="mb-2">
                       <TextField
                         v-model="user.password_confirmation"
                         :rules="`required|confirmed:${$t('USERS.PASSWORD')}`"
@@ -174,7 +170,7 @@
                     </b-form-group>
                   </b-col>
                   <b-col lg="4">
-                    <div class="hold-field">
+                    <div class="hold-field mb-2">
                       <SelectSearch
                         v-model="user.roles"
                         :label="$t('USERS.DEPARTMENT')"
@@ -190,10 +186,10 @@
                     </div>
                   </b-col>
                   <b-col lg="12">
-                    <h3 class="mt-2">روابط التواصل الإجتماعي</h3>
+                    <h3 class="mt-2">{{ $t('socialLink') }}</h3>
                   </b-col>
                   <b-col lg="4">
-                    <div class="hold-field">
+                    <div class="hold-field mb-2">
                       <TextField
                         v-model="user.facebook"
                         :label="$t('SOCIAL_MEDIA.FACEBOOK')"

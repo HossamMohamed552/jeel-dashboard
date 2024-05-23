@@ -26,7 +26,7 @@
       <template #modalBody>
         <div class="p-3">
           <div v-if="activeTap === 1" class="title-content">
-            تفاصيل التسجيل الصوتى
+            تفاصيل التسجيل الصوتي
           </div>
           <div v-else>تفاصيل ورقة العمل</div>
           <b-row>
@@ -45,7 +45,7 @@
               <p class="subtitle" v-if="detail.learningPath">{{detail.learningPath.name}}</p>
             </b-col>
             <b-col lg="4">
-              <h2 class="title" v-if="activeTap === 1">اسم التسجيل الصوتى</h2>
+              <h2 class="title" v-if="activeTap === 1">اسم التسجيل الصوتي</h2>
               <h2 class="title" v-else>اسم ورقه العمل</h2>
               <p class="subtitle">{{detail.name}}</p>
             </b-col>

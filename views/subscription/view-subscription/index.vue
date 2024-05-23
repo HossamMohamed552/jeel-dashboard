@@ -4,42 +4,42 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">تفاصيل الإشتراك</h2>
+            <h2 class="heading">{{$t('subscription.details')}}</h2>
           </b-col>
         </b-row>
         <b-row>
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="مجموعة المدارس"
+              :title="$t('subscription.schoolGroup')"
               :subtitle="singleSubscribtion.school_group.name"
             />
           </b-col>
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="الدولة"
+              :title="$t('subscription.country')"
               :subtitle="singleSubscribtion.country.name"
             />
           </b-col>
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="المدرسة"
+              :title="$t('subscription.school')"
               :subtitle="singleSubscribtion.school.name"
             />
           </b-col>
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="العام الدراسي"
+              :title="$t('subscription.studyYear')"
               :subtitle="singleSubscribtion.study_year.name"
             />
           </b-col>
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="الصف الدراسي"
+              :title="$t('subscription.level')"
               :with-out-background="true"
               :listItems="singleSubscribtion.levels"
             />
@@ -47,7 +47,7 @@
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="الترم الدراسي"
+              :title="$t('subscription.term')"
               :with-out-background="true"
               :listItems="singleSubscribtion.terms"
             />
@@ -55,20 +55,20 @@
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="تاريخ بدء الإشتراك"
+              :title="$t('subscription.start_subscription')"
               :subtitle="singleSubscribtion.start_subscription"
             />
           </b-col>
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="تاريخ نهاية الإشتراك"
+              :title="$t('subscription.end_subscription')"
               :subtitle="singleSubscribtion.end_subscription"
             />
           </b-col>
         </b-row>
         <b-row>
-          <h4 class="subscription-price">سعر الإشتراك</h4>
+          <h4 class="subscription-price">{{ $t('subscription.price') }}</h4>
         </b-row>
         <b-row>
           <b-col lg="4" class="mb-5">
@@ -81,14 +81,14 @@
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="نسبة الخصم"
+              :title="$t('subscription.disPercentage')"
               :subtitle="`${singleSubscribtion.package_discount} %` || `0 %`"
             />
           </b-col>
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="القيمة النهائية"
+              :title="$t('subscription.finalResult')"
               :subtitle="`${singleSubscribtion.price_after_discount}  ${singleSubscribtion.package.currency.name}`"
             />
           </b-col>

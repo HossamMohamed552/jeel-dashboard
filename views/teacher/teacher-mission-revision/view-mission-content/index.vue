@@ -219,7 +219,7 @@ export default {
       activeTap: 1,
       loading: false,
       paperWorkFieldsList: [
-        {key: "vid", label: "التسلسل"},
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
         {key: "type.name", label: this.$i18n.t('TABLE_FIELDS.type')},
         {key: "final_degree", label: this.$i18n.t('TABLE_FIELDS.finalDegree')},
@@ -231,7 +231,7 @@ export default {
         {key: "teacher_review", label: "الاجراء"},
       ],
       tasksFieldsList: [
-        {key: "vid", label: "التسلسل"},
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
         {key: "type.name", label: this.$i18n.t('TABLE_FIELDS.type')},
         {key: "final_degree", label: this.$i18n.t('TABLE_FIELDS.finalDegree')},

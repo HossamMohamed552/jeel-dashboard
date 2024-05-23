@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid custom-container">
-    <Modal :content-message="'تم التعديل بنجاح'" :showModal="isShowModal" :is-success="true" />
+    <Modal :content-message="$t('CONTROLS.edit_successfully')" :showModal="isShowModal" :is-success="true" />
     <div class="show-role">
       <div class="hold-fields">
         <form @submit.prevent="onSubmit" class="mt-2">

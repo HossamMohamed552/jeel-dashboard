@@ -12,18 +12,18 @@
                     v-model="createCharacter.name"
                     :label="$t('CHARACTER.name')"
                     :name="$t('CHARACTER.name')"
-                    placeholder="أدخل اسم الشخصية"
+                    :placeholder="$t('CHARACTER.enterName')"
                     :rules="'required|min:3'"
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="4" class="mt-3">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field" v-if="countries">
                   <SelectSearch
                     v-model="createCharacter.country_id"
                     :label="$t('CHARACTER.country')"
                     :name="$t('CHARACTER.country')"
-                    placeholder="اختر الدولة"
+                    :placeholder="$t('CHARACTER.selectCountry')"
                     :options="countries"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -31,13 +31,13 @@
                   ></SelectSearch>
                 </div>
               </b-col>
-              <b-col lg="4" class="mt-3">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field" v-if="characters">
                   <SelectSearch
                     v-model="characterSelected"
                     :label="$t('CHARACTER.type')"
                     :name="$t('CHARACTER.type')"
-                    placeholder="اختر نوع الشخصية"
+                    :placeholder="$t('CHARACTER.selectType')"
                     :options="characters"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.key"

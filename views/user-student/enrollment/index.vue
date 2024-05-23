@@ -83,7 +83,7 @@
                       v-model="enrollment.level_id"
                       :label="$t('schoolAdmin.level')"
                       :name="$t('schoolAdmin.level')"
-                      placeholder="أختر الصف الدراسي"
+                      placeholder="اختر الصف الدراسي"
                       :options="levels"
                       :reduce="(option) => option.id"
                       :get-option-label="(option) => option.name"
@@ -147,13 +147,13 @@
     </div>
     <Modal
       :content-message="'حذف العنصر'"
-      :content-message-question="'هل انت متأكد من حذف العنصر ؟'"
+      :content-message-question="'هل أنت متأكد من حذف العنصر؟'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
-    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+    <Modal :content-message="$t('CONTROLS.already_exists')" :showModal="showModalFailed" :isUsed="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>
 </template>
@@ -286,7 +286,7 @@ export default {
         })
        this.getStudentUsers()
       }).catch((error) => {
-        this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الصف الدراسى مُستخدمة من قبل');
+        this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الصف الدراسي مُستخدمة من قبل');
       })
     },
     handleCancel() {

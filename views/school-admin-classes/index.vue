@@ -32,7 +32,7 @@
     </ListItems>
     <Modal
       :content-message="'حذف الفصل'"
-      :content-message-question="'هل انت متأكد من حذف الفصل ؟'"
+      :content-message-question="'هل أنت متأكد من حذف الفصل؟'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"

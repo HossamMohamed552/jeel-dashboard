@@ -2,7 +2,7 @@
   <div class="add-edit-role">
     <div class="container-fluid custom-container">
       <div class="add-edit-role-form">
-        <h3>{{ $route.params.id ? "تعديل صندوق الطاقة" : "إضافة صندوق الطاقة" }}</h3>
+        <h3>{{ $route.params.id ? $t('power_up_box.edit') : $t('power_up_box.add') }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditPowerUpBoxForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -10,9 +10,9 @@
                 <div class="hold-field">
                   <TextField
                       v-model="createPowerUpBox.name"
-                      :label="'اسم الصندوق'"
-                      :name="'اسم الصندوق'"
-                      placeholder="أختر إسم المهمة"
+                      :label="$t('power_up_box.name')"
+                      :name="$t('power_up_box.name')"
+                      :placeholder="$t('power_up_box.name')"
                       :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
@@ -22,9 +22,9 @@
                 <div class="hold-field">
                   <SelectSearch
                       v-model="createPowerUpBox.level_id"
-                      :label="'الصف الدراسى'"
-                      :name="'أختر الصف الدراسى'"
-                      placeholder="أختر الصف الدراسى"
+                      :label="$t('power_up_box.level')"
+                      :name="$t('power_up_box.level')"
+                      :placeholder="$t('power_up_box.selectLevel')"
                       :options="levels"
                       :reduce="(option) => option.id"
                       :get-option-label="(option) => option.name"
@@ -36,9 +36,9 @@
                 <div class="hold-field">
                   <SelectSearch
                       v-model="createPowerUpBox.term_id"
-                      :label="'الترم الدراسى'"
-                      :name="'أختر التيرم الدراسى'"
-                      placeholder="أختر الترم الدراسى"
+                      :label="$t('power_up_box.term')"
+                      :name="$t('power_up_box.term')"
+                      :placeholder="$t('power_up_box.selectTerm')"
                       :options="terms"
                       :reduce="(option) => option.id"
                       :get-option-label="(option) => option.name"
@@ -50,9 +50,9 @@
                 <div class="hold-field">
                   <SelectSearch
                       v-model="createPowerUpBox.country_id"
-                      label="الدولة"
-                      name="الدولة"
-                      placeholder="أختر الدولة"
+                      :label="$t('power_up_box.country')"
+                      :name="$t('power_up_box.country')"
+                      :placeholder="$t('power_up_box.selectCountry')"
                       :options="countries"
                       :reduce="(option) => option.id"
                       :get-option-label="(option) => option.name"
@@ -64,9 +64,9 @@
                 <div class="hold-field">
                   <TextField
                       v-model="createPowerUpBox.appear_after_missions"
-                      :label="'ظهور بعد مهمة'"
-                      :name="'ظهور بعد مهمة'"
-                      placeholder="ادخل رقم المهمه"
+                      :label="$t('power_up_box.appear_after_missions')"
+                      :name="$t('power_up_box.appear_after_missions')"
+                      :placeholder="$t('power_up_box.enter_appear_after_missions')"
                       type="number"
                       min="1"
                       :rules="'required|numeric|min_value:1'"
@@ -78,7 +78,7 @@
                 <UploadAttachment
                   v-if="!$route.params.id || createPowerUpBox.thumbnailChangedRequest"
                   :rules="'required'"
-                  :label="'لوجو الملف'"
+                  :label="$t('library.fileLogo')"
                   :type-of-attachment="'image'"
                   :accept-files="'image/*'"
                   @setFileId="setImageId"
@@ -105,8 +105,7 @@
               <b-col lg="12"></b-col>
 
               <b-col lg="6">
-                <label class="required-flag"> نوع محتوى الصندوق
-                </label>
+                <label class="required-flag">{{ $t('power_up_box.powerType') }}</label>
                 <b-row>
                     <CheckboxField value="rememberMe" v-model="jeelXpStatus" :name="'نقاط'"></CheckboxField>
                     <CheckboxField value="rememberMe" v-model="jeelCoinsStatus" :name="'عملات جيل'"></CheckboxField>
@@ -122,7 +121,7 @@
                           v-model="createPowerUpBox.jeel_xp"
                           :label="'عدد النقاط'"
                           :name="' عدد النقاط'"
-                          placeholder="ادخل عدد النقاط"
+                          placeholder="أدخل عدد النقاط"
                           type="number"
                           min="0"
                           :rules="'required|numeric|min_value:0'"

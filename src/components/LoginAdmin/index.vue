@@ -45,6 +45,7 @@
           <div class="hold-field remember-me">
             <!--            @input="checkRemember($event)"-->
             <CheckboxField
+              @change="rememberMeSet"
               value="rememberMe"
               :name="$t('AUTH.rememberMe')"
               v-model="rememberMe"
@@ -102,19 +103,19 @@ export default {
         email: "",
         password: "",
       },
-      rememberMe: false,
+      rememberMe: localStorage.getItem('rememberMe'),
       showPassword: false,
     };
   },
   methods: {
     onSubmit() {
       this.$refs.loginForm.validate().then((success) => {
+        this.checkRemember()
         if (!success) {
           return;
         }
-        this.checkRemember()
         this.$emit("handleLogin", this.user);
-        // this.user.email = this.user.password = "";
+        this.user.email = this.user.password = "";
         this.$nextTick(() => {
           this.$refs.loginForm.reset();
         });
@@ -123,23 +124,20 @@ export default {
     handleForgetPassword() {
       this.$bvModal.show("forget-password-modal");
     },
+    rememberMeSet(){
+      localStorage.setItem('rememberMe', this.rememberMe)
+    },
     checkRemember() {
       if (this.rememberMe) {
-        if (this.user.email && this.user.password) {
-          localStorage.setItem('email', this.user.email)
-          localStorage.setItem('password', btoa(this.user.password))
-          localStorage.setItem('rememberMe', this.rememberMe)
-        }
-      } else {
-        localStorage.removeItem('email')
-        localStorage.removeItem('password')
-        localStorage.removeItem('rememberMe')
+        localStorage.setItem('email', this.user.email)
+        localStorage.setItem('password', btoa(this.user.password))
       }
     },
   },
-  created() {
+  mounted() {
     if (localStorage.getItem('rememberMe') && localStorage.getItem('rememberMe') === 'true') {
-      this.user.email = localStorage.email
+      this.user = {}
+      this.user.email = localStorage.getItem('email')
       this.user.password = atob(localStorage.getItem('password'))
       this.rememberMe = localStorage.getItem('rememberMe')
     }

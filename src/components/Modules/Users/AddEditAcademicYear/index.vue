@@ -10,7 +10,7 @@
             @onSubmit="onSubmit"
             :loading="loading"
             :submitButton="$route.params.id ? 'حفظ' : 'أضافة'"
-            cancelButton="إلغاء"
+            :cancelButton="$t('GLOBAL_CANCEL')"
             :invalid="invalid"
           ></GenericForm>
         </validation-observer>
@@ -71,7 +71,7 @@ export default {
           value: "",
           type: "date",
           rules: "required",
-          placeholder: "أختر تاريخ البداية",
+          placeholder: "اختر تاريخ البداية",
         },
         {
           key: "end_date",
@@ -81,7 +81,7 @@ export default {
           value: "",
           type: "date",
           rules: "required",
-          placeholder: "أختر تاريخ النهاية",
+          placeholder: "اختر تاريخ النهاية",
         },
       ],
       academicYear: {},

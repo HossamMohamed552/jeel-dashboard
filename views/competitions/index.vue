@@ -31,7 +31,7 @@
     </ListItems>
     <Modal
       :content-message="'حذف المسابقة'"
-      :content-message-question="'هل انت متأكد من حذف المسابقة ؟'"
+      :content-message-question="'هل أنت متأكد من حذف المسابقة ؟'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"

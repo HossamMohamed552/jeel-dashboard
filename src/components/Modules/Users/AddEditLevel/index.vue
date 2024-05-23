@@ -140,7 +140,7 @@
                         </div>
                       </draggable>
                       <p v-if="isError" class="text-danger">
-                        لم تصل الصفوف الى الحد الادنى للصفوف {{ createLevel.min_levels }}
+                        لم تصل الصفوف إلى الحد الادنى للصفوف {{ createLevel.min_levels }}
                       </p>
                     </b-col>
                   </b-row>

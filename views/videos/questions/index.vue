@@ -49,7 +49,7 @@
     </b-row>
     <b-row>
       <b-col lg="12">
-        <ListItems :header-name="'قائمة الأسئلة'"
+        <ListItems :header-name="$t('VIDEO.questions')"
                    :showSortControls="false"
                    :number-of-item="totalNumber"
                    :tableItems="questionsList"
@@ -67,19 +67,20 @@
             <Button :custom-class="'btn-add rounded-btn big-padding'"
                     @click="showModalQuestion=true">
               <img src="@/assets/images/icons/plus.svg">
-              <span> إضافة سؤال جديد</span>
+              <span>{{ $t('VIDEO.addQuestions') }}</span>
             </Button>
           </template>
         </ListItems>
       </b-col>
     </b-row>
-    <Modal :content-message="'حذف السؤال'"
-           :content-message-question="'هل انت متأكد من حذف السؤال'"
+    <Modal :content-message="$t('VIDEO.deleteQuestion')"
+           :content-message-question="$t('VIDEO.confirm_delete_question')"
            :showModal="showModal"
            @cancel="cancel($event)"
            :is-warning="true"
            @cancelWithConfirm="cancelWithConfirm($event)"/>
-    <QuestionModal :showModal="showModalQuestion" @addQuestion="addQuestion($event)" @editQuestion="editQuestion($event)"
+    <QuestionModal :showModal="showModalQuestion" @addQuestion="addQuestion($event)"
+                   @editQuestion="editQuestion($event)"
                    @cancelQuestion="cancelQuestion($event)" :totalDuration="totalDuration"
                    :currentTime="currentTime" :questionEdit="questionContent" :isEdit="isEdit"/>
     <GeneralModal id="questionContent" :size="'xl'" :hide-header="true">
@@ -94,7 +95,8 @@
                         :subtitle="questionContent.question_time"/>
             </b-col>
             <b-col lg="6">
-              <ShowItem v-if="questionContent && questionContent.question_type" class="divider-show" :title="$t('QUESTIONS.QUESTION_TYPE')"
+              <ShowItem v-if="questionContent && questionContent.question_type" class="divider-show"
+                        :title="$t('QUESTIONS.QUESTION_TYPE')"
                         :subtitle="questionContent.question_type.name"/>
             </b-col>
             <b-col lg="12" class="mt-3">
@@ -126,17 +128,18 @@
                         :subtitle="questionContent.question"/>
             </b-col>
             <b-col lg="12">
-              <b-row v-if="questionContent.question_type && questionContent.question_type.name === 'ضع علامة صح او خطاء'">
+              <b-row
+                v-if="questionContent.question_type && questionContent.question_type.name === 'ضع علامة صح او خطاء'">
                 <b-col lg="6" class="mt-3">
-                  <ShowItem :title="$t('QUESTIONS.ANSWERS')" />
+                  <ShowItem :title="$t('QUESTIONS.ANSWERS')"/>
                   <b-row>
                     <b-col v-for="answer in questionContent.answers" :key="answer.id">
-                      <ShowItem :subtitle="answer.answer" />
+                      <ShowItem :subtitle="answer.answer"/>
                     </b-col>
                   </b-row>
                 </b-col>
                 <b-col lg="6" class="mt-3">
-                  <ShowItem :title="$t('QUESTIONS.RIGHT_ANSWER')" />
+                  <ShowItem :title="$t('QUESTIONS.RIGHT_ANSWER')"/>
                   <b-row>
                     <b-col v-for="answer in questionContent.answers" :key="answer.id">
                       <ShowItem :subtitle="answer.answer" v-if="answer.correct === 1"/>
@@ -144,14 +147,17 @@
                   </b-row>
                 </b-col>
               </b-row>
-              <b-row v-if="questionContent.question_type && questionContent.question_type.name === 'اختر الإجابة الصحيحة'">
+              <b-row
+                v-if="questionContent.question_type && questionContent.question_type.name === 'اختر الإجابة الصحيحة'">
                 <b-col lg="12" class="mt-3">
-                  <ShowItem :title="$t('QUESTIONS.ANSWERS')" />
+                  <ShowItem :title="$t('QUESTIONS.ANSWERS')"/>
                   <b-row>
-                    <b-col lg="12" v-for="(answer,index) in questionContent.answers" :key="answer.id" class="hold-answers mt-0 mb-3">
+                    <b-col lg="12" v-for="(answer,index) in questionContent.answers"
+                           :key="answer.id" class="hold-answers mt-0 mb-3">
                       <div class="answer">
-                        <p class="font-weight-bold">{{$t('VIDEO.answerSort',{ index:`${index + 1 }`})}}</p>
-                        <p>{{answer.answer}}</p>
+                        <p class="font-weight-bold">
+                          {{ $t('VIDEO.answerSort', {index: `${index + 1}`}) }}</p>
+                        <p>{{ answer.answer }}</p>
                       </div>
                       <PreviewMedia
                         :header="`${$t('VIDEO.answerSortAudio',{ index:`${index + 1 }`})}`"
@@ -163,11 +169,12 @@
                   </b-row>
                 </b-col>
                 <b-col lg="12" class="mt-3">
-                  <ShowItem :title="$t('QUESTIONS.RIGHT_ANSWER')" />
+                  <ShowItem :title="$t('QUESTIONS.RIGHT_ANSWER')"/>
                   <b-row>
-                    <b-col lg="12" v-for="answer in questionContent.answers" :key="answer.id" class="hold-answers mt-0" v-if="answer.correct === 1">
+                    <b-col lg="12" v-for="answer in questionContent.answers" :key="answer.id"
+                           class="hold-answers mt-0" v-if="answer.correct === 1">
                       <div class="answer">
-                        <p>{{answer.answer}}</p>
+                        <p>{{ answer.answer }}</p>
                       </div>
                       <PreviewMedia
                         :header="`${$t('VIDEO.rightAnswerAudio')}`"
@@ -182,7 +189,8 @@
             </b-col>
           </b-row>
           <div class="w-100">
-            <Button @click="hideModal" class="w-100" :d-block="true" :custom-class="'rounded-btn transparent-btn back-modal'">
+            <Button @click="hideModal" class="w-100" :d-block="true"
+                    :custom-class="'rounded-btn transparent-btn back-modal'">
               {{ $t("BACK") }}
             </Button>
           </div>
@@ -227,7 +235,8 @@ export default {
   name: "index",
   components: {
     PreviewMedia,
-    GeneralModal, Button, Modal, ListItems, ShowItem, QuestionModal, VimeoPlayer: vueVimeoPlayer},
+    GeneralModal, Button, Modal, ListItems, ShowItem, QuestionModal, VimeoPlayer: vueVimeoPlayer
+  },
   data() {
     return {
       loading: false,
@@ -236,20 +245,13 @@ export default {
       showModal: false,
       showModalQuestion: false,
       url: null,
-      fieldsList: [
-        {key: "vid", label: "التسلسل"},
-        {key: "questionName", label: "نص السؤال"},
-        {key: "question_time", label: "التوقيت"},
-        {key: "question_type.name", label: "نوع السؤال"},
-        {key: "actions", label: "الإجراء"},
-      ],
       videoDetail: {},
       videoUrl: null,
       videoId: null,
       player: null,
       totalDuration: null,
       currentTime: null,
-      questionContent:{},
+      questionContent: {},
       isEdit: false,
       questionId: null,
     }
@@ -277,13 +279,13 @@ export default {
     detailItem($event) {
       this.ApiService(getSingleQuestionOnVideo($event)).then((response) => {
         this.questionContent = response.data.data
-      }).then(()=>this.showQuestionModal())
+      }).then(() => this.showQuestionModal())
     },
     editItem($event) {
       this.questionId = $event
       this.ApiService(getSingleQuestionOnVideo($event)).then((response) => {
         this.questionContent = response.data.data
-      }).then(()=>{
+      }).then(() => {
         this.showModalQuestion = true
         this.isEdit = true
       })
@@ -298,7 +300,7 @@ export default {
       this.$bvModal.show('holdContent')
       this.url = audio
     },
-    hidePreviewModal(){
+    hidePreviewModal() {
       this.$bvModal.hide('holdContent')
     },
     deleteItem($event) {
@@ -326,11 +328,11 @@ export default {
         this.showModalQuestion = false
       })
     },
-    editQuestion($event){
-      if (!$event['video_head_question_audioChangedRequest']){
+    editQuestion($event) {
+      if (!$event['video_head_question_audioChangedRequest']) {
         delete $event['head_question_audio']
       }
-      if (!$event['video_question_audioChangedRequest']){
+      if (!$event['video_question_audioChangedRequest']) {
         delete $event['video_question_audio']
       }
       delete $event['video_head_question_audioChangedRequest']
@@ -339,7 +341,7 @@ export default {
       delete $event['video_question_audioChangedRequest']
       delete $event['video_question_audio_name']
       delete $event['video_question_audio_size']
-      this.ApiService(editQuestionOnVideo($event,this.questionId)).then((response) => {
+      this.ApiService(editQuestionOnVideo($event, this.questionId)).then((response) => {
         this.getQuestionOfVideo(this.$route.params.id)
         this.showModalQuestion = false
       })
@@ -353,6 +355,17 @@ export default {
     async getCurrentDuration($event) {
       this.currentTime = $event.seconds
     }
+  },
+  computed: {
+    fieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t("TABLE_FIELDS.id")},
+        {key: "questionName", label: this.$i18n.t("QUESTIONS.videoQUESTION")},
+        {key: "question_time", label: this.$i18n.t("VIDEO.duration")},
+        {key: "question_type.name", label: this.$i18n.t("QUESTIONS.TYPE")},
+        {key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions")},
+      ]
+    },
   },
   mounted() {
     this.getVideoDetail(this.$route.params.id)

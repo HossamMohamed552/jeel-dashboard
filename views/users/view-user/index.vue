@@ -55,16 +55,16 @@
                 <ShowItem :title="$t('USERS.ACTIVE')" :subtitle="singleUser?.status?.name" />
               </b-col>
               <b-col lg="12">
-                <h3 class="mb-5">روابط التواصل الإجتماعي</h3>
+                <h3 class="mb-5">{{ $t('socialLink') }}</h3>
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('SOCIAL_MEDIA.FACEBOOK')" :subtitle="singleUser?.facebook" />
+                <ShowItem :title="$t('SOCIAL_MEDIA.FACEBOOK')" :subtitle='singleUser?.facebook === "null" || singleUser?.facebook === null ? $t("notFound") : singleUser?.facebook' />
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('SOCIAL_MEDIA.TWITTER')" :subtitle="singleUser?.twitter" />
+                <ShowItem :title="$t('SOCIAL_MEDIA.TWITTER')" :subtitle='singleUser?.twitter === "null" || singleUser?.twitter === null ? $t("notFound") : singleUser?.twitter' />
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('SOCIAL_MEDIA.LINKEDIN')" :subtitle="singleUser?.linkedin" />
+                <ShowItem :title="$t('SOCIAL_MEDIA.LINKEDIN')" :subtitle='singleUser?.linkedin === "null" || singleUser?.linkedin === null ? $t("notFound") : singleUser?.linkedin'/>
               </b-col>
 
               <b-col lg="6" class="mb-5 showItem img-container">
@@ -137,7 +137,11 @@ export default {
   data() {
     return {
       singleUser: {},
-      fieldsList: [
+    };
+  },
+  computed:{
+    fieldsList(){
+      return [
         {
           key: "jeel_coins",
           label: this.$i18n.t("USER.coins"),
@@ -182,8 +186,8 @@ export default {
           key: "reward_action.second_jeel_xp",
           label: this.$i18n.t("USER.second_xp"),
         },
-      ],
-    };
+      ]
+    },
   },
   mounted() {
     this.ApiService(getSingleUserRequest(this.$route.params.id)).then((response) => {

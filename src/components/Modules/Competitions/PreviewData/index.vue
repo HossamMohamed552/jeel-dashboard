@@ -15,7 +15,7 @@
           <div class="list seasonal-mission-custom-list-item">
             <div class="header">
               <div class="list-of-item">
-                <p class="name-of-item">قائمة الاسئلة</p>
+                <p class="name-of-item">قائمة الأسئلة</p>
               </div>
             </div>
             <b-table
@@ -87,10 +87,10 @@
             <slot></slot>
             <div class="steps">
               <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
-                السابق
+                {{ $t('GLOBAL_BACK') }}
               </Button>
 
-              <Button custom-class="submit-btn" @click="submitForm"> إنهاء </Button>
+              <Button custom-class="submit-btn" @click="submitForm"> {{$t('done')}} </Button>
             </div>
           </div>
         </b-col>
@@ -131,7 +131,7 @@ export default {
       questions: [],
       notificationsList: [],
       prizeFieldsList: [
-        { key: "vid", label: "التسلسل" },
+        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
         { key: "main_percentage", label: "من نسبة" },
         { key: "max_percentage", label: "إلى نسبة" },
         { key: "type_id_name", label: "نوع الجائزة" },
@@ -160,7 +160,7 @@ export default {
         },
       ],
       NotifacationFieldsList: [
-        { key: "vid", label: "التسلسل" },
+        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
         { key: "name", label: "عنوان اللإشعار" },
         { key: "start_date", label: "تاريخ ووقت الإشعار" },
         { key: "original_url", label: "صوت الإشعار" },

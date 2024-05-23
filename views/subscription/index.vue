@@ -2,7 +2,7 @@
   <section class="container-fluid custom-container">
     <div class="deep-search">
       <div class="header">
-        <h4>البحث</h4>
+        <h4>{{ $t('BUTTONS.SEARCH') }}</h4>
         <div class="collapse-btn" v-if="visible" @click="visible = !visible">
           <span> - </span>
         </div>
@@ -17,7 +17,7 @@
               v-model="searchValues.school_group_id"
               :label="$t('TABLE_FIELDS.school_group')"
               :name="$t('TABLE_FIELDS.school_group')"
-              placeholder="أختر إسم المجموعة"
+              :placeholder="$t('subscription.chooseSchoolGroup')"
               :options="schoolGroupOptions"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
@@ -29,7 +29,7 @@
               v-model="searchValues.school_id"
               :label="$t('TABLE_FIELDS.school')"
               :name="$t('TABLE_FIELDS.school')"
-              placeholder="أختر المدرسة"
+              :placeholder="$t('subscription.chooseSchool')"
               :options="schoolsOptions"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
@@ -39,9 +39,9 @@
           <b-col cols="4">
             <SelectSearch
               v-model="searchValues.study_year_id"
-              label="العام الدراسي"
-              name="العام الدراسي"
-              placeholder="أختر العام الدراسي"
+              :label="$t('subscription.studyYear')"
+              :name="$t('subscription.studyYear')"
+              :placeholder="$t('subscription.choosesStudyYear')"
               :options="schoolYearsOptions"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
@@ -55,21 +55,21 @@
               custom-class="cancel-btn margin"
               :loading="loading"
             >
-              إستعادة
+              {{ $t('BUTTONS.RECOVERY') }}
             </Button>
             <Button
               @click="handleSearch"
               :loading="loading"
               custom-class="submit-btn"
             >
-              بحث
+              {{ $t('BUTTONS.SEARCH') }}
             </Button>
           </div>
         </b-row>
       </div>
     </div>
     <ListItems
-      :header-name="'قائمة الإشتراكات'"
+      :header-name="$t('subscription.list')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="subscriptionsList"
@@ -90,13 +90,13 @@
           v-if="user.permissions.includes(`add-subscription`)"
         >
           <img src="@/assets/images/icons/plus.svg"/>
-          <span>تسجيل إشتراك</span>
+          <span>{{ $t('subscription.add') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف الإشتراك'"
-      :content-message-question="'هل انت متأكد من حذف الإشتراك'"
+      :content-message="$t('subscription.delete')"
+      :content-message-question="$t('subscription.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -119,6 +119,34 @@ import {getSchoolYearRequest} from "@/api/school-year";
 export default {
   components: {Modal, ListItems, Button, SelectSearch},
   computed: {
+    fieldsList(){
+      return  [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "country.name",
+          label: this.$i18n.t("TABLE_FIELDS.country"),
+        },
+        {
+          key: "school.name",
+          label: this.$i18n.t("TABLE_FIELDS.schoolName"),
+        },
+        {
+          key: "study_year.name",
+          label: this.$i18n.t("subscription.studyYear"),
+        },
+        {
+          key: "start_subscription",
+          label: this.$i18n.t("subscription.start_subscription"),
+        },
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ]
+    },
     ...mapGetters(["user"]),
   },
   data() {
@@ -127,32 +155,6 @@ export default {
       showModal: false,
       subscriptionsList: [],
       totalNumber: 0,
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "country.name",
-          label: "الدولة",
-        },
-        {
-          key: "school.name",
-          label: "اسم المدرسة",
-        },
-        {
-          key: "study_year.name",
-          label: "العام الدراسي",
-        },
-        {
-          key: "start_subscription",
-          label: "تاريخ بداية الإشتراك",
-        },
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
       itemId: 0,
       schoolGroupOptions: [],
       schoolsOptions: [],

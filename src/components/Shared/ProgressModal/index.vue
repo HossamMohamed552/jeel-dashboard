@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-modal size="lg" centered  v-model="show" :no-close-on-backdrop="true" :clickToClose="false" hide-header hide-footer>
-      <h3 style="margin-bottom: 8%;text-align: center;direction: rtl;word-break: break-all">{{`جاري رفع  ${title}`}}</h3>
+      <h3 style="margin-bottom: 8%;text-align: center;direction: rtl;word-break: break-all">{{`${$t('uploading')}  ${title}`}}</h3>
       <b-progress :max="max" height="2rem">
         <b-progress-bar :value="value" :label="`${value}%`">
         </b-progress-bar>
@@ -11,8 +11,8 @@
       </Button>
     </b-modal>
 
-    <b-modal size="lg" centered  v-model="showConfirm" okTitle='نعم' cancelTitle="لا" title="" @ok="cancel()">
-     هل تريد ايقاف الإضافة؟
+    <b-modal size="lg" centered  v-model="showConfirm" :okTitle='$t("ok")' :cancelTitle='$t("no")' title="" @ok="cancel()">
+      {{$t('stop')}}
     </b-modal>
   </div>
 

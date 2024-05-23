@@ -13,7 +13,7 @@
                 <ShowItem :title="$t('USER.second_name')" :subtitle="singleUser.middle_name" />
               </b-col>
               <b-col lg="3" class="showItem">
-                <ShowItem :title="$t('USER.second_name')" :subtitle="singleUser.last_name" />
+                <ShowItem :title="$t('USER.last_name')" :subtitle="singleUser.last_name" />
               </b-col>
               <b-col lg="3" class="showItem status">
                 <ShowItem :title="$t('TABLE_FIELDS.status')" :subtitle="singleUser.status.name" />

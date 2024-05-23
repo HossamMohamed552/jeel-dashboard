@@ -10,7 +10,7 @@
                 <div class="hold-field">
                   <TextField
                     v-model="createBadge.name"
-                    :label="'اسم الشارة'"
+                    :label="$t('BADGE.NAME')"
                     :name="$t('BADGE.NAME')"
                     :rules="'required|min:3|max:100'"
                   ></TextField>
@@ -21,7 +21,7 @@
                 <div class="hold-field">
                   <TextField
                     v-model="createBadge.main_percentage"
-                    :label="'نسبة من '"
+                    :label="$t('BADGE.main_percentage')"
                     :name="$t('BADGE.main_percentage')"
                     type="number"
                     :rules="'required|numeric|min_value:1'"
@@ -33,7 +33,7 @@
                 <div class="hold-field">
                   <TextField
                     v-model="createBadge.max_percentage"
-                    :label="'نسبة الى '"
+                    :label="$t('BADGE.max_percentage')"
                     type="number"
                     :name="$t('BADGE.max_percentage')"
                     :rules="'required|numeric|min_value:1'"

@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة اوراق العمل'" :number-of-item="totalNumber"
+    <ListItems :header-name="$t('PAPER_WORK.paperWorks')" :number-of-item="totalNumber"
                :tableItems="paperWorkList" :fields-list="fieldsList" :v-search-model="groupSearchWord" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getPaperWorks"
@@ -14,17 +14,17 @@
       <template #buttons>
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddPaperWorks" v-if="user.permissions.includes(`add-paperWork`)">
           <img src="@/assets/images/icons/plus.svg">
-          <span> إضافة ورقة عمل جديده</span>
+          <span>{{$t('PAPER_WORK.ADD_NEW') }}</span>
         </Button>
       </template>
     </ListItems>
-    <Modal :content-message="'حذف ورقة عمل'"
-           :content-message-question="'هل انت متأكد من حذف ورقة عمل'"
+    <Modal :content-message="$t('PAPER_WORK.delete')"
+           :content-message-question="$t('PAPER_WORK.confirm_delete')"
            :showModal="showModal"
            @cancel="cancel($event)"
            :is-warning="true"
            @cancelWithConfirm="cancelWithConfirm($event)"/>
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+    <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>
@@ -40,6 +40,16 @@ import {mapGetters} from "vuex";
 export default {
   components: {Modal, ListItems, Button},
   computed:{
+    fieldsList(){
+      return  [
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "name", label: this.$i18n.t('TABLE_FIELDS.paperName')},
+        {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
+        {key: "lesson.name", label: this.$i18n.t('TABLE_FIELDS.lesson')},
+        {key: "paper_work_final_degree", label: this.$i18n.t('TABLE_FIELDS.paper_work_final_degree')},
+        {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
+      ]
+    },
     ...mapGetters(['user'])
   },
   data() {
@@ -51,14 +61,6 @@ export default {
       groupSearchWord: "",
       paperWorkList: [],
       totalNumber: 0,
-      fieldsList: [
-        {key: "id", label: "التسلسل"},
-        {key: "name", label: this.$i18n.t('TABLE_FIELDS.paperName')},
-        {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
-        {key: "lesson.name", label: this.$i18n.t('TABLE_FIELDS.lesson')},
-        {key: "paper_work_final_degree", label: this.$i18n.t('TABLE_FIELDS.paper_work_final_degree')},
-        {key: "actions", label: "الإجراء"},
-      ],
     }
   },
   methods: {

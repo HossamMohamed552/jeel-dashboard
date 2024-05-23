@@ -3,7 +3,7 @@
     <div class="container-fluid custom-container">
       <div class="add-edit-country-form">
         <h3>
-          {{ $route.params.id ? "تعديل إشتراك" : "تسجيل إشتراك" }}
+          {{ $route.params.id ? $t('subscription.edit') : $t('subscription.add') }}
         </h3>
         <validation-observer v-slot="{ invalid }" ref="addEditSubscribtionForm">
           <form @submit.prevent="onSubmit" class="mt-2">
@@ -12,9 +12,9 @@
                 <div class="hold-field">
                   <SelectSearch
                     v-model="formValues.school_group_id"
-                    label="مجموعة المدارس"
-                    name="مجموعة المدارس"
-                    placeholder="أختر مجموعة المدارس"
+                    :label="$t('subscription.schoolGroup')"
+                    :name="$t('subscription.schoolGroup')"
+                    :placeholder="$t('subscription.selectSchoolGroup')"
                     :options="schoolGroups"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -26,9 +26,9 @@
                 <div class="hold-field" v-if="countries">
                   <SelectSearch
                     v-model="formValues.country_id"
-                    label="الدولة"
-                    name="الدولة"
-                    placeholder="اختر الدولة"
+                    :label="$t('CHARACTER.country')"
+                    :name="$t('CHARACTER.country')"
+                    :placeholder="$t('GROUP.selectCountry')"
                     :options="countries"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -40,9 +40,9 @@
                 <div class="hold-field">
                   <SelectSearch
                     v-model="formValues.school_id"
-                    label="المدرسة"
-                    name="المدرسة"
-                    placeholder="أختر المدرسة"
+                    :label="$t('subscription.school')"
+                    :name="$t('subscription.school')"
+                    :placeholder="$t('subscription.chooseSchool')"
                     :options="schoolsList"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -55,9 +55,9 @@
                 <div class="hold-field" v-if="schoolYearsList">
                   <SelectSearch
                     v-model="formValues.study_year_id"
-                    label="العام الدراسي"
-                    name="العام الدراسي"
-                    placeholder="أختر العام الدراسي"
+                    :label="$t('subscription.studyYear')"
+                    :name="$t('subscription.studyYear')"
+                    :placeholder="$t('subscription.choosesStudyYear')"
                     :options="schoolYearsList"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -70,9 +70,9 @@
                   <SelectSearch
                     :multiple="true"
                     v-model="formValues.levels"
-                    label="الصف الدراسي"
-                    name="الصف الدراسي"
-                    placeholder="أختر الصف الدراسي"
+                    :label="$t('subscription.level')"
+                    :name="$t('subscription.level')"
+                    :placeholder="$t('subscription.selectLevel')"
                     :options="levelsList"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -85,9 +85,9 @@
                   <SelectSearch
                     :multiple="true"
                     v-model="formValues.terms"
-                    label="الترم الدراسي"
-                    name="الترم الدراسي"
-                    placeholder="أختر الترم الدراسي"
+                    :label="$t('subscription.term')"
+                    :name="$t('subscription.term')"
+                    :placeholder="$t('subscription.selectTerm')"
                     :options="terms"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -99,13 +99,9 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <ValidationProvider rules="required">
-                    <label>
-                      تاريخ بدء الإشتراك
-                      <span><i class="fa-solid fa-asterisk"></i></span
-                      ></label>
-
+                    <label>{{$t('subscription.start_subscription')}}<span><i class="fa-solid fa-asterisk"></i></span></label>
                     <date-picker
-                      placeholder="أختر تاريخ بدء الإشتراك"
+                      :placeholder="$t('subscription.selectStart_subscription')"
                       :disabled-date="disabledBeforeToday"
                       :lang="en"
                       v-model="formValues.start_subscription"
@@ -122,11 +118,11 @@
                 <div class="hold-field">
                   <ValidationProvider rules="required">
                     <label>
-                      تاريخ نهاية الإشتراك
+                      {{$t('subscription.end_subscription')}}
                       <span><i class="fa-solid fa-asterisk"></i></span>
                     </label>
                     <date-picker
-                      placeholder="أختر تاريخ نهاية الإشتراك"
+                      :placeholder="$t('subscription.selectEnd_subscription')"
                       :disabled-date="disabledBeforeToday"
                       :lang="en"
                       v-model="formValues.end_subscription"
@@ -142,24 +138,24 @@
               <b-col lg="4" class="mb-3">
                 <ValidationProvider rules="required">
                   <label class="invisible mt-4">
-                    تاريخ نهاية الإشتراك
+                    تاريخ نهاية الاشتراك
                     <span><i class="fa-solid fa-asterisk"></i></span>
                   </label>
-                  <b-form-checkbox v-model="formValues.clone">نسخ المهام الدراسية مباشرة</b-form-checkbox>
+                  <b-form-checkbox v-model="formValues.clone">{{ $t('subscription.copy') }}</b-form-checkbox>
                 </ValidationProvider>
               </b-col>
             </b-row>
             <b-row class="mt-4">
               <div class="package-calc">
-                <h4>سعر الإشتراك</h4>
+                <h4>{{$t('subscription.price')}}</h4>
                 <b-row>
                   <b-col lg="4" class="mt-3">
                     <div class="hold-field" v-if="packagesList">
                       <SelectSearch
                         v-model="formValues.package_id"
-                        label="الباقة"
-                        name="الباقة"
-                        placeholder="أختر الباقة"
+                        :label="$t('subscription.package')"
+                        :name="$t('subscription.package')"
+                        :placeholder="$t('subscription.package')"
                         :options="packagesList"
                         :reduce="(option) => option.id"
                         :get-option-label="(option) => option.name"
@@ -172,9 +168,9 @@
                     <div class="hold-field discount-percentage">
                       <TextField
                         v-model="formValues.package_discount"
-                        label="نسبة الخصم"
-                        name="نسبة الخصم"
-                        placeholder="أدخل نسبة الخصم"
+                        :label="$t('subscription.disPercentage')"
+                        :name="$t('subscription.disPercentage')"
+                        :placeholder="$t('subscription.enterDisPercentage')"
                         type="number"
                         :rules="'numeric|max_value:100'"
                         :disabled="!formValues.package_id"
@@ -186,8 +182,8 @@
                     <div class="hold-field">
                       <TextField
                         v-model="discount_final"
-                        label="القيمة النهائية"
-                        name="القيمة النهائية"
+                        :label="$t('subscription.finalResult')"
+                        :name="$t('subscription.finalResult')"
                         :rules="'required'"
                         :disabled="true"
                       ></TextField>

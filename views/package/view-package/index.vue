@@ -28,7 +28,7 @@
           </b-col>
           <b-col lg="4" class="mb-5" v-for="singlePackageRole in roles" :key="singlePackageRole.id">
             <ShowItem
-              :title="` عدد ${singlePackageRole.name}`"
+              :title="` ${$t('number')} ${$i18n.locale === 'ar' ? singlePackageRole.name : singlePackageRole.nameEn}`"
               :subtitle="singlePackageRole.number"
             />
           </b-col>
@@ -58,26 +58,31 @@ export default {
         {
           role_id: 2,
           name: "مديرين المدرسة",
+          nameEn: "school admins",
           number: "",
         },
         {
           role_id: 3,
           name: "المشرفين",
+          nameEn: "school admins",
           number: "",
         },
         {
           role_id: 4,
           name: "المدرسين",
+          nameEn: "teachers",
           number: "",
         },
         {
           role_id: 5,
           name: "الطلاب",
+          nameEn: "students",
           number: "",
         },
         {
           role_id: 6,
           name: "أولياء الأمور",
+          nameEn: "parents",
           number: "",
         }
 

@@ -14,7 +14,7 @@
               <slot></slot>
               <div class="steps">
                 <Button :custom-class="'submit-btn'" :disabled="invalid" @click="nextStep">
-                  التالي
+                  {{ $t('GLOBAL_NEXT') }}
                 </Button>
               </div>
             </div>

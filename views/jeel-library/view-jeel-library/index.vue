@@ -6,26 +6,26 @@
           <b-col md="4" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'اسم الملف'"
+                :title="$t('library.fileName')"
                 :subtitle="jeelStoreLibrary.file_name"
             />
           </b-col>
           <b-col md="4" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'الصف الدراسى'"
+                :title="$t('library.level')"
                 :subtitle="jeelStoreLibrary?.level?.name"
             />
           </b-col>
           <b-col lg="4" >
-            <ShowItem class="divider-show" :title="'نوع الملف'" :subtitle="jeelStoreLibrary?.type?.name"/>
+            <ShowItem class="divider-show" :title="$t('library.fileType')" :subtitle="jeelStoreLibrary?.type?.name"/>
           </b-col>
         </b-row>
 
         <b-row>
           <b-col lg="12" class="mb-2 mt-2">
             <PreviewMedia
-              :header="'لوجو الملف'"
+              :header="$t('library.fileLogo')"
               :media-name="jeelStoreLibrary.logo_name"
               :file-size="jeelStoreLibrary.logo_size"
               :image-url="jeelStoreLibrary.logo"
@@ -35,7 +35,7 @@
           </b-col>
           <b-col lg="12" class="mb-2 mt-2" v-if="jeelStoreLibrary?.type?.key === 'voice'">
             <PreviewMedia
-              :header="'ملف صوت'"
+              :header="$t('PAPER_WORK.AUDIO')"
               :media-name="jeelStoreLibrary.audio_orginal_name"
               :file-size="jeelStoreLibrary.audio_size"
               :image-url="jeelStoreLibrary.audio"
@@ -45,7 +45,7 @@
           </b-col>
           <b-col lg="12" class="mb-2 mt-2" v-if="jeelStoreLibrary?.type?.key === 'image'">
             <PreviewMedia
-              :header="'ملف صورة'"
+              :header="$t('library.fileImage')"
               :media-name="jeelStoreLibrary.image_orginal_name"
               :file-size="jeelStoreLibrary.image_size"
               :image-url="jeelStoreLibrary.image"
@@ -55,7 +55,7 @@
           </b-col>
           <b-col lg="12" class="mb-2 mt-2" v-if="jeelStoreLibrary?.type?.key === 'video'">
             <PreviewMedia
-              :header="'ملف الفيديو بدون موسيقى'"
+              :header="$t('VIDEO.videoWithoutMusic')"
               :media-name="jeelStoreLibrary.video_without_music_name"
               :file-size="jeelStoreLibrary.video_without_music_size"
               :image-url="jeelStoreLibrary.video_without_music"
@@ -65,7 +65,7 @@
           </b-col>
           <b-col lg="12" class="mb-2 mt-2" v-if="jeelStoreLibrary?.type?.key === 'video'">
             <PreviewMedia
-              :header="'ملف الفيديو'"
+              :header="$t('VIDEO.videoWithMusic')"
               :media-name="jeelStoreLibrary.video_with_music_name"
               :file-size="jeelStoreLibrary.video_with_music_size"
               :image-url="jeelStoreLibrary.video_with_music"
@@ -75,7 +75,7 @@
           </b-col>
           <b-col lg="12" class="mb-2 mt-2" v-if="jeelStoreLibrary?.type?.key === 'file'">
             <PreviewMedia
-              :header="'ملف المحتوي'"
+              :header="$t('content.content_file')"
               :media-name="jeelStoreLibrary.file_orginal_name"
               :file-size="jeelStoreLibrary.file_size"
               :image-url="jeelStoreLibrary.file"
@@ -84,10 +84,10 @@
             />
           </b-col>
           <b-col lg="12" class="mt-2 mb-2" v-if="jeelStoreLibrary?.type?.key === 'game' || jeelStoreLibrary?.type?.key === 'read_with_jeel'">
-            <ShowItem class="divider-show" :title="'الرابط'" :subtitle="jeelStoreLibrary.link ? jeelStoreLibrary.link : '----'"/>
+            <ShowItem class="divider-show" :title="$t('content.link')" :subtitle="jeelStoreLibrary.link ? jeelStoreLibrary.link : '----'"/>
           </b-col>
           <b-col lg="12" class="mt-2 mb-2" v-if="jeelStoreLibrary?.type?.key === 'note'">
-            <ShowItem class="divider-show" :title="'الملحوظة'" :subtitle="jeelStoreLibrary.note ? jeelStoreLibrary.note : '----'"/>
+            <ShowItem class="divider-show" :title="$t('content.note')" :subtitle="jeelStoreLibrary.note ? jeelStoreLibrary.note : '----'"/>
           </b-col>
         </b-row>
 

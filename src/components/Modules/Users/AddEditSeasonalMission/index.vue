@@ -2,7 +2,7 @@
   <div class="container-fluid custom-container">
     <div class="add-edit-learning-skill">
       <div class="add-edit-term-form">
-        <h3>{{ $route.params.id ? "تعديل المهمة موسمية" : "إضافة مهمة موسمية" }}</h3>
+        <h3>{{ $route.params.id ? $t('seasonalMission.edit') : $t('seasonalMission.add') }}</h3>
         <Stepper v-show="true" class="mt-5 mb-3" :steps="steps" :current-step="currentStep" />
         <StepOne
           v-if="currentStep === 0"
@@ -11,7 +11,7 @@
           @prevStep="prevStep"
           :currentStep="currentStep"
         >
-          <Button @click="handleCancel" custom-class="cancel-btn margin"> إلغاء </Button>
+          <Button @click="handleCancel" custom-class="cancel-btn margin"> {{ $t('GLOBAL_CANCEL') }} </Button>
         </StepOne>
         <StepTwo
           v-show="currentStep === 1"
@@ -21,7 +21,7 @@
           @prevStep="prevStep"
           :currentStep="currentStep"
         >
-          <Button @click="handleCancel" custom-class="cancel-btn margin"> إلغاء </Button>
+          <Button @click="handleCancel" custom-class="cancel-btn margin"> {{ $t('GLOBAL_CANCEL') }} </Button>
         </StepTwo>
         <StepThree
           v-if="currentStep === 2"
@@ -30,7 +30,7 @@
           @prevStep="prevStep"
           :currentStep="currentStep"
         >
-          <Button @click="handleCancel" custom-class="cancel-btn margin"> إلغاء </Button>
+          <Button @click="handleCancel" custom-class="cancel-btn margin"> {{ $t('GLOBAL_CANCEL') }} </Button>
         </StepThree>
         <StepFour
           v-if="currentStep === 3"
@@ -39,7 +39,7 @@
           @prevStep="prevStep"
           :currentStep="currentStep"
         >
-          <Button @click="handleCancel" custom-class="cancel-btn margin"> إلغاء </Button>
+          <Button @click="handleCancel" custom-class="cancel-btn margin"> {{ $t('GLOBAL_CANCEL') }} </Button>
         </StepFour>
         <StepFive
           v-if="currentStep === 4"
@@ -49,7 +49,7 @@
           @prevStep="prevStep"
           :currentStep="currentStep"
         >
-          <Button @click="handleCancel" custom-class="cancel-btn margin"> إلغاء </Button>
+          <Button @click="handleCancel" custom-class="cancel-btn margin"> {{ $t('GLOBAL_CANCEL') }} </Button>
         </StepFive>
       </div>
     </div>
@@ -79,37 +79,42 @@ export default {
     StepFour,
     StepFive,
   },
+  computed:{
+    steps(){
+      return [
+        {
+          icon: "1",
+          title: this.$i18n.t('seasonalMission.basicInformation'),
+        },
+        {
+          icon: "2",
+          title: this.$i18n.t('seasonalMission.missionContent'),
+        },
+        {
+          icon: "3",
+          title: this.$i18n.t('seasonalMission.prizes'),
+        },
+        {
+          icon: "4",
+          title: this.$i18n.t('seasonalMission.Notifications'),
+        },
+        {
+          icon: "5",
+          title: this.$i18n.t('seasonalMission.PreviewSeasonalMission'),
+        },
+      ]
+    },
+  },
   data() {
     return {
       loading: false,
       showModal: false,
       currentStep: 0,
-      steps: [
-        {
-          icon: "1",
-          title: "البيانات الاساسية",
-        },
-        {
-          icon: "2",
-          title: "محتوى المهمة",
-        },
-        {
-          icon: "3",
-          title: "الجوائز",
-        },
-        {
-          icon: "4",
-          title: "الإشعارات",
-        },
-        {
-          icon: "5",
-          title: "معاينة المهمة",
-        },
-      ],
       stepOneForm: [
         {
           key: "name",
           label: "اسم المهمة",
+          labelEn: "mission name",
           col: "8",
           listen: "id",
           value: "",
@@ -122,7 +127,8 @@ export default {
           listen: "id",
           type: "select",
           optionValue: "name",
-          label: this.$t("SCHOOL.COUNTRY"),
+          label: 'الدولة',
+          labelEn: "country",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -136,6 +142,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "اسم المجموعة الموسمية",
+          labelEn: "Seasonal group name",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -144,22 +151,24 @@ export default {
         {
           key: "start_date",
           label: "تاريخ بدء المهمة",
+          labelEn: "mission start date",
           col: "4",
           listen: "id",
           value: "",
           type: "date",
           rules: "required",
-          placeholder: "أختر تاريخ بدء المهمة",
+          placeholder: "اختر تاريخ بدء المهمة",
         },
         {
           key: "end_date",
           label: "تاريخ نهاية المهمة",
+          labelEn: "mission end date",
           col: "4",
           listen: "id",
           value: "",
           type: "date",
           rules: "required",
-          placeholder: "أختر تاريخ نهاية المهمة",
+          placeholder: "اختر تاريخ نهاية المهمة",
         },
         {
           key: "level_id",
@@ -168,6 +177,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "الصف الدراسي",
+          labelEn: "level",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -179,6 +189,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "المسار التعليمي",
+          labelEn: "learning path",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -192,6 +203,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "الدرس",
+          labelEn: "lesson",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -206,6 +218,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "الديانة",
+          labelEn: "religion",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -219,6 +232,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "النوع",
+          labelEn: "type",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -229,7 +243,8 @@ export default {
           key: "image",
           col: "12",
           type: "image",
-          label: "لوجو المهمة",
+          label: "Mission logo",
+          labelEn: "type",
           value: "",
           rules: "required",
           multiple: false,
@@ -237,7 +252,8 @@ export default {
       ],
       stepTwoForm: [
         {
-          label: "اسم المسار الأول",
+          label: "The name of the first path",
+          labelEn: "Mission logo",
           type: "title",
           key: "title",
           col: "12",
@@ -248,6 +264,7 @@ export default {
           listen: "id",
           type: "select",
           label: "الفيديوهات",
+          labelEn: "videos",
           optionValue: "title",
           options: [],
           deselectFromDropdown: true,
@@ -261,6 +278,7 @@ export default {
           listen: "id",
           type: "select",
           label: "التمارين",
+          labelEn: "quiz",
           optionValue: "name",
           options: [],
           deselectFromDropdown: true,
@@ -273,6 +291,7 @@ export default {
         {
           key: "main_percentage",
           label: "من نسبة",
+          labelEn: "min percentage",
           col: "4",
           listen: "id",
           value: "",
@@ -282,6 +301,7 @@ export default {
         {
           key: "max_percentage",
           label: "إلى نسبة",
+          labelEn: "max percentage",
           col: "4",
           listen: "id",
           value: "",
@@ -295,6 +315,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "نوع الجائزة",
+          labelEn: "prize type",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -307,6 +328,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "نوع المحتوى",
+          labelEn: "Content type",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -321,6 +343,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "المحتوى",
+          labelEn: "content",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -330,6 +353,7 @@ export default {
         {
           key: "jeel_coins",
           label: "عملات جيل",
+          labelEn: "jeel coins",
           col: "4",
           value: "",
           type: "number",
@@ -341,6 +365,7 @@ export default {
         {
           key: "name",
           label: "عنوان الإشعار",
+          labelEn: "Notice title",
           col: "4",
           listen: "id",
           value: "",
@@ -350,6 +375,7 @@ export default {
         {
           key: "start_date",
           label: "تاريخ ووقت الإشعار",
+          labelEn: "Date and time of notification",
           col: "4",
           listen: "id",
           value: "",
@@ -359,6 +385,7 @@ export default {
         {
           key: "description",
           label: "نص الإشعار",
+          labelEn: "Notice text",
           col: "12",
           listen: "id",
           value: "",
@@ -368,6 +395,7 @@ export default {
         {
           key: "audio",
           label: "صوت الإشعار",
+          labelEn: "Notification sound",
           col: "12",
           listen: "id",
           value: "",

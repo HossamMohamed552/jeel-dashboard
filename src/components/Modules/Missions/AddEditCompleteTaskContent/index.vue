@@ -1,11 +1,12 @@
 <template>
   <div class="add-edit-complete-task-content">
     <div class="container-fluid custom-container">
-      <section class="prize-section d-flex w-100 flex-column mt-5" v-for="(badge, index) in badges" :key="index">
+      <section class="prize-section d-flex w-100 flex-column mt-5" v-for="(badge, index) in badges"
+               :key="index">
         <div class="row content-row w-100 justify-content-around align-items-center">
           <div class="col-1 badge-col">
             <p class="badge-title">
-              {{badge.name}}
+              {{ badge.name }}
             </p>
             <img :src="badge.logo" alt="" class="badge-img w-75">
           </div>
@@ -15,7 +16,7 @@
               v-model="badge.selectedBadgeContentType"
               :label="$t('MISSIONS.BadgeContentType')"
               :name="$t('MISSIONS.BadgeContentType')"
-              :placeholder="'اختر' + $t('MISSIONS.BadgeContentType')"
+              :placeholder="$t('CONTROLS.select') + $t('MISSIONS.BadgeContentType')"
               :options="badge.badgeContentTypes"
               :get-option-label="(option) => option.name"
               :deselectFromDropdown="true"
@@ -26,7 +27,7 @@
               v-model="badge.selectedBadgeContent"
               :label="$t('MISSIONS.BadgeContent')"
               :name="$t('MISSIONS.BadgeContent')"
-              :placeholder="'اختر' + $t('MISSIONS.BadgeContent')"
+              :placeholder="$t('CONTROLS.select') + $t('MISSIONS.BadgeContent')"
               :options="badge.badgeContent"
               :get-option-label="(option) => option.file_name"
               :deselectFromDropdown="true"
@@ -40,31 +41,32 @@
               :custom-class="'submit-btn w-100'"
               :disabled="!badge.selectedBadgeContent || !badge.selectedBadgeContentType"
             >
-              {{ 'اضافه' }}
+              {{ $t('CONTROLS.add') }}
             </Button>
           </div>
         </div>
         <div class="row table-row mt-5">
-          <b-table striped :items="badge.tableItems" :fields="fieldsList"  :head-variant="'gradient'" responsive  :tbody-class="'custom-body'" show-empty>
+          <b-table striped :items="badge.tableItems" :fields="fieldsList" :head-variant="'gradient'"
+                   responsive :tbody-class="'custom-body'" show-empty>
             <template #empty>
-            <div class="mt-5 pt-5 text-center">لا توجد بيانات</div>
-          </template>
-          <template #cell(actions)="data">
-            <b-dropdown
-              size="lg"
-              variant="link"
-              toggle-class="text-decoration-none"
-              no-caret
-              class="hold-controls"
-            >
-              <template #button-content>
-                <img src="@/assets/images/icons/actions.svg"/>
-              </template>
-              <b-dropdown-item @click="deleteBadgeContent(data,index)">
-                حذف
-              </b-dropdown-item>
-            </b-dropdown>
-          </template>
+              <div class="mt-5 pt-5 text-center">{{ $t('DEFAULT.no_data') }}</div>
+            </template>
+            <template #cell(actions)="data">
+              <b-dropdown
+                size="lg"
+                variant="link"
+                toggle-class="text-decoration-none"
+                no-caret
+                class="hold-controls"
+              >
+                <template #button-content>
+                  <img src="@/assets/images/icons/actions.svg"/>
+                </template>
+                <b-dropdown-item @click="deleteBadgeContent(data,index)">
+                  {{ $t('CONTROLS.deleteBtn') }}
+                </b-dropdown-item>
+              </b-dropdown>
+            </template>
           </b-table>
         </div>
       </section>
@@ -85,7 +87,7 @@
           </Button>
         </div>
         <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
-        {{ $t("GLOBAL_CANCEL") }}
+          {{ $t("GLOBAL_CANCEL") }}
         </Button>
       </section>
     </div>
@@ -94,10 +96,10 @@
 <script>
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import { getAllBadgesRequest } from "@/api/badge"
-import { getLibraryTypesRequest } from "@/api/badge"
-import { getLibraryContentRequest } from "@/api/badge"
-import { debounce } from "lodash";
+import {getAllBadgesRequest} from "@/api/badge"
+import {getLibraryTypesRequest} from "@/api/badge"
+import {getLibraryContentRequest} from "@/api/badge"
+import {debounce} from "lodash";
 
 
 export default {
@@ -106,18 +108,19 @@ export default {
     Button,
     SelectSearch,
   },
-  props: {
-
+  computed: {
+    fieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t("TABLE_FIELDS.id")},
+        {key: "badgeContentType", label: this.$i18n.t("TABLE_FIELDS.contentType")},
+        {key: "badgeContent", label: this.$i18n.t("TABLE_FIELDS.content")},
+        {key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions")},
+      ]
+    }
   },
   data() {
     return {
       badges: [],
-      fieldsList: [
-        {key: "vid", label: "التسلسل"},
-        {key: "badgeContentType", label: "نوع المحتوى"},
-        {key: "badgeContent", label: "المحتوى"},
-        {key: "actions", label: "الإجراء"},
-      ],
       badgeContentTypes: [],
       listOfAllContent: [],
       preparedToApi: null
@@ -129,13 +132,13 @@ export default {
         this.badges = res.data.data;
         this.badges = this.badges.map(badge => {
           return {
-              ...badge,
-              selectedBadgeContentType: null,
-              badgeContentTypes: this.badgeContentTypes,
-              selectedBadgeContent : null,
-              badgeContent: [],
-              tableItems : [],
-            }
+            ...badge,
+            selectedBadgeContentType: null,
+            badgeContentTypes: this.badgeContentTypes,
+            selectedBadgeContent: null,
+            badgeContent: [],
+            tableItems: [],
+          }
         })
       })
     },
@@ -147,23 +150,23 @@ export default {
     },
     getLibraryContentRequest() {
       let obj = {
-        list_all:true
+        list_all: true
       };
-      this.badgeContentTypes.forEach((contentType,index) => {
+      this.badgeContentTypes.forEach((contentType, index) => {
         obj[`type[${index}]`] = contentType.id;
       })
       this.ApiService(getLibraryContentRequest(obj)).then(res => {
         this.listOfAllContent = res.data.data.map(content => {
           return {
-           ...content,
-           selectable: true,
+            ...content,
+            selectable: true,
           }
         })
       })
     },
     badgeSelectedContentTypeChanged: debounce(function (selectedBadgeContentType, index) {
       const filteredContent = this.listOfAllContent.filter(content => {
-          return content.type.id === selectedBadgeContentType.id
+        return content.type.id === selectedBadgeContentType.id
       })
       this.badges[index].badgeContent = JSON.parse(JSON.stringify(filteredContent)).map(content => {
         const filtered = this.badges[index].tableItems.filter(tableItem => tableItem.id === content.id)
@@ -197,7 +200,7 @@ export default {
       */
       this.badges[badgeIndex].selectedBadgeContent = null;
     },
-    deleteBadgeContent(badgeRow,badgeIndex) {
+    deleteBadgeContent(badgeRow, badgeIndex) {
       this.badges[badgeIndex].tableItems = this.badges[badgeIndex].tableItems.filter(tableItem => tableItem.id != badgeRow.item.id);
       /*
         Enable Item from @BadgeContentSelect
@@ -222,7 +225,7 @@ export default {
     },
     goToFinalStep() {
       this.createBadgeRowForApi();
-      this.$emit("goToFinalStep",this.preparedToApi)
+      this.$emit("goToFinalStep", this.preparedToApi)
     },
     handleCancel() {
       this.$emit("handleCancel");

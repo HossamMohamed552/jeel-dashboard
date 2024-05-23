@@ -5,7 +5,7 @@
         <b-row> </b-row>
         <b-row>
           <b-col cols="12" md="6" lg="4">
-            <ShowItem title="الاسم " :subtitle="Currency.name" class="with-border-bottom" />
+            <ShowItem :title="$t('currency.name')" :subtitle="Currency.name" class="with-border-bottom" />
           </b-col>
         </b-row>
       </div>

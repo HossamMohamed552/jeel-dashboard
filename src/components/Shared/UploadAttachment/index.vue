@@ -126,7 +126,7 @@ export default {
               <span data-dz-errormessage></span>
             </div>
             <a id="removeFile" class="dz-remove" href="javascript:undefined;" data-dz-remove>
-          ${this.$i18n.locale === 'en' ? 'remove file' : ' حذف الملف'}
+          ${this.$i18n.locale === 'en' ? 'remove file' : 'حذف الملف'}
             </a>
           </div>
         `,

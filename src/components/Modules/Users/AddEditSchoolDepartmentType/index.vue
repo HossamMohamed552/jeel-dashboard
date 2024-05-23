@@ -2,7 +2,7 @@
   <div class="container-fluid custom-container">
     <div class="add-edit-learning-skill">
       <div class="add-edit-term-form">
-        <h3>{{ $route.params.id ? "تعديل ادارة" : "اضافة نوع ادارة" }}</h3>
+        <h3>{{ $route.params.id ? $t('management.edit') : $t('management.add') }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditSchoolDepartmentType">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -10,9 +10,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="name"
-                    label="اسم نوع ادارة"
-                    name="نوع ادارة"
-                    placeholder="أدخل اسم نوع ادارة"
+                    :label="$t('management.type_name')"
+                    :name="$t('management.type_name')"
+                    :placeholder="$t('management.enter_type_name')"
                     :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>

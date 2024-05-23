@@ -1,6 +1,6 @@
 <template>
   <div className="add-ad">
-    <Modal :content-message="'تم التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="$t('CONTROLS.edit_successfully')" :showModal="showModal" :is-success="true"/>
     <AddEditAdvertisementCategory
       :loading="loading"
       @editAdCategory="editAdCategory($event)"

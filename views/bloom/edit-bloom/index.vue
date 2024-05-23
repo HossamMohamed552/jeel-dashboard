@@ -38,7 +38,7 @@ export default {
           this.$router.push("/dashboard/bloom");
         }).catch((error) => {
         this.loading = false;
-        this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
+        this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الاسم مُستخدمة من قبل');
       })
     },
     handleCancel() {

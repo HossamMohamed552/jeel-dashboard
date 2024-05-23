@@ -14,7 +14,7 @@
                     v-model="createQuiz.name"
                     :label="$t('QUIZZES.name')"
                     :name="$t('QUIZZES.name')"
-                    placeholder="أدخل اسم التمرين"
+                    :placeholder="$t('QUIZZES.enterQuizName')"
                     :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
@@ -51,9 +51,9 @@
                 <div class="hold-field">
                   <SelectSearch
                     v-model="createQuiz.learning_path_id"
-                    label="المسار التعليمي"
-                    name="المسار التعليمي"
-                    placeholder="أختر المسار التعليمي"
+                    :label="$t('LEARNING_PATH.LEARNING_PATH')"
+                    :name="$t('LEARNING_PATH.LEARNING_PATH')"
+                    :placeholder="$t('LEARNING_PATH.CHOOSE_LEARNING_PATH')"
                     :options="learningPaths"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -84,7 +84,7 @@
                     v-model="createQuiz.blooms"
                     :label="$t('QUESTIONS.BLOOM_CATEGORIES')"
                     :name="$t('QUESTIONS.BLOOM_CATEGORIES')"
-                    :placeholder="createQuiz.blooms.length === 0 ? 'اختيار الكل' : $t('QUESTIONS.selectBLOOM_CATEGORIES')"
+                    :placeholder="createQuiz.blooms.length === 0 && $i18n.locale === 'ar' ? 'اختيار الكل' : $t('QUESTIONS.selectBLOOM_CATEGORIES')"
                     :options="bloomCategories"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -101,7 +101,7 @@
                     v-model="createQuiz.learning_styles"
                     :label="$t('QUESTIONS.LEARNING_METHOD')"
                     :name="$t('QUESTIONS.LEARNING_METHOD')"
-                    :placeholder="createQuiz.learning_styles.length === 0 ? 'اختيار الكل' : $t('QUESTIONS.selectLEARNING_METHOD')"
+                    :placeholder="createQuiz.learning_styles.length === 0 && $i18n.locale === 'ar' ? 'اختيار الكل' : $t('QUESTIONS.selectLEARNING_METHOD')"
                     :options="learningMethods"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -117,7 +117,7 @@
                     v-model="createQuiz.language_skills"
                     :label="$t('QUESTIONS.LANGUAGE_SKILLS')"
                     :name="$t('QUESTIONS.LANGUAGE_SKILLS')"
-                    :placeholder="createQuiz.language_skills.length === 0 ? 'اختيار الكل' : $t('QUESTIONS.selectLANGUAGE_SKILLS')"
+                    :placeholder="createQuiz.language_skills.length === 0 && $i18n.locale === 'ar' ? 'اختيار الكل' : $t('QUESTIONS.selectLANGUAGE_SKILLS')"
                     :options="languageSkills"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -134,7 +134,7 @@
                     v-model="createQuiz.type"
                     :label="$t('QUIZZES.type')"
                     :name="$t('QUIZZES.type')"
-                    placeholder="أختر نوع التمرين"
+                    :placeholder="$t('QUIZZES.selectType')"
                     :options="typeList"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -149,7 +149,7 @@
                     v-model="createQuiz.order_type"
                     :label="$t('QUIZZES.sort')"
                     :name="$t('QUIZZES.sort')"
-                    placeholder="أختر الترتيب"
+                    :placeholder="$t('QUIZZES.selectSort')"
                     :options="sortList"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -164,10 +164,10 @@
                     v-slot="{ ariaDescribedby }"
                     class="description"
                   >
-<!--                    required|min:3|-->
+                    <!--                    required|min:3|-->
                     <TextAreaField
                       :name="$t('QUIZZES.description')"
-                      placeholder="وصف التمرين"
+                      :placeholder="$t('QUIZZES.descriptionQuiz')"
                       :rules="'max:250'"
                       v-model="createQuiz.description"
                     />
@@ -176,20 +176,16 @@
               </b-col>
               <div class="question-bank-holder">
                 <div class="header">
-                  <h4 class="mb-0">بنك الأسئلة</h4>
+                  <h4 class="mb-0">{{ $t('QUIZZES.questionBank') }}</h4>
                   <div
                     v-if="easyCount || mediumCount || hardCount"
                     class="question-statistics"
                   >
-                    <p class="mb-0">
-                      الاسئلة السهلة <span>{{ easyCount }}</span>
+                    <p class="mb-0">{{ $t('QUIZZES.easyQuestion') }} <span>{{ easyCount }}</span>
                     </p>
-                    <p class="mb-0">
-                      الاسئلة المتوسطة <span>{{ mediumCount }}</span>
+                    <p class="mb-0">{{ $t('QUIZZES.mediumQuestion') }}<span>{{ mediumCount }}</span>
                     </p>
-                    <p class="mb-0">
-                      الاسئلة الصعبة <span>{{ hardCount }}</span>
-                    </p>
+                    <p class="mb-0">{{ $t('QUIZZES.hardQuestion') }}<span>{{ hardCount }}</span></p>
                   </div>
                 </div>
                 <div class="statistics-content">
@@ -198,9 +194,9 @@
                       <div class="hold-field">
                         <SelectSearch
                           v-model="easyCount"
-                          label="الاسئلة السهلة"
-                          name="الاسئلة السهلة"
-                          placeholder="أختر العدد"
+                          :label="$t('QUIZZES.easyQuestion')"
+                          :name="$t('QUIZZES.easyQuestion')"
+                          :placeholder="$t('QUIZZES.selectCount')"
                           :options="easyCountList"
                           :reduce="(option) => option"
                           :get-option-label="(option) => option"
@@ -215,9 +211,9 @@
                       <div class="hold-field">
                         <SelectSearch
                           v-model="mediumCount"
-                          label="الاسئلة المتوسطة"
-                          name="الاسئلة المتوسطة"
-                          placeholder="أختر العدد"
+                          :label="$t('QUIZZES.mediumQuestion')"
+                          :name="$t('QUIZZES.mediumQuestion')"
+                          :placeholder="$t('QUIZZES.selectCount')"
                           :options="mediumCountList"
                           :reduce="(option) => option"
                           :get-option-label="(option) => option"
@@ -232,9 +228,9 @@
                       <div class="hold-field">
                         <SelectSearch
                           v-model="hardCount"
-                          label="الاسئلة الصعبة"
-                          name="الاسئلة الصعبة"
-                          placeholder="أختر العدد"
+                          :label="$t('QUIZZES.hardQuestion')"
+                          :name="$t('QUIZZES.hardQuestion')"
+                          :placeholder="$t('QUIZZES.selectCount')"
                           :options="hardCountList"
                           :reduce="(option) => option"
                           :get-option-label="(option) => option"
@@ -252,23 +248,20 @@
                           :disabled="isGetQuestions"
                           @click="getStatistics"
                         >
-                          إستعادة
+                          {{ $t('QUIZZES.resetQuestion') }}
                         </Button>
                         <Button
                           v-if="isGetQuestions"
                           custom-class="submit-btn"
                           @click="resetGettingQuestion"
-                        >إعادة ضبط
-                        </Button
+                        >{{ $t('QUIZZES.reset') }}</Button
                         >
                         <Button
                           v-else
                           custom-class="submit-btn"
                           @click="getQuestionsList"
                           :disabled="!easyCount && !mediumCount && !hardCount"
-                        >عرض الأسئلة
-                        </Button
-                        >
+                        >{{ $t('QUIZZES.showQuestions') }}</Button>
                       </div>
                     </b-col>
                   </b-row>
@@ -309,7 +302,7 @@
                     </div>
                   </template>
                   <template #empty>
-                    <div class="text-center p-5">لا يوجد اسئلة لعرضها</div>
+                    <div class="text-center p-5">{{ $t('QUIZZES.noQuestion') }}</div>
                   </template>
                   <template #cell(id)="data">
                     <div>
@@ -426,7 +419,7 @@
                     <b-col lg="12">
                       <b-row>
                         <b-col lg="6" class="mt-3" v-if="questions.length > 0">
-                          <h3>بنك الاسئلة</h3>
+                          <h3>بنك الأسئلة</h3>
                           <draggable
                             v-model="questionBank"
                             group="items"
@@ -443,7 +436,7 @@
                           </draggable>
                         </b-col>
                         <b-col lg="6" class="mt-3" v-if="questions.length > 0">
-                          <h3>الاسئلة المختاره</h3>
+                          <h3>الأسئلة المختاره</h3>
                           <draggable
                             v-model="questionsToSend"
                             group="items"
@@ -574,36 +567,6 @@ export default {
       actions: [],
       selectedQestions: [],
       quizType: "",
-      fieldsList: [
-        {
-          key: "#",
-          label: "",
-        },
-        {
-          key: "vid",
-          label: "التسلسل",
-        },
-        {
-          key: "question",
-          label: "نص السؤال",
-        },
-        {
-          key: "question_type.name",
-          label: "نوع السؤال",
-        },
-        {
-          key: "sub_question_type.name",
-          label: "نوع السؤال الفرعى",
-        },
-        {
-          key: "question_difficulty.name",
-          label: "مستوى السؤال",
-        },
-        {
-          key: "random_question_action",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
       createQuiz: {
         name: "",
         // level_id: null,
@@ -632,6 +595,40 @@ export default {
       editableDrag: true,
       enableToSendData: false,
     };
+  },
+  computed:{
+    fieldsList(){
+      return [
+        {
+          key: "#",
+          label: "",
+        },
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "question",
+          label: this.$i18n.t("AUDIOS.QUESTION_TITLE")
+        },
+        {
+          key: "question_type.name",
+          label: this.$i18n.t("TABLE_FIELDS.questionType"),
+        },
+        {
+          key: "sub_question_type.name",
+          label: this.$i18n.t("TABLE_FIELDS.subQuestionType"),
+        },
+        {
+          key: "question_difficulty.name",
+          label: this.$i18n.t("TABLE_FIELDS.questionDifficulty"),
+        },
+        {
+          key: "random_question_action",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ]
+    },
   },
   watch: {
     // "createQuiz.level_id"() {

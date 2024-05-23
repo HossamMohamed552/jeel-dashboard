@@ -16,7 +16,7 @@
           v-if="user.permissions.includes(`add-teacher-groups`)"
         >
           <img src="@/assets/images/icons/plus.svg"/>
-          <span>إضافة مجموعه</span>
+          <span>إضافة مجموعة</span>
         </Button>
       </template>
     </ListItems>
@@ -39,7 +39,7 @@ export default {
       classesList: [],
       totalNumber: null,
       fieldsList: [
-        {key: "vid", label: "التسلسل"},
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
         {key: "studyYear.name", label: this.$i18n.t('TABLE_FIELDS.studyYearName')},
         {key: "level", label: this.$i18n.t('TABLE_FIELDS.levelSchoolAdmin')},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.className')},

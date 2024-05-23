@@ -17,7 +17,7 @@ localize(localStorage.getItem("lang") || "ar");
 
 extend("urlLink", {
   message:
-    localStorage.getItem("lang") === "ar" ? "من فضلك ادخل رابط صحيح" : "من فضلك ادخل رابط صحيح",
+    localStorage.getItem("lang") === "ar" ? "من فضلك أدخل رابط صحيح" : "من فضلك أدخل رابط صحيح",
   validate: (value) => {
     const urlRegex = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/
     return urlRegex.test(value)
@@ -25,7 +25,7 @@ extend("urlLink", {
 });
 
 extend("verify_password", {
-  message: "كلمه المرور يجب أن تحتوى على 8 حروف على الأقل (حرف كبير و حرف صغير ورقم واحد و حرف مختلف  (! @ # $ % ^ & * إلخ))  ",
+  message: "كلمه المرور يجب أن تحتوى على 8 الأسئلةالأقل (حرف كبير و حرف صغير ورقم واحد و حرف مختلف  (! @ # $ % ^ & * إلخ))  ",
   validate: (value) => {
     const passwordRegex = /^(?=.*[a-z]{1,})(?=.*[A-Z]{1,})(?=.*[0-9]{1,})(?=.*[!@#\$%\^&\*]).{8,}$/
     return passwordRegex.test(value);

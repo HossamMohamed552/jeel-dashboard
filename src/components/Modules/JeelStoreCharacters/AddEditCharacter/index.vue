@@ -50,9 +50,9 @@
                 <div class="hold-field">
                   <SelectSearch
                     v-model="createCharacter.level_id"
-                    :label="'الصف الدراسى'"
-                    :name="'أختر الصف الدراسى'"
-                    placeholder="أختر الصف الدراسى"
+                    :label="'الصف الدراسي'"
+                    :name="'اختر الصف الدراسي'"
+                    placeholder="اختر الصف الدراسي"
                     :options="levels"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"

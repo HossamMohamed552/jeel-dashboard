@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'شارات جيل'"
+      :header-name="$t('BADGE.jeelBadge')"
       :fieldsList="fieldsList"
       :table-items="badgesList"
       :v-search-model="groupSearchWord"
@@ -21,20 +21,20 @@
           @click="goToAddBadge"
           v-if="user.permissions.includes(`add-badge`)"
         >
-          <img src="../../src/assets/images/icons/plus.svg" />
-          <span>إضافة شارة جديدة</span>
+          <img src="../../src/assets/images/icons/plus.svg"/>
+          <span>{{ $t('BADGE.addJeelBadge') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف شارة جيل'"
-      :content-message-question="'هل انت متأكد من حذف شارة جيل'"
+      :content-message="$t('BADGE.delete')"
+      :content-message-question="$t('BADGE.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+    <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>
@@ -43,12 +43,12 @@
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { getBadgesRequest, deleteBadgeRequest } from "@/api/badge";
-import { mapGetters } from "vuex";
+import {getBadgesRequest, deleteBadgeRequest} from "@/api/badge";
+import {mapGetters} from "vuex";
 
 export default {
   name: "index",
-  components: { ListItems, Button, Modal },
+  components: {ListItems, Button, Modal},
   data() {
     return {
       loading: false,
@@ -57,28 +57,6 @@ export default {
       groupSearchWord: "",
       totalNumber: 0,
       badgesList: [],
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "name",
-          label: this.$i18n.t("TABLE_FIELDS.badge_name"),
-        },
-        {
-          key: "main_percentage",
-          label: this.$i18n.t("TABLE_FIELDS.percentage_of"),
-        },
-        {
-          key: "max_percentage",
-          label: this.$i18n.t("TABLE_FIELDS.percentage_to"),
-        },
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
       itemId: 0,
     };
   },
@@ -123,6 +101,30 @@ export default {
     },
   },
   computed: {
+    fieldsList() {
+      return [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "name",
+          label: this.$i18n.t("TABLE_FIELDS.badge_name"),
+        },
+        {
+          key: "main_percentage",
+          label: this.$i18n.t("TABLE_FIELDS.percentage_of"),
+        },
+        {
+          key: "max_percentage",
+          label: this.$i18n.t("TABLE_FIELDS.percentage_to"),
+        },
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {

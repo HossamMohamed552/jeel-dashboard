@@ -98,7 +98,7 @@
                       :custom-class="'submit-btn'"
                       @click="handleChoosingReward(idx)"
                     >
-                      أختر الجائزة
+                      اختر الجائزة
                     </Button>
                   </div>
                 </div>
@@ -119,7 +119,7 @@
 
               <div class="choose-reward">
                 <div class="header">
-                  <p>أختر الجائزة</p>
+                  <p>اختر الجائزة</p>
                 </div>
                 <div class="content">
                   <div class="search">
@@ -158,7 +158,7 @@
                   :custom-class="'cancel-btn'"
                   @click="cancelRewardModal"
                 >
-                  إلغاء
+                  {{ $t('') }}
                 </Button>
               </div>
             </b-modal>
@@ -172,7 +172,7 @@
                     :disabled="invalid"
                     :custom-class="'submit-btn'"
                   >
-                    إنهاء
+                    {{$t('done')}}
                   </Button>
                   <Button
                     class="mx-3"
@@ -310,4 +310,3 @@ export default {
     <style scoped lang="scss">
 @import "./index";
 </style>
-    

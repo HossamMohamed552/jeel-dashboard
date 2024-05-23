@@ -19,14 +19,14 @@
             <ShowItem
               class="divider-show"
               :title="$t('BADGE.main_percentage')"
-              :subtitle="badges.main_percentage"
+              :subtitle="`${badges.main_percentage} %`"
             />
           </b-col>
           <b-col md="4" sm="12">
             <ShowItem
               class="divider-show"
               :title="$t('BADGE.max_percentage')"
-              :subtitle="badges.max_percentage"
+              :subtitle="`${badges.max_percentage} %`"
             />
           </b-col>
         </b-row>

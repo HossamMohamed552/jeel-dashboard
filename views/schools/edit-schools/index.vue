@@ -1,6 +1,6 @@
 <template>
   <div class="add-schools">
-    <Modal :content-message="'تمت الإضافة بنجاح'"
+    <Modal :content-message="$t('CONTROLS.add_successfully')"
            :showModal="showModal"
            :is-success="true"/>
     <AddEditSchool

@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة المهام'" :number-of-item="totalNumber"
+    <ListItems :header-name="$t('MISSIONS.missionList')" :number-of-item="totalNumber"
                :tableItems="missionsList" :fieldsList="fieldsList"
                :v-search-model="missionSearchWord"
                @detailItem="detailItem($event)"
@@ -15,12 +15,12 @@
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddMissions"
                 v-if="user.permissions.includes(`add-missions`)">
           <img src="@/assets/images/icons/plus.svg">
-          <span>إضافة مهمة جديد</span>
+          <span>{{$t('MISSIONS.add')}}</span>
         </Button>
       </template>
     </ListItems>
-    <Modal :content-message="'حذف المهمة'"
-           :content-message-question="'هل انت متأكد من حذف المهمة'"
+    <Modal :content-message="$t('mission.delete_mission')"
+           :content-message-question="$t('mission.confirm_delete_mission')"
            :showModal="showModal"
            @cancel="cancel($event)"
            :is-warning="true"
@@ -39,6 +39,16 @@ export default {
   name: "index",
   components: {Modal, ListItems, Button},
   computed: {
+    fieldsList(){
+      return  [
+        {key: "vid", label: this.$i18n.t("TABLE_FIELDS.id")},
+        {key: "name", label: this.$i18n.t("TABLE_FIELDS.name")},
+        {key: "level", label: this.$i18n.t("TABLE_FIELDS.level")},
+        {key: "description", label: this.$i18n.t("TABLE_FIELDS.description")},
+        {key: "learningpaths", label: this.$i18n.t("TABLE_FIELDS.learning_path_name")},
+        {key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions")},
+      ]
+    },
     ...mapGetters(['user'])
   },
   data() {
@@ -48,14 +58,6 @@ export default {
       missionSearchWord: "",
       missionsList: [],
       totalNumber: 0,
-      fieldsList: [
-        {key: "vid", label: "التسلسل"},
-        {key: "name", label: "الإسم"},
-        {key: "level", label: "المرحله الدراسية"},
-        {key: "description", label: "الوصف"},
-        {key: "learningpaths", label: "المسارات التعليمية"},
-        {key: "actions", label: "الإجراء"},
-      ],
     }
   },
   methods: {

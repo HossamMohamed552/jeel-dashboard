@@ -5,6 +5,7 @@ export default [
     component: () => import("../../../views/jeel-library/index.vue"),
     meta: {
       breadcrumb: "مكتبة جيل",
+      breadcrumbEn: "jeel library",
       preLabel: "",
       preLink: "",
     },
@@ -15,7 +16,9 @@ export default [
     component: () => import("../../../views/jeel-library/add-jeel-library/index.vue"),
     meta: {
       breadcrumb: "إضافة عنصر للمكتبة",
+      breadcrumbEn: "add jeel library",
       preLabel: "مكتبة جيل",
+      preLabelEn: "jeel library",
       preLink: "/dashboard/jeel-library",
     },
   },
@@ -25,7 +28,9 @@ export default [
     component: () => import("../../../views/jeel-library/edit-jeel-library/index.vue"),
     meta: {
       breadcrumb: "تعديل عنصر من المكتبة",
+      breadcrumbEn: "edit jeel library",
       preLabel: "مكتبة جيل",
+      preLabelEn: "jeel library",
       preLink: "/dashboard/power-up-boxes",
     },
   },
@@ -35,7 +40,9 @@ export default [
     component: () => import("../../../views/jeel-library/view-jeel-library/index.vue"),
     meta: {
       breadcrumb: "تفاصيل عنصر من المكتبة",
+      breadcrumbEn: "show jeel library",
       preLabel: "مكتبة جيل",
+      preLabelEn: "jeel library",
       preLink: "/dashboard/jeel-library",
     },
   },

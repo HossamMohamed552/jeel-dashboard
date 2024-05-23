@@ -18,7 +18,7 @@
           <b-col md="4" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'الصف الدراسى'"
+                :title="'الصف الدراسي'"
                 :subtitle="powerUpBox.level.name"
             />
           </b-col>

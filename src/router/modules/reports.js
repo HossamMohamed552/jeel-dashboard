@@ -25,7 +25,7 @@ export default [
     name: "subscription-report",
     component:()=> import("../../../views/reports/subscription-report/index.vue"),
     meta: {
-      breadcrumb: "الإشتراكات",
+      breadcrumb: "الاشتراكات",
       breadcrumbEn: "subscriptions",
       preLabel: "التقارير",
       preLabelEn: "reports",

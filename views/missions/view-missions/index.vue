@@ -25,7 +25,7 @@
           </b-col>
           <b-col lg="3" v-if="mission && mission.mission_image">
             <ShowItem :title="$t('MISSIONS.UPLOAD_IMAGE')" />
-            <img class="mx-2" :src="mission.mission_image" width="200"/>
+            <img class="mx-2" :src="mission.mission_image.original_url" width="200"/>
           </b-col>
         </b-row>
       </div>

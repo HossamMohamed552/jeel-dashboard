@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة العملات'"
+      :header-name="$t('currency.list')"
       :number-of-item="totalNumber"
       :tableItems="currencyList"
       :fieldsList="fieldsList"
@@ -22,13 +22,13 @@
           v-if="user.permissions.includes(`add-currencies`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة عملة </span>
+          <span>{{ $t('currency.add') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف العملة'"
-      :content-message-question="'هل انت متأكد من حذف العملة '"
+      :content-message="$t('currency.delete')"
+      :content-message-question="$t('currency.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -53,11 +53,6 @@ export default {
       groupSearchWord: "",
       currencyList: [],
       totalNumber: null,
-      fieldsList: [
-        { key: "vid", label: "التسلسل" },
-        { key: "name", label: "اسم العملة" },
-        { key: "actions", label: "الإجراء" },
-      ],
     };
   },
   methods: {
@@ -97,6 +92,13 @@ export default {
     },
   },
   computed: {
+    fieldsList(){
+      return [
+        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
+        { key: "name", label: this.$i18n.t('currency.name') },
+        { key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions') },
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {
