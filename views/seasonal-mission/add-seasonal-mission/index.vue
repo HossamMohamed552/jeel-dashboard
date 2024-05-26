@@ -4,6 +4,7 @@
     <AddEditSeasonalMission
       :loading="loading"
       @handleCancel="handleCancel"
+      :isAddForm="true"
     />
   </div>
 </template>

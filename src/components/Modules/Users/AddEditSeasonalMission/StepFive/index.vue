@@ -3,8 +3,14 @@
     <div class="container-fluid">
       <b-row>
         <b-col v-for="field in stepForm" :key="field.key" :lg="field.col">
+          <ShowItem
+            v-if="field.key == 'types'"
+            class="divider-show"
+            :title="field?.label"
+            :subtitle="handleTypes(field?.options)"
+          />
           <PreviewMedia
-            v-if="filesUploadedTypes.includes(field.type)"
+            v-else-if="filesUploadedTypes.includes(field.type)"
             :header="field.label"
             :media-name="field.task_audio_name"
             :file-size="field.task_audio_size"
@@ -111,7 +117,7 @@ export default {
       videosFieldsList: [
         { key: "vid", label: "التسلسل" },
         { key: "title", label: "عنوان الفيديو" },
-        { key: "actions", label: "الاجراء" },
+        { key: "video", label: "عرض الفيديو" },
       ],
       exercisesFieldsList: [
         { key: "vid", label: "التسلسل" },
@@ -142,6 +148,13 @@ export default {
     };
   },
   methods: {
+    handleTypes(options) {
+      return options
+        .map((option) => {
+          return option.name;
+        })
+        .join(", ");
+    },
     async submitForm() {
       await this.updateFields();
       if (this.$route.params.id) this.handleEditSeasonalMission();

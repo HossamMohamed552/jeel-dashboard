@@ -10,6 +10,7 @@
           @nextStep="nextStep"
           @prevStep="prevStep"
           :currentStep="currentStep"
+          :isAddForm="isAddForm"
         >
           <Button @click="handleCancel" custom-class="cancel-btn margin"> إلغاء </Button>
         </StepOne>
@@ -70,6 +71,12 @@ import moment from "moment";
 import { mapActions } from "vuex";
 
 export default {
+  props: {
+    isAddForm: {
+      type: Boolean,
+      default: false,
+    },
+  },
   components: {
     Stepper,
     Button,
@@ -304,7 +311,7 @@ export default {
           key: "prizeable_type",
           col: "4",
           listen: "id",
-          type: "select",
+          type: "hidden",
           optionValue: "name",
           label: "نوع المحتوى",
           options: [],
@@ -318,7 +325,7 @@ export default {
           key: "prizeable_id",
           col: "4",
           listen: "id",
-          type: "select",
+          type: "hidden",
           optionValue: "name",
           label: "المحتوى",
           options: [],
@@ -332,7 +339,7 @@ export default {
           label: "عملات جيل",
           col: "4",
           value: "",
-          type: "number",
+          type: "hidden",
           rules: "required|numeric",
           disabled: true,
         },
@@ -402,11 +409,14 @@ export default {
         if (Array.isArray(data)) {
           selectOptionsField.value = data;
           selectOptionsField.name = data.map((item) => item.name);
+          console.log("name", selectOptionsField.name);
         } else {
           selectOptionsField.value = data;
+          console.log("selectOptionsField", selectOptionsField.value);
         }
       }
     },
+
     emptyStore() {
       this.addPrizeById([]);
       this.addNotificationById([]);
@@ -453,9 +463,11 @@ export default {
           ...this.stepThreeForm,
           ...this.stepFourForm,
         ];
+
         Object.entries(seasonalMission).forEach(([key, value]) => {
           this.updateFieldOptions(mergedAllSteps, key, value);
         });
+
         mergedAllSteps[2].value = seasonalMission.sesonalMissionGroup;
         mergedAllSteps[2].name = seasonalMission.sesonalMissionGroup.name;
         mergedAllSteps[3].value = moment(seasonalMission.start_date).format("DD-MM-YYYY");
@@ -467,8 +479,10 @@ export default {
         mergedAllSteps[10].value = seasonalMission.image_uuid;
         mergedAllSteps[10].task_audio_name = seasonalMission.image_name;
         mergedAllSteps[10].task_audio_size = seasonalMission.image_size;
+
         this.handlePrizesInEdit(seasonalMission.prizes);
         this.handleNotificationInEdit(seasonalMission.notifications);
+        console.log("mergedAllSteps", mergedAllSteps);
       });
     }
   },

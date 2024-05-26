@@ -16,7 +16,7 @@
           </Button>
           <Button
             :custom-class="'submit-btn'"
-            :disabled="invalid || imageUplpaded"
+            :disabled="isAddForm ? invalid || !imageUploaded : invalid"
             @click="nextStep"
           >
             التالي
@@ -55,6 +55,10 @@ export default {
     stepForm: {
       type: Array,
       default: () => [],
+    },
+    isAddForm: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

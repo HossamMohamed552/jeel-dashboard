@@ -153,6 +153,7 @@ export default {
       videosFieldsList: [
         { key: "id", label: "التسلسل" },
         { key: "title", label: "عنوان الفيديو" },
+        { key: "video", label: "عرض الفيديو" },
       ],
       exercisesFieldsList: [
         { key: "id", label: "التسلسل" },
