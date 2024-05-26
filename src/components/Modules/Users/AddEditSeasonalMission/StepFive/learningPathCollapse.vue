@@ -23,6 +23,8 @@
                   :tableItems="videosList"
                   :fieldsList="videosFieldsList"
                   :showSortControls="false"
+                  :notHidePagination="false"
+                  @openModal="openModal($event)"
                 >
                 </ListItems>
               </b-col>
@@ -42,6 +44,7 @@
                   :tableItems="exercisesList"
                   :fieldsList="exercisesFieldsList"
                   :showSortControls="false"
+                  :notHidePagination="false"
                 >
                 </ListItems>
               </b-col>
@@ -50,6 +53,24 @@
         </b-tab>
       </b-tabs>
     </div>
+    <b-modal
+      v-model="isShowModal"
+      class="custom-rounded"
+      @hide="cancel()"
+      centered
+      title="BootstrapVue"
+      hide-footer
+      hide-header
+      size="lg"
+    >
+      <video
+        width="100%"
+        :src="videoDetials.video_with_muisc"
+        ref="player"
+        autoplay="autoplay"
+        controls="controls"
+      />
+    </b-modal>
   </div>
 </template>
 
@@ -60,6 +81,8 @@ export default {
   data() {
     return {
       collapsed: false,
+      isShowModal: false,
+      videoDetials: {},
     };
   },
   components: {
@@ -91,6 +114,13 @@ export default {
     toggleCollapsed() {
       this.collapsed = !this.collapsed;
     },
+    openModal(data) {
+      this.isShowModal = true;
+      this.videoDetials = data;
+    },
+    cancel() {
+      this.isShowModal = false;
+    },
   },
   computed: {
     pathNum() {
@@ -107,6 +137,12 @@ export default {
 @import "../index.scss";
 
 ::v-deep {
+  .videoPreview {
+    all: unset;
+    cursor: pointer;
+    color: #58c6f2;
+  }
+
   .nav-tabs {
     border: none;
     display: flex;

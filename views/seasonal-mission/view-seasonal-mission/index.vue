@@ -139,9 +139,7 @@ export default {
     return {
       loading: false,
       seasonalMissing: {},
-    };
-  },
-  created() {
+    }
   },
   computed: {
     NotifacationFieldsList() {
