@@ -336,4 +336,90 @@ export default [
       preLink: "/dashboard/users",
     },
   },
+  // question difficulty
+  {
+    path: "/dashboard/question-difficulty",
+    name: "question-difficulty",
+    component: () => import("../../../views/question-difficulty/index.vue"),
+    meta: {
+      breadcrumb: "مستوى السؤال",
+      breadcrumbEn: "question difficulty",
+      preLabel: "",
+      preLink: "",
+    },
+  },
+  {
+    path: "/dashboard/question-difficulty/edit/:id",
+    name: "edit-question-difficulty",
+    component: () =>
+      import("../../../views/question-difficulty/edit-question-difficulty/index.vue"),
+    meta: {
+      breadcrumb: "تعديل  مستوى السؤال",
+      breadcrumbEn: "edit question difficulty",
+      preLabel: "مستوى السؤال",
+      preLabelEn: "question difficulty",
+      preLink: "/dashboard/question-difficulty",
+    },
+  },
+  {
+    path: "/dashboard/question-difficulty/show/:id",
+    name: "show-question-difficulty",
+    component: () =>
+      import("../../../views/question-difficulty/view-question-difficulty/index.vue"),
+    meta: {
+      breadcrumb: "تفاصيل  مستوى السؤال",
+      breadcrumbEn: "show question difficulty",
+      preLabel: "مستوى السؤال",
+      preLabelEn: "question difficulty",
+      preLink: "/dashboard/question-difficulty",
+    },
+  },
+  // student levels
+  {
+    path: "/dashboard/student-levels",
+    name: "student-levels",
+    component: () => import("../../../views/student-levels/index.vue"),
+    meta: {
+      breadcrumb: "نقاط المستوى",
+      breadcrumbEn: "Level points",
+      preLabel: "",
+      preLink: "",
+    },
+  },
+  // rewarding-actions
+  {
+    path: "/dashboard/rewarding-actions",
+    name: "rewarding-actions",
+    component: () => import("../../../views/rewarding-actions/index.vue"),
+    meta: {
+      breadcrumb: "جوائز التفاعل",
+      breadcrumbEn: "rewarding actions",
+      preLabel: "",
+      preLink: "",
+    },
+  },
+  {
+    path: "/dashboard/rewarding-actions/:id",
+    name: "rewarding-actions-edit",
+    component: () => import("../../../views/rewarding-actions/edit/index.vue"),
+    meta: {
+      breadcrumb: "تعديل جائزة تفاعل",
+      breadcrumbEn: "edit rewarding actions",
+      preLabel: "جوائز التفاعل",
+      preLabelEn: "rewarding actions",
+      preLink: "/dashboard/rewarding-actions",
+    },
+  },
+  {
+    path: "/dashboard/rewarding-actions/show/:id",
+    name: "show-rewarding-actions",
+    component: () => import("../../../views/rewarding-actions/view-rewarding-actions/index.vue"),
+    meta: {
+      breadcrumb: "تفاصيل جائزة تفاعل",
+      breadcrumbEn: "show rewarding actions",
+      preLabel: "جوائز التفاعل",
+      preLabelEn: "rewarding actions",
+      preLink: "/dashboard/rewarding-actions",
+    },
+  },
 ]

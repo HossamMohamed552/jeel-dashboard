@@ -7,7 +7,7 @@
     />
     <div class="container-fluid custom-container">
       <div class="add-edit-school-form">
-        <h3>تعديل جائزة تفاعل</h3>
+        <h3>{{ $t('rewardingActions.edit') }}</h3>
         <validation-observer
           v-slot="{ invalid }"
           ref="addEditQuestionDifficultyPointsForm"
@@ -18,9 +18,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="action.action_name"
-                    label="اسم جائزة التفاعل"
-                    name="اسم جائزة التفاعل"
-                    placeholder="أدخل اسم جائزة التفاعل"
+                    :label="$t('rewardingActions.action_name')"
+                    :name="$t('rewardingActions.action_name')"
+                    :placeholder="$t('rewardingActions.action_name')"
                     :rules="'required'"
                   ></TextField>
                 </div>
@@ -29,9 +29,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="action.jeel_xp"
-                    label="عدد النقاط"
-                    name="عدد النقاط"
-                    placeholder="أدخل عدد النقاط"
+                    :label="$t('rewardingActions.jeel_xp')"
+                    :name="$t('rewardingActions.jeel_xp')"
+                    :placeholder="$t('rewardingActions.jeel_xp')"
                     :rules="'required'"
                   ></TextField>
                 </div>
@@ -40,9 +40,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="action.jeel_coins"
-                    label="عدد عملات جيل"
-                    name="عدد عملات جيل"
-                    placeholder="أدخل عدد عملات جيل"
+                    :label="$t('rewardingActions.jeel_coins')"
+                    :name="$t('rewardingActions.jeel_coins')"
+                    :placeholder="$t('rewardingActions.jeel_coins')"
                     :rules="'required'"
                   ></TextField>
                 </div>

@@ -4,28 +4,28 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">تفاصيل مجموعة جيمز</h2>
+            <h2 class="heading">{{$t('jeelStore.detail')}}</h2>
           </b-col>
         </b-row>
         <b-row>
           <b-col md="4" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'اسم المجموعة'"
+                :title="$t('jeelStore.name')"
                 :subtitle="jeelStoreGames.name"
             />
           </b-col>
           <b-col md="4" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'الصف الدراسي'"
+                :title="$t('jeelStore.level')"
                 :subtitle="jeelStoreGames.level.name"
             />
           </b-col>
           <b-col md="4" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'عدد الجيمز'"
+                :title="$t('jeelStore.gems')"
                 :subtitle="jeelStoreGames.gems"
             />
           </b-col>
@@ -35,7 +35,7 @@
           <b-col md="4" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'عدد العملات'"
+                :title="$t('jeelStore.jeel_coins')"
                 :subtitle="jeelStoreGames.jeel_coins"
             />
             <b-col md="8" sm="12">
@@ -47,7 +47,7 @@
         <b-row>
           <b-col lg="6" class="mb-5 mt-4">
             <PreviewMedia
-              :header="'لوجو المجموعة'"
+              :header="$t('jeelStore.groupLogo')"
               :media-name="jeelStoreGames.logo_orginal_name"
               :file-size="jeelStoreGames.logo_size"
               :image-url="jeelStoreGames.logo"
@@ -59,13 +59,11 @@
           <b-col md="12" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'الوصف'"
+                :title="$t('jeelStore.description')"
                 :subtitle="jeelStoreGames.description"
             />
           </b-col>
         </b-row>
-
-
       </div>
     </div>
   </section>

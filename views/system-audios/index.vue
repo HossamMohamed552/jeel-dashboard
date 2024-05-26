@@ -30,7 +30,7 @@
     </div>
     <div class="collapse-search listing">
       <ListItems
-        :header-name="'أصوات المنصة'"
+        :header-name="$t('systemAudio.systemAudio')"
         :showSortControls="false"
         :number-of-item="totalNumber"
         :tableItems="systemAudiosList"
@@ -53,11 +53,11 @@
 import ListItems from "@/components/ListItems/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import GenericForm from "@/components/Shared/GenericForm";
-import { getSystemAudiosRequest } from "@/api/system-audios";
-import { getSystemAudiosCategories } from "@/services/dropdownService";
+import {getSystemAudiosRequest} from "@/api/system-audios";
+import {getSystemAudiosCategories} from "@/services/dropdownService";
 
 export default {
-  components: { ListItems, GenericForm, Button },
+  components: {ListItems, GenericForm, Button},
   data() {
     return {
       loading: false,
@@ -70,6 +70,7 @@ export default {
         {
           key: "category_id",
           label: "التصنيف",
+          labelEn: "category",
           col: "6",
           listen: "id",
           type: "select",
@@ -82,21 +83,13 @@ export default {
         {
           key: "name",
           label: "الاسم",
+          labelEn: "name",
           col: "6",
           listen: "id",
           value: "",
           type: "text",
           rules: "",
         },
-      ],
-      fieldsList: [
-        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
-        { key: "category.name", label: "التصنيف" },
-        { key: "name.ar", label: "الاسم بالعربية" },
-        { key: "name.en", label: "الاسم بالانجليزية" },
-        { key: "audio_ar", label: "الصوت بالعربية" },
-        { key: "audio_en", label: "الصوت بالانجليزية" },
-        { key: "actions", label: "الإجراء" },
       ],
     };
   },
@@ -138,6 +131,19 @@ export default {
     onSubmit(values) {
       this.getSystemAudios(values);
     },
+  },
+  computed: {
+    fieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "category.name", label: this.$i18n.t('systemAudio.category')},
+        {key: "name.ar", label: this.$i18n.t('systemAudio.arName')},
+        {key: "name.en", label: this.$i18n.t('systemAudio.enName')},
+        {key: "audio_ar", label: this.$i18n.t('systemAudio.arAudio')},
+        {key: "audio_en", label: this.$i18n.t('systemAudio.enAudio')},
+        {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
+      ]
+    }
   },
   mounted() {
     this.getSystemAudios();

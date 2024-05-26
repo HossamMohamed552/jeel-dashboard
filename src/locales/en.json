@@ -861,7 +861,9 @@
     "supervisors": "supervisors",
     "teachers": "teachers",
     "students": "students",
-    "parents": "parents"
+    "parents": "parents",
+    "exportExcel": "Export To Excel",
+    "exportPdf": "Export To Pdf"
   },
   "VERIFICATION": {
     "EXPIRED": "This code is expired. type your email to resend",
@@ -1222,12 +1224,78 @@
     "name": "box name",
     "level": "level",
     "term": "term",
+    "delete": "Delete the power up box",
+    "confirm_delete": "Are you sure to delete the power up box?",
     "selectLevel": "Select the level",
     "selectTerm": "Select the term",
     "country": "country",
     "selectCountry": "Select the term",
     "type": "type",
-    "selectType": "Select the type"
+    "selectType": "Select the type",
+    "appear_after_missions": "Appearance after mission",
+    "enter_appear_after_missions": "Enter the mission number",
+    "powerType": "Box content type",
+    "numberOfPoints": "Number of points",
+    "enterNumberOfPoints": "Enter the number of points",
+    "numberOfGeelCoins": "Number of Jeel coins",
+    "EnterNumberOfGeelCoins": "Enter the number of Jeel coins",
+    "details": "Power up box details"
+  },
+  "jeelStore": {
+    "jeelStore": "Gams Group",
+    "add": "Add a Gams group",
+    "delete": "delete a Gams group",
+    "confirm_delete": "Are you sure you want to delete a Gams group?",
+    "name": "group name",
+    "level": "level",
+    "gems": "Number of gams",
+    "jeel_coins": "jeel coins",
+    "selectJeel_coins": "Choose the number of Jeel coins",
+    "groupLogo": "group Logo",
+    "writeNote": "write a Note",
+    "detail": "Gems Group Details",
+    "description": "description"
+  },
+  "jeelStoreCharacter": {
+    "level": "level",
+    "selectLevel": "Select the level",
+    "country": "country",
+    "selectCountry": "Select the country",
+    "type": "Type",
+    "selectType": "Select the Type",
+    "jeelStoreCharacterList": "jeel Store Character List",
+    "add": "Add a new character",
+    "delete": "Delete character",
+    "confirm_delete": "Are you sure you want to delete the character?",
+    "numberOfGames": "number Of Games",
+    "EnterNumberOfGames": "Enter Number Of Games",
+    "character_logo": "character logo"
+  },
+  "questionDifficulty": {
+    "list": "List of questions Difficulty",
+    "name": "Question level name",
+    "grade_points": "Number of points"
+  },
+  "level_Points": {
+    "level_Points": "level Points",
+    "numberLevel_Points": "number of level Points",
+    "enterNumberLevel_Points": "Enter the number of level points"
+  },
+  "rewardingActions": {
+    "list": "rewarding Actions list",
+    "action_name": "Name of the rewarding Action",
+    "jeel_xp": "jeel xp",
+    "jeel_coins": "jeel coins",
+    "edit": "edit the rewarding Actions",
+    "rewardingActionDetail": "rewarding Action detail"
+  },
+  "systemAudio": {
+    "systemAudio": "system Audio",
+    "category": "category",
+    "arName": "The name is in Arabic",
+    "enName": "Name in English",
+    "arAudio": "Audio in Arabic",
+    "enAudio": "Audio in English"
   },
   "permissions": "permissions",
   "showDetails": "showDetails",
@@ -1305,5 +1373,6 @@
   "done": "done",
   "number": "number",
   "enterNumber": "enter Number",
-  "socialLink": "Social media links"
+  "socialLink": "Social media links",
+  "all": "All"
 }

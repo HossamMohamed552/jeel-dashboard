@@ -48,7 +48,7 @@
                     <div class="sort">
                       <img src="../../../src/assets/images/icons/sort.svg"/>
                       <div>
-                        {{$t('REPORTS.export_to')}}
+                        {{ $t('REPORTS.export_to') }}
                       </div>
                     </div>
                   </template>
@@ -56,7 +56,7 @@
                     <export-excel
                       ref="exportExcel"
                       :data="generalStatisticsExport">
-                      <img src="@/assets/images/icons/xls.png">{{$t('REPORTS.exportExcel')}}
+                      <img src="@/assets/images/icons/xls.png">{{ $t('REPORTS.exportExcel') }}
                     </export-excel>
                   </b-dropdown-item>
                   <b-dropdown-item @click="generatePdf">
@@ -133,16 +133,24 @@
                   <h5>{{ $t('REPORTS.generalHeading') }}</h5>
                 </b-col>
                 <b-col lg="3">
-                  <span>{{ $t(`TABLE_FIELDS.studyYear`) }}: {{ valuesOfAdvancedSearch.study_year_id }}</span>
+                  <span>{{ $t(`TABLE_FIELDS.studyYear`) }}: {{
+                      valuesOfAdvancedSearch.study_year_id
+                    }}</span>
                 </b-col>
                 <b-col lg="3">
-                  <span>{{ $t(`TABLE_FIELDS.countryName`)}}: {{ valuesOfAdvancedSearch.country_id }}</span>
+                  <span>{{ $t(`TABLE_FIELDS.countryName`) }}: {{
+                      valuesOfAdvancedSearch.country_id
+                    }}</span>
                 </b-col>
                 <b-col lg="3">
-                  <span>{{ $t(`TABLE_FIELDS.schoolGroups`)}}: {{ valuesOfAdvancedSearch.school_group_id }}</span>
+                  <span>{{ $t(`TABLE_FIELDS.schoolGroups`) }}: {{
+                      valuesOfAdvancedSearch.school_group_id
+                    }}</span>
                 </b-col>
                 <b-col lg="3">
-                  <span>{{ $t(`TABLE_FIELDS.schools`)}}: {{ valuesOfAdvancedSearch.school_id }}</span>
+                  <span>{{ $t(`TABLE_FIELDS.schools`) }}: {{
+                      valuesOfAdvancedSearch.school_id
+                    }}</span>
                 </b-col>
               </b-row>
             </div>
@@ -190,6 +198,7 @@ import {
   getJeelAdminReportRolesRequest,
   getJeelAdminReportStatisticsRequest
 } from "@/api/reports";
+import Login from "../../login/index.vue";
 
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
@@ -209,7 +218,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.studyYear"),
+          label: "العام الدراسي",
+          labelEn: "study year",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -221,7 +231,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.countryName"),
+          label: "الدولة",
+          labelEn: "country",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -233,7 +244,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.schoolGroups"),
+          label: "المجموعات الدراسية",
+          labelEn: "schoolGroups",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -245,7 +257,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.schools"),
+          label: "المدارس",
+          labelEn: "schools",
           options: [],
           deselectFromDropdown: true,
           disabled: true,
@@ -253,12 +266,6 @@ export default {
           rules: "",
         },
       ],
-      valuesOfAdvancedSearch: {
-        study_year_id: "",
-        country_id: "",
-        school_group_id: "",
-        school_id: "",
-      },
       exportArray: [
         {
           id: 1,
@@ -286,41 +293,47 @@ export default {
           number: 8
         },
         {
-          icon: require("../../../src/assets/images/icons/home.png"),
+          icon: require("../../../src/assets/images/icons/levels.svg"),
           name: "levels",
           number: 1058
         },
         {
-          icon: require("../../../src/assets/images/icons/home.png"),
+          icon: require("../../../src/assets/images/icons/classes.svg"),
           name: "classes",
           number: 1028
         },
         {
-          icon: require("../../../src/assets/images/icons/home.png"),
+          icon: require("../../../src/assets/images/icons/school-admin.svg"),
           name: "schoolAdmin",
           number: 45
         },
         {
-          icon: require("../../../src/assets/images/icons/home.png"),
+          icon: require("../../../src/assets/images/icons/supervisor.svg"),
           name: "supervisors",
           number: 102
         },
         {
-          icon: require("../../../src/assets/images/icons/home.png"),
+          icon: require("../../../src/assets/images/icons/teachers.svg"),
           name: "teachers",
           number: 90
         },
         {
-          icon: require("../../../src/assets/images/icons/home.png"),
+          icon: require("../../../src/assets/images/icons/students.svg"),
           name: "students",
           number: 65
         },
         {
-          icon: require("../../../src/assets/images/icons/home.png"),
+          icon: require("../../../src/assets/images/icons/parents.svg"),
           name: "parents",
           number: 30
         }
       ],
+      valuesOfAdvancedSearch: {
+        study_year_id: ``,
+        country_id: ``,
+        school_group_id: ``,
+        school_id: ``,
+      },
       reportFields: {},
       generalStatisticsExport: [],
       roleStatistics: [],
@@ -339,7 +352,7 @@ export default {
       this.getJeelAdminReportChart(values)
       this.getJeelAdminReportRoles(values)
     },
-    handleInput(key, value,_,options) {
+    handleInput(key, value, _, options) {
       if (key === 'school_group_id' && value !== '') {
         this.generalReportSearch[3].disabled = false;
         getAllSchools(this.generalReportSearch, 'school_id', this.generalReportSearch[0].value, this.generalReportSearch[1].value, this.generalReportSearch[2].value)
@@ -348,7 +361,9 @@ export default {
         const itemValue = options?.filter((item) => {
           return item.id === value
         })
-        this.valuesOfAdvancedSearch[key] = itemValue ? itemValue[0]?.name : ""
+        if (itemValue.length > 0) {
+          this.valuesOfAdvancedSearch[key] = itemValue[0]?.name
+        }
       } else {
         this.valuesOfAdvancedSearch[key] = value
       }

@@ -7,7 +7,7 @@
     />
     <div class="container-fluid custom-container">
       <div class="add-edit-school-form">
-        <h3>نقاط المستوى</h3>
+        <h3>{{$t('level_Points.level_Points')}}</h3>
         <validation-observer
           v-slot="{ invalid }"
           ref="addEditQuestionDifficultyPointsForm"
@@ -18,9 +18,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="xp"
-                    label="عدد نقاط المستوى"
-                    name="عدد نقاط المستوى"
-                    placeholder="أدخل عدد نقاط المستوى"
+                    :label="$t('level_Points.numberLevel_Points')"
+                    :name="$t('level_Points.numberLevel_Points')"
+                    :placeholder="$t('level_Points.enterNumberLevel_Points')"
                     type="number"
                     min="0"
                     :rules="'required'"

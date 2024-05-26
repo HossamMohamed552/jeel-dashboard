@@ -2,7 +2,7 @@
   <div class="add-edit-role">
     <div class="container-fluid custom-container">
       <div class="add-edit-role-form">
-        <h3>{{ $route.params.id ? "تعديل مجموعة جيمز" : "إضافة مجموعة جيمز" }}</h3>
+        <h3>{{ $route.params.id ? $t('jeelStore.edit') : $t('jeelStore.add') }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditPowerUpBoxForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -10,9 +10,9 @@
                 <div class="hold-field">
                   <TextField
                       v-model="createJeelStoreGames.name"
-                      :label="'اسم المجموعة'"
-                      :name="'اسم المجموعة'"
-                      placeholder="اختر اسم المجموعة"
+                      :label="$t('jeelStore.name')"
+                      :name="$t('jeelStore.name')"
+                      :placeholder="$t('jeelStore.name')"
                       :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
@@ -21,13 +21,13 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <label>
-                    الصف الدراسي
+                    {{$t('jeelStore.level')}}
                     <span><i class="fa-solid fa-asterisk"></i></span>
                   </label>
                   <SelectSearch
                       v-model="createJeelStoreGames.level_id"
-                      :name="'اختر الصف الدراسي'"
-                      placeholder="اختر الصف الدراسي"
+                      :name="$t('jeelStore.level')"
+                      :placeholder="$t('jeelStore.selectLevel')"
                       :options="levels"
                       :reduce="(option) => option.id"
                       :get-option-label="(option) => option.name"
@@ -39,9 +39,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="createJeelStoreGames.gems"
-                    :label="'عدد الجيمز'"
-                    :name="'عدد الجيمز'"
-                    placeholder="اختر عدد الجيمز"
+                    :label="$t('jeelStore.gems')"
+                    :name="$t('jeelStore.gems')"
+                    :placeholder="$t('jeelStore.selectGems')"
                     :rules="'required'"
                   ></TextField>
                 </div>
@@ -50,9 +50,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="createJeelStoreGames.jeel_coins"
-                    :label="'عدد العملات'"
-                    :name="'عدد العملات'"
-                    placeholder="اختر عدد العملات"
+                    :label="$t('jeelStore.jeel_coins')"
+                    :name="$t('jeelStore.jeel_coins')"
+                    :placeholder="$t('jeelStore.selectJeel_coins')"
                     :rules="'required'"
                   ></TextField>
                 </div>
@@ -62,7 +62,7 @@
                 <UploadAttachment
                   v-if="!$route.params.id || createJeelStoreGames.thumbnailChangedRequest"
                   :rules="'required'"
-                  :label="'لوجو المجموعة'"
+                  :label="$t('jeelStore.groupLogo')"
                   :type-of-attachment="'image'"
                   :accept-files="'image/*'"
                   @setFileId="setImageId"
@@ -89,15 +89,12 @@
               <b-col lg="12" class="mb-3" >
                 <div class="hold-field">
                   <TextAreaField
-                    :label="'اكتب ملحوظة'"
+                    :label="$t('jeelStore.writeNote')"
                     :rules="'required|min:3|max:250'"
                     v-model="createJeelStoreGames.description"
                   />
-
                 </div>
               </b-col>
-
-
               <b-col lg="12">
                 <b-row>
                   <div class="hold-btns-form">

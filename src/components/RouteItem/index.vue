@@ -4,7 +4,7 @@
       <div class="icon">
         <img :src="item.icon" :alt="item.altImage" :title="item.titleImage">
       </div>
-      <div class="name">{{ item.name }}</div>
+      <div class="name">{{ $i18n.locale === 'ar' ? item.name : item.nameEn }}</div>
     </div>
   </router-link>
 </template>

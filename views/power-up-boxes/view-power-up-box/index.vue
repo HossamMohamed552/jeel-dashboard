@@ -4,28 +4,28 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">تفاصيل صندوق الطاقة</h2>
+            <h2 class="heading">{{ $t('power_up_box.details') }}</h2>
           </b-col>
         </b-row>
         <b-row>
           <b-col md="4" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'اسم الصندوق'"
+                :title="$t('power_up_box.name')"
                 :subtitle="powerUpBox.name"
             />
           </b-col>
           <b-col md="4" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'الصف الدراسي'"
+                :title="$t('power_up_box.level')"
                 :subtitle="powerUpBox.level.name"
             />
           </b-col>
           <b-col md="4" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'الترم الدراسى'"
+                :title="$t('power_up_box.term')"
                 :subtitle="powerUpBox.term.name"
             />
           </b-col>
@@ -34,14 +34,14 @@
           <b-col md="4" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'الدولة'"
+                :title="$t('power_up_box.country')"
                 :subtitle="powerUpBox.country.name"
             />
           </b-col>
           <b-col md="4" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'ظهور بعد مدة'"
+                :title="$t('power_up_box.appear_after_missions')"
                 :subtitle="powerUpBox.appear_after_missions"
             />
           </b-col>
@@ -61,20 +61,18 @@
           <b-col md="4" sm="12" v-if="powerUpBox.jeel_xp">
             <ShowItem
                 class="divider-show"
-                :title="'عدد النقاط'"
+                :title="$t('power_up_box.numberOfPoints')"
                 :subtitle="powerUpBox.jeel_xp"
             />
           </b-col>
           <b-col md="4" sm="12" v-if="powerUpBox.jeel_coins">
             <ShowItem
                 class="divider-show"
-                :title="'عدد عملات جيل'"
+                :title="$t('power_up_box.numberOfGeelCoins')"
                 :subtitle="powerUpBox.jeel_coins"
             />
           </b-col>
         </b-row>
-
-
       </div>
     </div>
   </section>

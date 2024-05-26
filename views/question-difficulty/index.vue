@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة مستوى السؤال'"
+      :header-name="$t('questionDifficulty.list')"
       :number-of-item="totalNumber"
       :tableItems="questionDifficultyList"
       :fieldsList="fieldsList"
@@ -31,12 +31,6 @@ export default {
       questionsList: [],
       questionDifficultyList: [],
       totalNumber: 3,
-      fieldsList: [
-        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
-        { key: "name", label: "اسم مستوى السؤال" },
-        { key: "grade_points", label: "عدد النقاط" },
-        { key: "actions", label: "الإجراء" },
-      ],
     };
   },
   methods: {
@@ -57,6 +51,16 @@ export default {
     editItem($event) {
       this.$router.push(`/dashboard/question-difficulty/edit/${$event}`);
     },
+  },
+  computed:{
+    fieldsList(){
+      return  [
+        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
+        { key: "name", label: this.$i18n.t('questionDifficulty.name') },
+        { key: "grade_points", label: this.$i18n.t('questionDifficulty.grade_points') },
+        { key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions') },
+      ]
+    }
   },
   mounted() {
     this.getQuestionDifficulty();

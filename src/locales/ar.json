@@ -315,7 +315,7 @@
     "list": "قائمة الدول",
     "delete_Country": "حذف الدولة",
     "confirm_delete_Country": "هل أنت متأكد من حذف الدولة؟",
-    "Enter_name":"أدخل اسم الدولة"
+    "Enter_name": "أدخل اسم الدولة"
   },
   "GROUP": {
     "ADD_NEW": "إضافة مجموعة المدارس",
@@ -385,7 +385,7 @@
     "SCHOOL_ADDRESS": "عنوان المدرسة",
     "NOTES": "ملاحظات",
     "address": "العنوان",
-    "list":"قائمة المدارس",
+    "list": "قائمة المدارس",
     "delete": "حذف المدرسة",
     "confirm_delete": "هل أنت متأكد من حذف المدرسة؟"
   },
@@ -455,9 +455,9 @@
     "confirm_delete_video": "هل أنت متأكد من حذف الفيديو؟",
     "videoRequired": "ملف الفيديو مطلوب",
     "videoWithOutRequired": "ملف الفيديو بدون موسيقى مطلوب",
-    "videoWithThumbnailRequired":"صورة الفيديو مطلوب",
-    "videoWithThumbnail":"صورة الفيديو",
-    "confirm_delete_question":"هل أنت متأكد من حذف السؤال؟"
+    "videoWithThumbnailRequired": "صورة الفيديو مطلوب",
+    "videoWithThumbnail": "صورة الفيديو",
+    "confirm_delete_question": "هل أنت متأكد من حذف السؤال؟"
   },
   "PAPER_WORK": {
     "paperWorks": "قائمة أوراق العمل",
@@ -578,8 +578,8 @@
     "wrong": "خطأ",
     "rightAnswer": "إجابة صحيحة",
     "wrongAnswer": "إجابة خاطئة",
-    "text":"نص",
-    "image":"صورة"
+    "text": "نص",
+    "image": "صورة"
   },
   "MISSIONS": {
     "STEP_ONE": "البيانات الاساسية",
@@ -625,7 +625,7 @@
     "NAME": "اسم الدرس",
     "videoNAME": "الدرس",
     "ENTER_LESSON_NAME": "أدخل اسم الدرس",
-    "selectLessonName":"اختر اسم الدرس",
+    "selectLessonName": "اختر اسم الدرس",
     "NAME_OF_LESSON": "الدرس التعليمي",
     "selectLesson": "اختر الدرس",
     "delete_lesson": "حذف الدرس",
@@ -679,9 +679,9 @@
     "CURRENT_PRICE": "السعر الحالي  للباقة",
     "CURRENCY": "العملة",
     "DESCRIPTION": "تفاصيل",
-    "list":"قائمة الباقات",
-    "delete":"حذف الباقة",
-    "confirm_delete":"هل أنت متأكد من حذف الباقة؟",
+    "list": "قائمة الباقات",
+    "delete": "حذف الباقة",
+    "confirm_delete": "هل أنت متأكد من حذف الباقة؟",
     "enterName": "أدخل اسم الباقة",
     "selectCountry": "اختر الدولة",
     "enterClassesCount": "أدخل عدد الصفوف",
@@ -732,7 +732,7 @@
     "ShowDetails": "تفاصيل المسار التعليمي",
     "learning_path": "قائمة المسارات التعليمية",
     "delete_learning_path": "حذف المسار التعليمي",
-    "enterPathName":"اختر المسار التعليمي",
+    "enterPathName": "اختر المسار التعليمي",
     "confirm_delete_learning_path": "هل أنت متأكد من حذف المسار التعليمي؟",
     "audio": "ملف الصوتي للمسار"
   },
@@ -746,20 +746,20 @@
     "ADD": "إضافة هدف تعليمي",
     "EDIT": "تعديل هدف التعليمي",
     "NAME": "اسم الهدف",
-    "enterObjectiveName":"أدخل اسم الهدف التعليمي",
+    "enterObjectiveName": "أدخل اسم الهدف التعليمي",
     "selectOBJECTIVE": "اختر هدف التعليمي",
     "delete_OBJECTIVE": "حذف الهدف التعليمي",
     "confirm_delete_OBJECTIVE": "هل أنت متأكد من حذف الهدف التعليمي؟"
   },
   "OUTCOME": {
     "OUTCOME": "مخرجات التعلم",
-    "OUTCOMELIST":"قائمة مخرجات التعلم",
+    "OUTCOMELIST": "قائمة مخرجات التعلم",
     "DETAILS": "تفاصيل مخرج تعليمي",
     "ADD": "إضافة مخرج تعليمي",
     "EDIT": "تعديل مخرج تعليمي",
     "NAME": "اسم المخرج التعليمي",
     "NAME_2": "اسم المخرج التعليمي",
-    "enterOutcomeName":"أدخل اسم المخرج التعليمي",
+    "enterOutcomeName": "أدخل اسم المخرج التعليمي",
     "selectOUTCOME": "اختر المخرج التعليمي ",
     "delete_OUTCOME": "حذف مخرج تعليمي",
     "confirm_delete_OUTCOME": "هل أنت متأكد من حذف المخرج تعليمي؟"
@@ -1030,7 +1030,7 @@
     "add": "إضافة مهمة موسمية",
     "edit": "تعديل مهمة موسمية",
     "deleteSeasonalMission": "حذف المجموعة",
-    "confirmDeleteSeasonalMission":"هل أنت متأكد من حذف المجموعة؟",
+    "confirmDeleteSeasonalMission": "هل أنت متأكد من حذف المجموعة؟",
     "seasonalMissionDetails": "تفاصيل المهمة الموسمية",
     "country": "الدولة",
     "seasonalGroupName": "اسم المجموعة الموسمية",
@@ -1124,7 +1124,30 @@
     "selectType": "اختر النوع",
     "appear_after_missions": "ظهور بعد مهمة",
     "enter_appear_after_missions": "أدخل رقم المهمه",
-    "powerType": " نوع محتوى الصندوق"
+    "powerType": " نوع محتوى الصندوق",
+    "numberOfPoints": "عدد النقاط",
+    "enterNumberOfPoints": "أدخل عدد النقاط",
+    "numberOfGeelCoins": "عدد عملات جيل",
+    "EnterNumberOfGeelCoins": " أدخل عدد عملات جيل",
+    "details": "تفاصيل صندوق الطاقة"
+  },
+  "jeelStore": {
+    "jeelStore": "مجموعة جيمز",
+    "add": "إضافة مجموعة جيمز",
+    "edit": "تعديل مجموعة جيمز",
+    "delete": "حذف مجموعةجيمز ",
+    "confirm_delete": "هل أنت متأكد من حذف مجموعة جيمز؟",
+    "name": "اسم المجموعة",
+    "level": "الصف الدراسي",
+    "selectLevel": "اختر الصف الدراسي",
+    "gems": "عدد الجيمز",
+    "selectGems": "اختر عدد الجيمز",
+    "jeel_coins": "عدد العملات",
+    "selectJeel_coins": "اختر عدد العملات",
+    "groupLogo": "لوجو المجموعة",
+    "writeNote": "اكتب ملحوظة",
+    "detail": "تفاصيل مجموعة جيمز",
+    "description": "الوصف"
   },
   "superVisor": {
     "date": "اليوم",
@@ -1218,11 +1241,11 @@
     "chooseSchool": "اختر المدرسة",
     "choosesStudyYear": "اختر العام الدراسي",
     "studyYear": "العام الدراسي",
-    "list":"قائمة الاشتراكات",
+    "list": "قائمة الاشتراكات",
     "add": "تسجيل اشتراك",
     "edit": "تعديل اشتراك",
     "delete": "حذف الاشتراك",
-    "confirm_delete":"هل أنت متأكد من حذف الاشتراك؟",
+    "confirm_delete": "هل أنت متأكد من حذف الاشتراك؟",
     "start_subscription": "تاريخ بداية الاشتراك",
     "end_subscription": "تاريخ نهاية الاشتراك",
     "selectStart_subscription": "اختر تاريخ بدء الاشتراك",
@@ -1243,6 +1266,49 @@
     "finalResult": "القيمة النهائية",
     "details": "تفاصيل الاشتراك",
     "country": "الدولة"
+  },
+  "jeelStoreCharacter": {
+    "level": "الصف الدراسي",
+    "selectLevel": "اختر الصف الدراسي",
+    "country": "الدولة",
+    "selectCountry": "اختر الدولة",
+    "type": "النوع",
+    "selectType": "النوع",
+    "jeelStoreCharacterList": "قائمة شخصيات الشراء",
+    "add": "إضافة شخصية جديدة",
+    "delete": "حذف الشخصية",
+    "confirm_delete": "هل أنت متأكد من حذف الشخصية؟",
+    "numberOfGames": "عدد الجيمز",
+    "EnterNumberOfGames": "أدخل عدد الجيمز",
+    "character_logo": "لوجو الشخصية"
+  },
+  "questionDifficulty": {
+    "list": "قائمة مستوى السؤال",
+    "name": "اسم مستوى السؤال",
+    "enterName": "أدخل اسم مستوى السؤال",
+    "grade_points": "عدد النقاط",
+    "entergGrade_points": "أدخل عدد النقاط"
+  },
+  "level_Points": {
+    "level_Points": "نقاط المستوى",
+    "numberLevel_Points": "عدد نقاط المستوى",
+    "enterNumberLevel_Points": "أدخل عدد نقاط المستوى"
+  },
+  "rewardingActions": {
+    "list": "قائمة جوائز التفاعل",
+    "action_name": "اسم جائزة التفاعل",
+    "jeel_xp": "عدد النقاط",
+    "jeel_coins": "عدد العملات",
+    "edit": "تعديل جائزة تفاعل",
+    "rewardingActionDetail": "تفاصيل جائزة تفاعل"
+  },
+  "systemAudio": {
+    "systemAudio": "أصوات المنصة",
+    "category": "التصنيف",
+    "arName": "الاسم بالعربية",
+    "enName": "الاسم بالانجليزية",
+    "arAudio": "الصوت بالعربية",
+    "enAudio": "الصوت بالانجليزية"
   },
   "permissions": "الصلاحيات",
   "showDetails": "عرض تفاصيل المستخدم",
@@ -1320,5 +1386,6 @@
   "done": "إنهاء",
   "number": "عدد",
   "enterNumber": "أدخل عدد",
-  "socialLink": "روابط التواصل الإجتماعي"
+  "socialLink": "روابط التواصل الإجتماعي",
+  "all": "الكل"
 }
