@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة جوائز التفاعل'"
+      :header-name="$t('rewardingActions.list')"
       :fieldsList="fieldsList"
       :table-items="actions"
       :v-search-model="roleSearchWord"
@@ -30,29 +30,33 @@ export default {
       roleSearchWord: "",
       totalNumber: 0,
       actions: [],
-      fieldsList: [
+    };
+  },
+  computed:{
+    fieldsList(){
+      return  [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
           key: "action_name",
-          label: 'اسم جائزة التفاعل',
+          label: this.$i18n.t("rewardingActions.action_name"),
         },
         {
           key: "jeel_xp",
-          label: "عدد النقاط",
+          label: this.$i18n.t("rewardingActions.jeel_xp"),
         },
         {
           key: "jeel_coins",
-          label: "عدد العملات",
+          label: this.$i18n.t("rewardingActions.jeel_coins"),
         },
         {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-    };
+      ]
+    },
   },
   methods: {
     getRewardingActions(e) {

@@ -3,7 +3,7 @@
     <!------------------ st search box --------------->
     <div class="deep-search">
       <div class="header">
-        <h4>البحث</h4>
+        <h4>{{ $t('BUTTONS.SEARCH') }}</h4>
         <div class="collapse-btn" v-if="visible" @click="visible = !visible">
           <span> - </span>
         </div>
@@ -13,22 +13,20 @@
       </div>
       <div class="search-content" v-if="visible">
         <b-row>
-
           <b-col cols="4">
             <TextField
               v-model="searchValues.name"
-              :label="'اسم الشخصية'"
-              :name="'اسم الشخصية'"
-              placeholder="اختر اسم الشخصية"
+              :label="$t('CHARACTER.name')"
+              :name="$t('CHARACTER.name')"
+              :placeholder="$t('CHARACTER.name')"
             ></TextField>
           </b-col>
-
           <b-col cols="4" class="mt-3">
             <SelectSearch
               v-model="searchValues.level_id"
-              :label="'الصف الدراسي'"
-              :name="'اختر الصف الدراسي'"
-              placeholder="اختر الصف الدراسي"
+              :label="$t('jeelStoreCharacter.level')"
+              :name="$t('jeelStoreCharacter.selectLevel')"
+              :placeholder="$t('jeelStoreCharacter.selectLevel')"
               :options="levels"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
@@ -37,9 +35,9 @@
           <b-col cols="4" class="mt-3">
             <SelectSearch
               v-model="searchValues.country_id"
-              label="الدولة"
-              name="الدولة"
-              placeholder="اختر الدولة"
+              :label="$t('jeelStoreCharacter.country')"
+              :name="$t('jeelStoreCharacter.country')"
+              :placeholder="$t('jeelStoreCharacter.selectCountry')"
               :options="countries"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
@@ -48,15 +46,14 @@
           <b-col cols="4">
             <SelectSearch
               v-model="characterSelected"
-              label="النوع"
-              name="النوع"
-              placeholder="اختر النوع"
+              :label="$t('jeelStoreCharacter.type')"
+              :name="$t('jeelStoreCharacter.type')"
+              :placeholder="$t('jeelStoreCharacter.selectType')"
               :options="types"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
             ></SelectSearch>
           </b-col>
-
         </b-row>
         <b-row>
           <div class="actions">
@@ -65,14 +62,14 @@
               custom-class="cancel-btn margin"
               :loading="loading"
             >
-              إستعادة
+              {{ $t('BUTTONS.RECOVERY') }}
             </Button>
             <Button
               @click="handleSearch"
               :loading="loading"
               custom-class="submit-btn"
             >
-              بحث
+              {{ $t('BUTTONS.SEARCH') }}
             </Button>
           </div>
         </b-row>
@@ -80,7 +77,7 @@
     </div>
     <!------------------ nd search box --------------->
     <ListItems
-      :header-name="'قائمة شخصيات الشراء'"
+      :header-name="$t('jeelStoreCharacter.jeelStoreCharacterList')"
       :fieldsList="fieldsList"
       :table-items="charactersList"
       :v-search-model="groupSearchWord"
@@ -102,13 +99,13 @@
           v-if="user.permissions.includes(`add-characters`)"
         >
           <img src="../../src/assets/images/icons/plus.svg" />
-          <span>إضافة شخصية جديدة </span>
+          <span>{{$t('jeelStoreCharacter.add')}} </span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف الشخصية'"
-      :content-message-question="'هل أنت متأكد من حذف الشخصية؟'"
+      :content-message="$t('jeelStoreCharacter.delete')"
+      :content-message-question="$t('jeelStoreCharacter.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -154,32 +151,6 @@ export default {
       groupSearchWord: "",
       totalNumber: 0,
       charactersList: [],
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "name",
-          label: this.$i18n.t("TABLE_FIELDS.character_name"),
-        },
-        {
-          key: "level",
-          label: this.$i18n.t("TABLE_FIELDS.term"),
-        },
-        {
-          key: "country",
-          label: this.$i18n.t("TABLE_FIELDS.countryName"),
-        },
-        {
-          key: "gems",
-          label: this.$i18n.t("TABLE_FIELDS.gems_num"),
-        },
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
       itemId: 0,
     };
   },
@@ -255,6 +226,34 @@ export default {
 
   },
   computed: {
+    fieldsList(){
+      return [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "name",
+          label: this.$i18n.t("TABLE_FIELDS.character_name"),
+        },
+        {
+          key: "level",
+          label: this.$i18n.t("TABLE_FIELDS.term"),
+        },
+        {
+          key: "country",
+          label: this.$i18n.t("TABLE_FIELDS.countryName"),
+        },
+        {
+          key: "gems",
+          label: this.$i18n.t("TABLE_FIELDS.gems_num"),
+        },
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ]
+    },
     ...mapGetters(["user"]),
   },
   watch: {

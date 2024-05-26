@@ -107,8 +107,8 @@
               <b-col lg="6">
                 <label class="required-flag">{{ $t('power_up_box.powerType') }}</label>
                 <b-row>
-                    <CheckboxField value="rememberMe" v-model="jeelXpStatus" :name="'نقاط'"></CheckboxField>
-                    <CheckboxField value="rememberMe" v-model="jeelCoinsStatus" :name="'عملات جيل'"></CheckboxField>
+                    <CheckboxField value="rememberMe" v-model="jeelXpStatus" :name="$i18n.locale === 'ar'? 'نقاط' : 'points'"></CheckboxField>
+                    <CheckboxField value="rememberMe" v-model="jeelCoinsStatus" :name="$i18n.locale === 'ar'? 'عملات جيل' : 'jeel Coins'"></CheckboxField>
                 </b-row>
               </b-col>
               <b-col lg="12"></b-col>
@@ -119,9 +119,9 @@
                     <div class="hold-field">
                       <TextField
                           v-model="createPowerUpBox.jeel_xp"
-                          :label="'عدد النقاط'"
-                          :name="' عدد النقاط'"
-                          placeholder="أدخل عدد النقاط"
+                          :label="$t('power_up_box.numberOfPoints')"
+                          :name="$t('power_up_box.numberOfPoints')"
+                          :placeholder="$t('power_up_box.enterNumberOfPoints')"
                           type="number"
                           min="0"
                           :rules="'required|numeric|min_value:0'"
@@ -132,9 +132,9 @@
                     <div class="hold-field">
                       <TextField
                           v-model="createPowerUpBox.jeel_coins"
-                          :label="'عدد عملات جيل'"
-                          :name="'عدد عملات جيل'"
-                          placeholder=" أدخل عدد عملات جيل"
+                          :label="$t('power_up_box.numberOfGeelCoins')"
+                          :name="$t('power_up_box.numberOfGeelCoins')"
+                          :placeholder="$t('power_up_box.EnterNumberOfGeelCoins')"
                           min="0"
                           :rules="'required|numeric|min_value:0'"
                       ></TextField>
@@ -142,9 +142,6 @@
                   </b-col>
                 </b-row>
               </b-col>
-
-
-
               <b-col lg="12">
                 <b-row>
                   <div class="hold-btns-form">

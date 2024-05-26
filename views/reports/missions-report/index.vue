@@ -55,7 +55,9 @@
                   <b-dropdown-item>
                     <export-excel
                       ref="exportExcel"
-                      :fields="missionsReportFields"
+                      :name="pdfName"
+                      :title="$t('REPORTS.missionsHeading')"
+                      :fields="$i18n.locale === 'ar'? missionsReportFieldsAr : missionsReportFields"
                       :fetch="getAllMissionsReports">
                       <img src="@/assets/images/icons/xls.png">{{ $t('REPORTS.exportExcel') }}
                     </export-excel>
@@ -303,44 +305,6 @@ export default {
       loading: false,
       loadingChart: false,
       activeTap: 1,
-      missionReportListHeaders: [
-        {
-          key: "studyYear.name",
-          label: this.$i18n.t("TABLE_FIELDS.studyYear"),
-        },
-        {
-          key: "country.name",
-          label: this.$i18n.t("TABLE_FIELDS.country"),
-        },
-        {
-          key: "schoolGroup.name",
-          label: this.$i18n.t("TABLE_FIELDS.school_group"),
-        },
-        {
-          key: "school.name",
-          label: this.$i18n.t("TABLE_FIELDS.school"),
-        },
-        {
-          key: "levels",
-          label: this.$i18n.t("TABLE_FIELDS.jeel_library_level"),
-        },
-        {
-          key: "terms",
-          label: this.$i18n.t("MISSIONS.terms"),
-        },
-        {
-          key: "learning_paths",
-          label: this.$i18n.t("TABLE_FIELDS.learning_paths"),
-        },
-        {
-          key: "supervisors",
-          label: this.$i18n.t("TABLE_FIELDS.supervisor"),
-        },
-        {
-          key: "missions_count",
-          label: this.$i18n.t("TABLE_FIELDS.missions_count"),
-        },
-      ],
       missionsReportSearch: [
         {
           key: "study_year_id",
@@ -348,7 +312,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.studyYear"),
+          label: "العام الدراسي",
+          labelEn: "study year",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -360,7 +325,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.countryName"),
+          label: "الدولة",
+          labelEn: "country",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -372,7 +338,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.schoolGroups"),
+          label: "مجموعات الدراسية",
+          labelEn: "school Groups",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -384,7 +351,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.schools"),
+          label: "المدارس",
+          labelEn: "schools",
           options: [],
           deselectFromDropdown: true,
           disabled: true,
@@ -397,7 +365,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("REPORTS.levels"),
+          label: "السنة الدراسية",
+          labelEn: "levels",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -409,7 +378,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("MISSIONS.terms"),
+          label: "الترم الدراسي",
+          labelEn: "terms",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -438,53 +408,81 @@ export default {
           nameEn: "Export to pdf",
         },
       ],
-      subMissionsReportList: [
-        {
-          key: "studyYear.name",
-          label: this.$i18n.t("TABLE_FIELDS.studyYear"),
-        },
-        {
-          key: "country.name",
-          label: this.$i18n.t("TABLE_FIELDS.country"),
-        },
-        {
-          key: "schoolGroup.name",
-          label: this.$i18n.t("TABLE_FIELDS.school_group"),
-        },
-        {
-          key: "school.name",
-          label: this.$i18n.t("TABLE_FIELDS.school"),
-        },
-        {
-          key: "levels",
-          label: this.$i18n.t("TABLE_FIELDS.jeel_library_level"),
-        },
-        {
-          key: "terms",
-          label: this.$i18n.t("MISSIONS.terms"),
-        },
-        {
-          key: "learning_paths",
-          label: this.$i18n.t("TABLE_FIELDS.learning_paths"),
-        },
-        {
-          key: "supervisors",
-          label: this.$i18n.t("TABLE_FIELDS.supervisor"),
-        },
-        {
-          key: "missions_count",
-          label: this.$i18n.t("TABLE_FIELDS.missions_count"),
-        },
-      ],
       missionsReportList: [],
       missionsSearchFields: [],
-      missionsReportFields: {
+      totalNumber: 0,
+      searchWithPagination: {},
+    }
+  },
+  watch: {
+    chartData: {
+      handler(newVal) {
+        return newVal
+      },
+      immediate: true,
+    },
+    chartOptions: {
+      handler(newVal) {
+        return newVal
+      },
+      immediate: true,
+    },
+    "$i18n.locale"(newVal) {
+      if (newVal) {
+        this.setData()
+      }
+    },
+  },
+  computed: {
+    missionsReportFieldsAr() {
+      return {
+        "الدولة": "country.name",
+        "المدرسة": "school.name",
+        "مجموعة المدارس": "schoolGroup.name",
+        "العام الدراسي": "studyYear.name",
+        "الصفوف الدراسية": {
+          field: "levels",
+          callback: (value) => {
+            let levelNames = []
+            levelNames.push(...value)
+            levelNames = levelNames.map((item) => {
+              return item.name
+            })
+            return [...levelNames]
+          }
+        },
+        "الترم الدراسي": {
+          field: "terms",
+          callback: (value) => {
+            let termsNames = []
+            termsNames.push(...value)
+            termsNames = termsNames.map((item) => {
+              return item.name
+            })
+            return [...termsNames]
+          }
+        },
+        "المسارات التعليمية": {
+          field: "learning_paths",
+          callback: (value) => {
+            let learning_pathsNames = []
+            learning_pathsNames.push(...value)
+            learning_pathsNames = learning_pathsNames.map((item) => {
+              return item.name
+            })
+            return [...learning_pathsNames]
+          }
+        },
+        "عدد المهام": "missions_count",
+      }
+    },
+    missionsReportFields() {
+      return {
         "country": "country.name",
         "school": "school.name",
         "school group": "schoolGroup.name",
         "study year": "studyYear.name",
-        "levels": {
-          field: "levels",
+        "levels": {field: "levels",
           callback: (value) => {
             let levelNames = []
             levelNames.push(...value)
@@ -517,31 +515,88 @@ export default {
           }
         },
         "missions count": "missions_count",
-      },
-      totalNumber: 0,
-      searchWithPagination: {},
-    }
-  },
-  watch: {
-    chartData: {
-      handler(newVal) {
-        return newVal
-      },
-      immediate: true,
-    },
-    chartOptions: {
-      handler(newVal) {
-        return newVal
-      },
-      immediate: true,
-    },
-    "$i18n.locale"(newVal) {
-      if (newVal) {
-        this.setData()
       }
     },
-  },
-  computed: {
+    missionReportListHeaders() {
+      return [
+        {
+          key: "studyYear.name",
+          label: this.$i18n.t("TABLE_FIELDS.studyYear"),
+        },
+        {
+          key: "country.name",
+          label: this.$i18n.t("TABLE_FIELDS.country"),
+        },
+        {
+          key: "schoolGroup.name",
+          label: this.$i18n.t("TABLE_FIELDS.school_group"),
+        },
+        {
+          key: "school.name",
+          label: this.$i18n.t("TABLE_FIELDS.school"),
+        },
+        {
+          key: "levels",
+          label: this.$i18n.t("TABLE_FIELDS.jeel_library_level"),
+        },
+        {
+          key: "terms",
+          label: this.$i18n.t("MISSIONS.terms"),
+        },
+        {
+          key: "learning_paths",
+          label: this.$i18n.t("TABLE_FIELDS.learning_paths"),
+        },
+        {
+          key: "supervisors",
+          label: this.$i18n.t("TABLE_FIELDS.supervisor"),
+        },
+        {
+          key: "missions_count",
+          label: this.$i18n.t("TABLE_FIELDS.missions_count"),
+        },
+      ]
+    },
+    subMissionsReportList() {
+      return [
+        {
+          key: "studyYear.name",
+          label: this.$i18n.t("TABLE_FIELDS.studyYear"),
+        },
+        {
+          key: "country.name",
+          label: this.$i18n.t("TABLE_FIELDS.country"),
+        },
+        {
+          key: "schoolGroup.name",
+          label: this.$i18n.t("TABLE_FIELDS.school_group"),
+        },
+        {
+          key: "school.name",
+          label: this.$i18n.t("TABLE_FIELDS.school"),
+        },
+        {
+          key: "levels",
+          label: this.$i18n.t("TABLE_FIELDS.jeel_library_level"),
+        },
+        {
+          key: "terms",
+          label: this.$i18n.t("MISSIONS.terms"),
+        },
+        {
+          key: "learning_paths",
+          label: this.$i18n.t("TABLE_FIELDS.learning_paths"),
+        },
+        {
+          key: "supervisors",
+          label: this.$i18n.t("TABLE_FIELDS.supervisor"),
+        },
+        {
+          key: "missions_count",
+          label: this.$i18n.t("TABLE_FIELDS.missions_count"),
+        },
+      ]
+    },
     pdfName() {
       return `${this.$t('REPORTS.missionsHeading')} - ${new Date().toLocaleString()}`
     },

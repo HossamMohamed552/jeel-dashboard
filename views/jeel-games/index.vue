@@ -2,7 +2,7 @@
   <section class="container-fluid custom-container">
     <!------------------ st custom table section --------------->
     <ListItems
-      :header-name="'مجموعة جيمز'"
+      :header-name="$t('jeelStore.jeelStore')"
       :fieldsList="fieldsList"
       :table-items="jeelGamesList"
       :v-search-model="groupSearchWord"
@@ -24,15 +24,15 @@
           v-if="user.permissions.includes(`add-gems`)"
         >
           <img src="../../src/assets/images/icons/plus.svg" />
-          <span>إضافة مجموعة </span>
+          <span>{{$t('jeelStore.add')}}</span>
         </Button>
       </template>
     </ListItems>
     <!------------------ nd custom table section --------------->
     <!------------------ st delete model --------------->
     <Modal
-      :content-message="'حذف مجموعة '"
-      :content-message-question="'هل أنت متأكد من حذف مجموعة؟'"
+      :content-message="$t('jeelStore.delete')"
+      :content-message-question="$t('jeelStore.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -60,33 +60,6 @@ export default {
       groupSearchWord: "",
       totalNumber: 0,
       jeelGamesList: [],
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "name",
-          label: "اسم المجموعة",
-        },
-        {
-          key: "level",
-          label: "الصف الدراسي",
-        },
-        {
-          key: "gems",
-          label: "عدد الجيمز",
-        },
-        {
-          key: "jeel_coins",
-          label: "عدد العملات",
-        },
-
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
       itemId: 0,
     };
   },
@@ -151,6 +124,34 @@ export default {
 
   },
   computed: {
+    fieldsList(){
+      return[
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "name",
+          label: this.$i18n.t("jeelStore.name"),
+        },
+        {
+          key: "level",
+          label: this.$i18n.t("jeelStore.level"),
+        },
+        {
+          key: "gems",
+          label: this.$i18n.t("jeelStore.gems"),
+        },
+        {
+          key: "jeel_coins",
+          label: this.$i18n.t("jeelStore.jeel_coins"),
+        },
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {

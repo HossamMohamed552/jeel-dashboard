@@ -4,28 +4,28 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">تفاصيل جائزة تفاعل</h2>
+            <h2 class="heading">{{ $t('rewardingActions.rewardingActionDetail') }}</h2>
           </b-col>
         </b-row>
         <b-row>
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="اسم جائزة التفاعل"
+              :title="$t('rewardingActions.action_name')"
               :subtitle="singleReward.action_name"
             />
           </b-col>
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="عدد النقاط"
+              :title="$t('rewardingActions.jeel_xp')"
               :subtitle="singleReward.jeel_xp"
             />
           </b-col>
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="عدد عملات جيل"
+              :title="$t('rewardingActions.jeel_coins')"
               :subtitle="singleReward.jeel_coins"
             />
           </b-col>

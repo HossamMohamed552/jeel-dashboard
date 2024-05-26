@@ -13,9 +13,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="points.name"
-                    label="اسم مستوى السؤال"
-                    name="اسم مستوى السؤال"
-                    placeholder="أدخل اسم مستوى السؤال"
+                    :label="$t('questionDifficulty.name')"
+                    :name="$t('questionDifficulty.name')"
+                    :placeholder="$t('questionDifficulty.enterName')"
                     :rules="'required'"
                   ></TextField>
                 </div>
@@ -24,9 +24,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="points.grade_points"
-                    label="عدد النقاط"
-                    name="عدد النقاط"
-                    placeholder="أدخل عدد النقاط"
+                    :label="$t('questionDifficulty.grade_points')"
+                    :name="$t('questionDifficulty.grade_points')"
+                    :placeholder="$t('questionDifficulty.entergGrade_points')"
                     type="number"
                     min="0"
                     :rules="'required'"

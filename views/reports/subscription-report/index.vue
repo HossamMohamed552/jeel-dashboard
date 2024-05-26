@@ -55,9 +55,10 @@
                   <b-dropdown-item>
                     <export-excel
                       ref="exportExcel"
-                      :fields="subscriptionReportFields"
-                      :fetch="getAllSubscriptionReports"
-                      :data="subscriptionReportList">
+                      :name="pdfName"
+                      :title="$t('REPORTS.subscriptionHeading')"
+                      :fields="$i18n.locale === 'ar'?  subscriptionReportFieldsAr: subscriptionReportFields "
+                      :fetch="getAllSubscriptionReports">
                       <img src="@/assets/images/icons/xls.png">{{ $t('REPORTS.exportExcel') }}
                     </export-excel>
                   </b-dropdown-item>
@@ -188,57 +189,39 @@
               </b-row>
             </div>
             <div v-for="(subscription,index) in subscriptionReportList" :key="subscription.id"
-                 class="table-item" :class="index+1 % 9 === 9 ? 'html2pdf__page-break':''">
-              <div v-if="index+1 % 10 === 10">
+                 class="table-item" :class="index+1 % 7 === 7 ? 'html2pdf__page-break':''">
+              <div v-if="index+1 % 8 === 8">
                 <div class="filter">
                   <b-row>
                     <b-col lg="12" class="d-flex justify-content-center align-items-center my-2">
                       <h5>{{ $t('REPORTS.subscriptionHeading') }}</h5>
                     </b-col>
                     <b-col lg="3">
-                      <span>{{
-                          subscriptionReportListHeaders[0].label
-                        }}: {{ valuesOfAdvancedSearch.study_year_id }}</span>
+                      <span>{{subscriptionReportListHeaders[0].label}}: {{ valuesOfAdvancedSearch.study_year_id }}</span>
                     </b-col>
                     <b-col lg="3">
-                      <span>{{
-                          subscriptionReportListHeaders[1].label
-                        }}: {{ valuesOfAdvancedSearch.country_id }}</span>
+                      <span>{{subscriptionReportListHeaders[1].label}}: {{ valuesOfAdvancedSearch.country_id }}</span>
                     </b-col>
                     <b-col lg="3">
-                      <span>{{
-                          subscriptionReportListHeaders[2].label
-                        }}: {{ valuesOfAdvancedSearch.school_group_id }}</span>
+                      <span>{{subscriptionReportListHeaders[2].label}}: {{ valuesOfAdvancedSearch.school_group_id }}</span>
                     </b-col>
                     <b-col lg="3">
-                      <span>{{
-                          subscriptionReportListHeaders[3].label
-                        }}: {{ valuesOfAdvancedSearch.school_id }}</span>
+                      <span>{{subscriptionReportListHeaders[3].label}}: {{ valuesOfAdvancedSearch.school_id }}</span>
                     </b-col>
                     <b-col lg="3">
-                      <span>{{
-                          subscriptionReportListHeaders[4].label
-                        }} : {{ valuesOfAdvancedSearch.package_id }}</span>
+                      <span>{{subscriptionReportListHeaders[4].label}} : {{ valuesOfAdvancedSearch.package_id }}</span>
                     </b-col>
                     <b-col lg="3">
-                      <span>{{
-                          subscriptionReportListHeaders[5].label
-                        }} : {{ valuesOfAdvancedSearch.level_id }}</span>
+                      <span>{{subscriptionReportListHeaders[5].label}} : {{ valuesOfAdvancedSearch.level_id }}</span>
                     </b-col>
                     <b-col lg="3">
-                      <span>{{
-                          subscriptionReportListHeaders[6].label
-                        }} : {{ valuesOfAdvancedSearch.term_id }}</span>
+                      <span>{{subscriptionReportListHeaders[6].label}} : {{ valuesOfAdvancedSearch.term_id }}</span>
                     </b-col>
                     <b-col lg="3">
-                      <span>{{
-                          subscriptionReportListHeaders[7].label
-                        }} : {{ valuesOfAdvancedSearch.start_date }}</span>
+                      <span>{{subscriptionReportListHeaders[7].label}} : {{ valuesOfAdvancedSearch.start_date }}</span>
                     </b-col>
                     <b-col lg="3">
-                      <span>{{
-                          subscriptionReportListHeaders[8].label
-                        }} : {{ valuesOfAdvancedSearch.end_date }}</span>
+                      <span>{{subscriptionReportListHeaders[8].label}} : {{ valuesOfAdvancedSearch.end_date }}</span>
                     </b-col>
                   </b-row>
                 </div>
@@ -281,8 +264,7 @@
                 <b-col lg="1"><span>{{ subscription.school.name }}</span></b-col>
                 <b-col lg="1"><span>{{ subscription.package.name }}</span></b-col>
                 <b-col><span v-for="level in subscription.levels">{{ level.name }}</span></b-col>
-                <b-col class="terms"><span v-for="term in subscription.terms">{{ term.name }}</span>
-                </b-col>
+                <b-col class="terms"><span v-for="term in subscription.terms">{{ term.name }}</span></b-col>
                 <b-col><span>{{ subscription.start_subscription }}</span></b-col>
                 <b-col><span>{{ subscription.end_subscription }}</span></b-col>
               </b-row>
@@ -333,6 +315,39 @@ export default {
       loading: false,
       activeTap: 1,
       subscriptionsExport: [],
+      subscriptionReportFieldsAr: {
+        "الدولة": "country.name",
+        "الباقة": "package.name",
+        "المدرسة": "school.name",
+        "المجموعةالدراسية": "schoolGroup.name",
+        "العام الدراسي": "studyYear.name",
+        "نسبة خصم للباقة": "package_discount",
+        "سعر الباقة بعد الخصم": "price_after_discount",
+        "الصفوف الدراسية": {
+          field: "levels",
+          callback: (value) => {
+            let levelNames = []
+            levelNames.push(...value)
+            levelNames = levelNames.map((item) => {
+              return item.name
+            })
+            return [...levelNames]
+          }
+        },
+        "الترم الدراسي": {
+          field: "terms",
+          callback: (value) => {
+            let termsNames = []
+            termsNames.push(...value)
+            termsNames = termsNames.map((item) => {
+              return item.name
+            })
+            return [...termsNames]
+          }
+        },
+        "بداية التعاقد": "start_subscription",
+        "نهاية التعاقد": "end_subscription",
+      },
       subscriptionReportFields: {
         "country": "country.name",
         "package": "package.name",
@@ -373,7 +388,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.studyYear"),
+          label: "العام الدراسي",
+          labelEn: "study year",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -385,7 +401,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.countryName"),
+          label: "الدولة",
+          labelEn: "country",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -397,7 +414,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.schoolGroups"),
+          label: "مجموعات الدراسية",
+          labelEn: "school Groups",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -409,7 +427,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.schools"),
+          label: "المدارس",
+          labelEn: "schools",
           options: [],
           deselectFromDropdown: true,
           disabled: true,
@@ -422,7 +441,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.package"),
+          label: "الدولة",
+          labelEn:"package",
           options: [],
           deselectFromDropdown: true,
           disabled: true,
@@ -435,7 +455,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("REPORTS.levels"),
+          label: "السنة الدراسية",
+          labelEn:"levels",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -447,7 +468,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("MISSIONS.terms"),
+          label: "الترم الدراسي",
+          labelEn:"terms",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -459,7 +481,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("REPORTS.status"),
+          label: "الحالة",
+          labelEn:"status",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -469,7 +492,8 @@ export default {
           key: "start_date",
           col: "3",
           type: "date",
-          label: this.$t("TABLE_FIELDS.start_date_subscription"),
+          label: "بداية الإشتراك",
+          labelEn:"start date subscription",
           value: "",
           rules: "",
         },
@@ -477,7 +501,8 @@ export default {
           key: "end_date",
           col: "3",
           type: "date",
-          label: this.$t("TABLE_FIELDS.end_date_subscription"),
+          label: "نهاية الإشتراك",
+          labelEn:"end date subscription",
           value: "",
           rules: "",
         },
@@ -500,7 +525,43 @@ export default {
       subscriptionReportList: [],
       totalNumber: null,
       searchWithPagination: {},
-      subscriptionReportListHeaders: [
+      loadingChart: false,
+      valuesOfAdvancedSearch: {
+        study_year_id: "",
+        country_id: "",
+        school_group_id: "",
+        school_id: "",
+        package_id: "",
+        level_id: "",
+        term_id: "",
+        status: "",
+        start_date: "",
+        end_date: ""
+      }
+    }
+  },
+  watch: {
+    chartData: {
+      handler(newVal) {
+        return newVal
+      },
+      immediate: true,
+    },
+    chartOptions: {
+      handler(newVal) {
+        return newVal
+      },
+      immediate: true,
+    },
+    "$i18n.locale"(newVal) {
+      if (newVal) {
+        this.setData()
+      }
+    }
+  },
+  computed: {
+    subscriptionReportListHeaders() {
+      return [
         {
           key: "studyYear.name",
           label: this.$i18n.t("TABLE_FIELDS.studyYear"),
@@ -537,42 +598,8 @@ export default {
           key: "end_subscription",
           label: this.$i18n.t("TABLE_FIELDS.end_subscription"),
         },
-      ],
-      loadingChart: false,
-      valuesOfAdvancedSearch: {
-        study_year_id: "",
-        country_id: "",
-        school_group_id: "",
-        school_id: "",
-        package_id: "",
-        level_id: "",
-        term_id: "",
-        status: "",
-        start_date: "",
-        end_date: ""
-      }
-    }
-  },
-  watch: {
-    chartData: {
-      handler(newVal) {
-        return newVal
-      },
-      immediate: true,
+      ]
     },
-    chartOptions: {
-      handler(newVal) {
-        return newVal
-      },
-      immediate: true,
-    },
-    "$i18n.locale"(newVal) {
-      if (newVal) {
-        this.setData()
-      }
-    }
-  },
-  computed: {
     chartData() {
       return {
         datasets: [

@@ -715,7 +715,7 @@ let routesJeelAdminReports = [
     path: "/dashboard/reports/general-report",
     altImage: "general-report",
     titleImage: "general-report",
-    icon: require("@/assets/images/icons/steps.svg"),
+    icon: require("@/assets/images/icons/general.svg"),
     permission: "view-learningpath",
   },
   {
@@ -724,7 +724,7 @@ let routesJeelAdminReports = [
     path: "/dashboard/reports/subscriptions",
     altImage: "subscriptions",
     titleImage: "subscriptions",
-    icon: require("@/assets/images/icons/steps.svg"),
+    icon: require("@/assets/images/icons/subscription.svg"),
     permission: "view-learningpath",
   },
   {
@@ -733,7 +733,7 @@ let routesJeelAdminReports = [
     path: "/dashboard/reports/missions",
     altImage: "missions",
     titleImage: "missions",
-    icon: require("@/assets/images/icons/steps.svg"),
+    icon: require("@/assets/images/icons/mission-List.svg"),
     permission: "view-learningpath",
   },
 ]

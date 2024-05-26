@@ -116,33 +116,6 @@ export default {
       notificationsList: [],
       videosList: [],
       exercisesList: [],
-<<<<<<< HEAD
-=======
-      videosFieldsList: [
-        { key: "vid", label: "التسلسل" },
-        { key: "title", label: "عنوان الفيديو" },
-        { key: "video", label: "عرض الفيديو" },
-      ],
-      exercisesFieldsList: [
-        { key: "vid", label: "التسلسل" },
-        { key: "name", label: "عنوان التمرين" },
-        { key: "actions", label: "الاجراء" },
-      ],
-      prizeFieldsList: [
-        { key: "vid", label: "التسلسل" },
-        { key: "main_percentage", label: "من نسبة" },
-        { key: "max_percentage", label: "إلى نسبة" },
-        { key: "type_id_name", label: "نوع الجائزة" },
-        { key: "prizeable_id_name", label: "الجائزة" },
-      ],
-      NotifacationFieldsList: [
-        { key: "vid", label: "التسلسل" },
-        { key: "name", label: "عنوان اللإشعار" },
-        { key: "start_date", label: "تاريخ ووقت الإشعار" },
-        { key: "original_url", label: "صوت الإشعار" },
-        { key: "description", label: "نص الإشعار" },
-      ],
->>>>>>> db64b3a22bea22d883a65fbcc71a7385466529b0
       submittedForm: {
         learningpaths: {
           videos: [],

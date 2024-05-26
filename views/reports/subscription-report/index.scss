@@ -57,6 +57,10 @@
   img {
     width: 1.5rem;
     margin-left: 2rem;
+    &:lang(en){
+      margin-left: 0;
+      margin-right: 2rem;
+    }
   }
   select {
     width: 100%;
@@ -205,6 +209,9 @@
     padding: .2rem;
     font-size: .8rem;
     text-align: right;
+    &:lang(en){
+      text-align: left;
+    }
   }
 }
 .chart{

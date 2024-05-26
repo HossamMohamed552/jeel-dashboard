@@ -12,18 +12,18 @@
                     v-model="createCharacter.name"
                     :label="$t('CHARACTER.name')"
                     :name="$t('CHARACTER.name')"
-                    placeholder="أدخل اسم الشخصية"
+                    :placeholder="$t('CHARACTER.name')"
                     :rules="'required|min:3'"
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="4" class="mt-3">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field" v-if="countries">
                   <SelectSearch
                     v-model="createCharacter.country_id"
                     :label="$t('CHARACTER.country')"
                     :name="$t('CHARACTER.country')"
-                    placeholder="اختر الدولة"
+                    :placeholder="$t('CHARACTER.selectCountry')"
                     :options="countries"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -31,13 +31,13 @@
                   ></SelectSearch>
                 </div>
               </b-col>
-              <b-col lg="4" class="mt-3">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field" v-if="characters">
                   <SelectSearch
                     v-model="characterSelected"
                     :label="$t('CHARACTER.type')"
                     :name="$t('CHARACTER.type')"
-                    placeholder="اختر نوع الشخصية"
+                    :placeholder="$t('CHARACTER.selectType')"
                     :options="characters"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.key"
@@ -46,13 +46,13 @@
                 </div>
               </b-col>
 
-              <b-col lg="4" class="mt-3">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <SelectSearch
                     v-model="createCharacter.level_id"
-                    :label="'الصف الدراسي'"
-                    :name="'اختر الصف الدراسي'"
-                    placeholder="اختر الصف الدراسي"
+                    :label="$t('jeelStoreCharacter.level')"
+                    :name="$t('jeelStoreCharacter.level')"
+                    :placeholder="$t('jeelStoreCharacter.selectCountry')"
                     :options="levels"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -65,9 +65,9 @@
                   <TextField
                     type="number"
                     v-model="createCharacter.gems"
-                    :label="'عدد الجيمز'"
-                    :name="'عدد الجيمز'"
-                    placeholder="أدخل عدد الجيمز"
+                    :label="$t('jeelStoreCharacter.numberOfGames')"
+                    :name="$t('jeelStoreCharacter.numberOfGames')"
+                    :placeholder="$t('jeelStoreCharacter.EnterNumberOfGames')"
                     :rules="'required'"
                   ></TextField>
                 </div>

@@ -11,14 +11,14 @@
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="اسم مستوى السؤال"
+              :title="$t('questionDifficulty.name')"
               :subtitle="singleQuestionDifficulty.name"
             />
           </b-col>
           <b-col lg="4" class="mb-5">
             <ShowItem
               class="divider-show"
-              title="عدد النقاط"
+              :title="$t('questionDifficulty.grade_points')"
               :subtitle="singleQuestionDifficulty.grade_points"
             />
           </b-col>
