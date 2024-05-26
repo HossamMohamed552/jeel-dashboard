@@ -1025,6 +1025,9 @@ export default {
     // },
     sortBy(key) {
       this.formValues.order_by = key;
+      if (this.formValues.order_by === 'vid'){
+        this.formValues.order_by = 'id'
+      }
       this.formValues.order = this.switchSort;
       this.$emit("refetch", this.formValues);
       if (this.formValues.order === "DESC") {

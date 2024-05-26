@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'نوع الشهادة'"
+      :header-name="$t('degreeType.degreeType')"
       :number-of-item="totalNumber"
       :tableItems="degreeTypesList"
       :fieldsList="fieldsList"
@@ -21,20 +21,20 @@
           @click="goToAddDegreeType"
           v-if="user.permissions.includes(`add-certificates`)"
         >
-          <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة نوع شهادة </span>
+          <img src="@/assets/images/icons/plus.svg"/>
+          <span>{{ $t('degreeType.add') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف نوع الشهادة'"
-      :content-message-question="'هل انت متأكد من حذف نوع الشهادة '"
+      :content-message="$t('degreeType.delete')"
+      :content-message-question="$t('degreeType.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+    <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>
@@ -48,10 +48,10 @@ import {
   deleteSchoolDegreeTypeRequest,
 } from "@/api/school-degree-type";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
-  components: { Modal, ListItems, Button },
+  components: {Modal, ListItems, Button},
   data() {
     return {
       loading: false,
@@ -60,11 +60,6 @@ export default {
       groupSearchWord: "",
       degreeTypesList: [],
       totalNumber: null,
-      fieldsList: [
-        { key: "vid", label: "التسلسل" },
-        { key: "name", label: "نوع الشهادة" },
-        { key: "actions", label: "الإجراء" },
-      ],
     };
   },
   methods: {
@@ -107,6 +102,13 @@ export default {
     },
   },
   computed: {
+    fieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "name", label: this.$i18n.t('degreeType.TypeOfCertificate')},
+        {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {

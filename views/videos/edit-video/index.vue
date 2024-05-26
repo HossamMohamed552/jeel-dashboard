@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal :content-message="isSuccess ? 'تم التعديل بنجاح' : 'فشل التعديل'"
+    <Modal :content-message="isSuccess ? $t('CONTROLS.edit_successfully') : 'فشل التعديل'"
            :showModal="showModal"
            :is-success="isSuccess"
            :is-failed="isFailed"

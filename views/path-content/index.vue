@@ -27,7 +27,7 @@ export default {
       showModal: false,
       groupSearchWord: "",
       fieldsList: [
-        {key: "vid", label: "التسلسل"},
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
         {key: "name", label: "اسم المرحلة"},
         {key: "allowEdit", label: "إمكانيه التعديل"},
         {key: "edit", label: "تعديل"},

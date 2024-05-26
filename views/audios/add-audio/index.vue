@@ -1,7 +1,7 @@
 <template>
   <div class="add-group">
     <Modal
-      :content-message="isSuccess ? 'تمت الإضافة بنجاح' : 'فشل الاضافه'"
+      :content-message="isSuccess ? $t('CONTROLS.add_successfully') : $t('CONTROLS.add_failed')"
       :showModal="showModal"
       :is-success="isSuccess"
       :is-failed="isFailed"

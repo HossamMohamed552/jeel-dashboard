@@ -156,7 +156,7 @@
       </template>
     </GeneralModal>
     <Modal
-      :content-message="'تمت الإضافة بنجاح'"
+      :content-message="$t('CONTROLS.add_successfully')"
       :showModal="showSuccessModal"
       :is-success="true"
     />

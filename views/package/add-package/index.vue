@@ -1,6 +1,6 @@
 <template>
   <div class="add-country">
-    <Modal :content-message="'تمت الإضافة بنجاح'"
+    <Modal :content-message="$t('CONTROLS.add_successfully')"
            :showModal="showModal"
            :is-success="true"/>
     <AddEditPackage
@@ -27,6 +27,9 @@ export default {
   methods:{
     handleAddPackage($event) {
       this.loading = true
+      $event.roles.forEach((item)=>{
+        delete item.nameEn
+      })
       this.ApiService(postPackagesRequest($event)).then((response) => {
         this.loading = false
         this.showModal = true

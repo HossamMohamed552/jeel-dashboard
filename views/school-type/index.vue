@@ -24,7 +24,7 @@
     </ListItems>
     <Modal
       :content-message="'حذف نوع المدرسة'"
-      :content-message-question="'هل انت متأكد من حذف نوع المدرسة'"
+      :content-message-question="'هل أنت متأكد من حذف نوع المدرسة؟'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"

@@ -27,7 +27,7 @@
                         v-model="student_id"
                         :label="$t('schoolAdmin.studentName')"
                         :name="$t('schoolAdmin.studentName')"
-                        placeholder="ادخل اسم الطالب"
+                        placeholder="أدخل اسم الطالب"
                         :options="students"
                         :reduce="(option) => option.id"
                         :get-option-label="(option) => option.name"

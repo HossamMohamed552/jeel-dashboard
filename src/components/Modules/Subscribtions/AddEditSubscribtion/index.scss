@@ -83,9 +83,7 @@
 
 
 .discount-percentage {
-
     position: relative;
-
     &::after {
       content: "%";
       position: absolute;
@@ -94,5 +92,10 @@
       color: #8C8C8C;
       font-size: 1.25rem;
     }
-  
+  &:lang(en){
+    &::after {
+      left: auto;
+      right: 5%;
+    }
+  }
 }

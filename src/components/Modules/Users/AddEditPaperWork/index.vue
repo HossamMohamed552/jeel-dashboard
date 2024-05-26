@@ -38,7 +38,7 @@
                 <div class="hold-field mt-4">
                   <UploadAttachment
                     :rules="'required'"
-                    :label="'ملف الصوت'"
+                    :label="$t('PAPER_WORK.AUDIO')"
                     v-if="!$route.params.id || createPaperWork.audioChangedRequest"
                     @setFileId="setAudioId"
                     :type-of-attachment="'audio'"
@@ -329,8 +329,8 @@ export default {
       learningSkills: [],
       bloom: [],
       paperWorkTypes: [
-        {value: "single", text: "اوراق عمل فردية"},
-        {value: "participatory", text: "اوراق عمل تشاركية"},
+        {value: "single", text: "أوراق عمل فردية"},
+        {value: "participatory", text: "أوراق عمل تشاركية"},
       ],
       image: {
         fileImg: null,

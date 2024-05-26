@@ -11,7 +11,7 @@
               v-if="user.permissions.includes(`add-teacher-groups`)"
             >
               <img src="@/assets/images/icons/plus.svg"/>
-              <span>إضافة مجموعه</span>
+              <span>إضافة مجموعة</span>
             </Button>
           </b-col>
         </b-row>
@@ -88,7 +88,7 @@
     </div>
     <Modal
       :content-message="'حذف المجموعة الدراسية'"
-      :content-message-question="'هل انت متأكد من حذف المجموعة الدراسية'"
+      :content-message-question="'هل أنت متأكد من حذف المجموعة الدراسية؟'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"

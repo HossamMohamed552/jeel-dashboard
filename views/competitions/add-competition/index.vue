@@ -2,7 +2,7 @@
   <div class="add-mission">
     <!-- {{ collectData }} -->
     <!-- <pre>{{ user.school.id }}</pre> -->
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true" />
     <Stepper class="mt-5 mb-3" :steps="steps" :current-step="currentStep" />
     <AddEditTeacherCompetitionInfo
       v-if="currentStep === 0 && this.user.permissions.includes('add-teacher-competitions')"
@@ -16,7 +16,7 @@
       @nextStep="nextStep"
       @handleCancel="handleCancel"
     >
-      <Button @click="handleCancel" custom-class="cancel-btn margin"> إلغاء </Button>
+      <Button @click="handleCancel" custom-class="cancel-btn margin"> {{ $t('GLOBAL_CANCEL') }} </Button>
     </AddEditCompetitionInfo>
 
     <AddEditCompetitionQuestions
@@ -35,7 +35,7 @@
       @prevStep="prevStep"
       :currentStep="currentStep"
     >
-      <Button @click="handleCancel" custom-class="cancel-btn margin"> إلغاء </Button>
+      <Button @click="handleCancel" custom-class="cancel-btn margin"> {{ $t('GLOBAL_CANCEL') }} </Button>
     </AddEditPrizes>
     <AddEditNotification
       v-if="currentStep === 3"
@@ -44,7 +44,7 @@
       @prevStep="prevStep"
       :currentStep="currentStep"
     >
-      <Button @click="handleCancel" custom-class="cancel-btn margin"> إلغاء </Button>
+      <Button @click="handleCancel" custom-class="cancel-btn margin"> {{ $t('GLOBAL_CANCEL') }} </Button>
     </AddEditNotification>
     <PreviewData
       v-if="currentStep === 4"
@@ -53,7 +53,7 @@
       :stepForm="[...competitionInfoForm]"
       :questions_ids="questionsIds"
     >
-      <Button @click="handleCancel" custom-class="cancel-btn margin"> إلغاء </Button>
+      <Button @click="handleCancel" custom-class="cancel-btn margin"> {{ $t('GLOBAL_CANCEL') }} </Button>
     </PreviewData>
   </div>
 </template>
@@ -228,7 +228,7 @@ export default {
           value: "",
           type: "datetime",
           rules: "required",
-          placeholder: "الى",
+          placeholder: "إلى",
           format: "YYYY-MM-DD HH:mm",
         },
         {

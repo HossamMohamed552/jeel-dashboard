@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'التسجيلات الصوتية'" :number-of-item="totalNumber"
+    <ListItems :header-name="$t('AUDIOS.tasks')" :number-of-item="totalNumber"
                :tableItems="audiosList" :fields-list="fieldsList" :v-search-model="groupSearchWord"
                @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
@@ -16,17 +16,17 @@
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddAudios"
                 v-if="user.permissions.includes(`add-tasks`)">
           <img src="@/assets/images/icons/plus.svg">
-          <span> إضافة تسجيل جديد</span>
+          <span>{{$t('AUDIOS.ADD_NEW')}}</span>
         </Button>
       </template>
     </ListItems>
-    <Modal :content-message="'حذف التسجيل الصوتى'"
-           :content-message-question="'هل انت متأكد من حذف التسجبل الصوتى؟'"
+    <Modal :content-message="$t('AUDIOS.delete_task')"
+           :content-message-question="$t('AUDIOS.confirm_delete_tasks')"
            :showModal="showModal"
            @cancel="cancel($event)"
            :is-warning="true"
            @cancelWithConfirm="cancelWithConfirm($event)"/>
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+    <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>
@@ -42,6 +42,19 @@ import {mapGetters} from "vuex";
 export default {
   components: {Modal, ListItems, Button},
   computed: {
+    fieldsList(){
+      return  [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {key: "name", label: this.$i18n.t('AUDIOS.AUDIO_NAME')},
+        {key: "learningPath.name", label: this.$i18n.t('AUDIOS.LEARNING_PATH')},
+        {key: "lesson.name", label: this.$i18n.t('AUDIOS.LESSION_NAME')},
+        {key: "task_degree", label: this.$i18n.t('AUDIOS.DEGREE')},
+        {key: "actions", label: this.$i18n.t('actions')},
+      ]
+    },
     ...mapGetters(['user'])
   },
   data() {
@@ -53,17 +66,6 @@ export default {
       groupSearchWord: "",
       audiosList: [],
       totalNumber: 0,
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {key: "name", label: this.$i18n.t('AUDIOS.AUDIO_NAME')},
-        {key: "learningPath.name", label: this.$i18n.t('AUDIOS.LEARNING_PATH')},
-        {key: "lesson.name", label: this.$i18n.t('AUDIOS.LESSION_NAME')},
-        {key: "task_degree", label: this.$i18n.t('AUDIOS.DEGREE')},
-        {key: "actions", label: "الإجراء"},
-      ],
     }
   },
   methods: {

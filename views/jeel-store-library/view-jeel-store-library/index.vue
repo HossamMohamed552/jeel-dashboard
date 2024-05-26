@@ -6,14 +6,14 @@
           <b-col md="4" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'اسم المحتوي'"
+                :title="'اسم المحتوى'"
                 :subtitle="jeelStoreLibrary.file_name"
             />
           </b-col>
           <b-col md="4" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'الصف الدراسى'"
+                :title="'الصف الدراسي'"
                 :subtitle="jeelStoreLibrary?.level?.name"
             />
           </b-col>
@@ -85,7 +85,7 @@
           </b-col>
           <b-col lg="12" class="mb-2 mt-2" v-if="jeelStoreLibrary?.type?.key === 'file'">
             <PreviewMedia
-              :header="'ملف المحتوي'"
+              :header="'ملف المحتوى'"
               :media-name="jeelStoreLibrary.file_orginal_name"
               :file-size="jeelStoreLibrary.file_size"
               :image-url="jeelStoreLibrary.file"

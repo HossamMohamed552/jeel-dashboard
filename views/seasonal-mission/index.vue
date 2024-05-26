@@ -31,7 +31,7 @@
     <div class="collapse-search listing">
       <ListItems
         class="seasonal-mission-custom-list-item"
-        :header-name="'قائمة المهام الموسمية'"
+        :header-name="$t('seasonalMission.list')"
         :number-of-item="totalNumber"
         :tableItems="seasonalMission"
         :fieldsList="fieldsList"
@@ -53,14 +53,14 @@
             v-if="user.permissions.includes(`add-seasonal-missions`)"
           >
             <!--  -->
-            <img src="@/assets/images/icons/plus.svg" alt="seasonal" />
-            <span>إضافة مهمة موسمية</span>
+            <img src="@/assets/images/icons/plus.svg" alt="seasonal"/>
+            <span>{{$t('seasonalMission.add')}}</span>
           </Button>
         </template>
       </ListItems>
       <Modal
-        :content-message="'حذف المجموعة'"
-        :content-message-question="'هل انت متأكد من حذف المجموعة '"
+        :content-message="$t('seasonalMission.deleteSeasonalMission')"
+        :content-message-question="$t('seasonalMission.confirmDeleteSeasonalMission')"
         :showModal="showModal"
         @cancel="cancel($event)"
         :is-warning="true"
@@ -74,9 +74,9 @@
 import GenericForm from "@/components/Shared/GenericForm";
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { getSeasonalMissionRequest, deleteSeasonalMissionRequest } from "@/api/seasonal-mission.js";
+import {getSeasonalMissionRequest, deleteSeasonalMissionRequest} from "@/api/seasonal-mission.js";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 import _ from "lodash";
 import {
   getAllSeasonalMissionGroups,
@@ -85,7 +85,7 @@ import {
 } from "@/services/dropdownService";
 
 export default {
-  components: { Modal, ListItems, Button, GenericForm },
+  components: {Modal, ListItems, Button, GenericForm},
   data() {
     return {
       loading: false,
@@ -94,18 +94,11 @@ export default {
       groupSearchWord: "",
       seasonalMission: [],
       totalNumber: null,
-      fieldsList: [
-        { key: "vid", label: "التسلسل" },
-        { key: "logo", label: "اسم الموسم" },
-        { key: "name", label: "اسم المجموعة" },
-        { key: "level.name", label: "الصف الدراسي" },
-        { key: "start_date", label: "تاريخ البداية" },
-        { key: "actions", label: "الإجراء" },
-      ],
       seasonalMissionSchema: [
         {
           key: "name",
           label: "اسم المهمة",
+          labelEn: "mission name",
           col: "4",
           listen: "id",
           value: "",
@@ -116,6 +109,7 @@ export default {
         {
           key: "seasonal_mission_group_id",
           label: "اسم المجموعة",
+          labelEn: "seasonal mission group name",
           col: "4",
           listen: "id",
           type: "select",
@@ -133,6 +127,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "الدولة",
+          labelEn: "country",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -145,6 +140,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "الصف الدراسي",
+          labelEn: "level",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -204,6 +200,16 @@ export default {
     },
   },
   computed: {
+    fieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "logo", label: this.$i18n.t('seasonalMission.seasonName')},
+        {key: "name", label: this.$i18n.t('seasonalMission.groupName')},
+        {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.level')},
+        {key: "start_date", label: this.$i18n.t('TABLE_FIELDS.start_date')},
+        {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {

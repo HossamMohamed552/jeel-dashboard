@@ -2,7 +2,7 @@
   <section class="container-fluid custom-container">
     <!------------------ st custom table section --------------->
     <ListItems
-      :header-name="'مكتبة الشراء'"
+      :header-name="$t('content.list')"
       :fieldsList="fieldsList"
       :table-items="jeelStoreLibraryList"
       :v-search-model="groupSearchWord"
@@ -24,15 +24,15 @@
           v-if="user.permissions.includes(`add-store-library`)"
         >
           <img src="../../src/assets/images/icons/plus.svg" />
-          <span>إضافة محتوى </span>
+          <span>{{ $t('content.add')}}</span>
         </Button>
       </template>
     </ListItems>
     <!------------------ nd custom table section --------------->
     <!------------------ st delete model --------------->
     <Modal
-      :content-message="'حذف محتوى '"
-      :content-message-question="'هل انت متأكد من حذف محتوى'"
+      :content-message="$t('content.delete')"
+      :content-message-question="$t('content.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -60,33 +60,6 @@ export default {
       groupSearchWord: "",
       totalNumber: 0,
       jeelStoreLibraryList: [],
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "name",
-          label: "اسم المحتوى",
-        },
-        {
-          key: "level",
-          label: "الصف الدراسى",
-        },
-        {
-          key: "type",
-          label: "نوع المحتوى",
-        },
-        {
-          key: "gems",
-          label: "عدد الجيمز",
-        },
-
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
       itemId: 0,
     };
   },
@@ -142,6 +115,35 @@ export default {
 
   },
   computed: {
+    fieldsList(){
+      return [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "name",
+          label: this.$i18n.t("content.name"),
+        },
+        {
+          key: "level",
+          label: this.$i18n.t("content.level"),
+        },
+        {
+          key: "type",
+          label: this.$i18n.t("content.type"),
+        },
+        {
+          key: "gems",
+          label: this.$i18n.t("content.gems"),
+        },
+
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {

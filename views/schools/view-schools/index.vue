@@ -37,7 +37,7 @@
             />
           </b-col>
           <b-col lg="4" class="showItem">
-            <ShowItem :title="$t('SCHOOL.STUDENT_TYPE')" :subtitle="singleSchool.students_type" />
+            <ShowItem :title="$t('SCHOOL.STUDENT_TYPE')" :subtitle="singleSchool.students_type.name" />
           </b-col>
           <b-col lg="4" class="showItem">
             <ShowItem :title="$t('SCHOOL.MOBILE')" :subtitle="singleSchool.phone" />

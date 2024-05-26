@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة مجموعة المدارس'"
+      :header-name="$t('schoolGroup.list')"
       :number-of-item="totalNumber"
       :table-items="schoolGroupList"
       :v-search-model="groupSearchWord"
@@ -22,19 +22,19 @@
           v-if="user.permissions.includes(`add-schoolGroups`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة مجموعه المدارس</span>
+          <span>{{ $t('schoolGroup.add') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف المجموعة المدرسية'"
-      :content-message-question="'هل انت متأكد من حذف المجموعة المدرسية'"
+      :content-message="$t('schoolGroup.delete')"
+      :content-message-question="$t('schoolGroup.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+    <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>
@@ -50,6 +50,30 @@ import { mapGetters } from "vuex";
 export default {
   components: { Modal, ListItems, Button },
   computed: {
+    fieldsList(){
+      return [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "name",
+          label: this.$i18n.t("schoolGroup.name"),
+        },
+        {
+          key: "country.name",
+          label: this.$i18n.t("schoolGroup.country"),
+        },
+        {
+          key: "status",
+          label: this.$i18n.t("schoolGroup.status"),
+        },
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ]
+    },
     ...mapGetters(["user"]),
   },
   data() {
@@ -60,28 +84,6 @@ export default {
       groupSearchWord: "",
       schoolGroupList: [],
       totalNumber: 0,
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "name",
-          label: "اسم مجموعة المدارس",
-        },
-        {
-          key: "country.name",
-          label: "دولة ادارة المجموعة",
-        },
-        {
-          key: "status",
-          label: "الحالة",
-        },
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
       itemId: 0,
     };
   },

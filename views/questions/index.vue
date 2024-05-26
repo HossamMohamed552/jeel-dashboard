@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة الأسئلة'" :number-of-item="totalNumber"
+    <ListItems :header-name="$t('QUESTIONS.questionsList')" :number-of-item="totalNumber"
                :tableItems="questionsList" :fieldsList="fieldsList"
                :v-search-model="groupSearchWord"
                @detailItem="detailItem($event)"
@@ -17,17 +17,17 @@
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddQuestions"
                 v-if="user.permissions.includes(`add-questions`)">
           <img src="@/assets/images/icons/plus.svg">
-          <span>إضافة سؤال جديد</span>
+          <span>{{ $t('QUESTIONS.ADD_NEW') }}</span>
         </Button>
       </template>
     </ListItems>
-    <Modal :content-message="'حذف السؤال'"
-           :content-message-question="'هل انت متأكد من حذف السؤال'"
+    <Modal :content-message="$t('QUESTIONS.deleteQuestion')"
+           :content-message-question="$t('QUESTIONS.confirm_delete_question')"
            :showModal="showModal"
            @cancel="cancel($event)"
            :is-warning="true"
            @cancelWithConfirm="cancelWithConfirm($event)"/>
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+    <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>
@@ -43,6 +43,17 @@ import {mapGetters} from "vuex";
 export default {
   components: {Modal, ListItems, Button},
   computed: {
+    fieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t("TABLE_FIELDS.id"),},
+        {key: "question", label: this.$i18n.t("TABLE_FIELDS.question")},
+        {key: "questionType.name", label: this.$i18n.t("TABLE_FIELDS.questionType")},
+        {key: "subQuestionType.name", label: this.$i18n.t("TABLE_FIELDS.subQuestionType")},
+        {key: "lesson.name", label: this.$i18n.t("TABLE_FIELDS.lesson")},
+        {key: "questionDifficulty", label: this.$i18n.t("TABLE_FIELDS.questionDifficulty")},
+        {key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions")},
+      ]
+    },
     ...mapGetters(['user'])
   },
   data() {
@@ -54,18 +65,6 @@ export default {
       questionsList: [],
       totalNumber: 0,
       refreshIt: false,
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {key: "question", label: "نص السؤال"},
-        {key: "questionType.name", label: "نوع السؤال"},
-        {key: "subQuestionType.name", label: "نوع السؤال الفرعى"},
-        {key: "lesson.name", label: this.$i18n.t("TABLE_FIELDS.lesson")},
-        {key: "questionDifficulty", label: "مستوى الصعوبة"},
-        {key: "actions", label: "الإجراء"},
-      ],
     }
   },
   methods: {
@@ -108,7 +107,7 @@ export default {
   },
   mounted() {
     this.getQuestions()
-    window.localStorage.setItem("page","questions");
+    window.localStorage.setItem("page", "questions");
   },
   beforeDestroy() {
     window.localStorage.setItem('page', '')

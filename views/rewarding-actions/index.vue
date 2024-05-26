@@ -37,7 +37,7 @@ export default {
         },
         {
           key: "action_name",
-          label: 'إسم جائزة التفاعل',
+          label: 'اسم جائزة التفاعل',
         },
         {
           key: "jeel_xp",

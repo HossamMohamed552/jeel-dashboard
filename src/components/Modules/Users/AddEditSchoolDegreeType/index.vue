@@ -2,7 +2,7 @@
   <div class="container-fluid custom-container">
     <div class="add-edit-learning-skill">
       <div class="add-edit-term-form">
-        <h3>{{ $route.params.id ? "تعديل نوع الشهادة" : "اضافة نوع شهادة" }}</h3>
+        <h3>{{ $route.params.id ? $t('degreeType.edit') : $t('degreeType.add') }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditSchoolDegreeType">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -10,9 +10,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="name"
-                    label="اسم نوع الشهادة"
-                    name="نوع الشهادة"
-                    placeholder="أدخل اسم نوع الشهادة"
+                    :label="$t('degreeType.type_name')"
+                    :name="$t('degreeType.type_name')"
+                    :placeholder="$t('degreeType.enter_type_name')"
                     :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>

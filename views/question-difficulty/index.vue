@@ -32,7 +32,7 @@ export default {
       questionDifficultyList: [],
       totalNumber: 3,
       fieldsList: [
-        { key: "vid", label: "التسلسل" },
+        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
         { key: "name", label: "اسم مستوى السؤال" },
         { key: "grade_points", label: "عدد النقاط" },
         { key: "actions", label: "الإجراء" },

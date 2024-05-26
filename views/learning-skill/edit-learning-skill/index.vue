@@ -1,6 +1,6 @@
 <template>
   <div class="edit-term">
-    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+    <Modal :content-message="$t('CONTROLS.already_exists')" :showModal="showModalFailed" :isUsed="true"
            @cancelWithConfirm="showModalFailed=false"/>
     <AddEditLearningSkill
       :loading="loading"
@@ -33,7 +33,7 @@ export default {
           this.$router.push("/dashboard/learning-skill");
         }).catch((error) => {
         this.loading = false;
-        this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
+        this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الاسم مُستخدمة من قبل');
       }).finally(() => {
         this.loading = false;
       });

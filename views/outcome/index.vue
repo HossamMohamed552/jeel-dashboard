@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة مخرجات التعلم'"
+      :header-name="$t('OUTCOME.OUTCOMELIST')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="outcomeCategories"
@@ -22,19 +22,19 @@
           v-if="user.permissions.includes(`add-outcome`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة مخرج تعليمى</span>
+          <span>{{ $t('OUTCOME.ADD') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف مخرج تعليمى'"
-      :content-message-question="'هل انت متأكد من حذف المخرج تعليمى ؟'"
+      :content-message="$t('OUTCOME.delete_OUTCOME')"
+      :content-message-question="$t('OUTCOME.confirm_delete_OUTCOME')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+    <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>
@@ -65,7 +65,7 @@ export default {
           key: "name",
           label: this.$i18n.t("OUTCOME.NAME"),
         },
-        {key: "learningPath.name", label: this.$i18n.t('LEARNING_PATH.LEARNING_PATH')},
+        {key: "learningPath.name", label: this.$i18n.t('PATH.Name')},
         {key: "lesson.name", label: this.$i18n.t('LESSONS.NAME_OF_LESSON')},
         {
           key: "actions",

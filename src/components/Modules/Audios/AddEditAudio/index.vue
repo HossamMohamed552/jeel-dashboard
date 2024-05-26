@@ -40,7 +40,7 @@
                   :type-of-attachment="'audio'"
                   :dropIdRef="'audioFile'"
                   :accept-files="'audio/*'"
-                  :label="'ملف الصوت'"
+                  :label="$t('PAPER_WORK.AUDIO')"
                   :name="'audioFile'"
                   :rules="'required'"
                   @setFileId="setAudioFileId($event)"
@@ -51,7 +51,7 @@
                     formValues.taskAudioChanged === false &&
                     !formValues.taskAudioChangedRequest
                   "
-                  :header="$t('ملف الصوت')"
+                  :header="$t('PAPER_WORK.AUDIO')"
                   :media-name="formValues.task_audio_name"
                   :file-size="formValues.task_audio_size"
                   :typeOfMedia="'audio'"
@@ -113,7 +113,7 @@
                       !$route.params.id || formValues.taskImageChangedRequest
                     "
                     :type-of-attachment="'image'"
-                    :label="'صورة السؤال'"
+                    :label="$t('QUESTIONS.UPLOAD_IMAGE')"
                     :dropImage="true"
                     :name="'image'"
                     :rules="'required'"

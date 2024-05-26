@@ -1,6 +1,6 @@
 <template>
   <div class="add-edit-learning-skill">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true" />
     <AddEditSchoolLanguage
       :loading="loading"
       @handleAddSchoolLanguage="handleAddSchoolLanguage($event)"

@@ -5,6 +5,7 @@ export default [
     component: () => import("../../../views/jeel-store-library/index.vue"),
     meta: {
       breadcrumb: "مكتبة الشراء",
+      breadcrumbEn: "jeel store library",
       preLabel: "",
       preLink: "",
     },
@@ -15,7 +16,9 @@ export default [
     component: () => import("../../../views/jeel-store-library/add-jeel-store-library/index.vue"),
     meta: {
       breadcrumb: "إضافة المحتوى",
+      breadcrumbEn: "add jeel store games",
       preLabel: "مكتبة الشراء",
+      preLabelEn: "jeel store library",
       preLink: "/dashboard/jeel-store-library",
     },
   },
@@ -25,7 +28,9 @@ export default [
     component: () => import("../../../views/jeel-store-library/edit-jeel-store-library/index.vue"),
     meta: {
       breadcrumb: "تعديل المحتوى",
+      breadcrumbEn: "edit jeel store games",
       preLabel: "مكتبة الشراء",
+      preLabelEn: "jeel store library",
       preLink: "/dashboard/jeel-store-library",
     },
   },
@@ -35,10 +40,10 @@ export default [
     component: () => import("../../../views/jeel-store-library/view-jeel-store-library/index.vue"),
     meta: {
       breadcrumb: "تفاصيل المحتوى",
+      breadcrumbEn: "show jeel store games",
       preLabel: "مكتبة الشراء",
+      preLabelEn: "jeel store library",
       preLink: "/dashboard/jeel-store-library",
     },
   },
-
-
 ]

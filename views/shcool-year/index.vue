@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة الأعوام الدراسية'"
+      :header-name="$t('studyYear.list')"
       :number-of-item="totalNumber"
       :tableItems="schoolYearsList"
       :fieldsList="fieldsList"
@@ -22,13 +22,13 @@
           v-if="user.permissions.includes(`add-studyYear`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة عام دراسي </span>
+          <span>{{$t('studyYear.add')}}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف العام الدراسي'"
-      :content-message-question="'هل انت متأكد من حذف العام الدراسي '"
+      :content-message="$t('studyYear.delete')"
+      :content-message-question="$t('studyYear.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -53,11 +53,6 @@ export default {
       groupSearchWord: "",
       schoolYearsList: [],
       totalNumber: null,
-      fieldsList: [
-        { key: "vid", label: "التسلسل" },
-        { key: "name", label: "اسم العام الدراسي" },
-        { key: "actions", label: "الإجراء" },
-      ],
     };
   },
   methods: {
@@ -97,17 +92,27 @@ export default {
     },
   },
   computed: {
+    fieldsList(){
+      return [
+        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
+        { key: "name", label: this.$i18n.t('studyYear.name') },
+        { key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions') },
+      ]
+    },
+    fieldsListSuperVisor() {
+      return [
+        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
+        { key: "name", label: this.$i18n.t('studyYear.name') },
+        { key: "classes_count", label: this.$i18n.t('studyYear.classes_count') },
+        { key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions') },
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {
     this.getSchoolYears();
     if (this.user.roles[0].code === "supervisor") {
-      this.fieldsList = [
-        { key: "vid", label: "التسلسل" },
-        { key: "name", label: "اسم hguhl الدراسي" },
-        { key: "classes_count", label: "عدد الفصول" },
-        { key: "actions", label: "الإجراء" },
-      ];
+      this.fieldsList = this.fieldsListSuperVisor;
     }
   },
 };

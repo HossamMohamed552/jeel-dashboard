@@ -1,9 +1,9 @@
 <template>
   <div class="add-group">
-    <Modal :content-message="' تم التعديل بنجاح'"
+    <Modal :content-message="$t('CONTROLS.edit_successfully')"
            :showModal="showModal"
            :is-success="true"/>
-    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+    <Modal :content-message="$t('CONTROLS.already_exists')" :showModal="showModalFailed" :isUsed="true"
            @cancelWithConfirm="showModalFailed=false"/>
     <AddEditPath
       :loading="loading"
@@ -45,7 +45,7 @@ export default{
           this.$router.push("/dashboard/path");
         }, 1500)
       }).catch((error)=>{
-        this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
+        this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الاسم مُستخدمة من قبل');
         this.loading = false;
         setTimeout(() => {
           this.showModal = false

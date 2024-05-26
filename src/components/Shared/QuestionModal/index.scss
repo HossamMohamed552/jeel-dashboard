@@ -11,16 +11,17 @@
 
 .flexContent {
   text-align: right;
-
   .add-title {
     font-weight: bold;
     font-size: 1.5rem;
   }
-
   .add-question {
     //padding: 2rem;
     border-radius: .5rem;
     //background: #F9F9F9;
+  }
+  &:lang(en){
+    text-align: left;
   }
 }
 

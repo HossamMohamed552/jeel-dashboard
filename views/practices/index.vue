@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة التمارين'" :number-of-item="totalNumber"
+    <ListItems :header-name="$t('QUIZZES.quizzes')" :number-of-item="totalNumber"
                :tableItems="quizzesList" :fieldsList="fieldsList"
                :v-search-model="quizzesSearchWord" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
@@ -11,19 +11,20 @@
                :permission_view="'show-quizzes'"
     >
       <template #buttons>
-        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddQuiz" v-if="user.permissions.includes(`add-quizzes`)">
+        <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddQuiz"
+                v-if="user.permissions.includes(`add-quizzes`)">
           <img src="@/assets/images/icons/plus.svg">
-          <span>إضافة تمرين</span>
+          <span>{{ $t('QUIZZES.ADD_NEW') }}</span>
         </Button>
       </template>
     </ListItems>
-    <Modal :content-message="'حذف التمرين'"
-           :content-message-question="'هل انت متأكد من حذف التمرين '"
+    <Modal :content-message="$t('QUIZZES.delete_quiz')"
+           :content-message-question="$t('QUIZZES.confirm_delete_quiz')"
            :showModal="showModal"
            @cancel="cancel($event)"
            :is-warning="true"
            @cancelWithConfirm="cancelWithConfirm($event)"/>
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+    <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>
@@ -38,7 +39,20 @@ import {mapGetters} from "vuex";
 export default {
   name: "index",
   components: {Modal, ListItems, Button},
-  computed:{
+  computed: {
+    fieldsList() {
+      return [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {key: "name", label: this.$i18n.t("QUIZZES.name")},
+        {key: "type.name", label: this.$i18n.t("QUIZZES.quizType")},
+        {key: "learning_path.name", label: this.$i18n.t("LEARNING_PATH.LEARNING_PATH")},
+        {key: "lessons", label: this.$i18n.t("TABLE_FIELDS.lesson")},
+        {key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions")},
+      ]
+    },
     ...mapGetters(['user'])
   },
   data() {
@@ -49,17 +63,6 @@ export default {
       quizzesSearchWord: "",
       quizzesList: [],
       totalNumber: null,
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {key: "name", label: "اسم التمرين"},
-        {key: "type.name", label: "نوع التمرين"},
-        {key: "learning_path.name", label: "المسار التعليمي"},
-        {key: "lessons", label: "اسم الدرس"},
-        {key: "actions", label: "الإجراء"},
-      ],
     }
   },
   methods: {
@@ -104,7 +107,7 @@ export default {
     // window.localStorage.setItem("page","practices");
   },
   beforeDestroy() {
-    window.localStorage.setItem("page","");
+    window.localStorage.setItem("page", "");
   }
 }
 </script>

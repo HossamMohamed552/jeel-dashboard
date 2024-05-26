@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'مستخدمي إدارة المنظومة'"
+      :header-name="$t('USERS.adminUsers')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="usersList"
@@ -28,13 +28,13 @@
           v-if="user.permissions.includes(`add-users`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة مستخدم جديد</span>
+          <span>{{ $t('USERS.addUser') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف المستخدم'"
-      :content-message-question="'هل انت متأكد من حذف المستخدم ؟'"
+      :content-message="$t('USERS.deleteUser')"
+      :content-message-question="$t('USERS.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -68,32 +68,7 @@ export default {
       usersList: [],
       showModal: false,
       totalNumber: 0,
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "roles",
-          label: this.$i18n.t("USERS.DEPARTMENT"),
-        },
-        {
-          key: "email",
-          label: this.$i18n.t("USERS.name"),
-        },
-        {
-          key: "status.key",
-          label: this.$i18n.t("TABLE_FIELDS.status"),
-        },
-        {
-          key: "status.name",
-          label: this.$i18n.t("TABLE_FIELDS.block"),
-        },
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
+
     };
   },
   methods: {
@@ -156,6 +131,34 @@ export default {
     },
   },
   computed: {
+    fieldsList(){
+      return [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "roles",
+          label: this.$i18n.t("USERS.DEPARTMENT"),
+        },
+        {
+          key: "email",
+          label: this.$i18n.t("USERS.name"),
+        },
+        {
+          key: "status.key",
+          label: this.$i18n.t("TABLE_FIELDS.status"),
+        },
+        {
+          key: "status.name",
+          label: this.$i18n.t("TABLE_FIELDS.block"),
+        },
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {

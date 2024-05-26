@@ -28,7 +28,7 @@
     </ListItems>
     <Modal
       :content-message="'حذف الترم الدراسي'"
-      :content-message-question="'هل انت متأكد من حذف الترم الدراسي'"
+      :content-message-question="'هل أنت متأكد من حذف الترم الدراسي؟'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -57,7 +57,7 @@ export default {
       acadamicList: [],
       totalNumber: 0,
       fieldsList: [
-        { key: "vid", label: "التسلسل" },
+        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
         { key: "studyYear.name", label: "العام الدراسى" },
         { key: "term.name", label: "الترم الدراسى" },
         { key: "start_date", label: "تاريخ البداية" },

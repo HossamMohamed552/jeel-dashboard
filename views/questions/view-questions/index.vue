@@ -240,7 +240,7 @@
                     }})</span>
                 </div>
               </div>
-              <div class="to">الى</div>
+              <div class="to">إلى</div>
               <div>
                 <div v-for="answer in itemAnswerTo.answerCorrect" :key="answer.id">
                   <div v-if="answer.answer_pattern === 'text'" class="d-flex justify-content-start align-items-center mb-3">

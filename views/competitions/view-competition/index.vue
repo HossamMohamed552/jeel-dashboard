@@ -75,7 +75,7 @@
         <b-col :lg="12">
           <div class="header">
             <div class="list-of-item">
-              <p class="name-of-item">قائمة الاسئلة</p>
+              <p class="name-of-item">قائمة الأسئلة</p>
             </div>
           </div>
           <b-table
@@ -132,14 +132,14 @@ export default {
     return {
       competition: {},
       prizeFieldsList: [
-        { key: "vid", label: "التسلسل" },
+        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
         { key: "main_percentage", label: "من نسبة" },
         { key: "max_percentage", label: "إلى نسبة" },
         { key: "prizeable_type_name", label: "نوع الجائزة" },
         { key: "prizeable_id_name", label: "الجائزة" },
       ],
       NotifacationFieldsList: [
-        { key: "vid", label: "التسلسل" },
+        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
         { key: "name", label: "عنوان اللإشعار" },
         { key: "start_date", label: "تاريخ ووقت الإشعار" },
         { key: "original_url", label: "صوت الإشعار" },

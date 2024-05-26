@@ -2,7 +2,7 @@
   <section class="container-fluid custom-container">
     <ListItems
       class="seasonal-mission-custom-list-item"
-      :header-name="'مجموعة المهام الموسمية'"
+      :header-name="$t('seasonalGroup.seasonalGroup')"
       :number-of-item="totalNumber"
       :tableItems="seasonalMissionGroups"
       :fieldsList="fieldsList"
@@ -23,14 +23,14 @@
           @click="goToAddSeasonalMissionGroup"
           v-if="user.permissions.includes(`add-seasonal-mission-groups`)"
         >
-          <img src="@/assets/images/icons/plus.svg" alt="seasonal" />
-          <span>إضافة مجموعة </span>
+          <img src="@/assets/images/icons/plus.svg" alt="seasonal"/>
+          <span>{{ $t('seasonalGroup.add') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف المجموعة'"
-      :content-message-question="'هل انت متأكد من حذف المجموعة '"
+      :content-message="$t('seasonalGroup.delete')"
+      :content-message-question="$t('seasonalGroup.confirm')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -47,10 +47,10 @@ import {
   deleteSeasonalMissionGroupRequest,
 } from "@/api/seasonal-mission-group.js";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
-  components: { Modal, ListItems, Button },
+  components: {Modal, ListItems, Button},
   data() {
     return {
       loading: false,
@@ -58,12 +58,6 @@ export default {
       groupSearchWord: "",
       seasonalMissionGroups: [],
       totalNumber: null,
-      fieldsList: [
-        { key: "id", label: "التسلسل" },
-        { key: "logo", label: "لوجو المجموعة" },
-        { key: "name", label: "اسم المجموعة" },
-        { key: "actions", label: "الإجراء" },
-      ],
     };
   },
   methods: {
@@ -103,6 +97,14 @@ export default {
     },
   },
   computed: {
+    fieldsList() {
+      return [
+        {key: "id", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "logo", label: this.$i18n.t('TABLE_FIELDS.logoGroup')},
+        {key: "name", label: this.$i18n.t('TABLE_FIELDS.nameGroup')},
+        {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {

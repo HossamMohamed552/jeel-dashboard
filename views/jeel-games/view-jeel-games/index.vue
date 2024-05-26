@@ -18,7 +18,7 @@
           <b-col md="4" sm="12">
             <ShowItem
                 class="divider-show"
-                :title="'الصف الدراسى'"
+                :title="'الصف الدراسي'"
                 :subtitle="jeelStoreGames.level.name"
             />
           </b-col>
@@ -48,7 +48,7 @@
           <b-col lg="6" class="mb-5 mt-4">
             <PreviewMedia
               :header="'لوجو المجموعة'"
-              :media-name="jeelStoreGames.logo_name"
+              :media-name="jeelStoreGames.logo_orginal_name"
               :file-size="jeelStoreGames.logo_size"
               :image-url="jeelStoreGames.logo"
               :typeOfMedia="'image'"

@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'نوع الادارة'"
+      :header-name="$t('management.management')"
       :number-of-item="totalNumber"
       :tableItems="departmentTypeList"
       :fieldsList="fieldsList"
@@ -22,19 +22,19 @@
           v-if="user.permissions.includes(`add-management-types`)"
         >
           <img src="@/assets/images/icons/plus.svg"/>
-          <span>إضافة نوع ادارة </span>
+          <span>{{ $t('management.add') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف نوع الادارة'"
-      :content-message-question="'هل انت متأكد من حذف نوع الادارة '"
+      :content-message="$t('management.delete')"
+      :content-message-question="$t('management.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+    <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>
@@ -60,11 +60,6 @@ export default {
       groupSearchWord: "",
       departmentTypeList: [],
       totalNumber: null,
-      fieldsList: [
-        {key: "id", label: "التسلسل"},
-        {key: "name", label: "اسم نوع الادارة"},
-        {key: "actions", label: "الإجراء"},
-      ],
     };
   },
   methods: {
@@ -107,6 +102,13 @@ export default {
     },
   },
   computed: {
+    fieldsList(){
+      return  [
+        {key: "id", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "name", label: this.$i18n.t('management.type_name')},
+        {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {

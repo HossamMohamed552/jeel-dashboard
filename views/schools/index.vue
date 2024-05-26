@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة المدارس'"
+      :header-name="$t('SCHOOL.list')"
       :number-of-item="totalNumber"
       :tableItems="schoolsList"
       :fields-list="fieldsList"
@@ -22,13 +22,13 @@
           v-if="user.permissions.includes(`add-schools`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة مدرسة</span>
+          <span>{{ $t('SCHOOL.ADD_NEW') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف المدرسة'"
-      :content-message-question="'هل انت متأكد من حذف المدرسة'"
+      :content-message="$t('SCHOOL.delete')"
+      :content-message-question="$t('SCHOOL.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -47,6 +47,15 @@ import { mapGetters } from "vuex";
 export default {
   components: { Modal, ListItems, Button },
   computed: {
+    fieldsList(){
+      return [
+        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
+        { key: "name", label: this.$i18n.t("SCHOOL.name") },
+        { key: "country.name", label: this.$i18n.t("MISSIONS.country") },
+        { key: "status", label: this.$i18n.t("TABLE_FIELDS.status") },
+        { key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions") },
+      ]
+    },
     ...mapGetters(["user"]),
   },
   data() {
@@ -56,13 +65,6 @@ export default {
       groupSearchWord: "",
       schoolsList: [],
       totalNumber: 0,
-      fieldsList: [
-        { key: "vid", label: "التسلسل" },
-        { key: "name", label: this.$i18n.t("SCHOOL.name") },
-        { key: "country.name", label: this.$i18n.t("MISSIONS.country") },
-        { key: "status", label: this.$i18n.t("TABLE_FIELDS.status") },
-        { key: "actions", label: "الإجراء" },
-      ],
     };
   },
   methods: {

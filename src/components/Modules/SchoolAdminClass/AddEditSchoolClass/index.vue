@@ -28,7 +28,7 @@
                     v-model="classItem.level_id"
                     :label="$t('schoolAdmin.level')"
                     :name="$t('schoolAdmin.level')"
-                    placeholder="أختر الصف الدراسي"
+                    placeholder="اختر الصف الدراسي"
                     :options="levels"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"

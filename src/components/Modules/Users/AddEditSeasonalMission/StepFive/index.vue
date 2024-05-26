@@ -21,16 +21,18 @@
           <ShowItem
             v-else-if="field.type === 'select'"
             class="divider-show"
-            :title="field?.label"
+            :title="$i18n.locale === 'ar' ? field?.label : field?.labelEn"
             :subtitle="Array.isArray(field?.name) ? field?.name.join(', ') : field?.name"
           />
-          <ShowItem v-else class="divider-show" :title="field?.label" :subtitle="field?.value" />
+          <ShowItem v-else class="divider-show"
+                    :title="$i18n.locale === 'ar' ? field?.label : field?.labelEn"
+                    :subtitle="field?.value"/>
         </b-col>
         <b-col :lg="12">
           <ListItems
             class="seasonal-mission-custom-list-item"
             :tableItems="notificationsList"
-            :headerName="'قائمة الإشعار'"
+            :headerName="$t('seasonalMission.notification')"
             :fieldsList="NotifacationFieldsList"
             :showSortControls="false"
           >
@@ -49,7 +51,7 @@
           <ListItems
             class="seasonal-mission-custom-list-item"
             :tableItems="prizesList"
-            :headerName="'قائمة الجوائز'"
+            :headerName="$t('seasonalMission.prize')"
             :fieldsList="prizeFieldsList"
             :showSortControls="false"
           >
@@ -62,10 +64,10 @@
             <slot></slot>
             <div class="steps">
               <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
-                السابق
+                {{ $t('GLOBAL_BACK') }}
               </Button>
 
-              <Button custom-class="submit-btn" @click="submitForm"> إنهاء </Button>
+              <Button custom-class="submit-btn" @click="submitForm">{{ $t('done') }}</Button>
             </div>
           </div>
         </b-col>
@@ -79,7 +81,7 @@ import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import learningPathCollapse from "./learningPathCollapse.vue";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 import {
   postCreateSeasonalMissionRequest,
   putUpdateSeasonalMissionRequest,
@@ -114,6 +116,8 @@ export default {
       notificationsList: [],
       videosList: [],
       exercisesList: [],
+<<<<<<< HEAD
+=======
       videosFieldsList: [
         { key: "vid", label: "التسلسل" },
         { key: "title", label: "عنوان الفيديو" },
@@ -138,6 +142,7 @@ export default {
         { key: "original_url", label: "صوت الإشعار" },
         { key: "description", label: "نص الإشعار" },
       ],
+>>>>>>> db64b3a22bea22d883a65fbcc71a7385466529b0
       submittedForm: {
         learningpaths: {
           videos: [],
@@ -234,8 +239,39 @@ export default {
       this.handleObject("level_id");
     },
   },
-  async mounted() {},
   computed: {
+    videosFieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "title", label: this.$i18n.t('TABLE_FIELDS.videoTitle')},
+        {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
+      ]
+    },
+    exercisesFieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "name", label: this.$i18n.t('TABLE_FIELDS.titleQuiz')},
+        {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
+      ]
+    },
+    prizeFieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "main_percentage", label: this.$i18n.t('seasonalMission.minPercentage')},
+        {key: "max_percentage", label: this.$i18n.t('seasonalMission.maxPercentage')},
+        {key: "type_id_name", label: this.$i18n.t('seasonalMission.prizeType')},
+        {key: "prizeable_id_name", label: this.$i18n.t('seasonalMission.singlePrize')},
+      ]
+    },
+    NotifacationFieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "name", label: this.$i18n.t('seasonalMission.NoticeTitle')},
+        {key: "start_date", label: this.$i18n.t('seasonalMission.DateTimeNotification')},
+        {key: "original_url", label: this.$i18n.t('seasonalMission.NotificationSound')},
+        {key: "description", label: this.$i18n.t('seasonalMission.NotificationText')},
+      ]
+    },
     ...mapGetters([
       "getPrizesList",
       "getNotificationsList",
@@ -243,7 +279,6 @@ export default {
       "getExercisesList",
       "getLearningPaths",
     ]),
-
     showValue(values) {
       if (typeof values == Array) {
         return "array";
@@ -251,7 +286,7 @@ export default {
       return values;
     },
   },
-  mounted() {
+  async mounted() {
     this.videosList = this.getVideosList;
     this.exercisesList = this.getExercisesList;
     this.prizesList = this.getPrizesList;

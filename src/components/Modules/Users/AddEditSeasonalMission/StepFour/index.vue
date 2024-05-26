@@ -16,14 +16,14 @@
             @click="handleAdd"
             custom-class="submit-btn"
           >
-            إضافة
+            {{ $t('ADD_ANSWER') }}
           </Button>
         </b-col>
       </template>
       <ListItems
         class="seasonal-mission-custom-list-item"
         :tableItems="notifactionGroup"
-        :headerName="'قائمة الإشعار'"
+        :headerName="$t('seasonalMission.notification')"
         :fieldsList="fieldsList"
         :showSortControls="false"
       >
@@ -32,9 +32,12 @@
         <slot></slot>
         <div class="steps">
           <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
-            السابق
+            {{ $t('GLOBAL_BACK') }}
           </Button>
-          <Button custom-class="submit-btn" :disabled="!isNextStep && notifactionGroup.length  === 0" @click="nextStep"> التالي </Button>
+          <Button custom-class="submit-btn"
+                  :disabled="!isNextStep && notifactionGroup.length  === 0" @click="nextStep">
+            {{ $t('GLOBAL_NEXT') }}
+          </Button>
         </div>
       </div>
     </GenericForm>
@@ -44,7 +47,7 @@
 <script>
 import GenericForm from "@/components/Shared/GenericForm";
 import ListItems from "@/components/ListItems/index.vue";
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import moment from "moment";
 
 export default {
@@ -71,13 +74,6 @@ export default {
       watchedField: ["name", "start_date", "description"],
       notifactionGroup: [],
       notifactionIndex: 0,
-      fieldsList: [
-        { key: "vid", label: "التسلسل" },
-        { key: "name", label: "عنوان الإشعار" },
-        { key: "start_date", label: "تاريخ ووقت الإشعار" },
-        { key: "original_url", label: "صوت الإشعار" },
-        { key: "description", label: "نص الإشعار" },
-      ],
     };
   },
   methods: {
@@ -123,9 +119,9 @@ export default {
         }
       });
 
-      if (this.notifactionGroup.length === 0){
+      if (this.notifactionGroup.length === 0) {
         this.notifactionIndex++;
-      } else{
+      } else {
         this.notifactionIndex = this.notifactionGroup[this.notifactionGroup.length - 1].id + 1;
       }
       this.entry.id = this.notifactionIndex;
@@ -136,6 +132,15 @@ export default {
     },
   },
   computed: {
+    fieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "name", label: this.$i18n.t('seasonalMission.NoticeTitle')},
+        {key: "start_date", label: this.$i18n.t('seasonalMission.DateTimeNotification')},
+        {key: "original_url", label: this.$i18n.t('seasonalMission.NotificationSound')},
+        {key: "description", label: this.$i18n.t('seasonalMission.NotificationText')},
+      ]
+    },
     ...mapGetters(["getNotificationsList"]),
   },
   async mounted() {

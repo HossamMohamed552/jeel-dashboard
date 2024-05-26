@@ -1,7 +1,7 @@
 <template>
   <div class="add-edit-learning-skill">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
-    <Modal :content-message="'هذا السجل موجود من قبل'" :showModal="showModalFailed" :isUsed="true"
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="$t('CONTROLS.already_exists')" :showModal="showModalFailed" :isUsed="true"
            @cancelWithConfirm="showModalFailed=false"/>
     <AddEditSchoolDepartmentType
       :loading="loading"
@@ -36,7 +36,7 @@ export default {
             this.$router.push("/dashboard/school-department-types");
           }, 1500);
         }).catch((error) => {
-          this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
+          this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الاسم مُستخدمة من قبل');
         }).finally(() => {
           this.loading = false;
         });

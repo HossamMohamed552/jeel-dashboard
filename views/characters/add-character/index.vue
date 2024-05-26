@@ -1,6 +1,6 @@
 <template>
   <div class="add-role">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true" />
     <AddEditCharacter :loading="loading" @handleAddCharacter="handleAddCharacter($event)" @handleCancel="handleCancel" />
   </div>
 </template>

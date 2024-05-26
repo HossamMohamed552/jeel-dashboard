@@ -37,7 +37,7 @@ export default {
           }, 1500);
         })
         .catch((error) => {
-          this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الإسم مُستخدمة من قبل');
+          this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الاسم مُستخدمة من قبل');
         })
         .finally(() => {
           this.loading = false;

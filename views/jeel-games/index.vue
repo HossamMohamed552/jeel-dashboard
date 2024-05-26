@@ -24,15 +24,15 @@
           v-if="user.permissions.includes(`add-gems`)"
         >
           <img src="../../src/assets/images/icons/plus.svg" />
-          <span>إضافة مجموعه </span>
+          <span>إضافة مجموعة </span>
         </Button>
       </template>
     </ListItems>
     <!------------------ nd custom table section --------------->
     <!------------------ st delete model --------------->
     <Modal
-      :content-message="'حذف مجموعه '"
-      :content-message-question="'هل انت متأكد من حذف مجموعه'"
+      :content-message="'حذف مجموعة '"
+      :content-message-question="'هل أنت متأكد من حذف مجموعة؟'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -71,7 +71,7 @@ export default {
         },
         {
           key: "level",
-          label: "الصف الدراسى",
+          label: "الصف الدراسي",
         },
         {
           key: "gems",

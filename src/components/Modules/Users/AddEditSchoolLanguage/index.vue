@@ -2,7 +2,7 @@
   <div class="container-fluid custom-container">
     <div class="add-edit-learning-skill">
       <div class="add-edit-term-form">
-        <h3>{{ $route.params.id ? "تعديل لغة" : "اضافة لغة" }}</h3>
+        <h3>{{ $route.params.id ? $t("lang.edit") : $t("lang.add") }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditSchoolLanguage">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -10,9 +10,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="name"
-                    label="اسم لغة"
-                    name="اضافة لغة"
-                    placeholder="أدخل اسم اللغة"
+                    :label="$t('lang.name')"
+                    :name="$t('lang.add')"
+                    :placeholder="$t('lang.enterName')"
                     :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>

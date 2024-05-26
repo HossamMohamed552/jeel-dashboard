@@ -1,7 +1,7 @@
 <template>
   <div class="add-edit-school">
     <Modal
-      :content-message="'تم التعديل بنجاح'"
+      :content-message="$t('CONTROLS.edit_successfully')"
       :showModal="showModal"
       :is-success="true"
     />
@@ -20,7 +20,7 @@
                     v-model="action.action_name"
                     label="اسم جائزة التفاعل"
                     name="اسم جائزة التفاعل"
-                    placeholder="ادخل اسم جائزة التفاعل"
+                    placeholder="أدخل اسم جائزة التفاعل"
                     :rules="'required'"
                   ></TextField>
                 </div>
@@ -31,7 +31,7 @@
                     v-model="action.jeel_xp"
                     label="عدد النقاط"
                     name="عدد النقاط"
-                    placeholder="ادخل عدد النقاط"
+                    placeholder="أدخل عدد النقاط"
                     :rules="'required'"
                   ></TextField>
                 </div>
@@ -42,7 +42,7 @@
                     v-model="action.jeel_coins"
                     label="عدد عملات جيل"
                     name="عدد عملات جيل"
-                    placeholder="ادخل عدد عملات جيل"
+                    placeholder="أدخل عدد عملات جيل"
                     :rules="'required'"
                   ></TextField>
                 </div>

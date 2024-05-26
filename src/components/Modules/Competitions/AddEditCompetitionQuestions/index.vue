@@ -6,9 +6,9 @@
           <form @submit.prevent="onSubmit" class="mt-5">
             <div v-if="!isGeneratedQuestion" class="question-counter-container">
               <b-row>
-                <h5 class="title">الاسئلة</h5>
+                <h5 class="title">الأسئلة</h5>
                 <p v-if="disableRandomQuestionBtn" class="warning-error">
-                  * يجب ان يكون مجموع عدد انواع الاسئلة الثلاثة مساوى لعدد الاسئلة الكلى
+                  * يجب ان يكون مجموع عدد انواع الأسئلة الثلاثة مساوى لعدد الأسئلة الكلى
                 </p>
               </b-row>
 
@@ -78,7 +78,7 @@
 
             <div v-else class="question-counter-container">
               <b-row>
-                <h5 class="title">الاسئلة</h5>
+                <h5 class="title">الأسئلة</h5>
               </b-row>
 
               <div class="question-counter-holder">

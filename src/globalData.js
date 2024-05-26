@@ -31,7 +31,7 @@ let routesUsers = [
 ];
 let routesSchool = [
   {
-    name: "نوع الادارة",
+    name: "نوع الإدارة",
     nameEn: "management types",
     path: "/dashboard/school-department-types",
     altImage: "management-types",
@@ -98,7 +98,7 @@ let routesContent = [
     permission: "view-video",
   },
   {
-    name: "الاسئلة",
+    name: "الأسئلة",
     nameEn: "questions",
     path: "/dashboard/questions",
     altImage: "questions",
@@ -334,8 +334,8 @@ let routesSubscribes = [
     permission: "view-studyYear",
   },
   {
-    name: "الإشتراكات",
-    nameEn: "packages",
+    name: "الاشتراكات",
+    nameEn: "subscriptions",
     path: "/dashboard/subscription",
     altImage: "packages",
     titleImage: "packages",
@@ -505,7 +505,7 @@ let routeSchoolAdmin =[
 let routesPrizes = [
   {
     name: "شارات جيل",
-    nameEn: "jeel-badge",
+    nameEn: "jeel badge",
     path: "/dashboard/jeel-badge",
     altImage: "jeel-badge",
     titleImage: "jeel-badge",
@@ -719,7 +719,7 @@ let routesJeelAdminReports = [
     permission: "view-learningpath",
   },
   {
-    name: "الإشتراكات",
+    name: "الاشتراكات",
     nameEn: "Subscriptions",
     path: "/dashboard/reports/subscriptions",
     altImage: "subscriptions",

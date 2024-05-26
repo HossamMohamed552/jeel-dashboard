@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة الصفوف الدراسية'"
+      :header-name="$t('LEVEL.levels')"
       :number-of-item="totalNumber"
       :tableItems="levelsList"
       :fieldsList="fieldsList"
@@ -22,19 +22,19 @@
           v-if="user.permissions.includes(`add-levels`)"
         >
           <img src="@/assets/images/icons/plus.svg"/>
-          <span>إضافة صف دراسي</span>
+          <span>{{ $t('LEVEL.ADD_NEW') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف المرحلة الدراسية'"
-      :content-message-question="'هل انت متأكد من حذف المرحلة الدراسية'"
+      :content-message="$t('LEVEL.delete_level')"
+      :content-message-question="$t('LEVEL.confirm_delete_level')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+    <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>
@@ -57,14 +57,16 @@ export default {
       groupSearchWord: "",
       levelsList: [],
       totalNumber: 0,
-      fieldsList: [
-        {key: "vid", label: "التسلسل"},
-        {key: "name", label: "اسم الصف الدراسي"},
-        {key: "actions", label: "الإجراء"},
-      ],
     };
   },
   computed: {
+    fieldsList(){
+      return  [
+        {key: "vid", label: this.$i18n.t("TABLE_FIELDS.id")},
+        {key: "name", label: this.$i18n.t("LEVEL.name")},
+        {key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions")},
+      ]
+    },
     ...mapGetters(["user"]),
   },
   methods: {

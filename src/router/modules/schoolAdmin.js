@@ -199,7 +199,7 @@ export default [
     name: "add-students-enrollment",
     component: () => import("../../../views/user-student/enrollment/index.vue"),
     meta: {
-      breadcrumb: "تسجيل الصف الدراسى",
+      breadcrumb: "تسجيل الصف الدراسي",
       preLabel: "إدارة الطلاب",
       preLink: "/dashboard/students-users",
     },

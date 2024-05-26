@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة الترم الدراسي'"
+      :header-name="$t('TERM.terms')"
       :number-of-item="totalNumber"
       :tableItems="termsList"
       :fieldsList="fieldsList"
@@ -22,19 +22,19 @@
           v-if="user.permissions.includes(`add-terms`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة ترم دراسي </span>
+          <span>{{$t('TERM.ADD_NEW')}}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف الترم الدراسي'"
-      :content-message-question="'هل انت متأكد من حذف الترم الدراسي '"
+      :content-message="$t('TERM.delete_term')"
+      :content-message-question="$t('TERM.confirm_delete_term')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+    <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>
@@ -57,12 +57,6 @@ export default {
       groupSearchWord: "",
       termsList: [],
       totalNumber: null,
-      fieldsList: [
-        { key: "vid", label: "التسلسل" },
-        { key: "name", label: "اسم الترم الدراسي" },
-        { key: "min_missions", label: "الحد الآدنى من المهام" },
-        { key: "actions", label: "الإجراء" },
-      ],
     };
   },
   methods: {
@@ -105,17 +99,28 @@ export default {
     },
   },
   computed: {
+    fieldsList(){
+      return [
+        { key: "vid", label: this.$i18n.t("TABLE_FIELDS.id")},
+        { key: "name", label: this.$i18n.t("TERM.name")},
+        { key: "min_missions", label: this.$i18n.t("TERM.min_mission") },
+        { key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions") },
+      ]
+    },
+    fieldsListSuperVisor(){
+      return [
+        { key: "vid", label: this.$i18n.t("TABLE_FIELDS.id")},
+        { key: "name", label: this.$i18n.t("TERM.name")},
+        { key: "classes_count", label: this.$i18n.t("TERM.classes_count") },
+        { key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions") },
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {
     this.getTerms();
     if (this.user.roles[0].code === "supervisor") {
-      this.fieldsList = [
-        { key: "vid", label: "التسلسل" },
-        { key: "name", label: "اسم الترم الدراسي" },
-        { key: "classes_count", label: "عدد الفصول" },
-        { key: "actions", label: "الإجراء" },
-      ];
+      this.fieldsList = this.fieldsListSuperVisor;
     }
   },
 };

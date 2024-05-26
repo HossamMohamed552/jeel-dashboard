@@ -29,7 +29,7 @@
     </ListItems>
     <Modal
       :content-message="'حذف طالب مسجل'"
-      :content-message-question="'هل انت متأكد من حذف الطالب'"
+      :content-message-question="'هل أنت متأكد من حذف الطالب؟'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"

@@ -2,7 +2,7 @@
   <div class="add-edit-role">
     <div class="container-fluid custom-container">
       <div class="add-edit-role-form">
-        <h3>{{ $route.params.id ? "تعديل محتوى" : "إضافة محتوى" }}</h3>
+        <h3>{{ $route.params.id ? $t('content.edit') : $t('content.add') }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addLibraryItemForm">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -10,9 +10,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="createItem.file_name"
-                    :label="'اسم المحتوى'"
-                    :name="'اسم المحتوى'"
-                    placeholder="أختر المحتوى"
+                    :label="$t('content.name')"
+                    :name="$t('content.name')"
+                    :placeholder="$t('content.name')"
                     :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
@@ -21,13 +21,13 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <label>
-                    الصف الدراسى
+                    {{$t('content.level')}}
                     <span><i class="fa-solid fa-asterisk"></i></span>
                   </label>
                   <SelectSearch
                     v-model="createItem.level_id"
-                    :name="'أختر الصف الدراسى'"
-                    placeholder="أختر الصف الدراسى"
+                    :name="$t('content.selectLevel')"
+                    :placeholder="$t('content.selectLevel')"
                     :options="levels"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -40,9 +40,9 @@
                   <TextField
                     type="number"
                     v-model="createItem.gems"
-                    :label="'عدد الجيمز'"
-                    :name="'عدد الجيمز'"
-                    placeholder="أختر عدد الجيمز"
+                    :label="$t('content.gems')"
+                    :name="$t('content.gems')"
+                    :placeholder="$t('content.selectGems')"
                     :rules="'required'"
                   ></TextField>
                 </div>
@@ -53,7 +53,7 @@
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.logoChangedRequest"
                   :rules="'required'"
-                  :label="'لوجو المحتوى'"
+                  :label="$t('content.logo')"
                   :type-of-attachment="'image'"
                   :accept-files="'image/jpeg,image/png,image/jpg,image/gif'"
                   @setFileId="setThumbnailId"
@@ -75,8 +75,8 @@
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
                   <TextAreaField
-                    :label="'الوصف'"
-                    :name="'الوصف'"
+                    :label="$t('content.description')"
+                    :name="$t('content.description')"
                     :rules="'required|min:3|max:250'"
                     v-model="createItem.description"
                   />
@@ -86,13 +86,13 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <label>
-                    نوع المحتوى
+                    {{$t('content.type')}}
                     <span><i class="fa-solid fa-asterisk"></i></span>
                   </label>
                   <SelectSearch
                     v-model="createItem.type"
-                    name="نوع الملف"
-                    placeholder="أختر نوع الملف"
+                    :name="$t('content.type')"
+                    :placeholder="$t('content.selectType')"
                     :options="types"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -110,7 +110,7 @@
                   :type-of-attachment="'audio'"
                   :dropIdRef="'audioFile'"
                   :accept-files="'audio/mpeg,audio/mpga,audio/mp3,audio/wav'"
-                  :label="'ملف الصوت'"
+                  :label="$t('PAPER_WORK.audioFile')"
                   :name="'audioFile'"
                   :rules="'required'"
                   @setFileId="setAudioId($event)"
@@ -121,7 +121,7 @@
                     attachment.audioChanged === false &&
                     !attachment.audioChangedRequest
                   "
-                  :header="$t('ملف الصوت')"
+                  :header="$t('PAPER_WORK.audioFile')"
                   :media-name="attachment.audio_name"
                   :file-size="attachment.audio_size"
                   :typeOfMedia="'audio'"
@@ -137,7 +137,7 @@
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.imageChangedRequest"
                   :rules="'required'"
-                  :label="'ملف صورة '"
+                  :label="$t('BADGE.bade_logo')"
                   :type-of-attachment="'image'"
                   :accept-files="'image/jpeg,image/png,image/jpg,image/gif'"
                   @setFileId="setImageId"
@@ -172,7 +172,7 @@
                   :name="'VideoWithout'"
                   :rules="'required'"
                   @setFileId="setVideoWithOutMuiscFileId($event)"
-                  :label="'ملف الفيديو بدون موسيقى'"
+                  :label="$t('VIDEO.videoWithoutMusic')"
                 />
 
                 <PreviewMedia
@@ -181,7 +181,7 @@
                     attachment.videoWithOutMuiscChanged === false &&
                     !attachment.videoWithOutMuiscChangedRequest
                   "
-                  :header="`ملف الفيديو بدون موسيقى`"
+                  :header="$t('VIDEO.videoWithoutMusic')"
                   :media-name="attachment.video_without_music_name"
                   :file-size="attachment.video_without_music_size"
                   :image-url="attachment.videoWithOutMuisc"
@@ -200,7 +200,7 @@
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.videoWithMuiscChangedRequest"
                   :type-of-attachment="'video'"
-                  :label="'ملف الفيديو'"
+                  :label="$t('VIDEO.videoWithMusic')"
                   :name="'VideFile'"
                   :dropIdRef="'VideFile'"
                   :accept-files="'video/mp4,video/avi,video/mov'"
@@ -212,7 +212,7 @@
                     attachment.videoWithMuiscChanged === false &&
                     !attachment.videoWithMuiscChangedRequest
                   "
-                  :header="`ملف الفيديو`"
+                  :header="$t('VIDEO.videoWithMusic')"
                   :media-name="attachment.video_with_music_name"
                   :file-size="attachment.video_with_music_size"
                   :image-url="attachment.videoWithMuisc"
@@ -231,7 +231,7 @@
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.fileChangedRequest"
                   :type-of-attachment="'pdf'"
-                  :label="'ملف المحتوي'"
+                  :label="$t('content.content_file')"
                   :name="'File'"
                   :dropIdRef="'File'"
                   :accept-files="'application/pdf'"
@@ -243,7 +243,7 @@
                     attachment.fileChanged === false &&
                     !attachment.fileChangedRequest
                   "
-                  :header="`ملف المحتوي`"
+                  :header="$t('content.content_file')"
                   :media-name="attachment.file_name"
                   :file-size="attachment.file_size"
                   :image-url="attachment.file"
@@ -261,10 +261,10 @@
                 <div class="hold-field">
                   <TextAreaField
                     v-if="createItem.type===150"
-                    :label="'اكتب ملحوظة'"
+                    :label="$t('content.writeNote')"
                     :rules="'required|min:3|max:250'"
                     v-model="createItem.note"
-                    :name="'الملحوظة'"
+                    :name="$t('content.note')"
                   />
 
                 </div>
@@ -274,9 +274,9 @@
                 <div class="hold-field">
                   <TextField
                     v-model="createItem.link"
-                    :label="'رابط'"
-                    :name="'رابط'"
-                    placeholder="اكتب رابط"
+                    :label="$t('content.link')"
+                    :name="$t('content.link')"
+                    :placeholder="$t('content.writeLink')"
                     :rules="'required|urlLink'"
                   ></TextField>
                 </div>

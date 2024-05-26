@@ -75,6 +75,10 @@
       font-weight: 600;
       font-size: 1.2rem;
       cursor: pointer;
+      &:lang(en){
+        left: auto;
+        right: 1rem;
+      }
     }
   }
 }

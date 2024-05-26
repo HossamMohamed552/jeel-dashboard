@@ -90,7 +90,7 @@ export default {
         },
       ],
       fieldsList: [
-        { key: "vid", label: "التسلسل" },
+        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
         { key: "category.name", label: "التصنيف" },
         { key: "name.ar", label: "الاسم بالعربية" },
         { key: "name.en", label: "الاسم بالانجليزية" },

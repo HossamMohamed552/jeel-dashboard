@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة الفيديوهات'" :number-of-item="totalNumber"
+    <ListItems :header-name="$t('VIDEO.videos')" :number-of-item="totalNumber"
                :tableItems="videosList" :fields-list="fieldsList" :v-search-model="groupSearchWord"
                @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
@@ -16,17 +16,17 @@
         <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddSchools"
                 v-if="user.permissions.includes(`add-video`)">
           <img src="@/assets/images/icons/plus.svg">
-          <span> إضافة فيديو جديد</span>
+          <span>{{ $t('VIDEO.ADD_NEW') }}</span>
         </Button>
       </template>
     </ListItems>
-    <Modal :content-message="'حذف الفيديو'"
-           :content-message-question="'هل انت متأكد من حذف الفيديو'"
+    <Modal :content-message="$t('VIDEO.deleteVideo')"
+           :content-message-question="$t('VIDEO.confirm_delete_video')"
            :showModal="showModal"
            @cancel="cancel($event)"
            :is-warning="true"
            @cancelWithConfirm="cancelWithConfirm($event)"/>
-    <Modal :content-message="'لا يمكن حذف هذا العنصر لأنه مرتبط بعناصر أخرى'"
+    <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
   </section>
@@ -42,6 +42,22 @@ import {mapGetters} from "vuex";
 export default {
   components: {Modal, ListItems, Button},
   computed: {
+    fieldsList() {
+      return [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {key: "title", label: this.$i18n.t('TABLE_FIELDS.videoTitle')},
+        {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
+        {key: "lesson.name", label: this.$i18n.t('TABLE_FIELDS.lesson')},
+        {
+          key: "video_with_music_transcode",
+          label: this.$i18n.t('TABLE_FIELDS.video_with_music_transcode')
+        },
+        {key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions")},
+      ]
+    },
     ...mapGetters(['user'])
   },
   data() {
@@ -53,17 +69,6 @@ export default {
       groupSearchWord: "",
       videosList: [],
       totalNumber: 0,
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {key: "title", label: this.$i18n.t('TABLE_FIELDS.videoTitle')},
-        {key: "learningPath.name", label: this.$i18n.t('TABLE_FIELDS.learning_path')},
-        {key: "lesson.name", label: this.$i18n.t('TABLE_FIELDS.lesson')},
-        {key: "video_with_music_transcode", label: this.$i18n.t('TABLE_FIELDS.video_with_music_transcode')},
-        {key: "actions", label: "الإجراء"},
-      ],
     }
   },
   methods: {
@@ -79,9 +84,6 @@ export default {
       }).finally(() => {
         this.loading = false;
       });
-    },
-    searchBy($event) {
-
     },
     detailItem($event) {
       this.$router.push(`/dashboard/videos/show/${$event}`)

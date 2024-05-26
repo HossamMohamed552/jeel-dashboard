@@ -18,7 +18,7 @@
                 @click="handleAdd"
                 custom-class="submit-btn"
               >
-                إضافة
+                {{ $t('ADD_ANSWER') }}
               </Button>
             </b-col>
           </template>
@@ -34,11 +34,11 @@
             <slot></slot>
             <div class="steps">
               <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
-                السابق
+                {{ $t('GLOBAL_BACK') }}
               </Button>
 
               <Button custom-class="submit-btn" :disabled="!isNextStep" @click="nextStep">
-                التالي
+                {{ $t('GLOBAL_NEXT') }}
               </Button>
             </div>
           </div>
@@ -79,7 +79,7 @@ export default {
       notifactionGroup: [],
       notifactionIndex: 0,
       fieldsList: [
-        { key: "vid", label: "التسلسل" },
+        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
         { key: "name", label: "عنوان الإشعار" },
         { key: "start_date", label: "تاريخ ووقت الإشعار" },
         { key: "original_url", label: "صوت الإشعار" },

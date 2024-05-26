@@ -29,7 +29,7 @@
     </ListItems>
     <Modal
       :content-message="'حذف الصف الدراسي'"
-      :content-message-question="'هل انت متأكد من حذف الصف الدراسي'"
+      :content-message-question="'هل أنت متأكد من حذف الصف الدراسي؟'"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"

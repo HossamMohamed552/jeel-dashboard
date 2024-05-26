@@ -61,6 +61,6 @@ extend("audio", {
     if (audioExtensions.includes(extension)) {
       return true;
     }
-    return "التسجيل الصوتى يجب ان يكون صوت";
+    return "التسجيل الصوتي يجب ان يكون صوت";
   },
 });

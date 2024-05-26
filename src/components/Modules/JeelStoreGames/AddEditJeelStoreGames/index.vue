@@ -10,9 +10,9 @@
                 <div class="hold-field">
                   <TextField
                       v-model="createJeelStoreGames.name"
-                      :label="'اسم المجموعه'"
-                      :name="'اسم المجموعه'"
-                      placeholder="أختر إسم المجموعه"
+                      :label="'اسم المجموعة'"
+                      :name="'اسم المجموعة'"
+                      placeholder="اختر اسم المجموعة"
                       :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
@@ -21,13 +21,13 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
                   <label>
-                    الصف الدراسى
+                    الصف الدراسي
                     <span><i class="fa-solid fa-asterisk"></i></span>
                   </label>
                   <SelectSearch
                       v-model="createJeelStoreGames.level_id"
-                      :name="'أختر الصف الدراسى'"
-                      placeholder="أختر الصف الدراسى"
+                      :name="'اختر الصف الدراسي'"
+                      placeholder="اختر الصف الدراسي"
                       :options="levels"
                       :reduce="(option) => option.id"
                       :get-option-label="(option) => option.name"
@@ -41,7 +41,7 @@
                     v-model="createJeelStoreGames.gems"
                     :label="'عدد الجيمز'"
                     :name="'عدد الجيمز'"
-                    placeholder="أختر عدد الجيمز"
+                    placeholder="اختر عدد الجيمز"
                     :rules="'required'"
                   ></TextField>
                 </div>
@@ -52,7 +52,7 @@
                     v-model="createJeelStoreGames.jeel_coins"
                     :label="'عدد العملات'"
                     :name="'عدد العملات'"
-                    placeholder="أختر عدد العملات"
+                    placeholder="اختر عدد العملات"
                     :rules="'required'"
                   ></TextField>
                 </div>
@@ -62,7 +62,7 @@
                 <UploadAttachment
                   v-if="!$route.params.id || createJeelStoreGames.thumbnailChangedRequest"
                   :rules="'required'"
-                  :label="'لوجو المجموعه'"
+                  :label="'لوجو المجموعة'"
                   :type-of-attachment="'image'"
                   :accept-files="'image/*'"
                   @setFileId="setImageId"

@@ -2,7 +2,7 @@
   <div class="container-fluid custom-container">
     <div class="add-edit-learning-skill">
       <div class="add-edit-term-form">
-        <h3>{{ $route.params.id ? "تعديل المجموعة" : "اضافة مجموعة جديدة" }}</h3>
+        <h3>{{ $route.params.id ? $t('seasonalGroup.edit') : $t('seasonalGroup.add_new') }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditSeasonalMissionGroup">
           <form @submit.prevent="onSubmit" class="mt-5">
             <b-row>
@@ -10,16 +10,16 @@
                 <div class="hold-field">
                   <TextField
                     v-model="name"
-                    label="اسم المجموعة"
-                    name="اضافة مجموعة"
-                    placeholder="أدخل اسم المجموعة"
+                    :label="$t('seasonalGroup.nameGroup')"
+                    :name="$t('seasonalGroup.nameGroup')"
+                    :placeholder="$t('seasonalGroup.enterName')"
                     :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>
               </b-col>
               <b-col lg="12" cols="12" class="mb-3 mt-4">
                 <UploadAttachment
-                  :label="'لوجو المجموعة'"
+                  :label="$t('seasonalGroup.logoGroup')"
                   v-if="isLogoDeleted || !$route.params.id"
                   @setFileId="setLogoId"
                   :type-of-attachment="'image'"
@@ -27,7 +27,7 @@
                 />
                 <PreviewMedia
                   v-else
-                  :header="'لوجو المجموعة'"
+                  :header="$t('seasonalGroup.logoGroup')"
                   :typeOfMedia="'image'"
                   :show-remove-button="true"
                   :mediaName="fileName"
@@ -125,6 +125,9 @@ export default {
     setLogoId(event) {
       this.logoId = event;
       this.logoChangedRequest = true
+    },
+    hideModal(){
+      this.$bvModal.hide('holdContent')
     },
     handleCancel() {
       this.$emit("handleCancel");

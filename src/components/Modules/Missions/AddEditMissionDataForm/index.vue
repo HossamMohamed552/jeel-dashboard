@@ -146,7 +146,7 @@
                           :typeOfMedia="'audio'"
                           :show-remove-button="true"
                           @removeFile="removeFile('missionAudio','missionAudioChanged','missionAudioChangedRequest')"/>
-            <p v-if="mission.missionAudioChangedRequest" class="invalid-feedback d-block">ملف الفيديو بدون موسيقى مطلوب</p>
+            <p v-if="mission.missionAudioChangedRequest" class="invalid-feedback d-block">{{$t('MISSIONS.videoWithOutRequired')}}</p>
           </div>
         </b-col>
       </b-row>

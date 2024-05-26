@@ -1,7 +1,7 @@
 <template>
   <div class="add-mission">
     <section class="container-fluid custom-container">
-      <Modal :content-message="'تم التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
+      <Modal :content-message="$t('CONTROLS.edit_successfully')" :showModal="showModal" :is-success="true"/>
       <Stepper
         v-show="currentStep === 0 || currentStep === 1 || currentStep === 2  || currentStep === 3"
         class="mt-5 mb-3"
@@ -38,51 +38,52 @@
         <div class="mission-review ">
           <b-row>
             <b-col lg="4">
-              <h6>السنة الدراسية</h6>
+              <h6>{{ $t('MISSIONS.level') }}</h6>
               <p>{{ levels.find((item) => item.id === collectData.level_id).name }}</p>
             </b-col>
             <b-col lg="4">
-              <h6>إسم المهمة</h6>
+              <h6>{{ $t('MISSIONS.name') }}</h6>
               <p>{{ collectData.name }}</p>
             </b-col>
             <b-col lg="4">
-              <h6>الدولة</h6>
+              <h6> {{ $t('MISSIONS.country') }}</h6>
               <p>{{ countries.find((item) => item.id === collectData.country_id).name }}</p>
             </b-col>
             <b-col lg="4">
-              <h6>الصف الدراسى</h6>
+              <h6>{{ $t('MISSIONS.term') }}</h6>
               <p>{{ terms.find((item) => item.id === collectData.term_id).name }}</p>
             </b-col>
             <b-col lg="4">
-              <h6>الوصف</h6>
+              <h6>{{ $t('MISSIONS.description') }}</h6>
               <p>{{ collectData.description }}</p>
             </b-col>
             <b-col lg="4">
-              <h6>المدة الزمنية</h6>
+              <h6>{{ $t('MISSIONS.duration') }}</h6>
               <p>{{ collectData.duration }}</p>
             </b-col>
             <b-col lg="12">
               <div>
-                <p>المحتوى</p>
+                <p>{{ $t('MISSIONS.content') }}</p>
                 <div v-for="path in collectData.paths" :key="path.id">
                   <b-row>
                     <b-col lg="12">
-                      <h6>المسار</h6>
+                      <h6>{{ $t('MISSIONS.path') }}</h6>
                       <p>{{ path.name }}</p>
                     </b-col>
                     <b-col lg="3"
                            v-if="Array.from(path.videos).filter((item) => path.videoIds.includes(item.id)).length>0">
                       <div>
-                        <h6>الفيديوهات</h6>
+                        <h6>{{ $t('MISSIONS.videos') }}</h6>
                         <span
                           v-for="(video, index) in Array.from(path.videos).filter((item) => path.videoIds.includes(item.id))"
                           :key="`${video.id} ${index}`"
                         >{{ video.title }}</span>
                       </div>
                     </b-col>
-                    <b-col lg="3" v-if="Array.from(path.paperWorks).filter((item) => path.paperWorkIds.includes(item.id) ).length>0">
+                    <b-col lg="3"
+                           v-if="Array.from(path.paperWorks).filter((item) => path.paperWorkIds.includes(item.id) ).length>0">
                       <div>
-                        <h6>اوراق العمل</h6>
+                        <h6>{{ $t('MISSIONS.paperWorks') }}</h6>
                         <span
                           v-for="(paperWork, index) in Array.from(path.paperWorks).filter((item) =>
                           path.paperWorkIds.includes(item.id)
@@ -92,9 +93,10 @@
                         >
                       </div>
                     </b-col>
-                    <b-col lg="3" v-if="Array.from(path.quizzes).filter((item) => path.quizzesIds.includes(item.id)).length>0">
+                    <b-col lg="3"
+                           v-if="Array.from(path.quizzes).filter((item) => path.quizzesIds.includes(item.id)).length>0">
                       <div>
-                        <h6>التمارين</h6>
+                        <h6>{{ $t('MISSIONS.quizzes') }}</h6>
                         <span
                           v-for="(quiz, index) in Array.from(path.quizzes).filter((item) =>
                           path.quizzesIds.includes(item.id)
@@ -104,10 +106,13 @@
                         >
                       </div>
                     </b-col>
-                    <b-col lg="3" v-if="Array.from(path.quizzes).filter((item) => path.quizzesIds.includes(item.id)).length>0">
+                    <b-col lg="3"
+                           v-if="Array.from(path.quizzes).filter((item) => path.quizzesIds.includes(item.id)).length>0">
                       <div>
-                        <h6>النسجيلات الصوتية</h6>
-                        <span v-for="(task, index) in Array.from(path.tasks).filter((item) =>  path.tasksIds.includes(item.id)  )" :key="`${task.id} ${index}`">{{ task.name }}</span>
+                        <h6>{{ $t('MISSIONS.tasks') }}</h6>
+                        <span
+                          v-for="(task, index) in Array.from(path.tasks).filter((item) =>  path.tasksIds.includes(item.id)  )"
+                          :key="`${task.id} ${index}`">{{ task.name }}</span>
                       </div>
                     </b-col>
                   </b-row>
@@ -168,7 +173,14 @@ export default {
       level: null,
       collectData: {},
       term: null,
-      steps: [
+      currentStep: 0,
+      learningPathSelected: [],
+      lessonsSelected: [],
+    };
+  },
+  computed: {
+    steps() {
+      return [
         {
           icon: "1",
           title: this.$t("MISSIONS.STEP_ONE"),
@@ -185,11 +197,8 @@ export default {
           icon: "4",
           title: this.$t("MISSIONS.STEP_FOUR"),
         }
-      ],
-      currentStep: 0,
-      learningPathSelected: [],
-      lessonsSelected: [],
-    };
+      ]
+    }
   },
   methods: {
     handleCancel() {

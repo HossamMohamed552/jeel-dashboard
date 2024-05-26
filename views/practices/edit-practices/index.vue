@@ -1,6 +1,6 @@
 <template>
   <div class="add-practice">
-    <Modal :content-message="'تم التعديل بنجاح'" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="$t('CONTROLS.edit_successfully')" :showModal="showModal" :is-success="true"/>
     <AddEditQuiz @handleEditQuiz="handleEditQuiz" @handleCancel="handleCancel"/>
   </div>
 </template>

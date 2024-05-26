@@ -1,6 +1,7 @@
 <template>
   <div class="add-mission">
-    <Modal :content-message="'تمت الإضافة بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal"
+           :is-success="true"/>
     <div class="add-edit-mission">
       <div class="container-fluid custom-container">
         <div class="add-edit-mission-form">
@@ -39,72 +40,74 @@
             <div class="mission-review ">
               <b-row>
                 <b-col lg="4">
-                  <h6>السنة الدراسية</h6>
+                  <h6>{{ $t('MISSIONS.level') }}</h6>
                   <p>{{ levels.find((item) => item.id === collectData.level_id).name }}</p>
                 </b-col>
                 <b-col lg="4">
-                  <h6>إسم المهمة</h6>
+                  <h6>{{ $t('MISSIONS.name') }}</h6>
                   <p>{{ collectData.name }}</p>
                 </b-col>
                 <b-col lg="4">
-                  <h6>الدولة</h6>
+                  <h6> {{ $t('MISSIONS.country') }}</h6>
                   <p>{{ countries.find((item) => item.id === collectData.country_id).name }}</p>
                 </b-col>
                 <b-col lg="4">
-                  <h6>الصف الدراسى</h6>
+                  <h6>{{ $t('MISSIONS.term') }}</h6>
                   <p>{{ terms.find((item) => item.id === collectData.term_id).name }}</p>
                 </b-col>
                 <b-col lg="4">
-                  <h6>الوصف</h6>
+                  <h6>{{ $t('MISSIONS.description') }}</h6>
                   <p>{{ collectData.description }}</p>
                 </b-col>
                 <b-col lg="4">
-                  <h6>المدة الزمنية</h6>
+                  <h6>{{ $t('MISSIONS.duration') }}</h6>
                   <p>{{ collectData.duration }}</p>
                 </b-col>
                 <b-col lg="12">
                   <div>
-                    <p>المحتوى</p>
+                    <p>{{ $t('MISSIONS.content') }}</p>
                     <div v-for="path in collectData.paths" :key="path.id">
                       <b-row>
                         <b-col lg="12">
-                          <h6>المسار</h6>
+                          <h6>{{ $t('MISSIONS.path') }}</h6>
                           <p>{{ path.name }}</p>
                         </b-col>
-                        <b-col lg="3">
+                        <b-col lg="3"
+                               v-if="Array.from(path.videos).filter((item) =>  path.videoIds.includes(item.id)).length>0">
                           <div>
-                            <h6>الفيديوهات</h6>
+                            <h6>{{ $t('MISSIONS.videos') }}</h6>
                             <span
-                              v-for="(video, index) in Array.from(path.videos).filter((item) =>
-                          path.videoIds.includes(item.id)
-                        )"
-                              :key="`${video.id} ${index}`"
-                            >{{ video.title }}</span
-                            >
+                              v-for="(video, index) in Array.from(path.videos).filter((item) =>  path.videoIds.includes(item.id))"
+                              :key="`${video.id} ${index}`">{{ video.title }}</span>
                           </div>
                         </b-col>
-                        <b-col lg="3">
+                        <b-col lg="3"
+                               v-if="Array.from(path.paperWorks).filter((item) => path.paperWorkIds.includes(item.id)).length>0">
                           <div>
-                            <h6>اوراق العمل</h6>
-                            <span v-for="(paperWork, index) in Array.from(path.paperWorks).filter((item) => path.paperWorkIds.includes(item.id) )" :key="`${paperWork.id} ${index}`">{{ paperWork.name }}</span>
+                            <h6>{{ $t('MISSIONS.paperWorks') }}</h6>
+                            <span
+                              v-for="(paperWork, index) in Array.from(path.paperWorks).filter((item) => path.paperWorkIds.includes(item.id))"
+                              :key="`${paperWork.id} ${index}`">{{ paperWork.name }}</span>
                           </div>
                         </b-col>
-                        <b-col lg="3">
+                        <b-col lg="3"
+                               v-if="Array.from(path.quizzes).filter((item) => path.quizzesIds.includes(item.id)).length>0">
                           <div>
-                            <h6>التمارين</h6>
+                            <h6>{{ $t('MISSIONS.quizzes') }}</h6>
                             <span
-                              v-for="(quiz, index) in Array.from(path.quizzes).filter((item) =>
-                          path.quizzesIds.includes(item.id)
-                        )"
+                              v-for="(quiz, index) in Array.from(path.quizzes).filter((item) => path.quizzesIds.includes(item.id))"
                               :key="`${quiz.id} ${index}`"
                             >{{ quiz.name }}</span
                             >
                           </div>
                         </b-col>
-                        <b-col lg="3" v-if="Array.from(path.quizzes).filter((item) => path.quizzesIds.includes(item.id)).length>0">
+                        <b-col lg="3"
+                               v-if="Array.from(path.tasks).filter((item) => path.tasksIds.includes(item.id)).length>0">
                           <div>
-                            <h6>النسجيلات الصوتية</h6>
-                            <span v-for="(task, index) in Array.from(path.tasks).filter((item) =>  path.tasksIds.includes(item.id)  )" :key="`${task.id} ${index}`">{{ task.name }}</span>
+                            <h6>{{ $t('MISSIONS.tasks') }}</h6>
+                            <span
+                              v-for="(task, index) in Array.from(path.tasks).filter((item) =>  path.tasksIds.includes(item.id)  )"
+                              :key="`${task.id} ${index}`">{{ task.name }}</span>
                           </div>
                         </b-col>
                       </b-row>
@@ -118,7 +121,8 @@
                     <Button :loading="loading" custom-class="submit-btn" @click="createMission">
                       {{ $t("GLOBAL_SAVE") }}
                     </Button>
-                    <Button class="mx-3" @click="backToMissionContentStep" custom-class="submit-btn back-btn">
+                    <Button class="mx-3" @click="backToMissionContentStep"
+                            custom-class="submit-btn back-btn">
                       {{ $t("GLOBAL_BACK") }}
                     </Button>
                   </div>
@@ -137,7 +141,8 @@
 <script>
 import AddEditMissionDataForm from "@/components/Modules/Missions/AddEditMissionDataForm/index.vue";
 import AddEditContent from "@/components/Modules/Missions/AddEditContent/index.vue";
-import AddEditCompleteTaskContent from "@/components/Modules/Missions/AddEditCompleteTaskContent/index.vue";
+import AddEditCompleteTaskContent
+  from "@/components/Modules/Missions/AddEditCompleteTaskContent/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import Stepper from "@/components/Shared/Stepper/index.vue";
@@ -165,26 +170,8 @@ export default {
       levels: [],
       level: null,
       term: null,
-      lessonsSelected:null,
+      lessonsSelected: null,
       collectData: {},
-      steps: [
-        {
-          icon: "1",
-          title: this.$t("MISSIONS.STEP_ONE"),
-        },
-        {
-          icon: "2",
-          title: this.$t("MISSIONS.STEP_TWO"),
-        },
-        {
-          icon: "3",
-          title: this.$t("MISSIONS.STEP_THREE"),
-        },
-        {
-          icon: "4",
-          title: this.$t("MISSIONS.STEP_FOUR"),
-        }
-      ],
       currentStep: 0,
       learningPathSelected: [],
     };
@@ -214,12 +201,12 @@ export default {
       this.handleNavigation(1);
     },
     goToMissionContentStep(data) {
-      Object.assign(this.collectData, { paths: [...data] });
+      Object.assign(this.collectData, {paths: [...data]});
       this.handleSaveCollectedData(data);
       this.handleNavigation(2);
     },
     goToFinalStep(completeTaskContent) {
-      Object.assign(this.collectData, { completeTaskContent: [...completeTaskContent] });
+      Object.assign(this.collectData, {completeTaskContent: [...completeTaskContent]});
       this.handleSaveCollectedData(this.collectData);
       this.handleNavigation(3);
     },
@@ -238,17 +225,18 @@ export default {
       if (this.collectData.thumbnail)
         formData.append("mission_image", this.collectData.thumbnail);
       if (this.collectData.missionAudio)
-      formData.append("mission_audio", this.collectData.missionAudio);
+        formData.append("mission_audio", this.collectData.missionAudio);
       // for to get learnPaths
-      for (let learnPath = 0; learnPath < this.collectData.paths.length; ) {
+      for (let learnPath = 0; learnPath < this.collectData.paths.length;) {
         formData.append(`learningpaths[${learnPath}][id]`, this.collectData.paths[learnPath].id);
-        for (let video = 0; video < this.collectData.paths[learnPath].videoIds.length; ) {
+        for (let video = 0; video < this.collectData.paths[learnPath].videoIds.length;) {
           formData.append(`learningpaths[${learnPath}][videos][${video}][id]`, this.collectData.paths[learnPath].videoIds[video]);
           formData.append(`learningpaths[${learnPath}][videos][${video}][order]`, video + 1);
           formData.append(`learningpaths[${learnPath}][videos][${video}][is_selected]`, 1);
           video++;
         }
-        for (let paperWork = 0; paperWork < this.collectData.paths[learnPath].paperWorkIds.length;) {formData.append(
+        for (let paperWork = 0; paperWork < this.collectData.paths[learnPath].paperWorkIds.length;) {
+          formData.append(
             `learningpaths[${learnPath}][papersworks][${paperWork}][id]`,
             this.collectData.paths[learnPath].paperWorkIds[paperWork]
           );
@@ -259,7 +247,7 @@ export default {
           formData.append(`learningpaths[${learnPath}][papersworks][${paperWork}][is_selected]`, 1);
           paperWork++;
         }
-        for (let quiz = 0; quiz < this.collectData.paths[learnPath].quizzesIds.length; ) {
+        for (let quiz = 0; quiz < this.collectData.paths[learnPath].quizzesIds.length;) {
           formData.append(
             `learningpaths[${learnPath}][quizzes][${quiz}][id]`,
             this.collectData.paths[learnPath].quizzesIds[quiz]
@@ -271,7 +259,7 @@ export default {
         // formData.append(`learningpaths[0][quizzes][0][id]`,1);
         // formData.append(`learningpaths[0][quizzes][0][order]`,1);
         // formData.append(`learningpaths[0][quizzes][0][is_selected]`, 1);
-        for (let task = 0; task < this.collectData.paths[learnPath].tasksIds.length; ) {
+        for (let task = 0; task < this.collectData.paths[learnPath].tasksIds.length;) {
           formData.append(
             `learningpaths[${learnPath}][tasks][${task}][id]`,
             this.collectData.paths[learnPath].tasksIds[task]
@@ -282,7 +270,7 @@ export default {
         }
         learnPath++;
       }
-      this.collectData.completeTaskContent.forEach((content,index) => {
+      this.collectData.completeTaskContent.forEach((content, index) => {
         formData.append(`badge_rewards[${index}][badge_id]`, content.badgeId);
         formData.append(`badge_rewards[${index}][library_id]`, content.badgeRewardId);
       });
@@ -298,15 +286,17 @@ export default {
         .then((res) => {
           this.loading = false;
           this.showModal = true;
-          setTimeout(() => {this.showModal = false;}, 3000);
+          setTimeout(() => {
+            this.showModal = false;
+          }, 3000);
           this.$router.push("/dashboard/missions");
-        }).catch(()=>{
+        }).catch(() => {
         this.loading = false;
         this.showModal = false;
       })
     },
     handleAssignObject(data) {
-      Object.assign(this.collectData, { ...data });
+      Object.assign(this.collectData, {...data});
       this.handleSaveCollectedData(data);
     },
     handleSaveCollectedData(data) {
@@ -316,6 +306,28 @@ export default {
       this.currentStep = nextStep;
     },
   },
+  computed: {
+    steps() {
+      return [
+        {
+          icon: "1",
+          title: this.$t("MISSIONS.STEP_ONE"),
+        },
+        {
+          icon: "2",
+          title: this.$t("MISSIONS.STEP_TWO"),
+        },
+        {
+          icon: "3",
+          title: this.$t("MISSIONS.STEP_THREE"),
+        },
+        {
+          icon: "4",
+          title: this.$t("MISSIONS.STEP_FOUR"),
+        }
+      ]
+    },
+  }
 };
 </script>
 <style scoped lang="scss">

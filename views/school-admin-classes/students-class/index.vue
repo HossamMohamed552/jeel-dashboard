@@ -32,7 +32,7 @@
                       v-model="enrollment.student_id"
                       :label="$t('schoolAdmin.studentName')"
                       :name="$t('schoolAdmin.studentName')"
-                      placeholder="ادخل اسم الطالب"
+                      placeholder="أدخل اسم الطالب"
                       :options="studentList"
                       :reduce="(option) => option.id"
                       :get-option-label="(option) => option.name"

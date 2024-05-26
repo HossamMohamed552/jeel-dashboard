@@ -12,14 +12,14 @@
         <slot></slot>
         <div class="steps">
           <Button :custom-class="'cancel-btn margin'" v-if="currentStep > 0" @click="prevStep">
-            السابق
+            {{ $t('GLOBAL_BACK') }}
           </Button>
           <Button
             :custom-class="'submit-btn'"
             :disabled="isAddForm ? invalid || !imageUploaded : invalid"
             @click="nextStep"
           >
-            التالي
+            {{ $t('GLOBAL_NEXT') }}
           </Button>
         </div>
       </div>

@@ -19,7 +19,7 @@
             <b-col lg="12">
               <UploadAttachment :type-of-attachment="'audio'"
                                 :dropIdRef="'audioFile'"
-                                :accept-files="'audio/*'" :label="'ملف الصوت لنص السؤال'"
+                                :accept-files="'audio/*'" :label="$t('QUESTIONS.audio_file')"
                                 :name="'audioFile'"
                                 :rules="'required'"
                                 @setFileId="setQuestionAudioId('question_audio',$event)"
@@ -91,16 +91,16 @@
             <b-col lg="2" class="btn-holder">
               <div class="hold-field">
                 <span class="add-deleteBtn delete-answer" v-if="answersListMcQ.length > 1"
-                      @click="deleteAnswer(idx)">حذف</span>
+                      @click="deleteAnswer(idx)">{{ $t('BUTTONS.DELETE') }}</span>
                 <div class="addAnswer" v-if="answersListMcQ.length - 1 === idx"
                      @click="addAnswerMcq">
-                  <img src="@/assets/images/icons/add_answer.png"> <span>إضافة إجابة</span>
+                  <img src="@/assets/images/icons/add_answer.png"> <span>{{ $t('QUESTIONS.add') }}</span>
                 </div>
               </div>
             </b-col>
           </b-row>
           <b-row v-if="answersListMcQ.length > 8">
-            <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+            <b-col lg="12" class="text-danger">{{ $t('QUESTIONS.maxLengthOfAnswers') }}</b-col>
           </b-row>
           <b-row>
             <div class="action-holder mt-5">
@@ -216,7 +216,7 @@
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
               <span class="add-deleteBtn delete-answer" v-if="answersListMcQImage.length > 1"
-                    @click="answersListMcQImage.splice(idx, 1)">حذف</span>
+                    @click="answersListMcQImage.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
@@ -233,11 +233,11 @@
             <b-col lg="12">
               <span class="addAnswer" v-if="answersListMcQImage.length - 1 === idx"
                     @click="addAnswerMcqImage"><img
-                src="@/assets/images/icons/add_answer.png"> <span>إضافة إجابة</span></span>
+                src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
             </b-col>
           </b-row>
           <b-row v-if="answersListMcQImage.length > 8">
-            <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+            <b-col lg="12" class="text-danger">{{ $t('QUESTIONS.maxLengthOfAnswers') }}</b-col>
           </b-row>
           <b-row>
             <div class="action-holder">
@@ -339,7 +339,7 @@
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
               <span class="add-deleteBtn delete-answer" v-if="answersListMcQImage.length > 1"
-                    @click="answersListMcQImage.splice(idx, 1)">حذف</span>
+                    @click="answersListMcQImage.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
@@ -357,12 +357,12 @@
               <div class="hold-field">
                 <span class="addAnswer" v-if="answersListMcQImage.length - 1 === idx"
                       @click="addAnswerMcqImage"><img
-                  src="@/assets/images/icons/add_answer.png"> <span>إضافة إجابة</span></span>
+                  src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
               </div>
             </b-col>
           </b-row>
           <b-row v-if="answersListMcQImage.length > 8">
-            <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+            <b-col lg="12" class="text-danger">{{ $t('QUESTIONS.maxLengthOfAnswers') }}</b-col>
           </b-row>
           <b-row>
             <div class="action-holder">
@@ -466,7 +466,7 @@
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
               <span class="add-deleteBtn delete-answer" v-if="answersListMcQ.length > 1"
-                    @click="answersListMcQ.splice(idx, 1)">حذف</span>
+                    @click="answersListMcQ.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
             </b-col>
             <b-col lg="12" class="mb-3">
               <UploadAttachment :type-of-attachment="'audio'"
@@ -480,11 +480,11 @@
             </b-col>
             <b-col lg="12" class="btn-holder">
               <span class="addAnswer" v-if="answersListMcQ.length - 1 === idx"
-                    @click="addAnswerMcq"><img src="@/assets/images/icons/add_answer.png"> <span>إضافة إجابة</span></span>
+                    @click="addAnswerMcq"><img src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
             </b-col>
           </b-row>
           <b-row v-if="answersListMcQ.length > 8">
-            <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+            <b-col lg="12" class="text-danger">{{ $t('QUESTIONS.maxLengthOfAnswers') }}</b-col>
           </b-row>
           <b-row>
             <div class="action-holder">
@@ -598,7 +598,7 @@
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
               <span class="add-deleteBtn delete-answer" v-if="answersListSelect.length > 1"
-                    @click="answersListSelect.splice(idx, 1)">حذف</span>
+                    @click="answersListSelect.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
@@ -614,11 +614,11 @@
             </b-col>
             <b-col lg="12" class="btn-holder">
               <span class="addAnswer" v-if="answersListSelect.length - 1 === idx"
-                    @click="addAnswerSelect"><img src="@/assets/images/icons/add_answer.png"> <span>إضافة إجابة</span></span>
+                    @click="addAnswerSelect"><img src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
             </b-col>
           </b-row>
           <b-row v-if="answersListSelect.length > 8">
-            <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+            <b-col lg="12" class="text-danger">{{ $t('QUESTIONS.maxLengthOfAnswers') }}</b-col>
           </b-row>
           <b-row>
             <div class="action-holder">
@@ -727,7 +727,7 @@
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
               <span class="add-deleteBtn delete-answer"
                     v-if="answersListSelectImage.length > 1"
-                    @click="answersListSelectImage.splice(idx, 1)">حذف</span>
+                    @click="answersListSelectImage.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
@@ -744,11 +744,11 @@
             <b-col lg="12" class="btn-holder">
               <span class="addAnswer" v-if="answersListSelectImage.length - 1 === idx"
                     @click="addAnswerSelectImage"><img
-                src="@/assets/images/icons/add_answer.png"> <span>إضافة إجابة</span></span>
+                src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
             </b-col>
           </b-row>
           <b-row v-if="answersListSelectImage.length > 8">
-            <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+            <b-col lg="12" class="text-danger">{{ $t('QUESTIONS.maxLengthOfAnswers') }}</b-col>
           </b-row>
           <b-row>
             <div class="action-holder">
@@ -859,16 +859,16 @@
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
               <span class="add-deleteBtn delete-answer" v-if="answersListSelectAudio.length > 1"
-                    @click="deleteAnswerSelectAudio(idx)">حذف</span>
+                    @click="deleteAnswerSelectAudio(idx)">{{ $t('BUTTONS.DELETE') }}</span>
             </b-col>
             <b-col lg="12">
               <span class="addAnswer" v-if="answersListSelectAudio.length - 1 === idx"
                     @click="addAnswerSelectAudio"><img
-                src="@/assets/images/icons/add_answer.png"> <span>إضافة إجابة</span></span>
+                src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
             </b-col>
           </b-row>
           <b-row v-if="answersListSelectAudio.length > 8">
-            <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+            <b-col lg="12" class="text-danger">{{ $t('QUESTIONS.maxLengthOfAnswers') }}</b-col>
           </b-row>
           <b-row>
             <div class="action-holder">
@@ -1152,12 +1152,12 @@
                   :rules="'required|max:100'"
                 ></TextField>
                 <div v-if="validSpace" class="text-danger">
-                  يجب ان يوجد مساحة خالية واحده فقط
+                  {{ $t('QUESTIONS.addSpace') }}
                 </div>
                 <div v-if="!lockBtn && formValues.question" class="text-danger">
-                  يجب إضافة مساحة خالية واحده فقط
+                  {{ $t('QUESTIONS.addSpace') }}
                 </div>
-                <div class="preview-question-heading">عرض السؤال</div>
+                <div class="preview-question-heading">{{ $t('QUESTIONS.viewQuestion') }}</div>
                 <div
                   v-html="previewQuestion"
                   class="preview-question d-flex align-items-center my-3"
@@ -1165,13 +1165,13 @@
               </div>
             </b-col>
             <b-col lg="3" class="mb-3">
-              <label class="invisible">إضافه مساحه خالية</label>
+              <label class="invisible">{{ $t('QUESTIONS.addWhiteSpace') }}</label>
               <div class="hold-field d-flex justify-content-between align-items-end">
                 <Button :custom-class="'rounded-btn'" @click="addSpace" :disabled="lockBtn">
-                  إضافه مساحه خالية
+                  {{ $t('QUESTIONS.addWhiteSpace') }}
                 </Button>
                 <Button :custom-class="'rounded-btn transparent-btn'" @click="removeSpace">
-                  إعاده ضبط
+                  {{$t('QUESTIONS.resetWhiteSpace')}}
                 </Button>
               </div>
             </b-col>
@@ -1244,7 +1244,7 @@
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
               <span class="add-deleteBtn delete-answer" v-if="answersListDragOne.length > 1"
-                    @click="answersListDragOne.splice(idx, 1)">حذف</span>
+                    @click="answersListDragOne.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
@@ -1261,11 +1261,11 @@
             <b-col lg="12" class="btn-holder">
               <span class="addAnswer" v-if="answersListDragOne.length - 1 === idx"
                     @click="addAnswerDragOne"><img
-                src="@/assets/images/icons/add_answer.png"> <span>إضافة إجابة</span></span>
+                src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
             </b-col>
           </b-row>
           <b-row v-if="answersListDragOne.length > 8">
-            <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+            <b-col lg="12" class="text-danger">{{ $t('QUESTIONS.maxLengthOfAnswers') }}</b-col>
           </b-row>
           <b-row>
             <div class="action-holder">
@@ -1310,12 +1310,12 @@
                   :rules="'required|max:100'"
                 ></TextField>
                 <div v-if="validSpace" class="text-danger">
-                  يجب ان يوجد مساحة خالية واحده فقط
+                  {{$t('QUESTIONS.addSpace')}}
                 </div>
                 <div v-if="!lockBtn && formValues.question" class="text-danger">
-                  يجب إضافة مساحة خالية واحده فقط
+                  {{$t('QUESTIONS.addSpace')}}
                 </div>
-                <div class="preview-question-heading">عرض السؤال</div>
+                <div class="preview-question-heading">{{ $t('QUESTIONS.viewQuestion') }}</div>
                 <div
                   v-html="previewQuestion"
                   class="preview-question d-flex align-items-center my-3"
@@ -1323,13 +1323,13 @@
               </div>
             </b-col>
             <b-col lg="3" class="mb-3">
-              <label class="invisible">إضافه مساحه خالية</label>
+              <label class="invisible">{{ $t('QUESTIONS.addWhiteSpace') }}</label>
               <div class="hold-field d-flex justify-content-between align-items-end">
                 <Button :custom-class="'rounded-btn'" @click="addSpace" :disabled="lockBtn">
-                  إضافه مساحه خالية
+                  {{ $t('QUESTIONS.addWhiteSpace') }}
                 </Button>
                 <Button :custom-class="'rounded-btn transparent-btn'" @click="removeSpace">
-                  إعاده ضبط
+                  {{ $t('QUESTIONS.resetWhiteSpace') }}
                 </Button>
               </div>
             </b-col>
@@ -1413,7 +1413,7 @@
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
               <span class="add-deleteBtn delete-answer" v-if="answersListDragOne.length > 1"
-                    @click="answersListDragOne.splice(idx, 1)">حذف</span>
+                    @click="answersListDragOne.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
@@ -1430,11 +1430,11 @@
             <b-col lg="12" class="btn-holder">
               <span class="addAnswer" v-if="answersListDragOne.length - 1 === idx"
                     @click="addAnswerDragOne"><img
-                src="@/assets/images/icons/add_answer.png"> <span>إضافة إجابة</span></span>
+                src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
             </b-col>
           </b-row>
           <b-row v-if="answersListDragOne.length > 8">
-            <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+            <b-col lg="12" class="text-danger">{{ $t('QUESTIONS.maxLengthOfAnswers') }}</b-col>
           </b-row>
           <b-row>
             <div class="action-holder">
@@ -1550,12 +1550,12 @@
               </b-col>
               <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-start">
               <span class="add-deleteBtn delete-answer" v-if="answersListDragSort.length > 1"
-                    @click="answersListDragSort.splice(idx, 1)">حذف</span>
+                    @click="answersListDragSort.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
               </b-col>
               <b-col lg="12" class="btn-holder">
               <span class="addAnswer" v-if="answersListDragSort.length - 1 === idx"
                     @click="addAnswerDragSort"><img
-                src="@/assets/images/icons/add_answer.png"> <span>إضافة إجابة</span></span>
+                src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
               </b-col>
             </slot>
             <b-col lg="12" class="mb-3">
@@ -1581,7 +1581,7 @@
             </draggable>
           </b-row>
           <b-row v-if="answersListDragSort.length > 8">
-            <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+            <b-col lg="12" class="text-danger">{{ $t('QUESTIONS.maxLengthOfAnswers') }}</b-col>
           </b-row>
           <b-row>
             <div class="action-holder">
@@ -1675,12 +1675,12 @@
               </b-col>
               <b-col lg="2" class="mb-3 d-flex justify-content-center align-items-center">
                 <span class="add-deleteBtn delete-answer" v-if="answersListDragSortAudio.length > 1"
-                      @click="answersListDragSortAudio.splice(idx, 1)">حذف</span>
+                      @click="answersListDragSortAudio.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
               </b-col>
               <b-col lg="12">
                 <span class="addAnswer" v-if="answersListDragSortAudio.length - 1 === idx"
                       @click="addAnswersListDragSortAudio"><img
-                  src="@/assets/images/icons/add_answer.png"> <span>إضافة إجابة</span></span>
+                  src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
               </b-col>
             </slot>
             <b-col lg="12" class="mb-3">
@@ -1698,7 +1698,7 @@
             </draggable>
           </b-row>
           <b-row v-if="answersListDragSortAudio.length > 8">
-            <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+            <b-col lg="12" class="text-danger">{{ $t('QUESTIONS.maxLengthOfAnswers') }}</b-col>
           </b-row>
           <b-row>
             <div class="action-holder">
@@ -1798,7 +1798,7 @@
               <b-col lg="2" class="mb-3 d-flex justify-content-center align-items-center">
               <span class="add-deleteBtn delete-answer"
                     v-if="answersListDragSortImage.length > 1"
-                    @click="answersListDragSortImage.splice(idx, 1)">حذف</span>
+                    @click="answersListDragSortImage.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
@@ -1815,7 +1815,7 @@
               <b-col lg="12" class="btn-holder">
               <span class="addAnswer" v-if="answersListDragSortImage.length - 1 === idx"
                     @click="addAnswerDragSortImage"><img
-                src="@/assets/images/icons/add_answer.png"> <span>إضافة إجابة</span></span>
+                src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
               </b-col>
             </slot>
             <b-col lg="12" class="mb-3">
@@ -1842,7 +1842,7 @@
             </draggable>
           </b-row>
           <b-row v-if="answersListDragSortImage.length > 8">
-            <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+            <b-col lg="12" class="text-danger">{{ $t('QUESTIONS.maxLengthOfAnswers') }}</b-col>
           </b-row>
           <b-row>
             <div class="action-holder">
@@ -1943,7 +1943,7 @@
                   <UploadAttachment :type-of-attachment="'image'"
                                     :dropIdRef="`answerMatchImage`"
                                     :accept-files="'image/*'"
-                                    :label="'صوره الإجابة'"
+                                    :label="$t('imageOfAnswer')"
                                     :name="'answerMatchImage'"
                                     :rules="'required'"
                                     ref="answerMatchImage"
@@ -1996,10 +1996,10 @@
             <!-- show answer based on answer patter -->
             <slot v-if="answersListMatch.length > 0">
               <b-row class="mb-3">
-                <b-col lg="2" class="answer-item">الترتيب</b-col>
-                <b-col lg="3" class="answer-item">الإجابة</b-col>
+                <b-col lg="2" class="answer-item">{{ $t('QUESTIONS.order') }}</b-col>
+                <b-col lg="3" class="answer-item">{{ $t('QUESTIONS.answer') }}</b-col>
                 <b-col lg="3" class="answer-item" v-if="answerMatch.answer_pattern !== 'audio'">
-                  التسجيل الصوتى للإجابة
+                  {{$t('QUESTIONS.audioForAnswer')}}
                 </b-col>
                 <b-col lg="2" class="answer-item"></b-col>
               </b-row>
@@ -2032,7 +2032,7 @@
                 </b-col>
               </b-row>
               <b-row v-if="answersListMatch.length > 8">
-                <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+                <b-col lg="12" class="text-danger">{{ $t('QUESTIONS.maxLengthOfAnswers') }}</b-col>
               </b-row>
               <b-row>
                 <b-col lg="12">
@@ -2135,9 +2135,7 @@
                         questionSlug.slug === 'match_many_image_voices')
                     "
                 class="text-danger font-weight-bold"
-              >
-                يجب إضافة صوره واحدة
-              </p>
+              >{{$t('QUESTIONS.addOneImage')}}</p>
               <p
                 v-if="
                       answersListMatchTo.length !== 2 &&
@@ -2147,21 +2145,20 @@
                     "
                 class="text-danger font-weight-bold"
               >
-                يجب إضافة صورتين فقط
+                {{$t('QUESTIONS.addTwoImage')}}
               </p>
             </b-row>
             <!-- show answer to based on answer patter -->
             <slot v-if="answersListMatchTo.length > 0">
               <b-row class="mt-3">
-                <b-col lg="2" class="answer-item">الترتيب</b-col>
-                <b-col lg="3" class="answer-item">الإجابة</b-col>
+                <b-col lg="2" class="answer-item">{{$t('QUESTIONS.order')}}</b-col>
+                <b-col lg="3" class="answer-item">{{$t('QUESTIONS.answer')}}</b-col>
                 <b-col
                   lg="3"
                   class="answer-item"
                   v-if="answerMatchTo.answer_pattern !== 'audio'"
-                >التسجيل الصوتى للإجابة
-                </b-col>
-                <b-col lg="2" class="answer-item">الإجابة المقابلة</b-col>
+                >{{$t('QUESTIONS.audioForAnswer')}}</b-col>
+                <b-col lg="2" class="answer-item">{{ ('QUESTIONS.answerCorresponding') }}</b-col>
                 <b-col lg="2" class="answer-item"></b-col>
               </b-row>
               <b-row v-for="(answer, index) in answersListMatchTo" :key="index" class="mb-3">
@@ -2186,7 +2183,7 @@
                   <b-col lg="2" class="answer-item select">
                     <validation-provider
                       v-slot="{ errors, invalid }"
-                      :name="`الإجابة`"
+                      :name="`${$t('QUESTIONS.answer')}`"
                       rules="required"
                       v-if="questionSlug.slug.includes('match_one')"
                     >
@@ -2194,7 +2191,7 @@
                         v-model="answer.answerToId"
                         clearable
                         :multiple="questionSlug.slug.includes('match_many')"
-                        placeholder="إختر الإجابة المقابلة"
+                        :placeholder="$t('QUESTIONS.Choose_answer')"
                         @mouseenter.native="getId(answer.answerToId)"
                         @change="assignAnswerMatch($event)"
                         @clear="backToInitValue()"
@@ -2215,7 +2212,7 @@
                     </validation-provider>
                     <validation-provider
                       v-slot="{ errors, invalid }"
-                      :name="`الإجابة المقابلة`"
+                      :name="`${$t('QUESTIONS.answerCorresponding')}`"
                       rules="required"
                       v-if="questionSlug.slug.includes('match_many')"
                     >
@@ -2223,7 +2220,7 @@
                         v-model="answer.answerToId"
                         clearable
                         multiple
-                        placeholder="إختر الإجابة المقابلة"
+                        :placeholder="$t('QUESTIONS.Choose_answer')"
                         @mouseenter.native="getIds(answer.answerToId)"
                         @change="assignAnswersMatch($event)"
                         @clear="backToInitValues()"
@@ -2253,7 +2250,7 @@
             </slot>
           </b-col>
           <b-row v-if="answersListMatchTo.length > 8">
-            <b-col lg="12" class="text-danger">الحد الأقصى لعدد الإجابات 8</b-col>
+            <b-col lg="12" class="text-danger">{{ $t('QUESTIONS.maxLengthOfAnswers') }}</b-col>
           </b-row>
           <b-row>
             <div class="action-holder">
@@ -2332,12 +2329,34 @@ import draggable from "vuedraggable";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import vSelect from "vue-select";
 import UploadAttachment from "@/components/Shared/UploadAttachment/index.vue";
-import id from "vue2-datepicker/locale/es/id";
 
 export default {
   computed: {
-    id() {
-      return id
+    answersListTrueFalse(){
+      return [
+        {
+          answer: this.$i18n.t("QUESTIONS.correct"),
+          correct: 0,
+          answer_pattern: "text",
+        },
+        {
+          answer: this.$i18n.t("QUESTIONS.wrong"),
+          correct: 0,
+          answer_pattern: "text",
+        },
+      ]
+    },
+    correctList(){
+      return[
+        {
+          id: 1,
+          name: this.$i18n.t("QUESTIONS.rightAnswer"),
+        },
+        {
+          id: 0,
+          name: this.$i18n.t("QUESTIONS.wrongAnswer"),
+        },
+      ]
     }
   },
   mixins: [getData("question")],
@@ -2508,18 +2527,6 @@ export default {
         },
       ],
       // ture false
-      answersListTrueFalse: [
-        {
-          answer: "صحيح",
-          correct: 0,
-          answer_pattern: "text",
-        },
-        {
-          answer: "خطأ",
-          correct: 0,
-          answer_pattern: "text",
-        },
-      ],
       answersListMatch: [],
       answersListMatchTo: [],
       answerMatch: {
@@ -2546,16 +2553,6 @@ export default {
       currentSelectIds: null,
       answerToId: 0,
       confirmAnswersFrom: false,
-      correctList: [
-        {
-          id: 1,
-          name: "إجابة صحيحة",
-        },
-        {
-          id: 0,
-          name: "إجابة خطأ",
-        },
-      ],
       answersDragSortToSend: [],
       checkAssignAnswers: true,
     };

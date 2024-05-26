@@ -26,7 +26,7 @@
           <b-col lg="4" class="mb-4" v-if="quiz.questions_difficulties">
             <b-row>
               <b-col lg="12">
-                <ShowItem :title="'صعوبات الأسئلة'"/>
+                <ShowItem :title="$t('QUIZZES.DifficultiesOfQuestions')"/>
               </b-col>
               <b-col lg="4" class="mb-4" v-for="question in quiz.questions_difficulties" :key="question.id">
                 <ShowItem :title="question.name" :subtitle="question.total_question"/>
@@ -36,10 +36,14 @@
         </b-row>
         <b-row>
           <b-col lg="12">
-            <ShowItem :title="'الأسئلة'"/>
+            <ShowItem :title="$t('QUESTIONS.QUESTIONS')"/>
           </b-col>
           <b-col lg="6" v-for="question in quiz.questions" :key="question.id">
-            <p class="question-name">{{question.name}}</p>
+            <ShowItem :title="question.question" class="question mb-3" v-if="question.question_pattern === 'text'" />
+            <img class="question_img mb-3" v-else-if="question.question_pattern === 'image'" :src="question.question.question">
+            <audio controls v-else-if="question.question_pattern === 'audio'" class="mb-3">
+              <source :src="question.question.question" />
+            </audio>
           </b-col>
         </b-row>
       </div>

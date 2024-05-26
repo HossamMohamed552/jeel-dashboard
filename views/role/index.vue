@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'الأدوار الوظيفية'"
+      :header-name="$t('ROLES.job_roles')"
       :fieldsList="fieldsList"
       :table-items="rolesList"
       :v-search-model="roleSearchWord"
@@ -23,14 +23,14 @@
           @click="goToAddRole"
           v-if="user.permissions.includes(`add-roles`)"
         >
-          <img src="../../src/assets/images/icons/plus.svg" />
+          <img src="../../src/assets/images/icons/plus.svg"/>
           <span>{{ $t("ROLES.ADD_DEPARTMENT") }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف الدور الوظيفي'"
-      :content-message-question="'هل انت متأكد من حذف الدور الوظيفي'"
+      :content-message="$t('ROLES.delete')"
+      :content-message-question="$t('ROLES.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -42,13 +42,13 @@
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { getRolesRequest } from "@/api/role";
-import { deleteRoleRequest } from "@/api/role";
-import { mapGetters } from "vuex";
+import {getRolesRequest} from "@/api/role";
+import {deleteRoleRequest} from "@/api/role";
+import {mapGetters} from "vuex";
 
 export default {
   name: "index",
-  components: { ListItems, Button, Modal },
+  components: {ListItems, Button, Modal},
   data() {
     return {
       loading: false,
@@ -56,24 +56,6 @@ export default {
       roleSearchWord: "",
       totalNumber: 0,
       rolesList: [],
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "type.name",
-          label: this.$i18n.t("ROLES.CATEGORIES"),
-        },
-        {
-          key: "name",
-          label: this.$i18n.t("ROLES.DEPARTMENT"),
-        },
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
       itemId: 0,
     };
   },
@@ -118,6 +100,26 @@ export default {
     },
   },
   computed: {
+    fieldsList() {
+      return [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "type.name",
+          label: this.$i18n.t("ROLES.CATEGORIES"),
+        },
+        {
+          key: "name",
+          label: this.$i18n.t("ROLES.DEPARTMENT"),
+        },
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {

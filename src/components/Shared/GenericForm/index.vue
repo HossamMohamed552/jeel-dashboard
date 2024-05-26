@@ -4,14 +4,14 @@
       <b-row>
         <b-col v-for="(field, index) in schema" :key="index" :lg="field.col">
           <h3 class="list-title" :class="field.classList" v-if="field.type == 'title'">
-            {{ field.label }}
+            {{ $i18n.locale === 'ar' ? field.label : field.labelEn }}
           </h3>
           <div class="hold-field">
             <SelectSearch
               v-if="field.type === 'select'"
               v-model="field.value"
-              :label="field.label"
-              :name="field.label"
+              :label="$i18n.locale === 'ar' ? field.label : field.labelEn"
+              :name="$i18n.locale === 'ar' ? field.label : field.labelEn"
               :options="field.options"
               :reduce="field.listen ? (option) => option[field.listen] : (option) => option"
               :get-option-label="(option) => option[field.optionValue]"
@@ -19,14 +19,14 @@
               :deselectFromDropdown="field.deselectFromDropdown"
               :multiple="field.multiple"
               @input="handleInput(field.key, field.value, field, field.options)"
-              :placeholder="'إختر' + ' ' + field.label"
+              :placeholder="$t('choose') + ' ' + `${$i18n.locale === 'ar' ? field.label : field.labelEn}`"
               :disabled="field.disabled"
             ></SelectSearch>
             <TextField
               v-if="field.type === 'text' || field.type === 'number'"
               v-model="field.value"
-              :label="field.label"
-              :name="field.label"
+              :label="$i18n.locale === 'ar' ? field.label : field.labelEn"
+              :name="$i18n.locale === 'ar' ? field.label : field.labelEn"
               :rules="field.rules"
               :type="field.type"
               :placeholder="checkPlaceholder(field)"
@@ -35,19 +35,19 @@
             <TextAreaField
               v-if="field.type === 'textarea'"
               v-model="field.value"
-              :label="field.label"
-              :placeholder="'إدخل' + ' ' + field.label"
-              :name="field.label"
+              :label="$i18n.locale === 'ar' ? field.label : field.labelEn"
+              :placeholder="$t('enter') + ' ' + `${$i18n.locale === 'ar' ? field.label : field.labelEn}`"
+              :name="$i18n.locale === 'ar' ? field.label : field.labelEn"
               :rules="field.rules"
             ></TextAreaField>
             <DatePicker
               v-if="field.type === 'date'"
               v-model="field.value"
-              :label="field.label"
-              :placeholder="'إدخل' + ' ' + field.label"
+              :label="$i18n.locale === 'ar' ? field.label : field.labelEn"
+              :placeholder="$t('enter') + ' ' + `${$i18n.locale === 'ar' ? field.label : field.labelEn}`"
               :refValue="field.ref"
               valueType="format"
-              :name="field.label"
+              :name="$i18n.locale === 'ar' ? field.label : field.labelEn"
               :rules="field.rules"
               :type="field.type"
               @input="handleInput(field.key, field.value, field)"
@@ -56,13 +56,13 @@
               v-if="field.type === 'datetime' || field.type === 'time'"
               v-model="field.value"
               :format="field.format"
-              :label="field.label"
-              :placeholder="'إدخل' + ' ' + field.label"
+              :label="$i18n.locale === 'ar' ? field.label : field.labelEn"
+              :placeholder="$t('enter') + ' ' + `${$i18n.locale === 'ar' ? field.label : field.labelEn}`"
               :refValue="field.ref"
               :preventDateBefore="field.preventDateBefore"
               :preventTimeBefore="field.preventTimeBefore"
               valueType="format"
-              :name="field.label"
+              :name="$i18n.locale === 'ar' ? field.label : field.labelEn"
               :rules="field.rules"
               :type="field.type"
               @input="handleInput(field.key, field.value, field)"
@@ -72,7 +72,7 @@
               <UploadAttachment
                 v-if="!$route.params.id || isRemoved"
                 :type-of-attachment="field.type"
-                :label="field.label"
+                :label="$i18n.locale === 'ar' ? field.label : field.labelEn"
                 :dropImage="true"
                 :name="field.type"
                 :rules="'required'"
@@ -83,7 +83,7 @@
               />
               <PreviewMedia
                 v-else
-                :header="field.label"
+                :header="$i18n.locale === 'ar' ? field.label : field.labelEn"
                 :media-name="field.task_audio_name"
                 :file-size="field.task_audio_size"
                 :typeOfMedia="field.type"
@@ -98,7 +98,7 @@
               <UploadAttachment
                 v-if="field.value == ''"
                 :type-of-attachment="field.type"
-                :label="field.label"
+                :label="$i18n.locale === 'ar' ? field.label : field.labelEn"
                 :dropImage="true"
                 :name="field.type"
                 :rules="'required'"
@@ -108,7 +108,7 @@
               />
               <PreviewMedia
                 v-if="field.value != ''"
-                :header="field.label"
+                :header="$i18n.locale === 'ar' ? field.label : field.labelEn"
                 :media-name="field.task_audio_name"
                 :file-size="field.task_audio_size"
                 :typeOfMedia="field.type"
@@ -220,7 +220,7 @@ export default {
     },
     checkPlaceholder(field) {
       if (field.placeholder) return field.placeholder;
-      else return "إدخل" + " " + field.label;
+      else return this.$i18n.t('enter') + ' ' + `${this.$i18n.locale === 'ar' ? field.label : field.labelEn}`;
     },
     onSubmit() {
       this.updateFields();

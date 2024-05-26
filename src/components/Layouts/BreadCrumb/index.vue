@@ -6,7 +6,7 @@
           <img src="@/assets/images/icons/home.png" class="icon"
                @click="$router.push('/dashboard/home')">
           <div class="ml-3">
-            <ul class="d-flex justify-content-center align-items-center">
+            <ul class="d-flex justify-content-start align-items-center">
               <li v-for="(item, index) in breadcrumbItems" :key="index" class="router-link"
                   :class="index+1 === breadcrumbItems.length? 'last-link':''">
               <span

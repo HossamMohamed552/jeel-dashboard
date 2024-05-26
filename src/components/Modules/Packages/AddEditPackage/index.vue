@@ -14,18 +14,18 @@
                     v-model="createPackage.name"
                     :label="$t('PACKAGE.name')"
                     :name="$t('PACKAGE.name')"
-                    placeholder="أدخل اسم الباقة"
+                    :placeholder="$t('PACKAGE.enterName')"
                     :rules="'required|min:3'"
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="4" class="mt-3">
+              <b-col lg="4" class="mb-3">
                 <div class="hold-field" v-if="countries">
                   <SelectSearch
                     v-model="createPackage.country_id"
                     :label="$t('PACKAGE.countryName')"
                     :name="$t('PACKAGE.countryName')"
-                    placeholder="اختر الدولة"
+                    :placeholder="$t('PACKAGE.selectCountry')"
                     :options="countries"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
@@ -39,7 +39,7 @@
                     v-model="createPackage.classes_count"
                     :label="$t('PACKAGE.classes_count')"
                     :name="$t('PACKAGE.classes_count')"
-                    placeholder="أدخل عدد الصفوف"
+                    :placeholder="$t('PACKAGE.enterClassesCount')"
                     :rules="'required|numeric'"
                   ></TextField>
                 </div>
@@ -55,14 +55,14 @@
                 <div class="hold-field">
                   <TextField
                     v-model="role.number"
-                    :label="` عدد ${role.name} `"
-                    :name="` عدد ${role.name} `"
-                    :placeholder="`ادخل عدد ${role.name} `"
+                    :label="` ${$t('number')} ${ $i18n.locale === 'ar' ? role.name : role.nameEn  } `"
+                    :name="` ${$t('number')} ${$i18n.locale === 'ar' ? role.name : role.nameEn} `"
+                    :placeholder="`${$t('enterNumber')} ${$i18n.locale === 'ar' ? role.name : role.nameEn} `"
                     :rules="'required|numeric'"
                   ></TextField>
                 </div>
               </b-col>
-              <b-col lg="4" class="mt-3">
+              <b-col lg="4" class="mb-3">
                 <h5 class="currency-title d-inline-block">
                   {{ $t("PACKAGE.CURRENT_PRICE") }}
                 </h5>
@@ -72,7 +72,7 @@
                     <TextField
                       v-model="createPackage.price"
                       :name="$t('PACKAGE.CURRENT_PRICE')"
-                      placeholder="أدخل السعر الحالى للباقة"
+                      :placeholder="$t('PACKAGE.Enter_price_package')"
                       type="number"
                       min="0"
                       :rules="'required'"
@@ -99,17 +99,13 @@
             </b-row>
             <b-row>
               <b-col lg="12" class="mb-3">
-                <b-form-group
-                  :label="$t('PACKAGE.DESCRIPTION')"
-                  v-slot="{ ariaDescribedby }"
-                  class="description"
-                >
+                <b-form-group v-slot="{ ariaDescribedby }" class="description">
                   <div class="hold-field">
                     <TextAreaField
                       v-model="createPackage.description"
                       :label="$t('PACKAGE.description')"
                       :name="$t('PACKAGE.description')"
-                      placeholder="تفاصيل الباقة"
+                      :placeholder="$t('PACKAGE.DESCRIPTION')"
                     ></TextAreaField>
                   </div>
                 </b-form-group>
@@ -173,26 +169,31 @@ export default {
           {
             role: "student",
             name: "الطلاب",
+            nameEn: "students",
             number: "",
           },
           {
             role: "teacher",
             name: "المدرسين",
+            nameEn: "teacher",
             number: "",
           },
           {
             role: "supervisor",
             name: "المشرفين",
+            nameEn: "supervisor",
             number: "",
           },
           {
             role: "schooladmin",
             name: "المديرين",
+            nameEn: "school admins",
             number: "",
           },
           {
             role: "parent",
             name: "أولياء الأمور",
+            nameEn: "parent",
             number: "",
           }
         ],

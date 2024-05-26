@@ -1,6 +1,6 @@
 <template>
   <div class="add-role">
-    <Modal :content-message="'تم التعديل بنجاح'" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="$t('CONTROLS.edit_successfully')" :showModal="showModal" :is-success="true" />
     <AddEditAcademicYear
       :loading="loading"
       @handleAddAcademicYear="handleAddAcademicYear($event)"

@@ -12,21 +12,21 @@
             <b-col lg="4">
               <ShowItem
                 class="divider-show"
-                title="اسم التسجيل صوتي"
+                :title="$t('AUDIOS.AUDIO_NAME')"
                 :subtitle="audio.name"
               />
             </b-col>
             <b-col lg="4">
               <ShowItem
                 class="divider-show"
-                title="نوع السؤال"
-                :subtitle="audio.type == 'text' ? 'نص' : 'صورة'"
+                :title="$t('QUESTIONS.TYPE')"
+                :subtitle="audio.type === 'text' ? $t('QUESTIONS.text') : $t('QUESTIONS.image')"
               />
             </b-col>
             <b-col v-if="audio.task_degree" lg="4">
               <ShowItem
                 class="divider-show"
-                title="الدرجة"
+                :title="$t('AUDIOS.DEGREE')"
                 :subtitle="audio.task_degree"
               />
             </b-col>
@@ -34,7 +34,7 @@
           <b-row>
             <b-col>
               <PreviewMedia
-                header="ملف الصوت"
+                :header="$t('PAPER_WORK.audioFile')"
                 :media-name="audio.task_audio_name"
                 :file-size="audio.task_audio_size"
                 :typeOfMedia="'audio'"
@@ -45,7 +45,7 @@
           <b-row v-if="audio?.type?.key === 'images'">
             <b-col>
               <PreviewMedia
-                header="صورة السؤال"
+                :header="$t('QUESTIONS.UPLOAD_IMAGE')"
                 :media-name="audio.task_file_name"
                 :file-size="audio.task_file_size"
                 :image-url="audio.task"
@@ -58,7 +58,7 @@
             <b-col lg="12" class="mt-4">
               <ShowItem
                 class="divider-show"
-                title="نص السؤال"
+                :title="$t('QUESTIONS.videoQUESTION')"
                 :subtitle="audio.task"
               />
             </b-col>
@@ -68,7 +68,7 @@
               <ShowItem
                 v-if="audio && audio.learningPath"
                 class="divider-show"
-                title="المسار التعليمي"
+                :title="$t('QUESTIONS.questionLearningPath')"
                 :subtitle="audio.learningPath.name"
               />
             </b-col>
@@ -76,7 +76,7 @@
               <ShowItem
                 v-if="audio && audio.lesson"
                 class="divider-show"
-                title="الدرس"
+                :title="$t('MISSIONS.lesson')"
                 :subtitle="audio.lesson.name"
               />
             </b-col>
@@ -84,14 +84,14 @@
               <ShowItem
                 v-if="audio && audio.blooms"
                 class="divider-show"
-                title="بلوم"
+                :title="$t('BLOOM.BLOOM')"
                 :subtitle="audio.blooms.name"
               />
             </b-col>
             <b-col lg="4">
               <ShowItem
                 class="divider-show"
-                title="إسلوب التعلم"
+                :title="$t('learningStyle.name')"
                 :with-out-background="true"
                 :listItems="audio.learning_styles"
               />
@@ -99,7 +99,7 @@
             <b-col lg="4">
               <ShowItem
                 class="divider-show"
-                title="نوع المهارة"
+                :title="$t('QUESTIONS.LANGUAGE_SKILLS')"
                 :with-out-background="true"
                 :listItems="audio.language_skills"
               />

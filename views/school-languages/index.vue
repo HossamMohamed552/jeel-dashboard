@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة اللغات'"
+      :header-name="$t('lang.list')"
       :number-of-item="totalNumber"
       :tableItems="schoolLanguagesList"
       :fieldsList="fieldsList"
@@ -23,13 +23,13 @@
           v-if="user.permissions.includes(`add-languages`)"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة لغة </span>
+          <span>{{$t('lang.add')}}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف اللغة'"
-      :content-message-question="'هل انت متأكد من حذف اللغة '"
+      :content-message="$t('lang.delete')"
+      :content-message-question="$t('lang.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -54,11 +54,6 @@ export default {
       groupSearchWord: "",
       schoolLanguagesList: [],
       totalNumber: null,
-      fieldsList: [
-        { key: "vid", label: "التسلسل" },
-        { key: "name", label: "اسم اللغة" },
-        { key: "actions", label: "الإجراء" },
-      ],
     };
   },
   methods: {
@@ -98,6 +93,13 @@ export default {
     },
   },
   computed: {
+    fieldsList(){
+      return  [
+        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
+        { key: "name", label: this.$i18n.t('lang.name') },
+        { key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions') },
+      ]
+    },
     ...mapGetters(["user"]),
   },
   mounted() {
