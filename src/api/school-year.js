@@ -3,6 +3,11 @@ export const getSchoolYearRequest = (params) => ({
   url: "study_years",
   config: {params}
 });
+export const getSchoolAdminSchoolYearRequest = (params) => ({
+  method: "get",
+  url: "school/study_years",
+  config: {params}
+});
 export const getSchoolYearByIdRequest = (params) => ({
   method: "get",
   url: `study_years/${params}`,

@@ -46,7 +46,7 @@
                 <b-dropdown no-caret>
                   <template #button-content>
                     <div class="sort">
-                      <img src="../../../src/assets/images/icons/sort.svg"/>
+                      <img src="../../../../src/assets/images/icons/sort.svg"/>
                       <div>
                         {{ $t('REPORTS.export_to') }}
                       </div>
@@ -189,16 +189,8 @@ import {
   CategoryScale,
   LinearScale
 } from 'chart.js'
-import {
-  getALLCountriesForReports, getALLSchoolGroupsForReports, getAllSchools,
-  getStudyYear,
-} from "@/services/dropdownService";
-import {
-  getJeelAdminReportChartRequest,
-  getJeelAdminReportRolesRequest,
-  getJeelAdminReportStatisticsRequest
-} from "@/api/reports";
-
+import {getSchoolAdminStudyYear, getStudyYear,} from "@/services/dropdownService";
+import {getSchoolAdminReportChartRequest, getSchoolAdminReportStatisticsRequest} from "@/api/school-admin-reports";
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 export default {
@@ -224,46 +216,6 @@ export default {
           value: "",
           rules: ''
         },
-        {
-          key: "country_id",
-          col: "3",
-          type: "select",
-          optionValue: "name",
-          listen: "id",
-          label: "الدولة",
-          labelEn: "country",
-          options: [],
-          deselectFromDropdown: true,
-          value: "",
-          rules: "",
-        },
-        {
-          key: "school_group_id",
-          col: "3",
-          type: "select",
-          optionValue: "name",
-          listen: "id",
-          label: "المجموعات الدراسية",
-          labelEn: "schoolGroups",
-          options: [],
-          deselectFromDropdown: true,
-          value: "",
-          rules: "",
-        },
-        {
-          key: "school_id",
-          col: "3",
-          type: "select",
-          optionValue: "name",
-          listen: "id",
-          label: "المدارس",
-          labelEn: "schools",
-          options: [],
-          deselectFromDropdown: true,
-          disabled: true,
-          value: "",
-          rules: "",
-        },
       ],
       exportArray: [
         {
@@ -282,56 +234,43 @@ export default {
       dataForChart: [],
       generalStatistics: [
         {
-          icon: require("../../../src/assets/images/icons/home.png"),
-          name: "schoolGroup",
-          number: 45
-        },
-        {
-          icon: require("../../../src/assets/images/icons/home.png"),
-          name: "school",
-          number: 8
-        },
-        {
-          icon: require("../../../src/assets/images/icons/levels.svg"),
+          icon: require("../../../../src/assets/images/icons/levels.svg"),
           name: "levels",
           number: 1058
         },
         {
-          icon: require("../../../src/assets/images/icons/classes.svg"),
+          icon: require("../../../../src/assets/images/icons/classes.svg"),
           name: "classes",
           number: 1028
         },
         {
-          icon: require("../../../src/assets/images/icons/school-admin.svg"),
+          icon: require("../../../../src/assets/images/icons/school-admin.svg"),
           name: "schoolAdmin",
           number: 45
         },
         {
-          icon: require("../../../src/assets/images/icons/supervisor.svg"),
+          icon: require("../../../../src/assets/images/icons/supervisor.svg"),
           name: "supervisors",
           number: 102
         },
         {
-          icon: require("../../../src/assets/images/icons/teachers.svg"),
+          icon: require("../../../../src/assets/images/icons/teachers.svg"),
           name: "teachers",
           number: 90
         },
         {
-          icon: require("../../../src/assets/images/icons/students.svg"),
+          icon: require("../../../../src/assets/images/icons/students.svg"),
           name: "students",
           number: 65
         },
         {
-          icon: require("../../../src/assets/images/icons/parents.svg"),
+          icon: require("../../../../src/assets/images/icons/parents.svg"),
           name: "paretns",
           number: 30
         }
       ],
       valuesOfAdvancedSearch: {
         study_year_id: ``,
-        country_id: ``,
-        school_group_id: ``,
-        school_id: ``,
       },
       reportFields: {},
       generalStatisticsExport: [],
@@ -342,20 +281,15 @@ export default {
     handleCancel() {
       this.generalReportSearch.map(field => field.value = "")
       this.searchWithPagination = {}
-      this.getJeelAdminReportStatistics()
-      this.getJeelAdminReportChart()
-      this.getJeelAdminReportRoles()
+      this.getSchoolAdminReportStatistics()
+      this.getSchoolAdminReportChart()
+
     },
     onSubmit(values) {
-      this.getJeelAdminReportStatistics(values)
-      this.getJeelAdminReportChart(values)
-      this.getJeelAdminReportRoles(values)
+      this.getSchoolAdminReportStatistics(values)
+      this.getSchoolAdminReportChart(values)
     },
     handleInput(key, value, _, options) {
-      if (key === 'school_group_id' && value !== '') {
-        this.generalReportSearch[3].disabled = false;
-        getAllSchools(this.generalReportSearch, 'school_id', this.generalReportSearch[0].value, this.generalReportSearch[1].value, this.generalReportSearch[2].value)
-      }
       if (options) {
         const itemValue = options?.filter((item) => {
           return item.id === value
@@ -372,15 +306,13 @@ export default {
     },
     checkType(item) {
       return {
-        schoolGroupClass: item.name === "schoolGroup",
-        schoolClass: item.name === "school",
         levelsClass: item.name === "levels",
         classesClass: item.name === "classes",
         schoolAdminClass: item.name === "schoolAdmin",
         supervisorsClass: item.name === "supervisors",
         teachersClass: item.name === "teachers",
         studentsClass: item.name === "students",
-        parentsClass: item.name === "parents",
+        parentsClass: item.name === "paretns",
       }
     },
     setData() {
@@ -388,45 +320,34 @@ export default {
         return Object.assign(item, {data: this.dataForChart})
       })
     },
-    getJeelAdminReportStatistics(paramsWithSearch) {
+    getSchoolAdminReportStatistics(paramsWithSearch) {
       this.generalStatisticsExport = []
       const params = {...paramsWithSearch, ...this.searchWithPagination};
-      this.ApiService(getJeelAdminReportStatisticsRequest(params)).then((response) => {
+      this.ApiService(getSchoolAdminReportStatisticsRequest(params)).then((response) => {
         let data = response.data.data
         this.generalStatisticsExport.push(data)
-        this.generalStatistics[0].number = data.school_group
-        this.generalStatistics[1].number = data.school
-        this.generalStatistics[2].number = data.levels
-        this.generalStatistics[3].number = data.classes
-        this.generalStatistics[4].number = data.admins
-        this.generalStatistics[5].number = data.supervisors
-        this.generalStatistics[6].number = data.teachers
-        this.generalStatistics[7].number = data.students
-        this.generalStatistics[8].number = data.paretns
+        this.generalStatistics[0].number = data.levels
+        this.generalStatistics[1].number = data.classes
+        this.generalStatistics[2].number = data.admins
+        this.generalStatistics[3].number = data.supervisors
+        this.generalStatistics[4].number = data.teachers
+        this.generalStatistics[5].number = data.students
+        this.generalStatistics[6].number = data.paretns
 
         for (const [key, value] of Object.entries(response.data.data)) {
           this.reportFields[key] = value
         }
       })
     },
-    getJeelAdminReportChart(paramsWithSearch) {
+    getSchoolAdminReportChart(paramsWithSearch) {
       const params = {...paramsWithSearch, ...this.searchWithPagination};
       this.loadingChart = false
-      this.ApiService(getJeelAdminReportChartRequest(params)).then((response) => {
+      this.ApiService(getSchoolAdminReportChartRequest(params)).then((response) => {
         this.dataForChart = response.data.data
       }).then(() => {
         this.setData()
       }).then(() => {
         this.loadingChart = true
-      })
-    },
-    getJeelAdminReportRoles(paramsWithSearch) {
-      this.roleStatistics = []
-      const params = {...paramsWithSearch, ...this.searchWithPagination};
-      this.ApiService(getJeelAdminReportRolesRequest(params)).then((response) => {
-        for (const [key, value] of Object.entries(response.data.data)) {
-          this.roleStatistics.push({name: key, percentage: value})
-        }
       })
     },
     generatePdf() {
@@ -460,41 +381,89 @@ export default {
       return {
         datasets: [
           {
-            label: this.$i18n.t('TABLE_FIELDS.country'),
-            backgroundColor: '#F04771',
-            borderRadius: 5,
-            barThickness: 10,
-            categoryPercentage: 1,
-            barPercentage: 1,
-            parsing: {
-              yAxisKey: 'countries',
-              xAxisKey: 'name'
-            }
-          },
-          {
-            label: this.$i18n.t('TABLE_FIELDS.schoolGroup'),
-            backgroundColor: '#FFC700',
-            borderRadius: 5,
-            barThickness: 10,
-            categoryPercentage: 1,
-            barPercentage: 1,
-            parsing: {
-              yAxisKey: 'school_groups',
-              xAxisKey: 'name'
-            }
-          },
-          {
-            label: this.$i18n.t('TABLE_FIELDS.school'),
+            label: this.$i18n.t('REPORTS.levels'),
             backgroundColor: '#039FF7',
-            borderRadius: 5,
-            barThickness: 10,
-            categoryPercentage: 1,
-            barPercentage: 1,
+            borderRadius: 3,
+            barThickness: 7,
+            categoryPercentage: 5,
+            barPercentage: 5,
             parsing: {
-              yAxisKey: 'schools',
+              yAxisKey: 'levels',
               xAxisKey: 'name'
             }
-          }
+          },
+          {
+            label: this.$i18n.t('REPORTS.classes'),
+            backgroundColor: '#FFC700',
+            borderRadius: 3,
+            barThickness: 7,
+            categoryPercentage: 5,
+            barPercentage: 5,
+            parsing: {
+              yAxisKey: 'classes',
+              xAxisKey: 'name'
+            }
+          },
+          {
+            label: this.$i18n.t('REPORTS.schoolAdmin'),
+            backgroundColor: '#F04771',
+            borderRadius: 3,
+            barThickness: 7,
+            categoryPercentage: 5,
+            barPercentage: 5,
+            parsing: {
+              yAxisKey: 'admins',
+              xAxisKey: 'name'
+            }
+          },
+          {
+            label: this.$i18n.t('REPORTS.teachers'),
+            backgroundColor: '#76236C',
+            borderRadius: 3,
+            barThickness: 7,
+            categoryPercentage: 5,
+            barPercentage: 5,
+            parsing: {
+              yAxisKey: 'teachers',
+              xAxisKey: 'name'
+            }
+          },
+          {
+            label: this.$i18n.t('REPORTS.supervisors'),
+            backgroundColor: '#00BC37',
+            borderRadius: 3,
+            barThickness: 7,
+            categoryPercentage: 5,
+            barPercentage: 5,
+            parsing: {
+              yAxisKey: 'supervisors',
+              xAxisKey: 'name'
+            }
+          },
+          {
+            label: this.$i18n.t('REPORTS.paretns'),
+            backgroundColor: '#E25199',
+            borderRadius: 3,
+            barThickness: 7,
+            categoryPercentage: 5,
+            barPercentage: 5,
+            parsing: {
+              yAxisKey: 'paretns',
+              xAxisKey: 'name'
+            }
+          },
+          {
+            label: this.$i18n.t('REPORTS.students'),
+            backgroundColor: '#022930',
+            borderRadius: 3,
+            barThickness: 7,
+            categoryPercentage: 5,
+            barPercentage: 5,
+            parsing: {
+              yAxisKey: 'students',
+              xAxisKey: 'name'
+            }
+          },
         ]
       }
     },
@@ -527,7 +496,7 @@ export default {
           yAxes: {
             ticks: {
               min: 0,
-              stepSize: 1
+              stepSize: 2
             }
           }
         }
@@ -535,12 +504,9 @@ export default {
     },
   },
   mounted() {
-    getStudyYear(this.generalReportSearch, 'study_year_id')
-    getALLCountriesForReports(this.generalReportSearch, 'country_id')
-    getALLSchoolGroupsForReports(this.generalReportSearch, 'school_group_id')
-    this.getJeelAdminReportStatistics()
-    this.getJeelAdminReportChart()
-    this.getJeelAdminReportRoles()
+    getSchoolAdminStudyYear(this.generalReportSearch, 'study_year_id')
+    this.getSchoolAdminReportStatistics()
+    this.getSchoolAdminReportChart()
   }
 }
 </script>

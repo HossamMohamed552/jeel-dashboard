@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة الترمات الدراسية'"
+      :header-name="$t('academy.academyList')"
       :number-of-item="totalNumber"
       :tableItems="acadamicList"
       :fieldsList="fieldsList"
@@ -22,13 +22,13 @@
           @click="goToAddMissions"
         >
           <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة ترم دراسي جديد</span>
+          <span>{{$t('academy.add')}}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف الترم الدراسي'"
-      :content-message-question="'هل أنت متأكد من حذف الترم الدراسي؟'"
+      :content-message="$t('academy.delete')"
+      :content-message-question="$t('academy.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -47,6 +47,16 @@ export default {
   name: "index",
   components: { Modal, ListItems, Button },
   computed: {
+    fieldsList(){
+      return  [
+        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
+        { key: "studyYear.name", label: this.$i18n.t('TABLE_FIELDS.studyYearName') },
+        { key: "term.name", label: this.$i18n.t('TABLE_FIELDS.academyTerm') },
+        { key: "start_date", label: this.$i18n.t('TABLE_FIELDS.start_date') },
+        { key: "end_date", label: this.$i18n.t('TABLE_FIELDS.start_date') },
+        { key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions') },
+      ]
+    },
     ...mapGetters(["user"]),
   },
   data() {
@@ -56,14 +66,6 @@ export default {
       missionSearchWord: "",
       acadamicList: [],
       totalNumber: 0,
-      fieldsList: [
-        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
-        { key: "studyYear.name", label: "العام الدراسى" },
-        { key: "term.name", label: "الترم الدراسى" },
-        { key: "start_date", label: "تاريخ البداية" },
-        { key: "end_date", label: "تاريخ النهاية" },
-        { key: "actions", label: "الإجراء" },
-      ],
     };
   },
   methods: {

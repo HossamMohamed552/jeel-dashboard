@@ -55,7 +55,7 @@
                 <ShowItem :title="$t('USERS.ACTIVE')" :subtitle="singleUser?.status?.name" />
               </b-col>
               <b-col lg="12">
-                <h3 class="mb-5">روابط التواصل الإجتماعي</h3>
+                <h3 class="mb-5">{{$t("socialLink")}}</h3>
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
                 <ShowItem :title="$t('SOCIAL_MEDIA.FACEBOOK')" :subtitle="singleUser?.facebook" />
@@ -87,8 +87,8 @@
       </div>
     </div>
     <Modal
-      :content-message="'حذف العنصر'"
-      :content-message-question="'هل أنت متأكد من حذف العنصر؟'"
+      :content-message="$t('deleteItem')"
+      :content-message-question="$t('confirmDeleteItem')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -117,28 +117,6 @@ export default {
       singleUser: {},
       loading: false,
       showModal: false,
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "studyYear.name",
-          label: this.$i18n.t("TABLE_FIELDS.studyYearName"),
-        },
-        {
-          key: "level.name",
-          label: this.$i18n.t("TABLE_FIELDS.levelSchoolAdmin"),
-        },
-        {
-          key: "name",
-          label: this.$i18n.t("TABLE_FIELDS.className"),
-        },
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
     };
   },
   methods:{
@@ -160,6 +138,32 @@ export default {
         this.singleUser = response.data.data;
       });
     }
+  },
+  computed:{
+    fieldsList(){
+      return  [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "studyYear.name",
+          label: this.$i18n.t("TABLE_FIELDS.studyYearName"),
+        },
+        {
+          key: "level.name",
+          label: this.$i18n.t("TABLE_FIELDS.levelSchoolAdmin"),
+        },
+        {
+          key: "name",
+          label: this.$i18n.t("TABLE_FIELDS.className"),
+        },
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ]
+    },
   },
   mounted() {
     this.getStudentSchoolAdmin()

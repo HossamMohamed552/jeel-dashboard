@@ -11,7 +11,7 @@
           <b-col lg="3">
             <div class="img-container">
               <span>
-                <img v-if="singleUser.image" :src="singleUser.image" alt="Person Image" />
+                <img v-if="singleUser.image" :src="singleUser.image" alt="Person Image"/>
                 <i v-else class="far fa-user"></i>
               </span>
             </div>
@@ -19,19 +19,19 @@
           <b-col lg="9">
             <b-row>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('USER.first_name')" :subtitle="singleUser.first_name" />
+                <ShowItem :title="$t('USER.first_name')" :subtitle="singleUser.first_name"/>
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('USERS.SECOND_NAME')" :subtitle="singleUser.middle_name" />
+                <ShowItem :title="$t('USERS.SECOND_NAME')" :subtitle="singleUser.middle_name"/>
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('USER.last_name')" :subtitle="singleUser.last_name" />
+                <ShowItem :title="$t('USER.last_name')" :subtitle="singleUser.last_name"/>
               </b-col>
               <b-col lg="8" class="mb-5 showItem">
-                <ShowItem :title="$t('TABLE_FIELDS.email_username')" :subtitle="singleUser.email" />
+                <ShowItem :title="$t('TABLE_FIELDS.email_username')" :subtitle="singleUser.email"/>
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('USER.mobile')" :subtitle="singleUser.mobile" />
+                <ShowItem :title="$t('USER.mobile')" :subtitle="singleUser.mobile"/>
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
                 <ShowItem
@@ -46,29 +46,29 @@
                 />
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('USERS.gender')" :subtitle="singleUser?.gender?.name" />
+                <ShowItem :title="$t('USERS.gender')" :subtitle="singleUser?.gender?.name"/>
               </b-col>
               <b-col lg="4" class="mb-5 showItem" v-if="singleUser && singleUser.roles">
-                <ShowItem :title="$t('USERS.DEPARTMENT')" :listItems="singleUser.roles" />
+                <ShowItem :title="$t('USERS.DEPARTMENT')" :listItems="singleUser.roles"/>
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('USERS.ACTIVE')" :subtitle="singleUser?.status?.name" />
+                <ShowItem :title="$t('USERS.ACTIVE')" :subtitle="singleUser?.status?.name"/>
               </b-col>
               <b-col lg="12">
-                <h3 class="mb-5">روابط التواصل الإجتماعي</h3>
+                <h3 class="mb-5">{{ $t('socialLink') }}</h3>
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('SOCIAL_MEDIA.FACEBOOK')" :subtitle="singleUser?.facebook" />
+                <ShowItem :title="$t('SOCIAL_MEDIA.FACEBOOK')" :subtitle="singleUser?.facebook"/>
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('SOCIAL_MEDIA.TWITTER')" :subtitle="singleUser?.twitter" />
+                <ShowItem :title="$t('SOCIAL_MEDIA.TWITTER')" :subtitle="singleUser?.twitter"/>
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('SOCIAL_MEDIA.LINKEDIN')" :subtitle="singleUser?.linkedin" />
+                <ShowItem :title="$t('SOCIAL_MEDIA.LINKEDIN')" :subtitle="singleUser?.linkedin"/>
               </b-col>
-<!--              <b-col lg="6" class="mb-5 showItem img-container">-->
-<!--                <img class="w-100" :src="singleUser.avatar" />-->
-<!--              </b-col>-->
+              <!--              <b-col lg="6" class="mb-5 showItem img-container">-->
+              <!--                <img class="w-100" :src="singleUser.avatar" />-->
+              <!--              </b-col>-->
             </b-row>
           </b-col>
           <b-col lg="12">
@@ -104,6 +104,7 @@ import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import {deleteSchoolAdminEnrollmentRequest, getUsersSchoolAdminRequest} from "@/api/school-info";
 import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
+
 export default {
   name: "index",
   components: {
@@ -116,20 +117,6 @@ export default {
       singleUser: {},
       loading: false,
       showModal: false,
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "studyYear.name",
-          label: this.$i18n.t("TABLE_FIELDS.studyYearName"),
-        },
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
     };
   },
   watch: {
@@ -137,7 +124,7 @@ export default {
       return newVal
     }
   },
-  methods:{
+  methods: {
     deleteItem($event) {
       this.itemId = $event;
       this.showModal = true;
@@ -151,10 +138,28 @@ export default {
       });
       this.cancel();
     },
-    getSchoolAdminUser(){
+    getSchoolAdminUser() {
       this.ApiService(getUsersSchoolAdminRequest(this.$route.params.id)).then((response) => {
         this.singleUser = response.data.data;
       });
+    }
+  },
+  computed: {
+    fieldsList() {
+      return [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "studyYear.name",
+          label: this.$i18n.t("TABLE_FIELDS.studyYearName"),
+        },
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ]
     }
   },
   mounted() {

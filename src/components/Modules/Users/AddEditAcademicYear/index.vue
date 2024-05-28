@@ -2,14 +2,14 @@
   <div class="add-edit-academic-year">
     <div class="container-fluid custom-container">
       <div class="add-edit-academic-year-form">
-        <h3>{{ $route.params.id ? "تعديل الترم الدراسى" : "إضافة ترم الدراسى" }}</h3>
+        <h3>{{ $route.params.id ? $t('academy.edit') : $t('academy.add') }}</h3>
         <validation-observer v-slot="{ invalid }" ref="addEditAcademicYearForm">
           <GenericForm
             :schema="academicYearSchema"
             @handleCancel="handleCancel"
             @onSubmit="onSubmit"
             :loading="loading"
-            :submitButton="$route.params.id ? 'حفظ' : 'أضافة'"
+            :submitButton="$route.params.id ? $t('academy.saveTerm') : $t('academy.addTerm')"
             :cancelButton="$t('GLOBAL_CANCEL')"
             :invalid="invalid"
           ></GenericForm>
@@ -46,6 +46,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "العام الدراسى",
+          labelEn: "study Year",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -58,6 +59,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "الترم الدراسى",
+          labelEn: "term",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -66,6 +68,7 @@ export default {
         {
           key: "start_date",
           label: "تاريخ البداية",
+          labelEn: "start date",
           col: "3",
           listen: "id",
           value: "",
@@ -76,6 +79,7 @@ export default {
         {
           key: "end_date",
           label: "تاريخ النهاية",
+          labelEn: "end date",
           col: "3",
           listen: "id",
           value: "",

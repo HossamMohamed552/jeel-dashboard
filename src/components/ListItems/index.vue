@@ -138,7 +138,13 @@
           <AudioFakePlayer :data="data" />
         </template>
         <template #cell(percentage_mission)="data">
-          <span>{{ data.item.percentage_mission }}%</span>
+          <span>{{ Math.floor(data.item.percentage_mission) }}%</span>
+        </template>
+        <template #cell(percentage_quizzes)="data">
+          <span>{{ Math.floor(data.item.percentage_quizzes) }}%</span>
+        </template>
+        <template #cell(participating_user_percentage)="data">
+          <span>{{ Math.floor(data.item.participating_user_percentage) }}%</span>
         </template>
         <template #cell(audio_ar)="data">
           <audio controls>
@@ -209,6 +215,12 @@
             term.name | cutString
           }}</span>
         </template>
+        <template #cell(class)="data">
+          <span v-for="(singleClass, ind) in data.item.class" :key="ind" class="path">{{
+              singleClass.name | cutString
+            }}</span>
+        </template>
+
         <template #cell(lessons)="data">
           <span v-for="(lesson, ind) in data.item.lessons" :key="ind" class="path">{{
             lesson.name | cutString

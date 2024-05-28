@@ -4,7 +4,7 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">إضافة طالب إلى ولى الأمر</h2>
+            <h2 class="heading">{{ $t('schoolAdmin.addStudentToParent') }}</h2>
           </b-col>
         </b-row>
         <b-row>

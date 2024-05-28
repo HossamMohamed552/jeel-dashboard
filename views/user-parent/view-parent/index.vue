@@ -55,7 +55,7 @@
                 <ShowItem :title="$t('USERS.ACTIVE')" :subtitle="singleUser?.status?.name" />
               </b-col>
               <b-col lg="12">
-                <h3 class="mb-5">روابط التواصل الإجتماعي</h3>
+                <h3 class="mb-5">{{$t("socialLink")}}</h3>
               </b-col>
               <b-col lg="4" class="showItem">
                 <ShowItem :title="$t('SOCIAL_MEDIA.FACEBOOK')" :subtitle="singleUser?.facebook" />
@@ -71,7 +71,7 @@
           <b-col lg="12">
             <ListItems
               class="px-0"
-              :header-name="'قائمة الطلاب'"
+              :header-name="$t('schoolAdmin.listOfStudents')"
               :fieldsList="fieldsList"
               :number-of-item="totalNumber"
               :table-items="singleUser.students"
@@ -90,8 +90,8 @@
       </div>
     </div>
     <Modal
-      :content-message="'حذف العنصر'"
-      :content-message-question="'هل أنت متأكد من حذف العنصر؟'"
+      :content-message="$t('deleteItem')"
+      :content-message-question="$t('confirmDeleteItem')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -124,7 +124,11 @@ export default {
       loading: false,
       showModal: false,
       userSearchWord: "",
-      fieldsList: [
+    };
+  },
+  computed:{
+    fieldsList(){
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -165,8 +169,8 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-    };
+      ]
+    },
   },
   methods:{
     getStudentsForParent(){

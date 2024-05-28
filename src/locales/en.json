@@ -178,7 +178,10 @@
     "questionDifficulty": "question Difficulty",
     "logoGroup": "group logo",
     "nameGroup": "group name",
-    "titleQuiz": "quiz title"
+    "titleQuiz": "quiz title",
+    "academyTerm": "Academic term",
+    "academyStart_date": "Start Date",
+    "academyEnd_date": "End Date"
   },
   "CONTROLS": {
     "detailBtn": "details",
@@ -861,9 +864,12 @@
     "supervisors": "supervisors",
     "teachers": "teachers",
     "students": "students",
-    "parents": "parents",
+    "paretns": "parents",
     "exportExcel": "Export To Excel",
-    "exportPdf": "Export To Pdf"
+    "exportPdf": "Export To Pdf",
+    "user_count": "Number of subscribers",
+    "competitionHeading": "competitions report",
+    "studentHeading": "Student performance report"
   },
   "VERIFICATION": {
     "EXPIRED": "This code is expired. type your email to resend",
@@ -939,7 +945,16 @@
     "EASY_QUESTIONS": "Easy questions",
     "MEDIUM_QUESTIONS": "Intermediate questions",
     "DIFFICULT_QUESTIONS": "Difficult questions",
-    "DURATION": "Duration"
+    "DURATION": "Duration",
+    "questions_easy": "Number of easy questions",
+    "questions_medium": "Number of medium questions",
+    "questions_hard": "Number of hard questions",
+    "terms": "terms",
+    "class": "class",
+    "name": "competition",
+    "participating_user": "No.of participating students",
+    "participating_user_finsh": "No.of students finished competition",
+    "participating_user_percentage": "Performance ratio"
   },
   "LEARNING_PATH": {
     "LEARNING_PATH": "learning path",
@@ -1048,6 +1063,7 @@
   },
   "schoolAdmin": {
     "schoolInfoDetail": "School data",
+    "editSchoolInfo": "edit School Info",
     "schoolName": "school Name",
     "country": "country",
     "schoolGroup": "School group",
@@ -1089,6 +1105,7 @@
     "selectParent": "Choose the parent's name",
     "addParent": "Parents' data",
     "studyYearsList": "study Years List",
+    "schoolAdminList": "List of school Admin",
     "rolesList": "roles List",
     "showDetailsTeacher": "teacher details",
     "showDetailsParent": "Parent's details",
@@ -1100,7 +1117,20 @@
     "studentName": "student Name",
     "addClassTeacherEnrollment": "Add a class",
     "classesList": "classes",
-    "school": "school"
+    "school": "school",
+    "classesMainList": "List of classes",
+    "classesMainAdd": "Add a class",
+    "classesMainDelete": "Delete class",
+    "classesMainConfirmDelete": "Are you sure you want to delete the class?",
+    "selectStudyYear": "Select the Study year",
+    "selectLevel": "Select the Level",
+    "supervisors": "supervisors list",
+    "teachers": "teachers",
+    "students": "students",
+    "parentsOfStudent": "Parents Of The Student",
+    "parentManagement": "Parent Management",
+    "listOfStudents": "list Of Students",
+    "addStudentToParent": "Add a student to the parent"
   },
   "superVisor": {
     "date": "date",
@@ -1297,6 +1327,34 @@
     "arAudio": "Audio in Arabic",
     "enAudio": "Audio in English"
   },
+  "academy": {
+    "academyList": "List of academic terms",
+    "add": "Add a new term",
+    "delete": "Delete the academic term",
+    "confirm_delete": "Are you sure you want to delete the term?",
+    "addTerm": "add",
+    "saveTerm": "save"
+  },
+  "studentReport": {
+    "student_name": "student name",
+    "study_year_name": "study year",
+    "level_name": "level",
+    "term_name": "term",
+    "class_name": "class",
+    "mission_count": "missions count",
+    "lesson_count": "lessons count",
+    "user_mission_videos_count": "No. of videos watched",
+    "mission_videos_count": "Total no. of videos",
+    "user_mission_quiz_count": "No. of completed exercises",
+    "mission_quizzes_count": "Total no. of exercises",
+    "percentage_quizzes": "Percentage of performance in exercises",
+    "user_mission_tasks_count" : "No. of completed tasks",
+    "mission_tasks_count" : "Total no. of tasks",
+    "user_mission_single_paperworks_count": "No. of finished individual paperWork",
+    "mission_single_paperworks_count": "Total no. of individual worksheets",
+    "user_mission_participatory_paperworks_count": "No. of completed participatory paperWork",
+    "mission_participatory_paperworks_count": "Total no. of participatory paperWork"
+  },
   "permissions": "permissions",
   "showDetails": "showDetails",
   "copyRight": "All rights reserved © to jeel {year}",
@@ -1374,5 +1432,8 @@
   "number": "number",
   "enterNumber": "enter Number",
   "socialLink": "Social media links",
-  "all": "All"
+  "all": "All",
+  "deleteItem": "Delete item",
+  "confirmDeleteItem": "Are you sure you want to delete the item?",
+  "PLEASE_TRY_AGAIN": "PLEASE TRY AGAIN"
 }

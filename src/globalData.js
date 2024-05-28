@@ -737,6 +737,62 @@ let routesJeelAdminReports = [
     permission: "view-learningpath",
   },
 ]
+let routesSchoolAdminReports = [
+  {
+    name: "تقرير عام المنصة",
+    nameEn: "Platform general report",
+    path: "/dashboard/reports/school-admin/general-report",
+    altImage: "general-report",
+    titleImage: "general-report",
+    icon: require("@/assets/images/icons/general.svg"),
+    permission: "add-enrollment-supervisors-users",
+  },
+  {
+    name: "الاشتراكات",
+    nameEn: "Subscriptions",
+    path: "/dashboard/reports/school-admin/subscriptions",
+    altImage: "subscriptions",
+    titleImage: "subscriptions",
+    icon: require("@/assets/images/icons/subscription.svg"),
+    permission: "add-enrollment-supervisors-users",
+  },
+  {
+    name: "المهام",
+    nameEn: "missions",
+    path: "/dashboard/reports/school-admin/missions",
+    altImage: "missions",
+    titleImage: "missions",
+    icon: require("@/assets/images/icons/mission-List.svg"),
+    permission: "add-enrollment-supervisors-users",
+  },
+  {
+    name: "المسابقات",
+    nameEn: "competitions",
+    path: "/dashboard/reports/school-admin/competitions",
+    altImage: "competitions",
+    titleImage: "competitions",
+    icon: require("@/assets/images/icons/competition.svg"),
+    permission: "add-enrollment-supervisors-users",
+  },
+  {
+    name: "أداء الطالب",
+    nameEn: "Student performance",
+    path: "/dashboard/reports/school-admin/student-performance",
+    altImage: "Student performance",
+    titleImage: "Student performance",
+    icon: require("@/assets/images/icons/student-performance.svg"),
+    permission: "add-enrollment-supervisors-users",
+  },
+  {
+    name: "أداء الفصل",
+    nameEn: "Class performance",
+    path: "/dashboard/reports/school-admin/class-performance",
+    altImage: "competitions",
+    titleImage: "competitions",
+    icon: require("@/assets/images/icons/class-performance.svg"),
+    permission: "add-enrollment-supervisors-users",
+  },
+]
 export {
   routesUsers,
   routesSchool,
@@ -751,5 +807,6 @@ export {
   routeSchoolAdmin,
   routesTeacher,
   routesParent,
-  routesJeelAdminReports
+  routesJeelAdminReports,
+  routesSchoolAdminReports
 };

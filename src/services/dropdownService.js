@@ -33,7 +33,7 @@ import {getQuizLevelPathRequest} from "@/api/quiz"; // التمارين
 import {getVideoPerLevelPathRequest} from "@/api/videos";
 
 // Super Visor Dropdowns
-import {getStudyYearsForSuperVisorRequest} from "@/api/school-info";
+import {getLevelsRequest, getStudyYearsForSuperVisorRequest} from "@/api/school-info";
 import {getLevelsForSuperVisorDropDownRequest} from "@/api/level"; // المرحلة الدراسية
 import {
   getMissionForCompetitonRequest, // المهام
@@ -61,7 +61,7 @@ import {
   getSupervisorMissionsRequest,
   getTermsForSupervisorDropDownRequest,
 } from "@/api/supervisor-module";
-import {getSchoolYearRequest} from "@/api/school-year";
+import {getSchoolAdminSchoolYearRequest, getSchoolYearRequest} from "@/api/school-year";
 import {getPackagesRequest} from "@/api/packages";
 
 // isSub = false
@@ -132,6 +132,9 @@ export async function getAllLevelsForReports(array, key,packageId,schoolId) {
     package_id: packageId,
     school_id: schoolId,
   }), key);
+}
+export async function getAllLevelsForSchoolAdmin(array, key) {
+  await fetchDataAndUpdateOptions(array, getLevelsRequest(), key);
 }
 export async function geAllTermsForReports(array, key,packageId,schoolId) {
   await fetchDataAndUpdateOptions(array, geTermsRequest({
@@ -305,7 +308,9 @@ export async function getStudyYearForTeacher(array, key) {
 export async function getStudyYear(array, key) {
   await fetchDataAndUpdateOptions(array, getSchoolYearRequest({list_all: true}), key);
 }
-
+export async function getSchoolAdminStudyYear(array, key) {
+  await fetchDataAndUpdateOptions(array, getSchoolAdminSchoolYearRequest({list_all: true}), key);
+}
 export async function getStudyYearForSupervisor(array, key) {
   await fetchDataAndUpdateOptions(array, getStudyYearForSupervisorRequest({list_all: true}), key);
 }

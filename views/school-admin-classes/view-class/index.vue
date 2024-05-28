@@ -29,12 +29,6 @@
             >
             </ListItems>
           </b-col>
-<!--          <b-col lg="4" class="mb-5">-->
-<!--            <ShowItem class="divider-show" :title="$t('schoolAdmin.schoolName')" :subtitle="classItem.school.name" />-->
-<!--          </b-col>-->
-<!--          <b-col lg="4">-->
-<!--            <ShowItem class="divider-show" :title="$t('schoolAdmin.students_count')" :subtitle="classItem.student_count" />-->
-<!--          </b-col>-->
         </b-row>
       </div>
     </div>
@@ -52,7 +46,11 @@ export default {
     return {
       classItem: {},
       loading: false,
-      fieldsList: [
+    };
+  },
+  computed:{
+    fieldsList(){
+      return [
         {
           key: "id",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -85,8 +83,8 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-    };
+      ]
+    },
   },
   mounted() {
     this.ApiService(getClassByIdRequest(this.$route.params.id)).then((response) => {

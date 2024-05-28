@@ -45,7 +45,7 @@ export default {
             });
           });
         } else {
-          this.$root.$bvToast.toast(this.$t("PLEASE_TRY_AGAIN"), {
+          this.$root.$bvToast.toast(this.$i18n.t("PLEASE_TRY_AGAIN"), {
             title: this.toast.title,
             solid: true,
             variant: this.toast.type,

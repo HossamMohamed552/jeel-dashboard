@@ -3,7 +3,7 @@
     <div class="container-fluid custom-container">
       <div class="edit-school-info-form">
         <h3>
-          تعديل بيانات المدرسة
+          {{$t('schoolAdmin.editSchoolInfo')}}
         </h3>
         <validation-observer v-slot="{ invalid }" ref="EditSchoolInfoForm">
           <form @submit.prevent="onSubmit" class="mt-5">

@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة الفصول'"
+      :header-name="$t('schoolAdmin.classesMainList')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="classesList"
@@ -26,13 +26,13 @@
           v-if="user.permissions.includes(`add-classes`)"
         >
           <img src="@/assets/images/icons/plus.svg"/>
-          <span>إضافة فصل</span>
+          <span>{{ $t('schoolAdmin.classesMainAdd') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف الفصل'"
-      :content-message-question="'هل أنت متأكد من حذف الفصل؟'"
+      :content-message="$t('schoolAdmin.classesMainDelete')"
+      :content-message-question="$t('schoolAdmin.classesMainConfirmDelete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -51,16 +51,8 @@ export default {
   name: "index",
   components: {Modal, Button, ListItems},
   computed: {
-    ...mapGetters(["user"]),
-  },
-  data() {
-    return {
-      classesList: [],
-      showModal: false,
-      totalNumber: 0,
-      loading: false,
-      userSearchWord: "",
-      fieldsList: [
+    fieldsList(){
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -85,7 +77,17 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
+      ]
+    },
+    ...mapGetters(["user"]),
+  },
+  data() {
+    return {
+      classesList: [],
+      showModal: false,
+      totalNumber: 0,
+      loading: false,
+      userSearchWord: "",
     }
   },
   methods: {

@@ -5,6 +5,7 @@ export default [
     component: () => import("../../../views/management-academic-year/index.vue"),
     meta: {
       breadcrumb: "إدارة العام الدراسى",
+      breadcrumbEn: "management academic year",
       preLabel: "",
       preLink: "",
     },
@@ -16,7 +17,9 @@ export default [
       import("../../../views/management-academic-year/add-management-academic-year/index.vue"),
     meta: {
       breadcrumb: "إضافة ترم الدراسى",
+      breadcrumbEn: "add management academic year",
       preLabel: "إدارة العام الدراسى",
+      preLabelEn: "management academic year",
       preLink: "/dashboard/management-academic-year",
     },
   },
@@ -27,7 +30,9 @@ export default [
       import("../../../views/management-academic-year/edit-management-academic-year/index.vue"),
     meta: {
       breadcrumb: "تعديل الترم الدراسى",
+      breadcrumbEn: "edit management academic year",
       preLabel: "إدارة العام الدراسى",
+      preLabelEn: "management academic year",
       preLink: "/dashboard/management-academic-year",
     },
   },
