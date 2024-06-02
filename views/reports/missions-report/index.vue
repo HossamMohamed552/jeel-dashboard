@@ -659,7 +659,6 @@ export default {
       this.getMissionsReportChart()
     },
     handleInput(key, value, _, options) {
-      console.log('hey')
       if (key === 'school_group_id' && value !== '') {
         this.missionsReportSearch[3].disabled = false;
         getAllSchools(this.missionsReportSearch, 'school_id', this.missionsReportSearch[0].value, this.missionsReportSearch[1].value, this.missionsReportSearch[2].value)

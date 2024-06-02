@@ -311,3 +311,19 @@ export const deleteStudentParentEnrollmentRequest = (id, data) => ({
     data,
   },
 });
+export const getClassSchoolAdminRequest = (params) => ({
+  method: "get",
+  url: `school/classes`,
+  config: {
+    params,
+  },
+});
+export const getStudentsInClassSchoolAdminRequest = (id, params) => ({
+  method: "get",
+  url: `classes/${id}/students`,
+  config: {
+    params,
+  },
+});
+
+

@@ -59,4 +59,16 @@ export default [
       preLink: "/dashboard/reports",
     },
   },
+  {
+    path: "/dashboard/reports/school-admin/class-performance",
+    name: "competition-report",
+    component:()=> import("../../../views/reports/school-admin/classes-report/index.vue"),
+    meta: {
+      breadcrumb: "تقرير أداء الفصل",
+      breadcrumbEn: "Class performance report",
+      preLabel: "التقارير",
+      preLabelEn: "reports",
+      preLink: "/dashboard/reports",
+    },
+  },
 ]

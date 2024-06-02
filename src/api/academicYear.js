@@ -1,6 +1,9 @@
-export const geTermsRequest = () => ({
+export const geTermsRequest = (params) => ({
   method: "get",
   url: "/school/terms",
+  config: {
+    params
+  }
 });
 export const getStudyYearRequest = () => ({
   method: "get",
@@ -9,7 +12,7 @@ export const getStudyYearRequest = () => ({
 export const getAcademicYearRequest = (params) => ({
   method: "get",
   url: "/school-manage/study_year",
-  config: { params },
+  config: {params},
 });
 export const getSingleAcademicYearRequest = (params) => ({
   method: "get",

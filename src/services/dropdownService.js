@@ -33,7 +33,11 @@ import {getQuizLevelPathRequest} from "@/api/quiz"; // التمارين
 import {getVideoPerLevelPathRequest} from "@/api/videos";
 
 // Super Visor Dropdowns
-import {getLevelsRequest, getStudyYearsForSuperVisorRequest} from "@/api/school-info";
+import {
+  getClassSchoolAdminRequest,
+  getLevelsRequest, getStudentsInClassSchoolAdminRequest,
+  getStudyYearsForSuperVisorRequest
+} from "@/api/school-info";
 import {getLevelsForSuperVisorDropDownRequest} from "@/api/level"; // المرحلة الدراسية
 import {
   getMissionForCompetitonRequest, // المهام
@@ -133,9 +137,19 @@ export async function getAllLevelsForReports(array, key,packageId,schoolId) {
     school_id: schoolId,
   }), key);
 }
-export async function getAllLevelsForSchoolAdmin(array, key) {
-  await fetchDataAndUpdateOptions(array, getLevelsRequest(), key);
+export async function getAllLevelsForSchoolAdmin(array, key,params) {
+  await fetchDataAndUpdateOptions(array, getLevelsRequest(params), key);
 }
+export async function getTerms(array, key,params) {
+  await fetchDataAndUpdateOptions(array, geTermsRequest(params), key);
+}
+export async function getClassSchoolAdmin(array, key,params) {
+  await fetchDataAndUpdateOptions(array, getClassSchoolAdminRequest(params), key);
+}
+export async function getStudentsInClassSchoolAdmin(array, key,classId,params) {
+  await fetchDataAndUpdateOptions(array, getStudentsInClassSchoolAdminRequest(classId,params), key);
+}
+
 export async function geAllTermsForReports(array, key,packageId,schoolId) {
   await fetchDataAndUpdateOptions(array, geTermsRequest({
     package_id: packageId,

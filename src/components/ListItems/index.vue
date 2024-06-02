@@ -146,6 +146,18 @@
         <template #cell(participating_user_percentage)="data">
           <span>{{ Math.floor(data.item.participating_user_percentage) }}%</span>
         </template>
+        <template #cell(percentage_videos)="data">
+          <span>{{ Math.floor(data.item.percentage_videos) }}%</span>
+        </template>
+        <template #cell(percentage_tasks)="data">
+          <span>{{ Math.floor(data.item.percentage_tasks) }}%</span>
+        </template>
+        <template #cell(percentage_single_paperworks)="data">
+          <span>{{ Math.floor(data.item.percentage_single_paperworks) }}%</span>
+        </template>
+        <template #cell(percentage_participatory_paperwork)="data">
+          <span>{{ Math.floor(data.item.percentage_participatory_paperwork) }}%</span>
+        </template>
         <template #cell(audio_ar)="data">
           <audio controls>
             <source :src="data.item.audio_ar" />
