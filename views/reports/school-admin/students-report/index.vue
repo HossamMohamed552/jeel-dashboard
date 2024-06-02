@@ -355,6 +355,7 @@ export default {
       studentSearchFields: [],
       totalNumber: 0,
       searchWithPagination: {},
+      dataForChart: [],
     }
   },
   watch: {
@@ -580,13 +581,52 @@ export default {
       return {
         datasets: [
           {
-            label: this.$i18n.t('STATISTICS.missions'),
+            label: this.$i18n.t('REPORTS.levels'),
+            backgroundColor: '#039FF7',
+            borderRadius: 3,
+            barThickness: 7,
+            categoryPercentage: 5,
+            barPercentage: 5,
+            parsing: {
+              yAxisKey: 'total',
+              xAxisKey: 'missionName'
+            }
+          },
+          {
+            label: this.$i18n.t('REPORTS.classes'),
+            backgroundColor: '#FFC700',
+            borderRadius: 3,
+            barThickness: 7,
+            categoryPercentage: 5,
+            barPercentage: 5,
+            parsing: {
+              yAxisKey: 'total',
+              xAxisKey: 'missionName'
+            }
+          },
+          {
+            label: this.$i18n.t('REPORTS.schoolAdmin'),
+            backgroundColor: '#F04771',
+            borderRadius: 3,
+            barThickness: 7,
+            categoryPercentage: 5,
+            barPercentage: 5,
+            parsing: {
+              yAxisKey: 'total',
+              xAxisKey: 'missionName'
+            }
+          },
+          {
+            label: this.$i18n.t('REPORTS.teachers'),
             backgroundColor: '#76236C',
-            borderRadius: 5,
-            barThickness: 10,
-            categoryPercentage: 1,
-            barPercentage: 1,
-            data: []
+            borderRadius: 3,
+            barThickness: 7,
+            categoryPercentage: 5,
+            barPercentage: 5,
+            parsing: {
+              yAxisKey: 'total',
+              xAxisKey: 'missionName'
+            }
           },
         ]
       }
@@ -645,15 +685,15 @@ export default {
           level_id: this.studentReportSearch[1].value
         })
       }
-      if(key === 'level_id' && value !== '') {
+      if (key === 'level_id' && value !== '') {
         getClassSchoolAdmin(this.studentReportSearch, 'class_id', {
           study_year_id: this.studentReportSearch[0].value,
           level_id: this.studentReportSearch[1].value
         })
       }
-      if(key === 'class_id' && value !== '') {
+      if (key === 'class_id' && value !== '') {
         this.studentReportSearch[4].disabled = false;
-        getStudentsInClassSchoolAdmin(this.studentReportSearch,'user_id',this.studentReportSearch[3].value)
+        getStudentsInClassSchoolAdmin(this.studentReportSearch, 'user_id', this.studentReportSearch[3].value)
       }
       if (options) {
         const itemValue = options?.filter((item) => {
@@ -667,7 +707,7 @@ export default {
     onSubmit(values) {
       this.searchWithPagination = values;
       this.getStudentReport()
-      if(this.searchWithPagination.user_id){
+      if (this.searchWithPagination.user_id) {
         this.getChartLearningPathsReportChart()
       }
     },
@@ -703,8 +743,21 @@ export default {
       this.$refs.html2Pdf.generatePdf()
     },
     setData() {
-      this.chartData.datasets[0].data = this.dataForChart.map((item) => {
-        return {x: item.name, y: item.missions_count}
+      let charDataWithMissions = [];
+      this.dataForChart.forEach((missionItem) => {
+        let missionName = missionItem.name
+        if (missionItem.learning_paths) {
+          return missionItem.learning_paths.forEach((learningPathItem) => {
+            return charDataWithMissions.push(Object.assign({}, {
+              missionName: missionName,
+              learningPathName: learningPathItem.name,
+              total: learningPathItem.total_percentage
+            }))
+          })
+        }
+      })
+      this.chartData.datasets.forEach((item) => {
+        return Object.assign(item, {data: charDataWithMissions})
       })
     },
     toggleCollapsed() {
