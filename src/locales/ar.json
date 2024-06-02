@@ -178,7 +178,10 @@
     "questionDifficulty": "مستوى الصعوبة",
     "logoGroup": "لوجو المجموعة",
     "nameGroup": "اسم المجموعة",
-    "titleQuiz": "عنوان التمرين"
+    "titleQuiz": "عنوان التمرين",
+    "academyTerm": "الترم الدراسى",
+    "academyStart_date": "تاريخ البداية",
+    "academyEnd_date": "تاريخ النهاية"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -862,10 +865,14 @@
     "supervisors": "المشرفين",
     "teachers": "المدرسين",
     "students": "الطلاب",
-    "parents": "أولياء الأمور",
+    "paretns": "أولياء الأمور",
     "exportExcel": "تصدير ل أكسيل",
     "exportPdf": "تصدير ل pdf",
-    "status": "حالة الاشتراك"
+    "status": "حالة الاشتراك",
+    "user_count": "عدد المشتركين",
+    "competitionHeading": "تقارير المسابقات",
+    "studentHeading": "تقرير أداء الطالب",
+    "classHeading": "تقرير أداء الفصل"
   },
   "VERIFICATION": {
     "EXPIRED": "صلاحية الكود منتهية ، أدخل البريد الالكتروني لاعادة الارسال",
@@ -939,9 +946,18 @@
     "COMPETITION_PERIOD": "فترة المسابقة",
     "QUESTION_NUMBER": "عدد الأسئلة",
     "EASY_QUESTIONS": "الأسئلة السهلة",
+    "questions_easy": "عدد الأسئلة السهلة",
     "MEDIUM_QUESTIONS": "الأسئلة المتوسطة",
+    "questions_medium": "عدد الأسئلة المتوسطة",
     "DIFFICULT_QUESTIONS": "الأسئلة الصعبة",
-    "DURATION": "المدة الزمنية"
+    "questions_hard": " عدد الأسئلة الصعبة",
+    "DURATION": "المدة الزمنية",
+    "terms": "الترم الدراسي",
+    "class": "الفصل",
+    "name": "المسابقة",
+    "participating_user": "عدد الطلاب المشاركين",
+    "participating_user_finsh": "عدد الطلاب المنتهين من المسابقة",
+    "participating_user_percentage": "نسبة الأداء"
   },
   "LEARNING_PATH": {
     "LEARNING_PATH": "المسار التعليمي",
@@ -1053,6 +1069,7 @@
   },
   "schoolAdmin": {
     "schoolInfoDetail": "بيانات المدرسة",
+    "editSchoolInfo": "تعديل بيانات المدرسة",
     "schoolName": "اسم المدرسة",
     "country": "الدولة",
     "schoolGroup": "مجموعة المدارس",
@@ -1094,6 +1111,7 @@
     "selectParent": "اختر اسم ولى الأمر",
     "addParent": "بيانات أولياء الأمور",
     "studyYearsList": "قائمة الأعوام الدراسية",
+    "schoolAdminList": "قائمة مديرى المدرسة",
     "rolesList": "قائمة الصلاحيات",
     "showDetailsTeacher": "تفاصيل المدرس",
     "showDetailsParent": "تفاصيل ولى الأمر",
@@ -1105,7 +1123,20 @@
     "studentName": "اسم الطالب",
     "addClassTeacherEnrollment": "إضافة فصل دراسي",
     "classesList": "الفصول الدراسية",
-    "school": "المدرسة"
+    "school": "المدرسة",
+    "classesMainList": "قائمة الفصول",
+    "classesMainAdd": "إضافة فصل",
+    "classesMainDelete": "حذف الفصل",
+    "classesMainConfirmDelete": "هل أنت متأكد من حذف الفصل؟",
+    "selectStudyYear": "اختر العام الدراسى",
+    "selectLevel": "اختر الصف الدراسي",
+    "supervisors": "إدارة مشرفي المدرسة",
+    "teachers": "إدارة المدرسين",
+    "students": "إدارة الطلاب",
+    "parentsOfStudent": "أولياء الأمور للطالب",
+    "parentManagement": "إدارة اولياء الامور",
+    "listOfStudents": "قائمة الطلاب",
+    "addStudentToParent": "إضافة طالب إلى ولى الأمر"
   },
   "power_up_box": {
     "powerUp": "صناديق الطاقة",
@@ -1310,6 +1341,46 @@
     "arAudio": "الصوت بالعربية",
     "enAudio": "الصوت بالانجليزية"
   },
+  "academy": {
+    "academyList": "قائمة الترمات الدراسية",
+    "add": "إضافة ترم دراسي جديد",
+    "edit": "تعديل الترم الدراسى",
+    "delete": "حذف الترم الدراسي",
+    "confirm_delete": "هل أنت متأكد من حذف الترم الدراسي؟",
+    "addTerm": "أضافة",
+    "saveTerm": "حفظ"
+  },
+  "studentReport": {
+    "student_name": "اسم الطالب",
+    "study_year_name": "العام الدراسي",
+    "level_name": "الصف الدراسي",
+    "term_name": "الترم الدراسي",
+    "class_name": "اسم الفصل",
+    "mission_count": "عدد المهام",
+    "lesson_count": "عدد الدروس",
+    "user_mission_videos_count": "عدد الفيديوهات التى تم مشاهدتها",
+    "class_user_mission_videos_count": "عدد الطلاب الذين أنهو الفيديوهات",
+    "mission_videos_count": "إجمالى عدد الفيديوهات",
+    "percentage_videos": "نسبة التفاعل على الفيديوهات",
+    "user_mission_quiz_count": "عدد التمارين المنتهية",
+    "class_user_mission_quiz_count": "عدد الطلاب الذين أنهو التمارين",
+    "mission_quizzes_count": "إجمالى عدد التمارين",
+    "percentage_quizzes": "نسبة الأداء فى التمارين",
+    "class_percentage_quizzes": "نسبة التفاعل على التمارين",
+    "user_mission_tasks_count" : "عدد التسجيلات الصوتية المنتهية",
+    "class_user_mission_tasks_count": "عدد الطلاب الذين أنهو التسجيلات الصوتية",
+    "mission_tasks_count" : "إجمالى عدد التسجيلات الصوتية",
+    "class_percentage_tasks": "نسبة التفاعل على التسجيلات الصوتية",
+    "user_mission_single_paperworks_count": "عدد أوراق العمل الفردية المنتهية",
+    "class_mission_single_paperworks_count": "عدد الطلاب الذين أنهو أوراق العمل الفردية",
+    "mission_single_paperworks_count": "إجمالى عدد أوراق العمل الفردية",
+    "percentage_single_paperworks": "نسبة التفاعل على الأوراق الفردية",
+    "user_mission_participatory_paperworks_count": "عدد أوراق العمل التشاركية المنتهية",
+    "class_mission_participatory_paperworks_count": "عدد الطلاب الذين أنهو أوراق العمل التشاركية",
+    "percentage_participatory_paperwork": "نسبة التفاعل على الأوراق التشاركية",
+    "mission_participatory_paperworks_count": "إجمالى عدد أوراق العمل التشاركية",
+    "user_count": "عدد الطلاب الفصل"
+  },
   "permissions": "الصلاحيات",
   "showDetails": "عرض تفاصيل المستخدم",
   "copyRight": "جميع الحقوق محفوظة ©\uFE0F لجيل عالم الأطفال الآمن {year}",
@@ -1387,5 +1458,8 @@
   "number": "عدد",
   "enterNumber": "أدخل عدد",
   "socialLink": "روابط التواصل الإجتماعي",
-  "all": "الكل"
+  "all": "الكل",
+  "deleteItem": "حذف العنصر",
+  "confirmDeleteItem": "هل أنت متأكد من حذف العنصر؟",
+  "PLEASE_TRY_AGAIN": "من فضلك أعد المحاولة مره اخرى"
 }

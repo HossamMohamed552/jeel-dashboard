@@ -69,7 +69,7 @@
                       v-model="enrollment.study_year_id"
                       :label="$t('schoolAdmin.studyYear')"
                       :name="$t('schoolAdmin.studyYear')"
-                      placeholder="اختر العام الدراسى"
+                      :placeholder="$t('schoolAdmin.selectStudyYear')"
                       :options="studyYears"
                       :reduce="(option) => option.id"
                       :get-option-label="(option) => option.name"

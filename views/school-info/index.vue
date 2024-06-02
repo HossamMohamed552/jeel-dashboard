@@ -8,7 +8,7 @@
         <b-col lg="3" class="d-flex justify-content-end">
           <Button :custom-class="'btn-add rounded-btn big-padding'" @click="goToAddEditSchoolInfo"
                   v-if="user.permissions.includes(`update-schooladmin-school`)">
-            <span>تعديل بيانات المدرسة</span>
+            <span>{{ $t('schoolAdmin.editSchoolInfo') }}</span>
           </Button>
         </b-col>
         <b-col lg="4" class="mb-4">

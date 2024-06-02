@@ -28,7 +28,7 @@
     </div>
     <div class="collapse-search listing">
       <ListItems
-        :header-name="'المستخدمين'"
+        :header-name="$t('CONTROLS.users')"
         :fieldsList="fieldsList"
         :number-of-item="totalNumber"
         :table-items="usersSchoolList"
@@ -56,15 +56,15 @@
             v-if="user.permissions.includes(`add-school-users`)"
           >
             <img src="@/assets/images/icons/plus.svg" />
-            <span>إضافة مستخدم جديد</span>
+            <span>{{ $t('USERS.addUser') }}</span>
           </Button>
         </template>
         <!--      /dashboard/users/show/:id-->
       </ListItems>
     </div>
     <Modal
-      :content-message="'حذف المستخدم'"
-      :content-message-question="'هل أنت متأكد من حذف المستخدم؟'"
+      :content-message="$t('USERS.deleteUser')"
+      :content-message-question="$t('USERS.confirm_delete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -87,18 +87,8 @@ export default {
   name: "index",
   components: { Button, ListItems, GenericForm, Modal },
   computed: {
-    ...mapGetters(["user"]),
-  },
-  data() {
-    return {
-      collapsed: true,
-      itemId: "",
-      usersSchoolList: [],
-      showModal: false,
-      totalNumber: 0,
-      loading: false,
-      userSearchWord: "",
-      fieldsList: [
+    fieldsList(){
+      return [
         {
           key: "id",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -135,11 +125,24 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
+      ]
+    },
+    ...mapGetters(["user"]),
+  },
+  data() {
+    return {
+      collapsed: true,
+      itemId: "",
+      usersSchoolList: [],
+      showModal: false,
+      totalNumber: 0,
+      loading: false,
+      userSearchWord: "",
       userSearch: [
         {
           key: "email",
-          label: this.$t("USERS.name"),
+          label: "اسم المستخدم",
+          labelEn: "user name",
           col: "3",
           listen: "id",
           value: "",
@@ -152,7 +155,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("USERS.DEPARTMENT"),
+          label: "الدور الوظيفي",
+          labelEn: "department",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -163,7 +167,8 @@ export default {
           col: "3",
           type: "select",
           optionValue: "name",
-          label: this.$t("SCHOOL.status"),
+          label: "الحالة",
+          labelEn: "status",
           options: [],
           listen: "key",
           deselectFromDropdown: true,
@@ -176,6 +181,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "الحظر",
+          labelEn: "is blocked",
           options: [
             {
               id: 0,

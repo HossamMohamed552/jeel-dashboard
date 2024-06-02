@@ -4,7 +4,7 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">أولياء الأمور للطالب</h2>
+            <h2 class="heading">{{ $t('schoolAdmin.parentsOfStudent') }}</h2>
           </b-col>
         </b-row>
         <b-row>
@@ -143,7 +143,11 @@ export default {
         student_id:  Number(this.$route.params.id),
         parent_id: "",
       },
-      fieldsList: [
+    }
+  },
+  computed:{
+    fieldsList(){
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -172,8 +176,8 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-    }
+      ]
+    },
   },
   watch: {
     singleUser(newVal) {

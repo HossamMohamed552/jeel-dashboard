@@ -14,6 +14,7 @@ import parent from "@/router/modules/parent";
 import teacher from "@/router/modules/teacher";
 import reports from "@/router/modules/reports";
 import jeelAdmin from "@/router/modules/jeelAdmin";
+import schoolAdminReports from "@/router/modules/schoolAdminReports";
 const protectedRoutes = [
   {
     path: "/dashboard/home",
@@ -1386,6 +1387,7 @@ const protectedRoutes = [
       ...parent,
       ...teacher,
       ...reports,
+      ...schoolAdminReports,
       ...jeelAdmin
     ],
   },

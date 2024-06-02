@@ -133,7 +133,7 @@
                   </b-col>
 
                   <b-col lg="12">
-                    <h3 class="mt-2">روابط التواصل الإجتماعي</h3>
+                    <h3 class="mt-2">{{$t("socialLink")}}</h3>
                   </b-col>
                   <b-col lg="4">
                     <div class="hold-field">

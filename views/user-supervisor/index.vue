@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'إدارة مشرفي المدرسة'"
+      :header-name="$t('schoolAdmin.supervisors')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="superVisorList"
@@ -34,7 +34,11 @@ export default {
       totalNumber: 0,
       loading: false,
       userSearchWord: "",
-      fieldsList: [
+    }
+  },
+  computed:{
+    fieldsList(){
+      return  [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -71,8 +75,8 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-    }
+      ]
+    },
   },
   methods: {
     detailItem($event){

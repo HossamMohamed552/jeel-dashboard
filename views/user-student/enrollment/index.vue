@@ -69,7 +69,7 @@
                       v-model="enrollment.study_year_id"
                       :label="$t('schoolAdmin.studyYear')"
                       :name="$t('schoolAdmin.studyYear')"
-                      placeholder="اختر العام الدراسى"
+                      :placeholder="$t('schoolAdmin.selectStudyYear')"
                       :options="studyYears"
                       :reduce="(option) => option.id"
                       :get-option-label="(option) => option.name"
@@ -83,7 +83,7 @@
                       v-model="enrollment.level_id"
                       :label="$t('schoolAdmin.level')"
                       :name="$t('schoolAdmin.level')"
-                      placeholder="اختر الصف الدراسي"
+                      :placeholder="$t('schoolAdmin.selectLevel')"
                       :options="levels"
                       :reduce="(option) => option.id"
                       :get-option-label="(option) => option.name"
@@ -146,8 +146,8 @@
       </div>
     </div>
     <Modal
-      :content-message="'حذف العنصر'"
-      :content-message-question="'هل أنت متأكد من حذف العنصر؟'"
+      :content-message="$t('deleteItem')"
+      :content-message-question="$t('confirmDeleteItem')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -189,7 +189,12 @@ export default {
       loading: false,
       showModalFailed: false,
       studentEnrollmentList: [],
-      fieldsList: [
+      showModal: false,
+    }
+  },
+  computed:{
+    fieldsList(){
+      return  [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -210,9 +215,8 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-      showModal: false,
-    }
+      ]
+    },
   },
   watch: {
     studentEnrollmentList(newVal) {

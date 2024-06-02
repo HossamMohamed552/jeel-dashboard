@@ -59,7 +59,7 @@
                 <ShowItem :title="$t('USERS.ACTIVE')" :subtitle="user?.status?.name" />
               </b-col>
               <b-col lg="12">
-                <h3 class="mb-5">روابط التواصل الإجتماعي</h3>
+                <h3 class="mb-5">{{$t("socialLink")}}</h3>
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
                 <ShowItem :title="$t('SOCIAL_MEDIA.FACEBOOK')" :subtitle="user?.facebook" />

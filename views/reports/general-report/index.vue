@@ -198,7 +198,6 @@ import {
   getJeelAdminReportRolesRequest,
   getJeelAdminReportStatisticsRequest
 } from "@/api/reports";
-import Login from "../../login/index.vue";
 
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
@@ -324,7 +323,7 @@ export default {
         },
         {
           icon: require("../../../src/assets/images/icons/parents.svg"),
-          name: "parents",
+          name: "paretns",
           number: 30
         }
       ],

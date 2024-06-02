@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'إدارة اولياء الامور'"
+      :header-name="$t('schoolAdmin.parentManagement')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="parentList"
@@ -32,7 +32,11 @@ export default {
       totalNumber: 0,
       loading: false,
       userSearchWord: "",
-      fieldsList: [
+    }
+  },
+  computed: {
+    fieldsList() {
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -65,10 +69,10 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
+      ]
     }
   },
-  methods:{
+  methods: {
     getAllParentsUsers(event) {
       this.loading = true;
       this.ApiService(getAllParentUsersRequest(event))
@@ -80,10 +84,10 @@ export default {
           this.loading = false;
         });
     },
-    addRole($event){
+    addRole($event) {
       this.$router.push(`/dashboard/parent-enrollment/${$event}`)
     },
-    detailItem($event){
+    detailItem($event) {
       this.$router.push(`/dashboard/user-parent/${$event}`)
     },
   },
