@@ -39,8 +39,7 @@
         :showSearchInput="false"
         @detailItem="detailItem($event)"
         @editItem="editItem($event)"
-        @deleteItem="deleteItem($event)"
-        @refetch="getSystemAudios"
+        @refetch="getSystemAudios($event)"
         :loading="loading"
         :permission_edit="'edit-system-audio'"
         :permission_view="'show-system-audio'"
@@ -65,7 +64,7 @@ export default {
       groupSearchWord: "",
       questionsList: [],
       systemAudiosList: [],
-      totalNumber: 3,
+      totalNumber: null,
       searchSchema: [
         {
           key: "category_id",
@@ -96,10 +95,10 @@ export default {
   methods: {
     getSystemAudios(event) {
       this.loading = true;
-      const params = event;
-      this.ApiService(getSystemAudiosRequest(params))
+      this.ApiService(getSystemAudiosRequest(event))
         .then((response) => {
           this.systemAudiosList = response.data.data;
+          this.totalNumber = response.data.meta.total
         })
         .finally(() => {
           this.loading = false;

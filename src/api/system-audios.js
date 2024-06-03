@@ -1,4 +1,4 @@
-export const getSystemAudiosRequest = (params = { per_page: 10 }) => ({
+export const getSystemAudiosRequest = (params) => ({
   method: "get",
   url: `system_audio`,
   config: {
