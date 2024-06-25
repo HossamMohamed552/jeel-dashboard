@@ -870,7 +870,13 @@
     "user_count": "Number of subscribers",
     "competitionHeading": "competitions report",
     "studentHeading": "Student performance report",
-    "classHeading": "class performance report"
+    "classHeading": "class performance report",
+    "learningPath": "learning Paths for missions",
+    "missionContent": "Content for mission"
+  },
+  "achievements": {
+    "achievements": "achievements",
+    "ADD":"Add an achievement"
   },
   "VERIFICATION": {
     "EXPIRED": "This code is expired. type your email to resend",

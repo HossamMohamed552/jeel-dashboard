@@ -49,6 +49,11 @@ export const getSchoolAdminStudentsChartsRequest = (params) => ({
   url: "school-admin-report/students-performance/missions-learningpaths-charts",
   config: { params },
 });
+export const getSchoolAdminStudentsMissionsContentsChartsRequest = (params) => ({
+  method: "get",
+  url: "school-admin-report/students-performance/missions-contents-charts",
+  config: { params },
+});
 
 export const getSchoolAdminClassesRequest = (params) => ({
   method: "get",
@@ -56,5 +61,14 @@ export const getSchoolAdminClassesRequest = (params) => ({
   config: { params },
 });
 
-
+export const getSchoolAdminClassesChartsRequest = (params) => ({
+  method: "get",
+  url: "school-admin-report/class-performance/missions-learningpaths-charts",
+  config: { params },
+});
+export const getSchoolAdminClassesMissionsContentsChartsRequest = (params) => ({
+  method: "get",
+  url: "school-admin-report/class-performance/missions-contents-charts",
+  config: { params },
+});
 

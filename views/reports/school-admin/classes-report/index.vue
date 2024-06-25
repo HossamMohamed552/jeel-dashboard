@@ -85,7 +85,8 @@
               </b-row>
             </div>
             <div class="col-12" key="2" v-show="activeTap === 2">
-              <Bar v-if="loadingChart" :chart-data="chartData" :options="chartOptions"/>
+              <BarChart class="mb-3" :title="$t('REPORTS.learningPath')" :type-of-chart="'missions'" :missions-in-chart="missionsInChart"  v-if="missionsInChart.length > 0"/>
+              <BarChart class="mb-3" :title="$t('REPORTS.missionContent')" :type-of-chart="'missionContent'" :mission-content="missionContentInChart"  v-if="missionContentInChart.length > 0"/>
             </div>
           </transition-group>
         </div>
@@ -196,7 +197,6 @@
             </div>
             <div class="html2pdf__page-break"></div>
             <div class="chart">
-              <Bar v-if="loadingChart" :chart-data="chartData" :options="chartOptions"/>
             </div>
           </section>
         </VueHtml2pdf>
@@ -209,29 +209,21 @@ import GenericForm from "@/components/Shared/GenericForm/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import {Bar} from 'vue-chartjs'
+
 import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
-  CategoryScale,
-  LinearScale
-} from 'chart.js'
-import {
-  getAllLevelsForSchoolAdmin,
-  getSchoolAdminStudyYear,
+  getAllLevelsForSchoolAdmin, getClassSchoolAdmin,
+  getSchoolAdminStudyYear, getTerms,
 } from "@/services/dropdownService";
 import {
+  getSchoolAdminClassesChartsRequest, getSchoolAdminClassesMissionsContentsChartsRequest,
   getSchoolAdminClassesRequest,
-  getSchoolAdminMissionsChartRequest,
+  getSchoolAdminMissionsChartRequest, getSchoolAdminStudentsMissionsContentsChartsRequest,
 } from "@/api/school-admin-reports";
+import BarChart from "@/components/CustomBarChart/BarChart.vue";
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 export default {
   name: "index",
-  components: {ListItems, ShowItem, Button, GenericForm, Bar},
+  components: {BarChart, ListItems, ShowItem, Button, GenericForm},
   data() {
     return {
       collapsed: false,
@@ -266,6 +258,34 @@ export default {
           value: "",
           rules: "",
         },
+        {
+          key: "term_id",
+          col: "3",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: "الترم الدراسي",
+          labelEn: "terms",
+          options: [],
+          disabled: true,
+          deselectFromDropdown: true,
+          value: "",
+          rules: "",
+        },
+        {
+          key: "class_id",
+          col: "3",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: "الفصول",
+          labelEn: "classes",
+          options: [],
+          disabled: true,
+          deselectFromDropdown: true,
+          value: "",
+          rules: "",
+        },
       ],
       valuesOfAdvancedSearch: {
         study_year_id: "",
@@ -293,26 +313,11 @@ export default {
       studentSearchFields: [],
       totalNumber: 0,
       searchWithPagination: {},
+      missionsInChart:[],
+      missionContentInChart:[],
     }
   },
   watch: {
-    chartData: {
-      handler(newVal) {
-        return newVal
-      },
-      immediate: true,
-    },
-    chartOptions: {
-      handler(newVal) {
-        return newVal
-      },
-      immediate: true,
-    },
-    "$i18n.locale"(newVal) {
-      if (newVal) {
-        this.setData()
-      }
-    },
   },
   computed: {
     studentReportFieldsAr() {
@@ -420,56 +425,6 @@ export default {
     pdfName() {
       return `${this.$t('REPORTS.classHeading')} - ${new Date().toLocaleString()}`
     },
-    chartData() {
-      return {
-        datasets: [
-          {
-            label: this.$i18n.t('STATISTICS.missions'),
-            backgroundColor: '#76236C',
-            borderRadius: 5,
-            barThickness: 10,
-            categoryPercentage: 1,
-            barPercentage: 1,
-            data: []
-          },
-        ]
-      }
-    },
-    chartOptions() {
-      return {
-        responsive: true,
-        maintainAspectRatio: true,
-        plugins: {
-          legend: {
-            display: true,
-            position: 'bottom',
-            rtl: true,
-            labels: {
-              color: '#000',
-              usePointStyle: true,
-              pointStyle: 'circle',
-              font: {
-                size: 16,
-                weight: 'bold'
-              },
-              padding: 25
-            },
-          },
-          tooltip: {
-            backgroundColor: "#fff",
-            bodyColor: '#000',
-          }
-        },
-        scales: {
-          yAxes: {
-            ticks: {
-              min: 0,
-              stepSize: 1
-            }
-          }
-        }
-      }
-    },
   },
   methods: {
     handleCancel() {
@@ -479,6 +434,23 @@ export default {
       this.getMissionsReportChart()
     },
     handleInput(key, value, _, options) {
+      if (key === 'study_year_id' && value !== '') {
+        this.studentReportSearch[1].disabled = false;
+        this.studentReportSearch[2].disabled = false;
+        this.studentReportSearch[3].disabled = false;
+        getAllLevelsForSchoolAdmin(this.studentReportSearch, 'level_id', {study_year_id: this.studentReportSearch[0].value})
+        getTerms(this.studentReportSearch, 'term_id', {study_year_id: this.studentReportSearch[0].value})
+        getClassSchoolAdmin(this.studentReportSearch, 'class_id', {
+          study_year_id: this.studentReportSearch[0].value,
+          level_id: this.studentReportSearch[1].value
+        })
+      }
+      if (key === 'level_id' && value !== '') {
+        getClassSchoolAdmin(this.studentReportSearch, 'class_id', {
+          study_year_id: this.studentReportSearch[0].value,
+          level_id: this.studentReportSearch[1].value
+        })
+      }
       if (options) {
         const itemValue = options?.filter((item) => {
           return item.id === value
@@ -492,6 +464,7 @@ export default {
       this.searchWithPagination = values;
       this.getStudentReport()
       this.getMissionsReportChart()
+      this.getChartMissionsContentsCharts()
     },
     getStudentReport(paramsWithSearch) {
       const params = {...paramsWithSearch, ...this.searchWithPagination};
@@ -510,24 +483,20 @@ export default {
       })
     },
     getMissionsReportChart(paramsWithSearch) {
-      this.loadingChart = false
       const params = {...paramsWithSearch, ...this.searchWithPagination};
-      this.ApiService(getSchoolAdminMissionsChartRequest(params)).then((response) => {
-        this.dataForChart = response.data.data
-      }).then(() => {
-        this.setData()
-      }).then(() => {
-        this.loadingChart = true
+      this.ApiService(getSchoolAdminClassesChartsRequest(params)).then((response) => {
+        this.missionsInChart = response.data.data
+      })
+    },
+    getChartMissionsContentsCharts(paramsWithSearch){
+      const params = {...paramsWithSearch, ...this.searchWithPagination};
+      this.ApiService(getSchoolAdminClassesMissionsContentsChartsRequest(params)).then((response) => {
+        this.missionContentInChart = response.data.data
       })
     },
     generatePdf() {
       this.getAllStudentsReports()
       this.$refs.html2Pdf.generatePdf()
-    },
-    setData() {
-      this.chartData.datasets[0].data = this.dataForChart.map((item) => {
-        return {x: item.name, y: item.missions_count}
-      })
     },
     toggleCollapsed() {
       this.collapsed = !this.collapsed;
@@ -536,7 +505,6 @@ export default {
   mounted() {
     getSchoolAdminStudyYear(this.studentReportSearch, 'study_year_id')
     getAllLevelsForSchoolAdmin(this.studentReportSearch, 'level_id')
-    // this.getMissionsReportChart()
     this.getStudentReport()
   }
 }

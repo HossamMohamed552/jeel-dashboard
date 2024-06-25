@@ -539,6 +539,15 @@ let routesPrizes = [
     icon: require("@/assets/images/icons/steps.svg"),
     permission: "view-power-up-boxes",
   },
+  {
+    name: "الانجازات",
+    nameEn: "achievements",
+    path: "/dashboard/achievements",
+    altImage: "achievements",
+    titleImage: "achievements",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-achievements",
+  },
 ];
 let routesJeelStores = [
   {

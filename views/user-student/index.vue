@@ -72,6 +72,14 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.status"),
         },
         {
+          key: "level.name",
+          label: this.$i18n.t("schoolAdmin.level"),
+        },
+        {
+          key: "class.name",
+          label: this.$i18n.t("schoolAdmin.className"),
+        },
+        {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },

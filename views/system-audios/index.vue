@@ -90,12 +90,14 @@ export default {
           rules: "",
         },
       ],
+      searchWithPagination:{}
     };
   },
   methods: {
-    getSystemAudios(event) {
+    getSystemAudios($event) {
       this.loading = true;
-      this.ApiService(getSystemAudiosRequest(event))
+      const params = {...$event, ...this.searchWithPagination};
+      this.ApiService(getSystemAudiosRequest(params))
         .then((response) => {
           this.systemAudiosList = response.data.data;
           this.totalNumber = response.data.meta.total
@@ -122,13 +124,15 @@ export default {
     },
     handleCancel() {
       this.searchSchema.map((field) => (field.value = ""));
+      this.searchWithPagination = {}
       this.getSystemAudios();
     },
     toggleCollapsed() {
       this.collapsed = !this.collapsed;
     },
     onSubmit(values) {
-      this.getSystemAudios(values);
+      this.searchWithPagination = values;
+      this.getSystemAudios();
     },
   },
   computed: {

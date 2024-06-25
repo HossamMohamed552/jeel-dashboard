@@ -19,8 +19,8 @@
         </Button>
       </template>
     </ListItems>
-    <Modal :content-message="$t('mission.delete_mission')"
-           :content-message-question="$t('mission.confirm_delete_mission')"
+    <Modal :content-message="$t('MISSIONS.delete_mission')"
+           :content-message-question="$t('MISSIONS.confirm_delete_mission')"
            :showModal="showModal"
            @cancel="cancel($event)"
            :is-warning="true"
