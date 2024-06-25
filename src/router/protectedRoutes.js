@@ -15,6 +15,7 @@ import teacher from "@/router/modules/teacher";
 import reports from "@/router/modules/reports";
 import jeelAdmin from "@/router/modules/jeelAdmin";
 import schoolAdminReports from "@/router/modules/schoolAdminReports";
+import achievements from "@/router/modules/achievements";
 const protectedRoutes = [
   {
     path: "/dashboard/home",
@@ -34,9 +35,6 @@ const protectedRoutes = [
           breadcrumbEn: "home",
         },
       },
-
-
-
       // school group
       {
         path: "/dashboard/school-group",
@@ -1388,7 +1386,8 @@ const protectedRoutes = [
       ...teacher,
       ...reports,
       ...schoolAdminReports,
-      ...jeelAdmin
+      ...jeelAdmin,
+      ...achievements
     ],
   },
 ];

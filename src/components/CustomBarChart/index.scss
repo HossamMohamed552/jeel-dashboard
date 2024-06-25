@@ -1,0 +1,211 @@
+.hold-bar-chart{
+  background: #fff;
+  padding: 0 1rem 4rem 1rem;
+  border-radius: 1rem;
+  .title{
+    padding: 1rem;
+    border-bottom: 1px solid;
+    margin-bottom: 2rem;
+  }
+}
+.bar-chart {
+  height: 400px;
+  border-left: 1px solid;
+  border-bottom: 1px solid;
+  width: 95%;
+  margin: 0 auto;
+  position: relative;
+  .pos-20 {
+    position: absolute;
+    bottom: 20%;
+    left: -1.5rem;
+    transform: translate(-50%, 100%);
+  }
+
+  .pos-40 {
+    position: absolute;
+    bottom: 40%;
+    left: -1.5rem;
+    transform: translate(-50%, 100%);
+  }
+
+  .pos-60 {
+    position: absolute;
+    bottom: 60%;
+    left: -1.5rem;
+    transform: translate(-50%, 100%);
+  }
+
+  .pos-80 {
+    position: absolute;
+    bottom: 80%;
+    left: -1.5rem;
+    transform: translate(-50%, 100%);
+  }
+
+  .pos-100 {
+    position: absolute;
+    bottom: 100%;
+    left: -1.5rem;
+    transform: translate(-50%, 100%);
+  }
+
+  .mission {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    .learningPaths,.mission-content{
+      display: flex;
+      justify-content: center;
+      align-items: end;
+      width: 100%;
+      height: 100%;
+      transition: all ease-in-out .3s;
+      .learning-path,.mission-content-type {
+        width: 10px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        position: relative;
+        bottom: 0;
+        margin: 0 .1rem;
+        &:first-of-type {
+          background: #E25199;
+        }
+        &:nth-of-type(2) {
+          background: #76236C;
+        }
+        &:nth-of-type(3) {
+          background: #FFC700;
+        }
+        &:nth-of-type(4) {
+          background: #00BC37;
+        }
+        &:last-of-type {
+          background: #58C6F2;
+        }
+      }
+      .mission-content-type{
+        width: 7px;
+        &:first-of-type {
+          background: #039FF7;
+        }
+        &:nth-of-type(2) {
+          background: #FFC700;
+        }
+        &:nth-of-type(3) {
+          background: #8C8C8C;
+        }
+        &:nth-of-type(4) {
+          background: #E25199;
+        }
+        &:last-of-type {
+          background: #00BC37;
+        }
+      }
+      &:hover {
+        background: #F1E8F0;
+      }
+    }
+    .mission-name {
+      position: absolute;
+      bottom: 0;
+      transform: translateY(100%);
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .resume,.resumeContent{
+      position: absolute;
+      top: 0;
+      right: 50%;
+      background: #fff;
+      display: none;
+      flex-direction: column;
+      width: 180px;
+      z-index: 2;
+      transform: translateX(50%);
+      padding: 1rem;
+      box-shadow: 0 0 6px #0000001F;
+      border-radius: 8px;
+      .resume-mission-name{
+        color: #76236C;
+        font-weight: bold;
+      }
+      .hold-learningPaths{
+        .resume-learning-path{
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          margin: .4rem 0;
+          .pointer{
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+          }
+          .learning-path-name{
+            margin: 0 .5rem;
+            font-weight: 500;
+          }
+          &:first-of-type {
+            .pointer{
+              background: #E25199;
+            }
+          }
+          &:nth-of-type(2) {
+            .pointer{
+              background: #76236C;
+            }
+          }
+          &:nth-of-type(3) {
+            .pointer{
+              background: #FFC700;
+            }
+          }
+          &:nth-of-type(4) {
+            .pointer{
+              background: #00BC37;
+            }
+          }
+          &:last-of-type {
+            .pointer{
+              background: #58C6F2;
+            }
+          }
+        }
+        .resume-mission-content{
+          &:first-of-type {
+            background: #E25199;
+          }
+          &:nth-of-type(2) {
+            background: #76236C;
+          }
+          &:nth-of-type(3) {
+            background: #FFC700;
+          }
+          &:nth-of-type(4) {
+            background: #00BC37;
+          }
+          &:last-of-type {
+            background: #58C6F2;
+          }
+        }
+      }
+    }
+    .resumeContent{
+      width: 200px;
+    }
+    &:hover{
+      .resume{
+        display: flex;
+      }
+      .resumeContent{
+        display: block;
+      }
+    }
+  }
+}

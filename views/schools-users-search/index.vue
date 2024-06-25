@@ -105,8 +105,8 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.status"),
         },
         {
-          key: "status.name",
-          label: this.$i18n.t("TABLE_FIELDS.block"),
+          key: "school.name",
+          label: this.$i18n.t("TABLE_FIELDS.school"),
         },
         {
           key: "actions",

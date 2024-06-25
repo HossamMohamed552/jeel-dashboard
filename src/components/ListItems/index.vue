@@ -202,10 +202,8 @@
         </template>
         <template #cell(video_with_music_transcode)="data">
           <span>{{
-            data.item.video_with_music_transcode
-              ? $t("DEFAULT.videoNotUploaded")
-              : $t("DEFAULT.videoUploaded")
-          }}</span>
+              data.item.video_with_music_transcode ? $t("DEFAULT.videoUploaded") : $t("DEFAULT.videoNotUploaded")
+            }}</span>
         </template>
         <template #cell(learningpaths)="data">
           <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{

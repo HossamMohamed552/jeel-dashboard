@@ -167,7 +167,6 @@ export default {
     showModal(audio, $event) {
       this.$bvModal.show('holdContent')
       this.mediaType = $event
-      console.log('this.mediaType',this.mediaType)
       if (this.mediaType === 'audio'){
         this.url = audio.task_audio
       } else {
