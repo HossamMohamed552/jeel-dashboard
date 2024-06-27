@@ -1,5 +1,7 @@
 <template>
   <div class="edit-term">
+    <Modal :content-message="$t('CONTROLS.edit_successfully')" :showModal="showModal"
+           :is-success="true"/>
     <Modal :content-message="$t('CONTROLS.already_exists')" :showModal="showModalFailed" :isUsed="true"
            @cancelWithConfirm="showModalFailed=false"/>
     <AddEditLearningSkill
@@ -30,12 +32,16 @@ export default {
       const id = this.$route.params.id;
       this.ApiService(putUpdateLearningSkillRequest({name: $event}, id))
         .then(() => {
-          this.$router.push("/dashboard/learning-skill");
+          this.showModal = true;
         }).catch((error) => {
         this.loading = false;
         this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الاسم مُستخدمة من قبل');
       }).finally(() => {
         this.loading = false;
+        setTimeout(() => {
+          this.showModal = false;
+          this.$router.push("/dashboard/learning-skill");
+        }, 1500);
       });
     },
     handleCancel() {

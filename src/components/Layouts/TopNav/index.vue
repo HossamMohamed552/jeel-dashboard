@@ -208,12 +208,19 @@
             </router-link>
             <div class="notification-info-admin">
               <div class="notification">
-                <span v-if="$i18n.locale === 'ar'" @click="setLang('en')" class="lang-icon">
-                  <img src="@/assets/images/icons/english-lang.png">
-                </span>
-                <span v-else @click="setLang('ar')" class="lang-icon">
-                  <img src="@/assets/images/icons/arabic-lang.png">
-                </span>
+<!--                <span v-if="$i18n.locale === 'ar'" @click="setLang('en')" class="lang-icon">-->
+<!--                  <img src="@/assets/images/icons/english-lang.png">-->
+<!--                </span>-->
+<!--                <span v-else @click="setLang('ar')" class="lang-icon">-->
+<!--                  <img src="@/assets/images/icons/arabic-lang.png">-->
+<!--                </span>-->
+                <b-dropdown no-caret>
+                  <template #button-content>
+                    {{$i18n.locale === 'ar' ? 'العربية' : 'English' }}
+                  </template>
+                  <b-dropdown-item @click="setLang('en')">English</b-dropdown-item>
+                  <b-dropdown-item @click="setLang('ar')">العربية</b-dropdown-item>
+                </b-dropdown>
                 <!--                <div class="bill">-->
                 <!--                  <img-->
                 <!--                    src="@/assets/images/icons/notification.svg"-->
@@ -228,7 +235,7 @@
                   <p class="name">{{ user.name }}</p>
                   <p class="role">{{ user.roles[0]?.name }}</p>
                 </div>
-                <div class="dropdown-container" :dir="$i18n.locale == 'ar' ? 'ltr' : 'rtl'">
+                <div class="dropdown-container" :dir="$i18n.locale === 'ar' ? 'ltr' : 'rtl'">
                   <b-dropdown no-caret>
                     <template #button-content>
                       <div class="user-image">

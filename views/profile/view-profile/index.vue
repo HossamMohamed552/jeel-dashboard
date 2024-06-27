@@ -62,13 +62,13 @@
                 <h3 class="mb-5">{{$t("socialLink")}}</h3>
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('SOCIAL_MEDIA.FACEBOOK')" :subtitle="user?.facebook" />
+                <ShowItem :title="$t('SOCIAL_MEDIA.FACEBOOK')" :subtitle='user?.facebook === "null" || user?.facebook === null ? $t("notFound") : user?.facebook' />
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('SOCIAL_MEDIA.LINKEDIN')" :subtitle="user?.linkedin" />
+                <ShowItem :title="$t('SOCIAL_MEDIA.TWITTER')" :subtitle='user?.twitter === "null" || user?.twitter === null ? $t("notFound") : user?.twitter' />
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('SOCIAL_MEDIA.TWITTER')" :subtitle="user?.twitter" />
+                <ShowItem :title="$t('SOCIAL_MEDIA.LINKEDIN')" :subtitle='user?.linkedin === "null" || user?.linkedin === null ? $t("notFound") : user?.linkedin'/>
               </b-col>
             </b-row>
           </b-col>

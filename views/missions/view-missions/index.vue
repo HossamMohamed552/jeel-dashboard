@@ -93,7 +93,7 @@
                 class="cursor-pointer mt-4"
                 icon="cloud-download"
                 variant="info"
-                @click="downloadFile(papersWorkPath.name, papersWorkPath.url)"
+                @click="downloadFile(papersWorkPath.name, papersWorkPath.paper_work_with_color_full_url)"
               />
             </div>
           </b-col>
@@ -174,11 +174,11 @@ export default {
     downloadFile(name, url) {
       const link = document.createElement("a");
       link.href = url;
-      link.download = name;
+      // link.download = name;
       link.target = "_blank";
-      document.body.appendChild(link);
+      // document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
+      // document.body.removeChild(link);
     },
     handlePlayVideo(url,id) {
       this.videoPlayed = true

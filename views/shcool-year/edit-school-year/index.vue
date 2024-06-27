@@ -1,5 +1,10 @@
 <template>
   <div class="edit-term">
+    <Modal :content-message="$t('CONTROLS.edit_successfully')" :showModal="showModal"
+           :is-success="true"/>
+    <Modal :content-message="$t('CONTROLS.already_exists')" :showModal="showModalFailed"
+           :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <AddEditSchoolYear
       :loading="loading"
       @handleEditSchoolYear="handleEditSchoolYear($event)"
@@ -20,6 +25,7 @@ export default {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
     };
   },
   methods: {
@@ -35,11 +41,17 @@ export default {
             locale: "ar",
           },
         })
-
         .then(() => {
-          this.$router.push("/dashboard/school-year");
-        })
+          this.showModal = true;
+        }).catch((error) => {
+        this.loading = false;
+        this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الاسم مُستخدمة من قبل');
+      })
         .finally(() => {
+          setTimeout(() => {
+            this.showModal = false;
+            this.$router.push("/dashboard/school-year");
+          }, 1500);
           this.loading = false;
         });
     },

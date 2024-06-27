@@ -12,7 +12,7 @@ Vue.config.productionTip = false;
 import ElementUI from 'element-ui';
 import excel from 'vue-excel-export'
 import VueHtml2pdf from 'vue-html2pdf'
-// import 'element-ui/lib/theme-chalk/index.css';
+import 'element-ui/lib/theme-chalk/index.css';
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 Vue.use(ElementUI)
 Vue.use(VueHtml2pdf)

@@ -34,15 +34,18 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="$t('can_not_delete')"
+           :showModal="showModalFailed" :alarm="true"
+           @cancelWithConfirm="showModalFailed=false"/>
   </section>
 </template>
 
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { getSchoolYearRequest, deleteSchoolYearRequest } from "@/api/school-year";
+import {deleteSchoolYearRequest, getSchoolYearRequest} from "@/api/school-year";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
   components: { Modal, ListItems, Button },
@@ -53,6 +56,7 @@ export default {
       groupSearchWord: "",
       schoolYearsList: [],
       totalNumber: null,
+      showModalFailed: false,
     };
   },
   methods: {
@@ -61,8 +65,7 @@ export default {
     },
     getSchoolYears(event) {
       this.loading = true;
-      const params = event;
-      this.ApiService(getSchoolYearRequest(params))
+      this.ApiService(getSchoolYearRequest(event))
         .then((response) => {
           this.schoolYearsList = response.data.data;
           this.totalNumber = response.data.meta.total;
@@ -87,8 +90,11 @@ export default {
     cancelWithConfirm() {
       this.ApiService(deleteSchoolYearRequest(this.itemId)).then(() => {
         this.getSchoolYears();
-      });
-      this.cancel();
+      }).catch((error) => {
+        this.showModalFailed = error.response.data.code === 23000;
+      }).finally(() => {
+        this.cancel();
+      })
     },
   },
   computed: {
