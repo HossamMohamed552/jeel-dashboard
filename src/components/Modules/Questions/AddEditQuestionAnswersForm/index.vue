@@ -2158,7 +2158,7 @@
                   class="answer-item"
                   v-if="answerMatchTo.answer_pattern !== 'audio'"
                 >{{$t('QUESTIONS.audioForAnswer')}}</b-col>
-                <b-col lg="2" class="answer-item">{{ ('QUESTIONS.answerCorresponding') }}</b-col>
+                <b-col lg="2" class="answer-item">{{ $t('QUESTIONS.answerCorresponding') }}</b-col>
                 <b-col lg="2" class="answer-item"></b-col>
               </b-row>
               <b-row v-for="(answer, index) in answersListMatchTo" :key="index" class="mb-3">

@@ -80,16 +80,16 @@
               </b-col>
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
+<!--                  createQuiz.blooms.length === 0 && $i18n.locale === 'ar' ? 'اختيار الكل' :-->
                   <SelectSearch
                     v-model="createQuiz.blooms"
                     :label="$t('QUESTIONS.BLOOM_CATEGORIES')"
                     :name="$t('QUESTIONS.BLOOM_CATEGORIES')"
-                    :placeholder="createQuiz.blooms.length === 0 && $i18n.locale === 'ar' ? 'اختيار الكل' : $t('QUESTIONS.selectBLOOM_CATEGORIES')"
+                    :placeholder="$t('QUESTIONS.selectBLOOM_CATEGORIES')"
                     :options="bloomCategories"
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :disabled="!createQuiz.learning_path_id"
-                    multiple="multiple"
                     @input="selectAllCheckBloom(createQuiz.blooms)"
                   ></SelectSearch>
                   <!--                  multiple="multiple"-->
@@ -475,7 +475,7 @@
                 <Button
                   type="submit"
                   :loading="loading"
-                  :disabled="invalid"
+                  :disabled="invalid || actions.length === 0"
                   custom-class="submit-btn"
                 >
                   {{ $route.params.id ? $t("GLOBAL_EDIT") : $t("GLOBAL_SAVE") }}
@@ -654,10 +654,10 @@ export default {
   },
   methods: {
     selectAllCheckBloom(bloom) {
-      this.createQuiz.selectAllOptionBloom = bloom.includes("selectAll" || "اختيار الكل")
-      if (this.createQuiz.selectAllOptionBloom) {
-        return this.createQuiz.blooms = []
-      }
+      // this.createQuiz.selectAllOptionBloom = bloom.includes("selectAll" || "اختيار الكل")
+      // if (this.createQuiz.selectAllOptionBloom) {
+      //   return this.createQuiz.blooms = []
+      // }
     },
     selectAllCheckLearning(learning) {
       this.createQuiz.selectAllOptionLearning = learning.includes("selectAll" || "اختيار الكل")
@@ -685,10 +685,11 @@ export default {
         let params = {
           learning_path_id: this.createQuiz.learning_path_id,
           lessons: this.createQuiz.lessons,
+          'blooms[]': this.createQuiz.blooms
         };
-        if (typeof this.createQuiz.blooms === 'object' && this.createQuiz.blooms && this.createQuiz.blooms.length > 0) {
-          Object.assign(params, {blooms: this.createQuiz.blooms})
-        }
+        // if (typeof this.createQuiz.blooms === 'object' && this.createQuiz.blooms && this.createQuiz.blooms.length > 0) {
+        //   Object.assign(params, {blooms: this.createQuiz.blooms})
+        // }
         if (typeof this.createQuiz.learning_styles === 'object' && this.createQuiz.learning_styles && this.createQuiz.learning_styles.length > 0) {
           Object.assign(params, {learning_styles: this.createQuiz.learning_styles})
         }
@@ -728,7 +729,7 @@ export default {
       const data = {
         learning_path_id: this.createQuiz.learning_path_id,
         lessons: this.createQuiz.lessons,
-        // 'blooms[]': this.createQuiz.blooms,
+        'blooms[]': this.createQuiz.blooms,
         question_difficuly: [
           {
             question_difficulty_id: 1,
@@ -744,9 +745,11 @@ export default {
           },
         ],
       };
-      if (typeof this.createQuiz.blooms === 'object' && this.createQuiz.blooms && this.createQuiz.blooms.length > 0) {
-        Object.assign(data, {blooms: this.createQuiz.blooms})
-      }
+      // typeof this.createQuiz.blooms === 'object' && this.createQuiz.blooms.length > 0
+      // if ( this.createQuiz.blooms ) {
+      //
+      // }
+      // Object.assign(data, {blooms: this.createQuiz.blooms})
       if (typeof this.createQuiz.learning_styles === 'object' && this.createQuiz.learning_styles && this.createQuiz.learning_styles.length > 0) {
         Object.assign(data, {learning_styles: this.createQuiz.learning_styles})
       }
@@ -950,7 +953,7 @@ export default {
     getBloomCategories() {
       this.ApiService(getAllBloomCategoriesRequest()).then((response) => {
         this.bloomCategories = response.data.data;
-        this.bloomCategories.unshift({id: "selectAll", name: "اختيار الكل"})
+        // this.bloomCategories.unshift({id: "selectAll", name: "اختيار الكل"})
       });
     },
     getLearningMethods() {
@@ -998,12 +1001,12 @@ export default {
         this.createQuiz.description = quizData.description;
         this.createQuiz.learning_path_id = quizData.learning_path.id;
         this.createQuiz.lessons = quizData.lessons.map((item) => item.id)
-        // this.createQuiz.blooms = quizData.blooms.id
-        if (typeof quizData.blooms === 'object') {
-          this.createQuiz.blooms = quizData.blooms.map((item) => item.id)
-        } else {
-          this.createQuiz.blooms = ["selectAll"]
-        }
+        this.createQuiz.blooms = quizData.blooms.id
+        // if (typeof quizData.blooms === 'object') {
+        //   this.createQuiz.blooms = quizData.blooms.map((item) => item.id)
+        // } else {
+        //   this.createQuiz.blooms = ["selectAll"]
+        // }
         if (typeof quizData.learning_styles === 'object') {
           this.createQuiz.learning_styles = quizData.learning_styles.map((item) => item.id)
         } else {

@@ -236,7 +236,7 @@ export default {
         },
         {
           id: 'mcq',
-          type: "إختيارات",
+          type: "اختيار من متعدد",
         }
       ],
       questionDifficulties: [],

@@ -1,6 +1,6 @@
 <template>
   <div class="edit-term">
-    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="$t('CONTROLS.edit_successfully')" :showModal="showModal" :is-success="true"/>
     <Modal :content-message="$t('CONTROLS.already_exists')" :showModal="showModalFailed" :isUsed="true"
            @cancelWithConfirm="showModalFailed=false"/>
     <AddEditLearningStyle
@@ -36,8 +36,10 @@ export default {
         this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الاسم مُستخدمة من قبل');
       }).finally(() => {
         this.loading = false;
-        this.showModal = true;
-        this.$router.push("/dashboard/learning-style");
+        setTimeout(() => {
+          this.showModal = false;
+          this.$router.push("/dashboard/learning-style");
+        }, 1500);
       });
     },
     handleCancel() {

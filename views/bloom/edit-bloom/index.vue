@@ -1,7 +1,9 @@
 <template>
   <div class="add-country">
-    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true"/>
-    <Modal :content-message="$t('CONTROLS.already_exists')" :showModal="showModalFailed" :isUsed="true"
+    <Modal :content-message="$t('CONTROLS.edit_successfully')" :showModal="showModal"
+           :is-success="true"/>
+    <Modal :content-message="$t('CONTROLS.already_exists')" :showModal="showModalFailed"
+           :isUsed="true"
            @cancelWithConfirm="showModalFailed=false"/>
     <AddEditBloomCategory
       :loading="loading"
@@ -32,10 +34,14 @@ export default {
       this.loading = true;
       this.ApiService(putEditBloomCategoryRequest(this.scholTypeId, $event))
         .then(() => {
+          this.showModal = true;
           this.loading = false;
         })
         .then(() => {
-          this.$router.push("/dashboard/bloom");
+          setTimeout(() => {
+            this.showModal = false;
+            this.$router.push("/dashboard/bloom");
+          }, 1500);
         }).catch((error) => {
         this.loading = false;
         this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الاسم مُستخدمة من قبل');
