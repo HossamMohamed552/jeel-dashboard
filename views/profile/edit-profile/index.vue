@@ -345,7 +345,7 @@ export default {
     await this.getAllReligions();
     this.userStrored = JSON.parse(localStorage.getItem("user"));
     this.user = this.userStrored;
-    this.user.country_id = this.$store.getters.user.user_country ? this.$store.getters.user?.user_country.id : '';
+    this.user.country_id = this.$store.getters.user.user_nationality ? this.$store.getters.user?.user_nationality.id : '';
     this.user.religion_id = this.$store.getters.user.user_religion ? this.$store.getters.user?.user_religion.id : '';
     this.user.gender = this.$store.getters.user?.gender ? this.$store.getters.user?.gender?.id : "";
     this.imageUrl =  this.$store.getters.user?.image ? this.$store.getters.user?.image: "";

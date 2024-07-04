@@ -155,7 +155,7 @@
                   <b-col lg="4">
                     <div class="hold-field">
                       <SelectSearch
-                        v-model="user.country_id"
+                        v-model="user.nationality_id"
                         :label="$t('USERS.NATIONALITY')"
                         :name="$t('USERS.NATIONALITY')"
                         :options="countries"
@@ -305,7 +305,11 @@ import { TogglePasswordMixins } from "@/mixins/TogglePasswordMixins";
 import { deleteProfileImageRequest, postChangeStatusRequest } from "@/api/user";
 import { getAllSchoolGroupRequest, getSingleSchoolGroupRequest } from "@/api/schoolGroup";
 
-import {getAllCountryRequest, getAllNationaltyRequest} from "@/api/country";
+import {
+  getAllCountryRequest,
+  getAllNationalitiesRequest,
+  getAllNationaltyRequest
+} from "@/api/country";
 import { postAddUserSchoolRequest } from "@/api/user";
 import {
   getAllGenderRequest,
@@ -351,7 +355,7 @@ export default {
         gender: "",
         religion_id: "",
         roles: [],
-        country_id: "",
+        nationality_id: "",
         facebook: "",
         linkedin: "",
         twitter: "",
@@ -410,7 +414,7 @@ export default {
 
     // All Dropdown
     getAllCountries() {
-      this.ApiService(getAllCountryRequest()).then((response) => {
+      this.ApiService(getAllNationalitiesRequest()).then((response) => {
         this.countries = response.data.data;
       });
     },
@@ -445,9 +449,6 @@ export default {
         const studentRole = this.departmentsList.find(
           (role) => role.code.toLowerCase() === "student"
         );
-        console.log("studentRoleType", studentRole);
-        console.log("value", value);
-        console.log("includes", value.includes(studentRole.id));
         if (value.includes(studentRole.id)) this.isStudent = true;
         else this.isStudent = false;
         if (value.includes(studentRole.id) && this.index == 0) {

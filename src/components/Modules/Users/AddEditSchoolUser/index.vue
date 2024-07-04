@@ -127,7 +127,7 @@
                   <b-col lg="4">
                     <div class="hold-field">
                       <SelectSearch
-                        v-model="user.country_id"
+                        v-model="user.nationality_id"
                         :label="$t('USERS.NATIONALITY')"
                         :name="$t('USERS.NATIONALITY')"
                         :options="countries"
@@ -322,7 +322,7 @@ export default {
         gender: "",
         religion_id: "",
         roles: [],
-        country_id: "",
+        nationality_id: "",
         facebook: "",
         linkedin: "",
         twitter: "",
@@ -470,7 +470,7 @@ export default {
       this.ApiService(getSingleSchoolUserRequest(this.$route.params.id)).then((response) => {
         this.user = response.data.data;
         this.user.gender = response.data.data.gender.id;
-        this.user.country_id = response.data.data.user_country.id;
+        this.user.nationality_id = response.data.data.user_nationality.id;
         this.user.religion_id = response.data.data.user_religion.id;
         this.user.roles = response.data.data.roles.map((role) => role.id);
         this.user.roles_categories = response.data.data.category_roles.map((role) => role.id);

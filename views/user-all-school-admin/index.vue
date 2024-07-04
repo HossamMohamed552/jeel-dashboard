@@ -51,6 +51,15 @@
       >
         <template #buttons>
           <Button
+            class="mr-3"
+            :custom-class="'btn-add rounded-btn big-padding'"
+            @click="goToAddSchoolUserExcel"
+            v-if="user.permissions.includes(`excel-user-export`)"
+          >
+            <img src="@/assets/images/icons/plus.svg"/>
+            <span>{{ $t('AddExport') }}</span>
+          </Button>
+          <Button
             :custom-class="'btn-add rounded-btn big-padding'"
             @click="goToAddUser"
             v-if="user.permissions.includes(`add-school-users`)"
@@ -203,6 +212,9 @@ export default {
     };
   },
   methods: {
+    goToAddSchoolUserExcel(){
+      this.$router.push('/dashboard/add-school-user-excel')
+    },
     onSubmit(values) {
       this.getAllSchoolUsers(values);
     },

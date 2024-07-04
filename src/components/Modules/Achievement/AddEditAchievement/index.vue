@@ -241,7 +241,6 @@ import {getAchievementByIdRequest, getInteractionTypesRequest} from "@/api/achie
 import ApiService from "@/api/ApiService";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
-import da from "vue2-datepicker/locale/es/da";
 
 export default {
   components: {

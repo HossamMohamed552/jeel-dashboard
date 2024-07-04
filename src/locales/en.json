@@ -1483,5 +1483,11 @@
   "all": "All",
   "deleteItem": "Delete item",
   "confirmDeleteItem": "Are you sure you want to delete the item?",
-  "PLEASE_TRY_AGAIN": "PLEASE TRY AGAIN"
+  "PLEASE_TRY_AGAIN": "PLEASE TRY AGAIN",
+  "AddExport": "Add users using Excel file",
+  "downloadExcel": "download this excel file",
+  "uploadFile": "upload excel file File here",
+  "uploadExcel": "Upload excel file",
+  "user_add_successfully": "The number {userSuccessNumber} was entered correctly",
+  "user_failed": "the number {userFailedNumber} was not entered correctly"
 }

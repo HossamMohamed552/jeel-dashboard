@@ -8,6 +8,11 @@ export const getAllCountryRequest = (params) => ({
   url: "countries?list_all=true",
   config: { params },
 });
+export const getAllNationalitiesRequest = (params) => ({
+  method: "get",
+  url: "nationalities?list_all=true",
+  config: { params },
+});
 export const getAllNationaltyRequest = (params) => ({
   method: "get",
   url: "countries?page=1",

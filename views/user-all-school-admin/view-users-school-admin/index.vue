@@ -48,7 +48,7 @@
               <b-col lg="4" class="mb-5 showItem">
                 <ShowItem
                   :title="$t('USERS.NATIONALITY')"
-                  :subtitle="singleUser?.user_country?.name"
+                  :subtitle="singleUser?.user_nationality?.name"
                 />
               </b-col>
               <b-col lg="4" class="mb-5 showItem">

@@ -28,15 +28,16 @@
                 <ShowItem :title="$t('USER.last_name')" :subtitle="singleUser.last_name" />
               </b-col>
               <b-col lg="6" class="mb-5 showItem">
-                <ShowItem :title="$t('TABLE_FIELDS.email_username')" :subtitle="singleUser.email" />
+                <ShowItem :title="$t('TABLE_FIELDS.email_username')" :subtitle="singleUser.email ? singleUser.email : singleUser.user_name " />
               </b-col>
               <b-col lg="6" class="mb-5 showItem">
                 <ShowItem :title="$t('USER.mobile')" :subtitle="singleUser.mobile" />
               </b-col>
-              <b-col lg="4" class="mb-5 showItem">
+              <b-col lg="4" class="mb-5 showItem" v-if="singleUser?.user_nationality">
+
                 <ShowItem
                   :title="$t('USERS.NATIONALITY')"
-                  :subtitle="singleUser?.user_country?.name"
+                  :subtitle="singleUser?.user_nationality?.name"
                 />
               </b-col>
               <b-col lg="4" class="mb-5 showItem">

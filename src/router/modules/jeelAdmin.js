@@ -313,6 +313,17 @@ export default [
     },
   },
   {
+    path: "/dashboard/add-user-excel",
+    name: "add-user-excel",
+    component: () => import("../../../views/schools-users-search/user-excel/index.vue"),
+    meta: {
+      breadcrumb: "إضافة مستخدمين عن طريق ملف الإكسيل",
+      breadcrumbEn: "Add users via Excel file",
+      preLabel: "مستخدمين المدارس",
+      preLink: "/dashboard/schools-users-search",
+    },
+  },
+  {
     path: "/dashboard/schools-users-search/add",
     name: "add-schools-users-search",
     component: () => import("../../../views/schools-users-search/add-user/index.vue"),
