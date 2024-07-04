@@ -44,7 +44,7 @@
                 <ShowItem :title="$t('USER.mobile')" :subtitle="user.mobile" />
               </b-col>
               <b-col lg="4" class=" showItem">
-                <ShowItem :title="$t('USERS.NATIONALITY')" :subtitle="user?.user_country?.name" />
+                <ShowItem :title="$t('USERS.NATIONALITY')" :subtitle="user?.user_nationality?.name" />
               </b-col>
               <b-col lg="4" class=" showItem">
                 <ShowItem :title="$t('USERS.religion')" :subtitle="user?.user_religion?.name" />

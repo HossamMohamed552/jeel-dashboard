@@ -48,6 +48,15 @@
       >
         <template #buttons>
           <Button
+            class="mr-3"
+            :custom-class="'btn-add rounded-btn big-padding'"
+            @click="goToAddUserExcel"
+            v-if="user.permissions.includes(`excel-user-export`)"
+          >
+            <img src="@/assets/images/icons/plus.svg"/>
+            <span>{{ $t('AddExport') }}</span>
+          </Button>
+          <Button
             :custom-class="'btn-add rounded-btn big-padding'"
             @click="handleAddUser"
             v-if="user.permissions.includes(`add-users`)"
@@ -135,7 +144,7 @@ export default {
           rules: "",
         },
         {
-          key: "country_id",
+          key: "nationality_id",
           col: "4",
           listen: "id",
           type: "select",
@@ -278,9 +287,12 @@ export default {
           this.loading = false;
         });
     },
+    goToAddUserExcel(){
+      this.$router.push('/dashboard/add-user-excel')
+    }
   },
   async mounted() {
-    await getALLCountries(this.userSearch, "country_id");
+    await getALLCountries(this.userSearch, "nationality_id");
     await getALLSchoolGroups(this.userSearch, "school_group_id");
     await getAllRolesType(this.userSearch, "category_id");
     await getAllUserStatus(this.userSearch, "status");

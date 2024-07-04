@@ -1502,5 +1502,12 @@
   "all": "الكل",
   "deleteItem": "حذف العنصر",
   "confirmDeleteItem": "هل أنت متأكد من حذف العنصر؟",
-  "PLEASE_TRY_AGAIN": "من فضلك أعد المحاولة مره اخرى"
+  "PLEASE_TRY_AGAIN": "من فضلك أعد المحاولة مره اخرى",
+  "AddExport": "إضافة عن طريق الإكسيل",
+  "downloadExcel": "تحميل ملف الإكسيل",
+  "uploadFile": "قم برفع ملف الإكسيل هنا",
+  "uploadExcel": "رفع ملف الإكسيل",
+  "user_add_successfully": "تم إدخال عدد {userSuccessNumber} بشكل صحيح",
+  "user_failed": "لم يتم إدخال عدد {userFailedNumber} بشكل صحيح",
+  "userNumber": "رقم التسلسل {user_number}"
 }
