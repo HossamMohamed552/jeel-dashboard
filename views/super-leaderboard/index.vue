@@ -42,7 +42,7 @@
       </b-row>
       <ListItems
         class="mt-5 p-0"
-        :header-name="'قائمة الطلاب'"
+        :header-name="$t('schoolAdmin.listOfStudents')"
         :fieldsList="fieldsList"
         :table-items="students"
         :number-of-item="totalNumber"
@@ -81,7 +81,8 @@ export default {
       leaderBoardSearch: [
         {
           key: "name",
-          label: this.$t("leaderboard.name"),
+          label: "اسم الطالب",
+          labelEn: "student name",
           col: "4",
           listen: "id",
           value: "",
@@ -94,7 +95,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.studyYear"),
+          label: "العام الدراسي",
+          labelEn: "study Year name",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -106,7 +108,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.levelSchoolAdmin"),
+          label: "الصف الدراسي",
+          labelEn: "level",
           options: [],
           deselectFromDropdown: true,
           disabled: true,
@@ -119,7 +122,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("MISSIONS.terms"),
+          label: "الترم الدراسي",
+          labelEn: "terms",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -132,7 +136,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("leaderboard.className"),
+          label: "اسم الفصل",
+          labelEn: "class Name",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -145,7 +150,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("leaderboard.typeName"),
+          label: "النوع",
+          labelEn: "type Name",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -157,7 +163,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("leaderboard.missionName"),
+          label: "اسم المهمة",
+          labelEn: "mission Name",
           options: [],
           deselectFromDropdown: true,
           disabled: true,
@@ -168,7 +175,12 @@ export default {
       loading: false,
       students: [],
       topStudents: [],
-      fieldsList: [
+      totalNumber: 0
+    }
+  },
+  computed:{
+    fieldsList(){
+      return [
         {
           key: "position",
           label: this.$i18n.t("TABLE_FIELDS.position"),
@@ -198,9 +210,8 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.points"),
         },
 
-      ],
-      totalNumber: 0
-    }
+      ]
+    },
   },
   methods: {
     handleInput(key, value) {

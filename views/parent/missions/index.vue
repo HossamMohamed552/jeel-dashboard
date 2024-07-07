@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'سجل المهام'"
+      :header-name="$t('PARENT.TaskLog')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="missions"
@@ -24,7 +24,16 @@ export default {
   components: {ListItems, Button},
   data() {
     return {
-      fieldsList: [
+      missions: [],
+      missionSearchWord: "",
+      loading: false,
+      totalNumber: 0
+    }
+  },
+  computed: {
+    ...mapGetters(['currentChild']),
+    fieldsList(){
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -45,15 +54,8 @@ export default {
           key: "percentage_mission",
           label: this.$i18n.t("TABLE_FIELDS.percentage_mission"),
         },
-      ],
-      missions: [],
-      missionSearchWord: "",
-      loading: false,
-      totalNumber: 0
-    }
-  },
-  computed: {
-    ...mapGetters(['currentChild'])
+      ]
+    },
   },
   methods: {
     getMissions(event) {

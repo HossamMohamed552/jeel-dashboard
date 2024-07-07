@@ -184,6 +184,14 @@
     align-items: center;
     //border-top: 1px solid rgba(164, 163, 163, 0.2);
     margin-top: 1rem;
+    &:lang(en){
+      justify-content: right;
+    }
+    img{
+      &:lang(en){
+        transform: rotate(-180deg);
+      }
+    }
     a {
       color: $color-primary;
       font-weight: bold;

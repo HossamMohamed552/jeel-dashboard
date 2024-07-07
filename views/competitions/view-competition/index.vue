@@ -3,50 +3,52 @@
     <div class="add-edit-form">
       <b-row>
         <b-col lg="4">
-          <ShowItem class="divider-show" title="اسم المسابقة" :subtitle="competition?.name" />
+          <ShowItem class="divider-show" :title="$t('COMPETITIONS.NAME')"
+                    :subtitle="competition?.name"/>
         </b-col>
         <b-col lg="4">
           <ShowItem
             class="divider-show"
-            title="الصفوف المدرسية"
+            :title="$t('supervisor.levels')"
             :subtitle="competition?.level?.name"
           />
         </b-col>
         <b-col lg="4">
           <ShowItem
             class="divider-show"
-            title="المهام"
+            :title="$t('supervisor.missions')"
             :subtitle="spreateArray(competition?.mission)"
           />
         </b-col>
         <b-col lg="4">
           <ShowItem
             class="divider-show"
-            title="الاهداف التعليمية"
+            :title="$t('supervisor.objective')"
             :subtitle="competition?.objective?.name"
           />
         </b-col>
         <b-col lg="4">
           <ShowItem
             class="divider-show"
-            title="مخرجات التعلم"
+            :title="$t('supervisor.outcome')"
             :subtitle="competition?.outcome?.name"
           />
         </b-col>
         <b-col lg="2">
           <ShowItem
             class="divider-show"
-            title="بداية المسابقة"
+            :title="$t('supervisor.start')"
             :subtitle="competition?.start_date"
           />
         </b-col>
         <b-col lg="2">
-          <ShowItem class="divider-show" title="نهاية المسابقة" :subtitle="competition?.end_date" />
+          <ShowItem class="divider-show" :title="$t('supervisor.end') "
+                    :subtitle="competition?.end_date"/>
         </b-col>
         <b-col lg="4">
           <ShowItem
             class="divider-show"
-            title="المدة الزمنية (بالساعات)"
+            :title="$t('supervisor.durationTime')"
             :subtitle="competition?.competition_time"
           />
         </b-col>
@@ -54,7 +56,7 @@
           <ListItems
             class="seasonal-mission-custom-list-item"
             :tableItems="competition?.notifications"
-            :headerName="'قائمة الإشعار'"
+            :headerName="$t('supervisor.listOfNotification')"
             :fieldsList="NotifacationFieldsList"
             :showSortControls="false"
             :notHidePagination="false"
@@ -65,7 +67,7 @@
           <ListItems
             class="seasonal-mission-custom-list-item"
             :tableItems="competition?.prizes"
-            :headerName="'قائمة الجوائز'"
+            :headerName="$t('supervisor.listOfPrizes')"
             :fieldsList="prizeFieldsList"
             :showSortControls="false"
             :notHidePagination="false"
@@ -75,7 +77,7 @@
         <b-col :lg="12">
           <div class="header">
             <div class="list-of-item">
-              <p class="name-of-item">قائمة الأسئلة</p>
+              <p class="name-of-item">{{ $t('supervisor.listOfQuestions') }}</p>
             </div>
           </div>
           <b-table
@@ -93,7 +95,7 @@
             <template v-slot:cell(question)="data">
               <div v-if="typeof data.item.question === 'object'">
                 <audio v-if="isAudio(data.item.question.question)" controls>
-                  <source :src="data.item.question.question" type="audio/mp3" />
+                  <source :src="data.item.question.question" type="audio/mp3"/>
                   Your browser does not support the audio tag.
                 </audio>
                 <img
@@ -107,7 +109,7 @@
               <div v-else>{{ data.item.question }}</div>
             </template>
             <template v-slot:empty>
-              <div class="text-center p-5">لا يوجد اسئلة لعرضها</div>
+              <div class="text-center p-5">{{ $t('supervisor.noQuestions') }}</div>
             </template>
             <template v-slot:cell(id)="data">
               <div>
@@ -122,7 +124,7 @@
 </template>
 
 <script>
-import { getCompetitionByIdRequest } from "@/api/competition";
+import {getCompetitionByIdRequest} from "@/api/competition";
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 
@@ -131,42 +133,6 @@ export default {
   data() {
     return {
       competition: {},
-      prizeFieldsList: [
-        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
-        { key: "main_percentage", label: "من نسبة" },
-        { key: "max_percentage", label: "إلى نسبة" },
-        { key: "prizeable_type_name", label: "نوع الجائزة" },
-        { key: "prizeable_id_name", label: "الجائزة" },
-      ],
-      NotifacationFieldsList: [
-        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
-        { key: "name", label: "عنوان اللإشعار" },
-        { key: "start_date", label: "تاريخ ووقت الإشعار" },
-        { key: "original_url", label: "صوت الإشعار" },
-        { key: "description", label: "نص الإشعار" },
-      ],
-      questionsFieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("#"),
-        },
-        {
-          key: "question_type.name",
-          label: this.$i18n.t("QUESTION_TYPE"),
-        },
-        {
-          key: "sub_question_type.name",
-          label: this.$i18n.t("SUB_QUESTION_TYPE"),
-        },
-        {
-          key: "question",
-          label: this.$i18n.t("QUESTION"),
-        },
-        {
-          key: "question_difficulty",
-          label: this.$i18n.t("QUESTION_DIFFICULTY_TABLE"),
-        },
-      ],
     };
   },
   components: {
@@ -195,6 +161,50 @@ export default {
       this.competition = response.data.data;
     });
   },
+  computed: {
+    prizeFieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "main_percentage", label: this.$i18n.t('TABLE_FIELDS.percentage_of')},
+        {key: "max_percentage", label: this.$i18n.t('TABLE_FIELDS.percentage_to')},
+        {key: "prizeable_type_name", label:this.$i18n.t('seasonalMission.prizeType') },
+        {key: "prizeable_id_name", label: this.$i18n.t('seasonalMission.singlePrize')},
+      ]
+    },
+    NotifacationFieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "name", label: this.$i18n.t('seasonalMission.NoticeTitle')},
+        {key: "start_date", label: this.$i18n.t('seasonalMission.DateTimeNotification')},
+        {key: "original_url", label: this.$i18n.t('seasonalMission.NotificationSound')},
+        {key: "description", label: this.$i18n.t('seasonalMission.NotificationText')},
+      ]
+    },
+    questionsFieldsList(){
+      return [
+        {
+          key: "vid",
+          label: this.$i18n.t("#"),
+        },
+        {
+          key: "question_type.name",
+          label: this.$i18n.t("QUESTION_TYPE"),
+        },
+        {
+          key: "sub_question_type.name",
+          label: this.$i18n.t("SUB_QUESTION_TYPE"),
+        },
+        {
+          key: "question",
+          label: this.$i18n.t("QUESTION"),
+        },
+        {
+          key: "question_difficulty",
+          label: this.$i18n.t("QUESTION_DIFFICULTY_TABLE"),
+        },
+      ]
+    },
+  }
 };
 </script>
 

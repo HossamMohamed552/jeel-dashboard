@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'سجل لوحة الصدارة'"
+      :header-name="$t('PARENT.leaderboard')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="leaderboard"
@@ -22,7 +22,15 @@ export default {
   components: {ListItems, Button},
   data() {
     return {
-      fieldsList: [
+      leaderboard: [],
+      leaderboardSearchWord: "",
+      loading: false,
+      totalNumber: 0
+    }
+  },
+  computed:{
+    fieldsList(){
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -39,11 +47,7 @@ export default {
           key: "leaderboard3",
           label: this.$i18n.t("leaderboard3"),
         },
-      ],
-      leaderboard: [],
-      leaderboardSearchWord: "",
-      loading: false,
-      totalNumber: 0
+      ]
     }
   },
   methods: {

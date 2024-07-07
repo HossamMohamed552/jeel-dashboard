@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة الرسائل'"
+      :header-name="$t('supervisor.listOfAnnouncements')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="announcement"
@@ -22,13 +22,13 @@
           v-if="user.permissions.includes(`add-announcements`)"
         >
           <img src="@/assets/images/icons/plus.svg"/>
-          <span>إضافة رسالة</span>
+          <span>{{ $t('supervisor.addAnnouncement') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف الرسالة'"
-      :content-message-question="'هل أنت متأكد من حذف الرسالة ؟'"
+      :content-message="$t('supervisor.deleteAnnouncement')"
+      :content-message-question="$t('supervisor.confirmDeleteAnnouncement')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -53,7 +53,13 @@ export default {
       announcementSearchWord: "",
       announcement: [],
       totalNumber: 0,
-      fieldsList: [
+      itemId: 0,
+    };
+  },
+  computed: {
+    ...mapGetters(['user']),
+    fieldsList(){
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -66,12 +72,8 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-      itemId: 0,
-    };
-  },
-  computed: {
-    ...mapGetters(['user'])
+      ]
+    },
   },
   methods: {
     goToAddAnnouncement() {

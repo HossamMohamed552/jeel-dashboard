@@ -186,6 +186,7 @@ export default {
       this.entry.id = this.prizeIndex;
       this.addPrize(this.entry);
       this.entry = {};
+      this.$refs.stepThreeForm.reset()
       this.resetInput();
       this.isNextStep = true;
     },

@@ -20,16 +20,16 @@
       </validation-observer>
       <div class="header m-0">
         <div class="list-of-item">
-          <p class="name-of-item">قائمة المهام الدراسية</p>
+          <p class="name-of-item">{{ $t('supervisor.ListOfMissions') }}</p>
         </div>
       </div>
       <div class="mission-header">
         <b-row>
           <b-col lg="1"></b-col>
           <b-col lg="1">#</b-col>
-          <b-col lg="2">اسم المهمة</b-col>
-          <b-col lg="2">بداية المهمة</b-col>
-          <b-col lg="2">نهاية المهمة</b-col>
+          <b-col lg="2">{{ $t('superMission.missionName') }}</b-col>
+          <b-col lg="2">{{ $t('superMission.startDate') }}</b-col>
+          <b-col lg="2">{{ $t('superMission.endDate') }}</b-col>
           <b-col lg="2" class="d-flex justify-content-center align-items-center">الحالة</b-col>
           <b-col lg="2"></b-col>
         </b-row>
@@ -143,7 +143,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.studyYear"),
+          label: "العام الدراسي",
+          labelEn: "study Year name",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -155,7 +156,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.levelSchoolAdmin"),
+          label: "الصف الدراسي",
+          labelEn: "level name",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -167,7 +169,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("MISSIONS.terms"),
+          label:"الترم الدراسي",
+          labelEn: "terms",
           options: [],
           deselectFromDropdown: true,
           value: "",

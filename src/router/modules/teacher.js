@@ -5,6 +5,7 @@ export default [
     component: () => import("../../../views/teacher/teacher-level/index.vue"),
     meta: {
       breadcrumb: "الصفوف الدراسية",
+      breadcrumbEn: "levels",
     },
   },
   {
@@ -13,7 +14,9 @@ export default [
     component: () => import("../../../views/teacher/teacher-level/view-teacher-level/index.vue"),
     meta: {
       breadcrumb: "تفاصيل الصف الدراسي",
+      breadcrumbEn: "view level",
       preLabel: "الصفوف الدراسية",
+      preLabelEn: "levels",
       preLink: "/dashboard/teacher-level",
     },
   },
@@ -23,6 +26,19 @@ export default [
     component: () => import("../../../views/teacher/teacher-class/index.vue"),
     meta: {
       breadcrumb: "الفصول",
+      breadcrumbEn: "classes",
+    },
+  },
+  {
+    path: "/dashboard/teacher-class/show/:id",
+    name: "show-teacher-class",
+    component: () => import("../../../views/teacher/teacher-class/view-teacher-class/index.vue"),
+    meta: {
+      breadcrumb: "تفاصيل الفصل",
+      breadcrumbEn: "view class",
+      preLabel: "الفصول",
+      preLabelEn: "classes",
+      preLink: "/dashboard/teacher-class",
     },
   },
   {
@@ -31,7 +47,9 @@ export default [
     component: () => import("../../../views/teacher/teacher-group/add-teacher-group/index.vue"),
     meta: {
       breadcrumb: "إضافة مجموعة",
+      breadcrumbEn: "add group",
       preLabel: "الفصول",
+      preLabelEn: "classes",
       preLink: "/dashboard/teacher-class",
     },
   },
@@ -41,7 +59,9 @@ export default [
     component: () => import("../../../views/teacher/teacher-group/edit-teacher-group/index.vue"),
     meta: {
       breadcrumb: "تعديل المجموعة",
+      breadcrumbEn: "edit group",
       preLabel: "الفصول",
+      preLabelEn: "classes",
       preLink: "/dashboard/teacher-class",
     },
   },
@@ -51,27 +71,22 @@ export default [
     component: () => import("../../../views/teacher/teacher-group/view-teacher-group/index.vue"),
     meta: {
       breadcrumb: "تفاصيل المجموعة",
+      breadcrumbEn: "view group",
       preLabel: "الفصول",
+      preLabelEn: "classes",
       preLink: "/dashboard/teacher-class",
     },
   },
-  {
-    path: "/dashboard/teacher-class/show/:id",
-    name: "show-teacher-class",
-    component: () => import("../../../views/teacher/teacher-class/view-teacher-class/index.vue"),
-    meta: {
-      breadcrumb: "تفاصيل الفصل",
-      preLabel: "الفصول",
-      preLink: "/dashboard/teacher-class",
-    },
-  },
+
   {
     path: "/dashboard/teacher-mission",
     name: "teacher-mission",
     component: () => import("../../../views/teacher/teacher-mission/index.vue"),
     meta: {
       breadcrumb: "المهام الدراسية",
+      breadcrumbEn: "Academic missions",
       preLabel: "المهام",
+      preLabelEn: "missions",
       preLink: "/dashboard/teacher-mission",
     },
   },
@@ -81,6 +96,7 @@ export default [
     component: () => import("../../../views/teacher/teacher-mission-revision/index.vue"),
     meta: {
       breadcrumb: "تصحيح المهام",
+      breadcrumbEn: "Correction of missions",
       preLabel: "المهام",
       preLink: "/dashboard/teacher-mission",
     },
@@ -92,7 +108,9 @@ export default [
       import("../../../views/teacher/teacher-mission-revision/view-mission/index.vue"),
     meta: {
       breadcrumb: "المهام الدراسية",
+      breadcrumbEn: "revision mission",
       preLabel: "المهام",
+      preLabelEn: "missions",
       preLink: "/dashboard/teacher-mission",
     },
   },
@@ -103,8 +121,19 @@ export default [
       import("../../../views/teacher/teacher-mission-revision/view-mission-content/index.vue"),
     meta: {
       breadcrumb: " تفاصيل المهام الدراسية",
+      breadcrumbEn: "view mission detail",
       preLabel: "المهام الدراسية",
+      preLabelEn: "missions",
       preLink: "/dashboard/teacher-mission",
+    },
+  },
+  {
+    path: "/dashboard/teacher-students",
+    name: "view-teacher-students",
+    component: () => import("../../../views/teacher/teacher-student/index.vue"),
+    meta: {
+      breadcrumb: "الطلاب",
+      breadcrumbEn: "students",
     },
   },
   {
@@ -113,6 +142,7 @@ export default [
     component: () => import("../../../views/teacher/teacher-advertisement/index.vue"),
     meta: {
       breadcrumb: "الرسائل",
+      breadcrumbEn: "Announcements",
     },
   },
   {
@@ -122,26 +152,23 @@ export default [
       import("../../../views/teacher/teacher-advertisement/view-advertisement/index.vue"),
     meta: {
       breadcrumb: "تفاصيل الرسالة",
+      breadcrumbEn: "view Announcement",
       preLabel: "قائمة الرسائل",
+      preLabelEn: "list of Announcements",
       preLink: "/dashboard/teacher-advertisements",
     },
   },
   //
-  {
-    path: "/dashboard/teacher-students",
-    name: "view-teacher-students",
-    component: () => import("../../../views/teacher/teacher-student/index.vue"),
-    meta: {
-      breadcrumb: "الطلاب",
-    },
-  },
+
   {
     path: "/dashboard/teacher-student/show/:id",
     name: "show-super-student",
     component: () => import("../../../views/teacher/teacher-student/view-student/index.vue"),
     meta: {
       breadcrumb: "تفاصيل الطالب",
+      breadcrumbEn: "view student",
       preLabel: "قائمة الطلاب",
+      preLabelEn: "list of students",
       preLink: "/dashboard/teacher-students",
     },
   },
@@ -151,6 +178,7 @@ export default [
     component: () => import("../../../views/teacher/teacher-student/index.vue"),
     meta: {
       breadcrumb: "الطلاب",
+      breadcrumbEn: "students",
     },
   },
   {
@@ -159,6 +187,7 @@ export default [
     component: () => import("../../../views/teacher/teacher-leaderboard/index.vue"),
     meta: {
       breadcrumb: "لوحة الصدارة",
+      breadcrumbEn: "leaderboard",
     },
   },
   {
@@ -167,6 +196,7 @@ export default [
     component: () => import("../../../views/competitions/index.vue"),
     meta: {
       breadcrumb: "المسابقات",
+      breadcrumbEn: "competitions",
     },
   },
 ];

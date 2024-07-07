@@ -31,7 +31,7 @@
           <b-col lg="3">
             <ShowItem
               :title="$t('superMission.range')"
-              :subtitle="`${missionDetail.range} يوم`"
+              :subtitle="`${missionDetail.range} ${$t('supervisor.day')}`"
             />
           </b-col>
           <b-col lg="3">
@@ -53,7 +53,8 @@
             <ShowItem :title="$t('superMission.learningPath')"/>
           </b-col>
           <b-col lg="12">
-            <div class="learning-path" v-for="learningPath in learningPaths" :key="'learningPath'+learningPath.id">
+            <div class="learning-path" v-for="learningPath in learningPaths"
+                 :key="'learningPath'+learningPath.id">
               <div class="learning-path-header" @click="toggleContent(learningPath)">
                 <p>{{ learningPath.name }}</p>
                 <button class="show-hide"><img
@@ -63,13 +64,13 @@
               <div v-if="learningPath.is_selected">
                 <div class="learning-path-tabs">
                   <div @click="activeTap = 1" :class="activeTap === 1 ? 'active' : ''" class="tap">
-                    الفيديو
+                    {{ $t('supervisor.video') }}
                   </div>
                   <div @click="activeTap = 2" :class="activeTap === 2 ? 'active' : ''" class="tap">
-                    التمارين
+                    {{ $t('supervisor.quizzes') }}
                   </div>
                   <div @click="activeTap = 3" :class="activeTap === 3 ? 'active' : ''" class="tap">
-                    أوراق العمل
+                    {{ $t('supervisor.paperWork') }}
                   </div>
                 </div>
                 <div class="content">
@@ -195,12 +196,16 @@ export default {
       firstLearningPathId: null,
       contentLearningPath: {},
       activeTap: 1,
-      paperWorkFieldsList: [
+    }
+  },
+  computed: {
+    paperWorkFieldsList() {
+      return [
         {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
         {key: "type", label: this.$i18n.t('TABLE_FIELDS.type')},
         {key: "description", label: this.$i18n.t('TABLE_FIELDS.description')},
-        {key: "download", label: "المرفق"},
+        {key: "download", label: this.$i18n.t('CONTROLS.download_file')},
       ]
     }
   },

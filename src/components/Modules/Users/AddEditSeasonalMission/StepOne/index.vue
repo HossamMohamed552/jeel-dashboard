@@ -16,7 +16,7 @@
           </Button>
           <Button
             :custom-class="'submit-btn'"
-            :disabled="isAddForm ? invalid || !imageUploaded : invalid"
+            :disabled="isAddForm ? (invalid || imageUploaded) : invalid"
             @click="nextStep"
           >
             {{ $t('GLOBAL_NEXT') }}
@@ -63,7 +63,7 @@ export default {
   },
   data() {
     return {
-      imageUplpaded: true,
+      imageUploaded: true,
       loading: false,
     };
   },
@@ -95,7 +95,7 @@ export default {
     handleInput: _.debounce(function (key, value, field) {
       if (key === "start_date") this.validateForm(value);
       if (key === "image") {
-        this.imageUplpaded = false;
+        this.imageUploaded = false;
         const imageObjectIndex = this.stepForm.findIndex((field) => field.key === "image");
         this.stepForm[imageObjectIndex].value = value.uuid;
         this.stepForm[imageObjectIndex].url = value.url;
@@ -119,7 +119,7 @@ export default {
     },
     removeFile(fileName, fileChange, fileRequest) {
       console.log("File removed in parent component:", fileName, fileChange, fileRequest);
-      this.imageUplpaded = true;
+      this.imageUploaded = true;
       const imageObjectIndex = this.stepForm.findIndex((field) => field.key === "image");
 
       this.stepForm[imageObjectIndex].url = null;

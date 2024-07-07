@@ -70,22 +70,22 @@
             <!-- tabs-->
             <div class="taps">
               <div @click="activeTap = 1" :class="activeTap === 1 ? 'active' : ''" class="tap">
-                البيانات الدراسية
+                {{$t('supervisor.AcademicData')}}
               </div>
               <div @click="activeTap = 2" :class="activeTap === 2 ? 'active' : ''" class="tap">
-                الدخول اليومي
+                {{$t('supervisor.DailyEntry')}}
               </div>
               <div @click="activeTap = 3" :class="activeTap === 3 ? 'active' : ''" class="tap">
-                المهام
+                {{$t('supervisor.missions')}}
               </div>
               <div @click="activeTap = 4" :class="activeTap === 4 ? 'active' : ''" class="tap">
-                الإنجازات
+                {{$t('supervisor.Achievements')}}
               </div>
               <div @click="activeTap = 5" :class="activeTap === 5 ? 'active' : ''" class="tap">
-                المنافسات
+                {{$t('supervisor.Competitions')}}
               </div>
               <div @click="activeTap = 6" :class="activeTap === 6 ? 'active' : ''" class="tap">
-                المواسم
+                {{$t('supervisor.Seasons')}}
               </div>
             </div>
           </b-col>

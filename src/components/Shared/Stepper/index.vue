@@ -7,7 +7,7 @@
             <span class="stepper-step-img stepper-step" :class="{ active: index === currentStep, completed: index < currentStep }">{{ step.icon }}</span>
             <div class="progress" :class="{ active: index === currentStep, completed: index < currentStep }"></div>
           </div>
-          <div class="stepper-step-title fs-14 mt-2" :class="{ active: index === currentStep, completed: index < currentStep }">{{ step.title }}</div>
+          <div class="stepper-step-title fs-14 mt-2" :class="{ active: index === currentStep, completed: index < currentStep }">{{ $i18n.locale === 'ar' ? step.title : step.titleEn }}</div>
         </div>
       </div>
     </div>
