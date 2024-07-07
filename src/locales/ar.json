@@ -927,7 +927,12 @@
     "deleteGroup": "حذف المجموعة الدراسية",
     "deleteConfirm": "هل أنت متأكد من حذف المجموعة الدراسية؟",
     "enterStudentName": "أدخل اسم الطالب",
-    "listOfStudents": "قائمة الطلاب"
+    "listOfStudents": "قائمة الطلاب",
+    "revision": "تصحيح",
+    "type": "النوع",
+    "question": "السؤال",
+    "degreeOfTask": "درجة التسجيل الصوتي",
+    "degreeOfPaperWork": "درجة ورقة العمل"
   },
   "classGroup": {
     "ADD": "إضافة مجموعة جديدة",

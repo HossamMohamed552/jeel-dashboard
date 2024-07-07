@@ -82,10 +82,10 @@
                 {{$t('supervisor.Achievements')}}
               </div>
               <div @click="activeTap = 5" :class="activeTap === 5 ? 'active' : ''" class="tap">
-                {{ $t('Competitions') }}
+                {{ $t('supervisor.Competitions') }}
               </div>
               <div @click="activeTap = 6" :class="activeTap === 6 ? 'active' : ''" class="tap">
-                {{ $t('Seasons') }}
+                {{ $t('supervisor.Seasons') }}
               </div>
             </div>
           </b-col>

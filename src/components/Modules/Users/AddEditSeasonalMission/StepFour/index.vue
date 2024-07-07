@@ -127,6 +127,7 @@ export default {
       this.entry.id = this.notifactionIndex;
       this.addNotification(this.entry);
       this.entry = {};
+      this.$refs.stepTwoForm.reset()
       this.removeFile();
       this.isNextStep = true;
     },

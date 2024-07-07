@@ -31,7 +31,7 @@
           <b-col lg="3">
             <ShowItem
               :title="$t('superMission.range')"
-              :subtitle="`${missionDetail.data_range} يوم`"
+              :subtitle="`${missionDetail.data_range}  ${$t('supervisor.day')}`"
             />
           </b-col>
           <b-col lg="3">
@@ -65,11 +65,11 @@
                 <div class="learning-path-tabs">
                   <div @click.stop="activeTap = 1" :class="activeTap === 1 ? 'active' : ''"
                        class="tap">
-                    التسجيلات الصوتية
+                    {{ $t('PARENT.tasks') }}
                   </div>
                   <div @click.stop="activeTap = 2" :class="activeTap === 2 ? 'active' : ''"
                        class="tap">
-                    أوراق العمل
+                    {{ $t('PARENT.paperWork') }}
                   </div>
                 </div>
                 <div class="content">
@@ -111,19 +111,19 @@
         <div class="p-3">
           <div v-if="activeTap === 1"
                class="title-content d-flex justify-content-between align-items-center">
-            <span>تصحيح {{ detail.name }}</span>
-            <span>النوع : {{ detail.type.name }}</span>
+            <span>{{ $t('teacher.revision') }} {{ detail.name }}</span>
+            <span>{{$t('teacher.type')}} : {{ detail.type.name }}</span>
           </div>
           <div v-else class="d-flex justify-content-between align-items-center">
-            <span>تصحيح {{ detail.name }}</span>
-            <span>النوع : {{ detail.type.name }}</span>
+            <span>{{ $t('teacher.revision') }} {{ detail.name }}</span>
+            <span>{{$t('teacher.type')}} : {{ detail.type.name }}</span>
           </div>
           <b-row>
             <b-col lg="12" v-if="activeTap === 1">
 
               <div v-if="detail.task" class="mb-3"
                    :class="detail.type.key === 'text'? 'd-flex justify-content-center align-items-center':''">
-                <span>  السؤال : </span>
+                <span>  {{ $t('teacher.question') }} : </span>
                 <span v-if="detail.type.key === 'text'" class="ml-2">{{ detail.task }} </span>
                 <img v-else :src="detail.task" class="task-question-img ">
               </div>
@@ -133,8 +133,8 @@
               <img :src="detail?.paper_work_student" class="paperwork-img">
             </b-col>
             <b-col lg="12">
-              <h2 class="title" v-if="activeTap === 1">درجة التسجيل الصوتي</h2>
-              <h2 class="title" v-else>درجة ورقة العمل</h2>
+              <h2 class="title" v-if="activeTap === 1">{{ $t('teacher.degreeOfTask') }}</h2>
+              <h2 class="title" v-else>{{ $t('teacher.degreeOfPaperWork') }}</h2>
               <p class="subtitle">{{ detail.note }}</p>
             </b-col>
           </b-row>
@@ -218,30 +218,6 @@ export default {
       contentLearningPath: {},
       activeTap: 1,
       loading: false,
-      paperWorkFieldsList: [
-        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
-        {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
-        {key: "type.name", label: this.$i18n.t('TABLE_FIELDS.type')},
-        {key: "final_degree", label: this.$i18n.t('TABLE_FIELDS.finalDegree')},
-        {
-          key: "teacher_review.student_final_degree",
-          label: this.$i18n.t('TABLE_FIELDS.correctionDegree')
-        },
-        {key: "download", label: "المرفق"},
-        {key: "teacher_review", label: "الاجراء"},
-      ],
-      tasksFieldsList: [
-        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
-        {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
-        {key: "type.name", label: this.$i18n.t('TABLE_FIELDS.type')},
-        {key: "final_degree", label: this.$i18n.t('TABLE_FIELDS.finalDegree')},
-        {
-          key: "teacher_review.student_final_degree",
-          label: this.$i18n.t('TABLE_FIELDS.correctionDegree')
-        },
-        {key: "download", label: "المرفق"},
-        {key: "teacher_review", label: "الاجراء"},
-      ],
       detail: {},
       correctionObject: {
         user_id: this.$route.params.studentId,
@@ -251,6 +227,36 @@ export default {
         note: ''
       }
     }
+  },
+  computed:{
+    paperWorkFieldsList(){
+      return  [
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
+        {key: "type.name", label: this.$i18n.t('TABLE_FIELDS.type')},
+        {key: "final_degree", label: this.$i18n.t('TABLE_FIELDS.finalDegree')},
+        {
+          key: "teacher_review.student_final_degree",
+          label: this.$i18n.t('TABLE_FIELDS.correctionDegree')
+        },
+        {key: "download", label: this.$i18n.t('CONTROLS.download_file')},
+        {key: "teacher_review", label: this.$i18n.t('TABLE_FIELDS.actions')},
+      ]
+    },
+    tasksFieldsList(){
+      return  [
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
+        {key: "type.name", label: this.$i18n.t('TABLE_FIELDS.type')},
+        {key: "final_degree", label: this.$i18n.t('TABLE_FIELDS.finalDegree')},
+        {
+          key: "teacher_review.student_final_degree",
+          label: this.$i18n.t('TABLE_FIELDS.correctionDegree')
+        },
+        {key: "download", label: this.$i18n.t('CONTROLS.download_file')},
+        {key: "teacher_review", label: this.$i18n.t('TABLE_FIELDS.actions')},
+      ]
+    },
   },
   methods: {
     getMissionContent() {

@@ -195,12 +195,16 @@ export default {
       firstLearningPathId: null,
       contentLearningPath: {},
       activeTap: 1,
-      paperWorkFieldsList: [
+    }
+  },
+  computed:{
+    paperWorkFieldsList(){
+      return  [
         {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
         {key: "type", label: this.$i18n.t('TABLE_FIELDS.type')},
         {key: "description", label: this.$i18n.t('TABLE_FIELDS.description')},
-        {key: "download", label: "المرفق"},
+        {key: "download", label: this.$i18n.t('CONTROLS.download_file')},
       ]
     }
   },

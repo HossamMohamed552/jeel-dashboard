@@ -954,7 +954,12 @@
     "deleteGroup": "Delete the study group",
     "deleteConfirm": "Are you sure you want to delete the study group?",
     "enterStudentName": "enter Student Name",
-    "listOfStudents": "list Of Students"
+    "listOfStudents": "list Of Students",
+    "revision": "revision",
+    "type": "type",
+    "question": "question",
+    "degreeOfTask": "degree Of Task",
+    "degreeOfPaperWork": "degree Of PaperWork"
   },
   "classGroup": {
     "ADD": "Add a new group",
