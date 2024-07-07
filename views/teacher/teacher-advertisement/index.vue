@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة الرسائل'"
+      :header-name="$t('supervisor.listOfAnnouncements')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="announcement"
@@ -31,7 +31,13 @@ export default {
       announcementSearchWord: "",
       announcement: [],
       totalNumber: 0,
-      fieldsList: [
+      itemId: 0,
+    };
+  },
+  computed: {
+    ...mapGetters(['user']),
+    fieldsList() {
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -43,12 +49,8 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-      itemId: 0,
-    };
-  },
-  computed: {
-    ...mapGetters(['user'])
+      ]
+    },
   },
   methods: {
     getAnnouncement(event) {

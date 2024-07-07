@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'سجل المنافسات'"
+      :header-name="$t('PARENT.competitions')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="competitions"
@@ -23,7 +23,15 @@ export default {
   components: {ListItems, Button},
   data() {
     return {
-      fieldsList: [
+      competitions: [],
+      competitionSearchWord: "",
+      loading: false,
+      totalNumber: 0
+    }
+  },
+  computed: {
+    fieldsList() {
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -48,11 +56,7 @@ export default {
           key: "achievement5",
           label: this.$i18n.t("achievement5"),
         },
-      ],
-      competitions: [],
-      competitionSearchWord: "",
-      loading: false,
-      totalNumber: 0
+      ]
     }
   },
   methods: {

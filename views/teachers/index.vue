@@ -19,7 +19,7 @@
     </validation-observer>
     <ListItems
       class="m-0 p-0"
-      :header-name="'قائمة المدرسين'"
+      :header-name="$t('supervisor.ListOfTeachers')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="teachers"
@@ -64,7 +64,8 @@ export default {
           key: "name",
           col: "4",
           type: "text",
-          label: this.$t("TABLE_FIELDS.teacherName"),
+          label: "اسم المستخدم",
+          labelEn: "teacher Name",
           value: "",
         },
         {
@@ -73,7 +74,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.studyYear"),
+          label: "العام الدراسي",
+          labelEn: "study Year Name",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -84,7 +86,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.levelSchoolAdmin"),
+          label: "الصف الدراسي",
+          labelEn: "level name",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -95,7 +98,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("MISSIONS.terms"),
+          label: "الترم الدراسى",
+          labelEn: "terms",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -106,14 +110,21 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.className"),
+          label: "اسم الفصل",
+          labelEn: "className",
           options: [],
           deselectFromDropdown: true,
           value: "",
         },
       ],
       totalNumber: 0,
-      fieldsList: [
+      itemId: 0,
+    };
+  },
+  computed: {
+    ...mapGetters(['user']),
+    fieldsList(){
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -146,12 +157,8 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-      itemId: 0,
-    };
-  },
-  computed: {
-    ...mapGetters(['user'])
+      ]
+    },
   },
   methods: {
     getAllTeachers(values){

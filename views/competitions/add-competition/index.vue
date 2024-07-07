@@ -95,29 +95,34 @@ export default {
         {
           icon: "1",
           title: "البيانات الاساسية",
+          titleEn: "basic information",
         },
         {
           icon: "2",
           title: "أسئلة المسابقة",
+          titleEn: "competition questions",
         },
         {
           icon: "3",
           title: "الجوائز",
+          titleEn: "Prizes",
         },
         {
           icon: "4",
           title: "الاشعارات",
+          titleEn: "Notifications",
         },
         {
           icon: "5",
           title: "معاينة المسابقة",
+          titleEn: "Preview the competition",
         },
       ],
-
       competitionInfoForm: [
         {
           key: "name",
           label: "اسم المسابقة",
+          labelEn: "Competition name",
           col: "4",
           listen: "id",
           value: "",
@@ -131,6 +136,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "الصفوف الدراسية",
+          labelEn: "level name",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -146,6 +152,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "المهام",
+          labelEn: "missions",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -160,6 +167,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "الاهداف التعليمية",
+          labelEn: "objective",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -174,6 +182,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "مخرجات التعلم",
+          labelEn: "outcome",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -188,6 +197,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "الفصل الدراسي",
+          labelEn: "class",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -201,6 +211,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "المجموعات",
+          labelEn: "groups",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -210,6 +221,7 @@ export default {
         {
           key: "start_date",
           label: "بداية المسابقة",
+          labelEn: "start date",
           col: "2",
           listen: "id",
           value: "",
@@ -223,6 +235,7 @@ export default {
         {
           key: "end_date",
           label: "نهاية المسابقة",
+          labelEn: "end date",
           col: "2",
           listen: "id",
           value: "",
@@ -234,6 +247,7 @@ export default {
         {
           key: "competition_time",
           label: "المدة الزمنية",
+          labelEn: "duration",
           col: "4",
           value: "",
           type: "time",
@@ -246,6 +260,7 @@ export default {
         {
           key: "main_percentage",
           label: "من نسبة",
+          labelEn: "min percentage",
           col: "4",
           listen: "id",
           value: "",
@@ -255,6 +270,7 @@ export default {
         {
           key: "max_percentage",
           label: "إلى نسبة",
+          labelEn: "max percentage",
           col: "4",
           listen: "id",
           value: "",
@@ -268,6 +284,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "نوع الجائزة",
+          labelEn: "Prize type",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -280,6 +297,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "نوع المحتوى",
+          labelEn: "Content type",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -294,6 +312,7 @@ export default {
           type: "select",
           optionValue: "name",
           label: "المحتوى",
+          labelEn: "Content",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -303,6 +322,7 @@ export default {
         {
           key: "jeel_coins",
           label: "عملات جيل",
+          labelEn: "jeel coins",
           col: "4",
           value: "",
           type: "number",
@@ -314,6 +334,7 @@ export default {
         {
           key: "name",
           label: "عنوان الإشعار",
+          labelEn: "Notice title",
           col: "4",
           listen: "id",
           value: "",
@@ -323,6 +344,7 @@ export default {
         {
           key: "start_date",
           label: "تاريخ ووقت الإشعار",
+          labelEn: "Date and time of notification",
           col: "4",
           listen: "id",
           value: "",
@@ -332,6 +354,7 @@ export default {
         {
           key: "description",
           label: "نص الإشعار",
+          labelEn: "description",
           col: "12",
           listen: "id",
           value: "",
@@ -341,6 +364,7 @@ export default {
         {
           key: "audio",
           label: "صوت الإشعار",
+          labelEn: "audio",
           col: "12",
           listen: "id",
           value: "",

@@ -27,7 +27,7 @@
                         v-model="student_id"
                         :label="$t('schoolAdmin.studentName')"
                         :name="$t('schoolAdmin.studentName')"
-                        placeholder="أدخل اسم الطالب"
+                        :placeholder="$t('teacher.enterStudentName')"
                         :options="students"
                         :reduce="(option) => option.id"
                         :get-option-label="(option) => option.name"
@@ -53,7 +53,7 @@
           <b-col lg="12">
             <ListItems
               class="m-0 p-0"
-              :header-name="'قائمة الطلاب'"
+              :header-name="$t('teacher.listOfStudents')"
               :fieldsList="fieldsList"
               :number-of-item="totalNumber"
               :table-items="studentsInGroup"
@@ -98,7 +98,12 @@ export default {
       students: [],
       studentsInGroup: [],
       totalNumber: 0,
-      fieldsList: [
+      groupDetail: {},
+    };
+  },
+  computed:{
+    fieldsList(){
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -131,9 +136,8 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-      groupDetail: {},
-    };
+      ]
+    },
   },
   methods: {
     detailItem($event) {

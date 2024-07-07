@@ -4,26 +4,27 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12" class="d-flex justify-content-between align-items-center">
-            <h2 class="heading">تفاصيل الفصل</h2>
+            <h2 class="heading">{{ $t('schoolAdmin.classDETAILS') }}</h2>
             <Button
               :custom-class="'btn-add rounded-btn big-padding'"
               @click="goToAddGroup"
               v-if="user.permissions.includes(`add-teacher-groups`)"
             >
               <img src="@/assets/images/icons/plus.svg"/>
-              <span>إضافة مجموعة</span>
+              <span>{{ $t('teacher.addGroup') }}</span>
             </Button>
           </b-col>
         </b-row>
         <b-row class="divider p-0 mt-5">
           <b-col lg="3" class="mb-5">
-            <ShowItem v-if="singleClass && singleClass.studyYear" :title="$t('TABLE_FIELDS.studyYearName')"
+            <ShowItem v-if="singleClass && singleClass.studyYear"
+                      :title="$t('TABLE_FIELDS.studyYearName')"
                       :subtitle="singleClass.studyYear.name"/>
           </b-col>
           <b-col lg="3" class="mb-5">
             <ShowItem v-if="singleClass && singleClass.level"
-              :title="$t('TABLE_FIELDS.levelSchoolAdmin')"
-              :subtitle="singleClass.level.name"
+                      :title="$t('TABLE_FIELDS.levelSchoolAdmin')"
+                      :subtitle="singleClass.level.name"
             />
           </b-col>
           <b-col lg="3" class="mb-5">
@@ -40,10 +41,10 @@
     </div>
     <div class="tabs">
       <div @click="activeTap = 1" :class="activeTap === 1 ? 'active' : ''" class="tap">
-        قائمة طلاب الفصل
+        {{ $t('teacher.listOfClassStudents') }}
       </div>
       <div @click="activeTap = 2" :class="activeTap === 2 ? 'active' : ''" class="tap">
-        مجموعات الفصل
+        {{ $t('teacher.classGroups') }}
       </div>
     </div>
     <div class="content">
@@ -87,8 +88,8 @@
       </div>
     </div>
     <Modal
-      :content-message="'حذف المجموعة الدراسية'"
-      :content-message-question="'هل أنت متأكد من حذف المجموعة الدراسية؟'"
+      :content-message="$t('teacher.deleteGroup')"
+      :content-message-question="$t('teacher.deleteConfirm')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -130,7 +131,16 @@ export default {
       itemId: "",
       singleClass: {},
       activeTap: 1,
-      fieldsList: [
+      students: [],
+      groups: [],
+      numberOfStudents: 0,
+      numberOfGroups: 0
+    };
+  },
+  computed: {
+    ...mapGetters(["user"]),
+    fieldsList() {
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -163,8 +173,10 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-      groupFieldsList: [
+      ]
+    },
+    groupFieldsList() {
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -181,24 +193,17 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-      students: [],
-      groups: [],
-      numberOfStudents: 0,
-      numberOfGroups: 0
-    };
-  },
-  computed: {
-    ...mapGetters(["user"]),
+      ]
+    },
   },
   methods: {
-    detailItem($event){
+    detailItem($event) {
       this.$router.push(`/dashboard/teacher-group/show/${$event}`);
     },
-    addStudentOnGroupItem($event){
+    addStudentOnGroupItem($event) {
       this.$router.push(`/dashboard/teacher-group/show/${$event.id}`);
     },
-    editItem($event){
+    editItem($event) {
       this.$router.push(`/dashboard/teacher-group/edit/${$event}`);
     },
     deleteItem($event) {
@@ -210,15 +215,15 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteClassTeacherRequest(this.itemId)).then((response) => {
-       this.getGroupsForClass()
+        this.getGroupsForClass()
       })
       this.cancel();
     },
-    goToStudentDetail($event){
+    goToStudentDetail($event) {
       this.$router.push(`/dashboard/teacher-student/show/${$event}`);
     },
     goToAddGroup() {
-      this.$store.commit('SET_CLASS_ID',this.$route.params.id)
+      this.$store.commit('SET_CLASS_ID', this.$route.params.id)
       this.$router.push(`/dashboard/teacher-group/add`)
     },
     getStudentForClass($event) {

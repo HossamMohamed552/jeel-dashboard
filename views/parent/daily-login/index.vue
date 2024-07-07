@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'سجل الدخول اليومى'"
+      :header-name="$t('PARENT.LogInDaily')"
       :fieldsList="fieldsList"
       :table-items="dailyLogin"
       :v-search-model="dailySearchWord"
@@ -25,7 +25,16 @@ export default {
   components: {ListItems, Button},
   data() {
     return {
-      fieldsList: [
+      dailyLogin: [],
+      dailySearchWord: "",
+      loading: false,
+      totalNumber: 0
+    }
+  },
+  computed: {
+    ...mapGetters(['currentChild']),
+    fieldsList() {
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -38,23 +47,8 @@ export default {
           key: "time",
           label: this.$i18n.t("TABLE_FIELDS.enterTime"),
         },
-        // {
-        //   key: "dailyLogin3",
-        //   label: this.$i18n.t("TABLE_FIELDS.dailyLogin3"),
-        // },
-        // {
-        //   key: "dailyLogin4",
-        //   label: this.$i18n.t("TABLE_FIELDS.dailyLogin4"),
-        // },
-      ],
-      dailyLogin: [],
-      dailySearchWord: "",
-      loading: false,
-      totalNumber: 0
+      ]
     }
-  },
-  computed: {
-    ...mapGetters(['currentChild'])
   },
   methods: {
     getDailyLogin(event) {

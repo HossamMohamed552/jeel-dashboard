@@ -4,12 +4,13 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">تفاصيل الفصل</h2>
+            <h2 class="heading">{{ $t('schoolAdmin.classDETAILS') }}</h2>
           </b-col>
         </b-row>
         <b-row class="divider">
           <b-col lg="3" class="mb-5">
-            <ShowItem :title="$t('TABLE_FIELDS.studyYearName')" :subtitle="singleClass.studyYear.name" />
+            <ShowItem :title="$t('TABLE_FIELDS.studyYearName')"
+                      :subtitle="singleClass.studyYear.name"/>
           </b-col>
           <b-col lg="3" class="mb-5">
             <ShowItem
@@ -24,7 +25,7 @@
             />
           </b-col>
           <b-col lg="3" class="mb-5" v-if="singleClass.students_count">
-            <ShowItem :title="$t('CLASS.students_count')" :subtitle="singleClass.students_count" />
+            <ShowItem :title="$t('CLASS.students_count')" :subtitle="singleClass.students_count"/>
           </b-col>
         </b-row>
       </div>
@@ -32,7 +33,7 @@
     <ListItems
       class="background-transparent"
       :show-sort-controls="false"
-      :header-name="'قائمه طلاب الفصل'"
+      :header-name="$t('ListOfClassStudents')"
       :fieldsList="fieldsList"
       :table-items="singleClass.student"
       :loading="loading"
@@ -47,6 +48,7 @@
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import {getSingleClassForSuperVisorRequest, getSingleClassRequest} from "@/api/class.js";
 import ListItems from "@/components/ListItems/index.vue";
+
 export default {
   name: "index",
   components: {
@@ -58,7 +60,11 @@ export default {
       loading: false,
       userSearchWord: "",
       singleClass: {},
-      fieldsList: [
+    };
+  },
+  computed: {
+    fieldsList() {
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -91,11 +97,11 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-    };
+      ]
+    }
   },
-  methods:{
-    detailItem($event){
+  methods: {
+    detailItem($event) {
       this.$router.push(`/dashboard/super-student/show/${$event}`)
     }
   },

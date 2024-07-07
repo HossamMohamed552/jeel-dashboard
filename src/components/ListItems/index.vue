@@ -310,23 +310,21 @@
             :custom-class="'transparent-btn rounded-btn'"
             @click="editItem(data.item)"
             :disabled="data.item.is_selected === false"
-            >تعديل المحتوى
-          </Button>
+            >{{ $t('CONTROLS.editContent') }}</Button>
         </template>
         <template #cell(editActions)="data">
           <Button :custom-class="'transparent-btn rounded-btn'" @click="detailItem(data.item)"
-            >تفاصيل
+            >
+            {{ $t('CONTROLS.detailBtn') }}
           </Button>
         </template>
         <template #cell(showMissions)="data">
           <Button :custom-class="'transparent-btn rounded-btn'" @click="detailItem(data.item)"
-            >عرض المهام
-          </Button>
+            >{{$t('CONTROLS.showMissions')}}</Button>
         </template>
         <template #cell(missionContent)="data">
           <Button :custom-class="'transparent-btn rounded-btn'" @click="detailItem(data.item)"
-            >محتوى المهمة
-          </Button>
+            >{{ $t('CONTROLS.contentOfMission') }}</Button>
         </template>
         <template #cell(teacher_review)="data">
           <Button
@@ -350,7 +348,7 @@
           </b-form-checkbox>
         </template>
         <template #cell(status.name)="data">
-          <span class="blocked-user" v-if="checkBlockUser(data) === 'show'">محظور</span>
+          <span class="blocked-user" v-if="checkBlockUser(data) === 'show'">{{ $t('CONTROLS.blocked') }}</span>
         </template>
         <template #cell(status)="data">
           <span>{{ data.item.status.name }}</span>

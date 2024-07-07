@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة الفصول'"
+    <ListItems :header-name="$t('schoolAdmin.classesMainList')"
                :number-of-item="totalNumber"
                :tableItems="classesList"
                :fields-list="fieldsList"
@@ -16,7 +16,7 @@
           v-if="user.permissions.includes(`add-teacher-groups`)"
         >
           <img src="@/assets/images/icons/plus.svg"/>
-          <span>إضافة مجموعة</span>
+          <span>{{ $t('teacher.addGroup') }}</span>
         </Button>
       </template>
     </ListItems>
@@ -38,18 +38,20 @@ export default {
       groupSearchWord: "",
       classesList: [],
       totalNumber: null,
-      fieldsList: [
+    }
+  },
+  computed: {
+    ...mapGetters(["user"]),
+    fieldsList(){
+      return [
         {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
         {key: "studyYear.name", label: this.$i18n.t('TABLE_FIELDS.studyYearName')},
         {key: "level", label: this.$i18n.t('TABLE_FIELDS.levelSchoolAdmin')},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.className')},
         {key: "student_count", label: this.$i18n.t('TABLE_FIELDS.students_count')},
-        {key: "actions", label: "الإجراء"},
-      ],
-    }
-  },
-  computed: {
-    ...mapGetters(["user"]),
+        {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
+      ]
+    },
   },
   methods: {
     getClasses(event) {

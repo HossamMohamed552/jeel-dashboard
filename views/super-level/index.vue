@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid custom-container">
-    <ListItems :header-name="'قائمة الصفوف الدراسية'" :number-of-item="totalNumber"
+    <ListItems :header-name="$t('LEVEL.levels')" :number-of-item="totalNumber"
                :tableItems="levelList" :fields-list="fieldsList" :v-search-model="groupSearchWord" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getLevels"
@@ -26,14 +26,18 @@ export default {
       groupSearchWord: "",
       levelList: [],
       totalNumber: null,
-      fieldsList: [
+    }
+  },
+  computed:{
+    fieldsList(){
+      return [
         {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
         {key: "studyYear.name", label: this.$i18n.t('TABLE_FIELDS.studyYearName')},
         {key: "level", label: this.$i18n.t('TABLE_FIELDS.levelSchoolAdmin')},
         {key: "classes", label: this.$i18n.t('TABLE_FIELDS.classes_count')},
-        {key: "actions", label: "الإجراء"},
-      ],
-    }
+        {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
+      ]
+    },
   },
   methods: {
     getLevels(event) {

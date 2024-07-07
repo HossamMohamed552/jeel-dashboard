@@ -36,7 +36,7 @@
           <b-col lg="12" class="mt-5">
             <ListItems
               class="m-0 p-0"
-              :header-name="'قائمة المهام الدراسية'"
+              :header-name="$t('supervisor.ListOfMissions')"
               :fieldsList="fieldsList"
               :number-of-item="totalNumber"
               :table-items="missions"
@@ -74,10 +74,32 @@ export default {
     return {
       studentObject: {},
       activeTap: 1,
-      missions:[],
+      missions: [],
       totalNumber: 0,
       loading: false,
-      fieldsList: [
+      missionSearchWord: ""
+    };
+  },
+  methods: {
+    altImage($event) {
+      $event.target.src = require("@/assets/images/icons/user-avatar.png")
+    },
+    getMissionsPerStudent($event) {
+      this.ApiService(getMissionsPerStudentForTeacherRequest(this.$route.params.id, $event)).then((response) => {
+        this.missions = response.data.data;
+        this.totalNumber = response.data.meta.total
+      });
+    },
+    detailItem($event) {
+      this.$router.push(`/dashboard/teacher/missions-student/show/${this.$route.params.id}/${$event}`)
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+    fieldsList() {
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -102,27 +124,7 @@ export default {
           key: "missionContent",
           label: this.$i18n.t("TABLE_FIELDS.missionContent"),
         },
-      ],
-      missionSearchWord:""
-    };
-  },
-  methods: {
-    altImage($event) {
-      $event.target.src = require("@/assets/images/icons/user-avatar.png")
-    },
-    getMissionsPerStudent($event){
-      this.ApiService(getMissionsPerStudentForTeacherRequest(this.$route.params.id,$event)).then((response) => {
-        this.missions = response.data.data;
-        this.totalNumber = response.data.meta.total
-      });
-    },
-    detailItem($event){
-      this.$router.push(`/dashboard/teacher/missions-student/show/${this.$route.params.id}/${$event}`)
-    }
-  },
-  computed: {
-    user() {
-      return this.$store.getters.user;
+      ]
     },
   },
   mounted() {

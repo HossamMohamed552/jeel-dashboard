@@ -2,7 +2,7 @@
   <section class="container-fluid custom-container">
     <!--    @refetch="getMissions"-->
     <ListItems
-      :header-name="'سجل التعليقات'"
+      :header-name="$t('PARENT.comments')"
       :fieldsList="activeTap === 1 ? taskFieldsList : paperWorkFieldsList"
       :number-of-item="activeTap === 1 ? taskTotalNumber : paperWorkTotalNumber"
       :table-items="activeTap === 1 ? tasks : paperWorks"
@@ -14,10 +14,10 @@
       <template #tabs>
         <div class="tabs">
           <div @click="selectRecord(1)" :class="activeTap === 1 ? 'active' : ''" class="tap">
-            التسجيلات الصوتية
+            {{$t('PARENT.tasks')}}
           </div>
           <div @click="selectRecord(2)" :class="activeTap === 2 ? 'active' : ''" class="tap">
-            أوراق العمل
+            {{$t('PARENT.paperWork')}}
           </div>
         </div>
       </template>
@@ -26,9 +26,9 @@
       <template #modalBody>
         <div class="p-3">
           <div v-if="activeTap === 1" class="title-content">
-            تفاصيل التسجيل الصوتي
+            {{ $t("PARENT.Audio_details") }}
           </div>
-          <div v-else>تفاصيل ورقة العمل</div>
+          <div v-else>{{$t('PARENT.paperWork_details')}}</div>
           <b-row>
             <b-col lg="12" v-if="activeTap === 1">
               <AudioFakePlayer :url="detail.task_audio_student" :with-background="true"/>
@@ -37,34 +37,34 @@
               <img :src="detail.paper_work_student" class="paperwork-img">
             </b-col>
             <b-col lg="4">
-              <h2 class="title">اسم المهمة</h2>
+              <h2 class="title">{{$t('PARENT.missionName')}}</h2>
               <p class="subtitle" v-if="detail.mission">{{detail.mission.name}}</p>
             </b-col>
             <b-col lg="4">
-              <h2 class="title">المسار</h2>
+              <h2 class="title">{{$t('PARENT.learningPath')}}</h2>
               <p class="subtitle" v-if="detail.learningPath">{{detail.learningPath.name}}</p>
             </b-col>
             <b-col lg="4">
-              <h2 class="title" v-if="activeTap === 1">اسم التسجيل الصوتي</h2>
-              <h2 class="title" v-else>اسم ورقه العمل</h2>
+              <h2 class="title" v-if="activeTap === 1">{{$t('PARENT.taskName')}}</h2>
+              <h2 class="title" v-else>{{$t('PARENT.paperWorkName')}}</h2>
               <p class="subtitle">{{detail.name}}</p>
             </b-col>
             <b-col lg="4" class="my-2">
-              <h2 class="title">نوع الملف</h2>
-              <p class="subtitle" v-if="activeTap === 1">صوتى</p>
-              <p class="subtitle" v-else>صورة</p>
+              <h2 class="title">{{ $t('PARENT.fileType') }}</h2>
+              <p class="subtitle" v-if="activeTap === 1">{{$t('PARENT.voice')}}</p>
+              <p class="subtitle" v-else> {{$t('PARENT.image')}} </p>
             </b-col>
             <b-col lg="4" class="my-2">
-              <h2 class="title">الدرجة النهائية</h2>
+              <h2 class="title">{{ $t('PARENT.finalDegree') }}</h2>
               <p class="subtitle" v-if="activeTap === 1">{{ detail.task_degree }}</p>
               <p class="subtitle" v-else>{{ detail.paperwork_degree}}</p>
             </b-col>
             <b-col lg="4" class="my-2">
-              <h2 class="title">الدرجة</h2>
+              <h2 class="title">{{ $t('PARENT.degree') }}</h2>
               <p class="subtitle">{{ detail.student_final_degree }}</p>
             </b-col>
             <b-col lg="12">
-              <h2 class="title">التعليق</h2>
+              <h2 class="title"> {{ $t('PARENT.note') }}</h2>
               <p class="subtitle">{{ detail.note }}</p>
             </b-col>
           </b-row>
@@ -91,7 +91,22 @@ export default {
   components: {Button, GeneralModal, ListItems,AudioFakePlayer},
   data() {
     return {
-      taskFieldsList: [
+
+      tasks: [],
+      paperWorks: [],
+      taskSearchWord: "",
+      paperWorkSearchWord: "",
+      loading: false,
+      taskTotalNumber: 0,
+      paperWorkTotalNumber: 0,
+      activeTap: 1,
+      detail: {}
+    }
+  },
+  computed: {
+    ...mapGetters(['currentChild']),
+    taskFieldsList(){
+      return  [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -116,8 +131,10 @@ export default {
           key: "editActions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-      paperWorkFieldsList: [
+      ]
+    },
+    paperWorkFieldsList(){
+      return  [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -142,20 +159,8 @@ export default {
           key: "editActions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-      tasks: [],
-      paperWorks: [],
-      taskSearchWord: "",
-      paperWorkSearchWord: "",
-      loading: false,
-      taskTotalNumber: 0,
-      paperWorkTotalNumber: 0,
-      activeTap: 1,
-      detail: {}
-    }
-  },
-  computed: {
-    ...mapGetters(['currentChild'])
+      ]
+    },
   },
   methods: {
     selectRecord(tab) {

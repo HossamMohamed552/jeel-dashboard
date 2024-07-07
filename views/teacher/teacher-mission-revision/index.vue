@@ -19,7 +19,7 @@
     </validation-observer>
     <ListItems
       class="m-0 p-0"
-      :header-name="'قائمة الطلاب'"
+      :header-name="$t('schoolAdmin.listOfStudents')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="students"
@@ -55,7 +55,71 @@ export default {
       studentsSearchWord: "",
       students: [],
       totalNumber: 0,
-      fieldsList: [
+      studentSearch: [
+        {
+          key: "name",
+          col: "4",
+          type: "text",
+          label: "اسم الطالب",
+          labelEn: "student Name",
+          value: "",
+        },
+        {
+          key: "study_year_id",
+          col: "4",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: "العام الدراسي",
+          labelEn: "study year name",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+        },
+        {
+          key: "level_id",
+          col: "4",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: "الصف الدراسي",
+          labelEn: "level name",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+        },
+        {
+          key: "term_id",
+          col: "4",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: "الترم الدراسي",
+          labelEn: "terms",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+        },
+        {
+          key: "class_id",
+          col: "4",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: "اسم الفصل",
+          labelEn: "class name",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+        },
+      ],
+      itemId: 0,
+    };
+  },
+  computed: {
+    ...mapGetters(['user']),
+    fieldsList(){
+      return  [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -84,65 +148,8 @@ export default {
           key: "showMissions",
           label: this.$i18n.t("TABLE_FIELDS.showMissions"),
         },
-      ],
-      studentSearch: [
-        {
-          key: "name",
-          col: "4",
-          type: "text",
-          label: this.$t("TABLE_FIELDS.studentName"),
-          value: "",
-        },
-        {
-          key: "study_year_id",
-          col: "4",
-          type: "select",
-          optionValue: "name",
-          listen: "id",
-          label: this.$t("TABLE_FIELDS.studyYear"),
-          options: [],
-          deselectFromDropdown: true,
-          value: "",
-        },
-        {
-          key: "level_id",
-          col: "4",
-          type: "select",
-          optionValue: "name",
-          listen: "id",
-          label: this.$t("TABLE_FIELDS.levelSchoolAdmin"),
-          options: [],
-          deselectFromDropdown: true,
-          value: "",
-        },
-        {
-          key: "term_id",
-          col: "4",
-          type: "select",
-          optionValue: "name",
-          listen: "id",
-          label: this.$t("MISSIONS.terms"),
-          options: [],
-          deselectFromDropdown: true,
-          value: "",
-        },
-        {
-          key: "class_id",
-          col: "4",
-          type: "select",
-          optionValue: "name",
-          listen: "id",
-          label: this.$t("TABLE_FIELDS.className"),
-          options: [],
-          deselectFromDropdown: true,
-          value: "",
-        },
-      ],
-      itemId: 0,
-    };
-  },
-  computed: {
-    ...mapGetters(['user'])
+      ]
+    },
   },
   methods: {
     getAllStudents(values){

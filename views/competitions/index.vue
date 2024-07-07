@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'قائمة المسابقات'"
+      :header-name="$t('supervisor.ListOfCompetitions')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="competition"
@@ -24,14 +24,14 @@
             user.permissions.includes('add-teacher-competitions')
           "
         >
-          <img src="@/assets/images/icons/plus.svg" />
-          <span>إضافة مسابقة</span>
+          <img src="@/assets/images/icons/plus.svg"/>
+          <span>{{ $t('supervisor.addCompetitions') }}</span>
         </Button>
       </template>
     </ListItems>
     <Modal
-      :content-message="'حذف المسابقة'"
-      :content-message-question="'هل أنت متأكد من حذف المسابقة ؟'"
+      :content-message="$t('supervisor.deleteCompetitions')"
+      :content-message-question="$t('supervisor.confirmDelete')"
       :showModal="showModal"
       @cancel="cancel($event)"
       :is-warning="true"
@@ -44,11 +44,11 @@
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { mapGetters } from "vuex";
-import { deleteCompetitionRequest, getCompetitionRequest } from "@/api/competition";
+import {mapGetters} from "vuex";
+import {deleteCompetitionRequest, getCompetitionRequest} from "@/api/competition";
 
 export default {
-  components: { Modal, ListItems, Button },
+  components: {Modal, ListItems, Button},
   data() {
     return {
       loading: false,
@@ -56,24 +56,26 @@ export default {
       competitionSearchWord: "",
       competition: [],
       totalNumber: 0,
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        { key: "name", label: this.$i18n.t("COMPETITIONS.NAME") },
-        { key: "level.name", label: this.$i18n.t("COMPETITIONS.LEVEL") },
-        { key: "competition_duration", label: this.$i18n.t("COMPETITIONS.DURATION") },
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
-      ],
       itemId: 0,
     };
   },
   computed: {
     ...mapGetters(["user"]),
+    fieldsList() {
+      return [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {key: "name", label: this.$i18n.t("COMPETITIONS.NAME")},
+        {key: "level.name", label: this.$i18n.t("COMPETITIONS.LEVEL")},
+        {key: "competition_duration", label: this.$i18n.t("COMPETITIONS.DURATION")},
+        {
+          key: "actions",
+          label: this.$i18n.t("TABLE_FIELDS.actions"),
+        },
+      ]
+    }
   },
   methods: {
     goToAddCompetition() {

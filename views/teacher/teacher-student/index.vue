@@ -19,7 +19,7 @@
     </validation-observer>
     <ListItems
       class="m-0 p-0"
-      :header-name="'قائمة الطلاب'"
+      :header-name="$t('teacher.listOfStudents')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="students"
@@ -41,7 +41,12 @@ import ListItems from "@/components/ListItems/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {mapGetters} from "vuex";
 import GenericForm from "@/components/Shared/GenericForm/index.vue";
-import {getClassesForTeacher, getLevelsForTeacher, getSTermsForTeacher, getStudyYearsForTeacher} from "@/services/dropdownService";
+import {
+  getClassesForTeacher,
+  getLevelsForTeacher,
+  getSTermsForTeacher,
+  getStudyYearsForTeacher
+} from "@/services/dropdownService";
 import {getAllStudentsForTeacherRequest} from "@/api/teacher-module";
 
 export default {
@@ -53,7 +58,71 @@ export default {
       studentsSearchWord: "",
       students: [],
       totalNumber: 0,
-      fieldsList: [
+      studentSearch: [
+        {
+          key: "name",
+          col: "4",
+          type: "text",
+          label: "اسم الطالب",
+          labelEn: "studentName",
+          value: "",
+        },
+        {
+          key: "study_year_id",
+          col: "4",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: "العام الدراسي",
+          labelEn: "study year",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+        },
+        {
+          key: "level_id",
+          col: "4",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: "السف الدراسي",
+          labelEn: "level",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+        },
+        {
+          key: "term_id",
+          col: "4",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: "الترم الدراسي",
+          labelEn: "terms",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+        },
+        {
+          key: "class_id",
+          col: "4",
+          type: "select",
+          optionValue: "name",
+          listen: "id",
+          label: "اسم الفصل",
+          labelEn: "class Name",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+        },
+      ],
+      itemId: 0,
+    };
+  },
+  computed: {
+    ...mapGetters(['user']),
+    fieldsList() {
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -86,69 +155,12 @@ export default {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
-      ],
-      studentSearch: [
-        {
-          key: "name",
-          col: "4",
-          type: "text",
-          label: this.$t("TABLE_FIELDS.studentName"),
-          value: "",
-        },
-        {
-          key: "study_year_id",
-          col: "4",
-          type: "select",
-          optionValue: "name",
-          listen: "id",
-          label: this.$t("TABLE_FIELDS.studyYear"),
-          options: [],
-          deselectFromDropdown: true,
-          value: "",
-        },
-        {
-          key: "level_id",
-          col: "4",
-          type: "select",
-          optionValue: "name",
-          listen: "id",
-          label: this.$t("TABLE_FIELDS.levelSchoolAdmin"),
-          options: [],
-          deselectFromDropdown: true,
-          value: "",
-        },
-        {
-          key: "term_id",
-          col: "4",
-          type: "select",
-          optionValue: "name",
-          listen: "id",
-          label: this.$t("MISSIONS.terms"),
-          options: [],
-          deselectFromDropdown: true,
-          value: "",
-        },
-        {
-          key: "class_id",
-          col: "4",
-          type: "select",
-          optionValue: "name",
-          listen: "id",
-          label: this.$t("TABLE_FIELDS.className"),
-          options: [],
-          deselectFromDropdown: true,
-          value: "",
-        },
-      ],
-      itemId: 0,
-    };
-  },
-  computed: {
-    ...mapGetters(['user'])
+      ]
+    },
   },
   methods: {
-    getAllStudents(values){
-      this.ApiService(getAllStudentsForTeacherRequest(values)).then((response)=>{
+    getAllStudents(values) {
+      this.ApiService(getAllStudentsForTeacherRequest(values)).then((response) => {
         this.students = response.data.data
         this.totalNumber = response.data.meta.total
       })
@@ -156,7 +168,7 @@ export default {
     onSubmit(values) {
       this.getAllStudents(values)
     },
-    handleCancel(){
+    handleCancel() {
       this.getAllStudents()
     },
     detailItem($event) {

@@ -20,7 +20,7 @@
       </validation-observer>
       <div class="header m-0">
         <div class="list-of-item">
-          <p class="name-of-item">قائمة المهام الدراسية</p>
+          <p class="name-of-item">{{$t('supervisor.ListOfMissions')}}</p>
           <!--          <span class="no-of-item">{{ missions.length }}</span>-->
         </div>
       </div>
@@ -40,7 +40,7 @@
         <b-col lg="8" class="d-flex justify-content-start align-items-end" v-if="minMissions">
           <div class="info">
             <span><img src="@/assets/images/icons/info.png"></span>
-            <span>يجب أن لا يقل عدد المهام عن {{ minMissions }} مهام</span>
+            <span>{{ $t('superMission.numberOfMission') }} {{ minMissions }} {{$t('superMission.missions')}} </span>
           </div>
         </b-col>
       </b-row>
@@ -48,10 +48,10 @@
         <b-row>
           <b-col lg="1"></b-col>
           <b-col lg="1">#</b-col>
-          <b-col lg="2">اسم المهمة</b-col>
-          <b-col lg="2">بداية المهمة</b-col>
-          <b-col lg="2">نهاية المهمة</b-col>
-          <b-col lg="2" class="d-flex justify-content-center align-items-center">الحالة</b-col>
+          <b-col lg="2">{{ $t('superMission.missionName') }}</b-col>
+          <b-col lg="2">{{$t('superMission.startDate')}}</b-col>
+          <b-col lg="2">{{ $t('superMission.endDate') }}</b-col>
+          <b-col lg="2" class="d-flex justify-content-center align-items-center">{{ $t('superMission.status') }}</b-col>
           <b-col lg="2"></b-col>
         </b-row>
       </div>
@@ -117,10 +117,10 @@
                 <b-col lg="2" class="d-flex justify-content-start align-items-center"><span
                   class="mission-name">{{ item.name }}</span></b-col>
                 <b-col lg="2" class="d-flex justify-content-start align-items-center">
-                  <span class="mission-name">عدد النقاط : {{ item.jeel_xp }} </span>
+                  <span class="mission-name">{{$t('superMission.NumberOfPoints')}} : {{ item.jeel_xp }} </span>
                 </b-col>
                 <b-col lg="2" class="d-flex justify-content-start align-items-center">
-                  <span class="mission-name">عدد الجيمز : {{ item.jeel_coins }} </span>
+                  <span class="mission-name">{{$t('superMission.NumberOfGames')}} : {{ item.jeel_coins }} </span>
                 </b-col>
                 <b-col lg="2" class="d-flex justify-content-start align-items-center"></b-col>
                 <b-col lg="2" class="d-flex justify-content-center align-items-center">
@@ -188,7 +188,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.studyYear"),
+          label: 'العام الدراسي',
+          labelEn: "study year name",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -200,7 +201,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("TABLE_FIELDS.levelSchoolAdmin"),
+          label: "الصف الدراسي",
+          labelEn: "level",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -212,7 +214,8 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: this.$t("MISSIONS.terms"),
+          label: "الترم الدراسي",
+          labelEn: "term",
           options: [],
           deselectFromDropdown: true,
           value: "",
@@ -371,7 +374,7 @@ export default {
         term_id: this.term_id,
         missions: missionSavedWithPower
       }, {
-        headers: {Authorization: `Bearer ${VueCookies.get("token")}`, locale: 'ar',}
+        headers: {Authorization: `Bearer ${VueCookies.get("token")}`, locale: 'ar'}
       }).then(() => {
         this.showModal = true
         setTimeout(() => {

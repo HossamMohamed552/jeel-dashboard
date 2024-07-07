@@ -4,7 +4,7 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">تفاصيل الصف الدراسي</h2>
+            <h2 class="heading">{{ $t('LEVEL.showDetails') }}</h2>
           </b-col>
         </b-row>
         <b-row class="divider">

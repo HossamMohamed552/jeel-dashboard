@@ -135,7 +135,7 @@
     "middle_name": "middle name",
     "last_name": "last name",
     "studyYear": "study Year",
-    "levelSchoolAdmin": "level School Admin",
+    "levelSchoolAdmin": "level name",
     "levelTeacher": "level Teacher",
     "className": "class Name",
     "studyYearName": "study Year Name",
@@ -218,7 +218,11 @@
     "sizeOfFile": "File size",
     "removeFile": "remove File",
     "download_file": "download file",
-    "edit_successfully": "edit successfully"
+    "edit_successfully": "edit successfully",
+    "editContent": "Edit content",
+    "showMissions": "View missions",
+    "contentOfMission": "mission content",
+    "blocked": "blocked"
   },
   "ROLES": {
     "job_roles": "job roles",
@@ -918,13 +922,13 @@
     "RESEND_SUCCESS": "Verification code has been sent successfully, Please check your email"
   },
   "ads": {
-    "ADD": "Add an Message",
+    "ADD": "Add an Announcement",
     "superLevel": "level",
     "superTeachersTo": "directed to",
     "subject": "subject",
-    "superDescription": "Message content",
-    "DETAILS": "Message details",
-    "EDIT": "Edit Message"
+    "superDescription": "Announcement content",
+    "DETAILS": "Announcement details",
+    "EDIT": "Edit Announcement"
   },
   "teacher": {
     "data": "Teacher data",
@@ -942,7 +946,15 @@
     "student_degree": "student degree",
     "student_degree_placeholder": "Enter the degree here",
     "note": "note",
-    "note_placeholder": "Write a comment here"
+    "note_placeholder": "Write a comment here",
+    "levels":"List of levels",
+    "addGroup":"add Group",
+    "listOfClassStudents": "list Of Class Students",
+    "classGroups": "class Groups",
+    "deleteGroup": "Delete the study group",
+    "deleteConfirm": "Are you sure you want to delete the study group?",
+    "enterStudentName": "enter Student Name",
+    "listOfStudents": "list Of Students"
   },
   "classGroup": {
     "ADD": "Add a new group",
@@ -963,7 +975,11 @@
     "range": "Duration",
     "status": "status",
     "description": "description ",
-    "learningPath": "learning Path"
+    "learningPath": "learning Path",
+    "numberOfMission": "The number of missions must be no less than",
+    "missions": "missions",
+    "NumberOfPoints": "Number Of Points",
+    "NumberOfGames": "Number Of Games"
   },
   "COMPETITIONS": {
     "STEP_ONE": "basic information",
@@ -1176,7 +1192,28 @@
   },
   "PARENT": {
     "myChildren": "my Children",
-    "child_student": "student"
+    "child_student": "student",
+    "LogInDaily": "Log in daily",
+    "TaskLog": "mission log",
+    "comments": "Record comments",
+    "tasks": "tasks",
+    "paperWork": "paper Work",
+    "Audio_details": "Audio recording details",
+    "paperWork_details": "paper Work details",
+    "missionName": "mission Name",
+    "learningPath": "learning path",
+    "taskName": "task Name",
+    "paperWorkName": "paperWork Name",
+    "fileType": "file Type",
+    "voice": "voice",
+    "image": "image",
+    "finalDegree": "final Degree",
+    "degree": "degree",
+    "note": "note",
+    "achievements": "Record of achievements",
+    "competitions":"Record competitions",
+    "seasons":"Record seasons",
+    "leaderboard": "Record the leaderboard"
   },
   "leaderboard": {
     "name": "student name",
@@ -1489,5 +1526,39 @@
   "uploadFile": "upload excel file File here",
   "uploadExcel": "Upload excel file",
   "user_add_successfully": "The number {userSuccessNumber} was entered correctly",
-  "user_failed": "the number {userFailedNumber} was not entered correctly"
+  "user_failed": "the number {userFailedNumber} was not entered correctly",
+  "supervisor": {
+    "ListOfClassStudents":"List Of Class Students",
+    "ListOfMissions":"List Of Missions",
+    "day": "day",
+    "video": "video",
+    "quizzes": "quizzes",
+    "paperWork": "paper Works",
+    "ListOfTeachers": "List Of Teachers",
+    "AcademicData": "Academic Data",
+    "DailyEntry": "Daily Entry",
+    "missions": "missions",
+    "Achievements": "Achievements",
+    "Competitions": "Competitions",
+    "Seasons": "Seasons",
+    "SelectTheTimePeriod": "Select The Time Period",
+    "ListOfCompetitions": "List Of Competitions",
+    "addCompetitions": "add Competition",
+    "deleteCompetitions": "delete Competition",
+    "confirmDelete": "Are you sure to delete the competition?",
+    "levels": "levels",
+    "objective": "objective",
+    "outcome": "outcome",
+    "start": "start date",
+    "end": "end date",
+    "durationTime": "Duration (in hours)",
+    "listOfNotification": "list Of Notifications",
+    "listOfPrizes": "list Of Prizes",
+    "listOfQuestions": "list Of Questions",
+    "noQuestions": "There are no questions to display",
+    "listOfAnnouncements": "list Of Announcements",
+    "addAnnouncement": "add Announcement",
+    "deleteAnnouncement": "delete Announcement",
+    "confirmDeleteAnnouncement": "Are you sure you want to delete the Announcement?"
+  }
 }

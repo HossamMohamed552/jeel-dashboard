@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid custom-container">
     <ListItems
-      :header-name="'سجل الانجازات'"
+      :header-name="$t('PARENT.achievements')"
       :fieldsList="fieldsList"
       :number-of-item="totalNumber"
       :table-items="achievements"
@@ -22,7 +22,15 @@ export default {
   components: {ListItems, Button},
   data() {
     return {
-      fieldsList: [
+      achievements: [],
+      achievementSearchWord: "",
+      loading: false,
+      totalNumber: 0
+    }
+  },
+  computed:{
+    fieldsList(){
+      return [
         {
           key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
@@ -39,12 +47,8 @@ export default {
           key: "achievement3",
           label: this.$i18n.t("TABLE_FIELDS.achievement3"),
         },
-      ],
-      achievements: [],
-      achievementSearchWord: "",
-      loading: false,
-      totalNumber: 0
-    }
+      ]
+    },
   },
   methods: {
     getAchievements(event) {

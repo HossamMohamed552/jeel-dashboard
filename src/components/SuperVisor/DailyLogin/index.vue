@@ -1,12 +1,12 @@
 <template>
   <b-row>
     <b-col lg="4">
-      <label class="selectDate">حدد الفترة الزمنية</label>
+      <label class="selectDate">{{ $t('supervisor.SelectTheTimePeriod') }}</label>
       <date-picker
         v-model="dateRange"
         type="date"
         range
-        placeholder="حدد الفتره الزمنية"
+        :placeholder="$t('supervisor.SelectTheTimePeriod')"
         valueType="format"
         :disabled-date="disabledBeforeTodayAndAfterAWeek"
         @change="setDate($event)"
@@ -45,20 +45,6 @@ export default {
       loading: false,
       dailyLoginData: [],
       totalNumber: 0,
-      fieldsList: [
-        {
-          key: "vid",
-          label: this.$i18n.t("TABLE_FIELDS.id"),
-        },
-        {
-          key: "date",
-          label: this.$i18n.t("TABLE_FIELDS.date"),
-        },
-        {
-          key: "time",
-          label: this.$i18n.t("TABLE_FIELDS.time"),
-        },
-      ],
     }
   },
   methods: {
@@ -84,6 +70,24 @@ export default {
       this.startDate = $event[0]
       this.endDate = $event[1]
       this.getDailyLoginForStudent()
+    }
+  },
+  computed:{
+    fieldsList(){
+      return [
+        {
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
+        },
+        {
+          key: "date",
+          label: this.$i18n.t("TABLE_FIELDS.date"),
+        },
+        {
+          key: "time",
+          label: this.$i18n.t("TABLE_FIELDS.time"),
+        },
+      ]
     }
   },
   mounted() {

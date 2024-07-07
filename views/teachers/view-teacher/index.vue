@@ -11,7 +11,9 @@
           <b-col lg="2">
             <b-row>
               <b-col lg="12" class="img-container">
-                <img class="w-100" :src="teacherObject.avatar ? teacherObject.avatar :'@/assets/images/icons/user-avatar.png'" @error="altImage($event)"/>
+                <img class="w-100"
+                     :src="teacherObject.avatar ? teacherObject.avatar :'@/assets/images/icons/user-avatar.png'"
+                     @error="altImage($event)"/>
               </b-col>
             </b-row>
           </b-col>
@@ -65,7 +67,7 @@
           </b-col>
           <b-col lg="12">
             <div v-if="teacherObject.classes_history">
-              <h2 class="class-header">الفصول</h2>
+              <h2 class="class-header">{{ $t("REPORTS.classes") }}</h2>
               <ListItems
                 class="m-0 p-0"
                 :showSortControls=false
@@ -134,13 +136,6 @@ export default {
       enrollmentDate: null,
       totalNumber: 0,
       loading: false,
-      fieldsList: [
-        {key: "vid", label: this.$i18n.t("TABLE_FIELDS.id"),},
-        {key: "studyYear.name", label: this.$i18n.t('TABLE_FIELDS.studyYearName')},
-        {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.levelSchoolAdmin')},
-        {key: "class.name", label: this.$i18n.t('TABLE_FIELDS.className')},
-        {key: "students_count", label: this.$i18n.t('TABLE_FIELDS.students_count')},
-      ],
     };
   },
   methods: {
@@ -157,6 +152,15 @@ export default {
   computed: {
     user() {
       return this.$store.getters.user;
+    },
+    fieldsList() {
+      return [
+        {key: "vid", label: this.$i18n.t("TABLE_FIELDS.id"),},
+        {key: "studyYear.name", label: this.$i18n.t('TABLE_FIELDS.studyYearName')},
+        {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.levelSchoolAdmin')},
+        {key: "class.name", label: this.$i18n.t('TABLE_FIELDS.className')},
+        {key: "students_count", label: this.$i18n.t('TABLE_FIELDS.students_count')},
+      ]
     },
   },
   mounted() {
