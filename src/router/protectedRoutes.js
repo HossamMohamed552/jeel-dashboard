@@ -6,7 +6,7 @@ import jeelStoreGames from "./modules/jeelStoreGames";
 import jeelStoreLibrary from "./modules/jeelStoreLibrary";
 import jeelStoreCharacters from "./modules/jeelStoreCharacters";
 import schoolAdmin from "@/router/modules/schoolAdmin";
-import supervisor from "@/router/modules/supervisor"
+import supervisor from "@/router/modules/supervisor";
 import seasonalMissions from "@/router/modules/seasonalMissions";
 import systemAudios from "@/router/modules/systemAudios";
 import academicYear from "@/router/modules/academicYear";
@@ -16,6 +16,8 @@ import reports from "@/router/modules/reports";
 import jeelAdmin from "@/router/modules/jeelAdmin";
 import schoolAdminReports from "@/router/modules/schoolAdminReports";
 import achievements from "@/router/modules/achievements";
+import teacherReports from "@/router/modules/teacherReports";
+import supervisiorReports from "@/router/modules/supervisiorReports";
 const protectedRoutes = [
   {
     path: "/dashboard/home",
@@ -734,7 +736,6 @@ const protectedRoutes = [
           preLabelEn: "",
           preLabel: "",
           preLink: "",
-
         },
       },
       {
@@ -1387,7 +1388,9 @@ const protectedRoutes = [
       ...reports,
       ...schoolAdminReports,
       ...jeelAdmin,
-      ...achievements
+      ...teacherReports,
+      ...supervisiorReports,
+      ...achievements,
     ],
   },
 ];
