@@ -10,8 +10,6 @@
             :steps="steps"
             :current-step="currentStep"
           />
-<!--          :objectives="objectives"-->
-<!--          :outcomes="outcomes"-->
           <AddEditQuestionPatternForm
             v-show="currentStep === 0"
             :loading="loading"
@@ -276,8 +274,6 @@ export default {
     this.getQuestionDifficulties();
     this.getBloomCategories();
     this.getLearningMethods();
-    // this.getObjectivesRequest();
-    // this.getOutcomesRequest();
   },
   methods: {
     getQuestionTypes() {
@@ -392,7 +388,6 @@ export default {
       formData.append("question_sub_type_slug", this.collectData.question_slug.slug);
       formData.append("learning_path_id", this.collectData.learning_path_id);
       formData.append("question_difficulty_id", this.collectData.question_difficulty_id);
-      // formData.append("language_method_id", this.collectData.language_method_id);
       formData.append("question_objective_id", this.collectData.question_objective_id);
       formData.append("question_outcome_id", this.collectData.question_outcome_id);
       formData.append("question_pattern", this.collectData.question_pattern);

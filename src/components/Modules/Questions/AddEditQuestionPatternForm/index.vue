@@ -13,6 +13,7 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
+              :disabled="$route.name.includes('edit')"
               @input="getSubQuestionTypes(formValues.question_type_id)"
             ></SelectSearch>
           </div>
@@ -28,14 +29,17 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
-              :disabled="!formValues.question_type_id"
+              :disabled="!formValues.question_type_id || $route.name.includes('edit')"
               @input="setQuestionSlug($event)"
             ></SelectSearch>
           </div>
         </b-col>
         <b-col lg="12">
-          <img v-if="formValues.question_slug === null" src="@/assets/images/bg/login.png" class="question_img cover mb-3" alt="question image">
-          <img :src="formValues.question_slug.question_type_image" v-if="formValues.question_slug && formValues.question_slug.question_type_image" class="question_img cover mb-3" alt="question image" @error="altImage">
+          <img v-if="formValues.question_slug === null" src="@/assets/images/bg/login.png"
+               class="question_img cover mb-3" alt="question image">
+          <img :src="formValues.question_slug.question_type_image"
+               v-if="formValues.question_slug && formValues.question_slug.question_type_image"
+               class="question_img cover mb-3" alt="question image" @error="altImage">
         </b-col>
       </b-row>
       <b-row>
@@ -49,13 +53,24 @@
           ></TextField>
         </b-col>
         <b-col lg="12" class="mb-3">
-          <UploadAttachment :type-of-attachment="'audio'"
+          <UploadAttachment v-if="!$route.params.id || formValues.head_question_audioChangedRequest"
+                            :type-of-attachment="'audio'"
                             :dropIdRef="'headerQuestionFile'"
                             :accept-files="'audio/*'" :label="$t('QUESTIONS.headerQuestionAudio')"
                             :name="'headerQuestionFile'"
                             :rules="'required'"
                             @setFileId="setQuestionAudioId('head_question_audio',$event)"
                             @setFileUrl="setQuestionAudioUrl('head_question_audioUser',$event)"/>
+          <PreviewMedia
+            v-if="$route.params.id && formValues.head_question_audioChanged === false && !formValues.head_question_audioChangedRequest"
+            :header="$t('QUESTIONS.headerQuestionAudio')"
+            :media-name="formValues.head_question_audio_name"
+            :file-size="formValues.head_question_audio_size"
+            :image-url="formValues.head_question_audioPreview"
+            :typeOfMedia="'audio'"
+            :showRemoveButton="true"
+            @removeFile="removeFile('head_question_audio','head_question_audioChanged','head_question_audioChangedRequest')"
+          />
         </b-col>
         <b-col lg="4" class="mb-3">
           <div class="hold-field">
@@ -68,6 +83,7 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
+              :disabled="$route.name.includes('edit')"
               @input="setLessonsBasedLearningPathId($event)"
             ></SelectSearch>
           </div>
@@ -83,8 +99,7 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
-              :disabled="!formValues.learning_path_id"
-
+              :disabled="!formValues.learning_path_id || $route.name.includes('edit')"
             ></SelectSearch>
           </div>
         </b-col>
@@ -98,6 +113,7 @@
               :options="bloomCategories"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
+              :disabled="$route.name.includes('edit')"
               :rules="'required'"
             ></SelectSearch>
           </div>
@@ -112,6 +128,7 @@
               :options="learningMethods"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
+              :disabled="$route.name.includes('edit')"
               :rules="'required'"
               multiple="multiple"
             ></SelectSearch>
@@ -128,6 +145,7 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
+              :disabled="$route.name.includes('edit')"
               multiple="multiple"
             ></SelectSearch>
           </div>
@@ -143,7 +161,7 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
-              :disabled="!formValues.learning_path_id || !formValues.lesson_id"
+              :disabled="!formValues.learning_path_id || !formValues.lesson_id || $route.name.includes('edit')"
             ></SelectSearch>
           </div>
         </b-col>
@@ -158,7 +176,7 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
-              :disabled="!formValues.learning_path_id || !formValues.lesson_id"
+              :disabled="!formValues.learning_path_id || !formValues.lesson_id || $route.name.includes('edit')"
             ></SelectSearch>
           </div>
         </b-col>
@@ -172,6 +190,7 @@
               :options="questionDifficulties"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
+              :disabled="$route.name.includes('edit')"
               :rules="'required'"
             ></SelectSearch>
           </div>
@@ -183,10 +202,19 @@
             <Button @click="handleCancel" custom-class="cancel-btn margin mr-0">
               {{ $t("GLOBAL_CANCEL") }}
             </Button>
-            <Button
+            <Button v-if="!$route.params.id"
               type="submit"
               :loading="loading"
               :disabled="invalid"
+              :custom-class="'submit-btn'"
+            >
+              {{ $t("GLOBAL_NEXT") }}
+            </Button>
+            <Button
+              v-else
+              type="submit"
+              :loading="loading"
+              :disabled="invalid || checkHeadOfQuestion"
               :custom-class="'submit-btn'"
             >
               {{ $t("GLOBAL_NEXT") }}
@@ -202,16 +230,18 @@
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import {debounce} from "lodash";
-import getData from "@/mixins/getData/getData";
 import TextField from "@/components/Shared/TextField/index.vue";
 import UploadAttachment from "@/components/Shared/UploadAttachment/index.vue";
 import {getAllLessonsRequest, getLessonsRequest} from "@/api/lessons";
 import {getAllObjectivesRequest} from "@/api/objective";
 import {getAllOutcomesRequest} from "@/api/outcome";
+import ApiService from "@/api/ApiService";
+import {getSingleQuestionRequest} from "@/api/question";
+import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 
 export default {
-  mixins: [getData('question')],
   components: {
+    PreviewMedia,
     UploadAttachment,
     TextField,
     SelectSearch,
@@ -242,15 +272,7 @@ export default {
       type: Array,
       default: () => [],
     },
-    // objectives: {
-    //   type: Array,
-    //   default: () => [],
-    // },
-    // outcomes: {
-    //   type: Array,
-    //   default: () => [],
-    // },
-    questionDifficulties:{
+    questionDifficulties: {
       type: Array,
       default: () => [],
     },
@@ -261,9 +283,10 @@ export default {
   },
   data() {
     return {
-      lessons:[],
-      objectives:[],
-      outcomes:[],
+      lessons: [],
+      objectives: [],
+      outcomes: [],
+      question: null,
       formValues: {
         question_type_id: null,
         question_type_sub_id: null,
@@ -278,27 +301,19 @@ export default {
         question_objective_id: null,
         question_outcome_id: null,
         question_pattern: "text",
-        head_question:"",
-        head_question_audio:"",
-        header_question_audioUser:"",
+        head_question: "",
+        head_question_audio: "",
+        header_question_audioUser: "",
+        head_question_audioChanged: false,
+        head_question_audioChangedRequest: false,
+        head_question_audioPreview:"",
+        head_question_audio_name:"",
+        head_question_audio_size:"",
       },
     };
   },
   watch: {
-    question(question) {
-      this.formValues.question_type_id = question.question_type.id
-      this.formValues.question_type_sub_id = question.sub_question_type.id
-      this.formValues.learning_path_id = question.learningPath.id
-      this.formValues.language_skill_id = question.language_skill.id
-      this.formValues.question_difficulty_id = question.question_difficulty.id
-      this.formValues.bloom_category_id = question.bloom_category.id
-      this.formValues.language_method_id = question.learningPath.id
-      this.formValues.question_objective_id = question.question_objective_id.id
-      this.formValues.question_outcome_id = question.question_outcome_id.id
-      this.formValues.level_id = question.level.id
-      this.formValues.question_pattern = question.question_pattern
-    },
-    "formValues.lesson_id"(newVal){
+    "formValues.lesson_id"(newVal) {
       let params = {
         learning_path_id: this.formValues.learning_path_id,
         lesson_id: newVal
@@ -307,12 +322,17 @@ export default {
       this.getOutcomesRequest(params)
     }
   },
-  methods: {
-    setQuestionSlug($event) {
-      this.formValues.question_slug = this.questionSubTypes.filter((item) => item.id === $event)[0]
+  computed:{
+    checkHeadOfQuestion() {
+      return this.formValues.head_question_audio === null;
     },
+  },
+  methods: {
     setMainQuestionSlug($event) {
       this.formValues.main_question_slug = this.questionTypes.filter((item) => item.id === $event)[0]
+    },
+    setQuestionSlug($event) {
+      this.formValues.question_slug = this.questionSubTypes.filter((item) => item.id === $event)[0]
     },
     onSubmit() {
       this.$emit("onSubmit", this.formValues)
@@ -320,10 +340,15 @@ export default {
     handleCancel() {
       this.$emit("handleCancel");
     },
+    removeFile(fileName, fileChange, fileRequest) {
+      this.formValues[fileChange] = true
+      this.formValues[fileName] = null
+      this.formValues[fileRequest] = true
+    },
     getSubQuestionTypes: debounce(function (id) {
       this.setMainQuestionSlug(id)
       this.$emit("getSubQuestionTypes", id);
-    }, 100),
+    }, 300),
     altImage($event) {
       $event.target.src = require("@/assets/images/logo-white.png")
     },
@@ -333,13 +358,14 @@ export default {
     setQuestionAudioUrl(keyName, $event) {
       this.formValues[keyName] = $event
     },
-    setLessonsBasedLearningPathId($event){
+    setLessonsBasedLearningPathId($event) {
       this.ApiService(getAllLessonsRequest({learning_path_id: $event})).then((response) => {
         this.lessons = response.data.data
         this.formValues.lesson_id = null
+        if (this.$route.params.id) {
+          this.formValues.lesson_id = this.question.lesson.id
+        }
       })
-      // this.getObjectivesRequest($event)
-      // this.getOutcomesRequest($event)
     },
     getObjectivesRequest(params) {
       this.ApiService(getAllObjectivesRequest(params)).then((response) => {
@@ -351,10 +377,34 @@ export default {
         this.outcomes = response.data.data
       })
     },
-// {
-//   learning_path_id: this.formValues.learning_path_id,
-// }
+    getQuestionById() {
+      ApiService(getSingleQuestionRequest(this.$route.params.id)).then((response) => {
+        this.question = response.data.data
+        this.formValues.question_type_id = this.question.question_type.id
+        this.getSubQuestionTypes(this.formValues.question_type_id)
+        this.formValues.question_type_sub_id = this.question?.sub_question_type?.id
+        this.formValues.head_question = this.question.head_question
+        this.formValues.learning_path_id = this.question.learningPath.id
+        this.formValues.bloom_category_id = this.question.blooms.id
+        this.formValues.language_method_id = this.question.learning_styles.map(item => item.id)
+        this.formValues.language_skill_id = this.question.language_skills.map(item => item.id)
+        this.formValues.question_objective_id = this.question.question_objective.id
+        this.formValues.question_outcome_id = this.question.question_outcome.id
+        this.formValues.question_difficulty_id = this.question.question_difficulty.id
+        this.formValues.head_question_audio_name  = this.question.head_question_audio_name
+        this.formValues.head_question_audio_size  = this.question.head_question_audio_size
+        this.formValues.head_question_audioPreview  = this.question.head_question_audio
+        setTimeout(() => {
+          this.setQuestionSlug(this.formValues.question_type_sub_id)
+        }, 1500)
+      })
+    }
   },
+  mounted() {
+    if (this.$route.params.id) {
+      this.getQuestionById()
+    }
+  }
 };
 </script>
 <style scoped lang="scss">

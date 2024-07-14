@@ -503,7 +503,8 @@
     "confirm_delete": "Are you sure you want to delete a paperwork?"
   },
   "QUESTIONS": {
-    "ADD_NEW": "Add new qustion",
+    "ADD_NEW": "Add new question",
+    "edit": "Edit question",
     "questionsList": "questions list",
     "CHOOSE_Question_PATTERN": "Choose question pattern",
     "QUESTION_PATTERN": "Question pattern",
@@ -908,6 +909,9 @@
     "jeel_gems": "The number of diamonds that the student will receive upon completion of the achievement",
     "jeel_gems_PLACEHOLDER": "Enter the number of diamonds that the student will receive upon completion of the achievement",
     "name": "Achievement name",
+    "jeel_gemsTable": "Number of user achievements",
+    "claim_date": "claim date",
+    "user_achievements_count": "user achievements count",
     "delete_achievement": "Delete achievement",
     "confirm_delete_achievement": "Are you sure you want to delete the achievement?",
     "DETAILS": "achievement details"
@@ -1069,6 +1073,18 @@
     "FACEBOOK": "face book",
     "TWITTER": "twitter",
     "LINKEDIN": "linkedin"
+  },
+  "competitionsParent": {
+    "name": "Competition name",
+    "finish_solving": "Competition completion date",
+    "competition_type": "Type of competition",
+    "competition_percentage": "Student grade"
+  },
+  "seasonalMissionsParent": {
+    "name": "season name",
+    "start_date": "start date",
+    "end_date": "end date",
+    "seasonal_quiz_percentage": "Student grade"
   },
   "BUTTONS": {
     "EDIT": "edit",

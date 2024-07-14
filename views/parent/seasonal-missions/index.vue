@@ -15,6 +15,8 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
+import {mapGetters} from "vuex";
+import {getSeasonalMissionsForParentRequest} from "@/api/parent-module";
 
 
 export default {
@@ -29,6 +31,7 @@ export default {
     }
   },
   computed:{
+    ...mapGetters(['currentChild']),
     fieldsList(){
       return [
         {
@@ -36,24 +39,20 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
-          key: "seasonalMissions",
-          label: this.$i18n.t("TABLE_FIELDS.seasonal"),
+          key: "name",
+          label: this.$i18n.t("seasonalMissionsParent.name"),
         },
         {
-          key: "seasonalMissions2",
-          label: this.$i18n.t("seasonal2"),
+          key: "start_date",
+          label: this.$i18n.t("seasonalMissionsParent.start_date"),
         },
         {
-          key: "seasonalMissions3",
-          label: this.$i18n.t("seasonal3"),
+          key: "end_date",
+          label: this.$i18n.t("seasonalMissionsParent.end_date"),
         },
         {
-          key: "seasonalMissions4",
-          label: this.$i18n.t("seasonal4"),
-        },
-        {
-          key: "seasonalMissions5",
-          label: this.$i18n.t("seasonal5"),
+          key: "seasonal_quiz_percentage",
+          label: this.$i18n.t("seasonalMissionsParent.seasonal_quiz_percentage"),
         },
       ]
     },
@@ -61,16 +60,18 @@ export default {
   methods: {
     getSeasonal(event) {
       this.loading = true;
-      const params = event;
-      // this.ApiService(getBloomCategoriesRequest(params))
-      //   .then((response) => {
-      //     this.bloomCategories = response.data.data;
-      //     this.totalNumber = response.data.meta.total;
-      //   })
-      //   .finally(() => {
-      //     this.loading = false;
-      //   });
+      this.ApiService(getSeasonalMissionsForParentRequest(this.currentChild.id,event))
+        .then((response) => {
+          this.seasonalMissions = response.data.data;
+          this.totalNumber = response.data.meta.total;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
+  },
+  mounted() {
+    this.getSeasonal()
   }
 }
 </script>

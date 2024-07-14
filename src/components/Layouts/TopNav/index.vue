@@ -216,7 +216,8 @@
 <!--                </span>-->
                 <b-dropdown no-caret>
                   <template #button-content>
-                    {{$i18n.locale === 'ar' ? 'العربية' : 'English' }}
+                    <span>{{$i18n.locale === 'ar' ? 'العربية' : 'English' }}</span>
+                    <img src="@/assets/images/icons/arrow.svg" alt="arrow" class="mx-2"/>
                   </template>
                   <b-dropdown-item @click="setLang('en')">English</b-dropdown-item>
                   <b-dropdown-item @click="setLang('ar')">العربية</b-dropdown-item>
@@ -465,7 +466,7 @@
             <!--            <div class="nav-item" v-if="user.is_super_admin === 1">-->
             <!--              <router-link tag="p" to="/dashboard/home">{{ $t("MENU.infoDashBoard") }}</router-link>-->
             <!--            </div>-->
-            <div class="nav-item">
+            <div class="nav-item" v-if="user.roles[0]?.code !== 'parent'">
               <router-link tag="p" to="/dashboard/reports">{{ $t("MENU.reports") }}</router-link>
             </div>
           </div>

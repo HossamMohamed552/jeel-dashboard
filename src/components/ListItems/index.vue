@@ -158,6 +158,12 @@
         <template #cell(percentage_participatory_paperwork)="data">
           <span>{{ Math.floor(data.item.percentage_participatory_paperwork) }}%</span>
         </template>
+        <template #cell(competition_percentage)="data">
+          <span>{{ Math.floor(data.item.competition_percentage) }}%</span>
+        </template>
+        <template #cell(seasonal_quiz_percentage)="data">
+          <span>{{ Math.floor(data.item.seasonal_quiz_percentage) }}%</span>
+        </template>
         <template #cell(audio_ar)="data">
           <audio controls>
             <source :src="data.item.audio_ar" />

@@ -18,6 +18,21 @@ export const getPaperWorkForParentRequest = (childId,params) => ({
   url: `parent/student/${childId}/paperwork`,
   config: {params}
 })
+export const getAchievementsForParentRequest = (id,params) => ({
+  method: 'get',
+  url: `parent/student/${id}/achievements`,
+  config: {params}
+})
+export const getCompetitionsForParentRequest = (id,params) => ({
+  method: 'get',
+  url: `parent/student/${id}/competitions`,
+  config: {params}
+})
+export const getSeasonalMissionsForParentRequest = (id,params) => ({
+  method: 'get',
+  url: `parent/student/${id}/seasonal-missions`,
+  config: {params}
+})
 export const getSinglePaperWorkForParentRequest = (id,params) => ({
   method: 'get',
   url: `parent/paperwork/${id}/uploaded`,
@@ -28,3 +43,4 @@ export const getSingleTaskForParentRequest = (id,params) => ({
   url: `parent/task/${id}/uploaded`,
   config: {params}
 })
+

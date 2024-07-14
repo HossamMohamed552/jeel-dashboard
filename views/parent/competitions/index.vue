@@ -15,7 +15,8 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import competitions from "../../competitions/index.vue";
+import {getCompetitionsForParentRequest} from "@/api/parent-module";
+import {mapGetters} from "vuex";
 
 
 export default {
@@ -30,6 +31,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['currentChild']),
     fieldsList() {
       return [
         {
@@ -37,24 +39,20 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
-          key: "achievement",
-          label: this.$i18n.t("TABLE_FIELDS.achievement"),
+          key: "name",
+          label: this.$i18n.t("competitionsParent.name"),
         },
         {
-          key: "achievement2",
-          label: this.$i18n.t("achievement2"),
+          key: "finish_solving",
+          label: this.$i18n.t("competitionsParent.finish_solving"),
         },
         {
-          key: "achievement3",
-          label: this.$i18n.t("achievement3"),
+          key: "competition_type.name",
+          label: this.$i18n.t("competitionsParent.competition_type"),
         },
         {
-          key: "achievement4",
-          label: this.$i18n.t("achievement4"),
-        },
-        {
-          key: "achievement5",
-          label: this.$i18n.t("achievement5"),
+          key: "competition_percentage",
+          label: this.$i18n.t("competitionsParent.competition_percentage"),
         },
       ]
     }
@@ -62,16 +60,18 @@ export default {
   methods: {
     getCompetition(event) {
       this.loading = true;
-      const params = event;
-      // this.ApiService(getBloomCategoriesRequest(params))
-      //   .then((response) => {
-      //     this.bloomCategories = response.data.data;
-      //     this.totalNumber = response.data.meta.total;
-      //   })
-      //   .finally(() => {
-      //     this.loading = false;
-      //   });
+      this.ApiService(getCompetitionsForParentRequest(this.currentChild.id,event))
+        .then((response) => {
+          this.competitions = response.data.data;
+          this.totalNumber = response.data.meta.total;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
+  },
+  mounted() {
+    this.getCompetition()
   }
 }
 </script>

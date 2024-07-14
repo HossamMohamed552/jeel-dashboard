@@ -272,7 +272,7 @@ import _ from "lodash";
 
 import {TogglePasswordMixins} from "@/mixins/TogglePasswordMixins";
 // Dropdown
-import {getAllNationaltyRequest} from "@/api/country";
+import {getAllNationalitiesRequest} from "@/api/country";
 import {
   addEditSchoolUserRequest,
   postChangeStatusSchoolUserRequest,
@@ -389,7 +389,7 @@ export default {
 
     // All Dropdown
     getAllCountries() {
-      this.ApiService(getAllNationaltyRequest()).then((response) => {
+      this.ApiService(getAllNationalitiesRequest()).then((response) => {
         this.countries = response.data.data;
       });
     },

@@ -1,4 +1,5 @@
-import { extend } from "vee-validate";
+import {extend} from "vee-validate";
+import i18n from "@/plugins/i18n";
 import moment from "moment";
 import {
   required,
@@ -40,7 +41,7 @@ extend("max_value", {
 });
 
 extend("afterDate", {
-  validate(value, { compareValue }) {
+  validate(value, {compareValue}) {
     const enteredDate = moment(value, "DD-MM-YYYY");
     const comparisonDate = moment(compareValue, "DD-MM-YYYY");
     if (moment(enteredDate).isAfter(comparisonDate)) {
@@ -64,3 +65,9 @@ extend("audio", {
     return "التسجيل الصوتي يجب ان يكون صوت";
   },
 });
+extend('select-three-or-less', {
+  validate: (value) => {
+    return value.length <= 3
+  },
+  message: i18n.locale === 'ar' ? "يجب ان لا يكون عدد الاختيارات اكثر من 3" : "The number of choices must not be more than 3"
+})

@@ -94,7 +94,9 @@
                       @click="deleteAnswer(idx)">{{ $t('BUTTONS.DELETE') }}</span>
                 <div class="addAnswer" v-if="answersListMcQ.length - 1 === idx"
                      @click="addAnswerMcq">
-                  <img src="@/assets/images/icons/add_answer.png"> <span>{{ $t('QUESTIONS.add') }}</span>
+                  <img src="@/assets/images/icons/add_answer.png"> <span>{{
+                    $t('QUESTIONS.add')
+                  }}</span>
                 </div>
               </div>
             </b-col>
@@ -233,7 +235,9 @@
             <b-col lg="12">
               <span class="addAnswer" v-if="answersListMcQImage.length - 1 === idx"
                     @click="addAnswerMcqImage"><img
-                src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
+                src="@/assets/images/icons/add_answer.png"> <span>{{
+                  $t('QUESTIONS.add')
+                }}</span></span>
             </b-col>
           </b-row>
           <b-row v-if="answersListMcQImage.length > 8">
@@ -357,7 +361,7 @@
               <div class="hold-field">
                 <span class="addAnswer" v-if="answersListMcQImage.length - 1 === idx"
                       @click="addAnswerMcqImage"><img
-                  src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
+                  src="@/assets/images/icons/add_answer.png"> <span>{{ $t('QUESTIONS.add') }}</span></span>
               </div>
             </b-col>
           </b-row>
@@ -480,7 +484,10 @@
             </b-col>
             <b-col lg="12" class="btn-holder">
               <span class="addAnswer" v-if="answersListMcQ.length - 1 === idx"
-                    @click="addAnswerMcq"><img src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
+                    @click="addAnswerMcq"><img
+                src="@/assets/images/icons/add_answer.png"> <span>{{
+                  $t('QUESTIONS.add')
+                }}</span></span>
             </b-col>
           </b-row>
           <b-row v-if="answersListMcQ.length > 8">
@@ -614,7 +621,9 @@
             </b-col>
             <b-col lg="12" class="btn-holder">
               <span class="addAnswer" v-if="answersListSelect.length - 1 === idx"
-                    @click="addAnswerSelect"><img src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
+                    @click="addAnswerSelect"><img src="@/assets/images/icons/add_answer.png"> <span>{{
+                  $t('QUESTIONS.add')
+                }}</span></span>
             </b-col>
           </b-row>
           <b-row v-if="answersListSelect.length > 8">
@@ -744,7 +753,9 @@
             <b-col lg="12" class="btn-holder">
               <span class="addAnswer" v-if="answersListSelectImage.length - 1 === idx"
                     @click="addAnswerSelectImage"><img
-                src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
+                src="@/assets/images/icons/add_answer.png"> <span>{{
+                  $t('QUESTIONS.add')
+                }}</span></span>
             </b-col>
           </b-row>
           <b-row v-if="answersListSelectImage.length > 8">
@@ -864,7 +875,9 @@
             <b-col lg="12">
               <span class="addAnswer" v-if="answersListSelectAudio.length - 1 === idx"
                     @click="addAnswerSelectAudio"><img
-                src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
+                src="@/assets/images/icons/add_answer.png"> <span>{{
+                  $t('QUESTIONS.add')
+                }}</span></span>
             </b-col>
           </b-row>
           <b-row v-if="answersListSelectAudio.length > 8">
@@ -986,34 +999,58 @@
           <b-row>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'image'"
-                                  :dropIdRef="'questionImage'"
-                                  :accept-files="'image/*'" :label="$t('QUESTIONS.UPLOAD_IMAGE')"
-                                  :name="'questionImage'"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('question',$event)"
-                                  @setFileUrl="setQuestionAudioUrl('questionUser',$event)"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || formValues.questionChangedRequest"
+                  :type-of-attachment="'image'"
+                  :dropIdRef="'questionImage'"
+                  :accept-files="'image/*'" :label="$t('QUESTIONS.UPLOAD_IMAGE')"
+                  :name="'questionImage'"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('question',$event)"
+                  @setFileUrl="setQuestionAudioUrl('questionUser',$event)"/>
+                <PreviewMedia
+                  v-if="$route.params.id && formValues.questionChanged === false && !formValues.questionChangedRequest"
+                  :header="$t('QUESTIONS.UPLOAD_IMAGE')"
+                  :media-name="formValues.question_name"
+                  :file-size="formValues.question_size"
+                  :image-url="formValues.question_preview"
+                  :typeOfMedia="'image'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFile('question','questionChanged','questionChangedRequest')"
+                />
               </div>
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="'questionAudio'"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
-                                  :name="'questionAudio'"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('question_audio',$event)"
-                                  @setFileUrl="setQuestionAudioUrl('questionAudioUser',$event)"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || formValues.question_audioChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="'questionAudio'"
+                  :accept-files="'audio/*'"
+                  :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                  :name="'questionAudio'"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('question_audio',$event)"
+                  @setFileUrl="setQuestionAudioUrl('questionAudioUser',$event)"/>
+                <PreviewMedia
+                  v-if="$route.params.id && formValues.question_audioChanged === false && !formValues.question_audioChangedRequest"
+                  :header="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                  :media-name="formValues.question_audio_name"
+                  :file-size="formValues.question_audio_size"
+                  :image-url="formValues.question_audio_preview"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFile('question_audio','question_audioChanged','question_audioChangedRequest')"
+                />
               </div>
             </b-col>
           </b-row>
-          <b-col lg="12" class="mb-3">
+          <b-col lg="12" class="mb-3" :class="$route.name.includes('edit')? 'd-none':''">
             <div class="hold-field">
               <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
             </div>
           </b-col>
-          <b-row v-for="(answer, idx) in answersListTrueFalse" :key="idx">
+          <b-row v-for="(answer, idx) in answersListTrueFalse" :key="idx" :class="$route.name.includes('edit')? 'd-none':''">
             <b-col lg="6" class="mb-3">
               <div class="hold-field">
                 <TextField
@@ -1044,12 +1081,20 @@
           <b-row>
             <div class="action-holder">
               <div>
-                <Button
-                  type="submit"
-                  :loading="loading"
-                  :disabled="invalid || checkOneAnswerTureFalse"
-                  :custom-class="'submit-btn'"
+                <Button v-if="!$route.params.id"
+                        type="submit"
+                        :loading="loading"
+                        :disabled="invalid || checkOneAnswerTureFalse"
+                        :custom-class="'submit-btn'"
                 >{{ $t("GLOBAL_NEXT") }}
+                </Button>
+                <Button v-if="$route.params.id"
+                        type="submit"
+                        :loading="loading"
+                        :disabled="(invalid || checkQuestionMediaInputs)"
+                        :custom-class="'submit-btn'"
+                >{{ $t("GLOBAL_NEXT") }}
+<!--                  || checkOneAnswerTureFalse-->
                 </Button>
                 <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
                   {{ $t("GLOBAL_BACK") }}
@@ -1143,8 +1188,8 @@
           <b-row>
             <b-col lg="9" class="mb-3">
               <div class="hold-field">
-<!--                @paste.prevent-->
-<!--                @drop.prevent-->
+                <!--                @paste.prevent-->
+                <!--                @drop.prevent-->
                 <TextField
                   v-model="formValues.question"
                   :label="$t('QUESTIONS.QUESTION')"
@@ -1171,7 +1216,7 @@
                   {{ $t('QUESTIONS.addWhiteSpace') }}
                 </Button>
                 <Button :custom-class="'rounded-btn transparent-btn'" @click="removeSpace">
-                  {{$t('QUESTIONS.resetWhiteSpace')}}
+                  {{ $t('QUESTIONS.resetWhiteSpace') }}
                 </Button>
               </div>
             </b-col>
@@ -1261,7 +1306,9 @@
             <b-col lg="12" class="btn-holder">
               <span class="addAnswer" v-if="answersListDragOne.length - 1 === idx"
                     @click="addAnswerDragOne"><img
-                src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
+                src="@/assets/images/icons/add_answer.png"> <span>{{
+                  $t('QUESTIONS.add')
+                }}</span></span>
             </b-col>
           </b-row>
           <b-row v-if="answersListDragOne.length > 8">
@@ -1310,10 +1357,10 @@
                   :rules="'required|max:100'"
                 ></TextField>
                 <div v-if="validSpace" class="text-danger">
-                  {{$t('QUESTIONS.addSpace')}}
+                  {{ $t('QUESTIONS.addSpace') }}
                 </div>
                 <div v-if="!lockBtn && formValues.question" class="text-danger">
-                  {{$t('QUESTIONS.addSpace')}}
+                  {{ $t('QUESTIONS.addSpace') }}
                 </div>
                 <div class="preview-question-heading">{{ $t('QUESTIONS.viewQuestion') }}</div>
                 <div
@@ -1430,7 +1477,9 @@
             <b-col lg="12" class="btn-holder">
               <span class="addAnswer" v-if="answersListDragOne.length - 1 === idx"
                     @click="addAnswerDragOne"><img
-                src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
+                src="@/assets/images/icons/add_answer.png"> <span>{{
+                  $t('QUESTIONS.add')
+                }}</span></span>
             </b-col>
           </b-row>
           <b-row v-if="answersListDragOne.length > 8">
@@ -1555,7 +1604,9 @@
               <b-col lg="12" class="btn-holder">
               <span class="addAnswer" v-if="answersListDragSort.length - 1 === idx"
                     @click="addAnswerDragSort"><img
-                src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
+                src="@/assets/images/icons/add_answer.png"> <span>{{
+                  $t('QUESTIONS.add')
+                }}</span></span>
               </b-col>
             </slot>
             <b-col lg="12" class="mb-3">
@@ -1675,12 +1726,14 @@
               </b-col>
               <b-col lg="2" class="mb-3 d-flex justify-content-center align-items-center">
                 <span class="add-deleteBtn delete-answer" v-if="answersListDragSortAudio.length > 1"
-                      @click="answersListDragSortAudio.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
+                      @click="answersListDragSortAudio.splice(idx, 1)">{{
+                    $t('BUTTONS.DELETE')
+                  }}</span>
               </b-col>
               <b-col lg="12">
                 <span class="addAnswer" v-if="answersListDragSortAudio.length - 1 === idx"
                       @click="addAnswersListDragSortAudio"><img
-                  src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
+                  src="@/assets/images/icons/add_answer.png"> <span>{{ $t('QUESTIONS.add') }}</span></span>
               </b-col>
             </slot>
             <b-col lg="12" class="mb-3">
@@ -1798,7 +1851,9 @@
               <b-col lg="2" class="mb-3 d-flex justify-content-center align-items-center">
               <span class="add-deleteBtn delete-answer"
                     v-if="answersListDragSortImage.length > 1"
-                    @click="answersListDragSortImage.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
+                    @click="answersListDragSortImage.splice(idx, 1)">{{
+                  $t('BUTTONS.DELETE')
+                }}</span>
               </b-col>
               <b-col lg="12" class="mb-3">
                 <div class="hold-field">
@@ -1815,7 +1870,9 @@
               <b-col lg="12" class="btn-holder">
               <span class="addAnswer" v-if="answersListDragSortImage.length - 1 === idx"
                     @click="addAnswerDragSortImage"><img
-                src="@/assets/images/icons/add_answer.png"> <span>{{$t('QUESTIONS.add')}}</span></span>
+                src="@/assets/images/icons/add_answer.png"> <span>{{
+                  $t('QUESTIONS.add')
+                }}</span></span>
               </b-col>
             </slot>
             <b-col lg="12" class="mb-3">
@@ -1952,7 +2009,8 @@
                   />
                 </div>
               </b-col>
-              <b-col lg="12" class="mb-3" v-if=" answerMatch.answer_pattern === 'text' ||answerMatch.answer_pattern === 'image'">
+              <b-col lg="12" class="mb-3"
+                     v-if=" answerMatch.answer_pattern === 'text' ||answerMatch.answer_pattern === 'image'">
                 <div class="hold-field">
                   <UploadAttachment :type-of-attachment="'audio'"
                                     :dropIdRef="`answerMatch`"
@@ -1999,7 +2057,7 @@
                 <b-col lg="2" class="answer-item">{{ $t('QUESTIONS.order') }}</b-col>
                 <b-col lg="3" class="answer-item">{{ $t('QUESTIONS.answer') }}</b-col>
                 <b-col lg="3" class="answer-item" v-if="answerMatch.answer_pattern !== 'audio'">
-                  {{$t('QUESTIONS.audioForAnswer')}}
+                  {{ $t('QUESTIONS.audioForAnswer') }}
                 </b-col>
                 <b-col lg="2" class="answer-item"></b-col>
               </b-row>
@@ -2072,7 +2130,8 @@
                 <b-col lg="12" class="mb-3 px-0" v-if="answerMatchTo.answer_pattern === 'text'">
                   <div class="hold-field">
                     <label>{{ $t("QUESTIONS.ANSWER") }}</label>
-                    <TextField :rules="'required|max:100'" v-model="answerMatchTo.answer" :name="`${$t('QUESTIONS.ANSWER')}`" :id="`ANSWER`"></TextField>
+                    <TextField :rules="'required|max:100'" v-model="answerMatchTo.answer"
+                               :name="`${$t('QUESTIONS.ANSWER')}`" :id="`ANSWER`"></TextField>
                   </div>
                 </b-col>
                 <b-col lg="12" class="mb-3 px-0" v-if="answerMatchTo.answer_pattern === 'image'">
@@ -2089,7 +2148,8 @@
                     />
                   </div>
                 </b-col>
-                <b-col lg="12" class="mb-3" v-if="answerMatchTo.answer_pattern === 'text' || answerMatchTo.answer_pattern === 'image' ">
+                <b-col lg="12" class="mb-3"
+                       v-if="answerMatchTo.answer_pattern === 'text' || answerMatchTo.answer_pattern === 'image' ">
                   <UploadAttachment :type-of-attachment="'audio'"
                                     :dropIdRef="`answerMatchTo`"
                                     :accept-files="'audio/*'"
@@ -2135,7 +2195,7 @@
                         questionSlug.slug === 'match_many_image_voices')
                     "
                 class="text-danger font-weight-bold"
-              >{{$t('QUESTIONS.addOneImage')}}</p>
+              >{{ $t('QUESTIONS.addOneImage') }}</p>
               <p
                 v-if="
                       answersListMatchTo.length !== 2 &&
@@ -2145,19 +2205,20 @@
                     "
                 class="text-danger font-weight-bold"
               >
-                {{$t('QUESTIONS.addTwoImage')}}
+                {{ $t('QUESTIONS.addTwoImage') }}
               </p>
             </b-row>
             <!-- show answer to based on answer patter -->
             <slot v-if="answersListMatchTo.length > 0">
               <b-row class="mt-3">
-                <b-col lg="2" class="answer-item">{{$t('QUESTIONS.order')}}</b-col>
-                <b-col lg="3" class="answer-item">{{$t('QUESTIONS.answer')}}</b-col>
+                <b-col lg="2" class="answer-item">{{ $t('QUESTIONS.order') }}</b-col>
+                <b-col lg="3" class="answer-item">{{ $t('QUESTIONS.answer') }}</b-col>
                 <b-col
                   lg="3"
                   class="answer-item"
                   v-if="answerMatchTo.answer_pattern !== 'audio'"
-                >{{$t('QUESTIONS.audioForAnswer')}}</b-col>
+                >{{ $t('QUESTIONS.audioForAnswer') }}
+                </b-col>
                 <b-col lg="2" class="answer-item">{{ $t('QUESTIONS.answerCorresponding') }}</b-col>
                 <b-col lg="2" class="answer-item"></b-col>
               </b-row>
@@ -2329,10 +2390,20 @@ import draggable from "vuedraggable";
 import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import vSelect from "vue-select";
 import UploadAttachment from "@/components/Shared/UploadAttachment/index.vue";
+import ApiService from "@/api/ApiService";
+import {getSingleQuestionRequest} from "@/api/question";
+import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 
 export default {
   computed: {
-    answersListTrueFalse(){
+    checkQuestionMediaInputs() {
+      if (this.formValues.question === null || this.formValues.question_audio === null) {
+        return true
+      } else {
+        return false
+      }
+    },
+    answersListTrueFalse() {
       return [
         {
           answer: this.$i18n.t("QUESTIONS.correct"),
@@ -2346,8 +2417,8 @@ export default {
         },
       ]
     },
-    correctList(){
-      return[
+    correctList() {
+      return [
         {
           id: 1,
           name: this.$i18n.t("QUESTIONS.rightAnswer"),
@@ -2361,6 +2432,7 @@ export default {
   },
   mixins: [getData("question")],
   components: {
+    PreviewMedia,
     UploadAttachment,
     vSelect,
     ImageUploader,
@@ -2394,8 +2466,24 @@ export default {
       checkOneAnswerTureFalse: true,
       checkOneAnswerDragOne: true,
       checkMultiCorrectAnswerSelect: true,
+      questionEdit: null,
       formValues: {
         question: null,
+        // question change
+        questionChanged: false,
+        questionChangedRequest: false,
+        // question audio change
+        question_audioChanged: false,
+        question_audioChangedRequest: false,
+        // question info
+        question_name: null,
+        question_size: null,
+        question_preview: null,
+        //question audio info
+        question_audio_name: null,
+        question_audio_size: null,
+        question_audio_preview: null,
+        // hint
         hint: null,
         question_audio: null,
         question_audioUser: null,
@@ -2574,7 +2662,7 @@ export default {
       this.answerMatch.audio = null;
       this.answerMatch.audioUrl = null;
       this.$refs.answerMatch.$refs.answerMatch.removeAllFiles()
-      if (this.$refs.answerMatchImage){
+      if (this.$refs.answerMatchImage) {
         this.$refs.answerMatchImage.$refs.answerMatchImage.removeAllFiles()
       }
     },
@@ -2586,7 +2674,7 @@ export default {
       this.answerMatchTo.audioUrl = null;
       this.answerMatchTo.answerImage = null;
       this.$refs.answerMatchTo.$refs.answerMatchTo.removeAllFiles()
-      if (this.$refs.answerMatchToImage){
+      if (this.$refs.answerMatchToImage) {
         this.$refs.answerMatchToImage.$refs.answerMatchToImage.removeAllFiles()
       }
     },
@@ -3034,6 +3122,28 @@ export default {
       if (e) item.answer = e.target.files[0];
       else return;
     },
+    removeFile(fileName, fileChange, fileRequest) {
+      this.formValues[fileChange] = true
+      this.formValues[fileName] = null
+      this.formValues[fileRequest] = true
+    },
+    getQuestionById() {
+      ApiService(getSingleQuestionRequest(this.$route.params.id)).then((response) => {
+        this.questionEdit = response.data.data
+        console.log('this.questionEdit', this.questionEdit)
+        this.formValues.question_pattern = this.questionEdit.question_pattern
+        // question
+        this.formValues.question = this.questionEdit.question
+        this.formValues.question_preview = this.questionEdit.question
+        this.formValues.question_name = this.questionEdit.question_file_name
+        this.formValues.question_size = this.questionEdit.question_file_size
+        // question audio
+        this.formValues.question_audio = this.questionEdit.question_audio
+        this.formValues.question_audio_preview = this.questionEdit.question_audio
+        this.formValues.question_audio_name = this.questionEdit.question_audio_name
+        this.formValues.question_audio_size = this.questionEdit.question_audio_size
+      })
+    }
   },
   watch: {
     answersListMatch: {
@@ -3141,14 +3251,6 @@ export default {
         countRepeatedWords(newVal);
       }
     },
-    question(questionEdit) {
-      this.formValues.question = questionEdit.question;
-      this.formValues.question_audio = questionEdit.question_audio;
-      this.formValues.hint = questionEdit.hint;
-      this.formValues.answers = questionEdit.answers;
-      this.answersListMcQ = this.formValues.answers;
-      this.answersListMatchOneToOne = this.formValues.answers;
-    },
     "questionSlug.slug"(newVal) {
       if (newVal === "match_one_voice_text") {
         this.answerMatchTo.answer_pattern = "audio";
@@ -3175,11 +3277,16 @@ export default {
       } else if (newVal === "match_many_images_voices") {
         this.answerMatch.answer_pattern = "audio";
         this.answerMatchTo.answer_pattern = "image";
-      } else if (newVal === "drag_and_drop_text_text" || newVal ===  "drag_and_drop_text_image_text"){
+      } else if (newVal === "drag_and_drop_text_text" || newVal === "drag_and_drop_text_image_text") {
         this.formValues.question = ""
       }
     }
   },
+  mounted() {
+    if (this.$route.params.id) {
+      this.getQuestionById()
+    }
+  }
 };
 </script>
 <style scoped lang="scss">

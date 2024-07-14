@@ -506,6 +506,7 @@
     "QUESTIONS": "الأسئلة",
     "questionsList": "قائمة الأسئلة",
     "ADD_NEW": "إضافة سؤال جديد",
+    "edit": "تعديل السؤال",
     "CHOOSE_Question_PATTERN": "إختيار نمط السؤال",
     "EDIT_Question_PATTERN": "تعديل نمط السؤال",
     "QUESTION_PATTERN": "نمط السؤال",
@@ -1039,6 +1040,18 @@
     "level": "الصفوف الدراسية",
     "groups": "المجموعات"
   },
+  "competitionsParent": {
+    "name": "اسم المنافسة",
+    "finish_solving": "تاريخ اتمام المنافسة",
+    "competition_type": "نوع المنافسة",
+    "competition_percentage": "درجة الطالب"
+  },
+  "seasonalMissionsParent": {
+    "name": "اسم الموسم",
+    "start_date": "تاريخ البداية",
+    "end_date": "تاريخ النهاية",
+    "seasonal_quiz_percentage": "درجة الطالب"
+  },
   "SOCIAL_MEDIA": {
     "FACEBOOK": "فيس بوك",
     "TWITTER": "تويتر",
@@ -1460,6 +1473,9 @@
     "jeel_gems": "عدد الماسات التى سيحصل عليها الطالب عند إكتمال الإنجاز",
     "jeel_gems_PLACEHOLDER": "أدخل عدد الماسات التى سيحصل عليها الطالب عند إكتمال الإنجاز",
     "name": "اسم الإنجاز",
+    "jeel_gemsTable": "عدد الماسات التى حصل عليها",
+    "claim_date": "تاريخ الإنجاز",
+    "user_achievements_count": "عدد إنجازات المستخدم",
     "delete_achievement": "حذف الإنجاز",
     "confirm_delete_achievement": "هل أنت متأكد من حذف الإنجاز؟",
     "DETAILS": "تفاصيل الإنجاز"

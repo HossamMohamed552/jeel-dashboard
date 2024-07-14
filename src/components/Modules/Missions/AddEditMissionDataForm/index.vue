@@ -52,7 +52,7 @@
               :options="learningPaths"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
-              :rules="'required'"
+              :rules="'required|select-three-or-less'"
               :deselectFromDropdown="true"
               multiple
               @option:deselecting="mission.lessons_ids = []"

@@ -15,6 +15,8 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
+import {getAchievementsForParentRequest} from "@/api/parent-module";
+import {mapGetters} from "vuex";
 
 
 export default {
@@ -29,6 +31,7 @@ export default {
     }
   },
   computed:{
+    ...mapGetters(['currentChild']),
     fieldsList(){
       return [
         {
@@ -36,33 +39,39 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
-          key: "achievement",
-          label: this.$i18n.t("TABLE_FIELDS.achievement"),
+          key: "name",
+          label: this.$i18n.t("achievements.name"),
         },
         {
-          key: "achievement2",
-          label: this.$i18n.t("TABLE_FIELDS.achievement2"),
+          key: "jeel_gems",
+          label: this.$i18n.t("achievements.jeel_gemsTable"),
         },
         {
-          key: "achievement3",
-          label: this.$i18n.t("TABLE_FIELDS.achievement3"),
+          key: "claim_date",
+          label: this.$i18n.t("achievements.claim_date"),
         },
+        // {
+        //   key: "user_achievements_count",
+        //   label: this.$i18n.t("achievements.user_achievements_count"),
+        // },
       ]
     },
   },
   methods: {
     getAchievements(event) {
       this.loading = true;
-      const params = event;
-      // this.ApiService(getBloomCategoriesRequest(params))
-      //   .then((response) => {
-      //     this.bloomCategories = response.data.data;
-      //     this.totalNumber = response.data.meta.total;
-      //   })
-      //   .finally(() => {
-      //     this.loading = false;
-      //   });
+      this.ApiService(getAchievementsForParentRequest(this.currentChild.id,event))
+        .then((response) => {
+          this.achievements = response.data.data;
+          this.totalNumber = response.data.meta.total;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
+  },
+  mounted() {
+    this.getAchievements();
   }
 }
 </script>

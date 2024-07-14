@@ -707,15 +707,15 @@ let routesParent = [
     icon: require("@/assets/images/icons/steps.svg"),
     permission: "view-studnet-parent-seasonal-missions",
   },
-  {
-    name: "لوحة الصدارة",
-    nameEn: "leaderboard",
-    path: "/dashboard/parent-leaderboard",
-    altImage: "parent-leaderboard",
-    titleImage: "parent-leaderboard",
-    icon: require("@/assets/images/icons/steps.svg"),
-    permission: "view-studnet-parent-leaderboard",
-  },
+  // {
+  //   name: "لوحة الصدارة",
+  //   nameEn: "leaderboard",
+  //   path: "/dashboard/parent-leaderboard",
+  //   altImage: "parent-leaderboard",
+  //   titleImage: "parent-leaderboard",
+  //   icon: require("@/assets/images/icons/steps.svg"),
+  //   permission: "view-studnet-parent-leaderboard",
+  // },
 ];
 let routesJeelAdminReports = [
   {
