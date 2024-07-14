@@ -417,7 +417,7 @@ let routeSuperVisor = [
     permission: "view-supervisor-leaderboard",
   },
 ];
-let routeSchoolAdmin =[
+let routeSchoolAdmin = [
   {
     name: "المستخدمين",
     nameEn: "users",
@@ -501,7 +501,7 @@ let routeSchoolAdmin =[
     icon: require("@/assets/images/icons/list.svg"),
     permission: "view-parents-users",
   },
-]
+];
 let routesPrizes = [
   {
     name: "شارات جيل",
@@ -745,7 +745,7 @@ let routesJeelAdminReports = [
     icon: require("@/assets/images/icons/mission-List.svg"),
     permission: "view-learningpath",
   },
-]
+];
 let routesSchoolAdminReports = [
   {
     name: "تقرير عام المنصة",
@@ -801,7 +801,47 @@ let routesSchoolAdminReports = [
     icon: require("@/assets/images/icons/class-performance.svg"),
     permission: "add-enrollment-supervisors-users",
   },
-]
+];
+let routesTeacherReports = [
+  {
+    name: "أداء الطالب",
+    nameEn: "Student performance",
+    path: "/dashboard/reports/teacher-report/student-performance",
+    altImage: "Student performance",
+    titleImage: "Student performance",
+    icon: require("@/assets/images/icons/student-performance.svg"),
+    permission: "view-teacher-levels",
+  },
+  {
+    name: "أداء الفصل",
+    nameEn: "Class performance",
+    path: "/dashboard/reports/teacher-report/class-performance",
+    altImage: "competitions",
+    titleImage: "competitions",
+    icon: require("@/assets/images/icons/class-performance.svg"),
+    permission: "view-teacher-levels",
+  },
+];
+let routesSuperVisorReports = [
+  {
+    name: "أداء الطالب",
+    nameEn: "Student performance",
+    path: "/dashboard/reports/supervisor-report/student-performance",
+    altImage: "Student performance",
+    titleImage: "Student performance",
+    icon: require("@/assets/images/icons/student-performance.svg"),
+    permission: "view-supervisior-levels",
+  },
+  {
+    name: "أداء الفصل",
+    nameEn: "Class performance",
+    path: "/dashboard/reports/supervisor-report/class-performance",
+    altImage: "competitions",
+    titleImage: "competitions",
+    icon: require("@/assets/images/icons/class-performance.svg"),
+    permission: "view-supervisior-levels",
+  },
+];
 export {
   routesUsers,
   routesSchool,
@@ -817,5 +857,7 @@ export {
   routesTeacher,
   routesParent,
   routesJeelAdminReports,
-  routesSchoolAdminReports
+  routesSchoolAdminReports,
+  routesTeacherReports,
+  routesSuperVisorReports,
 };
