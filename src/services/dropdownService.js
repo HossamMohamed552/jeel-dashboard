@@ -163,6 +163,11 @@ export async function getAllSchoolsBySchoolGroup(array, key, id) {
   await fetchDataAndUpdateOptions(array, getSingleSchoolGroupRequest(id), key);
 }
 
+
+export async function getAllSchoolsBySchoolGroupWithoutFullDetail(array, key, params) {
+  await fetchDataAndUpdateOptions(array, getSchoolsRequest(params), key);
+}
+
 export async function getAllRoles(array, key) {
   await fetchDataAndUpdateOptions(array, getRolesRequest(), key);
 }

@@ -84,7 +84,7 @@ import {
   getAllUserStatus,
   getAllRolesType,
   getAllSchoolsBySchoolGroup,
-  getAllRolesByType,
+  getAllRolesByType, getAllSchoolsBySchoolGroupWithoutFullDetail,
 } from "@/services/dropdownService";
 
 export default {
@@ -232,9 +232,13 @@ export default {
       this.getAllUsers(values);
     },
     handleInput: _.debounce(function (key, value) {
-      if (key == "school_group_id" && value != "")
-        getAllSchoolsBySchoolGroup(this.userSearch, "school_id", value);
-      if (key == "category_id" && value != "") getAllRolesByType(this.userSearch, "role_id", value);
+      if (key == "school_group_id" && value != ""){
+        console.log('value',value)
+        getAllSchoolsBySchoolGroupWithoutFullDetail(this.userSearch, "school_id", {school_group_id:value,list_all:true});
+      }
+      if (key == "category_id" && value != ""){
+        getAllRolesByType(this.userSearch, "role_id", value);
+      }
     }, 300),
 
     handleCancel() {
