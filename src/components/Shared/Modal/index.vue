@@ -5,13 +5,14 @@
       <div class="all-content">
         <div class="flexContent">
           <div>
-            <div class="text-center hold-icon">
+            <div class="text-center hold-icon" :class="info? 'backInfo':''">
               <img src="@/assets/images/icons/email.png" v-show="isVerify">
               <img src="@/assets/images/icons/badge.png" v-show="isVerifyCheck">
               <img src="@/assets/images/icons/delete.svg" v-show="isWarning || isFailed">
               <img src="@/assets/images/icons/reuse.png" v-show="isUsed">
               <img src="@/assets/images/icons/alarm.png" v-show="alarm">
               <img src="@/assets/images/icons/success.svg" v-show="isSuccess">
+              <img src="@/assets/images/icons/info-modal.png" v-show="info">
             </div>
             <div class="text-center">
               <p class="confirm-message" v-if="contentMessage">{{ contentMessage }}</p>
@@ -46,6 +47,15 @@
           </div>
           <div class="d-flex justify-content-center align-items-center mt-5" v-if="isVerifyCheck">
             <Button :custom-class="'rounded-btn'" @click="cancelWithConfirm()">
+              {{ $t('close') }}
+            </Button>
+          </div>
+          <div class="d-flex justify-content-center align-items-center mt-5" v-if="info">
+            <Button class="mx-2" :custom-class="'rounded-btn'" @click="cancelWithConfirm()"
+                    v-if="info && infoWithConfirm">
+              {{ $t('GLOBAL_CONFIRM') }}
+            </Button>
+            <Button :custom-class="'rounded-btn'" @click="cancel()">
               {{ $t('close') }}
             </Button>
           </div>
@@ -102,6 +112,14 @@ export default {
       default: false
     },
     showModal: {
+      type: Boolean,
+      default: false
+    },
+    info: {
+      type: Boolean,
+      default: false
+    },
+    infoWithConfirm: {
       type: Boolean,
       default: false
     },

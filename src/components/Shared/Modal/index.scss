@@ -30,3 +30,13 @@
 .controls{
   @include flexCenter(space-between)
 }
+.backInfo{
+  background: #FAE5E5;
+  border-radius: 50%;
+  width: 7rem;
+  height: 7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem auto;
+}

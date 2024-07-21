@@ -222,7 +222,10 @@
     "editContent": "Edit content",
     "showMissions": "View missions",
     "contentOfMission": "mission content",
-    "blocked": "blocked"
+    "blocked": "blocked",
+    "studentAlreadyAdd": "This student is already in this class",
+    "studentInClass": "This student is in a class {className}",
+    "transferStudent": "Do you want to move it to this class?"
   },
   "ROLES": {
     "job_roles": "job roles",
@@ -1204,7 +1207,8 @@
     "parentsOfStudent": "Parents Of The Student",
     "parentManagement": "Parent Management",
     "listOfStudents": "list Of Students",
-    "addStudentToParent": "Add a student to the parent"
+    "addStudentToParent": "Add a student to the parent",
+    "classes":"class"
   },
   "superVisor": {
     "date": "date",
@@ -1424,7 +1428,7 @@
   },
   "academy": {
     "academyList": "List of academic terms",
-    "add": "Add a new term",
+    "add": "Determine a new academic term",
     "delete": "Delete the academic term",
     "confirm_delete": "Are you sure you want to delete the term?",
     "addTerm": "add",

@@ -33,7 +33,7 @@
     <ListItems
       class="background-transparent"
       :show-sort-controls="false"
-      :header-name="$t('ListOfClassStudents')"
+      :header-name="$t('teacher.listOfClassStudents')"
       :fieldsList="fieldsList"
       :table-items="singleClass.student"
       :loading="loading"

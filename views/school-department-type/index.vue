@@ -104,7 +104,7 @@ export default {
   computed: {
     fieldsList(){
       return  [
-        {key: "id", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
         {key: "name", label: this.$i18n.t('management.type_name')},
         {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
       ]

@@ -80,7 +80,7 @@
               </b-col>
               <b-col lg="4" class="mb-3">
                 <div class="hold-field">
-<!--                  createQuiz.blooms.length === 0 && $i18n.locale === 'ar' ? 'اختيار الكل' :-->
+                  <!--                  createQuiz.blooms.length === 0 && $i18n.locale === 'ar' ? 'اختيار الكل' :-->
                   <SelectSearch
                     v-model="createQuiz.blooms"
                     :label="$t('QUESTIONS.BLOOM_CATEGORIES')"
@@ -254,14 +254,16 @@
                           v-if="isGetQuestions"
                           custom-class="submit-btn"
                           @click="resetGettingQuestion"
-                        >{{ $t('QUIZZES.reset') }}</Button
+                        >{{ $t('QUIZZES.reset') }}
+                        </Button
                         >
                         <Button
                           v-else
                           custom-class="submit-btn"
                           @click="getQuestionsList"
                           :disabled="!easyCount && !mediumCount && !hardCount"
-                        >{{ $t('QUIZZES.showQuestions') }}</Button>
+                        >{{ $t('QUIZZES.showQuestions') }}
+                        </Button>
                       </div>
                     </b-col>
                   </b-row>
@@ -596,8 +598,8 @@ export default {
       enableToSendData: false,
     };
   },
-  computed:{
-    fieldsList(){
+  computed: {
+    fieldsList() {
       return [
         {
           key: "#",
@@ -681,15 +683,23 @@ export default {
       this.actions = [];
     },
     getStatistics: debounce(function () {
-      if (this.createQuiz.lessons && this.createQuiz.lessons > 0) {
+      let listLessons = {}
+      if (this.createQuiz.lessons && this.createQuiz.lessons.length > 0) {
         let params = {
           learning_path_id: this.createQuiz.learning_path_id,
-          lessons: this.createQuiz.lessons,
+          // lessons: this.createQuiz.lessons,
           'blooms[]': this.createQuiz.blooms
         };
+        for (let lessons = 0; lessons < this.createQuiz.lessons.length;) {
+          listLessons[`lessons[${lessons}]`] = this.createQuiz.lessons[lessons]
+          lessons++
+        }
         // if (typeof this.createQuiz.blooms === 'object' && this.createQuiz.blooms && this.createQuiz.blooms.length > 0) {
         //   Object.assign(params, {blooms: this.createQuiz.blooms})
         // }
+        if (typeof this.createQuiz.lessons === 'object' && this.createQuiz.lessons && this.createQuiz.lessons.length > 0) {
+          Object.assign(params, {...listLessons})
+        }
         if (typeof this.createQuiz.learning_styles === 'object' && this.createQuiz.learning_styles && this.createQuiz.learning_styles.length > 0) {
           Object.assign(params, {learning_styles: this.createQuiz.learning_styles})
         }

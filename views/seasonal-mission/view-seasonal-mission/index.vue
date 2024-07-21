@@ -153,7 +153,7 @@ export default {
     },
     prizeFieldsList() {
       return [
-        {key: "id", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
         {key: "main_percentage", label: this.$i18n.t('seasonalMission.minPercentage')},
         {key: "max_percentage", label: this.$i18n.t('seasonalMission.maxPercentage')},
         {key: "type.name", label: this.$i18n.t('seasonalMission.prizeType')},
@@ -161,13 +161,13 @@ export default {
     },
     videosFieldsList(){
       return [
-        {key: "id", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
         {key: "title", label: this.$i18n.t('TABLE_FIELDS.videoTitle')},
       ]
     },
     exercisesFieldsList(){
       return  [
-        {key: "id", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.titleQuiz')},
       ]
     },

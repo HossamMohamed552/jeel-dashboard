@@ -70,7 +70,7 @@
 <script>
 import Button from "@/components/Shared/Button/index.vue";
 import TextField from "@/components/Shared/TextField/index.vue";
-import {getLevelsRequest, getSchoolClassByIdRequest, getStudyYearsRequest} from "@/api/school-info";
+import {getSchoolAdminLevelsRequest, getSchoolClassByIdRequest, getStudyYearsRequest} from "@/api/school-info";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 
 export default {
@@ -102,7 +102,7 @@ export default {
       })
     },
     getAllLevels(){
-      this.ApiService(getLevelsRequest({list_all:true})).then((response)=>{
+      this.ApiService(getSchoolAdminLevelsRequest({list_all:true})).then((response)=>{
         this.levels = response.data.data
       })
     },

@@ -16,8 +16,8 @@ export default [
     component: () =>
       import("../../../views/management-academic-year/add-management-academic-year/index.vue"),
     meta: {
-      breadcrumb: "إضافة ترم الدراسى",
-      breadcrumbEn: "add management academic year",
+      breadcrumb: "تحديد ميعاد ترم الدراسى",
+      breadcrumbEn: "Determine the date of the academic semester",
       preLabel: "إدارة العام الدراسى",
       preLabelEn: "management academic year",
       preLink: "/dashboard/management-academic-year",

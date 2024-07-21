@@ -76,6 +76,36 @@
                     ></SelectSearch>
                   </div>
                 </b-col>
+                <b-col lg="6" v-if="user.role === 5">
+                  <div class="hold-field mt-3">
+                    <SelectSearch
+                      v-model="user.level_id"
+                      :label="$t('schoolAdmin.level')"
+                      :name="$t('schoolAdmin.level')"
+                      :options="levels"
+                      :reduce="(option) => option.id"
+                      :get-option-label="(option) => option.name"
+                      rules="required"
+                      :deselectFromDropdown="true"
+                      @input="getAllClassByLeveId"
+                    ></SelectSearch>
+                  </div>
+                </b-col>
+                <b-col lg="6" v-if="user.role === 5">
+                  <div class="hold-field mt-3">
+                    <SelectSearch
+                      v-model="user.class_id"
+                      :label="$t('schoolAdmin.classes')"
+                      :name="$t('schoolAdmin.classes')"
+                      :options="classes"
+                      :reduce="(option) => option.id"
+                      :get-option-label="(option) => option.name"
+                      rules="required"
+                      :disabled="!user.level_id"
+                      :deselectFromDropdown="true"
+                    ></SelectSearch>
+                  </div>
+                </b-col>
                 <b-col lg="12">
                   <h5 class="mt-3">{{ $t('uploadFile') }}</h5>
                   <div class="input_container">
@@ -115,6 +145,7 @@ import {getAllRolesByTypeRequest, getAllRolesTypeRequest} from "@/api/system";
 import axios from "axios";
 import VueCookies from "vue-cookies";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {getAllClassesRequest, getSchoolAdminLevelsRequest} from "@/api/school-info";
 
 export default {
   name: "index",
@@ -125,12 +156,16 @@ export default {
       schoolsList: [],
       rolesTypeList: [],
       departmentsList: [],
+      classes: [],
+      levels: [],
       loading: false,
       showModal: false,
       user: {
         file: null,
         role_category: null,
         role: null,
+        level_id: null,
+        class_id: null
       },
       statusOfUploadExcel: null,
       userFailedError: []
@@ -177,6 +212,10 @@ export default {
     onSubmit() {
       this.$refs.addExcelForm.validate().then((success) => {
         if (!success) return;
+        if(!this.user.level_id || !this.user.class_id){
+          delete  this.user.level_id
+          delete  this.user.class_id
+        }
         axios.post('/school-admin/excel-user-import', this.user, {
           headers: {
             Authorization: `Bearer ${VueCookies.get("token")}`,
@@ -193,9 +232,24 @@ export default {
     handleCancel() {
       this.$router.back()
     },
+    getAllLevels() {
+      this.ApiService(getSchoolAdminLevelsRequest({list_all: true})).then((response) => {
+        this.levels = response.data.data
+      })
+    },
+    getAllClassByLeveId() {
+      this.ApiService(getAllClassesRequest({
+        level_id: this.user.level_id,
+        list_all: true
+      })).then((response) => {
+        this.classes = response.data.data
+      })
+    },
+
   },
   mounted() {
     this.getAllRolesType();
+    this.getAllLevels();
   }
 }
 </script>

@@ -52,8 +52,8 @@ export default {
         { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
         { key: "studyYear.name", label: this.$i18n.t('TABLE_FIELDS.studyYearName') },
         { key: "term.name", label: this.$i18n.t('TABLE_FIELDS.academyTerm') },
-        { key: "start_date", label: this.$i18n.t('TABLE_FIELDS.start_date') },
-        { key: "end_date", label: this.$i18n.t('TABLE_FIELDS.start_date') },
+        { key: "start_date", label: this.$i18n.t('TABLE_FIELDS.academyStart_date') },
+        { key: "end_date", label: this.$i18n.t('TABLE_FIELDS.academyEnd_date') },
         { key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions') },
       ]
     },

@@ -9,11 +9,12 @@
         </b-row>
         <b-row>
           <b-col lg="4" class="mb-5">
-            <ShowItem class="divider-show" :title="$t('schoolAdmin.studyYear')"
-                      :subtitle="classItem.studyYear.name"/>
+            <ShowItem v-if="classItem?.studyYear" class="divider-show"
+                      :title="$t('schoolAdmin.studyYear')"
+                      :subtitle="classItem?.studyYear?.name"/>
           </b-col>
           <b-col lg="4" class="mb-5">
-            <ShowItem class="divider-show" :title="$t('schoolAdmin.level')"
+            <ShowItem v-if="classItem.level" class="divider-show" :title="$t('schoolAdmin.level')"
                       :subtitle="classItem.level.name"/>
           </b-col>
           <b-col lg="4" class="mb-5">
@@ -32,7 +33,7 @@
                       v-model="enrollment.student_id"
                       :label="$t('schoolAdmin.studentName')"
                       :name="$t('schoolAdmin.studentName')"
-                      placeholder="أدخل اسم الطالب"
+                      :placeholder="$t('teacher.enterStudentName')"
                       :options="studentList"
                       :reduce="(option) => option.id"
                       :get-option-label="(option) => option.name"
@@ -51,14 +52,6 @@
                   </Button>
                 </b-col>
               </b-row>
-              <b-row>
-                <div class="hold-btns-form">
-                  <!--                  <Button @click="handleCancel" custom-class="cancel-btn margin">-->
-                  <!--                    {{ $t("GLOBAL_CANCEL") }}-->
-                  <!--                  </Button>-->
-
-                </div>
-              </b-row>
             </form>
           </validation-observer>
           <b-col lg="12">
@@ -66,6 +59,7 @@
               :fieldsList="fieldsList"
               :table-items="classItem.student"
               :disableIt="true"
+              :notHidePagination="false"
               :loading="loading"
               :permission_delete="'delete-enrollment-supervisors-users'"
               @deleteItem="deleteItem($event)"
@@ -74,15 +68,26 @@
             >
             </ListItems>
           </b-col>
-          <!--          <b-col lg="4" class="mb-5">-->
-          <!--            <ShowItem class="divider-show" :title="$t('schoolAdmin.schoolName')" :subtitle="classItem.school.name" />-->
-          <!--          </b-col>-->
-          <!--          <b-col lg="4">-->
-          <!--            <ShowItem class="divider-show" :title="$t('schoolAdmin.students_count')" :subtitle="classItem.student_count" />-->
-          <!--          </b-col>-->
         </b-row>
       </div>
     </div>
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModalSuccess" :is-success="true" />
+    <Modal
+      :content-message="$t('CONTROLS.studentAlreadyAdd')"
+      :showModal="showModalAlreadyAdd"
+      :info="true"
+      @cancel="showModalAlreadyAdd=false"
+      @cancelWithConfirm="cancelWithConfirmAlreadyAdd($event)"
+    />
+    <Modal
+      :content-message="$t('CONTROLS.studentInClass',{className:selectStudent?.class?.name})"
+      :content-message-question="$t('CONTROLS.transferStudent')"
+      :showModal="showModalChangeClass"
+      @cancel="showModalChangeClass=false"
+      :info="true"
+      :infoWithConfirm="true"
+      @cancelWithConfirm="cancelWithConfirmChangeClass($event)"
+    />
   </section>
 </template>
 <script>
@@ -95,18 +100,23 @@ import {
 import ListItems from "@/components/ListItems/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
+import Modal from "@/components/Shared/Modal/index.vue";
 
 export default {
   name: "index",
-  components: {SelectSearch, Button, ListItems, ShowItem},
+  components: {Modal, SelectSearch, Button, ListItems, ShowItem},
   data() {
     return {
       classItem: {},
+      selectStudent: {},
       studentList: [],
       loading: false,
+      showModalAlreadyAdd: false,
+      showModalChangeClass: false,
+      showModalSuccess: false,
       fieldsList: [
         {
-          key: "id",
+          key: "vid",
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
@@ -143,19 +153,54 @@ export default {
       }
     };
   },
+  watch: {
+    "enrollment.student_id"(newId) {
+      this.selectStudentFromList(newId)
+    }
+  },
   methods: {
+    selectStudentFromList(selectStudent) {
+      this.selectStudent = this.studentList.filter((item) => {
+        return item.id === selectStudent
+      })[0]
+    },
     getAllStudents() {
-      this.ApiService(getAllStudentUsersRequest()).then((response) => {
+      this.ApiService(getAllStudentUsersRequest({list_all: true})).then((response) => {
         this.studentList = response.data.data;
-      })
-        .finally(() => {
-          this.loading = false;
-        });
+      }).finally(() => {
+        this.loading = false;
+      });
     },
     getClassDetail() {
       this.ApiService(getClassByIdRequest(this.$route.params.id)).then((response) => {
         this.classItem = response.data.data;
       });
+    },
+    cancelWithConfirmAlreadyAdd($event) {
+      this.showModalAlreadyAdd = $event
+    },
+    cancelWithConfirmChangeClass($event) {
+      let data = {
+        class_id: this.$route.params.id,
+        user_id: this.enrollment.student_id,
+        study_year_id: this.classItem.studyYear.id
+      }
+      this.addStudentOnClass(data)
+      this.showModalChangeClass = $event
+    },
+    addStudentOnClass(data) {
+      this.ApiService(postStudentEnrollmentRequest(data)).then((response) => {
+        this.showModalSuccess = true
+        this.getClassDetail()
+        this.getAllStudents()
+        this.enrollment.student_id = ""
+        this.$nextTick(() => {
+          this.$refs.addEditSchoolClassForm.reset()
+        })
+        setTimeout(()=>{
+          this.showModalSuccess = false
+        },500)
+      })
     },
     onSubmit() {
       this.$refs.addEditSchoolClassForm.validate().then((success) => {
@@ -166,13 +211,13 @@ export default {
         user_id: this.enrollment.student_id,
         study_year_id: this.classItem.studyYear.id
       }
-      this.ApiService(postStudentEnrollmentRequest(data)).then((response) => {
-        this.enrollment.user_id = ""
-        this.$nextTick(() => {
-          this.$refs.addEditSchoolClassForm.reset()
-        })
-        this.getClassDetail()
-      })
+      if (this.selectStudent.class && (this.classItem.id === this.selectStudent.class.id)) {
+        this.showModalAlreadyAdd = true
+      } else if (this.selectStudent.class && (this.classItem.id !== this.selectStudent.class.id)) {
+        this.showModalChangeClass = true
+      } else {
+        this.addStudentOnClass(data)
+      }
     },
   },
   mounted() {

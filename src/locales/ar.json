@@ -181,7 +181,8 @@
     "titleQuiz": "عنوان التمرين",
     "academyTerm": "الترم الدراسى",
     "academyStart_date": "تاريخ البداية",
-    "academyEnd_date": "تاريخ النهاية"
+    "academyEnd_date": "تاريخ النهاية",
+    "classes":"الفصل الدراسي"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -222,7 +223,10 @@
     "editContent": "تعديل المحتوى",
     "showMissions": "عرض المهام",
     "contentOfMission": "محتوى المهمة",
-    "blocked": "محظور"
+    "blocked": "محظور",
+    "studentAlreadyAdd": "هذا الطالب موجود فى هذا الفصل بالفعل",
+    "studentInClass": "هذا الطالب موجود فى فصل {className}",
+    "transferStudent": "هل تريد نقله لهذا الفصل"
   },
   "ROLES": {
     "ADD_NEW": "إضافة صلاحية",
@@ -410,6 +414,7 @@
   },
   "TERM": {
     "ADD_NEW": "إضافة ترم دراسي جديد",
+    "selectTerm": "تحديد ميعاد ترم دراسي جديد",
     "EDIT": "تعديل ترم دراسي",
     "name": "اسم الترم الدراسي",
     "level": "اسم الصف",
@@ -1177,7 +1182,8 @@
     "parentsOfStudent": "أولياء الأمور للطالب",
     "parentManagement": "إدارة اولياء الامور",
     "listOfStudents": "قائمة الطلاب",
-    "addStudentToParent": "إضافة طالب إلى ولى الأمر"
+    "addStudentToParent": "إضافة طالب إلى ولى الأمر",
+    "classes":"الصف الدراسي"
   },
   "power_up_box": {
     "powerUp": "صناديق الطاقة",
@@ -1405,7 +1411,7 @@
   },
   "academy": {
     "academyList": "قائمة الترمات الدراسية",
-    "add": "إضافة ترم دراسي جديد",
+    "add": "تحديد ميعاد ترم دراسي جديد",
     "edit": "تعديل الترم الدراسى",
     "delete": "حذف الترم الدراسي",
     "confirm_delete": "هل أنت متأكد من حذف الترم الدراسي؟",

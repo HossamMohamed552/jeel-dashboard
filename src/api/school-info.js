@@ -149,7 +149,7 @@ export const getStudyYearsForSuperVisorRequest = (data) => ({
   },
 });
 
-export const getLevelsRequest = (params) => ({
+export const getSchoolAdminLevelsRequest = (params) => ({
   method: "get",
   url: `school/levels`,
   config: {
