@@ -140,7 +140,7 @@ export default {
   },
   data() {
     return {
-      collapsed: true,
+      collapsed: false,
       itemId: "",
       usersSchoolList: [],
       showModal: false,

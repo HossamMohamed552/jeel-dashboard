@@ -118,7 +118,7 @@
                               :name="'logoMission'"
                               :rules="'required'"
                               :dropIdRef="'missionImgRef'"
-                              :accept-files="'image/*'" @setFileId="setFileImageId($event)"/>
+                              :accept-files="'image/*'" @setFileId="setFileImageId($event)" @removeFile=""/>
             <PreviewMedia
               v-if="$route.params.id && mission.thumbnailChanged === false && !mission.thumbnailChangedRequest"
               :header="$t('MISSIONS.UPLOAD_IMAGE')"
@@ -129,7 +129,7 @@
               :showRemoveButton="true"
               @removeFile="removeFile('thumbnail','thumbnailChanged','thumbnailChangedRequest')"
             />
-            <p v-if="mission.thumbnailChangedRequest" class="invalid-feedback d-block">صورة المهمة
+            <p v-if="!mission.thumbnail && mission.thumbnailChangedRequest" class="invalid-feedback d-block">صورة المهمة
               مطلوب</p>
           </div>
         </b-col>
@@ -146,12 +146,15 @@
                           :typeOfMedia="'audio'"
                           :show-remove-button="true"
                           @removeFile="removeFile('missionAudio','missionAudioChanged','missionAudioChangedRequest')"/>
-            <p v-if="mission.missionAudioChangedRequest" class="invalid-feedback d-block">{{$t('MISSIONS.videoWithOutRequired')}}</p>
+            <p v-if="!mission.missionAudio && mission.missionAudioChangedRequest" class="invalid-feedback d-block">{{$t('MISSIONS.UPLOAD_AUDIO')}}</p>
           </div>
         </b-col>
       </b-row>
       <b-row>
         <div class="action-holder">
+          <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
+            {{ $t("GLOBAL_CANCEL") }}
+          </Button>
           <div>
             <Button
               v-if="!$route.params.id"
@@ -172,9 +175,6 @@
               {{ $t("GLOBAL_EDIT") }}
             </Button>
           </div>
-          <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
-            {{ $t("GLOBAL_CANCEL") }}
-          </Button>
         </div>
       </b-row>
     </form>
@@ -269,11 +269,9 @@ export default {
       else return;
     },
     setFileImageId($event) {
-      if ($event) {
-        this.mission.thumbnail = $event
-        this.mission.thumbnailChangedRequest = true
-        this.mission.thumbnailChanged = false
-      }
+      this.mission.thumbnail = $event
+      this.mission.thumbnailChangedRequest = true
+      this.mission.thumbnailChanged = false
     },
     setFileAudioId($event) {
       this.mission.missionAudio = $event

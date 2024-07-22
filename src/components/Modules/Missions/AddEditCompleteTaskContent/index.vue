@@ -71,6 +71,9 @@
         </div>
       </section>
       <section class="action-holder mt-5">
+        <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
+          {{ $t("GLOBAL_CANCEL") }}
+        </Button>
         <div>
           <Button
             @click="goToFinalStep"
@@ -86,9 +89,6 @@
             {{ $t("GLOBAL_BACK") }}
           </Button>
         </div>
-        <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
-          {{ $t("GLOBAL_CANCEL") }}
-        </Button>
       </section>
     </div>
   </div>

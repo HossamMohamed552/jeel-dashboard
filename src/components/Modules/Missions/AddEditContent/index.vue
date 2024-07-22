@@ -61,6 +61,9 @@
       </b-row>
       <b-row>
         <div class="action-holder">
+          <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
+            {{ $t("GLOBAL_CANCEL") }}
+          </Button>
           <div>
             <Button
               type="submit"
@@ -78,9 +81,6 @@
               {{ $t("GLOBAL_BACK") }}
             </Button>
           </div>
-          <Button @click="handleCancel" :custom-class="'cancel-btn margin'">
-            {{ $t("GLOBAL_CANCEL") }}
-          </Button>
         </div>
       </b-row>
     </form>

@@ -1,7 +1,8 @@
 <template>
   <div class="img-container">
     <span>
-      <img v-if="imageUrl" :src="imageUrl" alt="Person Image" />
+      <img v-if="imageUrl && localImageUrl === null" :src="imageUrl" alt="Person Image" />
+      <img v-else-if="localImageUrl" :src="localImageUrl" alt="Person Image" />
       <i v-else class="far fa-user"></i>
     </span>
     <input type="file" accept="image/*" ref="fileInput" style="display: none" @change="handleImageChange" />

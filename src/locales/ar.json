@@ -602,7 +602,7 @@
     "EDIT": "تعديل المهمة",
     "ADD_NEW": "إضافة مهمة جديدة",
     "name": "اسم المهمة",
-    "level": "السنة الدراسية",
+    "level": "الصف الدراسى",
     "lesson": "الدرس",
     "LEARNING_PATH": "المسار",
     "terms": "الترم الدراسي",
@@ -1167,7 +1167,7 @@
     "parentList": "قائمة أولياء الأمور",
     "addStudentClassDETAILS": "إضافة طلاب للفصل",
     "studentName": "اسم الطالب",
-    "addClassTeacherEnrollment": "إضافة فصل دراسي",
+    "addClassTeacherEnrollment": "إضافة فصل دراسي الى المدرس",
     "classesList": "الفصول الدراسية",
     "school": "المدرسة",
     "classesMainList": "قائمة الفصول",
@@ -1183,7 +1183,10 @@
     "parentManagement": "إدارة اولياء الامور",
     "listOfStudents": "قائمة الطلاب",
     "addStudentToParent": "إضافة طالب إلى ولى الأمر",
-    "classes":"الصف الدراسي"
+    "classes":"الصف الدراسي",
+    "superVisorDetail": "تفاصيل المشرف",
+    "addLevelToSupervisor": "إضافة صفوف الى المشرف",
+    "levelsList": "قائمه صفوف المشرف"
   },
   "power_up_box": {
     "powerUp": "صناديق الطاقة",

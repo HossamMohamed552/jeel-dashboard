@@ -251,8 +251,8 @@ export default [
     name: "teachers-users",
     component: () => import("../../../views/user-teacher/enrollment/index.vue"),
     meta: {
-      breadcrumb: "الصلاحيات",
-      breadcrumbEn: "teacher enrollment",
+      breadcrumb: "إضافة فصل دراسي الى المدرس",
+      breadcrumbEn: "Add a class to the teacher",
       preLabel: "إدارة المدرسين",
       preLabelEn: "teachers",
       preLink: "/dashboard/teachers-users",

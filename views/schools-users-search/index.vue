@@ -127,7 +127,7 @@ export default {
   },
   data() {
     return {
-      collapsed: true,
+      collapsed: false,
       loading: false,
       showModal: false,
       usersList: [],

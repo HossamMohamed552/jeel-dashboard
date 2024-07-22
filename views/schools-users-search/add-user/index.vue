@@ -126,9 +126,9 @@
                       ></TextField>
                     </div>
                   </b-col>
-<!--<<<<<<< HEAD-->
-<!--                  <b-col lg="8" :class="isStudent && 'd-none'" v-if="!$route.params.id && !isManagementStudent">-->
-<!--=======-->
+                  <!--<<<<<<< HEAD-->
+                  <!--                  <b-col lg="8" :class="isStudent && 'd-none'" v-if="!$route.params.id && !isManagementStudent">-->
+                  <!--=======-->
                   <b-col lg="8" v-if="!isStudent">
                     <div class="hold-field">
                       <TextField
@@ -148,7 +148,7 @@
                         :name="$t('USERS.PHONE_NUMBER')"
                         :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.PHONE_NUMBER')"
                         :rules="{ required: true }">
-<!--                        regex: /^01[0125][0-9]{8}$/-->
+                        <!--                        regex: /^01[0125][0-9]{8}$/-->
                       </TextField>
                     </div>
                   </b-col>
@@ -289,6 +289,8 @@
         </validation-observer>
       </div>
     </div>
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal"
+           :is-success="true"/>
   </div>
 </template>
 <script>
@@ -296,51 +298,48 @@ import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import ImageUploader from "@/components/Shared/UploadImage/index.vue";
-import axios from "axios";
-import VueCookies from "vue-cookies";
 import _ from "lodash";
 
-import { TogglePasswordMixins } from "@/mixins/TogglePasswordMixins";
+import {TogglePasswordMixins} from "@/mixins/TogglePasswordMixins";
 // Dropdown
-import { deleteProfileImageRequest, postChangeStatusRequest } from "@/api/user";
-import { getAllSchoolGroupRequest, getSingleSchoolGroupRequest } from "@/api/schoolGroup";
+import {postChangeStatusRequest} from "@/api/user";
+import {getAllSchoolGroupRequest, getSingleSchoolGroupRequest} from "@/api/schoolGroup";
 
 import {
   getAllCountryRequest,
   getAllNationalitiesRequest,
   getAllNationaltyRequest
 } from "@/api/country";
-import { postAddUserSchoolRequest } from "@/api/user";
+import {postAddUserSchoolRequest} from "@/api/user";
 import {
   getAllGenderRequest,
   getAllReligionRequest,
   getAllRolesTypeRequest,
   getAllRolesByTypeRequest,
 } from "@/api/system";
+import Modal from "@/components/Shared/Modal/index.vue";
 
 export default {
   components: {
+    Modal,
     TextField,
     Button,
     SelectSearch,
     ImageUploader,
   },
   mixins: [TogglePasswordMixins],
-
   props: {
     systemRoles: {
       type: Array,
       default: () => [],
-    },
-    loading: {
-      type: Boolean,
-      default: false,
     },
   },
   data() {
     return {
       imageUrl: null,
       isStudent: false,
+      showModal: false,
+      loading: false,
       index: 0,
       indexType: 0,
       user: {
@@ -371,7 +370,7 @@ export default {
       schoolsList: [],
       rolesTypeList: [],
       religions: [],
-      filterWith:[],
+      filterWith: [],
       isManagementStudent: false,
       isSelectingRoleCategories: false,
     };
@@ -396,15 +395,24 @@ export default {
         userStatus.is_active = 0;
       else userStatus.is_active = 1;
 
-      this.ApiService(postChangeStatusRequest(userStatus)).then(() => {});
+      this.ApiService(postChangeStatusRequest(userStatus)).then(() => {
+      });
     },
 
     onSubmit() {
       this.$refs.addEditUserForm.validate().then((success) => {
+        this.loading = true;
         if (!success) return;
         this.ApiService(postAddUserSchoolRequest(this.user)).then(() => {
-          this.$router.push({ name: "schools-users-search" });
-        });
+          this.showModal = true;
+          setTimeout(() => {
+            this.loading = false;
+            this.showModal = false;
+            this.$router.push({name: "schools-users-search"});
+          }, 1500);
+        }).catch(()=>{
+          this.loading = false;
+        })
       });
     },
 
@@ -430,8 +438,7 @@ export default {
     },
     getAllDepartments: _.debounce(function (value) {
       if (value != undefined) {
-        console.log('value',value)
-        if (value.includes(125)){
+        if (value.includes(125)) {
           this.isManagementStudent = true
         } else {
           this.isManagementStudent = false
@@ -478,9 +485,7 @@ export default {
         const studentRoleType = this.rolesTypeList.find(
           (type) => type.key.toLowerCase() === "student_management"
         );
-        console.log("studentRoleType", studentRoleType);
-        console.log("value", value);
-        console.log("includes", value.includes(studentRoleType.id));
+
         if (value.includes(studentRoleType.id)) this.isStudent = true;
         else this.isStudent = false;
         if (value.includes(studentRoleType.id) && this.indexType == 0) {
@@ -492,7 +497,7 @@ export default {
           this.indexType = 0;
         }
       } catch (e) {
-        console.log(e);
+
       }
     },
 

@@ -161,13 +161,11 @@
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import {
   deleteStudentEnrollmentRequest,
-  deleteSupervisorEnrollmentRequest, getAllClassesRequest,
-  getLevelsRequest,
+  getAllClassesRequest,
+  getSchoolAdminLevelsRequest,
   getSchoolAdminUserRequest, getStudentsUsersRequest,
   getStudyYearsRequest,
-  getSuperVisorUsersRequest,
   postStudentEnrollmentRequest,
-  postSuperVisorEnrollmentRequest,
 } from "@/api/school-info";
 import Button from "@/components/Shared/Button/index.vue";
 import TextField from "@/components/Shared/TextField/index.vue";
@@ -242,7 +240,7 @@ export default {
       })
     },
     getAllLevels(){
-      this.ApiService(getLevelsRequest()).then((response)=>{
+      this.ApiService(getSchoolAdminLevelsRequest()).then((response)=>{
         this.levels = response.data.data
       })
     },

@@ -1208,7 +1208,10 @@
     "parentManagement": "Parent Management",
     "listOfStudents": "list Of Students",
     "addStudentToParent": "Add a student to the parent",
-    "classes":"class"
+    "classes":"class",
+    "superVisorDetail": "supervisor Detail",
+    "addLevelToSupervisor": "Add level to supervisor",
+    "levelsList": "List of supervisor levels"
   },
   "superVisor": {
     "date": "date",

@@ -4,7 +4,7 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">{{ $t("schoolAdmin.role") }}</h2>
+            <h2 class="heading">{{ $t("schoolAdmin.showDetailsTeacher") }}</h2>
           </b-col>
         </b-row>
         <b-row>
@@ -159,10 +159,9 @@
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import {
-  deleteSchoolAdminEnrollmentRequest, deleteTeacherEnrollmentRequest,
-  getAllClassesRequest, getClassesLevelRequest, geTeacherUsersRequest,
-  getLevelsRequest,
-  getSchoolAdminUserRequest, getSchoolAdminUsersRequest,
+  deleteTeacherEnrollmentRequest,
+  getAllClassesRequest, geTeacherUsersRequest, getSchoolAdminLevelsRequest,
+  getSchoolAdminUserRequest,
   getStudyYearsRequest,
   postTeacherEnrollmentRequest
 } from "@/api/school-info";
@@ -238,7 +237,7 @@ export default {
       })
     },
     getAllLevels() {
-      this.ApiService(getLevelsRequest()).then((response) => {
+      this.ApiService(getSchoolAdminLevelsRequest()).then((response) => {
         this.levels = response.data.data
       })
     },

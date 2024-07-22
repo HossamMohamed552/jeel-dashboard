@@ -389,8 +389,8 @@
               {{ $t("CONTROLS.permissions") }}
             </b-dropdown-item>
             <!-- Edit Item -->
-            <b-dropdown-divider v-if="checkEdit() === 'show'"></b-dropdown-divider>
-            <b-dropdown-item @click="editItem(data.item)" v-if="checkEdit() === 'show'">
+            <b-dropdown-divider v-if="checkEdit(data.item) === 'show'"></b-dropdown-divider>
+            <b-dropdown-item @click="editItem(data.item)" v-if="checkEdit(data.item) === 'show'">
               {{ $t("CONTROLS.editBtn") }}
             </b-dropdown-item>
 
@@ -411,18 +411,6 @@
             >
               {{ $t("CHANGE_PASSWORD") }}
             </b-dropdown-item>
-            <!-- Add User -->
-            <!--            <b-dropdown-divider v-if="checkUsersAdd() === 'show'"></b-dropdown-divider>-->
-            <!--            <b-dropdown-item @click="addUser(data.item.id)" v-if="checkUsersAdd() === 'show'">-->
-            <!--              {{ $t("CONTROLS.users") }}-->
-            <!--            </b-dropdown-item>-->
-            <!--            <b-dropdown-divider v-if="checkEditClass() === 'show'"></b-dropdown-divider>-->
-            <!--            <b-dropdown-item-->
-            <!--              v-if="checkEditClass() === 'show'"-->
-            <!--              @click="$router.push(`/dashboard/level-classes/${data.item.id}`)"-->
-            <!--            >-->
-            <!--              {{ $t("CONTROLS.ManageClasses") }}-->
-            <!--            </b-dropdown-item>-->
             <b-dropdown-divider v-if="checkAddQuestionVideo() === 'show'"></b-dropdown-divider>
             <b-dropdown-item
               v-if="checkAddQuestionVideo() === 'show'"
@@ -557,6 +545,8 @@ export default {
         return `CONTROLS.addStudentInClass`;
       } else if (this.$route.path.includes("teachers-users")) {
         return `CONTROLS.classes`;
+      } else if (this.$route.path.includes("supervisors-users")) {
+        return `schoolAdmin.addLevelToSupervisor`;
       } else {
         return `CONTROLS.addRoleBtn`;
       }
@@ -914,16 +904,14 @@ export default {
         return "hide";
       }
     },
-    checkEdit() {
-      const permissions = Array.isArray(this.permission_edit)
-        ? this.permission_edit
-        : [this.permission_edit];
-      if (
-        !this.user.permissions.includes("manage-learningpath") &&
-        !(this.activePage === "schoolAdmin") &&
-        permissions.some((permission) => this.user.permissions.includes(permission))
-      ) {
-        return "show";
+    checkEdit(item) {
+      const permissions = Array.isArray(this.permission_edit) ? this.permission_edit : [this.permission_edit];
+      if (!this.user.permissions.includes("manage-learningpath") && !(this.activePage === "schoolAdmin") && permissions.some((permission) => this.user.permissions.includes(permission))) {
+        if (!item.can_update && this.$route.name === 'subscription') {
+          return "hide";
+        } else {
+          return "show";
+        }
       } else if (this.activePage === "schoolAdmin") {
         return "hide";
       } else if (["questions", "practices", "missions"].includes(this.activePage)) {

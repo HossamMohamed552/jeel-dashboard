@@ -4,7 +4,7 @@
       <div class="hold-fields">
         <b-row>
           <b-col lg="12">
-            <h2 class="heading">{{ $t("schoolAdmin.role") }}</h2>
+            <h2 class="heading">{{ $t("schoolAdmin.superVisorDetail") }}</h2>
           </b-col>
         </b-row>
         <b-row>
@@ -33,7 +33,7 @@
             <ShowItem
               class="divider-show"
               :title="$t('schoolAdmin.status')"
-              :subtitle="userDetail.status.name"
+              :subtitle="userDetail?.status?.name"
             />
           </b-col>
           <b-col lg="6" class="mb-4">
@@ -52,16 +52,17 @@
           </b-col>
           <b-col lg="3" class="mb-4">
             <ShowItem
+              v-if="userDetail && userDetail.roles?.[0]"
               class="divider-show"
               :title="$t('schoolAdmin.roleDetail')"
-              :subtitle="userDetail.roles[0].name"
+              :subtitle="userDetail.roles[0]?.name"
             />
           </b-col>
           <validation-observer class="w-100 px-3" v-slot="{ invalid }" ref="addEditSchoolClassForm">
             <form @submit.prevent="onSubmit">
               <b-row>
                 <b-col lg="12">
-                  <h2 class="heading mt-3">{{ $t("schoolAdmin.addRole") }}</h2>
+                  <h2 class="heading mt-3">{{ $t("schoolAdmin.addLevelToSupervisor") }}</h2>
                 </b-col>
                 <b-col lg="5" >
                   <div class="hold-field" v-if="studyYears">
@@ -100,18 +101,12 @@
                   >
                     {{ $t("GLOBAL_SAVE") }}
                   </Button>
-<!--                  <div >-->
-<!--                    <Button @click="handleCancel" custom-class="cancel-btn margin">-->
-<!--                      {{ $t("GLOBAL_CANCEL") }}-->
-<!--                    </Button>-->
-
-<!--                  </div>-->
                 </b-col>
               </b-row>
             </form>
           </validation-observer>
           <b-col lg="12">
-            <h2 class="heading mt-4 mb-0">{{ $t("schoolAdmin.rolesList") }}</h2>
+            <h2 class="heading mt-4 mb-0">{{ $t("schoolAdmin.levelsList") }}</h2>
           </b-col>
           <b-col lg="12">
             <ListItems
@@ -142,7 +137,7 @@
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import {
   deleteSupervisorEnrollmentRequest,
-  getLevelsRequest,
+  getSchoolAdminLevelsRequest,
   getSchoolAdminUserRequest,
   getStudyYearsRequest, getSuperVisorUsersRequest, postSuperVisorEnrollmentRequest,
 } from "@/api/school-info";
@@ -179,7 +174,7 @@ export default {
       })
     },
     getAllLevels(){
-      this.ApiService(getLevelsRequest()).then((response)=>{
+      this.ApiService(getSchoolAdminLevelsRequest()).then((response)=>{
         this.levels = response.data.data
       })
     },

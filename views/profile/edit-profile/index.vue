@@ -89,10 +89,10 @@
 <!--                      /^01[0125][0-9]{8}$/-->
                     </div>
                   </b-col>
-                  <b-col lg="4" v-if="user.roles[0].type.key === 'system_administration'">
+                  <b-col lg="4" v-if="user?.roles?.[0]?.type?.key === 'system_administration'">
                     <div class="hold-field" >
                       <SelectSearch
-                        v-model="user.country_id"
+                        v-model="user.nationality_id"
                         :label="$t('USERS.NATIONALITY')"
                         :name="$t('USERS.NATIONALITY')"
                         :options="countries"
@@ -236,7 +236,7 @@ export default {
         mobile: "",
         gender: "",
         religion_id: "",
-        country_id: "",
+        nationality_id: "",
         facebook: "",
         linkedin: "",
         twitter: "",
@@ -283,7 +283,7 @@ export default {
         formData.append("mobile", this.user.mobile);
         formData.append("gender", this.user.gender);
         formData.append("religion_id", this.user.religion_id);
-        formData.append("country_id", this.user.country_id);
+        formData.append("nationality_id", this.user.nationality_id);
         formData.append("facebook", this.user.facebook);
         formData.append("linkedin", this.user.linkedin);
         formData.append("twitter", this.user.twitter);
@@ -345,7 +345,7 @@ export default {
     await this.getAllReligions();
     this.userStrored = JSON.parse(localStorage.getItem("user"));
     this.user = this.userStrored;
-    this.user.country_id = this.$store.getters.user.user_nationality ? this.$store.getters.user?.user_nationality.id : '';
+    this.user.nationality_id = this.$store.getters.user.user_nationality ? this.$store.getters.user?.user_nationality.id : '';
     this.user.religion_id = this.$store.getters.user.user_religion ? this.$store.getters.user?.user_religion.id : '';
     this.user.gender = this.$store.getters.user?.gender ? this.$store.getters.user?.gender?.id : "";
     this.imageUrl =  this.$store.getters.user?.image ? this.$store.getters.user?.image: "";
