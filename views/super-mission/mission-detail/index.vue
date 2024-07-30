@@ -72,6 +72,9 @@
                   <div @click="activeTap = 3" :class="activeTap === 3 ? 'active' : ''" class="tap">
                     {{ $t('supervisor.paperWork') }}
                   </div>
+                  <div @click="activeTap = 4" :class="activeTap === 4 ? 'active' : ''" class="tap">
+                    {{ $t('supervisor.tasks') }}
+                  </div>
                 </div>
                 <div class="content">
                   <div class="row">
@@ -79,84 +82,96 @@
                       <!-- video slider -->
                       <div class="col-12 px-0 videos" :key="learningPath.id"
                            v-show="activeTap === 1">
-                        <div ref="swiper" class="swiper">
-                          <div class="swiper-wrapper">
-                            <div class="swiper-slide" v-for="video in contentLearningPath.videos"
-                                 :id="'video'+video.id">
-                              <div class="video-cont">
-                                <vimeo-player
-                                  v-if="video.vimeo_video_with_music_url"
-                                  class="vimeo-player"
-                                  ref="videoPlayer"
-                                  :video-url="video.vimeo_video_with_music_url"
-                                  :options="{'responsive':true}"
-                                ></vimeo-player>
-                                <!--                                <video-player :videoId="video.id" :options="{-->
-                                <!--                            controls:true,-->
-                                <!--                            poster: `${video.thumbnail ? video.thumbnail : 'https://picsum.photos/1000'}`,-->
-                                <!--                            autoplay:false,-->
-                                <!--                            sources:[ {src: video.url, type:'video/mp4'}  ]-->
-                                <!--                          }"></video-player>-->
+                        <div v-if="Array.from(contentLearningPath.videos).length>0">
+                          <div ref="swiper" class="swiper">
+                            <div class="swiper-wrapper">
+                              <div class="swiper-slide" v-for="video in contentLearningPath.videos"
+                                   :id="'video'+video.id">
+                                <div class="video-cont">
+                                  <vimeo-player
+                                    v-if="video.vimeo_video_with_music_url"
+                                    class="vimeo-player"
+                                    ref="videoPlayer"
+                                    :video-url="video.vimeo_video_with_music_url"
+                                    :options="{'responsive':true}"
+                                  ></vimeo-player>
+                                  <!--                                <video-player :videoId="video.id" :options="{-->
+                                  <!--                            controls:true,-->
+                                  <!--                            poster: `${video.thumbnail ? video.thumbnail : 'https://picsum.photos/1000'}`,-->
+                                  <!--                            autoplay:false,-->
+                                  <!--                            sources:[ {src: video.url, type:'video/mp4'}  ]-->
+                                  <!--                          }"></video-player>-->
+                                </div>
                               </div>
                             </div>
                           </div>
+                          <div class="back-slide">
+                            <img src="@/assets/images/icons/back.svg">
+                          </div>
+                          <div class="next-slide">
+                            <img src="@/assets/images/icons/next.svg">
+                          </div>
                         </div>
-                        <div class="back-slide">
-                          <img src="@/assets/images/icons/back.svg">
-                        </div>
-                        <div class="next-slide">
-                          <img src="@/assets/images/icons/next.svg">
+                        <div v-else class="d-flex justify-content-center align-items-center">
+                          {{ $t('notFound') }}
                         </div>
                       </div>
                       <!--/-->
-                      <div class="col-12  quizzes" :key="learningPath.id" v-show="activeTap === 2">
-                        <div class="row mb-4" v-for="quiz in contentLearningPath.quizzes"
-                             :key="'quiz'+quiz.id">
-                          <div class="col-12">
-                            <div class="content-quizzes">
-                              <div class="content-quizzes-header" @click="getQuiz(quiz)">
-                                <p>{{ quiz.name }}</p>
-                                <button class="show-hide"><img
-                                  :src="quiz.is_selected === true? require('@/assets/images/icons/minus.png') : require('@/assets/images/icons/plus.png')">
-                                </button>
-                              </div>
-                              <div v-if="quiz.is_selected">
-                                <b-row class="divider" v-for="question in quiz.questions"
-                                       :key="'question'+ question.id">
-                                  <b-col lg="6" class="mt-4"
-                                         v-if="question.question_pattern === 'text'">
-                                    <ShowItem :title="$t('QUESTIONS.QUESTION')"
-                                              :subtitle="question.question.question"/>
-                                  </b-col>
-                                  <b-col lg="6" class="mt-4"
-                                         v-else-if="question.question_pattern === 'image'">
-                                    <ShowItem :title="$t('QUESTIONS.QUESTION')"/>
-                                    <div class="d-flex justify-content-start align-items-center">
-                                      <img class="question_img" :src="question.question.question">
-                                    </div>
-                                  </b-col>
-                                  <b-col lg="6" class="mt-4"
-                                         v-else-if="question.question_pattern === 'audio'">
-                                    <ShowItem :title="$t('QUESTIONS.QUESTION')"/>
-
-                                    <audio controls>
-                                      <source :src="question.question.question"/>
-                                    </audio>
-                                  </b-col>
-                                  <b-col lg="3" class="mt-4">
-                                    <ShowItem :title="$t('QUESTIONS.QUESTION_TYPE')"
-                                              :subtitle="question.question_type.name"/>
-                                  </b-col>
-                                </b-row>
+                      <!--quizzes-->
+                      <div class="col-12  quizzes" :key="`quizzes + ${learningPath.id}`"
+                           v-show="activeTap === 2">
+                        <div v-if="Array.from(contentLearningPath.quizzes).length>0">
+                          <div class="row mb-4" v-for="quiz in contentLearningPath.quizzes"
+                               :key="'quiz'+quiz.id">
+                            <div class="col-12">
+                              <div class="content-quizzes">
+                                <div class="content-quizzes-header" @click="getQuiz(quiz)">
+                                  <p>{{ quiz.name }}</p>
+                                  <button class="show-hide"><img
+                                    :src="quiz.is_selected === true? require('@/assets/images/icons/minus.png') : require('@/assets/images/icons/plus.png')">
+                                  </button>
+                                </div>
+                                <div v-if="quiz.is_selected">
+                                  <b-row class="divider" v-for="question in quiz.questions"
+                                         :key="'question'+ question.id">
+                                    <b-col lg="6" class="mt-4"
+                                           v-if="question.question_pattern === 'text'">
+                                      <ShowItem :title="$t('QUESTIONS.QUESTION')"
+                                                :subtitle="question.question"/>
+                                    </b-col>
+                                    <b-col lg="6" class="mt-4"
+                                           v-else-if="question.question_pattern === 'image'">
+                                      <ShowItem :title="$t('QUESTIONS.QUESTION')"/>
+                                      <div class="d-flex justify-content-start align-items-center">
+                                        <img class="question_img" :src="question.question.question">
+                                      </div>
+                                    </b-col>
+                                    <b-col lg="6" class="mt-4"
+                                           v-else-if="question.question_pattern === 'audio'">
+                                      <ShowItem :title="$t('QUESTIONS.QUESTION')"/>
+                                      <audio controls>
+                                        <source :src="question.question.question"/>
+                                      </audio>
+                                    </b-col>
+                                    <b-col lg="3" class="mt-4">
+                                      <ShowItem :title="$t('QUESTIONS.QUESTION_TYPE')"
+                                                :subtitle="question.question_type.name"/>
+                                    </b-col>
+                                  </b-row>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
+                        <div v-else class="d-flex justify-content-center align-items-center">
+                          {{ $t('notFound') }}
+                        </div>
                       </div>
-
-                      <div class="col-12 px-0 paper-work" :key="learningPath.id"
-                           v-show="activeTap === 3">
+                      <!--/-->
+                      <!--paper-work-->
+                      <div class="col-12 px-0 paper-work" :key="`paper-work + ${learningPath.id}`" v-show="activeTap === 3">
                         <ListItems
+                          v-if="Array.from(contentLearningPath.papersWork).length>0"
                           class="m-0 py-0"
                           :tableItems="contentLearningPath.papersWork"
                           :notHidePagination="false"
@@ -165,7 +180,29 @@
                           :showDownloadBtn="true"
                         >
                         </ListItems>
+                        <div v-else class="d-flex justify-content-center align-items-center">
+                          {{ $t('notFound') }}
+                        </div>
                       </div>
+                      <!--/-->
+                      <!--tasks-->
+                      <div class="col-12 px-0 paper-work" :key="`tasks + ${learningPath.id}`"
+                           v-show="activeTap === 4">
+                        <ListItems
+                          v-if="Array.from(contentLearningPath.tasks).length>0"
+                          class="m-0 py-0"
+                          :tableItems="contentLearningPath.tasks"
+                          :notHidePagination="false"
+                          :showSortControls="false"
+                          :fields-list="paperWorkFieldsList"
+                          :showDownloadBtn="true"
+                        >
+                        </ListItems>
+                        <div v-else class="d-flex justify-content-center align-items-center">
+                          {{ $t('notFound') }}
+                        </div>
+                      </div>
+                      <!--/-->
                     </transition-group>
                   </div>
                 </div>
@@ -203,7 +240,7 @@ export default {
       return [
         {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.name')},
-        {key: "type", label: this.$i18n.t('TABLE_FIELDS.type')},
+        {key: "type.name", label: this.$i18n.t('TABLE_FIELDS.type')},
         {key: "description", label: this.$i18n.t('TABLE_FIELDS.description')},
         {key: "download", label: this.$i18n.t('CONTROLS.download_file')},
       ]

@@ -34,7 +34,7 @@
                 <b-form-group class="mb-3">
                   <TextField
                     v-model="user.password"
-                    :rules="'required|min:8'"
+                    :rules="'required|verify_password'"
                     :type="passwordType"
                     :label="$t('USERS.PASSWORD')"
                     :name="$t('USERS.PASSWORD')"

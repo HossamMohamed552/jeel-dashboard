@@ -5,48 +5,15 @@
       <!-- Additional required wrapper -->
       <div class="swiper-wrapper">
         <!-- Slides -->
-        <div class="swiper-slide">
+        <div class="swiper-slide" v-for="(student,index) in students" :key="student.id">
           <div class="leader-item">
             <div class="leader-item-img">
-              <img src="@/assets/images/icons/user-avatar.png">
-              <div class="leader-item-rank"><span>#1</span></div>
+              <img :src="student.image" alt="avatar">
+              <div class="leader-item-rank"><span>#{{ index+1 }}</span></div>
             </div>
-            <p class="leader-item-name">حمزه عمر</p>
-            <p class="leader-item-class">الصف الأول الأبتدائى</p>
-            <p class="leader-item-point"><span>989</span><span>نقطة</span></p>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="leader-item">
-            <div class="leader-item-img">
-              <img src="@/assets/images/icons/user-avatar.png">
-              <div class="leader-item-rank"><span>#1</span></div>
-            </div>
-            <p class="leader-item-name">حمزه عمر</p>
-            <p class="leader-item-class">الصف الأول الأبتدائى</p>
-            <p class="leader-item-point"><span>989</span><span>نقطة</span></p>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="leader-item">
-            <div class="leader-item-img">
-              <img src="@/assets/images/icons/user-avatar.png">
-              <div class="leader-item-rank"><span>#1</span></div>
-            </div>
-            <p class="leader-item-name">حمزه عمر</p>
-            <p class="leader-item-class">الصف الأول الأبتدائى</p>
-            <p class="leader-item-point"><span>989</span><span>نقطة</span></p>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="leader-item">
-            <div class="leader-item-img">
-              <img src="@/assets/images/icons/user-avatar.png">
-              <div class="leader-item-rank"><span>#1</span></div>
-            </div>
-            <p class="leader-item-name">حمزه عمر</p>
-            <p class="leader-item-class">الصف الأول الأبتدائى</p>
-            <p class="leader-item-point"><span>989</span><span>نقطة</span></p>
+            <p class="leader-item-name">{{ student.name }}</p>
+            <p class="leader-item-class">{{ student.class.level.name }}</p>
+            <p class="leader-item-point"><span>{{ student.missions_points }}</span><span>نقطة</span></p>
           </div>
         </div>
       </div>
@@ -66,10 +33,23 @@
 <script>
 import Swiper from "swiper/swiper-bundle";
 import "swiper/swiper-bundle.css"
+import {getLeaderBoardSuperRequest} from "@/api/supervisor-module";
 
 export default {
   name: "LeaderBoard",
-  mounted() {
+  data(){
+    return{
+      students:[]
+    }
+  },
+  methods:{
+    getLeaderBoard(params) {
+      this.ApiService(getLeaderBoardSuperRequest(params)).then((response) => {
+        this.students = response.data.data
+      })
+    }
+  },
+  updated() {
     new Swiper('.swiper', {
       // Optional parameters
       loop: true,
@@ -81,6 +61,9 @@ export default {
       slidesPerView: 3,
       spaceBetween: 20,
     })
+  },
+  mounted() {
+    this.getLeaderBoard()
   }
 }
 </script>
@@ -95,7 +78,7 @@ export default {
   position: relative;
   .back-slide,.next-slide{
     position: absolute;
-    bottom: -4.2rem;
+    bottom: -1.9rem;
     background-color: #F4EDF3;
     width: 36px;
     height: 36px;
@@ -131,7 +114,6 @@ export default {
         background-color: #76236C;
         width: 40px;
         height: 40px;
-        padding: 0 0 0.5rem 0;
         color: #FFFFFF;
         border: 2px solid #fff;
         display: flex;
@@ -148,7 +130,7 @@ export default {
     }
     .leader-item-name{
       margin: 1.1rem 0 .2rem 0;
-      font-size: 1.4rem;
+      font-size: 1rem;
       font-weight: bold;
       color: $color-primary;
     }

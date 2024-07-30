@@ -854,21 +854,15 @@ export default {
         .catch((error) => {});
     },
     checkDelete(data) {
-      const permissions = Array.isArray(this.permission_delete)
-        ? this.permission_delete
-        : [this.permission_delete];
-
-      if (
-        (data.item.is_default === 1 || data.item.school_owner === true) &&
-        permissions.some((permission) => this.user.permissions.includes(permission))
-      ) {
+      const permissions = Array.isArray(this.permission_delete) ? this.permission_delete : [this.permission_delete];
+      if ((data.item.is_default === 1 || data.item.school_owner === true) && permissions.some((permission) => this.user.permissions.includes(permission))) {
         return "hide";
-      } else if (
-        data.item.is_default === 0 ||
-        data.item.school_owner === false ||
-        permissions.some((permission) => this.user.permissions.includes(permission))
-      ) {
-        return "show";
+      } else if (data.item.is_default === 0 || data.item.school_owner === false || permissions.some((permission) => this.user.permissions.includes(permission))) {
+        if (!data.item.can_update && this.$route.name === 'subscription') {
+          return "hide";
+        } else {
+          return "show";
+        }
       } else if (this.$route.path === "/dashboard/question-difficulty") {
         return "hide";
       } else {
@@ -983,17 +977,6 @@ export default {
         return "hide";
       }
     },
-
-    // checkEditClass() {
-    //   if (
-    //     this.user.permissions.includes("manage-learningpath") &&
-    //     this.$route.path.includes("levels")
-    //   ) {
-    //     return "show";
-    //   } else {
-    //     return "hide";
-    //   }
-    // },
     checkAddAd(data) {
       if (
         this.user.permissions.includes("add-announcements") &&
@@ -1021,22 +1004,7 @@ export default {
       } else if (item.task_audio) {
         window.open(item.task_audio, "_blank", "noreferrer");
       }
-      // try {
-      //   const response = await axios.get(`${item.url}`, {
-      //     responseType: 'arraybuffer'
-      //   });
-      //   const blob = new Blob([response.data], {type: response.headers['content-type']})
-      //   const link = document.createElement('a')
-      //   link.href = window.URL.createObjectURL(blob)
-      //   link.click()
-      //   window.URL.revokeObjectURL(link.href)
-      // } catch (error) {
-      //   console.error('Error downloading image', error);
-      // }
     },
-    // goToAddVideo(videoId) {
-    //   this.$router.push(`/dashboard/video/${videoId}/questions`);
-    // },
     sortBy(key) {
       this.formValues.order_by = key;
       if (this.formValues.order_by === 'vid'){

@@ -7,6 +7,7 @@ import welcomeModal from "./modules/welcomeModal";
 import seasonalMission from "./modules/seasonalMission";
 import competition from "./modules/competition";
 import group from "@/store/modules/group";
+import mission from "@/store/modules/mission";
 
 Vue.use(Vuex);
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     welcomeModal,
     seasonalMission,
     competition,
-    group
+    group,
+    mission
   },
 });

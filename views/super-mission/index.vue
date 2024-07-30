@@ -20,7 +20,7 @@
       </validation-observer>
       <div class="header m-0">
         <div class="list-of-item">
-          <p class="name-of-item">{{$t('supervisor.ListOfMissions')}}</p>
+          <p class="name-of-item">{{ $t('supervisor.ListOfMissions') }}</p>
           <!--          <span class="no-of-item">{{ missions.length }}</span>-->
         </div>
       </div>
@@ -40,7 +40,9 @@
         <b-col lg="8" class="d-flex justify-content-start align-items-end" v-if="minMissions">
           <div class="info">
             <span><img src="@/assets/images/icons/info.png"></span>
-            <span>{{ $t('superMission.numberOfMission') }} {{ minMissions }} {{$t('superMission.missions')}} </span>
+            <span>{{ $t('superMission.numberOfMission') }} {{
+                minMissions
+              }} {{ $t('superMission.missions') }} </span>
           </div>
         </b-col>
       </b-row>
@@ -49,9 +51,11 @@
           <b-col lg="1"></b-col>
           <b-col lg="1">#</b-col>
           <b-col lg="2">{{ $t('superMission.missionName') }}</b-col>
-          <b-col lg="2">{{$t('superMission.startDate')}}</b-col>
+          <b-col lg="2">{{ $t('superMission.startDate') }}</b-col>
           <b-col lg="2">{{ $t('superMission.endDate') }}</b-col>
-          <b-col lg="2" class="d-flex justify-content-center align-items-center">{{ $t('superMission.status') }}</b-col>
+          <b-col lg="2" class="d-flex justify-content-center align-items-center">
+            {{ $t('superMission.status') }}
+          </b-col>
           <b-col lg="2"></b-col>
         </b-row>
       </div>
@@ -117,10 +121,14 @@
                 <b-col lg="2" class="d-flex justify-content-start align-items-center"><span
                   class="mission-name">{{ item.name }}</span></b-col>
                 <b-col lg="2" class="d-flex justify-content-start align-items-center">
-                  <span class="mission-name">{{$t('superMission.NumberOfPoints')}} : {{ item.jeel_xp }} </span>
+                  <span class="mission-name">{{ $t('superMission.NumberOfPoints') }} : {{
+                      item.jeel_xp
+                    }} </span>
                 </b-col>
                 <b-col lg="2" class="d-flex justify-content-start align-items-center">
-                  <span class="mission-name">{{$t('superMission.NumberOfGames')}} : {{ item.jeel_coins }} </span>
+                  <span class="mission-name">{{ $t('superMission.NumberOfGames') }} : {{
+                      item.jeel_coins
+                    }} </span>
                 </b-col>
                 <b-col lg="2" class="d-flex justify-content-start align-items-center"></b-col>
                 <b-col lg="2" class="d-flex justify-content-center align-items-center">
@@ -135,7 +143,8 @@
             <Button @click="handleCancel" custom-class="cancel-btn margin">
               {{ $t("GLOBAL_CANCEL") }}
             </Button>
-            <Button @click="sortMissions" :disabled="missionSaved.length === 0" :loading="loading"
+            <Button @click="sortMissions" :disabled="missionSaved.length === 0 || notSend"
+                    :loading="loading"
                     custom-class="submit-btn">
               {{ $t("GLOBAL_SAVE") }}
             </Button>
@@ -179,6 +188,7 @@ export default {
       missionSaved: [],
       endDateItemBefore: null,
       loading: false,
+      notSend: false,
       invalid: true,
       minMissions: null,
       missionSearch: [
@@ -227,6 +237,20 @@ export default {
     }
   },
   watch: {
+    missionSaved(newVal) {
+      for (let index = 0; index < newVal.length; index++) {
+        let typeOfNextElement = newVal[index + 1]
+        if (typeOfNextElement?.type === 'power') {
+          newVal[index]['power_up_box_id'] = newVal[index + 1].id
+        } else {
+          delete newVal[index]['power_up_box_id']
+        }
+      }
+      this.missionSavedWithPower = newVal
+      if (this.missionSavedWithPower) {
+        this.notSend = this.hasDuplicates(this.missionSavedWithPower)
+      }
+    },
     missionSavedWithPower(newVal) {
       return newVal
     }
@@ -239,6 +263,14 @@ export default {
     }
   },
   methods: {
+    hasDuplicates(arr) {
+      for (let i = 0; i < arr.length - 1; i++) {
+        if ((arr[i]?.type === arr[i + 1]?.type) && (arr[i]?.type === "power") && (arr[i + 1]?.type === "power") ) {
+          return true; // Found  duplicates
+        }
+      }
+      return false; // No  duplicates found
+    },
     handleInput(key, value, field) {
       if (key === 'term_id') {
         this.minMissions = field?.options ? field?.options.find(item => item.id === value)?.min_missions : null

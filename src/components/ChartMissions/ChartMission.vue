@@ -1,5 +1,6 @@
 <template>
   <Doughnut
+    v-if="chartIsLoaded"
     :chart-options="chartOptions"
     :chart-data="chartData"
     :chart-id="chartId"
@@ -19,22 +20,32 @@ import {
   ArcElement,
   CategoryScale
 } from 'chart.js'
+import {getSupervisorMissionsStatisticsRequest} from "@/api/supervisor-module";
+import ApiService from "@/api/ApiService";
+
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale)
 export default defineComponent({
   name: "ChartMission",
   components: {Doughnut},
-  data(){
-    return{
-      chartData: {
-        labels: ['تمت 25', 'جارية 8', 'معلقة 3'],
+  data() {
+    return {
+      chartIsLoaded: false
+    }
+  },
+  computed: {
+    chartData() {
+      return {
+        // labels: ['تمت 25', 'جارية 8', 'معلقة 3'],
         datasets: [
           {
             backgroundColor: ['#76236C', '#40BBF0', '#FFA900'],
-            data: [50, 20, 30],
+            // data: [50, 20, 30],
           }
         ]
-      },
-      chartOptions: {
+      }
+    },
+    chartOptions() {
+      return {
         responsive: true,
         maintainAspectRatio: false,
         borderWidth: 0,
@@ -63,6 +74,14 @@ export default defineComponent({
       }
     }
   },
+  watch: {
+    chartData: {
+      handler(newVal) {
+        return newVal
+      },
+      immediate: true,
+    },
+  },
   props: {
     chartId: {
       type: String,
@@ -82,6 +101,19 @@ export default defineComponent({
     },
 
   },
+  methods: {
+    getMissionStatistics() {
+      ApiService(getSupervisorMissionsStatisticsRequest()).then((response) => {
+        let MissionsStatistics = response.data.data
+        this.chartData.datasets[0].data = [MissionsStatistics.mission_pending, MissionsStatistics.mission_open, MissionsStatistics.mission_compeleted]
+        this.chartData.labels = [`معلقة ${MissionsStatistics.mission_pending}`, `جارية ${MissionsStatistics.mission_open}`, `تمت ${MissionsStatistics.mission_compeleted}`]
+        this.chartIsLoaded = true
+      })
+    }
+  },
+  mounted() {
+    this.getMissionStatistics()
+  }
 })
 </script>
 <style scoped lang="scss">

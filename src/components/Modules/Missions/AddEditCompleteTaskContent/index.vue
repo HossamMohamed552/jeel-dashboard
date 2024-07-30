@@ -100,10 +100,11 @@ import {getAllBadgesRequest} from "@/api/badge"
 import {getLibraryTypesRequest} from "@/api/badge"
 import {getLibraryContentRequest} from "@/api/badge"
 import {debounce} from "lodash";
+import {getSingleMissionsRequest} from "@/api/missios";
 
 
 export default {
-  name: "index",
+  name:"missionStepThree",
   components: {
     Button,
     SelectSearch,
@@ -237,6 +238,11 @@ export default {
   mounted() {
     this.getLibraryTypesRequest();
     this.getAllBadges();
+    if (this.$route.params.id) {
+      // this.ApiService(getSingleMissionsRequest(this.$route.params.id)).then((response) => {
+      //   this.badges = response.data.data.badges_rewards
+      // })
+    }
   }
 }
 </script>

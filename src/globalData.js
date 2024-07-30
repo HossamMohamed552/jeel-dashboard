@@ -416,6 +416,15 @@ let routeSuperVisor = [
     icon: require("@/assets/images/icons/steps.svg"),
     permission: "view-supervisor-leaderboard",
   },
+  {
+    name: "التقارير",
+    nameEn: "reports",
+    path: "/dashboard/reports",
+    altImage: "view-reports",
+    titleImage: "view-reports",
+    icon: require("@/assets/images/icons/steps.svg"),
+    permission: "view-supervisor-leaderboard",
+  },
 ];
 let routeSchoolAdmin = [
   {
@@ -830,7 +839,7 @@ let routesSuperVisorReports = [
     altImage: "Student performance",
     titleImage: "Student performance",
     icon: require("@/assets/images/icons/student-performance.svg"),
-    permission: "view-supervisior-levels",
+    permission: "view-supervisor-terms",
   },
   {
     name: "أداء الفصل",
@@ -839,7 +848,7 @@ let routesSuperVisorReports = [
     altImage: "competitions",
     titleImage: "competitions",
     icon: require("@/assets/images/icons/class-performance.svg"),
-    permission: "view-supervisior-levels",
+    permission: "view-supervisor-terms",
   },
 ];
 export {

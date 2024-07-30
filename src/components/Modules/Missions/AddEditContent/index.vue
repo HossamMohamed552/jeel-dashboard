@@ -97,7 +97,7 @@ import {getSingleMissionsRequest} from "@/api/missios";
 import {log} from "video.js";
 
 export default {
-  name: "index",
+  name:"missionStepTwo",
   components: {
     Button,
     SelectSearch,
@@ -274,7 +274,6 @@ export default {
         this.filterWith[`lessons[${lesson}]`] = this.lessonsSelectedWithEdit[lesson]
       }
       this.watchLearningPathSelected.forEach((item) => {
-
         this.ApiService(getVideoPerLevelPathMissionRequest({
           learning_path_id: item.id,
           ...this.filterWith,
@@ -285,7 +284,6 @@ export default {
             videoIds: []
           })
         })
-
         this.ApiService(getPaperWorkPerLevelPathRequest({
           learning_path_id: item.id,
           ...this.filterWith,
@@ -316,13 +314,6 @@ export default {
             tasksIds: []
           })
         })
-        // this.ApiService(getAudioPerLevelPathRequest({
-        //   // levelId: this.level,
-        //   learnPathId: item.id,
-        //   // termId: this.term
-        // })).then((response) => {
-        //   Object.assign(item, {tasks: response.data.data, tasksIds: []})
-        // })
         collectArray.push(item)
       })
       this.learnPathsVideoPaperWokQuiz = collectArray

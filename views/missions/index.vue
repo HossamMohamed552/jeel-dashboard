@@ -44,7 +44,7 @@ export default {
         {key: "vid", label: this.$i18n.t("TABLE_FIELDS.id")},
         {key: "name", label: this.$i18n.t("TABLE_FIELDS.name")},
         {key: "level", label: this.$i18n.t("TABLE_FIELDS.level")},
-        {key: "description", label: this.$i18n.t("TABLE_FIELDS.description")},
+        // {key: "description", label: this.$i18n.t("TABLE_FIELDS.description")},
         {key: "learningpaths", label: this.$i18n.t("TABLE_FIELDS.learning_path_name")},
         {key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions")},
       ]

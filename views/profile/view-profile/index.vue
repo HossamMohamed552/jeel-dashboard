@@ -21,7 +21,7 @@
           <b-col lg="3">
             <div class="img-container">
               <span>
-                <img v-if="user.image" :src="user.image" alt="Person Image" />
+                <img v-if="user.image" :src="user.image" alt="Person Image"/>
                 <i v-else class="far fa-user"></i>
               </span>
             </div>
@@ -29,46 +29,50 @@
           <b-col lg="9">
             <b-row>
               <b-col lg="4" class=" showItem">
-                <ShowItem :title="$t('USER.first_name')" :subtitle="user.first_name" />
+                <ShowItem :title="$t('USER.first_name')" :subtitle="user.first_name"/>
               </b-col>
               <b-col lg="4" class=" showItem">
-                <ShowItem :title="$t('USERS.SECOND_NAME')" :subtitle="user.middle_name" />
+                <ShowItem :title="$t('USERS.SECOND_NAME')" :subtitle="user.middle_name"/>
               </b-col>
               <b-col lg="4" class=" showItem">
-                <ShowItem :title="$t('USERS.LAST_NAME')" :subtitle="user.last_name" />
+                <ShowItem :title="$t('USERS.LAST_NAME')" :subtitle="user.last_name"/>
               </b-col>
               <b-col lg="8" class=" showItem">
-                <ShowItem :title="$t('TABLE_FIELDS.email_username')" :subtitle="user.email" />
+                <ShowItem :title="$t('TABLE_FIELDS.email_username')" :subtitle="user.email"/>
               </b-col>
               <b-col lg="4" class=" showItem">
-                <ShowItem :title="$t('USER.mobile')" :subtitle="user.mobile" />
+                <ShowItem :title="$t('USER.mobile')" :subtitle="user.mobile"/>
               </b-col>
               <b-col lg="4" class=" showItem">
-                <ShowItem :title="$t('USERS.NATIONALITY')" :subtitle="user?.user_nationality?.name" />
+                <ShowItem :title="$t('USERS.NATIONALITY')"
+                          :subtitle="user?.user_nationality?.name"/>
               </b-col>
               <b-col lg="4" class=" showItem">
-                <ShowItem :title="$t('USERS.religion')" :subtitle="user?.user_religion?.name" />
+                <ShowItem :title="$t('USERS.religion')" :subtitle="user?.user_religion?.name"/>
               </b-col>
               <b-col lg="4" class=" showItem">
-                <ShowItem :title="$t('USERS.gender')" :subtitle="user?.gender?.name" />
+                <ShowItem :title="$t('USERS.gender')" :subtitle="user?.gender?.name"/>
               </b-col>
               <b-col lg="4" class=" showItem" v-if="user && user.roles">
-                <ShowItem :title="$t('USERS.DEPARTMENT')" :listItems="user.roles" />
+                <ShowItem :title="$t('USERS.DEPARTMENT')" :listItems="user.roles"/>
               </b-col>
               <b-col lg="4" class=" showItem">
-                <ShowItem :title="$t('USERS.ACTIVE')" :subtitle="user?.status?.name" />
+                <ShowItem :title="$t('USERS.ACTIVE')" :subtitle="user?.status?.name"/>
               </b-col>
               <b-col lg="12">
-                <h3 class="mb-5">{{$t("socialLink")}}</h3>
+                <h3 class="mb-5">{{ $t("socialLink") }}</h3>
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('SOCIAL_MEDIA.FACEBOOK')" :subtitle='user?.facebook === "null" || user?.facebook === null ? $t("notFound") : user?.facebook' />
+                <ShowItem :title="$t('SOCIAL_MEDIA.FACEBOOK')"
+                          :subtitle='user?.facebook === "null" || user?.facebook === null ? $t("notFound") : user?.facebook'/>
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('SOCIAL_MEDIA.TWITTER')" :subtitle='user?.twitter === "null" || user?.twitter === null ? $t("notFound") : user?.twitter' />
+                <ShowItem :title="$t('SOCIAL_MEDIA.TWITTER')"
+                          :subtitle='user?.twitter === "null" || user?.twitter === null ? $t("notFound") : user?.twitter'/>
               </b-col>
               <b-col lg="4" class="mb-5 showItem">
-                <ShowItem :title="$t('SOCIAL_MEDIA.LINKEDIN')" :subtitle='user?.linkedin === "null" || user?.linkedin === null ? $t("notFound") : user?.linkedin'/>
+                <ShowItem :title="$t('SOCIAL_MEDIA.LINKEDIN')"
+                          :subtitle='user?.linkedin === "null" || user?.linkedin === null ? $t("notFound") : user?.linkedin'/>
               </b-col>
             </b-row>
           </b-col>
@@ -90,7 +94,7 @@
                 <b-form-group>
                   <TextField
                     v-model="changePassword.old_password"
-                    rules="required"
+                    rules="required|verify_password"
                     :type="newPasswordType"
                     :label="$t('LOGIN_CURRENT_PASSWORD')"
                     :name="$t('LOGIN_CURRENT_PASSWORD')"
@@ -110,7 +114,7 @@
                 <b-form-group>
                   <TextField
                     v-model="changePassword.new_password"
-                    rules="required"
+                    rules="required|verify_password"
                     :type="passwordType"
                     :label="$t('LOGIN_NEW_PASSWORD')"
                     :name="$t('LOGIN_NEW_PASSWORD')"
@@ -118,7 +122,7 @@
                     class="p-relative d-block"
                     ref="password"
                   >
-                    <b-icon :icon="passwordIcon" @click="hideShowPassword" class="icon-password" />
+                    <b-icon :icon="passwordIcon" @click="hideShowPassword" class="icon-password"/>
                   </TextField>
                 </b-form-group>
               </b-col>
@@ -163,14 +167,14 @@
   </section>
 </template>
 <script>
-import { postChangePasswordRequest } from "@/api/user.js";
+import {postChangePasswordRequest} from "@/api/register.js";
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { TogglePasswordMixins } from "@/mixins/TogglePasswordMixins";
+import {TogglePasswordMixins} from "@/mixins/TogglePasswordMixins";
 import TextField from "@/components/Shared/TextField/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
-import { mapActions } from "vuex";
+import {mapActions} from "vuex";
 
 export default {
   mixins: [TogglePasswordMixins],

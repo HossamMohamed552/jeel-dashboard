@@ -76,11 +76,11 @@
               :fieldsList="fieldsList"
               :table-items="singleUser.classes"
               :loading="loading"
-              :permission_delete="'delete-enrollment-supervisors-users'"
               @deleteItem="deleteItem($event)"
               :showSortControls="false"
               class="m-0 p-0"
             >
+<!--              :permission_delete="'delete-enrollment-supervisors-users'"-->
             </ListItems>
           </b-col>
         </b-row>
@@ -158,10 +158,10 @@ export default {
           key: "name",
           label: this.$i18n.t("TABLE_FIELDS.className"),
         },
-        {
-          key: "actions",
-          label: this.$i18n.t("TABLE_FIELDS.actions"),
-        },
+        // {
+        //   key: "actions",
+        //   label: this.$i18n.t("TABLE_FIELDS.actions"),
+        // },
       ]
     },
   },

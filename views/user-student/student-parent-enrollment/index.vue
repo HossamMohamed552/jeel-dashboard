@@ -213,7 +213,7 @@ export default {
     })
   },
     getParentUsers(){
-      this.ApiService(getAllParentUsersRequest()).then((response)=>{
+      this.ApiService(getAllParentUsersRequest({list_all:true})).then((response)=>{
         this.parentsList = response.data.data
       })
     }

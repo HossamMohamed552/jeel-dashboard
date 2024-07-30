@@ -62,10 +62,10 @@
               :notHidePagination="false"
               :loading="loading"
               :permission_delete="'delete-enrollment-supervisors-users'"
-              @deleteItem="deleteItem($event)"
               :showSortControls="false"
               class="m-0 p-0"
             >
+<!--              @deleteItem="deleteItem($event)"-->
             </ListItems>
           </b-col>
         </b-row>

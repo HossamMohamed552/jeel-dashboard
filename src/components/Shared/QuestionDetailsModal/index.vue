@@ -23,9 +23,9 @@
                 <b-col lg="5">
                   <ShowItem :title="$t('QUESTIONS.QUESTION')" />
                   <div class="d-flex align-items-center mb-4 mt-3">
-                    <ShowItem :subtitle="question.question" v-if="question.question_pattern === 'text'"/>
-                    <img class="question_img mb-3" v-else-if="question.question_pattern === 'image'" :src="question.question">
-                    <audio controls v-else-if="question.question_pattern === 'audio'" class="mb-3">
+                    <ShowItem :subtitle="question.question" v-if="question.question_pattern_slug === 'text'"/>
+                    <img class="question_img mb-3" v-else-if="question.question_pattern_slug === 'image'" :src="question.question">
+                    <audio controls v-else-if="question.question_pattern_slug === 'audio'" class="mb-3">
                       <source :src="question.question" />
                     </audio>
                     <div v-if="question.question_audio">
@@ -48,13 +48,13 @@
                 </b-col>
                 <b-col lg="4" class="mb-4 mt-3" v-if="question.question_type && question.question_type.name">
                   <ShowItem
-                    :title="$t('QUESTIONS.QUESTION_PATTERN')"
+                    :title="$t('QUESTIONS.TYPE')"
                     :subtitle="question.question_type.name"
                   />
                 </b-col>
                 <b-col lg="3" class="mb-4 mt-3">
                   <ShowItem
-                    :title="$t('QUESTIONS.TYPE')"
+                    :title="$t('QUESTIONS.QUESTION_PATTERN')"
                     :subtitle="question.question_pattern"
                   />
                 </b-col>

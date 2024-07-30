@@ -190,8 +190,10 @@ import ImageUploader from "@/components/Shared/ImageUploader/index.vue";
 import UploadAttachment from "@/components/Shared/UploadAttachment";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import {getLessonsByLearningPathRequest} from "@/api/lessons"
+import {mapGetters} from "vuex";
 
 export default {
+  name:"missionStepOne",
   components: {
     TextField,
     SelectSearch,
@@ -240,7 +242,6 @@ export default {
         thumbnailChanged: false,
         thumbnailChangedRequest: false,
         thumbnailPreview: null,
-
         missionAudio: null,
         missionAudioChanged:false,
         missionAudioChangedRequest:false
@@ -254,6 +255,7 @@ export default {
       this.mission.itemImage = null;
     },
     onSubmit() {
+      this.$store.commit('SET_MISSION_STEP_ONE',this.mission)
       this.$emit("onSubmit", this.mission);
     },
     handleCancel() {
@@ -306,6 +308,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['getMissionStepOne']),
     checkInputs() {
       if (this.mission.thumbnail === null || this.mission.missionAudio === null) {
         return true
@@ -348,6 +351,9 @@ export default {
         this.getLessonsByLearningPathIds(this.mission.learning_path_ids)
       });
     }
+    // else if (this.getMissionStepOne){
+    //   this.mission = this.getMissionStepOne
+    // }
   },
 };
 </script>

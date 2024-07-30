@@ -121,44 +121,32 @@
           </b-row>
         </b-col>
       </b-row>
-<!--      <b-row>-->
-<!--        <b-col lg="4">-->
-<!--          <div class="stats">-->
-<!--            <div class="heading">-->
-<!--              <span>{{ $t('MENU.routesMissions') }}</span>-->
-<!--            </div>-->
-<!--            <ChartMission/>-->
-<!--            <div class="item-link">-->
-<!--              <router-link to="missions"><span>{{ $t('all') }}</span> <span><img-->
-<!--                src="@/assets/images/icons/arrow-left.svg"/></span></router-link>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </b-col>-->
-<!--        <b-col lg="4">-->
-<!--          <div class="stats leader-board">-->
-<!--            <div class="heading">-->
-<!--              <span>{{ $t('STATISTICS.leaderboard') }}</span>-->
-<!--            </div>-->
-<!--            <LeaderBoard/>-->
-<!--            <div class="item-link">-->
-<!--              <router-link to="missions"><span>{{ $t('all') }}</span> <span><img-->
-<!--                src="@/assets/images/icons/arrow-left.svg"/></span></router-link>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </b-col>-->
-<!--        <b-col lg="4">-->
-<!--          <div class="stats">-->
-<!--            <div class="heading">-->
-<!--              <span>{{ $t('STATISTICS.competitions') }}</span>-->
-<!--            </div>-->
-<!--            <ChartCompetition/>-->
-<!--            <div class="item-link">-->
-<!--              <router-link to="missions"><span>{{ $t('all') }}</span> <span><img-->
-<!--                src="@/assets/images/icons/arrow-left.svg"/></span></router-link>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </b-col>-->
-<!--      </b-row>-->
+      <b-row>
+        <b-col lg="4">
+          <div class="stats">
+            <div class="heading">
+              <span>{{ $t('MENU.routesMissions') }}</span>
+            </div>
+            <ChartMission/>
+          </div>
+        </b-col>
+        <b-col lg="4">
+          <div class="stats leader-board">
+            <div class="heading">
+              <span>{{ $t('STATISTICS.leaderboard') }}</span>
+            </div>
+            <LeaderBoard/>
+          </div>
+        </b-col>
+        <b-col lg="4">
+          <div class="stats">
+            <div class="heading">
+              <span>{{ $t('STATISTICS.competitions') }}</span>
+            </div>
+            <ChartCompetition/>
+          </div>
+        </b-col>
+      </b-row>
     </div>
     <WelcomeModal/>
   </section>

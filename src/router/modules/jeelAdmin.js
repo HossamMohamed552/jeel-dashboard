@@ -295,7 +295,7 @@ export default [
     meta: {
       breadcrumb: "تغيير كلمة المرور",
       breadcrumbEn: "add users",
-      preLabel: "change password",
+      preLabel: "قائمة المستخدمين",
       preLabelEn: "System administration users",
       preLink: "/dashboard/users",
     },

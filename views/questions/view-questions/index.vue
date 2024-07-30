@@ -10,10 +10,10 @@
         <div class="divider">
           <b-row>
             <b-col lg="4">
-              <ShowItem :title="$t('QUESTIONS.TYPE')" :subtitle="question.question_pattern"/>
+              <ShowItem :title="$t('QUESTIONS.TYPE')" :subtitle="question.question_type.name"/>
             </b-col>
             <b-col lg="4" class="d-flex align-items-end">
-              <div v-if="question.question_pattern === 'text'"
+              <div v-if="question.question_pattern_slug === 'text'"
                    class="d-flex justify-content-start align-items-lg-end">
                 <ShowItem :title="$t('QUESTIONS.QUESTION')" :subtitle="question.question"/>
                 <div v-if="question.question_audio">
@@ -33,7 +33,7 @@
                   />
                 </div>
               </div>
-              <div v-else-if="question.question_pattern === 'image'">
+              <div v-else-if="question.question_pattern_slug === 'image'">
                 <ShowItem :title="$t('QUESTIONS.QUESTION')"/>
                 <div class="d-flex justify-content-start align-items-center">
                   <img class="question_img" :src="question.question">
@@ -55,7 +55,7 @@
                   </div>
                 </div>
               </div>
-              <div v-else-if="question.question_pattern === 'audio'">
+              <div v-else-if="question.question_pattern_slug === 'audio'">
                 <ShowItem :title="$t('QUESTIONS.QUESTION')"/>
                 <audio controls>
                   <source :src="question.question"/>
@@ -65,7 +65,7 @@
             <b-col lg="4">
               <ShowItem
                 :title="$t('QUESTIONS.QUESTION_PATTERN')"
-                :subtitle="question.question_type.name"
+                :subtitle="question.question_pattern"
               />
             </b-col>
           </b-row>

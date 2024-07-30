@@ -28,7 +28,7 @@
                 <b-form-group class="mb-3">
                   <TextField
                     v-model="user.password"
-                    rules="required"
+                    rules="required|verify_password"
                     :type="passwordType"
                     :label="$t('USERS.PASSWORD')"
                     :name="$t('USERS.PASSWORD')"
@@ -116,7 +116,7 @@ export default {
       this.$refs.addEditUserForm.validate().then((success) => {
         if (!success) return;
         this.ApiService(postChangePasswordRequest(this.id, this.user)).then((response) => {
-          this.$router.push(`/dashboard/users`);
+          this.$router.back();
         });
       });
     },

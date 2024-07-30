@@ -38,3 +38,17 @@ export const getSupervisorMissionsRequest = (params) => ({
     params,
   },
 });
+export const getSupervisorMissionsStatisticsRequest = (params) => ({
+  method: "get",
+  url: `supervisor/missions/statistics`,
+  config: {
+    params,
+  },
+});
+export const getSupervisorCompetitionsStatisticsRequest = (params) => ({
+  method: "get",
+  url: `supervisor/competitions/statistics`,
+  config: {
+    params,
+  },
+});
