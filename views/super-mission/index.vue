@@ -64,7 +64,7 @@
         <form @submit.prevent="sortMissions">
           <draggable v-model="missionSaved" group="items" :animation="150" class="list-group"
                      :sort="true"
-                     :options="{ draggable: ['.itemEnabled'] }" :move="checkMove">
+                     :options="{ draggable: ['.itemEnabled'] }">
             <div v-for="(item,index) in missionSaved"
                  :key="item.id"
                  :class="
@@ -342,27 +342,6 @@ export default {
       let findItemBefore = this.missionSaved.findIndex((itemMissionSaved) => itemMissionSaved.id === item.id) - 1
       this.endDateItemBefore = this.missionSaved[findItemBefore].end_date
     },
-    checkMove: function (e) {
-      // let missionStarted = this.missionSaved.filter((item) => {
-      //   return item.is_mission_start === true
-      // })
-      // let resetMissionNotStarted = this.missionSaved.filter((item) => {
-      //   return item.is_mission_start === false
-      // }).map((item) => {
-      //   return {...item, start_date: null, end_date: null}
-      // })
-      // this.missionSaved = [...missionStarted, ...resetMissionNotStarted]
-
-      // this.powerUpBoxList.forEach((item) => {
-      //   const index = item.appear_after_missions
-      //   let missionWithPower = [
-      //     ...this.missionSaved.splice(0, index),
-      //     item,
-      //     ...this.missionSaved
-      //   ]
-      //   this.missionSaved = missionWithPower
-      // })
-    },
     goToMission(missionId) {
       this.$router.push(`/dashboard/mission-detail/${missionId}`)
     },
@@ -381,7 +360,7 @@ export default {
           return {
             id: item.id,
             order: index + 1,
-            is_selected: 1,
+            is_selected: item.is_selected === true ? 1: 0,
             start_date: item.start_date,
             end_date: item.end_date,
             type: item.type,
@@ -391,7 +370,7 @@ export default {
           return {
             id: item.id,
             order: index + 1,
-            is_selected: 1,
+            is_selected: item.is_selected === true ? 1: 0,
             start_date: item.start_date,
             end_date: item.end_date,
             type: item.type,
