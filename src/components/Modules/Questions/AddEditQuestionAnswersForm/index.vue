@@ -1045,12 +1045,12 @@
               </div>
             </b-col>
           </b-row>
-          <b-col lg="12" class="mb-3" :class="$route.name.includes('edit')? 'd-none':''">
+          <b-col lg="12" class="mb-3">
             <div class="hold-field">
               <label class="mx-0">{{ $t("QUESTIONS.ANSWERS") }}:</label>
             </div>
           </b-col>
-          <b-row v-for="(answer, idx) in answersListTrueFalse" :key="idx" :class="$route.name.includes('edit')? 'd-none':''">
+          <b-row v-for="(answer, idx) in answersListTrueFalse" :key="idx">
             <b-col lg="6" class="mb-3">
               <div class="hold-field">
                 <TextField
@@ -1091,7 +1091,7 @@
                 <Button v-if="$route.params.id"
                         type="submit"
                         :loading="loading"
-                        :disabled="(invalid || checkQuestionMediaInputs)"
+                        :disabled="(invalid || checkQuestionMediaInputs) || checkOneAnswerTureFalse"
                         :custom-class="'submit-btn'"
                 >{{ $t("GLOBAL_NEXT") }}
 <!--                  || checkOneAnswerTureFalse-->
@@ -3142,6 +3142,18 @@ export default {
         this.formValues.question_audio_preview = this.questionEdit.question_audio
         this.formValues.question_audio_name = this.questionEdit.question_audio_name
         this.formValues.question_audio_size = this.questionEdit.question_audio_size
+        // set answers
+        if(this.questionEdit.question_type.slug === "true_false"){
+          let correctAnswer = this.questionEdit.answers.find((item)=>{
+            return item.correct === 1
+          })
+          if(correctAnswer.answer === "صحيح"){
+            this.answersListTrueFalse[0].correct = 1
+          } else {
+            this.answersListTrueFalse[1].correct = 1
+          }
+        }
+
       })
     }
   },
