@@ -176,7 +176,7 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
-              :disabled="!formValues.learning_path_id || !formValues.lesson_id"
+              :disabled="!formValues.learning_path_id || !formValues.lesson_id || $route.name.includes('edit')"
             ></SelectSearch>
           </div>
         </b-col>
@@ -190,7 +190,6 @@
               :options="questionDifficulties"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
-              :disabled="$route.name.includes('edit')"
               :rules="'required'"
             ></SelectSearch>
           </div>

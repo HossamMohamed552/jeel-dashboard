@@ -390,7 +390,14 @@ export default {
       formData.append("question_pattern", this.collectData.question_pattern);
       formData.append("head_question", this.collectData.head_question);
       formData.append("_method", "put")
-      if (this.collectData.head_question_audio && this.collectData.head_question_audioChangedRequest){
+      if (this.collectData.answers_deleted.length === 0) {
+        formData.append('answers_deleted[]', []);
+      } else {
+        for (let answer_deleted = 0; answer_deleted < this.collectData.answers_deleted.length; answer_deleted++) {
+          formData.append(`answers_deleted[${answer_deleted}]`, this.collectData.answers_deleted[answer_deleted]);
+        }
+      }
+      if (this.collectData.head_question_audio && this.collectData.head_question_audioChangedRequest) {
         formData.append("head_question_audio", this.collectData.head_question_audio);
       }
       formData.append('blooms', this.collectData.bloom_category_id);
@@ -407,14 +414,16 @@ export default {
       if (this.collectData.question !== null && this.collectData.question_pattern === 'text') {
         formData.append("question", this.collectData.question);
       }
-      if (this.collectData.question_image !== null && this.collectData.question_pattern === 'text') {
+      if (this.collectData.question_image !== null && this.collectData.question_pattern === 'text' && this.collectData.questionImageChangedRequest) {
         formData.append("question_image", this.collectData.question_image);
       }
       if (this.collectData.question_pattern !== 'audio' && this.collectData.question_audio && this.collectData.question_audioChangedRequest) {
         formData.append("question_audio", this.collectData.question_audio);
       }
       if (!this.questionTypeSlug.includes('true_false')) {
-        formData.append("hint_audio", this.collectData.hint_audio);
+        if (this.collectData.hint_audio && this.collectData.hint_audioChangedRequest) {
+          formData.append("hint_audio", this.collectData.hint_audio);
+        }
         formData.append("hint", this.collectData.hint);
       }
       if (this.questionTypeSlug.includes('order_text_with_question') || this.questionTypeSlug.includes('order_text_without_question') || this.questionTypeSlug.includes('order_image_without_question')) {
@@ -477,8 +486,16 @@ export default {
         }
       } else {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
-          formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
-          if (this.collectData.answers[answer].audio) {
+          if (this.collectData.answers[answer]?.id) {
+            formData.append(`answers[${answer}][id]`, this.collectData.answers[answer].id);
+          }
+          if (this.collectData.answers[answer].answer && this.collectData.answers[answer].answerChangedRequest && (this.collectData.answers[answer].answer_pattern === 'image' || this.collectData.answers[answer].answer_pattern === 'audio')) {
+            formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
+          }
+          if (this.collectData.answers[answer].answer_pattern === 'text') {
+            formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
+          }
+          if (this.collectData.answers[answer].audio && this.collectData.answers[answer].answer_audioChangedRequest) {
             formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
           }
           formData.append(`answers[${answer}][correct]`, this.collectData.answers[answer].correct);

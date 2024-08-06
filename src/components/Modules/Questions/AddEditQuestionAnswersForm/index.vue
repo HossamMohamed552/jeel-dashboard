@@ -16,14 +16,27 @@
                 ></TextField>
               </div>
             </b-col>
-            <b-col lg="12">
-              <UploadAttachment :type-of-attachment="'audio'"
-                                :dropIdRef="'audioFile'"
-                                :accept-files="'audio/*'" :label="$t('QUESTIONS.audio_file')"
-                                :name="'audioFile'"
-                                :rules="'required'"
-                                @setFileId="setQuestionAudioId('question_audio',$event)"
-                                @setFileUrl="setQuestionAudioUrl('question_audioUser',$event)"/>
+            <b-col lg="12" class="mb-3">
+              <UploadAttachment
+                v-if="!$route.params.id || formValues.question_audioChangedRequest"
+                :type-of-attachment="'audio'"
+                :dropIdRef="'questionAudio'"
+                :accept-files="'audio/*'"
+                :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                :name="'questionAudio'"
+                :rules="'required'"
+                @setFileId="setQuestionAudioId('question_audio',$event)"
+                @setFileUrl="setQuestionAudioUrl('questionAudioUser',$event)"/>
+              <PreviewMedia
+                v-if="$route.params.id && formValues.question_audioChanged === false && !formValues.question_audioChangedRequest"
+                :header="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                :media-name="formValues.question_audio_name"
+                :file-size="formValues.question_audio_size"
+                :image-url="formValues.question_audio_preview"
+                :typeOfMedia="'audio'"
+                :showRemoveButton="true"
+                @removeFile="removeFile('question_audio','question_audioChanged','question_audioChangedRequest')"
+              />
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
@@ -37,22 +50,35 @@
               </div>
             </b-col>
             <b-col lg="12">
-              <UploadAttachment :type-of-attachment="'audio'"
-                                :dropIdRef="'audioHintFile'"
-                                :accept-files="'audio/*'" :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
-                                :name="'audioHintFile'"
-                                :rules="'required'"
-                                @setFileId="setQuestionAudioId('hint_audio',$event)"
-                                @setFileUrl="setQuestionAudioUrl('hint_audioUser',$event)"/>
+              <UploadAttachment
+                v-if="!$route.params.id || formValues.hint_audioChangedRequest"
+                :type-of-attachment="'audio'"
+                :dropIdRef="'hintAudio'"
+                :accept-files="'audio/*'"
+                :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                :name="'hintAudio'"
+                :rules="'required'"
+                @setFileId="setQuestionAudioId('hint_audio',$event)"
+                @setFileUrl="setQuestionAudioUrl('hintAudioUser',$event)"/>
+              <PreviewMedia
+                v-if="$route.params.id && formValues.hint_audioChanged === false && !formValues.hint_audioChangedRequest"
+                :header="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                :media-name="formValues.hint_audio_name"
+                :file-size="formValues.hint_audio_size"
+                :image-url="formValues.hint_audio_preview"
+                :typeOfMedia="'audio'"
+                :showRemoveButton="true"
+                @removeFile="removeFile('hint_audio','hint_audioChanged','hint_audioChangedRequest')"
+              />
             </b-col>
           </b-row>
-          <b-col lg="12" class="my-3">
+          <b-col lg="12" class="mt-1 mb-1">
             <div class="hold-field">
               <label class="m-0">{{ $t("QUESTIONS.ANSWERS") }}</label>
             </div>
           </b-col>
           <b-row v-for="(answer, idx) in answersListMcQ" :key="idx">
-            <b-col lg="9" class="mb-3">
+            <b-col lg="8" class="mt-3 mb-3">
               <div class="hold-field">
                 <TextField
                   :rules="'required|max:150'"
@@ -63,7 +89,7 @@
                 ></TextField>
               </div>
             </b-col>
-            <b-col lg="3" class="mb-3">
+            <b-col lg="3" class="mt-3 mb-3">
               <div class="hold-field">
                 <label><span><i class="fa-solid fa-asterisk"></i></span>
                   {{ $t("QUESTIONS.ANSWER_TYPE") }}</label>
@@ -78,25 +104,34 @@
                 ></SelectSearch>
               </div>
             </b-col>
-            <b-col lg="12">
-              <UploadAttachment :type-of-attachment="'audio'"
-                                :dropIdRef="`audioFile ${idx}`"
-                                :accept-files="'audio/*'"
-                                :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
-                                :name="`audioFile${idx}`"
-                                :rules="'required'"
-                                @setFileId="setQuestionAudioId('',$event,true,'answersListMcQ',idx,'audio')"
-                                @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListMcQ',idx,'answerAudioUser')"/>
+            <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
+              <button class="add-deleteBtn delete-answer border-0" v-if="answersListMcQ.length > 1" @click="deleteAnswer(idx)">{{ $t('BUTTONS.DELETE') }}</button>
             </b-col>
-            <b-col lg="2" class="btn-holder">
+            <b-col lg="12">
+              <UploadAttachment
+                v-if="!$route.params.id || answer.answer_audioChangedRequest"
+                :type-of-attachment="'audio'"
+                :dropIdRef="`audio ${idx + 1}`"
+                :accept-files="'audio/*'"
+                :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                :name="`audioFile ${idx + 1}`"
+                :rules="'required'"
+                @setFileId="setQuestionAudioId('',$event,true,'answersListMcQ',idx,'audio')"
+                @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListMcQ',idx,'answerImageAudio')"/>
+              <PreviewMedia
+                v-if="$route.params.id && answer.answer_audioChanged === false && !answer.answer_audioChangedRequest"
+                :header="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                :media-name="answer.audio_name"
+                :file-size="answer.audio_size"
+                :typeOfMedia="'audio'"
+                :showRemoveButton="true"
+                @removeFile="removeFileInAnswerListAnswerOrAudio(false,'answersListMcQ',idx,'audio')"
+              />
+            </b-col>
+            <b-col lg="12" class="btn-holder">
               <div class="hold-field">
-                <span class="add-deleteBtn delete-answer" v-if="answersListMcQ.length > 1"
-                      @click="deleteAnswer(idx)">{{ $t('BUTTONS.DELETE') }}</span>
-                <div class="addAnswer" v-if="answersListMcQ.length - 1 === idx"
-                     @click="addAnswerMcq">
-                  <img src="@/assets/images/icons/add_answer.png"> <span>{{
-                    $t('QUESTIONS.add')
-                  }}</span>
+                <div class="addAnswer mt-3" v-if="answersListMcQ.length - 1 === idx" @click="addAnswerMcq">
+                  <img src="@/assets/images/icons/add_answer.png"><span> {{$t('QUESTIONS.add')}}</span>
                 </div>
               </div>
             </b-col>
@@ -113,17 +148,7 @@
                 <Button @click="handleBack" :custom-class="'submit-btn back-btn'" class="mr-3">
                   {{ $t("GLOBAL_BACK") }}
                 </Button>
-                <Button
-                  type="submit"
-                  :loading="loading"
-                  :disabled="
-                        invalid ||
-                        answersListMcQ.length <= 1 ||
-                        answersListMcQ.length > 8 ||
-                        checkOneCorrectAnswerMcq
-                      "
-                  :custom-class="'submit-btn'"
-                >
+                <Button type="submit" :loading="loading" :disabled=" invalid ||answersListMcQ.length <= 1 || answersListMcQ.length > 8 || checkOneCorrectAnswerMcq" :custom-class="'submit-btn'">
                   {{ $t("GLOBAL_NEXT") }}
                 </Button>
               </div>
@@ -277,14 +302,25 @@
         <form @submit.prevent="onSubmit" class="mt-5">
           <b-row>
             <b-col lg="12" class="mb-3">
-              <UploadAttachment :type-of-attachment="'audio'"
-                                :dropIdRef="'questionAudio'"
-                                :accept-files="'audio/*'"
-                                :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
-                                :name="'questionAudio'"
-                                :rules="'required'"
-                                @setFileId="setQuestionAudioId('question',$event)"
-                                @setFileUrl="setQuestionAudioUrl('questionUser',$event)"/>
+              <UploadAttachment
+                v-if="!$route.params.id || formValues.questionChangedRequest"
+                :type-of-attachment="'audio'"
+                :dropIdRef="'questionAudio'"
+                :accept-files="'audio/*'" :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                :name="'questionAudio'"
+                :rules="'required'"
+                @setFileId="setQuestionAudioId('question',$event)"
+                @setFileUrl="setQuestionAudioUrl('questionUser',$event)"/>
+              <PreviewMedia
+                v-if="$route.params.id && formValues.questionChanged === false && !formValues.questionChangedRequest"
+                :header="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                :media-name="formValues.question_name"
+                :file-size="formValues.question_size"
+                :image-url="formValues.question_preview"
+                :typeOfMedia="'audio'"
+                :showRemoveButton="true"
+                @removeFile="removeFile('question','questionChanged','questionChangedRequest')"
+              />
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
@@ -298,14 +334,26 @@
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="'hintAudio'"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
-                                  :name="'hintAudio'"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('hint_audio',$event)"
-                                  @setFileUrl="setQuestionAudioUrl('hintAudioUser',$event)"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || formValues.hint_audioChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="'hintAudio'"
+                  :accept-files="'audio/*'"
+                  :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                  :name="'hintAudio'"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('hint_audio',$event)"
+                  @setFileUrl="setQuestionAudioUrl('hintAudioUser',$event)"/>
+                <PreviewMedia
+                  v-if="$route.params.id && formValues.hint_audioChanged === false && !formValues.hint_audioChangedRequest"
+                  :header="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                  :media-name="formValues.hint_audio_name"
+                  :file-size="formValues.hint_audio_size"
+                  :image-url="formValues.hint_audio_preview"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFile('hint_audio','hint_audioChanged','hint_audioChangedRequest')"
+                />
               </div>
             </b-col>
           </b-row>
@@ -317,14 +365,26 @@
           <b-row v-for="(answer, idx) in answersListMcQImage" :key="idx">
             <b-col lg="8" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'image'"
-                                  :dropIdRef="`answerImage${idx}`"
-                                  :accept-files="'image/*'"
-                                  :label="$t('QUESTIONS.UPLOAD_IMAGE_ANSWER')"
-                                  :name="`answerImage${idx}`"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('',$event,true,'answersListMcQImage',idx,'answer')"
-                                  @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListMcQImage',idx,'answerImage')"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || answer.answerChangedRequest"
+                  :type-of-attachment="'image'"
+                  :dropIdRef="`answerImage${idx}`"
+                  :accept-files="'image/*'"
+                  :label="$t('QUESTIONS.UPLOAD_IMAGE_ANSWER')"
+                  :name="`answerImage${idx}`"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('',$event,true,'answersListMcQImage',idx,'answer')"
+                  @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListMcQImage',idx,'answerImage')"/>
+                <PreviewMedia
+                  v-if="$route.params.id && answer.answerChanged === false && !answer.answerChangedRequest"
+                  :header="$t('QUESTIONS.UPLOAD_IMAGE_ANSWER')"
+                  :image-url="answer.answer"
+                  :media-name="answer.answer_name"
+                  :file-size="answer.answer_size"
+                  :typeOfMedia="'image'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFileInAnswerListAnswerOrAudio(true,'answersListMcQImage',idx,'answer')"
+                />
               </div>
             </b-col>
             <b-col lg="3" class="mb-3">
@@ -343,18 +403,29 @@
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
               <span class="add-deleteBtn delete-answer" v-if="answersListMcQImage.length > 1"
-                    @click="answersListMcQImage.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
+                    @click="deleteAnswerMcqImage(idx)">{{ $t('BUTTONS.DELETE') }}</span>
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="`answerAudio${idx}`"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
-                                  :name="`answerImage${idx}`"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('',$event,true,'answersListMcQImage',idx,'audio')"
-                                  @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListMcQImage',idx,'answerImageAudio')"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || answer.answer_audioChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="`answerAudio${idx}`"
+                  :accept-files="'audio/*'"
+                  :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                  :name="`answerImage${idx}`"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('',$event,true,'answersListMcQImage',idx,'audio')"
+                  @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListMcQImage',idx,'answerImageAudio')"/>
+                <PreviewMedia
+                  v-if="$route.params.id && answer.answer_audioChanged === false && !answer.answer_audioChangedRequest"
+                  :header="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                  :media-name="answer.audio_name"
+                  :file-size="answer.audio_size"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFileInAnswerListAnswerOrAudio(false,'answersListMcQImage',idx,'audio')"
+                />
               </div>
             </b-col>
             <b-col lg="12" class="btn-holder">
@@ -403,14 +474,25 @@
           <b-row>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="'questionAudio'"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
-                                  :name="'questionAudio'"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('question',$event)"
-                                  @setFileUrl="setQuestionAudioUrl('questionUser',$event)"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || formValues.questionChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="'questionAudio'"
+                  :accept-files="'audio/*'" :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                  :name="'questionAudio'"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('question',$event)"
+                  @setFileUrl="setQuestionAudioUrl('questionUser',$event)"/>
+                <PreviewMedia
+                  v-if="$route.params.id && formValues.questionChanged === false && !formValues.questionChangedRequest"
+                  :header="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                  :media-name="formValues.question_name"
+                  :file-size="formValues.question_size"
+                  :image-url="formValues.question_preview"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFile('question','questionChanged','questionChangedRequest')"
+                />
               </div>
             </b-col>
             <b-col lg="12" class="mb-3">
@@ -425,14 +507,26 @@
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="'hintAudio'"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
-                                  :name="'hintAudio'"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('hint_audio',$event)"
-                                  @setFileUrl="setQuestionAudioUrl('hintAudioUser',$event)"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || formValues.hint_audioChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="'hintAudio'"
+                  :accept-files="'audio/*'"
+                  :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                  :name="'hintAudio'"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('hint_audio',$event)"
+                  @setFileUrl="setQuestionAudioUrl('hintAudioUser',$event)"/>
+                <PreviewMedia
+                  v-if="$route.params.id && formValues.hint_audioChanged === false && !formValues.hint_audioChangedRequest"
+                  :header="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                  :media-name="formValues.hint_audio_name"
+                  :file-size="formValues.hint_audio_size"
+                  :image-url="formValues.hint_audio_preview"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFile('hint_audio','hint_audioChanged','hint_audioChangedRequest')"
+                />
               </div>
             </b-col>
           </b-row>
@@ -442,10 +536,10 @@
             </div>
           </b-col>
           <b-row v-for="(answer, idx) in answersListMcQ" :key="idx">
-            <b-col lg="8" class="mb-3">
+            <b-col lg="8" class="mt-3 mb-3">
               <div class="hold-field">
                 <TextField
-                  :rules="'required|max:100'"
+                  :rules="'required|max:150'"
                   v-model="answer.answer"
                   :label="$t('QUESTIONS.ANSWER')"
                   :name="`${$t('QUESTIONS.ANSWER')} ${idx}`"
@@ -453,11 +547,11 @@
                 ></TextField>
               </div>
             </b-col>
-            <b-col lg="3" class="mb-3">
+            <b-col lg="3" class="mt-3 mb-3">
               <div class="hold-field">
-                <label>{{ $t("QUESTIONS.ANSWER_TYPE") }}</label>
+                <label><span><i class="fa-solid fa-asterisk"></i></span>
+                  {{ $t("QUESTIONS.ANSWER_TYPE") }}</label>
                 <SelectSearch
-                  :rules="'required'"
                   v-model="answer.correct"
                   :name="`${$t('QUESTIONS.ANSWER_TYPE')} ${idx + 1}`"
                   :id="idx"
@@ -469,25 +563,35 @@
               </div>
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
-              <span class="add-deleteBtn delete-answer" v-if="answersListMcQ.length > 1"
-                    @click="answersListMcQ.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
+              <button class="add-deleteBtn delete-answer border-0" v-if="answersListMcQ.length > 1" @click="deleteAnswer(idx)">{{ $t('BUTTONS.DELETE') }}</button>
             </b-col>
-            <b-col lg="12" class="mb-3">
-              <UploadAttachment :type-of-attachment="'audio'"
-                                :dropIdRef="`audio-${idx}`"
-                                :accept-files="'audio/*'"
-                                :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
-                                :name="`audio-${idx}`"
-                                :rules="'required'"
-                                @setFileId="setQuestionAudioId('',$event,true,'answersListMcQ',idx,'audio')"
-                                @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListMcQ',idx,'answerImageAudio')"/>
+            <b-col lg="12">
+              <UploadAttachment
+                v-if="!$route.params.id || answer.answer_audioChangedRequest"
+                :type-of-attachment="'audio'"
+                :dropIdRef="`audio ${idx + 1}`"
+                :accept-files="'audio/*'"
+                :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                :name="`audioFile ${idx + 1}`"
+                :rules="'required'"
+                @setFileId="setQuestionAudioId('',$event,true,'answersListMcQ',idx,'audio')"
+                @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListMcQ',idx,'answerImageAudio')"/>
+              <PreviewMedia
+                v-if="$route.params.id && answer.answer_audioChanged === false && !answer.answer_audioChangedRequest"
+                :header="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                :media-name="answer.audio_name"
+                :file-size="answer.audio_size"
+                :typeOfMedia="'audio'"
+                :showRemoveButton="true"
+                @removeFile="removeFileInAnswerListAnswerOrAudio(false,'answersListMcQ',idx,'audio')"
+              />
             </b-col>
             <b-col lg="12" class="btn-holder">
-              <span class="addAnswer" v-if="answersListMcQ.length - 1 === idx"
-                    @click="addAnswerMcq"><img
-                src="@/assets/images/icons/add_answer.png"> <span>{{
-                  $t('QUESTIONS.add')
-                }}</span></span>
+              <div class="hold-field">
+                <div class="addAnswer mt-3" v-if="answersListMcQ.length - 1 === idx" @click="addAnswerMcq">
+                  <img src="@/assets/images/icons/add_answer.png"><span> {{$t('QUESTIONS.add')}}</span>
+                </div>
+              </div>
             </b-col>
           </b-row>
           <b-row v-if="answersListMcQ.length > 8">
@@ -538,14 +642,26 @@
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="'questionAudio'"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
-                                  :name="'questionAudio'"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('question_audio',$event)"
-                                  @setFileUrl="setQuestionAudioUrl('questionAudioUser',$event)"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || formValues.question_audioChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="'questionAudio'"
+                  :accept-files="'audio/*'"
+                  :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                  :name="'questionAudio'"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('question_audio',$event)"
+                  @setFileUrl="setQuestionAudioUrl('questionAudioUser',$event)"/>
+                <PreviewMedia
+                  v-if="$route.params.id && formValues.question_audioChanged === false && !formValues.question_audioChangedRequest"
+                  :header="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                  :media-name="formValues.question_audio_name"
+                  :file-size="formValues.question_audio_size"
+                  :image-url="formValues.question_audio_preview"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFile('question_audio','question_audioChanged','question_audioChangedRequest')"
+                />
               </div>
             </b-col>
             <b-col lg="12" class="mb-3">
@@ -560,14 +676,26 @@
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="'hintAudio'"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
-                                  :name="'hintAudio'"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('hint_audio',$event)"
-                                  @setFileUrl="setQuestionAudioUrl('hintAudioUser',$event)"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || formValues.hint_audioChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="'hintAudio'"
+                  :accept-files="'audio/*'"
+                  :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                  :name="'hintAudio'"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('hint_audio',$event)"
+                  @setFileUrl="setQuestionAudioUrl('hintAudioUser',$event)"/>
+                <PreviewMedia
+                  v-if="$route.params.id && formValues.hint_audioChanged === false && !formValues.hint_audioChangedRequest"
+                  :header="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                  :media-name="formValues.hint_audio_name"
+                  :file-size="formValues.hint_audio_size"
+                  :image-url="formValues.hint_audio_preview"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFile('hint_audio','hint_audioChanged','hint_audioChangedRequest')"
+                />
               </div>
             </b-col>
           </b-row>
@@ -605,18 +733,29 @@
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
               <span class="add-deleteBtn delete-answer" v-if="answersListSelect.length > 1"
-                    @click="answersListSelect.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
+                    @click="deleteAnswerMultiMcq(idx)">{{ $t('BUTTONS.DELETE') }}</span>
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="`answerAudio ${idx + 1}`"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
-                                  :name="`answerAudio ${idx + 1}`"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('',$event,true,'answersListSelect',idx,'audio')"
-                                  @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListSelect',idx,'answerImageAudio')"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || answer.answer_audioChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="`answerAudio ${idx + 1}`"
+                  :accept-files="'audio/*'"
+                  :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                  :name="`answerAudio ${idx + 1}`"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('',$event,true,'answersListSelect',idx,'audio')"
+                  @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListSelect',idx,'answerImageAudio')"/>
+                <PreviewMedia
+                  v-if="$route.params.id && answer.answer_audioChanged === false && !answer.answer_audioChangedRequest"
+                  :header="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                  :media-name="answer.audio_name"
+                  :file-size="answer.audio_size"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFileInAnswerListAnswerOrAudio(false,'answersListSelect',idx,'audio')"
+                />
               </div>
             </b-col>
             <b-col lg="12" class="btn-holder">
@@ -1094,7 +1233,7 @@
                         :disabled="(invalid || checkQuestionMediaInputs) || checkOneAnswerTureFalse"
                         :custom-class="'submit-btn'"
                 >{{ $t("GLOBAL_NEXT") }}
-<!--                  || checkOneAnswerTureFalse-->
+                  <!--                  || checkOneAnswerTureFalse-->
                 </Button>
                 <Button class="mx-3" @click="handleBack" :custom-class="'submit-btn back-btn'">
                   {{ $t("GLOBAL_BACK") }}
@@ -1115,14 +1254,25 @@
           <b-row>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="'questionAudio'"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
-                                  :name="'questionAudio'"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('question',$event)"
-                                  @setFileUrl="setQuestionAudioUrl('questionUser',$event)"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || formValues.questionChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="'questionAudio'"
+                  :accept-files="'audio/*'" :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                  :name="'questionAudio'"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('question',$event)"
+                  @setFileUrl="setQuestionAudioUrl('questionUser',$event)"/>
+                <PreviewMedia
+                  v-if="$route.params.id && formValues.questionChanged === false && !formValues.questionChangedRequest"
+                  :header="$t('QUESTIONS.UPLOAD_IMAGE')"
+                  :media-name="formValues.question_name"
+                  :file-size="formValues.question_size"
+                  :image-url="formValues.question_preview"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFile('question','questionChanged','questionChangedRequest')"
+                />
               </div>
             </b-col>
           </b-row>
@@ -1165,7 +1315,7 @@
                 <Button
                   type="submit"
                   :loading="loading"
-                  :disabled="invalid || checkOneAnswerTureFalse"
+                  :disabled="(invalid || checkQuestionMediaInputs) || checkOneAnswerTureFalse"
                   :custom-class="'submit-btn'"
                 >{{ $t("GLOBAL_NEXT") }}
                 </Button>
@@ -1196,6 +1346,7 @@
                   :name="$t('QUESTIONS.QUESTION')"
                   :rules="'required|max:100'"
                 ></TextField>
+                {{ formValues.question }}
                 <div v-if="validSpace" class="text-danger">
                   {{ $t('QUESTIONS.addSpace') }}
                 </div>
@@ -1212,7 +1363,8 @@
             <b-col lg="3" class="mb-3">
               <label class="invisible">{{ $t('QUESTIONS.addWhiteSpace') }}</label>
               <div class="hold-field d-flex justify-content-between align-items-end">
-                <Button :custom-class="'rounded-btn'" @click="addSpace" :disabled="lockBtn">
+                <Button :custom-class="'rounded-btn'" class="mb-3" @click="addSpace"
+                        :disabled="lockBtn">
                   {{ $t('QUESTIONS.addWhiteSpace') }}
                 </Button>
                 <Button :custom-class="'rounded-btn transparent-btn'" @click="removeSpace">
@@ -1222,14 +1374,26 @@
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="'questionAudio'"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
-                                  :name="'questionAudio'"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('question_audio',$event)"
-                                  @setFileUrl="setQuestionAudioUrl('questionAudioUser',$event)"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || formValues.question_audioChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="'questionAudio'"
+                  :accept-files="'audio/*'"
+                  :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                  :name="'questionAudio'"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('question_audio',$event)"
+                  @setFileUrl="setQuestionAudioUrl('questionAudioUser',$event)"/>
+                <PreviewMedia
+                  v-if="$route.params.id && formValues.question_audioChanged === false && !formValues.question_audioChangedRequest"
+                  :header="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                  :media-name="formValues.question_audio_name"
+                  :file-size="formValues.question_audio_size"
+                  :image-url="formValues.question_audio_preview"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFile('question_audio','question_audioChanged','question_audioChangedRequest')"
+                />
               </div>
             </b-col>
             <b-col lg="12" class="mb-3">
@@ -1244,14 +1408,26 @@
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="'hintAudio'"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
-                                  :name="'hintAudio'"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('hint_audio',$event)"
-                                  @setFileUrl="setQuestionAudioUrl('hintAudioUser',$event)"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || formValues.hint_audioChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="'hintAudio'"
+                  :accept-files="'audio/*'"
+                  :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                  :name="'hintAudio'"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('hint_audio',$event)"
+                  @setFileUrl="setQuestionAudioUrl('hintAudioUser',$event)"/>
+                <PreviewMedia
+                  v-if="$route.params.id && formValues.hint_audioChanged === false && !formValues.hint_audioChangedRequest"
+                  :header="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                  :media-name="formValues.hint_audio_name"
+                  :file-size="formValues.hint_audio_size"
+                  :image-url="formValues.hint_audio_preview"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFile('hint_audio','hint_audioChanged','hint_audioChangedRequest')"
+                />
               </div>
             </b-col>
           </b-row>
@@ -1288,27 +1464,35 @@
               </div>
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
-              <span class="add-deleteBtn delete-answer" v-if="answersListDragOne.length > 1"
-                    @click="answersListDragOne.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
+              <span class="add-deleteBtn delete-answer" v-if="answersListDragOne.length > 1" @click="deleteAnswersDragOneAnswer(idx)">{{ $t('BUTTONS.DELETE') }}</span>
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="`audio ${idx + 1}`"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
-                                  :name="`audio ${idx + 1}`"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('',$event,true,'answersListDragOne',idx,'audio')"
-                                  @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListDragOne',idx,'answerImageAudio')"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || answer.answer_audioChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="`audio ${idx + 1}`"
+                  :accept-files="'audio/*'"
+                  :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                  :name="`audio ${idx + 1}`"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('',$event,true,'answersListDragOne',idx,'audio')"
+                  @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListDragOne',idx,'answerImageAudio')"/>
+                <PreviewMedia
+                  v-if="$route.params.id && answer.answer_audioChanged === false && !answer.answer_audioChangedRequest"
+                  :header="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                  :media-name="answer.audio_name"
+                  :file-size="answer.audio_size"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFileInAnswerListAnswerOrAudio(false,'answersListDragOne',idx,'audio')"
+                />
               </div>
             </b-col>
             <b-col lg="12" class="btn-holder">
-              <span class="addAnswer" v-if="answersListDragOne.length - 1 === idx"
-                    @click="addAnswerDragOne"><img
-                src="@/assets/images/icons/add_answer.png"> <span>{{
-                  $t('QUESTIONS.add')
-                }}</span></span>
+              <span class="addAnswer" v-if="answersListDragOne.length - 1 === idx" @click="addAnswerDragOne"><img src="@/assets/images/icons/add_answer.png">
+                <span>{{$t('QUESTIONS.add')}}</span>
+              </span>
             </b-col>
           </b-row>
           <b-row v-if="answersListDragOne.length > 8">
@@ -1372,7 +1556,7 @@
             <b-col lg="3" class="mb-3">
               <label class="invisible">{{ $t('QUESTIONS.addWhiteSpace') }}</label>
               <div class="hold-field d-flex justify-content-between align-items-end">
-                <Button :custom-class="'rounded-btn'" @click="addSpace" :disabled="lockBtn">
+                <Button :custom-class="'rounded-btn'" class="mb-3" @click="addSpace" :disabled="lockBtn">
                   {{ $t('QUESTIONS.addWhiteSpace') }}
                 </Button>
                 <Button :custom-class="'rounded-btn transparent-btn'" @click="removeSpace">
@@ -1382,25 +1566,50 @@
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="'questionAudio'"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
-                                  :name="'questionAudio'"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('question_audio',$event)"
-                                  @setFileUrl="setQuestionAudioUrl('questionAudioUser',$event)"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || formValues.question_audioChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="'questionAudio'"
+                  :accept-files="'audio/*'"
+                  :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                  :name="'questionAudio'"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('question_audio',$event)"
+                  @setFileUrl="setQuestionAudioUrl('questionAudioUser',$event)"/>
+                <PreviewMedia
+                  v-if="$route.params.id && formValues.question_audioChanged === false && !formValues.question_audioChangedRequest"
+                  :header="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                  :media-name="formValues.question_audio_name"
+                  :file-size="formValues.question_audio_size"
+                  :image-url="formValues.question_audio_preview"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFile('question_audio','question_audioChanged','question_audioChangedRequest')"
+                />
               </div>
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'image'"
-                                  :dropIdRef="'questionImage'"
-                                  :accept-files="'image/*'" :label="$t('QUESTIONS.UPLOAD_IMAGE')"
-                                  :name="'questionImage'"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('question_image',$event)"
-                                  @setFileUrl="setQuestionAudioUrl('questionUser',$event)"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || formValues.questionImageChangedRequest"
+                  :type-of-attachment="'image'"
+                  :dropIdRef="'questionImage'"
+                  :accept-files="'image/*'"
+                  :label="$t('QUESTIONS.UPLOAD_IMAGE')"
+                  :name="'questionImage'"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('question_image',$event)"
+                  @setFileUrl="setQuestionAudioUrl('questionUser',$event)"/>
+                <PreviewMedia
+                  v-if="$route.params.id && formValues.questionImageChanged === false && !formValues.questionImageChangedRequest"
+                  :header="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                  :media-name="formValues.question_image_name"
+                  :file-size="formValues.question_image_size"
+                  :image-url="formValues.question_image_preview"
+                  :typeOfMedia="'image'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFile('question_image','questionImageChanged','questionImageChangedRequest')"
+                />
               </div>
             </b-col>
             <b-col lg="12" class="mb-3">
@@ -1415,14 +1624,26 @@
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="'hintAudio'"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
-                                  :name="'hintAudio'"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('hint_audio',$event)"
-                                  @setFileUrl="setQuestionAudioUrl('hintAudioUser',$event)"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || formValues.hint_audioChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="'hintAudio'"
+                  :accept-files="'audio/*'"
+                  :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                  :name="'hintAudio'"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('hint_audio',$event)"
+                  @setFileUrl="setQuestionAudioUrl('hintAudioUser',$event)"/>
+                <PreviewMedia
+                  v-if="$route.params.id && formValues.hint_audioChanged === false && !formValues.hint_audioChangedRequest"
+                  :header="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                  :media-name="formValues.hint_audio_name"
+                  :file-size="formValues.hint_audio_size"
+                  :image-url="formValues.hint_audio_preview"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFile('hint_audio','hint_audioChanged','hint_audioChangedRequest')"
+                />
               </div>
             </b-col>
           </b-row>
@@ -1460,18 +1681,29 @@
             </b-col>
             <b-col lg="1" class="mb-3 d-flex justify-content-center align-items-center">
               <span class="add-deleteBtn delete-answer" v-if="answersListDragOne.length > 1"
-                    @click="answersListDragOne.splice(idx, 1)">{{ $t('BUTTONS.DELETE') }}</span>
+                    @click="deleteAnswersDragOneAnswer(idx)">{{ $t('BUTTONS.DELETE') }}</span>
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="`answerAudio ${idx + 1}`"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
-                                  :name="`answerAudio ${idx + 1}`"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('',$event,true,'answersListDragOne',idx,'audio')"
-                                  @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListDragOne',idx,'answerImageAudio')"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || answer.answer_audioChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="`audio ${idx + 1}`"
+                  :accept-files="'audio/*'"
+                  :label="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                  :name="`audio ${idx + 1}`"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('',$event,true,'answersListDragOne',idx,'audio')"
+                  @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListDragOne',idx,'answerImageAudio')"/>
+                <PreviewMedia
+                  v-if="$route.params.id && answer.answer_audioChanged === false && !answer.answer_audioChangedRequest"
+                  :header="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
+                  :media-name="answer.audio_name"
+                  :file-size="answer.audio_size"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFileInAnswerListAnswerOrAudio(false,'answersListDragOne',idx,'audio')"
+                />
               </div>
             </b-col>
             <b-col lg="12" class="btn-holder">
@@ -2483,8 +2715,20 @@ export default {
         question_audio_name: null,
         question_audio_size: null,
         question_audio_preview: null,
+        // question Image
+        questionImageChanged:false,
+        questionImageChangedRequest:false,
+        Request:false,
         // hint
         hint: null,
+        // hint audio change
+        hint_audioChanged: false,
+        hint_audioChangedRequest: false,
+        // hint audio info
+        hint_audio_name: null,
+        hint_audio_size: null,
+        hint_audio_preview: null,
+        //
         question_audio: null,
         question_audioUser: null,
         hint_audio: null,
@@ -2493,6 +2737,7 @@ export default {
         questionImage: null,
         question_image: null,
         img_url: "",
+        answers_deleted: []
       },
       answersListDragSort: [
         {
@@ -2562,13 +2807,19 @@ export default {
           answerAudioUser: null,
           correct: 0,
           answer_pattern: "text",
+          answer_audioChanged: false,
+          answer_audioChangedRequest: false,
         },
       ],
       answersListMcQImage: [
         {
           answer: null,
+          answerChanged: false,
+          answerChangedRequest: false,
           answerImage: "",
           audio: null,
+          answer_audioChanged: false,
+          answer_audioChangedRequest: false,
           answerAudioUser: null,
           correct: 0,
           answer_pattern: "image",
@@ -2579,6 +2830,8 @@ export default {
           answer: "",
           answerImage: "",
           audio: null,
+          answer_audioChanged: false,
+          answer_audioChangedRequest: false,
           answerAudioUser: null,
           correct: 0,
           answer_pattern: "text",
@@ -2609,9 +2862,13 @@ export default {
           answer: "",
           answerImage: null,
           audio: null,
+          audio_name: "",
+          audio_size: "",
           answerAudioUser: null,
           correct: 0,
           answer_pattern: "text",
+          answer_audioChanged: false,
+          answer_audioChangedRequest: false,
         },
       ],
       // ture false
@@ -2735,6 +2992,7 @@ export default {
         return;
       }
     },
+    // add space to question drag and drop one
     addSpace() {
       if (this.formValues.question !== null) {
         this.formValues.question += "%s";
@@ -2747,6 +3005,234 @@ export default {
       this.lockBtn = false;
       this.previewQuestion = this.formValues.question;
     },
+    // set media id
+    async setQuestionAudioId(keyName, $event, isAnswer = false, answerList = '', indexWillChange = 0, answerOrAudio = 'answer') {
+      if (isAnswer) {
+        if (answerList === 'answersListMcQ') {
+          this.answersListMcQ[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListMcQImage') {
+          this.answersListMcQImage[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListSelect') {
+          this.answersListSelect[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListSelectImage') {
+          this.answersListSelectImage[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListSelectAudio') {
+          this.answersListSelectAudio[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListDragOne') {
+          this.answersListDragOne[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListDragSort') {
+          this.answersListDragSort[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListDragSortAudio') {
+          this.answersListDragSortAudio[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListDragSortImage') {
+          this.answersListDragSortImage[indexWillChange][answerOrAudio] = $event
+        }
+
+      } else {
+        this.formValues[keyName] = $event
+      }
+    },
+    async setQuestionAudioUrl(keyName, $event, isAnswer = false, answerList = '', indexWillChange = 0, answerOrAudio = 'answer') {
+      if (isAnswer) {
+        if (answerList === 'answersListMcQ') {
+          this.answersListMcQ[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListMcQImage') {
+          this.answersListMcQImage[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListSelect') {
+          this.answersListSelect[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListSelectImage') {
+          this.answersListSelectImage[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListSelectAudio') {
+          this.answersListSelectAudio[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListDragOne') {
+          this.answersListDragOne[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListDragSort') {
+          this.answersListDragSort[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListDragSortAudio') {
+          this.answersListDragSortAudio[indexWillChange][answerOrAudio] = $event
+        }
+        if (answerList === 'answersListDragSortImage') {
+          this.answersListDragSortImage[indexWillChange][answerOrAudio] = $event
+        }
+      } else {
+        this.formValues[keyName] = $event
+      }
+    },
+    // set media id for match
+    async setAnswerMatchId(keyName, $event, matchType) {
+      if (matchType === 'answerMatch') {
+        this.answerMatch[keyName] = $event
+      }
+      if (matchType === 'answerMatchTo') {
+        this.answerMatchTo[keyName] = $event
+      }
+    },
+    async setAnswerMatchUrl(keyName, $event, matchType) {
+      if (matchType === 'answerMatch') {
+        this.answerMatch[keyName] = $event
+      }
+      if (matchType === 'answerMatchTo') {
+        this.answerMatchTo[keyName] = $event
+      }
+    },
+    // removeFile
+    removeFile(fileName, fileChange, fileRequest) {
+      this.formValues[fileChange] = true
+      this.formValues[fileName] = null
+      this.formValues[fileRequest] = true
+    },
+    // remove file from answer
+    removeFileInAnswerListAnswerOrAudio(isAnswer = false, answerList = '', indexWillChange = 0, answerOrAudio = 'answer') {
+      if (isAnswer) {
+        if (answerList === 'answersListMcQImage'){
+          this.answersListMcQImage[indexWillChange][answerOrAudio] = null;
+          this.answersListMcQImage[indexWillChange].answerImage = null;
+          this.answersListMcQImage[indexWillChange].answerChanged = true;
+          this.answersListMcQImage[indexWillChange].answerChangedRequest = true;
+        }
+      } else {
+        if (answerList === 'answersListDragOne') {
+          this.answersListDragOne[indexWillChange][answerOrAudio] = null;
+          this.answersListDragOne[indexWillChange].answerAudioUser = null;
+          this.answersListDragOne[indexWillChange].answer_audioChanged = true;
+          this.answersListDragOne[indexWillChange].answer_audioChangedRequest = true;
+        } else if (answerList === "answersListMcQ"){
+          this.answersListMcQ[indexWillChange][answerOrAudio] = null;
+          this.answersListMcQ[indexWillChange].answerAudioUser = null;
+          this.answersListMcQ[indexWillChange].answer_audioChanged = true;
+          this.answersListMcQ[indexWillChange].answer_audioChangedRequest = true;
+        } else if (answerList === "answersListMcQImage"){
+          this.answersListMcQImage[indexWillChange][answerOrAudio] = null;
+          this.answersListMcQImage[indexWillChange].answerAudioUser = null;
+          this.answersListMcQImage[indexWillChange].answer_audioChanged = true;
+          this.answersListMcQImage[indexWillChange].answer_audioChangedRequest = true;
+        } else if(answerList === "answersListSelect"){
+          this.answersListSelect[indexWillChange][answerOrAudio] = null;
+          this.answersListSelect[indexWillChange].answerAudioUser = null;
+          this.answersListSelect[indexWillChange].answer_audioChanged = true;
+          this.answersListSelect[indexWillChange].answer_audioChangedRequest = true;
+        }
+      }
+    },
+    // add answer
+    addAnswerSelect() {
+      this.answersListSelect.push({
+        answer: null,
+        answerImage: null,
+        audio: null,
+        correct: 0,
+        answer_pattern: "text",
+        answer_audioChanged: true,
+        answer_audioChangedRequest: true,
+      });
+    },
+    addAnswerSelectImage() {
+      this.answersListSelectImage.push({
+        answer: null,
+        answerImage: null,
+        audio: null,
+        answerAudioUser: null,
+        correct: 0,
+        answer_pattern: "image",
+      });
+    },
+    addAnswerSelectAudio() {
+      this.answersListSelectAudio.push({
+        answer: null,
+        answerImage: null,
+        audio: null,
+        correct: 0,
+        answer_pattern: "audio",
+      });
+    },
+    addAnswerMcq() {
+      this.answersListMcQ.push({
+        answer: "",
+        answerImage: null,
+        audio: null,
+        answerAudioUser: null,
+        correct: 0,
+        answer_pattern: "text",
+        audio_name: "",
+        audio_size: "",
+        answer_audioChanged: true,
+        answer_audioChangedRequest: true,
+      });
+    },
+    addAnswerMcqImage() {
+      this.answersListMcQImage.push({
+        answer: null,
+        answerChanged: true,
+        answerChangedRequest: true,
+        answerImage: null,
+        audio: null,
+        answerAudioUser: null,
+        correct: 0,
+        answer_pattern: "image",
+        answer_audioChanged: true,
+        answer_audioChangedRequest: true,
+      });
+    },
+    addAnswerDragOne() {
+      this.answersListDragOne.push({
+        answer: "",
+        answerImage: "",
+        audio: null,
+        answerAudioUser: null,
+        correct: 0,
+        answer_pattern: "text",
+        audio_name: "",
+        audio_size: "",
+        answer_audioChanged: true,
+        answer_audioChangedRequest: true,
+      });
+    },
+    addAnswerDragSort() {
+      this.answersListDragSort.push({
+        answer: "",
+        answerImage: "",
+        order: 0,
+        audio: null,
+        answerAudioUser: null,
+        answer_pattern: "text",
+      });
+    },
+    addAnswerDragSortImage() {
+      this.answersListDragSortImage.push({
+        answer: null,
+        answerImage: null,
+        order: 0,
+        audio: null,
+        answer_pattern: "image",
+        audioName: "",
+      });
+    },
+    addAnswersListDragSortAudio() {
+      this.answersListDragSortAudio.push({
+        answer: null,
+        answerImage: null,
+        order: 0,
+        correct: 0,
+        answer_pattern: "audio",
+        answerAudioUser: "",
+      });
+    },
+    // check correct answer
     answerMcQ($event, answersListMcQ) {
       let checkOneCorrect = answersListMcQ.filter((item) => item.correct === 1);
       if (checkOneCorrect.length >= 2) {
@@ -2810,88 +3296,83 @@ export default {
         this.checkOneAnswerDragOne = true;
       }
     },
-    async setQuestionAudioId(keyName, $event, isAnswer = false, answerList = '', indexWillChange = 0, answerOrAudio = 'answer') {
-      if (isAnswer) {
-        if (answerList === 'answersListMcQ') {
-          this.answersListMcQ[indexWillChange][answerOrAudio] = $event
-        }
-        if (answerList === 'answersListMcQImage') {
-          this.answersListMcQImage[indexWillChange][answerOrAudio] = $event
-        }
-        if (answerList === 'answersListSelect') {
-          this.answersListMcQImage[indexWillChange][answerOrAudio] = $event
-        }
-        if (answerList === 'answersListSelectImage') {
-          this.answersListSelectImage[indexWillChange][answerOrAudio] = $event
-        }
-        if (answerList === 'answersListSelectAudio') {
-          this.answersListSelectAudio[indexWillChange][answerOrAudio] = $event
-        }
-        if (answerList === 'answersListDragOne') {
-          this.answersListDragOne[indexWillChange][answerOrAudio] = $event
-        }
-        if (answerList === 'answersListDragSort') {
-          this.answersListDragSort[indexWillChange][answerOrAudio] = $event
-        }
-        if (answerList === 'answersListDragSortAudio') {
-          this.answersListDragSortAudio[indexWillChange][answerOrAudio] = $event
-        }
-        if (answerList === 'answersListDragSortImage') {
-          this.answersListDragSortImage[indexWillChange][answerOrAudio] = $event
-        }
-
-      } else {
-        this.formValues[keyName] = $event
+    // remove answer and check correct
+    deleteAnswer(index) {
+      if (this.answersListMcQ[index].id) {
+        this.formValues.answers_deleted.push(this.answersListMcQ[index].id)
       }
+      this.answersListMcQ.splice(index, 1);
+      this.answerMcQ(_, this.answersListMcQ);
     },
-    async setQuestionAudioUrl(keyName, $event, isAnswer = false, answerList = '', indexWillChange = 0, answerOrAudio = 'answer') {
-      if (isAnswer) {
-        if (answerList === 'answersListMcQ') {
-          this.answersListMcQ[indexWillChange][answerOrAudio] = $event
-        }
-        if (answerList === 'answersListMcQImage') {
-          this.answersListMcQImage[indexWillChange][answerOrAudio] = $event
-        }
-        if (answerList === 'answersListSelect') {
-          this.answersListMcQImage[indexWillChange][answerOrAudio] = $event
-        }
-        if (answerList === 'answersListSelectImage') {
-          this.answersListSelectImage[indexWillChange][answerOrAudio] = $event
-        }
-        if (answerList === 'answersListSelectAudio') {
-          this.answersListSelectAudio[indexWillChange][answerOrAudio] = $event
-        }
-        if (answerList === 'answersListDragOne') {
-          this.answersListDragOne[indexWillChange][answerOrAudio] = $event
-        }
-        if (answerList === 'answersListDragSort') {
-          this.answersListDragSort[indexWillChange][answerOrAudio] = $event
-        }
-        if (answerList === 'answersListDragSortAudio') {
-          this.answersListDragSortAudio[indexWillChange][answerOrAudio] = $event
-        }
-        if (answerList === 'answersListDragSortImage') {
-          this.answersListDragSortImage[indexWillChange][answerOrAudio] = $event
-        }
-      } else {
-        this.formValues[keyName] = $event
+    deleteAnswerMcqImage(index){
+      if (this.answersListMcQImage[index].id) {
+        this.formValues.answers_deleted.push(this.answersListMcQImage[index].id)
       }
+      this.answersListMcQImage.splice(index, 1)
+      this.answersMcQImage(_,this.answersListMcQImage)
     },
-    async setAnswerMatchId(keyName, $event, matchType) {
-      if (matchType === 'answerMatch') {
-        this.answerMatch[keyName] = $event
+    deleteAnswerMultiMcq(index){
+      if (this.answersListSelect[index].id) {
+        this.formValues.answers_deleted.push(this.answersListSelect[index].id)
       }
-      if (matchType === 'answerMatchTo') {
-        this.answerMatchTo[keyName] = $event
-      }
+      this.answersListSelect.splice(index, 1)
+      this.answerSelect(_,this.answersListSelect)
     },
-    async setAnswerMatchUrl(keyName, $event, matchType) {
-      if (matchType === 'answerMatch') {
-        this.answerMatch[keyName] = $event
+    deleteAnswerSelectAudio(index) {
+      this.answersListSelectAudio.splice(index, 1);
+      this.answerSelectAudio(_, this.answersListSelectAudio);
+    },
+    deleteAnswersDragOneAnswer(index) {
+      if (this.answersListDragOne[index].id) {
+        this.formValues.answers_deleted.push(this.answersListDragOne[index].id)
       }
-      if (matchType === 'answerMatchTo') {
-        this.answerMatchTo[keyName] = $event
-      }
+      this.answersListDragOne.splice(index, 1);
+      this.checkAnswerDragOne(_, this.answersListDragOne);
+    },
+    // assign answer
+    assignAnswersDragOne() {
+      this.formValues.answers = this.answersListDragOne.filter((answer) => answer.answer);
+    },
+    assignAnswersTrueFalse() {
+      this.formValues.answers = this.answersListTrueFalse.filter((answer) => answer.answer);
+    },
+    assignAnswersSelect() {
+      this.formValues.answers = this.answersListSelect.filter((answer) => answer.answer);
+    },
+    assignAnswersSelectImages() {
+      this.formValues.answers = this.answersListSelectImage.filter((answer) => answer.answer);
+    },
+    assignAnswersSelectAudio() {
+      this.formValues.answers = this.answersListSelectAudio.filter((answer) => answer.answer);
+    },
+    assignAnswersMcq() {
+      this.formValues.answers = this.answersListMcQ;
+    },
+    assignAnswersMcqImage() {
+      this.formValues.answers = this.answersListMcQImage.filter((answer) => answer.answer);
+    },
+    assignAnswersMatchOneToOne() {
+      this.answersListMatch.forEach((item) => {
+        let holder;
+        holder = this.answersListMatchTo.filter((answerTo) => {
+          return answerTo.answerToId === item.id;
+        });
+        return (item.answers_to = holder);
+      });
+      this.formValues.answers = this.answersListMatch;
+    },
+    assignAnswersMatchOneToMany() {
+      this.formValues.answers.answersListMatch = this.answersListMatch;
+      this.formValues.answers.answersListMatchTo = this.answersListMatchTo;
+    },
+    assignAnswersDragSort() {
+      this.formValues.answers = this.answersDragSortToSend;
+    },
+    handleCancel() {
+      this.$emit("handleCancel");
+    },
+    handleBack() {
+      this.$emit("handleBack");
     },
     onSubmit() {
       if (this.questionSlug.slug === "mcq_text_text_one_option") {
@@ -2965,173 +3446,10 @@ export default {
         this.$emit("onSubmit", this.formValues);
       }
     },
-    handleCancel() {
-      this.$emit("handleCancel");
-    },
-    handleBack() {
-      this.$emit("handleBack");
-    },
-    addAnswerSelect() {
-      this.answersListSelect.push({
-        answer: null,
-        answerImage: null,
-        audio: null,
-        correct: 0,
-        answer_pattern: "text",
-      });
-    },
-    addAnswerSelectImage() {
-      this.answersListSelectImage.push({
-        answer: null,
-        answerImage: null,
-        audio: null,
-        answerAudioUser: null,
-        correct: 0,
-        answer_pattern: "image",
-      });
-    },
-    addAnswerSelectAudio() {
-      this.answersListSelectAudio.push({
-        answer: null,
-        answerImage: null,
-        audio: null,
-        correct: 0,
-        answer_pattern: "audio",
-      });
-    },
-    addAnswerMcq() {
-      this.answersListMcQ.push({
-        answer: "",
-        answerImage: null,
-        audio: null,
-        answerAudioUser: null,
-        correct: 0,
-        answer_pattern: "text",
-      });
-    },
-    addAnswerMcqImage() {
-      this.answersListMcQImage.push({
-        answer: null,
-        answerImage: null,
-        audio: null,
-        answerAudioUser: null,
-        correct: 0,
-        answer_pattern: "image",
-      });
-    },
-    addAnswerDragOne() {
-      this.answersListDragOne.push({
-        answer: "",
-        answerImage: "",
-        audio: null,
-        answerAudioUser: null,
-        correct: 0,
-        answer_pattern: "text",
-      });
-    },
-    addAnswerDragSort() {
-      this.answersListDragSort.push({
-        answer: "",
-        answerImage: "",
-        order: 0,
-        audio: null,
-        answerAudioUser: null,
-        answer_pattern: "text",
-      });
-    },
-    addAnswerDragSortImage() {
-      this.answersListDragSortImage.push({
-        answer: null,
-        answerImage: null,
-        order: 0,
-        audio: null,
-        answer_pattern: "image",
-        audioName: "",
-      });
-    },
-    addAnswersListDragSortAudio() {
-      this.answersListDragSortAudio.push({
-        answer: null,
-        answerImage: null,
-        order: 0,
-        correct: 0,
-        answer_pattern: "audio",
-        answerAudioUser: "",
-      });
-    },
-    // remove answer and check correct
-    deleteAnswer(index) {
-      this.answersListMcQ.splice(index, 1);
-      this.answerMcQ(_, this.answersListMcQ);
-    },
-    deleteAnswerSelectAudio(index) {
-      this.answersListSelectAudio.splice(index, 1);
-      this.answerSelectAudio(_, this.answersListSelectAudio);
-    },
-    // assign answer
-    assignAnswersDragOne() {
-      this.formValues.answers = this.answersListDragOne.filter((answer) => answer.answer);
-    },
-    assignAnswersTrueFalse() {
-      this.formValues.answers = this.answersListTrueFalse.filter((answer) => answer.answer);
-    },
-    assignAnswersSelect() {
-      this.formValues.answers = this.answersListSelect.filter((answer) => answer.answer);
-    },
-    assignAnswersSelectImages() {
-      this.formValues.answers = this.answersListSelectImage.filter((answer) => answer.answer);
-    },
-    assignAnswersSelectAudio() {
-      this.formValues.answers = this.answersListSelectAudio.filter((answer) => answer.answer);
-    },
-    assignAnswersMcq() {
-      this.formValues.answers = this.answersListMcQ;
-    },
-    assignAnswersMcqImage() {
-      this.formValues.answers = this.answersListMcQImage.filter((answer) => answer.answer);
-    },
-    assignAnswersMatchOneToOne() {
-      this.answersListMatch.forEach((item) => {
-        let holder;
-        holder = this.answersListMatchTo.filter((answerTo) => {
-          return answerTo.answerToId === item.id;
-        });
-        return (item.answers_to = holder);
-      });
-      this.formValues.answers = this.answersListMatch;
-    },
-    assignAnswersMatchOneToMany() {
-      this.formValues.answers.answersListMatch = this.answersListMatch;
-      this.formValues.answers.answersListMatchTo = this.answersListMatchTo;
-    },
-    assignAnswersDragSort() {
-      this.formValues.answers = this.answersDragSortToSend;
-    },
-    handleUploadImage(e) {
-      this.formValues.questionImage = URL.createObjectURL(e.target.files[0]);
-      if (e) this.formValues.question = e.target.files[0];
-      else return;
-    },
-    handleUploadDragImage(e) {
-      this.formValues.questionImage = URL.createObjectURL(e.target.files[0]);
-      if (e) this.formValues.question_image = e.target.files[0];
-      else return;
-    },
-    handleUploadImageOnAnswers(item, e) {
-      item.answerImage = URL.createObjectURL(e.target.files[0]);
-      if (e) item.answer = e.target.files[0];
-      else return;
-    },
-    removeFile(fileName, fileChange, fileRequest) {
-      this.formValues[fileChange] = true
-      this.formValues[fileName] = null
-      this.formValues[fileRequest] = true
-    },
     getQuestionById() {
       ApiService(getSingleQuestionRequest(this.$route.params.id)).then((response) => {
         this.questionEdit = response.data.data
-        console.log('this.questionEdit', this.questionEdit)
-        this.formValues.question_pattern = this.questionEdit.question_pattern
+        this.formValues.question_pattern = this.questionEdit.question_pattern_slug
         // question
         this.formValues.question = this.questionEdit.question
         this.formValues.question_preview = this.questionEdit.question
@@ -3142,16 +3460,86 @@ export default {
         this.formValues.question_audio_preview = this.questionEdit.question_audio
         this.formValues.question_audio_name = this.questionEdit.question_audio_name
         this.formValues.question_audio_size = this.questionEdit.question_audio_size
+        // question image
+        this.formValues.question_image = this.questionEdit.question_image
+        this.formValues.question_image_preview = this.questionEdit.question_image
+        this.formValues.question_image_name = this.questionEdit.question_image_name
+        this.formValues.question_image_size = this.questionEdit.question_image_size
+        // question hint
+        this.formValues.hint = this.questionEdit.hint
+        this.formValues.hint_audio = this.questionEdit.hint_audio
+        this.formValues.hint_audio_preview = this.questionEdit.hint_audio
+        this.formValues.hint_audio_name = this.questionEdit.hint_audio_name
+        this.formValues.hint_audio_size = this.questionEdit.hint_audio_size
         // set answers
-        if(this.questionEdit.question_type.slug === "true_false"){
-          let correctAnswer = this.questionEdit.answers.find((item)=>{
+        if (this.questionEdit.question_type.slug === "true_false") {
+          let correctAnswer = this.questionEdit.answers.find((item) => {
             return item.correct === 1
           })
-          if(correctAnswer.answer === "صحيح"){
+          if (correctAnswer.answer === "صحيح") {
             this.answersListTrueFalse[0].correct = 1
           } else {
             this.answersListTrueFalse[1].correct = 1
           }
+        } else if (this.questionEdit.sub_question_type.slug === "drag_and_drop_text_text" || this.questionEdit.sub_question_type.slug === "drag_and_drop_text_image_text" ) {
+          this.questionEdit.answers = this.questionEdit.answers.map((item) => {
+            return Object.assign({}, {
+              id: item.id,
+              answer: item.answer,
+              answerImage: item.answer,
+              audio: item.audio,
+              audio_name: item.audio_name,
+              audio_size: item.audio_size,
+              answerAudioUser: item.audio,
+              correct: item.correct === 1 ? 1 : 0,
+              answer_pattern: "text",
+              answer_audioChanged: false,
+              answer_audioChangedRequest: false,
+            })
+          })
+          this.answersListDragOne = this.questionEdit.answers
+        } else if(this.questionEdit.sub_question_type.slug === "mcq_text_text_one_option" || this.questionEdit.sub_question_type.slug === "mcq_voice_text_one_option" || this.questionEdit.sub_question_type.slug === "mcq_text_text_multi_option"){
+          this.questionEdit.answers = this.questionEdit.answers.map((item) => {
+            return Object.assign({}, {
+              id: item.id,
+              answer: item.answer,
+              answerImage: item.answer,
+              audio: item.audio,
+              audio_name: item.audio_name,
+              audio_size: item.audio_size,
+              answerAudioUser: item.audio,
+              correct: item.correct === 1 ? 1 : 0,
+              answer_pattern: "text",
+              answer_audioChanged: false,
+              answer_audioChangedRequest: false,
+            })
+          })
+          if(this.questionEdit.sub_question_type.slug === "mcq_text_text_one_option" || this.questionEdit.sub_question_type.slug === "mcq_voice_text_one_option"){
+            this.answersListMcQ = this.questionEdit.answers
+          } else {
+            this.answersListSelect = this.questionEdit.answers
+          }
+        } else if(this.questionEdit.sub_question_type.slug === "mcq_voice_images_one_option"){
+          this.questionEdit.answers = this.questionEdit.answers.map((item) => {
+            return Object.assign({}, {
+              id: item.id,
+              answer: item.answer,
+              answer_name: item.answer_file_name,
+              answer_size: item.answer_file_size,
+              answerChanged: false,
+              answerChangedRequest: false,
+              answerImage: item.answer,
+              audio: item.audio,
+              audio_name: item.audio_name,
+              audio_size: item.audio_size,
+              answerAudioUser: item.audio,
+              correct: item.correct === 1 ? 1 : 0,
+              answer_pattern: "image",
+              answer_audioChanged: false,
+              answer_audioChangedRequest: false,
+            })
+          })
+          this.answersListMcQImage = this.questionEdit.answers
         }
 
       })
@@ -3289,7 +3677,7 @@ export default {
       } else if (newVal === "match_many_images_voices") {
         this.answerMatch.answer_pattern = "audio";
         this.answerMatchTo.answer_pattern = "image";
-      } else if (newVal === "drag_and_drop_text_text" || newVal === "drag_and_drop_text_image_text") {
+      } else if ((newVal === "drag_and_drop_text_text" || newVal === "drag_and_drop_text_image_text") && !this.$route.params.id) {
         this.formValues.question = ""
       }
     }
