@@ -9,15 +9,15 @@
         </b-row>
         <b-row>
           <b-col lg="4" class="mb-5">
-            <ShowItem :title="$t('PACKAGE.name')" :subtitle="singlePackage.name" />
+            <ShowItem :title="$t('PACKAGE.name')" :subtitle="singlePackage.name"/>
           </b-col>
           <b-col lg="4" class="mb-5">
-            <ShowItem :title="$t('PACKAGE.price')" :subtitle="singlePackage.price" />
+            <ShowItem :title="$t('PACKAGE.price')" :subtitle="singlePackage.price"/>
           </b-col>
           <b-col lg="4" class="mb-5">
             <ShowItem
               :title="$t('PACKAGE.countryName')"
-              :subtitle="singlePackage.country.name"
+              :subtitle="singlePackage.country?.name"
             />
           </b-col>
           <b-col lg="4" class="mb-5">
@@ -45,7 +45,8 @@
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
-import { getSinglePackagesRequest } from "@/api/packages.js";
+import {getSinglePackagesRequest} from "@/api/packages.js";
+
 export default {
   name: "index",
   components: {
@@ -93,11 +94,11 @@ export default {
     this.ApiService(getSinglePackagesRequest(this.$route.params.id)).then(
       (response) => {
         this.singlePackage = response.data.data;
-        this.roles[0].number = response.data.data.number_users_roles[0].number
-        this.roles[1].number = response.data.data.number_users_roles[1].number
-        this.roles[2].number = response.data.data.number_users_roles[2].number
-        this.roles[3].number = response.data.data.number_users_roles[3].number
-        this.roles[4].number = response.data.data.number_users_roles[4].number
+        this.roles[0].number = this.singlePackage.number_users_roles.filter(item => item.slug === 'schooladmin')[0].number
+        this.roles[1].number = this.singlePackage.number_users_roles.filter(item => item.slug === 'supervisor')[0].number
+        this.roles[2].number = this.singlePackage.number_users_roles.filter(item => item.slug === 'teacher')[0].number
+        this.roles[3].number = this.singlePackage.number_users_roles.filter(item => item.slug === 'student')[0].number
+        this.roles[4].number = this.singlePackage.number_users_roles.filter(item => item.slug === 'parent')[0].number
       }
     );
   },

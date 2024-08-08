@@ -36,7 +36,7 @@ export default [
     name: "parent-achievements",
     component: () => import("../../../views/parent/achievements/index.vue"),
     meta: {
-      breadcrumb: "الانجازات",
+      breadcrumb: "الإنجازات",
       breadcrumbEn: "achievements",
     },
   },

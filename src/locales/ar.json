@@ -1037,7 +1037,7 @@
     "parents": "عدد أولياء الأمور",
     "announcements": "الرسائل",
     "competitions": "المسابقات",
-    "achievements": "الانجازات",
+    "achievements": "الإنجازات",
     "jeel_coins": "عملات جيل",
     "jeel_gems": "جميز جيل",
     "leaderboard": "لوحة الصدارة",
@@ -1236,7 +1236,7 @@
     "studentData": "بيانات الطالب"
   },
   "PARENT": {
-    "myChildren": "أطفإلى",
+    "myChildren": "أطفالى",
     "child_student": "طالب",
     "LogInDaily": "سجل الدخول اليومى",
     "TaskLog": "سجل المهام",
@@ -1255,7 +1255,7 @@
     "finalDegree": "الدرجة النهائية",
     "degree": "الدرجة",
     "note": "التعليق",
-    "achievements": "سجل الانجازات",
+    "achievements": "سجل الإنجازات",
     "competitions":"سجل المنافسات",
     "seasons":"سجل المواسم",
     "leaderboard": "سجل لوحة الصدارة"

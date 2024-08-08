@@ -323,7 +323,7 @@ export default {
       this.$router.push("/dashboard/questions");
     },
     getQuestionPatternData(data) {
-      this.questionTypeSlug = data.question_slug.slug;
+      this.questionTypeSlug = data.question_slug?.slug;
       this.questionTypesValues = data;
       //set qestion pattern to step 2 (text, image or audio)
       this.questionPattern = data.question_pattern;
@@ -426,10 +426,20 @@ export default {
         }
         formData.append("hint", this.collectData.hint);
       }
-      if (this.questionTypeSlug.includes('order_text_with_question') || this.questionTypeSlug.includes('order_text_without_question') || this.questionTypeSlug.includes('order_image_without_question')) {
+      if (this.questionTypeSlug.includes('order_text_with_question') || this.questionTypeSlug.includes('order_text_without_question') || this.questionTypeSlug.includes('order_image_without_question') || this.questionTypeSlug.includes('order_voice_without_question')) {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
-          formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
-          formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
+          if (this.collectData.answers[answer]?.id) {
+            formData.append(`answers[${answer}][id]`, this.collectData.answers[answer].id);
+          }
+          if (this.collectData.answers[answer].answer && this.collectData.answers[answer].answerChangedRequest && (this.collectData.answers[answer].answer_pattern === 'image' || this.collectData.answers[answer].answer_pattern === 'audio')) {
+            formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
+          }
+          if (this.collectData.answers[answer].answer_pattern === 'text') {
+            formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
+          }
+          if (this.collectData.answers[answer].audio && this.collectData.answers[answer].answer_audioChangedRequest) {
+            formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer].audio);
+          }
           formData.append(`answers[${answer}][order]`, this.collectData.answers[answer].order);
           formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers[answer].answer_pattern);
         }

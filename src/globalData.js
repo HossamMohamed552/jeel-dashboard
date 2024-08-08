@@ -549,7 +549,7 @@ let routesPrizes = [
     permission: "view-power-up-boxes",
   },
   {
-    name: "الانجازات",
+    name: "الإنجازات",
     nameEn: "achievements",
     path: "/dashboard/achievements",
     altImage: "achievements",
@@ -690,7 +690,7 @@ let routesParent = [
     permission: "view-studnet-parent-comments",
   },
   {
-    name: "الانجازات",
+    name: "الإنجازات",
     nameEn: "achievements",
     path: "/dashboard/parent-achievements",
     altImage: "parent-achievements",
