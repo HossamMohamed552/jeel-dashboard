@@ -2410,8 +2410,9 @@
             <draggable v-model="answersListDragSortAudioDragged" group="items" :animation="150"
                        class="list-group" :sort="true"
                        v-if="answersListDragSortAudioDragged.length >= 2">
-              <div v-for="(item, index) in answersListDragSortAudioDragged" :key="item.id" class="list-group-item d-flex justify-content-start align-items-center">
-                <p class="d-inline-block mr-2">{{ index + 1 }} - {{item.answerAudioUser}}</p>
+              <div v-for="(item, index) in answersListDragSortAudioDragged" :key="item.id"
+                   class="list-group-item d-flex justify-content-start align-items-center">
+                <p class="d-inline-block mr-2">{{ index + 1 }} - {{ item.answerAudioUser }}</p>
               </div>
             </draggable>
           </b-row>
@@ -2461,14 +2462,26 @@
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="'questionAudio'"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
-                                  :name="'questionAudio'"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('question_audio',$event)"
-                                  @setFileUrl="setQuestionAudioUrl('questionAudioUser',$event)"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || formValues.question_audioChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="'questionAudio'"
+                  :accept-files="'audio/*'"
+                  :label="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                  :name="'questionAudio'"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('question_audio',$event)"
+                  @setFileUrl="setQuestionAudioUrl('questionAudioUser',$event)"/>
+                <PreviewMedia
+                  v-if="$route.params.id && formValues.question_audioChanged === false && !formValues.question_audioChangedRequest"
+                  :header="$t('QUESTIONS.QUESTION_TITLE_AUDIO')"
+                  :media-name="formValues.question_audio_name"
+                  :file-size="formValues.question_audio_size"
+                  :image-url="formValues.question_audio_preview"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFile('question_audio','question_audioChanged','question_audioChangedRequest')"
+                />
               </div>
             </b-col>
             <b-col lg="12" class="mb-3">
@@ -2483,14 +2496,26 @@
             </b-col>
             <b-col lg="12" class="mb-3">
               <div class="hold-field">
-                <UploadAttachment :type-of-attachment="'audio'"
-                                  :dropIdRef="'hintAudio'"
-                                  :accept-files="'audio/*'"
-                                  :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
-                                  :name="'hintAudio'"
-                                  :rules="'required'"
-                                  @setFileId="setQuestionAudioId('hint_audio',$event)"
-                                  @setFileUrl="setQuestionAudioUrl('hintAudioUser',$event)"/>
+                <UploadAttachment
+                  v-if="!$route.params.id || formValues.hint_audioChangedRequest"
+                  :type-of-attachment="'audio'"
+                  :dropIdRef="'hintAudio'"
+                  :accept-files="'audio/*'"
+                  :label="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                  :name="'hintAudio'"
+                  :rules="'required'"
+                  @setFileId="setQuestionAudioId('hint_audio',$event)"
+                  @setFileUrl="setQuestionAudioUrl('hintAudioUser',$event)"/>
+                <PreviewMedia
+                  v-if="$route.params.id && formValues.hint_audioChanged === false && !formValues.hint_audioChangedRequest"
+                  :header="$t('QUESTIONS.HINT_TITLE_AUDIO')"
+                  :media-name="formValues.hint_audio_name"
+                  :file-size="formValues.hint_audio_size"
+                  :image-url="formValues.hint_audio_preview"
+                  :typeOfMedia="'audio'"
+                  :showRemoveButton="true"
+                  @removeFile="removeFile('hint_audio','hint_audioChanged','hint_audioChangedRequest')"
+                />
               </div>
             </b-col>
           </b-row>
@@ -2517,7 +2542,7 @@
                   <UploadAttachment :type-of-attachment="'image'"
                                     :dropIdRef="`answerMatchImage`"
                                     :accept-files="'image/*'"
-                                    :label="$t('imageOfAnswer')"
+                                    :label="$t('QUESTIONS.imageOfAnswer')"
                                     :name="'answerMatchImage'"
                                     :rules="'required'"
                                     ref="answerMatchImage"
@@ -2584,11 +2609,11 @@
                   {{ answer.answer }}
                 </b-col>
                 <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'image'">
-                  <img :src="answer.answerImage" alt="answer image" class="answer_image"/>
+                  <img :src="answer.answerImage ? answer.answerImage : answer.answer" alt="answer image" class="answer_image"/>
                 </b-col>
                 <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'audio'">
                   <audio controls>
-                    <source :src="answer.audioUrl">
+                    <source :src="answer.audioUrl ? answer.audioUrl : answer.answer">
                   </audio>
                 </b-col>
                 <b-col lg="3" class="answer-item" v-if="answer.answer_pattern !== 'audio'">
@@ -2614,7 +2639,7 @@
                   <div class="hold-field my-3">
                     <button
                       class="add-btn"
-                      @click="confirmAnswersFrom = true"
+                      @click="confirmAnswersFrom = true;canAddAnswer=true"
                       v-if="!confirmAnswersFrom"
                       :disabled="answersListMatch.length <= 1 || answersListMatch.length > 8"
                     >
@@ -2643,7 +2668,8 @@
             </div>
             <!-- add answer to with type based on answer patter -->
             <b-row>
-              <validation-observer v-slot="{ invalid }" ref="addAnswerToForm" class="row w-100">
+              <validation-observer v-slot="{ invalid }" ref="addAnswerToForm" class="row w-100"
+                                   v-if="canAddAnswer">
                 <b-col lg="12" class="mb-3 px-0" v-if="answerMatchTo.answer_pattern === 'text'">
                   <div class="hold-field">
                     <label>{{ $t("QUESTIONS.ANSWER") }}</label>
@@ -2730,11 +2756,8 @@
               <b-row class="mt-3">
                 <b-col lg="2" class="answer-item">{{ $t('QUESTIONS.order') }}</b-col>
                 <b-col lg="3" class="answer-item">{{ $t('QUESTIONS.answer') }}</b-col>
-                <b-col
-                  lg="3"
-                  class="answer-item"
-                  v-if="answerMatchTo.answer_pattern !== 'audio'"
-                >{{ $t('QUESTIONS.audioForAnswer') }}
+                <b-col lg="3" class="answer-item" v-if="answerMatchTo.answer_pattern !== 'audio'">
+                  {{ $t('QUESTIONS.audioForAnswer') }}
                 </b-col>
                 <b-col lg="2" class="answer-item">{{ $t('QUESTIONS.answerCorresponding') }}</b-col>
                 <b-col lg="2" class="answer-item"></b-col>
@@ -2746,11 +2769,11 @@
                     {{ answer.answer }}
                   </b-col>
                   <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'image'">
-                    <img :src="answer.answerImage" alt="answer image" class="answer_image"/>
+                    <img :src="answer.answerImage ? answer.answerImage : answer.answer" alt="answer image" class="answer_image"/>
                   </b-col>
                   <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'audio'">
                     <audio controls>
-                      <source :src="answer.audioUrl">
+                      <source :src="answer.audioUrl ? answer.audioUrl : answer.answer">
                     </audio>
                   </b-col>
                   <b-col lg="3" class="answer-item" v-if="answer.answer_pattern !== 'audio'">
@@ -2776,9 +2799,9 @@
                         class="custom-select-answer"
                       >
                         <el-option
-                          v-for="item in answersListMatch"
+                          v-for="(item,index) in answersListMatch"
                           :key="item.id"
-                          :label="item.id"
+                          :label="`${index + 1 }`"
                           :disabled="item.isSelected"
                           :value="item.id"
                         >
@@ -2805,9 +2828,9 @@
                         class="custom-select-answer"
                       >
                         <el-option
-                          v-for="item in answersListMatch"
+                          v-for="(item,index) in answersListMatch"
                           :key="item.id"
-                          :label="item.id"
+                          :label="`${index + 1 }`"
                           :disabled="item.isSelected"
                           :value="item.id"
                         >
@@ -2984,6 +3007,7 @@ export default {
       checkOneAnswerDragOne: true,
       checkMultiCorrectAnswerSelect: true,
       questionEdit: null,
+      canAddAnswer: false,
       formValues: {
         question: null,
         // question change
@@ -3022,7 +3046,7 @@ export default {
         questionImage: null,
         question_image: null,
         img_url: "",
-        answers_deleted: []
+        answers_deleted: [],
       },
       answersListDragSort: [
         {
@@ -3186,8 +3210,12 @@ export default {
       answersListMatchTo: [],
       answerMatch: {
         answer: null,
+        answerChanged: true,
+        answerChangedRequest: true,
         match_from: 1,
         audio: null,
+        answer_audioChanged: true,
+        answer_audioChangedRequest: true,
         audioUrl: null,
         answers_to: [],
         answer_pattern: "text",
@@ -3197,8 +3225,12 @@ export default {
       answerId: 0,
       answerMatchTo: {
         answer: null,
+        answerChanged: true,
+        answerChangedRequest: true,
         match_to: 1,
         audio: null,
+        answer_audioChanged: true,
+        answer_audioChangedRequest: true,
         audioUrl: null,
         answer_pattern: "text",
         answerImage: null,
@@ -3216,6 +3248,12 @@ export default {
     // matching functions
     resetAnswers() {
       this.confirmAnswersFrom = false;
+      this.canAddAnswer = false;
+      this.answersListMatchTo.forEach((item) => {
+        if (item.correct_answers) {
+          this.formValues.answers_deleted.push(item.id)
+        }
+      })
       this.answersListMatchTo = [];
       this.answersListMatch.forEach((item) => {
         item.isSelected = false;
@@ -3246,6 +3284,9 @@ export default {
       }
     },
     removeAnswerMatch(index) {
+      if (this.answersListMatch[index].correct_answers) {
+        this.formValues.answers_deleted.push(this.answersListMatch[index].id)
+      }
       this.answersListMatch.splice(index, 1);
     },
     removeAnswerMatchTo(index) {
@@ -3255,6 +3296,9 @@ export default {
       this.answersListMatchTo.splice(index, 1);
     },
     removeAnswersMatchTo(index) {
+      if (this.answersListMatchTo[index].correct_answers && this.questionSlug.slug.includes("match_many")) {
+        this.formValues.answers_deleted.push(this.answersListMatchTo[index].id)
+      }
       let indexToBeChangeAnswerMatchTo = this.answersListMatchTo[index];
       this.getIds(indexToBeChangeAnswerMatchTo.answerToId);
       this.backToInitValues();
@@ -3429,7 +3473,7 @@ export default {
           this.answersListDragSortImage[indexWillChange].answerImage = null;
           this.answersListDragSortImage[indexWillChange].answerChanged = true;
           this.answersListDragSortImage[indexWillChange].answerChangedRequest = true;
-        } else if(answerList === "answersListDragSortAudio"){
+        } else if (answerList === "answersListDragSortAudio") {
           this.answersListDragSortAudio[indexWillChange][answerOrAudio] = null;
           this.answersListDragSortAudio[indexWillChange].answerImage = null;
           this.answersListDragSortAudio[indexWillChange].answerChanged = true;
@@ -3697,13 +3741,13 @@ export default {
       }
       this.answersListDragSort.splice(index, 1)
     },
-    deleteAnswersListDragSortImage(index){
+    deleteAnswersListDragSortImage(index) {
       if (this.answersListDragSortImage[index].id) {
         this.formValues.answers_deleted.push(this.answersListDragSortImage[index].id)
       }
       this.answersListDragSortImage.splice(index, 1)
     },
-    deleteAnswersListDragSortAudio(index){
+    deleteAnswersListDragSortAudio(index) {
       if (this.answersListDragSortAudio[index].id) {
         this.formValues.answers_deleted.push(this.answersListDragSortAudio[index].id)
       }
@@ -3978,11 +4022,44 @@ export default {
               answer_audioChangedRequest: false,
             })
           })
-          if(this.questionEdit.sub_question_type.slug === "order_voice_without_question"){
+          if (this.questionEdit.sub_question_type.slug === "order_voice_without_question") {
             this.answersListDragSortAudio = this.questionEdit.answers
           } else {
             this.answersListDragSortImage = this.questionEdit.answers
           }
+        } else if (this.questionEdit.sub_question_type.slug.includes("match")) {
+          this.answersListMatch = this.questionEdit.answers.filter((item) => {
+            return item.match_from === 1
+          }).map((item) => {
+            return {
+              ...item,
+              audioUrl: item.audio ? item.audio : item.answer,
+              isSelected: true,
+              answerChanged: false,
+              answerChangedRequest: false,
+              answer_audioChanged: false,
+              answer_audioChangedRequest: false,
+            }
+          })
+          this.confirmAnswersFrom = true
+          this.answersListMatchTo = this.questionEdit.answers.filter((item) => {
+            return item.match_to === 1
+          })
+          if (this.questionEdit.sub_question_type.slug.includes("match_one_voice_text")) {
+            this.answersListMatchTo.answer_pattern = "audio"
+          }
+          this.answersListMatchTo = this.answersListMatchTo.map((item) => {
+            return {
+              ...item,
+              answerToId: this.questionEdit.sub_question_type.slug.includes("match_one")? item.correct_answers[0] : item.correct_answers,
+              audioUrl: item.audio ? item.audio : item.answer,
+              answerImage: item.audio ? item.answerImage : item.answer,
+              answerChanged: false,
+              answerChangedRequest: false,
+              answer_audioChanged: false,
+              answer_audioChangedRequest: false,
+            }
+          })
         }
       })
     }
@@ -4066,7 +4143,7 @@ export default {
       handler(newList) {
         const list = newList.map((item, index) => {
           return {
-            id:item.id,
+            id: item.id,
             answerChanged: item.answerChanged,
             answerChangedRequest: item.answerChangedRequest,
             answer: item.answer,

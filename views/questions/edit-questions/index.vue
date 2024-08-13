@@ -109,8 +109,7 @@
                     <source :src="answer.answerAudioUser"/>
                   </audio>
                 </b-col>
-                <b-col lg="12"
-                       v-if="!questionTypeSlug.includes('order') || !questionTypeSlug.includes('match')">
+                <b-col lg="12" v-if="!questionTypeSlug.includes('order') || !questionTypeSlug.includes('match')">
                   <h6>{{ $t('QUESTIONS.RIGHT_ANSWER') }}</h6>
                   <b-row>
                     <b-col v-for="correctAnswer in getCorrectAnswer(collectData.answers,1)"
@@ -148,7 +147,7 @@
                     <p>{{ index + 1 }} - </p>
                     <p v-if="matchAnswer.answer_pattern === 'text'">{{ matchAnswer.answer }}</p>
                     <audio controls v-if="matchAnswer.answer_pattern === 'audio'">
-                      <source :src="matchAnswer.audioUrl">
+                      <source :src="matchAnswer.audioUrl ? matchAnswer.audioUrl : matchAnswer.answer">
                     </audio>
                     <p class="to">إلى</p>
                     <div v-for="(matchAnswerTo,index) in matchAnswer.answers_to" :key="index">
@@ -156,10 +155,10 @@
                           matchAnswerTo.answer
                         }}</p>
                       <audio controls v-if="matchAnswerTo.answer_pattern === 'audio'">
-                        <source :src="matchAnswerTo.audioUrl">
+                        <source :src="matchAnswerTo.audioUrl ? matchAnswerTo.audioUrl : matchAnswerTo.answer">
                       </audio>
                       <div v-if="matchAnswerTo.answer_pattern === 'image'"><img
-                        :src="matchAnswerTo.answerImage" alt="answer image" class="answer_image">
+                        :src="matchAnswerTo.answerImage ? matchAnswerTo.answerImage : matchAnswerTo.answer" alt="answer image" class="answer_image">
                       </div>
                     </div>
                   </div>
@@ -451,16 +450,32 @@ export default {
         }
       } else if (this.questionTypeSlug.includes('match_one')) {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
-          formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
+          if (this.collectData.answers[answer]?.id && this.collectData.answers[answer]?.correct_answers && this.collectData.answers[answer]?.correct_answers.length > 0) {
+            formData.append(`answers[${answer}][id]`, this.collectData.answers[answer].id);
+          }
+          if ((this.collectData.answers[answer].answer_pattern === 'audio' || this.collectData.answers[answer].answer_pattern === 'image') && this.collectData.answers[answer].answerChangedRequest) {
+            formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
+          }
+          if (this.collectData.answers[answer].answer_pattern === 'text') {
+            formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
+          }
           formData.append(`answers[${answer}][match_from]`, this.collectData.answers[answer]?.match_from);
-          if (this.collectData.answers[answer]?.audio) {
+          if (this.collectData.answers[answer]?.audio && this.collectData.answers[answer]?.answer_audioChangedRequest) {
             formData.append(`answers[${answer}][audio]`, this.collectData.answers[answer]?.audio);
           }
           formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers[answer]?.answer_pattern);
           for (let answerTo = 0; answerTo < this.collectData.answers[answer].answers_to.length; answerTo++) {
-            formData.append(`answers[${answer}][answers_to][${answerTo}][answer]`, this.collectData.answers[answer].answers_to[answerTo]?.answer);
+            if (this.collectData.answers[answer].answers_to[answerTo].id && this.collectData.answers[answer].answers_to[answerTo].correct_answers && this.collectData.answers[answer].answers_to[answerTo].correct_answers.length > 0 && this.collectData.answers_deleted.length === 0) {
+              formData.append(`answers[${answer}][answers_to][${answerTo}][id]`, this.collectData.answers[answer].answers_to[answerTo]?.id);
+            }
+            if (this.collectData.answers[answer].answers_to[answerTo].answer_pattern === 'text') {
+              formData.append(`answers[${answer}][answers_to][${answerTo}][answer]`, this.collectData.answers[answer].answers_to[answerTo]?.answer);
+            }
+            if ((this.collectData.answers[answer].answers_to[answerTo].answer_pattern === 'audio' || this.collectData.answers[answer].answers_to[answerTo].answer_pattern === 'image') && this.collectData.answers[answer].answers_to[answerTo].answerChangedRequest) {
+              formData.append(`answers[${answer}][answers_to][${answerTo}][answer]`, this.collectData.answers[answer].answers_to[answerTo]?.answer);
+            }
             formData.append(`answers[${answer}][answers_to][${answerTo}][match_to]`, this.collectData.answers[answer].answers_to[answerTo]?.match_to);
-            if (this.collectData.answers[answer].answers_to[answerTo]?.audio) {
+            if (this.collectData.answers[answer].answers_to[answerTo]?.audio && this.collectData.answers[answer].answers_to[answerTo]?.answer_audioChangedRequest) {
               formData.append(`answers[${answer}][answers_to][${answerTo}][audio]`, this.collectData.answers[answer].answers_to[answerTo]?.audio);
             }
             formData.append(`answers[${answer}][answers_to][${answerTo}][answer_pattern]`, this.collectData.answers[answer].answers_to[answerTo]?.answer_pattern);
@@ -468,22 +483,38 @@ export default {
         }
       } else if (this.questionTypeSlug.includes('match_many')) {
         for (let answer = 0; answer < this.collectData.answers.answersListMatch.length; answer++) {
-          formData.append(`answers[${answer}][answer]`, this.collectData.answers.answersListMatch[answer]?.answer);
+          if (this.collectData.answers.answersListMatch[answer]?.id && this.collectData.answers.answersListMatch[answer]?.correct_answers && this.collectData.answers.answersListMatch[answer]?.correct_answers.length > 0) {
+            formData.append(`answers[${answer}][id]`, this.collectData.answers.answersListMatch[answer].id);
+          }
+          if ((this.collectData.answers.answersListMatch[answer].answer_pattern === 'audio' || this.collectData.answers.answersListMatch[answer].answer_pattern === 'image') && this.collectData.answers.answersListMatch[answer].answerChangedRequest) {
+            formData.append(`answers[${answer}][answer]`, this.collectData.answers.answersListMatch[answer]?.answer);
+          }
+          if (this.collectData.answers.answersListMatch[answer].answer_pattern === 'text') {
+            formData.append(`answers[${answer}][answer]`, this.collectData.answers.answersListMatch[answer]?.answer);
+          }
           formData.append(`answers[${answer}][match_from]`, this.collectData.answers.answersListMatch[answer]?.match_from);
-          if (this.collectData.answers.answersListMatch[answer]?.audio) {
+          if (this.collectData.answers.answersListMatch[answer]?.audio && this.collectData.answers.answersListMatch[answer]?.answer_audioChangedRequest) {
             formData.append(`answers[${answer}][audio]`, this.collectData.answers.answersListMatch[answer]?.audio);
           }
           formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers.answersListMatch[answer]?.answer_pattern);
         }
         for (let answerTo = 0; answerTo < this.collectData.answers.answersListMatchTo.length; answerTo++) {
-          formData.append(`answers_to[${answerTo}][answer]`, this.collectData.answers.answersListMatchTo[answerTo]?.answer);
+          if (this.collectData.answers.answersListMatchTo[answerTo]?.id && this.collectData.answers.answersListMatchTo[answerTo]?.correct_answers && this.collectData.answers.answersListMatchTo[answerTo]?.correct_answers.length > 0) {
+            formData.append(`answers_to[${answerTo}][id]`, this.collectData.answers.answersListMatchTo[answerTo].id);
+          }
+          if ((this.collectData.answers.answersListMatchTo[answerTo].answer_pattern === 'audio' || this.collectData.answers.answersListMatchTo[answerTo].answer_pattern === 'image') && this.collectData.answers.answersListMatchTo[answerTo].answerChangedRequest) {
+            formData.append(`answers_to[${answerTo}][answer]`, this.collectData.answers.answersListMatchTo[answerTo]?.answer);
+          }
+          if (this.collectData.answers.answersListMatchTo[answerTo].answer_pattern === 'text') {
+            formData.append(`answers_to[${answerTo}][answer]`, this.collectData.answers.answersListMatchTo[answerTo]?.answer);
+          }
           formData.append(`answers_to[${answerTo}][match_to]`, this.collectData.answers.answersListMatchTo[answerTo]?.match_to);
           for (let id = 0; id < this.collectData.answers.answersListMatchTo[answerTo].answerToId.length; id++) {
             let indexOfId;
             indexOfId = this.collectData.answers.answersListMatch.findIndex((item) => item.id === this.collectData.answers.answersListMatchTo[answerTo].answerToId[id])
             formData.append(`answers_to[${answerTo}][index_id][${id}]`, indexOfId);
           }
-          if (this.collectData.answers.answersListMatchTo[answerTo]?.audio) {
+          if (this.collectData.answers.answersListMatchTo[answerTo]?.audio && this.collectData.answers.answersListMatchTo[answerTo]?.answer_audioChangedRequest) {
             formData.append(`answers_to[${answerTo}][audio]`, this.collectData.answers.answersListMatchTo[answerTo]?.audio);
           }
           formData.append(`answers_to[${answerTo}][answer_pattern]`, this.collectData.answers.answersListMatchTo[answerTo]?.answer_pattern);
