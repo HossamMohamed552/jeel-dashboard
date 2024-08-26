@@ -7,6 +7,7 @@
       :table-items="outcomeCategories"
       :v-search-model="outcomeSearchWord"
       :loading="loading"
+      :isRefresh="refresh"
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
@@ -37,6 +38,7 @@
     <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 
@@ -53,6 +55,8 @@ export default {
       loading: false,
       showModal: false,
       showModalFailed: false,
+      refresh: false,
+      deleteModal: false,
       outcomeSearchWord: "",
       outcomeCategories: [],
       totalNumber: 0,
@@ -109,7 +113,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteOutcomeRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getOutcomeCategories();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       }).catch((error) => {
         this.showModalFailed = error.response.data.code === 23000;
       }).finally(() => {

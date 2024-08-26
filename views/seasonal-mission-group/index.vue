@@ -12,6 +12,7 @@
       @deleteItem="deleteItem($event)"
       @refetch="getSeasonalMissionGroups"
       :loading="loading"
+      :isRefresh="refresh"
       :permission_delete="'delete-seasonal-mission-groups'"
       :permission_edit="'edit-seasonal-mission-groups'"
       :permission_view="'show-seasonal-mission-groups'"
@@ -36,6 +37,7 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 
@@ -58,6 +60,8 @@ export default {
       groupSearchWord: "",
       seasonalMissionGroups: [],
       totalNumber: null,
+      refresh: false,
+      deleteModal: false,
     };
   },
   methods: {
@@ -91,7 +95,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteSeasonalMissionGroupRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getSeasonalMissionGroups();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       });
       this.cancel();
     },

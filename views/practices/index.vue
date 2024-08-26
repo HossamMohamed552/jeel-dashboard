@@ -5,6 +5,7 @@
                :v-search-model="quizzesSearchWord" @detailItem="detailItem($event)"
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getQuizzes"
+               :isRefresh="refresh"
                :loading="loading"
                :permission_delete="'delete-quizzes'"
                :permission_edit="'edit-quizzes'"
@@ -27,6 +28,7 @@
     <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 <script>
@@ -47,8 +49,8 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {key: "name", label: this.$i18n.t("QUIZZES.name")},
-        {key: "type.name", label: this.$i18n.t("QUIZZES.quizType")},
-        {key: "learning_path.name", label: this.$i18n.t("LEARNING_PATH.LEARNING_PATH")},
+        {key: "quizType.name", label: this.$i18n.t("QUIZZES.quizType")},
+        {key: "learningPath.name", label: this.$i18n.t("LEARNING_PATH.LEARNING_PATH")},
         {key: "lessons", label: this.$i18n.t("TABLE_FIELDS.lesson")},
         {key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions")},
       ]
@@ -63,6 +65,8 @@ export default {
       quizzesSearchWord: "",
       quizzesList: [],
       totalNumber: null,
+      refresh: false,
+      deleteModal: false,
     }
   },
   methods: {
@@ -94,7 +98,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteQuizRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getQuizzes()
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       }).catch((error) => {
         this.showModalFailed = error.response.data.code === 23000;
       }).finally(() => {

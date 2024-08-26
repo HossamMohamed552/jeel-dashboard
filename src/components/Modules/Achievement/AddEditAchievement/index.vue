@@ -162,7 +162,7 @@
                 </ValidationProvider>
               </b-col>
               <b-col lg="6" class="my-3">
-                <CheckboxField value="isRepeat" :name="$t('achievements.isRepeat')"
+                <CheckboxField v-if="achievement.interactionType.key === 'daily_entry'" value="isRepeat" :name="$t('achievements.isRepeat')"
                                v-model="achievement.isRepeat"></CheckboxField>
                 <TextField
                   class="my-3"
@@ -171,7 +171,7 @@
                   :label="$t('achievements.repetitions_number')"
                   :name="$t('achievements.repetitions_number')"
                   :placeholder="$t('achievements.repetitions_number_PLACEHOLDER')"
-                  :rules="'required|numeric'"
+                  :rules="'required|numeric|min_value:1'"
                 ></TextField>
               </b-col>
               <b-col lg="6" class="my-3">
@@ -284,7 +284,7 @@ export default {
         end_date: "",
         interactionType: "",
         interaction_number: "",
-        repetitions_number: 0,
+        repetitions_number: 1,
         jeel_gems: "",
         isRepeat: false,
       },
@@ -365,7 +365,7 @@ export default {
         name_audio: this.achievement.name_audio,
         description_audio: this.achievement.description_audio,
         interaction_number: this.achievement.interaction_number,
-        repetitions_number: this.achievement.isRepeat ? this.achievement.repetitions_number : 0,
+        repetitions_number: this.achievement.repetitions_number,
         jeel_gems: this.achievement.jeel_gems,
         start_date: this.achievement.start_date,
         end_date: this.achievement.end_date,

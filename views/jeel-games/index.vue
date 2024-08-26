@@ -12,6 +12,7 @@
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
       :loading="loading"
+      :isRefresh="refresh"
       @refetch="getJeelStoreGames"
       :permission_delete="'delete-gems'"
       :permission_edit="'edit-gems'"
@@ -38,6 +39,7 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
     <!------------------ st delete model --------------->
   </section>
 </template>
@@ -57,6 +59,8 @@ export default {
     return {
       loading: false,
       showModal: false,
+      refresh: false,
+      deleteModal: false,
       groupSearchWord: "",
       totalNumber: 0,
       jeelGamesList: [],
@@ -82,7 +86,7 @@ export default {
                   return {
                     id: item.id,
                     name: item.name,
-                    level: item.level,
+                    "level.name": item.level.name,
                     gems: item.gems,
                     jeel_coins: item.jeel_coins,
                     appear_after_missions: item.appear_after_missions+" مهام ",
@@ -117,7 +121,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteJeelStoreGamesRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getJeelStoreGames();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       });
       this.cancel();
     },
@@ -135,7 +144,7 @@ export default {
           label: this.$i18n.t("jeelStore.name"),
         },
         {
-          key: "level",
+          key: "level.name",
           label: this.$i18n.t("jeelStore.level"),
         },
         {

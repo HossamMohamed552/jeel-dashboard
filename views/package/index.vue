@@ -11,6 +11,7 @@
       @deleteItem="deleteItem($event)"
       @refetch="getPackages"
       :loading="loading"
+      :isRefresh="refresh"
       :permission_delete="'delete-packages'"
       :permission_edit="'edit-packages'"
       :permission_view="'show-packages'"
@@ -34,6 +35,7 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 
@@ -106,6 +108,8 @@ export default {
     return {
       loading: false,
       showModal: false,
+      refresh: false,
+      deleteModal: false,
       packageSearchWord: "",
       packagesList: [],
       totalNumber: 0,
@@ -143,7 +147,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deletePackagesRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getPackages();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       });
       this.cancel();
     },

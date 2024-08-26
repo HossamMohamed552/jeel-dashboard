@@ -11,6 +11,7 @@
       @deleteItem="deleteItem($event)"
       @refetch="getSchools"
       :loading="loading"
+      :isRefresh="refresh"
       :permission_delete="'delete-schools'"
       :permission_edit="'edit-schools'"
       :permission_view="'show-schools'"
@@ -34,6 +35,7 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 
@@ -62,6 +64,8 @@ export default {
     return {
       loading: false,
       showModal: false,
+      refresh: false,
+      deleteModal: false,
       groupSearchWord: "",
       schoolsList: [],
       totalNumber: 0,
@@ -98,7 +102,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteSchoolsRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getSchools();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       }).finally(()=>{
         this.cancel();
       })

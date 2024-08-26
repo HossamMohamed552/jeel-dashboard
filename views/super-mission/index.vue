@@ -331,7 +331,8 @@ export default {
       return date < new Date(new Date().setHours(0, 0, 0, 0))
     },
     disableEndDateItemBefore(date) {
-      return date < new Date(new Date(this.endDateItemBefore).setHours(0, 0, 0, 0))
+      // return date < new Date(new Date(this.endDateItemBefore).setHours(0, 0, 0, 0))
+      return date < new Date(new Date().setHours(0, 0, 0, 0))
     },
     setEndDate(item) {
       let startDate = new Date(item.start_date)

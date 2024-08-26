@@ -2380,7 +2380,7 @@
                     @setFileUrl="setQuestionAudioUrl('',$event,true,'answersListDragSortAudio',idx,'answerAudioUser')"/>
                   <PreviewMedia
                     v-if="$route.params.id && answer.answerChanged === false && !answer.answerChangedRequest"
-                    :header="$t('QUESTIONS.UPLOAD_IMAGE_ANSWER')"
+                    :header="$t('QUESTIONS.QUESTION_ANSWER_AUDIO')"
                     :image-url="answer.answer"
                     :media-name="answer.answer_name"
                     :file-size="answer.answer_size"
@@ -2609,7 +2609,8 @@
                   {{ answer.answer }}
                 </b-col>
                 <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'image'">
-                  <img :src="answer.answerImage ? answer.answerImage : answer.answer" alt="answer image" class="answer_image"/>
+                  <img :src="answer.answerImage ? answer.answerImage : answer.answer"
+                       alt="answer image" class="answer_image"/>
                 </b-col>
                 <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'audio'">
                   <audio controls>
@@ -2769,7 +2770,8 @@
                     {{ answer.answer }}
                   </b-col>
                   <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'image'">
-                    <img :src="answer.answerImage ? answer.answerImage : answer.answer" alt="answer image" class="answer_image"/>
+                    <img :src="answer.answerImage ? answer.answerImage : answer.answer"
+                         alt="answer image" class="answer_image"/>
                   </b-col>
                   <b-col lg="3" class="answer-item" v-if="answer.answer_pattern === 'audio'">
                     <audio controls>
@@ -3904,13 +3906,29 @@ export default {
         this.formValues.hint_audio_size = this.questionEdit.hint_audio_size
         // set answers
         if (this.questionEdit.question_type.slug === "true_false") {
+          this.questionEdit.answers = this.questionEdit.answers.map((item) => {
+            return {
+              id: item.id,
+              answer: item.answer,
+              correct: item.correct === 1 ? 1 : 0,
+              answer_pattern: item.answer_pattern,
+            }
+          })
+          console.log('this.questionEdit.answers',this.questionEdit.answers)
           let correctAnswer = this.questionEdit.answers.find((item) => {
             return item.correct === 1
           })
+          let wrongAnswer = this.questionEdit.answers.find((item) => {
+            return item.correct === 0
+          })
           if (correctAnswer.answer === "صحيح") {
             this.answersListTrueFalse[0].correct = 1
+            this.answersListTrueFalse[0].id = correctAnswer.id
+            this.answersListTrueFalse[1].id = wrongAnswer.id
           } else {
             this.answersListTrueFalse[1].correct = 1
+            this.answersListTrueFalse[1].id = correctAnswer.id
+            this.answersListTrueFalse[0].id = wrongAnswer.id
           }
         } else if (this.questionEdit.sub_question_type.slug === "drag_and_drop_text_text" || this.questionEdit.sub_question_type.slug === "drag_and_drop_text_image_text") {
           this.questionEdit.answers = this.questionEdit.answers.map((item) => {
@@ -4034,7 +4052,7 @@ export default {
             return {
               ...item,
               audioUrl: item.audio ? item.audio : item.answer,
-              isSelected: true,
+              isSelected: item.correct_answers.length > 0,
               answerChanged: false,
               answerChangedRequest: false,
               answer_audioChanged: false,
@@ -4051,7 +4069,7 @@ export default {
           this.answersListMatchTo = this.answersListMatchTo.map((item) => {
             return {
               ...item,
-              answerToId: this.questionEdit.sub_question_type.slug.includes("match_one")? item.correct_answers[0] : item.correct_answers,
+              answerToId: this.questionEdit.sub_question_type.slug.includes("match_one") ? item.correct_answers[0] : item.correct_answers,
               audioUrl: item.audio ? item.audio : item.answer,
               answerImage: item.audio ? item.answerImage : item.answer,
               answerChanged: false,

@@ -7,6 +7,7 @@
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getCountries"
                :loading="loading"
+               :isRefresh="refresh"
                :permission_delete="'delete-countries'"
                :permission_edit="'edit-countries'"
                :permission_view="'show-countries'"
@@ -28,6 +29,7 @@
     <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 
@@ -64,6 +66,8 @@ export default {
       loading: false,
       showModal: false,
       showModalFailed: false,
+      refresh: false,
+      deleteModal: false,
       countrySearchWord: "",
       countriesList: [],
       totalNumber: 0,
@@ -99,7 +103,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteCountryRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getCountries()
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       }).catch((error) => {
         this.showModalFailed = error.response.data.code === 23000;
       }).finally(() => {

@@ -6,6 +6,7 @@
       :tableItems="schoolLanguagesList"
       :fieldsList="fieldsList"
       :v-search-model="groupSearchWord"
+      :isRefresh="refresh"
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
@@ -35,6 +36,7 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 
@@ -51,6 +53,8 @@ export default {
     return {
       loading: false,
       showModal: false,
+      refresh: false,
+      deleteModal: false,
       groupSearchWord: "",
       schoolLanguagesList: [],
       totalNumber: null,
@@ -87,7 +91,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteSchoolLanguageRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getSchoolLanguages();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       });
       this.cancel();
     },

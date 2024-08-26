@@ -38,6 +38,7 @@ export default {
         }, 1500);
       })
         .catch((error) => {
+          this.loading = false;
           this.showModalFailed = !!error.response.data.errors.includes('قيمة الحقل الاسم مُستخدمة من قبل');
         })
         .finally(() => {

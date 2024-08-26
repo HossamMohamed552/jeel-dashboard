@@ -27,6 +27,7 @@
     <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 
@@ -57,6 +58,7 @@ export default {
       loading: false,
       showModal: false,
       showModalFailed: false,
+      deleteModal: false,
       refreshIt: false,
       groupSearchWord: "",
       paperWorkList: [],
@@ -94,8 +96,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deletePaperWorkRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getPaperWorks()
         this.refreshIt = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       }).catch((error) => {
         this.showModalFailed = error.response.data.code === 23000;
       }).finally(() => {

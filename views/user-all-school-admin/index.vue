@@ -34,7 +34,6 @@
         :table-items="usersSchoolList"
         :v-search-model="userSearchWord"
         :loading="loading"
-        :disable-it="true"
         :is-user-page="true"
         :permission_view="'show-school-users'"
         :permission_delete="'show-school-users'"
@@ -49,6 +48,7 @@
         @editItem="editItem($event)"
         @refetch="getAllSchoolUsers"
       >
+<!--        :disable-it="true"-->
         <template #buttons>
           <Button
             class="mr-3"
@@ -250,7 +250,8 @@ export default {
         userStatus.is_active = 1;
       else userStatus.is_active = 0;
 
-      this.ApiService(postChangeStatusRequest(userStatus)).then(() => {});
+      this.ApiService(postChangeStatusRequest(userStatus))
+        .then(() => {this.getAllSchoolUsers()}).catch(()=>this.getAllSchoolUsers())
     },
     cancelBlock($event) {
       this.ApiService(postCancelBlockRequest({ user_id: $event })).then(() => {

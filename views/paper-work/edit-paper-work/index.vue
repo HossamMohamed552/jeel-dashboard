@@ -1,5 +1,7 @@
 <template>
   <div class="edit-term">
+    <Modal :content-message="$t('CONTROLS.edit_successfully')" :showModal="showModal"
+           :is-success="true"/>
     <AddEditPaperWork
       :loading="loading"
       @handleEditPaperWork="handleEditPaperWork($event)"
@@ -31,16 +33,19 @@ export default {
       formData.append('learning_path_id', $event.learning_path_id);
       formData.append('description', $event.description);
       formData.append('paper_work_final_degree', $event.paper_work_final_degree);
-      formData.append('blooms', $event.blooms);
+      // formData.append('blooms', $event.blooms);
       formData.append('lesson_id', $event.lesson_id);
       // formData.append('learning_styles', $event.learning_styles);
       // formData.append('language_skills', $event.language_skills);
-      $event.language_skills.forEach((e) => {
-        formData.append("language_skills[]", e);
-      });
-      $event.learning_styles.forEach((e) => {
-        formData.append("learning_styles[]", e);
-      });
+      for (let bloom = 0; bloom < $event.blooms.length; bloom++) {
+        formData.append(`blooms[${bloom}]`, $event.blooms[bloom]);
+      }
+      for (let language_skill = 0; language_skill < $event.language_skills.length; language_skill++) {
+        formData.append(`language_skills[${language_skill}]`, $event.language_skills[language_skill]);
+      }
+      for (let learning_style = 0; learning_style < $event.learning_styles.length; learning_style++) {
+        formData.append(`learning_styles[${learning_style}]`, $event.learning_styles[learning_style]);
+      }
       if ($event.audioChangedRequest) {
         formData.append('audio', $event.audio);
       }
@@ -65,11 +70,11 @@ export default {
       }).then((response) => {
         this.showModal = true
         this.loading = false
+      }).then(() => {
         setTimeout(() => {
           this.showModal = false
+          this.$router.push("/dashboard/paper-work");
         }, 1500)
-      }).then(() => {
-        this.$router.push("/dashboard/paper-work");
       }).catch(err => {
         this.loading = false;
       })

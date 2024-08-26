@@ -12,7 +12,7 @@
                     v-model="name"
                     :label="$t('learningStyle.name')"
                     :name="$t('learningStyle.name')"
-                    :placeholder="$t('placeholderLearningStyle')"
+                    :placeholder="$t('learningStyle.placeholderLearningStyle')"
                     :rules="'required|min:3|max:100'"
                   ></TextField>
                 </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="add-question">
-    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal"
+    <Modal :content-message="$t('CONTROLS.edit_successfully')" :showModal="showModal"
            :is-success="true"/>
     <div class="add-edit-user">
       <div class="container-fluid custom-container">
@@ -62,7 +62,10 @@
                 </b-col>
                 <b-col lg="3">
                   <h6>{{ $t("QUESTIONS.BLOOM_CATEGORIES") }}</h6>
-                  <p>{{ getName(this.bloomCategories, this.collectData.bloom_category_id) }}</p>
+<!--                  <p>{{ getName(this.bloomCategories, this.collectData.bloom_category_id) }}</p>-->
+                  <p
+                    v-for="bloom in getName(bloomCategories, this.collectData.bloom_category_id,true)"
+                    :key="bloom">{{ bloom }}</p>
                 </b-col>
                 <b-col lg="3" v-if="collectData.language_method_id">
                   <h6>{{ $t("QUESTIONS.LEARNING_METHOD") }}</h6>
@@ -109,7 +112,8 @@
                     <source :src="answer.answerAudioUser"/>
                   </audio>
                 </b-col>
-                <b-col lg="12" v-if="!questionTypeSlug.includes('order') || !questionTypeSlug.includes('match')">
+                <b-col lg="12"
+                       v-if="!questionTypeSlug.includes('order') || !questionTypeSlug.includes('match')">
                   <h6>{{ $t('QUESTIONS.RIGHT_ANSWER') }}</h6>
                   <b-row>
                     <b-col v-for="correctAnswer in getCorrectAnswer(collectData.answers,1)"
@@ -147,7 +151,8 @@
                     <p>{{ index + 1 }} - </p>
                     <p v-if="matchAnswer.answer_pattern === 'text'">{{ matchAnswer.answer }}</p>
                     <audio controls v-if="matchAnswer.answer_pattern === 'audio'">
-                      <source :src="matchAnswer.audioUrl ? matchAnswer.audioUrl : matchAnswer.answer">
+                      <source
+                        :src="matchAnswer.audioUrl ? matchAnswer.audioUrl : matchAnswer.answer">
                     </audio>
                     <p class="to">إلى</p>
                     <div v-for="(matchAnswerTo,index) in matchAnswer.answers_to" :key="index">
@@ -155,10 +160,12 @@
                           matchAnswerTo.answer
                         }}</p>
                       <audio controls v-if="matchAnswerTo.answer_pattern === 'audio'">
-                        <source :src="matchAnswerTo.audioUrl ? matchAnswerTo.audioUrl : matchAnswerTo.answer">
+                        <source
+                          :src="matchAnswerTo.audioUrl ? matchAnswerTo.audioUrl : matchAnswerTo.answer">
                       </audio>
                       <div v-if="matchAnswerTo.answer_pattern === 'image'"><img
-                        :src="matchAnswerTo.answerImage ? matchAnswerTo.answerImage : matchAnswerTo.answer" alt="answer image" class="answer_image">
+                        :src="matchAnswerTo.answerImage ? matchAnswerTo.answerImage : matchAnswerTo.answer"
+                        alt="answer image" class="answer_image">
                       </div>
                     </div>
                   </div>
@@ -166,18 +173,18 @@
               </b-row>
               <b-row>
                 <div class="action-holder">
-                  <div>
-                    <Button :loading="loading" custom-class="submit-btn" @click="saveQuestion">
-                      {{ $t("GLOBAL_SAVE") }}
-                    </Button>
-                    <Button class="mx-3" @click="goToAnswersForm"
-                            custom-class="submit-btn back-btn">
-                      {{ $t("GLOBAL_BACK") }}
-                    </Button>
-                  </div>
                   <Button @click="handleCancel" custom-class="cancel-btn margin">
                     {{ $t("GLOBAL_CANCEL") }}
                   </Button>
+                  <div>
+                    <Button @click="goToAnswersForm"
+                            custom-class="submit-btn back-btn">
+                      {{ $t("GLOBAL_BACK") }}
+                    </Button>
+                    <Button class="mx-3" :loading="loading" custom-class="submit-btn" @click="saveQuestion">
+                      {{ $t("GLOBAL_SAVE") }}
+                    </Button>
+                  </div>
                 </div>
               </b-row>
             </b-container>
@@ -399,8 +406,11 @@ export default {
       if (this.collectData.head_question_audio && this.collectData.head_question_audioChangedRequest) {
         formData.append("head_question_audio", this.collectData.head_question_audio);
       }
-      formData.append('blooms', this.collectData.bloom_category_id);
+      // formData.append('blooms', this.collectData.bloom_category_id);
       formData.append('lesson_id', this.collectData.lesson_id);
+      for (let bloom = 0; bloom < this.collectData.bloom_category_id.length; bloom++) {
+        formData.append(`blooms[${bloom}]`, this.collectData.bloom_category_id[bloom]);
+      }
       for (let language_method = 0; language_method < this.collectData.language_method_id.length; language_method++) {
         formData.append(`learning_styles[${language_method}]`, this.collectData.language_method_id[language_method]);
       }
@@ -483,7 +493,7 @@ export default {
         }
       } else if (this.questionTypeSlug.includes('match_many')) {
         for (let answer = 0; answer < this.collectData.answers.answersListMatch.length; answer++) {
-          if (this.collectData.answers.answersListMatch[answer]?.id && this.collectData.answers.answersListMatch[answer]?.correct_answers && this.collectData.answers.answersListMatch[answer]?.correct_answers.length > 0) {
+          if (this.collectData.answers.answersListMatch[answer]?.id && this.collectData.answers.answersListMatch[answer]?.correct_answers && this.collectData.answers.answersListMatch[answer]?.correct_answers.length >= 0) {
             formData.append(`answers[${answer}][id]`, this.collectData.answers.answersListMatch[answer].id);
           }
           if ((this.collectData.answers.answersListMatch[answer].answer_pattern === 'audio' || this.collectData.answers.answersListMatch[answer].answer_pattern === 'image') && this.collectData.answers.answersListMatch[answer].answerChangedRequest) {
@@ -521,6 +531,9 @@ export default {
         }
       } else if (this.questionTypeSlug.includes('true_false')) {
         for (let answer = 0; answer < this.collectData.answers.length; answer++) {
+          if (this.collectData.answers[answer]?.id) {
+            formData.append(`answers[${answer}][id]`, this.collectData.answers[answer].id);
+          }
           formData.append(`answers[${answer}][answer]`, this.collectData.answers[answer]?.answer);
           formData.append(`answers[${answer}][correct]`, this.collectData.answers[answer].correct);
           formData.append(`answers[${answer}][answer_pattern]`, this.collectData.answers[answer].answer_pattern);
@@ -553,11 +566,16 @@ export default {
           onUploadProgress: ({loaded, total}) => {
             this.progress = Math.floor((loaded / total) * 100)
           }
-        })
-        .then((res) => {
-          this.loading = false
+        }).then(() => {
+        this.showModal = true;
+        this.loading = false
+      }).then((res) => {
+        setTimeout(() => {
+          this.showModal = false;
           this.$router.push("/dashboard/questions");
-        }).catch(() => this.loading = false);
+        }, 1500);
+      })
+        .catch(() => this.loading = false);
     },
     cancelUpload() {
       this.loading = false

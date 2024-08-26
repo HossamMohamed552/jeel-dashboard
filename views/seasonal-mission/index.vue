@@ -41,6 +41,7 @@
         @deleteItem="deleteItem($event)"
         @refetch="getSeasonalMission"
         :loading="loading"
+        :isRefresh="refresh"
         :permission_delete="'delete-seasonal-missions'"
         :permission_edit="'edit-seasonal-missions'"
         :permission_view="'show-seasonal-missions'"
@@ -66,6 +67,7 @@
         :is-warning="true"
         @cancelWithConfirm="cancelWithConfirm($event)"
       />
+      <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
     </div>
   </section>
 </template>
@@ -90,7 +92,9 @@ export default {
     return {
       loading: false,
       showModal: false,
-      collapsed: true,
+      collapsed: false,
+      refresh: false,
+      deleteModal: false,
       groupSearchWord: "",
       seasonalMission: [],
       totalNumber: null,
@@ -194,7 +198,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteSeasonalMissionRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getSeasonalMission();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       });
       this.cancel();
     },
@@ -203,8 +212,8 @@ export default {
     fieldsList() {
       return [
         {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
-        {key: "logo", label: this.$i18n.t('seasonalMission.seasonName')},
-        {key: "name", label: this.$i18n.t('seasonalMission.groupName')},
+        {key: "name", label: this.$i18n.t('seasonalMission.seasonName')},
+        {key: "sesonalMissionGroup.name", label: this.$i18n.t('seasonalMission.groupName')},
         {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.level')},
         {key: "start_date", label: this.$i18n.t('TABLE_FIELDS.start_date')},
         {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},

@@ -298,7 +298,7 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: "السنة الدراسية",
+          label: "الصف الدراسى",
           labelEn: "levels",
           options: [],
           deselectFromDropdown: true,
@@ -653,7 +653,7 @@ export default {
   mounted() {
     getSchoolAdminStudyYear(this.competitionsReportSearch, 'study_year_id')
     getAllLevelsForSchoolAdmin(this.competitionsReportSearch, 'level_id')
-    this.getCompetitionsReportChart()
+    // this.getCompetitionsReportChart()
     this.getCompetitionsReport()
   }
 }

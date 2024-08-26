@@ -9,8 +9,8 @@
         </b-row>
         <b-row>
           <b-col lg="6">
-            <ShowItem class="divider-show" :title="$t('achievements.name')"
-                      :subtitle="achievement.name"/>
+            <ShowItem v-if="achievement" class="divider-show" :title="$t('achievements.name')"
+                      :subtitle="achievement?.name"/>
           </b-col>
           <b-col lg="6">
             <ShowItem class="divider-show" :title="$t('achievements.description')"
@@ -36,14 +36,14 @@
           </b-col>
           <b-col lg="6">
             <ShowItem class="divider-show" :title="$t('achievements.interactionType')"
-                      :subtitle="achievement.interaction.name"/>
+                      :subtitle="achievement.interactionType.name"/>
           </b-col>
           <b-col lg="6">
-            <ShowItem class="divider-show" :title="$t('achievements.numberOfDailyEntry')" :subtitle="achievement.interaction_number" v-if="achievement.interaction.key === 'daily_entry'"/>
-            <ShowItem class="divider-show" :title="$t('achievements.numberOfMission')" :subtitle="achievement.interaction_number" v-if="achievement.interaction.key === 'mission'"/>
-            <ShowItem class="divider-show" :title="$t('achievements.numberOfSeasonalMission')" :subtitle="achievement.interaction_number" v-if="achievement.interaction.key === 'seasonal_mission'"/>
-            <ShowItem class="divider-show" :title="$t('achievements.numberOfCompetitions')" :subtitle="achievement.interaction_number" v-if="achievement.interaction.key === 'competitions'"/>
-            <ShowItem class="divider-show" :title="$t('achievements.numberOfLeaderboard')" :subtitle="achievement.interaction_number" v-if="achievement.interaction.key === 'leaderboard'"/>
+            <ShowItem class="divider-show" :title="$t('achievements.numberOfDailyEntry')" :subtitle="achievement.interaction_number" v-if="achievement?.interaction?.key === 'daily_entry'"/>
+            <ShowItem class="divider-show" :title="$t('achievements.numberOfMission')" :subtitle="achievement.interaction_number" v-if="achievement?.interaction?.key === 'mission'"/>
+            <ShowItem class="divider-show" :title="$t('achievements.numberOfSeasonalMission')" :subtitle="achievement.interaction_number" v-if="achievement?.interaction?.key === 'seasonal_mission'"/>
+            <ShowItem class="divider-show" :title="$t('achievements.numberOfCompetitions')" :subtitle="achievement.interaction_number" v-if="achievement?.interaction?.key === 'competitions'"/>
+            <ShowItem class="divider-show" :title="$t('achievements.numberOfLeaderboard')" :subtitle="achievement.interaction_number" v-if="achievement?.interaction?.key === 'leaderboard'"/>
           </b-col>
           <b-col lg="6" class="mt-3">
             <ShowItem class="divider-show" :title="$t('achievements.startDate')" :subtitle="achievement.start_date"/>

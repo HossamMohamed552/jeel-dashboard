@@ -3,6 +3,8 @@
     <Modal :content-message="$t('CONTROLS.add_successfully')"
            :showModal="showModal"
            :is-success="true"/>
+    <Modal :content-message="$t('CONTROLS.already_exists_subscription')" :showModal="showModalFailed" :isUsed="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <AddEditSubscribtion
       :loading="loading"
       @handleAddSubscribtion="handleAddSubscribtion($event)"
@@ -22,6 +24,7 @@ export default {
     return{
       loading: false,
       showModal: false,
+      showModalFailed: false,
     }
   },
   methods:{
@@ -35,9 +38,10 @@ export default {
           this.showModal = false
           this.$router.push("/dashboard/subscription");
         }, 1500)
-      }).catch(()=>{
+      }).catch((error)=>{
         this.loading = false
         this.showModal = false
+        this.showModalFailed = error.response.data.code === 422;
       })
     },
     handleCancel() {

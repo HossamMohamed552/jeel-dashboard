@@ -208,6 +208,7 @@
     "select_date_range": "حدد الفتره الزمنية",
     "sort_by": "ترتيب حسب",
     "add_successfully": "تمت الإضافة بنجاح",
+    "delete_successfully": "تم الحذف",
     "add_failed": "فشل الاضافه",
     "already_exists": "هذا السجل موجود من قبل",
     "Browse_files": "تصفح الملفات",
@@ -226,7 +227,10 @@
     "blocked": "محظور",
     "studentAlreadyAdd": "هذا الطالب موجود فى هذا الفصل بالفعل",
     "studentInClass": "هذا الطالب موجود فى فصل {className}",
-    "transferStudent": "هل تريد نقله لهذا الفصل"
+    "transferStudent": "هل تريد نقله لهذا الفصل",
+    "already_exists_subscription": "لا يمكن إضافة إشتراك لوجود إشتراك بالفعل فى نفس الفترة",
+    "remove_student": "هل تريد حذف الطالب",
+    "remove_student_paragraph": "هل تريد حذف الطالب من هذا الفصل"
   },
   "ROLES": {
     "ADD_NEW": "إضافة صلاحية",
@@ -1183,7 +1187,7 @@
     "parentManagement": "إدارة اولياء الامور",
     "listOfStudents": "قائمة الطلاب",
     "addStudentToParent": "إضافة طالب إلى ولى الأمر",
-    "classes":"الصف الدراسي",
+    "classes":"الفصل الدراسي",
     "superVisorDetail": "تفاصيل المشرف",
     "addLevelToSupervisor": "إضافة صفوف الى المشرف",
     "levelsList": "قائمه صفوف المشرف"

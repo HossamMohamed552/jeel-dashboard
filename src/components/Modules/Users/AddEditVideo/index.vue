@@ -84,6 +84,7 @@
                       :get-option-label="(option) => option.name"
                       :reduce="(option) => option.id"
                       :rules="'required'"
+                      :disabled="$route.params.id !== undefined"
                       @input="getAllLessonBasedOnPath"
                     />
                   </ValidationProvider>
@@ -101,7 +102,7 @@
                       :get-option-label="(option) => option.name"
                       :reduce="(option) => option.id"
                       :rules="'required'"
-                      :disabled="!createVideo.learning_path_id"
+                      :disabled="!createVideo.learning_path_id || $route.params.id"
                     />
                   </ValidationProvider>
                 </div>
@@ -115,6 +116,7 @@
                       :placeholder="$t('VIDEO.selectBloom')"
                       :name="'bloom'"
                       :options="bloom"
+                      multiple
                       :get-option-label="(option) => option.name"
                       :reduce="(option) => option.id"
                       :rules="'required'"
@@ -393,7 +395,9 @@ export default {
           this.createVideo.name = response.data.data.title;
           this.createVideo.description = response.data.data.description;
           this.createVideo.learning_path_id = response.data.data.learningPath.id;
-          this.createVideo.blooms = response.data.data.blooms.id
+          this.createVideo.blooms = response.data.data.blooms.map((item) => {
+            return item.id
+          })
           this.createVideo.lesson_id = response.data.data.lesson.id
           this.createVideo.learning_styles = response.data.data.learning_styles.map((item) => {
             return item.id

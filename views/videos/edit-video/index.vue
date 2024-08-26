@@ -46,8 +46,11 @@ export default {
       formData.append('title', $event.name);
       formData.append('description', $event.description);
       formData.append('learning_path_id', $event.learning_path_id);
-      formData.append('blooms', $event.blooms);
+      // formData.append('blooms', $event.blooms);
       formData.append('lesson_id', $event.lesson_id);
+      for (let bloom=0; bloom < $event.blooms.length; bloom++){
+        formData.append(`blooms[${bloom}]`, $event.blooms[bloom]);
+      }
       for (let learning=0; learning < $event.learning_styles.length; learning++){
         formData.append(`learning_styles[${learning}]`, $event.learning_styles[learning]);
       }

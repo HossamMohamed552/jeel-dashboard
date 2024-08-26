@@ -26,7 +26,7 @@
               {{ $i18n.locale === 'ar' ?  currentRoute.meta.breadcrumb : currentRoute.meta.breadcrumbEn}}</p>
           </div>
         </div>
-        <div class="navigation-back" v-if="currentRoute && !(currentRoute.name === 'main')" @click="$router.back()">
+        <div class="navigation-back" v-if="currentRoute && !(currentRoute.name === 'main')" @click="goToBack">
           <span>{{ $t('BACK') }}</span>
           <img src="@/assets/images/icons/left-arrow.png" class="icon back">
         </div>
@@ -66,12 +66,27 @@ export default {
       }));
     }
   },
+  methods:{
+    goToBack(){
+      if (this.IsList){
+        this.$router.push('/')
+      } else {
+        this.$router.back()
+      }
+    }
+  },
   mounted() {
     this.currentRoute = this.$route
     this.isSuperVisor = this.user.roles[0]?.code === 'supervisor';
   },
   updated() {
     this.currentRoute = this.$route
+    const regex = new RegExp(/\/dashboard\/(.+?)\/(.+)/);
+    if (regex.test(this.currentRoute.path)) {
+      this.IsList = false
+    } else {
+      this.IsList = true
+    }
   }
 }
 </script>

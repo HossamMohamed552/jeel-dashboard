@@ -207,6 +207,7 @@
     "select_date_range":"select date range",
     "sort_by": "sort by",
     "add_successfully": "Added successfully",
+    "delete_successfully": "deleted successfully",
     "add_failed": "add failed",
     "already_exists": "This record already exists",
     "Browse_files": "Browse files",
@@ -223,6 +224,7 @@
     "showMissions": "View missions",
     "contentOfMission": "mission content",
     "blocked": "blocked",
+    "already_exists_subscription": "The subscription cannot be added because there is already a subscription for the same period.",
     "studentAlreadyAdd": "This student is already in this class",
     "studentInClass": "This student is in a class {className}",
     "transferStudent": "Do you want to move it to this class?"

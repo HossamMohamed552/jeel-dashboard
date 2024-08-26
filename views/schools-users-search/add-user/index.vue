@@ -72,9 +72,9 @@
                         :get-option-label="(option) => option.name"
                         :rules="'required'"
                         :deselectFromDropdown="true"
-                        multiple
                         @input="onSelectRoleCategoriesInput($event)"
                       ></SelectSearch>
+<!--                      multiple-->
                     </div>
                   </b-col>
                   <b-col lg="4">
@@ -88,9 +88,9 @@
                         :get-option-label="(option) => option.name"
                         :rules="'required'"
                         :deselectFromDropdown="true"
-                        multiple
                         @input="onSelectRole($event)"
                       ></SelectSearch>
+<!--                      multiple-->
                     </div>
                   </b-col>
                   <b-col lg="4">
@@ -111,8 +111,8 @@
                         :label="$t('USERS.SECOND_NAME')"
                         :name="$t('USERS.SECOND_NAME')"
                         :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.SECOND_NAME')"
-                        :rules="'required|min:2'"
                       ></TextField>
+<!--                      :rules="'required|min:2'"-->
                     </div>
                   </b-col>
                   <b-col lg="4">
@@ -122,21 +122,30 @@
                         :label="$t('USERS.LAST_NAME')"
                         :name="$t('USERS.LAST_NAME')"
                         :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.LAST_NAME')"
-                        :rules="'required|min:2'"
                       ></TextField>
+<!--                      :rules="'required|min:2'"-->
                     </div>
                   </b-col>
                   <!--<<<<<<< HEAD-->
                   <!--                  <b-col lg="8" :class="isStudent && 'd-none'" v-if="!$route.params.id && !isManagementStudent">-->
                   <!--=======-->
-                  <b-col lg="8" v-if="!isStudent">
+                  <b-col lg="8" >
                     <div class="hold-field">
                       <TextField
+                        v-if="!isStudent"
                         v-model="user.email"
                         :label="$t('USERS.EMAIL')"
                         :name="$t('USERS.EMAIL')"
                         :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.EMAIL')"
                         :rules="'required|email'"
+                      ></TextField>
+                      <TextField
+                        v-if="isStudent"
+                        v-model="user.user_name"
+                        :label="$t('USERS.USER_NAME')"
+                        :name="$t('USERS.USER_NAME')"
+                        :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.USER_NAME')"
+                        :rules="'required|min:2'"
                       ></TextField>
                     </div>
                   </b-col>
@@ -348,6 +357,7 @@ export default {
         middle_name: "",
         last_name: "",
         email: "",
+        user_name: "",
         password: "",
         password_confirmation: "",
         mobile: "",
@@ -403,6 +413,7 @@ export default {
       this.$refs.addEditUserForm.validate().then((success) => {
         this.loading = true;
         if (!success) return;
+        if(!this.isStudent) delete this.user.user_name
         this.ApiService(postAddUserSchoolRequest(this.user)).then(() => {
           this.showModal = true;
           setTimeout(() => {
@@ -438,14 +449,15 @@ export default {
     },
     getAllDepartments: _.debounce(function (value) {
       if (value != undefined) {
-        if (value.includes(125)) {
+        if (value === 125) {
           this.isManagementStudent = true
         } else {
           this.isManagementStudent = false
         }
-        for (let type = 0; type < value.length; type++) {
-          this.filterWith[`types[${type}]`] = value[type]
-        }
+        this.filterWith[`types[0]`] = value
+        // for (let type = 0; type < value.length; type++) {
+        //   this.filterWith[`types[${type}]`] = value[type]
+        // }
         this.ApiService(getAllRolesByTypeRequest(this.filterWith)).then((response) => {
           this.departmentsList = response.data.data;
         });
@@ -453,17 +465,18 @@ export default {
     }, 300),
     onSelectRole: _.debounce(function (value) {
       if (value != undefined) {
-        const studentRole = this.departmentsList.find(
-          (role) => role.code.toLowerCase() === "student"
-        );
-        if (value.includes(studentRole.id)) this.isStudent = true;
-        else this.isStudent = false;
-        if (value.includes(studentRole.id) && this.index == 0) {
-          this.user.roles = [studentRole.id];
-          this.index = 1;
-        } else {
-          this.index = 0;
-        }
+        // const studentRole = this.departmentsList.find(
+        //   (role) => role.code.toLowerCase() === "student"
+        // );
+        // if (value.includes(studentRole.id)) this.isStudent = true;
+        // if (value === 3) this.isStudent = true;
+        // else this.isStudent = false;
+        // if (value.includes(studentRole.id) && this.index == 0) {
+        //   this.user.roles = [studentRole.id];
+        //   this.index = 1;
+        // } else {
+        //   this.index = 0;
+        // }
       }
     }, 300),
     getAllSchools: _.debounce(function (value) {
@@ -475,6 +488,7 @@ export default {
     }, 300),
 
     onSelectRoleCategoriesInput: _.debounce(function (value) {
+      console.log('onSelectRoleCategoriesInput value',value)
       if (value != undefined) {
         this.onSelectRoleCategories(value);
       }
@@ -482,20 +496,25 @@ export default {
 
     onSelectRoleCategories: async function (value) {
       try {
-        const studentRoleType = this.rolesTypeList.find(
-          (type) => type.key.toLowerCase() === "student_management"
-        );
+        // const studentRoleType = this.rolesTypeList.find(
+        //   (type) => type.key.toLowerCase() === "student_management"
+        // );
 
-        if (value.includes(studentRoleType.id)) this.isStudent = true;
-        else this.isStudent = false;
-        if (value.includes(studentRoleType.id) && this.indexType == 0) {
-          this.user.roles_categories = [studentRoleType.id];
-          this.indexType = 1;
-          this.getAllDepartments(studentRoleType.id);
+        // if (value.includes(studentRoleType.id)) this.isStudent = true;
+        if (value === 125) {
+          this.isStudent = true;
         } else {
-          this.getAllDepartments(value);
-          this.indexType = 0;
+          this.isStudent = false;
         }
+        this.getAllDepartments(value);
+        // if (value.includes(studentRoleType.id) && this.indexType == 0) {
+          this.user.roles_categories.push(value);
+        //   this.indexType = 1;
+        //   this.getAllDepartments(studentRoleType.id);
+        // } else {
+        //   this.getAllDepartments(value);
+        //   this.indexType = 0;
+        // }
       } catch (e) {
 
       }

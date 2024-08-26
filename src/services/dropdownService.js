@@ -35,7 +35,7 @@ import {getVideoPerLevelPathRequest} from "@/api/videos";
 // Super Visor Dropdowns
 import {
   getClassSchoolAdminRequest,
-  getLevelsRequest, getStudentsInClassSchoolAdminRequest,
+  getLevelsRequest, getLevelsSchoolAdminRequest, getStudentsInClassSchoolAdminRequest,
   getStudyYearsForSuperVisorRequest
 } from "@/api/school-info";
 import {getLevelsForSuperVisorDropDownRequest} from "@/api/level"; // المرحلة الدراسية
@@ -67,6 +67,7 @@ import {
 } from "@/api/supervisor-module";
 import {getSchoolAdminSchoolYearRequest, getSchoolYearRequest} from "@/api/school-year";
 import {getPackagesRequest} from "@/api/packages";
+import {getAllStudentsForSuperVisorRequest} from "@/api/user";
 
 // isSub = false
 export async function updateFieldOptions(array, key, data) {
@@ -131,34 +132,41 @@ export async function getPackage(array, key, countryId, schoolGroupId, schoolId)
     list_all: true
   }), key);
 }
-export async function getAllLevelsForReports(array, key,packageId,schoolId) {
+
+export async function getAllLevelsForReports(array, key, packageId, schoolId) {
   await fetchDataAndUpdateOptions(array, getAllLevelsRequest({
     package_id: packageId,
     school_id: schoolId,
   }), key);
 }
-export async function getAllLevelsForSchoolAdmin(array, key,params) {
-  await fetchDataAndUpdateOptions(array, getLevelsRequest(params), key);
-}
-export async function getTerms(array, key,params) {
-  await fetchDataAndUpdateOptions(array, geTermsRequest(params), key);
-}
-export async function getClassSchoolAdmin(array, key,params) {
-  await fetchDataAndUpdateOptions(array, getClassSchoolAdminRequest(params), key);
-}
-export async function getStudentsInClassSchoolAdmin(array, key,classId,params) {
-  await fetchDataAndUpdateOptions(array, getStudentsInClassSchoolAdminRequest(classId,params), key);
+
+export async function getAllLevelsForSchoolAdmin(array, key, params) {
+  await fetchDataAndUpdateOptions(array, getLevelsSchoolAdminRequest(params), key);
 }
 
-export async function geAllTermsForReports(array, key,packageId,schoolId) {
+export async function getTerms(array, key, params) {
+  await fetchDataAndUpdateOptions(array, geTermsRequest(params), key);
+}
+
+export async function getClassSchoolAdmin(array, key, params) {
+  await fetchDataAndUpdateOptions(array, getClassSchoolAdminRequest(params), key);
+}
+
+export async function getStudentsInClassSchoolAdmin(array, key, classId, params) {
+  await fetchDataAndUpdateOptions(array, getStudentsInClassSchoolAdminRequest(classId, params), key);
+}
+
+export async function geAllTermsForReports(array, key, packageId, schoolId) {
   await fetchDataAndUpdateOptions(array, geTermsRequest({
     package_id: packageId,
     school_id: schoolId,
   }), key);
 }
-export async function getAllSubscriptionsType(array, key,packageId,schoolId) {
+
+export async function getAllSubscriptionsType(array, key, packageId, schoolId) {
   await fetchDataAndUpdateOptions(array, getAllSubscriptionsTypeRequest(), key);
 }
+
 export async function getAllSchoolsBySchoolGroup(array, key, id) {
   await fetchDataAndUpdateOptions(array, getSingleSchoolGroupRequest(id), key);
 }
@@ -327,11 +335,19 @@ export async function getStudyYearForTeacher(array, key) {
 export async function getStudyYear(array, key) {
   await fetchDataAndUpdateOptions(array, getSchoolYearRequest({list_all: true}), key);
 }
+
 export async function getSchoolAdminStudyYear(array, key) {
   await fetchDataAndUpdateOptions(array, getSchoolAdminSchoolYearRequest({list_all: true}), key);
 }
+
 export async function getStudyYearForSupervisor(array, key) {
   await fetchDataAndUpdateOptions(array, getStudyYearForSupervisorRequest({list_all: true}), key);
+}
+
+export async function getAllStudentsForSuperVisor(array, key, classId) {
+  await fetchDataAndUpdateOptions(array, getAllStudentsForSuperVisorRequest({
+    class_id: classId
+  }), key);
 }
 
 export async function getLevelByStudyYearForTeacher(array, key, id) {

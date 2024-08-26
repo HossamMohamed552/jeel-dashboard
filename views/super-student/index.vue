@@ -152,6 +152,10 @@ export default {
           label: this.$i18n.t("USERS.name"),
         },
         {
+          key: "level.name",
+          label: this.$i18n.t("MISSIONS.level"),
+        },
+        {
           key: "status.key",
           label: this.$i18n.t("TABLE_FIELDS.status"),
         },

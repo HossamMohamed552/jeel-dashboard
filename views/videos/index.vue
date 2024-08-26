@@ -29,6 +29,7 @@
     <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 
@@ -66,6 +67,7 @@ export default {
       showModal: false,
       showModalFailed: false,
       refreshIt: false,
+      deleteModal: false,
       groupSearchWord: "",
       videosList: [],
       totalNumber: 0,
@@ -103,8 +105,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteVideoRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getVideos()
         this.refreshIt = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       }).catch((error) => {
         this.showModalFailed = error.response.data.code === 23000;
       }).finally(() => {

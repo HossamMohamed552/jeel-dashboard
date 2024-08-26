@@ -50,8 +50,8 @@
                         :label="$t('USERS.SECOND_NAME')"
                         :name="$t('USERS.SECOND_NAME')"
                         :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.SECOND_NAME')"
-                        :rules="'required|min:2'"
                       ></TextField>
+<!--                      :rules="'required|min:2'"-->
                     </div>
                   </b-col>
                   <b-col lg="4">
@@ -61,8 +61,8 @@
                         :label="$t('USERS.LAST_NAME')"
                         :name="$t('USERS.LAST_NAME')"
                         :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.LAST_NAME')"
-                        :rules="'required|min:2'"
                       ></TextField>
+<!--                      :rules="'required|min:2'"-->
                     </div>
                   </b-col>
                   <b-col lg="8" :class="isStudent && 'd-none'" v-if="!$route.params.id || !isStudent">

@@ -49,8 +49,11 @@ export default {
       formData.append('thumbnail', $event.thumbnail);
       formData.append('video', $event.video);
       formData.append('video_without_music', $event.video_without_music);
-      formData.append('blooms', $event.blooms);
+      // formData.append('blooms', $event.blooms);
       formData.append('lesson_id', $event.lesson_id);
+      for (let bloom=0; bloom < $event.blooms.length; bloom++){
+        formData.append(`blooms[${bloom}]`, $event.blooms[bloom]);
+      }
       for (let learning=0; learning < $event.learning_styles.length; learning++){
         formData.append(`learning_styles[${learning}]`, $event.learning_styles[learning]);
       }

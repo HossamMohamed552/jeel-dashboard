@@ -29,6 +29,7 @@
     <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 
@@ -52,7 +53,7 @@ export default {
         {key: "learningPath.name", label: this.$i18n.t('AUDIOS.LEARNING_PATH')},
         {key: "lesson.name", label: this.$i18n.t('AUDIOS.LESSION_NAME')},
         {key: "task_degree", label: this.$i18n.t('AUDIOS.DEGREE')},
-        {key: "actions", label: this.$i18n.t('actions')},
+        {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
       ]
     },
     ...mapGetters(['user'])
@@ -63,6 +64,7 @@ export default {
       showModal: false,
       showModalFailed: false,
       refreshIt: false,
+      deleteModal: false,
       groupSearchWord: "",
       audiosList: [],
       totalNumber: 0,
@@ -103,8 +105,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteAudioRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getAudios()
         this.refreshIt = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       }).catch((error) => {
         this.showModalFailed = error.response.data.code === 23000;
       }).finally(() => {

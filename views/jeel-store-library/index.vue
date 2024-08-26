@@ -11,6 +11,7 @@
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
       :loading="loading"
+      :isRefresh="refresh"
       :showSearchInput="false"
       @refetch="getJeelStoreLibrary"
       :permission_delete="'delete-store-library'"
@@ -38,6 +39,7 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
     <!------------------ st delete model --------------->
   </section>
 </template>
@@ -57,6 +59,8 @@ export default {
     return {
       loading: false,
       showModal: false,
+      refresh: false,
+      deleteModal: false,
       groupSearchWord: "",
       totalNumber: 0,
       jeelStoreLibraryList: [],
@@ -73,10 +77,10 @@ export default {
                 (item) => {
                   return {
                     id: item.id,
-                    name: item.file_name,
-                    level: item.level,
+                    file_name: item.file_name,
+                    "level.name": item.level.name,
                     gems: item.gems,
-                    type: item.type.name,
+                    typeStoreLibrary: item.type.name,
                   };
 
                 }
@@ -108,7 +112,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteJeelStoreLibraryRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getJeelStoreLibrary();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       });
       this.cancel();
     },
@@ -122,15 +131,15 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
-          key: "name",
+          key: "file_name",
           label: this.$i18n.t("content.name"),
         },
         {
-          key: "level",
+          key: "level.name",
           label: this.$i18n.t("content.level"),
         },
         {
-          key: "type",
+          key: "typeStoreLibrary",
           label: this.$i18n.t("content.type"),
         },
         {

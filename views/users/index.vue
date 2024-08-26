@@ -7,6 +7,7 @@
       :table-items="usersList"
       :v-search-model="userSearchWord"
       :loading="loading"
+      :isRefresh="refresh"
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @changeStatus="changeStatus($event)"
@@ -40,6 +41,7 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 <script>
@@ -64,6 +66,8 @@ export default {
   data() {
     return {
       loading: false,
+      refresh: false,
+      deleteModal: false,
       userSearchWord: "",
       usersList: [],
       showModal: false,
@@ -125,7 +129,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteUserRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getAllUsers();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       });
       this.cancel();
     },

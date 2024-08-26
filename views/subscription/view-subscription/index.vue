@@ -33,7 +33,7 @@
             <ShowItem
               class="divider-show"
               :title="$t('subscription.studyYear')"
-              :subtitle="singleSubscribtion.study_year.name"
+              :subtitle="singleSubscribtion.studyYear.name"
             />
           </b-col>
           <b-col lg="4" class="mb-5">
@@ -82,7 +82,7 @@
             <ShowItem
               class="divider-show"
               :title="$t('subscription.disPercentage')"
-              :subtitle="`${singleSubscribtion.package_discount} %` || `0 %`"
+              :subtitle="singleSubscribtion.package_discount ? `${singleSubscribtion.package_discount} %` : `0 %`"
             />
           </b-col>
           <b-col lg="4" class="mb-5">

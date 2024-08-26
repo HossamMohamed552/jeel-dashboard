@@ -1,5 +1,5 @@
 <template>
-  <validation-observer v-slot="{ invalid }" ref="stepTwoForm">
+  <validation-observer v-slot="{ invalid }" ref="stepFourForm">
     <GenericForm
       :schema="stepForm"
       @handleInput="handleInput"
@@ -71,7 +71,7 @@ export default {
       voiceUploaded: false,
       loading: false,
       entry: {},
-      watchedField: ["name", "start_date", "description"],
+      watchedField: ["name", "start_date", "description", "audio"],
       notifactionGroup: [],
       notifactionIndex: 0,
     };
@@ -88,10 +88,14 @@ export default {
       this.$emit("onSubmit", this.stepForm);
     },
     handleInput(key, value) {
-      if (typeof value == "object") {
+      console.log('key',key)
+      console.log('key',value)
+      if (key === "audio") {
         this.entry["uuid"] = value.uuid;
         this.entry["audio"] = value.uuid;
+        this.entry["value"] = value.uuid;
         this.entry["original_url"] = value.url;
+        this.entry[key] = value.uuid;
         this.voiceUploaded = true;
       } else {
         this.entry[key] = value;
@@ -99,18 +103,19 @@ export default {
     },
     removeFile() {
       let removeButton = document.getElementById("removeFile");
+      console.log('removeButton', removeButton)
       removeButton.click();
+      this.entry["uuid"] = null;
+      this.entry["audio"] = null;
+      this.entry["value"] = null;
+      this.entry["original_url"] = null;
     },
     handleAdd() {
+      this.voiceUploaded = false;
       this.stepForm.forEach((field) => {
         if (this.watchedField.includes(field.key)) {
           try {
-            if (field.type === "date")
-              this.$set(
-                this.entry,
-                field.key,
-                moment(field.value, "DD-MM-YYYY").format("YYYY-MM-DD")
-              );
+            if (field.type === "date") this.$set(this.entry, field.key, moment(field.value, "DD-MM-YYYY").format("YYYY-MM-DD"));
             else this.$set(this.entry, field.key, field.value);
             field.value = "";
           } catch (error) {
@@ -118,7 +123,6 @@ export default {
           }
         }
       });
-
       if (this.notifactionGroup.length === 0) {
         this.notifactionIndex++;
       } else {
@@ -127,7 +131,10 @@ export default {
       this.entry.id = this.notifactionIndex;
       this.addNotification(this.entry);
       this.entry = {};
-      this.$refs.stepTwoForm.reset()
+      this.$nextTick(() => {
+        this.voiceUploaded = false;
+        this.$refs.stepFourForm.reset()
+      });
       this.removeFile();
       this.isNextStep = true;
     },

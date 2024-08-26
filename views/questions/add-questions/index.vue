@@ -1,6 +1,7 @@
 <template>
   <div class="add-question">
-    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal"
+           :is-success="true"/>
     <div class="add-edit-user">
       <div class="container-fluid custom-container">
         <div class="add-edit-question-form">
@@ -45,7 +46,7 @@
                 </b-col>
                 <b-col lg="3" v-if="collectData.learning_path_id">
                   <h6>{{ $t("QUESTIONS.LEARNING_PATH") }}</h6>
-                  <p >{{ getName(learningPaths, collectData.learning_path_id) }}</p>
+                  <p>{{ getName(learningPaths, collectData.learning_path_id) }}</p>
                 </b-col>
                 <b-col lg="3" v-if="collectData.language_skill_id">
                   <h6>{{ $t("QUESTIONS.LANGUAGE_SKILLS") }}</h6>
@@ -61,7 +62,10 @@
                 </b-col>
                 <b-col lg="3">
                   <h6>{{ $t("QUESTIONS.BLOOM_CATEGORIES") }}</h6>
-                  <p>{{ getName(this.bloomCategories, this.collectData.bloom_category_id) }}</p>
+                  <!--                  <p>{{ getName(this.bloomCategories, this.collectData.bloom_category_id) }}</p>-->
+                  <p
+                    v-for="bloom in getName(bloomCategories, this.collectData.bloom_category_id,true)"
+                    :key="bloom">{{ bloom }}</p>
                 </b-col>
                 <b-col lg="3" v-if="collectData.language_method_id">
                   <h6>{{ $t("QUESTIONS.LEARNING_METHOD") }}</h6>
@@ -166,18 +170,18 @@
               </b-row>
               <b-row>
                 <div class="action-holder">
-                  <div>
-                    <Button :loading="loading" custom-class="submit-btn" @click="saveQuestion">
-                      {{ $t("GLOBAL_SAVE") }}
-                    </Button>
-                    <Button class="mx-3" @click="goToAnswersForm"
-                            custom-class="submit-btn back-btn">
-                      {{ $t("GLOBAL_BACK") }}
-                    </Button>
-                  </div>
                   <Button @click="handleCancel" custom-class="cancel-btn margin">
                     {{ $t("GLOBAL_CANCEL") }}
                   </Button>
+                  <div>
+                    <Button  @click="goToAnswersForm"
+                            custom-class="submit-btn back-btn">
+                      {{ $t("GLOBAL_BACK") }}
+                    </Button>
+                    <Button class="mx-3" :loading="loading" custom-class="submit-btn" @click="saveQuestion">
+                      {{ $t("GLOBAL_SAVE") }}
+                    </Button>
+                  </div>
                 </div>
               </b-row>
             </b-container>
@@ -211,6 +215,7 @@ import axios from "axios";
 import VueCookies from "vue-cookies";
 import globalAssetData from "@/mixins/getData/globalAssetData";
 import ProgressModal from "@/components/Shared/ProgressModal/index.vue";
+
 export default {
   mixins: [globalAssetData],
   components: {
@@ -250,8 +255,8 @@ export default {
       progress: 0
     };
   },
-  computed:{
-    steps(){
+  computed: {
+    steps() {
       return [
         {
           icon: "1",
@@ -393,8 +398,11 @@ export default {
       formData.append("question_pattern", this.collectData.question_pattern);
       formData.append("head_question", this.collectData.head_question);
       formData.append("head_question_audio", this.collectData.head_question_audio);
-      formData.append('blooms', this.collectData.bloom_category_id);
+      // formData.append('blooms', this.collectData.bloom_category_id);
       formData.append('lesson_id', this.collectData.lesson_id);
+      for (let bloom = 0; bloom < this.collectData.bloom_category_id.length; bloom++) {
+        formData.append(`blooms[${bloom}]`, this.collectData.bloom_category_id[bloom]);
+      }
       for (let language_method = 0; language_method < this.collectData.language_method_id.length; language_method++) {
         formData.append(`learning_styles[${language_method}]`, this.collectData.language_method_id[language_method]);
       }
@@ -492,11 +500,15 @@ export default {
           onUploadProgress: ({loaded, total}) => {
             this.progress = Math.floor((loaded / total) * 100)
           }
-        })
-        .then((res) => {
-          this.loading = false
+        }).then(() => {
+        this.showModal = true;
+        this.loading = false
+      }).then((res) => {
+        setTimeout(() => {
+          this.showModal = false;
           this.$router.push("/dashboard/questions");
-        }).catch(() => this.loading = false);
+        }, 1500);
+      }).catch(() => this.loading = false);
     },
     cancelUpload() {
       this.loading = false

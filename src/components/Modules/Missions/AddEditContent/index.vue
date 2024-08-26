@@ -66,19 +66,19 @@
           </Button>
           <div>
             <Button
+              @click="handleBack"
+              custom-class="submit-btn back-btn"
+            >
+              {{ $t("GLOBAL_BACK") }}
+            </Button>
+            <Button
+              class="mx-3"
               type="submit"
               :loading="loading"
               :disabled="invalid"
               :custom-class="'submit-btn'"
             >
               {{ $t("GLOBAL_NEXT") }}
-            </Button>
-            <Button
-              class="mx-3"
-              @click="handleBack"
-              custom-class="submit-btn back-btn"
-            >
-              {{ $t("GLOBAL_BACK") }}
             </Button>
           </div>
         </div>
@@ -95,6 +95,7 @@ import {getAudioPerLevelPathRequest} from "@/api/audios";
 import Button from "@/components/Shared/Button/index.vue";
 import {getSingleMissionsRequest} from "@/api/missios";
 import {log} from "video.js";
+import {mapGetters} from "vuex";
 
 export default {
   name:"missionStepTwo",
@@ -134,11 +135,16 @@ export default {
       lessonsSelectedWithEdit: []
     }
   },
+  computed:{
+    ...mapGetters(['learnPathsVideoPaperWokQuizStored','storedData'])
+  },
   methods: {
     goToMissionContentStep() {
+      this.$store.commit('SET_MISSION_STEP_ONE',[this.learnPathsVideoPaperWokQuiz,true])
       this.$emit("goToMissionContentStep", this.learnPathsVideoPaperWokQuiz)
     },
     handleCancel() {
+      this.$store.commit('SET_MISSION_STEP_ONE', [null,false])
       this.$emit("handleCancel");
     },
     handleBack() {
@@ -149,7 +155,7 @@ export default {
     if (this.$route.params.id) {
       this.watchLearningPathSelected = this.learningPathSelected
       this.ApiService(getSingleMissionsRequest(this.$route.params.id)).then((response) => {
-        this.learnPathsVideoPaperWokQuiz = response.data.data.learningpaths
+        this.learnPathsVideoPaperWokQuiz = response.data.data.learningPaths
         this.lessonsSelectedWithEdit = this.lessonsSelected
         for (let lesson = 0; lesson < this.lessonsSelectedWithEdit.length; lesson++) {
           this.filterWith[`lessons[${lesson}]`] = this.lessonsSelectedWithEdit[lesson]
@@ -273,50 +279,57 @@ export default {
       for (let lesson = 0; lesson < this.lessonsSelectedWithEdit.length; lesson++) {
         this.filterWith[`lessons[${lesson}]`] = this.lessonsSelectedWithEdit[lesson]
       }
-      this.watchLearningPathSelected.forEach((item) => {
-        this.ApiService(getVideoPerLevelPathMissionRequest({
-          learning_path_id: item.id,
-          ...this.filterWith,
-          'list_all': 'true'
-        })).then((response) => {
-          Object.assign(item, {
-            videos: response.data.data,
-            videoIds: []
+      if (!this.storedData){
+        this.watchLearningPathSelected.forEach((item) => {
+          this.ApiService(getVideoPerLevelPathMissionRequest({
+            learning_path_id: item.id,
+            ...this.filterWith,
+            'list_all': 'true'
+          })).then((response) => {
+            Object.assign(item, {
+              videos: response.data.data,
+              videoIds: []
+            })
           })
-        })
-        this.ApiService(getPaperWorkPerLevelPathRequest({
-          learning_path_id: item.id,
-          ...this.filterWith,
-          'list_all': 'true'
-        })).then((response) => {
-          Object.assign(item, {
-            paperWorks: response.data.data,
-            paperWorkIds: []
+          this.ApiService(getPaperWorkPerLevelPathRequest({
+            learning_path_id: item.id,
+            ...this.filterWith,
+            'list_all': 'true'
+          })).then((response) => {
+            Object.assign(item, {
+              paperWorks: response.data.data,
+              paperWorkIds: []
+            })
           })
-        })
-        this.ApiService(getQuizLevelPathMissionRequest({
-          learning_path_id: item.id,
-          ...this.filterWith,
-          'list_all': 'true'
-        })).then((response) => {
-          Object.assign(item, {
-            quizzes: response.data.data,
-            quizzesIds: []
+          this.ApiService(getQuizLevelPathMissionRequest({
+            learning_path_id: item.id,
+            ...this.filterWith,
+            'list_all': 'true'
+          })).then((response) => {
+            Object.assign(item, {
+              quizzes: response.data.data,
+              quizzesIds: []
+            })
           })
-        })
-        this.ApiService(getAudioPerLevelPathRequest({
-          learning_path_id: item.id,
-          ...this.filterWith,
-          'list_all': 'true'
-        })).then((response) => {
-          Object.assign(item, {
-            tasks: response.data.data,
-            tasksIds: []
+          this.ApiService(getAudioPerLevelPathRequest({
+            learning_path_id: item.id,
+            ...this.filterWith,
+            'list_all': 'true'
+          })).then((response) => {
+            Object.assign(item, {
+              tasks: response.data.data,
+              tasksIds: []
+            })
           })
+          collectArray.push(item)
         })
-        collectArray.push(item)
-      })
-      this.learnPathsVideoPaperWokQuiz = collectArray
+      }
+      if (this.storedData){
+        this.learnPathsVideoPaperWokQuiz = this.learnPathsVideoPaperWokQuizStored
+      } else {
+        this.learnPathsVideoPaperWokQuiz = collectArray
+      }
+
     }
   }
 }

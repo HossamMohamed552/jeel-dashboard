@@ -17,7 +17,7 @@
               :placeholder="$t('CONTROLS.search')"
               class="search-input"
             />
-            <img src="@/assets/images/icons/search.svg" />
+            <img src="@/assets/images/icons/search.svg"/>
           </div>
         </div>
         <div v-if="showDateRange" class="ml-3">
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="sort">
-        <img src="@/assets/images/icons/sort.svg" />
+        <img src="@/assets/images/icons/sort.svg"/>
         <select @change="orderBy">
           <option value="" selected disabled>{{ $t("CONTROLS.sort_by") }}</option>
           <option v-for="(item, index) in sortArray" :id="item.id" :value="item.value" :key="index">
@@ -67,8 +67,8 @@
         <template :slot="`head(${headerItem.key})`" v-for="headerItem in fieldsList">
           <div :class="headerItem.key !== 'actions' ? 'sort' : ''">
             <span>{{ headerItem.label }}</span>
-            <span class="sortIcon" v-if="headerItem.key !== 'actions'">
-              <img src="@/assets/images/icons/arrow-up-down.png" @click="sortBy(headerItem.key)" />
+            <span class="sortIcon" v-if="hideSortBasedOnHeaderKey(headerItem.key)">
+              <img src="@/assets/images/icons/arrow-up-down.png" @click="sortBy(headerItem.key)"/>
             </span>
           </div>
         </template>
@@ -79,7 +79,7 @@
         </template>
         <template #cell(avatar)="data">
           <div class="hold-image">
-            <img class="image-in-table" :src="data.item.avatar" @error="altImage($event)" />
+            <img class="image-in-table" :src="data.item.avatar" @error="altImage($event)"/>
           </div>
         </template>
         <template #cell(video)="data">
@@ -93,8 +93,8 @@
         </template>
         <template #cell(music_status)="data">
           <span>{{
-            data.item.music_status === 1 ? $t("DEFAULT.acabila") : $t("DEFAULT.bymusic")
-          }}</span>
+              data.item.music_status === 1 ? $t("DEFAULT.acabila") : $t("DEFAULT.bymusic")
+            }}</span>
         </template>
         <template #cell(country)="data">
           <span>{{ data.value.name | cutString }}</span>
@@ -104,12 +104,12 @@
         </template>
         <template #cell(logo)="data">
           <div class="hold-image-school">
-            <img class="image-school-in-table" :src="data.item.logo" />
+            <img class="image-school-in-table" :src="data.item.logo"/>
           </div>
         </template>
         <template #cell(image)="data">
           <div class="hold-image-school">
-            <img class="image-school-in-table" :src="data.item.image" />
+            <img class="image-school-in-table" :src="data.item.image"/>
           </div>
         </template>
         <template #cell(school_type)="data">
@@ -123,19 +123,19 @@
         </template>
         <template #cell(question)="data">
           <span v-if="data.item.question_pattern === 'text'">{{
-            data.item.question | cutString
-          }}</span>
+              data.item.question | cutString
+            }}</span>
           <img
             v-else-if="data.item.question_pattern === 'image'"
             :src="data.item.question"
             class="question-image-show"
           />
           <audio v-else-if="data.item.question_pattern === 'audio'" controls>
-            <source :src="data.item.question" />
+            <source :src="data.item.question"/>
           </audio>
         </template>
         <template #cell(original_url)="data">
-          <AudioFakePlayer :data="data" />
+          <AudioFakePlayer :data="data"/>
         </template>
         <template #cell(percentage_mission)="data">
           <span>{{ Math.floor(data.item.percentage_mission) }}%</span>
@@ -166,17 +166,17 @@
         </template>
         <template #cell(audio_ar)="data">
           <audio controls>
-            <source :src="data.item.audio_ar" />
+            <source :src="data.item.audio_ar"/>
           </audio>
         </template>
         <template #cell(audio_en)="data">
           <audio controls>
-            <source :src="data.item.audio_en" />
+            <source :src="data.item.audio_en"/>
           </audio>
         </template>
         <template #cell(audio)="data">
           <audio controls>
-            <source :src="data.item.audio" />
+            <source :src="data.item.audio"/>
           </audio>
         </template>
         <template #cell(questionName)="data">
@@ -192,7 +192,7 @@
           <span
             class="questionDifficulty"
             :class="questionDifficultyClass(data.item.questionDifficulty)"
-            >{{ data.item.questionDifficulty.name | cutString }}</span
+          >{{ data.item.questionDifficulty.name | cutString }}</span
           >
         </template>
         <template #cell(level)="data">
@@ -200,8 +200,8 @@
         </template>
         <template #cell(chracter_type)="data">
           <span v-if="data.item.chracter_type">{{
-            data.item.chracter_type[0].key | cutString
-          }}</span>
+              data.item.chracter_type[0].key | cutString
+            }}</span>
         </template>
         <template #cell(term)="data">
           <span v-if="data.item.term">{{ data.item.term.name | cutString }}</span>
@@ -211,25 +211,25 @@
               data.item.video_with_music_transcode ? $t("DEFAULT.videoUploaded") : $t("DEFAULT.videoNotUploaded")
             }}</span>
         </template>
-        <template #cell(learningpaths)="data">
-          <span v-for="(path, ind) in data.item.learningpaths" :key="ind" class="path">{{
-            path.name | cutString
-          }}</span>
+        <template #cell(learningPaths)="data">
+          <span v-for="(path, ind) in data.item.learningPaths" :key="ind" class="path">{{
+              path.name | cutString
+            }}</span>
         </template>
         <template #cell(learning_paths)="data">
           <span v-for="(path, ind) in data.item.learning_paths" :key="ind" class="path">{{
-            path.name | cutString
-          }}</span>
+              path.name | cutString
+            }}</span>
         </template>
         <template #cell(levels)="data">
           <span v-for="(level, ind) in data.item.levels" :key="ind" class="path">{{
-            level.name | cutString
-          }}</span>
+              level.name | cutString
+            }}</span>
         </template>
         <template #cell(terms)="data">
           <span v-for="(term, ind) in data.item.terms" :key="ind" class="path">{{
-            term.name | cutString
-          }}</span>
+              term.name | cutString
+            }}</span>
         </template>
         <template #cell(class)="data">
           <span v-for="(singleClass, ind) in data.item.class" :key="ind" class="path">{{
@@ -239,13 +239,13 @@
 
         <template #cell(lessons)="data">
           <span v-for="(lesson, ind) in data.item.lessons" :key="ind" class="path">{{
-            lesson.name | cutString
-          }}</span>
+              lesson.name | cutString
+            }}</span>
         </template>
         <template #cell(supervisors)="data">
           <span v-for="(singleSupervisor, ind) in data.item.supervisors" :key="ind" class="path">{{
-            singleSupervisor.name | cutString
-          }}</span>
+              singleSupervisor.name | cutString
+            }}</span>
         </template>
         <template #cell(teachers)="data">
           <!--          <div v-if="typeof data.item.teachers === 'object'">-->
@@ -268,28 +268,28 @@
         </template>
         <template #cell(number_users_roles[0])="data">
           <span v-if="data.item.number_users_roles[0]">{{
-            data.item.number_users_roles[0].number
-          }}</span>
+              data.item.number_users_roles[0].number
+            }}</span>
         </template>
         <template #cell(number_users_roles[1])="data">
           <span v-if="data.item.number_users_roles[1]">{{
-            data.item.number_users_roles[1].number
-          }}</span>
+              data.item.number_users_roles[1].number
+            }}</span>
         </template>
         <template #cell(number_users_roles[2])="data">
           <span v-if="data.item.number_users_roles[2]">{{
-            data.item.number_users_roles[2].number
-          }}</span>
+              data.item.number_users_roles[2].number
+            }}</span>
         </template>
         <template #cell(number_users_roles[3])="data">
           <span v-if="data.item.number_users_roles[3]">{{
-            data.item.number_users_roles[3].number
-          }}</span>
+              data.item.number_users_roles[3].number
+            }}</span>
         </template>
         <template #cell(number_users_roles[4])="data">
           <span v-if="data.item.number_users_roles[4]">{{
-            data.item.number_users_roles[4].number
-          }}</span>
+              data.item.number_users_roles[4].number
+            }}</span>
         </template>
         <template #cell(allowEdit)="data">
           <b-form-checkbox
@@ -316,21 +316,24 @@
             :custom-class="'transparent-btn rounded-btn'"
             @click="editItem(data.item)"
             :disabled="data.item.is_selected === false"
-            >{{ $t('CONTROLS.editContent') }}</Button>
+          >{{ $t('CONTROLS.editContent') }}
+          </Button>
         </template>
         <template #cell(editActions)="data">
           <Button :custom-class="'transparent-btn rounded-btn'" @click="detailItem(data.item)"
-            >
+          >
             {{ $t('CONTROLS.detailBtn') }}
           </Button>
         </template>
         <template #cell(showMissions)="data">
           <Button :custom-class="'transparent-btn rounded-btn'" @click="detailItem(data.item)"
-            >{{$t('CONTROLS.showMissions')}}</Button>
+          >{{ $t('CONTROLS.showMissions') }}
+          </Button>
         </template>
         <template #cell(missionContent)="data">
           <Button :custom-class="'transparent-btn rounded-btn'" @click="detailItem(data.item)"
-            >{{ $t('CONTROLS.contentOfMission') }}</Button>
+          >{{ $t('CONTROLS.contentOfMission') }}
+          </Button>
         </template>
         <template #cell(teacher_review)="data">
           <Button
@@ -350,11 +353,13 @@
             size="lg"
             :disabled="disableIt"
             @change="changeStatus(data.item)"
+            :class="data.item.is_super_admin === 1 && $route.name === 'users' ? 'd-none': ''"
           >
           </b-form-checkbox>
         </template>
         <template #cell(status.name)="data">
-          <span class="blocked-user" v-if="checkBlockUser(data) === 'show'">{{ $t('CONTROLS.blocked') }}</span>
+          <span class="blocked-user"
+                v-if="checkBlockUser(data) === 'show'">{{ $t('CONTROLS.blocked') }}</span>
         </template>
         <template #cell(status)="data">
           <span>{{ data.item.status.name }}</span>
@@ -379,7 +384,7 @@
             "
           >
             <template #button-content>
-              <img src="@/assets/images/icons/actions.svg" />
+              <img src="@/assets/images/icons/actions.svg"/>
             </template>
             <b-dropdown-item @click="detailItem(data.item)" v-if="checkDetail() === 'show'">
               {{ $t("CONTROLS.detailBtn") }}
@@ -469,8 +474,8 @@
         </template>
         <template #cell(edit_action)="data">
           <span class="pointer cursor-pointer" @click="editItem(data.item)">{{
-            $t("CONTROLS.editBtn")
-          }}</span>
+              $t("CONTROLS.editBtn")
+            }}</span>
         </template>
         <template #cell(download)="data">
           <span
@@ -478,7 +483,7 @@
             v-if="showDownloadBtn"
             @click="downloadImg(data.item)"
           >
-            <img src="@/assets/images/icons/download.png" />
+            <img src="@/assets/images/icons/download.png"/>
           </span>
         </template>
       </b-table>
@@ -495,8 +500,8 @@
   </section>
 </template>
 <script>
-import { debounce } from "lodash";
-import { mapGetters } from "vuex";
+import {debounce} from "lodash";
+import {mapGetters} from "vuex";
 import Button from "@/components/Shared/Button/index.vue";
 import AudioFakePlayer from "@/components/Shared/AudioFakePlayer/index.vue";
 import axios from "axios";
@@ -522,6 +527,18 @@ export default {
       dateRange: [],
       switchSort: "DESC",
       en: "en",
+      hideKeys:['actions',
+        'question',
+        'avatar',
+        'image',
+        'audio',
+        'video_with_music_transcode',
+        'lessons',
+        'learningPaths',
+        'logo',
+        'audio_ar',
+        'audio_en',
+      ],
       formValues: {
         per_page: 10,
         page: 1,
@@ -740,6 +757,9 @@ export default {
     },
   },
   methods: {
+    hideSortBasedOnHeaderKey(key){
+      return !this.hideKeys.includes(key)
+    },
     goToMissionContent(pathId, missionId) {
       this.$router.push(`/dashboard/path-content/${pathId}/mission/${missionId}`);
     },
@@ -753,10 +773,12 @@ export default {
     },
     searchBy: debounce(function (name) {
       this.formValues.name = name;
+      this.formValues.page = 1
       this.$emit("refetch", this.formValues);
     }, 500),
     orderBy(event) {
       this.formValues.order = event.target.value;
+      this.formValues.order_by = 'id'
       this.$emit("refetch", this.formValues);
     },
     disabledBeforeTodayAndAfterAWeek(date) {
@@ -850,8 +872,10 @@ export default {
             },
           }
         )
-        .then((response) => {})
-        .catch((error) => {});
+        .then((response) => {
+        })
+        .catch((error) => {
+        });
     },
     checkDelete(data) {
       const permissions = Array.isArray(this.permission_delete) ? this.permission_delete : [this.permission_delete];
@@ -1007,8 +1031,16 @@ export default {
     },
     sortBy(key) {
       this.formValues.order_by = key;
-      if (this.formValues.order_by === 'vid'){
+      if (this.formValues.order_by === 'vid') {
         this.formValues.order_by = 'id'
+      } else if (this.formValues.order_by === 'learningPaths') {
+        this.formValues.order_by = 'learningPaths.name'
+      } else if (this.formValues.order_by === 'video_with_music_transcode') {
+        this.formValues.order_by = 'lastVimeo.is_fully_uploaded'
+      } else if (this.formValues.order_by === 'typeStoreLibrary') {
+        this.formValues.order_by = 'getTypeEnumFromSystemCode.name'
+      } else if (this.formValues.order_by === 'questionDifficulty') {
+        this.formValues.order_by = 'questionDifficulty.name'
       }
       this.formValues.order = this.switchSort;
       this.$emit("refetch", this.formValues);

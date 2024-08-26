@@ -7,22 +7,24 @@
       :table-items="studentList"
       :v-search-model="userSearchWord"
       :loading="loading"
-      :disableIt="true"
       @refetch="getAllStudentUsers"
       :is-user-page="true"
       :permission_view="'view-enrollment-students-users'"
       :add_role="'add-enrollment-students-users'"
       :add_parent="'add-enrollment-students-parents-users'"
+      @changeStatus="changeStatus($event)"
       @addRole="addRole($event)"
       @detailItem="detailItem($event)"
       @addParentToStudentItem="addParentToStudentItem($event)"
     >
     </ListItems>
+<!--    :disableIt="true"-->
   </section>
 </template>
 <script>
 import ListItems from "@/components/ListItems/index.vue";
 import {getAllStudentUsersRequest, getAllTeacherUsersRequest} from "@/api/school-info";
+import {postChangeStatusRequest} from "@/api/user";
 
 export default {
   name: "index",
@@ -87,6 +89,18 @@ export default {
     }
   },
   methods:{
+    changeStatus($event) {
+      let userStatus = {
+        user_id: $event.id,
+      };
+
+      if ($event.status.key == "deactivated" || $event.status.key == "unverified")
+        userStatus.is_active = 1;
+      else userStatus.is_active = 0;
+
+      this.ApiService(postChangeStatusRequest(userStatus))
+        .then(() => {this.getAllStudentUsers()}).catch(()=>this.getAllStudentUsers())
+    },
     addRole($event){
       this.$router.push(`/dashboard/student-enrollment/${$event}`)
     },

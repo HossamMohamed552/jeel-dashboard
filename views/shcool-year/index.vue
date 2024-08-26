@@ -11,6 +11,7 @@
       @deleteItem="deleteItem($event)"
       @refetch="getSchoolYears"
       :loading="loading"
+      :isRefresh="refresh"
       :permission_delete="'delete-studyYear'"
       :permission_edit="'edit-studyYear'"
       :permission_view="'show-studyYear'"
@@ -37,6 +38,7 @@
     <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 
@@ -53,6 +55,8 @@ export default {
     return {
       loading: false,
       showModal: false,
+      refresh: false,
+      deleteModal: false,
       groupSearchWord: "",
       schoolYearsList: [],
       totalNumber: null,
@@ -89,7 +93,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteSchoolYearRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getSchoolYears();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       }).catch((error) => {
         this.showModalFailed = error.response.data.code === 23000;
       }).finally(() => {

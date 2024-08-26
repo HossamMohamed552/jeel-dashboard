@@ -64,6 +64,7 @@
                     :rules="'required'"
                     v-model="createPaperWork.type"
                     name="type"
+                    :disabled="$route.params.id !== undefined"
                     :options="paperWorkTypes"
                     :get-option-label="(option) => option.name"
                     :reduce="(option) => option.id"
@@ -120,6 +121,7 @@
                       :placeholder="$t('VIDEO.selectPath')"
                       :name="'learning_path'"
                       :options="paths"
+                      :disabled="$route.params.id !== undefined"
                       :get-option-label="(option) => option.text"
                       :reduce="(option) => option.value"
                       :rules="'required'"
@@ -140,7 +142,7 @@
                       :get-option-label="(option) => option.name"
                       :reduce="(option) => option.id"
                       :rules="'required'"
-                      :disabled="!createPaperWork.learning_path_id"
+                      :disabled="!createPaperWork.learning_path_id || $route.params.id !== null"
                     />
                   </ValidationProvider>
                 </div>
@@ -154,6 +156,7 @@
                       :placeholder="$t('VIDEO.selectBloom')"
                       :name="'bloom'"
                       :options="bloom"
+                      multiple
                       :get-option-label="(option) => option.name"
                       :reduce="(option) => option.id"
                       :rules="'required'"
@@ -481,8 +484,11 @@ export default {
           this.createPaperWork.description = response.data.data.description;
           this.createPaperWork.learning_path_id = response.data.data.learningPath.id;
           this.createPaperWork.paper_work_final_degree = response.data.data.paper_work_final_degree;
-          this.createPaperWork.blooms = response.data.data.blooms.id
+          // this.createPaperWork.blooms = response.data.data.blooms.id
           this.createPaperWork.lesson_id = response.data.data.lesson.id
+          this.createPaperWork.blooms = response.data.data.blooms.map((item) => {
+            return item.id
+          })
           this.createPaperWork.learning_styles = response.data.data.learning_styles.map((item) => {
             return item.id
           })

@@ -108,17 +108,17 @@ export default {
     },
     deleteItem($event) {
       this.itemId = $event;
+      console.log('$event',$event)
       this.showModal = true;
     },
     addStudentOnClassItem($event) {
-      console.log('$event', $event)
       this.$router.push(`/dashboard/school-admin-class/students/${$event}`)
     },
     goToAddClass() {
       this.$router.push('/dashboard/school-admin-classes/add')
     },
-    getAllClasses() {
-      this.ApiService(getAllClassesRequest()).then((response) => {
+    getAllClasses(event) {
+      this.ApiService(getAllClassesRequest(event)).then((response) => {
         this.classesList = response.data.data
         this.totalNumber = response.data.meta.total;
       })

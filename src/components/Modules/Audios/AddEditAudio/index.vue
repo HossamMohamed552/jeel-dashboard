@@ -79,6 +79,7 @@
                     :get-option-label="(option) => option.name"
                     :reduce="(option) => option.id"
                     :rules="'required'"
+                    :disabled="$route.params.id !== undefined"
                     @input="setQuestionType($event)"
                   />
                 </div>
@@ -158,6 +159,7 @@
                       :get-option-label="(option) => option.name"
                       :reduce="(option) => option.id"
                       :rules="'required'"
+                      :disabled="$route.params.id !== undefined"
                       @input="getAllLessonBasedOnPath"
                     />
                   </ValidationProvider>
@@ -178,7 +180,7 @@
                       :get-option-label="(option) => option.name"
                       :reduce="(option) => option.id"
                       :rules="'required'"
-                      :disabled="!formValues.learning_path_id"
+                      :disabled="!formValues.learning_path_id || $route.params.id !== null"
                     />
                   </ValidationProvider>
                 </div>
@@ -192,6 +194,7 @@
                       :placeholder="$t('VIDEO.selectBloom')"
                       :name="'bloom'"
                       :options="bloom"
+                      multiple="multiple"
                       :get-option-label="(option) => option.name"
                       :reduce="(option) => option.id"
                       :rules="'required'"
@@ -273,8 +276,8 @@
                    autoplay="autoplay"
                    controls="controls"></audio>
           </div>
-          <div v-else>
-            <img :src="url">
+          <div v-else class="w-100">
+            <img :src="url" class="w-100">
           </div>
           <Button @click="hideModal" :custom-class="'rounded-btn transparent-btn'">
             {{ $t("BACK") }}
@@ -348,7 +351,7 @@ export default {
         task: "",
         task_image: "",
         learning_path_id: "",
-        blooms: "",
+        blooms: [],
         lesson_id: "",
         learning_styles: [],
         language_skills: [],
@@ -388,7 +391,7 @@ export default {
       this.isPlaying = true;
     },
     setQuestionType: debounce(function ($event) {
-      this.questionType = this.questionTypes.filter((item)=>{
+      this.questionType = this.questionTypes.filter((item) => {
         return item.id === $event
       })
       this.formValues.typeName = this.questionType[0]?.key
@@ -495,10 +498,10 @@ export default {
             this.formValues.task_file_name = response.data.data.task_file_name;
             this.formValues.task_file_uuid = response.data.data.task_file_uuid;
             this.formValues.learning_path_id = response.data.data.learningPath.id;
-            this.formValues.blooms = response.data.data.blooms.id;
+            this.formValues.blooms = response.data.data.blooms.map((item) => item.id);
             this.formValues.lesson_id = response.data.data.lesson.id;
-            this.formValues.learning_styles = response.data.data.learning_styles.map((item) => {return item.id;});
-            this.formValues.language_skills = response.data.data.language_skills.map((item) => {return item.id;});
+            this.formValues.learning_styles = response.data.data.learning_styles.map((item) => item.id);
+            this.formValues.language_skills = response.data.data.language_skills.map((item) => item.id);
           }
         );
       }

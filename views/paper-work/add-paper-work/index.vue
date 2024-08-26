@@ -38,14 +38,17 @@ export default {
       formData.append("term_id", $event.term_id);
       formData.append("description", $event.description);
       formData.append("paper_work_final_degree", $event.paper_work_final_degree);
-      formData.append("blooms", $event.blooms);
+      // formData.append("blooms", $event.blooms);
       formData.append("lesson_id", $event.lesson_id);
-      $event.language_skills.forEach((e) => {
-        formData.append("language_skills[]", e);
-      });
-      $event.learning_styles.forEach((e) => {
-        formData.append("learning_styles[]", e);
-      });
+      for (let bloom = 0; bloom < $event.blooms.length; bloom++) {
+        formData.append(`blooms[${bloom}]`, $event.blooms[bloom]);
+      }
+      for (let language_skill = 0; language_skill < $event.language_skills.length; language_skill++) {
+        formData.append(`language_skills[${language_skill}]`, $event.language_skills[language_skill]);
+      }
+      for (let learning_style = 0; learning_style < $event.learning_styles.length; learning_style++) {
+        formData.append(`learning_styles[${learning_style}]`, $event.learning_styles[learning_style]);
+      }
 
       this.loading = true;
       axios
@@ -59,12 +62,12 @@ export default {
         .then((response) => {
           this.showModal = true;
           this.loading = false;
-          setTimeout(() => {
-            this.showModal = false;
-          }, 1500);
         })
         .then(() => {
-          this.$router.push("/dashboard/paper-work");
+          setTimeout(() => {
+            this.showModal = false;
+            this.$router.push("/dashboard/paper-work");
+          }, 1500);
         })
         .catch((err) => {
           this.loading = false;

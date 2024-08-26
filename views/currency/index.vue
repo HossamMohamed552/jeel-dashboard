@@ -11,6 +11,7 @@
       @deleteItem="deleteItem($event)"
       @refetch="getCurrency"
       :loading="loading"
+      :isRefresh="refresh"
       :permission_delete="'delete-currencies'"
       :permission_edit="'edit-currencies'"
       :permission_view="'show-currencies'"
@@ -34,6 +35,7 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 
@@ -50,6 +52,8 @@ export default {
     return {
       loading: false,
       showModal: false,
+      refresh: false,
+      deleteModal: false,
       groupSearchWord: "",
       currencyList: [],
       totalNumber: null,
@@ -86,7 +90,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteCurrencyRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getCurrency();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       });
       this.cancel();
     },

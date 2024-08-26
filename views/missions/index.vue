@@ -7,6 +7,7 @@
                @editItem="editItem($event)" @deleteItem="deleteItem($event)"
                @refetch="getMissions"
                :loading="loading"
+               :isRefresh="refresh"
                :permission_delete="'delete-missions'"
                :permission_edit="'edit-missions'"
                :permission_view="'show-missions'"
@@ -25,6 +26,7 @@
            @cancel="cancel($event)"
            :is-warning="true"
            @cancelWithConfirm="cancelWithConfirm($event)"/>
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 <script>
@@ -43,9 +45,9 @@ export default {
       return  [
         {key: "vid", label: this.$i18n.t("TABLE_FIELDS.id")},
         {key: "name", label: this.$i18n.t("TABLE_FIELDS.name")},
-        {key: "level", label: this.$i18n.t("TABLE_FIELDS.level")},
+        {key: "level.name", label: this.$i18n.t("TABLE_FIELDS.level")},
         // {key: "description", label: this.$i18n.t("TABLE_FIELDS.description")},
-        {key: "learningpaths", label: this.$i18n.t("TABLE_FIELDS.learning_path_name")},
+        {key: "learningPaths", label: this.$i18n.t("TABLE_FIELDS.learning_path_name")},
         {key: "actions", label: this.$i18n.t("TABLE_FIELDS.actions")},
       ]
     },
@@ -58,6 +60,8 @@ export default {
       missionSearchWord: "",
       missionsList: [],
       totalNumber: 0,
+      refresh: false,
+      deleteModal: false,
     }
   },
   methods: {
@@ -92,7 +96,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteMissionsRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getMissions()
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       })
       this.cancel()
     }

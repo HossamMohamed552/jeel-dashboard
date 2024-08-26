@@ -11,6 +11,7 @@
       @deleteItem="deleteItem($event)"
       @refetch="getSchoolDepartmentsTypes"
       :loading="loading"
+      :isRefresh="refresh"
       :permission_delete="'delete-management-types'"
       :permission_edit="'edit-management-types'"
       :permission_view="'show-management-types'"
@@ -37,6 +38,7 @@
     <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 
@@ -57,6 +59,8 @@ export default {
       loading: false,
       showModal: false,
       showModalFailed: false,
+      refresh: false,
+      deleteModal: false,
       groupSearchWord: "",
       departmentTypeList: [],
       totalNumber: null,
@@ -93,7 +97,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteSchoolDepartmentTypeRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getSchoolDepartmentsTypes();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       }).catch((error) => {
         this.showModalFailed = error.response.data.code === 23000;
       }).finally(() => {

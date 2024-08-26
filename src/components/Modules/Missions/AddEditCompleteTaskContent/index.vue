@@ -39,7 +39,7 @@
               class="w-100"
               @click="addBadgeContent(index)"
               :custom-class="'submit-btn w-100'"
-              :disabled="!badge.selectedBadgeContent || !badge.selectedBadgeContentType"
+              :disabled="(!badge.selectedBadgeContent || !badge.selectedBadgeContentType) && $route.params.id === undefined"
             >
               {{ $t('CONTROLS.add') }}
             </Button>
@@ -76,17 +76,17 @@
         </Button>
         <div>
           <Button
-            @click="goToFinalStep"
-            :custom-class="'submit-btn'"
-          >
-            {{ $t("GLOBAL_NEXT") }}
-          </Button>
-          <Button
-            class="mx-3"
             @click="handleBack"
             custom-class="submit-btn back-btn"
           >
             {{ $t("GLOBAL_BACK") }}
+          </Button>
+          <Button
+            class="mx-3"
+            @click="goToFinalStep"
+            :custom-class="'submit-btn'"
+          >
+            {{ $t("GLOBAL_NEXT") }}
           </Button>
         </div>
       </section>
@@ -104,7 +104,7 @@ import {getSingleMissionsRequest} from "@/api/missios";
 
 
 export default {
-  name:"missionStepThree",
+  name: "missionStepThree",
   components: {
     Button,
     SelectSearch,
@@ -167,7 +167,7 @@ export default {
     },
     badgeSelectedContentTypeChanged: debounce(function (selectedBadgeContentType, index) {
       const filteredContent = this.listOfAllContent.filter(content => {
-        return content.type.id === selectedBadgeContentType.id
+        return content.type.id === selectedBadgeContentType?.id
       })
       this.badges[index].badgeContent = JSON.parse(JSON.stringify(filteredContent)).map(content => {
         const filtered = this.badges[index].tableItems.filter(tableItem => tableItem.id === content.id)
@@ -237,11 +237,80 @@ export default {
   },
   mounted() {
     this.getLibraryTypesRequest();
-    this.getAllBadges();
+    if (!this.$route.params.id) {
+      this.getAllBadges();
+    }
     if (this.$route.params.id) {
-      // this.ApiService(getSingleMissionsRequest(this.$route.params.id)).then((response) => {
-      //   this.badges = response.data.data.badges_rewards
-      // })
+      this.ApiService(getSingleMissionsRequest(this.$route.params.id)).then((response) => {
+        let goldenBadgesTable = []
+        let silverBadgesTable = []
+        let bronzeBadgesTable = []
+        //  get data goldenBadges
+        let goldenBadges = response.data.data.badges_rewards.filter((badge) => {
+          return badge.bagde.id === 1
+        })
+        goldenBadges.forEach((itemGolden) => {
+          goldenBadgesTable.push(itemGolden.library)
+        })
+        //  get data  silverBadges
+        let silverBadges = response.data.data.badges_rewards.filter((badge) => {
+          return badge.bagde.id === 2
+        })
+        silverBadges.forEach((itemGolden) => {
+          silverBadgesTable.push(itemGolden.library)
+        })
+        //  get data  bronzeBadges
+        let bronzeBadges = response.data.data.badges_rewards.filter((badge) => {
+          return badge.bagde.id === 3
+        })
+        bronzeBadges.forEach((itemGolden) => {
+          bronzeBadgesTable.push(itemGolden.library)
+        })
+
+        let goldenBadgesWithBadgeTables = {
+          id: 1,
+          name: goldenBadges[0].bagde.name,
+          logo: goldenBadges[0].bagde.logo,
+          badgeContentTypes: this.badgeContentTypes,
+          badgeContent: [],
+          tableItems: goldenBadgesTable.map((item) => {
+            return {
+              id: item.id,
+              badgeContent: item.file_name,
+              badgeContentType: item.type.name
+            }
+          })
+        }
+        let silverBadgesWithBadgeTables = {
+          id: 2,
+          name: silverBadges[0].bagde.name,
+          logo: silverBadges[0].bagde.logo,
+          badgeContentTypes: this.badgeContentTypes,
+          badgeContent: [],
+          tableItems: silverBadgesTable.map((item) => {
+            return {
+              id: item.id,
+              badgeContent: item.file_name,
+              badgeContentType: item.type.name
+            }
+          })
+        }
+        let bronzeBadgesWithBadgeTables = {
+          id: 3,
+          name: bronzeBadges[0].bagde.name,
+          logo: bronzeBadges[0].bagde.logo,
+          badgeContentTypes: this.badgeContentTypes,
+          badgeContent: [],
+          tableItems: bronzeBadgesTable.map((item) => {
+            return {
+              id: item.id,
+              badgeContent: item.file_name,
+              badgeContentType: item.type.name
+            }
+          })
+        }
+        this.badges = [goldenBadgesWithBadgeTables, silverBadgesWithBadgeTables, bronzeBadgesWithBadgeTables]
+      })
     }
   }
 }

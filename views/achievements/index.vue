@@ -1,4 +1,4 @@
-<template>
+  <template>
   <section class="container-fluid custom-container">
     <ListItems
       :header-name="$t('achievements.achievements')"
@@ -7,6 +7,7 @@
       :table-items="achievements"
       :v-search-model="achievementsSearchWord"
       :loading="loading"
+      :isRefresh="refresh"
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
@@ -37,6 +38,7 @@
     <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 <script>
@@ -55,6 +57,8 @@ export default {
       loading: false,
       showModal: false,
       showModalFailed: false,
+      refresh: false,
+      deleteModal: false,
       achievementsSearchWord: "",
       achievements: [],
       totalNumber: 0,
@@ -88,7 +92,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteAchievementRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getAchievements();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       }).catch((error) => {
         this.showModalFailed = error.response.data.code === 23000;
       }).finally(() => {
@@ -108,7 +117,7 @@ export default {
           label: this.$i18n.t("achievements.name"),
         },
         {
-          key: "interaction.name",
+          key: "interactionType.name",
           label: this.$i18n.t("achievements.interactionType"),
         },
         {

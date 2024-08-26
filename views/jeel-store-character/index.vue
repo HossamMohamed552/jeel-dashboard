@@ -86,6 +86,7 @@
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
       :loading="loading"
+      :isRefresh="refresh"
       :showSearchInput="false"
       @refetch="getcharacters"
       :permission_delete="'delete-characters'"
@@ -111,6 +112,7 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 <script>
@@ -148,6 +150,8 @@ export default {
       /*********** nd search box variables ******************/
       loading: false,
       showModal: false,
+      refresh: false,
+      deleteModal: false,
       groupSearchWord: "",
       totalNumber: 0,
       charactersList: [],
@@ -186,7 +190,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteCharacterRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getcharacters();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       });
       this.cancel();
     },
@@ -237,11 +246,11 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.character_name"),
         },
         {
-          key: "level",
+          key: "level.name",
           label: this.$i18n.t("TABLE_FIELDS.term"),
         },
         {
-          key: "country",
+          key: "country.name",
           label: this.$i18n.t("TABLE_FIELDS.countryName"),
         },
         {

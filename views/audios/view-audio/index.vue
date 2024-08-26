@@ -85,7 +85,8 @@
                 v-if="audio && audio.blooms"
                 class="divider-show"
                 :title="$t('BLOOM.BLOOM')"
-                :subtitle="audio.blooms.name"
+                :with-out-background="true"
+                :list-items="audio.blooms"
               />
             </b-col>
             <b-col lg="4">

@@ -7,6 +7,7 @@
             <TextField
               v-model="mission.name"
               :label="$t('MISSIONS.name')"
+              :placeholder="$t('MISSIONS.name')"
               :name="$t('MISSIONS.name')"
               :rules="'required|max:100'"
             ></TextField>
@@ -18,6 +19,7 @@
             <SelectSearch
               v-model="mission.country_id"
               :label="$t('MISSIONS.country')"
+              :placeholder="$t('enter') + ' ' +$t('MISSIONS.country')"
               :name="$t('MISSIONS.country')"
               :options="countries"
               :reduce="(option) => option.id"
@@ -33,6 +35,7 @@
             <SelectSearch
               v-model="mission.level_id"
               :label="$t('MISSIONS.level')"
+              :placeholder="$t('enter') + ' ' +$t('MISSIONS.level')"
               :name="$t('MISSIONS.level')"
               :options="levels"
               :reduce="(option) => option.id"
@@ -48,8 +51,10 @@
               v-model="mission.learning_path_ids"
               @input="getLessonsByLearningPathIds($event)"
               :label="$t('MISSIONS.LEARNING_PATH')"
+              :placeholder="$t('enter') + ' ' +$t('MISSIONS.LEARNING_PATH')"
               :name="$t('MISSIONS.LEARNING_PATH')"
               :options="learningPaths"
+              :disabled="$route.params.id !== undefined"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required|select-three-or-less'"
@@ -64,6 +69,7 @@
             <SelectSearch
               v-model="mission.term_id"
               :label="$t('MISSIONS.terms')"
+              :placeholder="$t('enter') + ' ' +$t('MISSIONS.terms')"
               :name="$t('MISSIONS.terms')"
               :options="terms"
               :reduce="(option) => option.id"
@@ -78,14 +84,16 @@
             <SelectSearch
               v-model="mission.lessons_ids"
               :label="$t('MISSIONS.lesson')"
+              :placeholder="$t('enter') + ' ' +$t('MISSIONS.lesson')"
               :name="$t('MISSIONS.lesson')"
               :options="lessons"
+              :disabled="$route.params.id !== undefined"
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :rules="'required'"
               :deselectFromDropdown="true"
               multiple
-              @input="$emit('setLessonSelected',mission.lessons_ids)"
+              @input="setLessons"
             ></SelectSearch>
           </div>
         </b-col>
@@ -94,6 +102,7 @@
             <TextField
               v-model="mission.duration"
               :label="$t('MISSIONS.duration')"
+              :placeholder="$t('MISSIONS.duration')"
               :name="$t('MISSIONS.duration')"
               :rules="'required|numeric|max_value:60'"
             ></TextField>
@@ -104,6 +113,7 @@
             <TextAreaField
               v-model="mission.description"
               :label="$t('MISSIONS.description')"
+              :placeholder="$t('MISSIONS.description')"
               :name="$t('MISSIONS.description')"
               :rules="'required|max:250'"
             ></TextAreaField>
@@ -175,6 +185,7 @@
               {{ $t("GLOBAL_EDIT") }}
             </Button>
           </div>
+
         </div>
       </b-row>
     </form>
@@ -255,7 +266,6 @@ export default {
       this.mission.itemImage = null;
     },
     onSubmit() {
-      this.$store.commit('SET_MISSION_STEP_ONE',this.mission)
       this.$emit("onSubmit", this.mission);
     },
     handleCancel() {
@@ -263,6 +273,10 @@ export default {
     },
     handleBack() {
       this.$emit("handleBack");
+    },
+    setLessons(){
+      this.$store.commit('SET_MISSION_STEP_ONE', [null,false])
+      this.$emit('setLessonSelected',this.mission.lessons_ids)
     },
     //SHOULD DELETE
     handleUploadImage(e) {
@@ -304,6 +318,7 @@ export default {
       pathsIds.forEach((pathId, index) => {
         obj[`learning_paths[${index}]`] = pathId
       });
+      this.$store.commit('SET_MISSION_STEP_ONE', [null,false])
       this.getLessonsByLearningPathIdsRequest(obj)
     }
   },
@@ -334,7 +349,7 @@ export default {
         this.mission.country_id = response.data.data.country.id;
         this.mission.term_id = response.data.data.term.id;
         this.mission.lessons_ids = response.data.data.lessons.map((item) => item.id);
-        this.mission.learning_path_ids = response.data.data.learningpaths.map((item) => item.id);
+        this.mission.learning_path_ids = response.data.data.learningPaths.map((item) => item.id);
         this.mission.itemImage = response.data.data.mission_image;
         this.mission.mission_image = response.data.data.mission_image;
 

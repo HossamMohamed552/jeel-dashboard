@@ -5,7 +5,7 @@
         <h3>{{ $route.params.id ? $t('seasonalMission.edit') : $t('seasonalMission.add') }}</h3>
         <Stepper v-show="true" class="mt-5 mb-3" :steps="steps" :current-step="currentStep" />
         <StepOne
-          v-if="currentStep === 0"
+          v-show="currentStep === 0"
           :stepForm="stepOneForm"
           @nextStep="nextStep"
           @prevStep="prevStep"
@@ -437,10 +437,8 @@ export default {
         if (Array.isArray(data)) {
           selectOptionsField.value = data;
           selectOptionsField.name = data.map((item) => item.name);
-          console.log("name", selectOptionsField.name);
         } else {
           selectOptionsField.value = data;
-          console.log("selectOptionsField", selectOptionsField.value);
         }
       }
     },
@@ -510,7 +508,6 @@ export default {
 
         this.handlePrizesInEdit(seasonalMission.prizes);
         this.handleNotificationInEdit(seasonalMission.notifications);
-        console.log("mergedAllSteps", mergedAllSteps);
       });
     }
   },

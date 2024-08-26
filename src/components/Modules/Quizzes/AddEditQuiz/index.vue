@@ -58,6 +58,7 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
+                    :disabled="$route.params.id !== undefined"
                     @input="setLessonsBasedLearningPathId($event)"
                   ></SelectSearch>
                 </div>
@@ -73,7 +74,7 @@
                     :reduce="(option) => option.id"
                     :get-option-label="(option) => option.name"
                     :rules="'required'"
-                    :disabled="!createQuiz.learning_path_id"
+                    :disabled="!createQuiz.learning_path_id || $route.params.id !== null"
                     multiple="multiple"
                   ></SelectSearch>
                 </div>
@@ -327,14 +328,14 @@
                       }}</span>
                     <img
                       v-else-if="data.item.question_pattern === 'image'"
-                      :src="data.item.question ? data.item.question : data.item.name"
+                      :src="data.item.question ? data.item.question.question : data.item.name"
                       class="question-image-show"
                     />
                     <audio
                       v-else-if="data.item.question_pattern === 'audio'"
                       controls
                     >
-                      <source :src="data.item.question ? data.item.question : data.item.name"/>
+                      <source :src="data.item.question ? data.item.question.question : data.item.name"/>
                     </audio>
                   </template>
                 </b-table>
@@ -1010,7 +1011,7 @@ export default {
         quizData = response.data.data
         this.createQuiz.name = quizData.name;
         this.createQuiz.description = quizData.description;
-        this.createQuiz.learning_path_id = quizData.learning_path.id;
+        this.createQuiz.learning_path_id = quizData.learningPath.id;
         this.createQuiz.lessons = quizData.lessons.map((item) => item.id)
         this.createQuiz.blooms = quizData.blooms.id
         if (typeof quizData.blooms === 'object') {
@@ -1028,7 +1029,7 @@ export default {
         } else {
           this.createQuiz.language_skills = ["selectAll"]
         }
-        this.createQuiz.type = quizData.type.id;
+        this.createQuiz.type = quizData.quizType.id;
         this.createQuiz.order_type = quizData.order_type.id;
       }).then(() => {
         setTimeout(() => {

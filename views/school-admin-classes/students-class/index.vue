@@ -38,6 +38,7 @@
                       :reduce="(option) => option.id"
                       :get-option-label="(option) => option.name"
                       :rules="'required'"
+                      multiple
                     ></SelectSearch>
                   </div>
                 </b-col>
@@ -64,14 +65,16 @@
               :permission_delete="'delete-enrollment-supervisors-users'"
               :showSortControls="false"
               class="m-0 p-0"
+              @deleteItem="deleteItem($event)"
             >
-<!--              @deleteItem="deleteItem($event)"-->
+              <!--              @deleteItem="deleteItem($event)"-->
             </ListItems>
           </b-col>
         </b-row>
       </div>
     </div>
-    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModalSuccess" :is-success="true" />
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModalSuccess"
+           :is-success="true"/>
     <Modal
       :content-message="$t('CONTROLS.studentAlreadyAdd')"
       :showModal="showModalAlreadyAdd"
@@ -88,11 +91,20 @@
       :infoWithConfirm="true"
       @cancelWithConfirm="cancelWithConfirmChangeClass($event)"
     />
+    <Modal
+      :content-message="$t('CONTROLS.remove_student')"
+      :content-message-question="$t('CONTROLS.remove_student_paragraph')"
+      :showModal="removeStudentModal"
+      @cancel="cancel($event)"
+      :is-warning="true"
+      @cancelWithConfirm="cancelWithConfirm($event)"
+    />
   </section>
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import {
+  deleteSchoolAdminClassRequest, deleteStudentFromClassByIdRequest,
   getAllStudentUsersRequest,
   getClassByIdRequest,
   postStudentEnrollmentRequest
@@ -101,6 +113,7 @@ import ListItems from "@/components/ListItems/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
+import {log} from "video.js";
 
 export default {
   name: "index",
@@ -114,6 +127,8 @@ export default {
       showModalAlreadyAdd: false,
       showModalChangeClass: false,
       showModalSuccess: false,
+      removeStudentModal: false,
+      itemId: null,
       fieldsList: [
         {
           key: "vid",
@@ -149,7 +164,7 @@ export default {
         },
       ],
       enrollment: {
-        student_id: ""
+        student_id: []
       }
     };
   },
@@ -159,13 +174,31 @@ export default {
     }
   },
   methods: {
+    deleteItem($event) {
+      this.itemId = $event;
+      this.removeStudentModal = true;
+    },
+    cancel($event) {
+      this.removeStudentModal = $event;
+    },
+    cancelWithConfirm() {
+      this.ApiService(deleteStudentFromClassByIdRequest(this.itemId,this.$route.params.id)).then(() => {
+        this.getClassDetail()
+        this.getAllStudents()
+      });
+      this.cancel();
+    },
     selectStudentFromList(selectStudent) {
       this.selectStudent = this.studentList.filter((item) => {
         return item.id === selectStudent
-      })[0]
+      })
+      // [0]
     },
     getAllStudents() {
-      this.ApiService(getAllStudentUsersRequest({list_all: true})).then((response) => {
+      this.ApiService(getAllStudentUsersRequest({
+        list_all: true,
+        without_class: true
+      })).then((response) => {
         this.studentList = response.data.data;
       }).finally(() => {
         this.loading = false;
@@ -197,9 +230,9 @@ export default {
         this.$nextTick(() => {
           this.$refs.addEditSchoolClassForm.reset()
         })
-        setTimeout(()=>{
+        setTimeout(() => {
           this.showModalSuccess = false
-        },500)
+        }, 500)
       })
     },
     onSubmit() {
@@ -208,7 +241,7 @@ export default {
       });
       let data = {
         class_id: this.$route.params.id,
-        user_id: this.enrollment.student_id,
+        users: this.enrollment.student_id,
         study_year_id: this.classItem.studyYear.id
       }
       if (this.selectStudent.class && (this.classItem.id === this.selectStudent.class.id)) {

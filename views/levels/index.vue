@@ -6,6 +6,7 @@
       :tableItems="levelsList"
       :fieldsList="fieldsList"
       :v-search-model="groupSearchWord"
+      :isRefresh="refresh"
       @detailItem="detailItem($event)"
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
@@ -37,6 +38,7 @@
     <Modal :content-message="$t('can_not_delete')"
            :showModal="showModalFailed" :alarm="true"
            @cancelWithConfirm="showModalFailed=false"/>
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 
@@ -57,6 +59,8 @@ export default {
       groupSearchWord: "",
       levelsList: [],
       totalNumber: 0,
+      refresh: false,
+      deleteModal: false,
     };
   },
   computed: {
@@ -99,7 +103,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteLevelRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getLevels();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       }).catch((error) => {
         this.showModalFailed = error.response.data.code === 23000;
       }).finally(() => {

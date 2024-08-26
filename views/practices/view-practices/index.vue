@@ -11,8 +11,8 @@
           <b-col lg="4" class="mb-4">
             <ShowItem :title="$t('QUIZZES.name')" :subtitle="quiz.name"/>
           </b-col>
-          <b-col lg="4" class="mb-4" v-if="quiz && quiz.type">
-            <ShowItem :title="$t('QUIZZES.type')" :subtitle="quiz.type.name"/>
+          <b-col lg="4" class="mb-4" v-if="quiz && quiz.quizType">
+            <ShowItem :title="$t('QUIZZES.type')" :subtitle="quiz.quizType.name"/>
           </b-col>
           <b-col lg="4" class="mb-4" v-if="quiz && quiz.level">
             <ShowItem :title="$t('QUIZZES.level')" :subtitle="quiz.level.name"/>
@@ -36,31 +36,55 @@
         </b-row>
         <b-row>
           <b-col lg="12">
-            <ShowItem :title="$t('QUESTIONS.QUESTIONS')"/>
+            <ShowItem :title="$t('QUESTIONS.QUESTIONS')" class="font-weight-bold"/>
           </b-col>
-          <b-col lg="6" v-for="question in quiz.questions" :key="question.id">
-            <ShowItem :title="question.question" class="question mb-3" v-if="question.question_pattern === 'text'" />
-            <img class="question_img mb-3" v-else-if="question.question_pattern === 'image'" :src="question.question.question">
-            <audio controls v-else-if="question.question_pattern === 'audio'" class="mb-3">
-              <source :src="question.question.question" />
-            </audio>
+          <b-col lg="12" v-for="question in quiz.questions" :key="question.id">
+            <div class="icon-play-holder">
+              <ShowItem :subtitle="question.question" v-if="question.question_pattern === 'text'" class="my-3"/>
+              <img class="question_img my-3" :src="question.question.question" v-if="question.question_pattern === 'image'">
+              <audio controls v-if="question.question_pattern === 'audio'" class="my-3">
+                <source :src="question.question.question" />
+              </audio>
+              <b-icon
+                class="cursor-pointer"
+                icon="info-circle"
+                variant="info"
+                @click="handleShowQuestionDetails(question.id)"
+              />
+            </div>
           </b-col>
         </b-row>
       </div>
     </div>
+    <QuestionDetailsModal
+      :question-id="selectedQuestion"
+      @closeModal="handleCloseQuestionDetailsModal"
+    />
   </section>
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import {getSingleQuizRequest} from "@/api/quiz";
+import QuestionDetailsModal from "@/components/Shared/QuestionDetailsModal/index.vue";
 
 export default {
   name: "index",
-  components: {ShowItem},
+  components: {QuestionDetailsModal, ShowItem},
   data() {
     return {
-      quiz: {}
+      quiz: {},
+      selectedQuestion: null,
     }
+  },
+  methods:{
+    handleShowQuestionDetails(questionId) {
+      this.selectedQuestion = questionId;
+      this.$bvModal.show("question-details-modal");
+    },
+    handleCloseQuestionDetailsModal() {
+      this.$bvModal.hide("question-details-modal");
+      this.selectedQuestion = null;
+    },
   },
   mounted() {
     this.ApiService(getSingleQuizRequest(this.$route.params.id)).then((response) => {

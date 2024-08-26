@@ -318,6 +318,13 @@ export const getClassSchoolAdminRequest = (params) => ({
     params,
   },
 });
+export const getLevelsSchoolAdminRequest = (params) => ({
+  method: "get",
+  url: `school-admin/list/levels`,
+  config: {
+    params,
+  },
+});
 export const getStudentsInClassSchoolAdminRequest = (id, params) => ({
   method: "get",
   url: `classes/${id}/students`,
@@ -325,5 +332,10 @@ export const getStudentsInClassSchoolAdminRequest = (id, params) => ({
     params,
   },
 });
-
+export const deleteStudentFromClassByIdRequest = (userId, classId) => ({
+  method: "delete",
+  url: `class_students/${userId}/class/${classId}`,
+  config: {
+  },
+});
 

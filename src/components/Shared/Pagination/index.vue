@@ -7,7 +7,7 @@
         :per-page="perPage"
         @input="onPageChange"
         class="custom-pagination"
-        :hide-goto-end-buttons="true"
+        :hide-goto-end-buttons="false"
         next-class="next-btn"
         prev-class="prev-btn"
       />

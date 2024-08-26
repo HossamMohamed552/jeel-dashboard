@@ -114,6 +114,7 @@
               :reduce="(option) => option.id"
               :get-option-label="(option) => option.name"
               :disabled="$route.name.includes('edit')"
+              multiple
               :rules="'required'"
             ></SelectSearch>
           </div>
@@ -384,7 +385,7 @@ export default {
         this.formValues.question_type_sub_id = this.question?.sub_question_type?.id
         this.formValues.head_question = this.question.head_question
         this.formValues.learning_path_id = this.question.learningPath.id
-        this.formValues.bloom_category_id = this.question.blooms.id
+        this.formValues.bloom_category_id = this.question.blooms.map(item => item.id)
         this.formValues.language_method_id = this.question.learning_styles.map(item => item.id)
         this.formValues.language_skill_id = this.question.language_skills.map(item => item.id)
         this.formValues.question_objective_id = this.question.question_objective.id

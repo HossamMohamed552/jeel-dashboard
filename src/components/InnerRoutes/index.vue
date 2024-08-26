@@ -291,7 +291,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     color: #000000;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
     margin: 1rem 0 0 0;
   }

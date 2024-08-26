@@ -34,13 +34,13 @@
               <b-col lg="4" class="mb-3">
                 <div class="hold-field" v-if="characters">
                   <SelectSearch
-                    v-model="characterSelected"
+                    v-model="createCharacter.character_type"
                     :label="$t('CHARACTER.type')"
                     :name="$t('CHARACTER.type')"
                     :placeholder="$t('CHARACTER.selectType')"
                     :options="characters"
                     :reduce="(option) => option.id"
-                    :get-option-label="(option) => option.key"
+                    :get-option-label="(option) => option.name"
                     :rules="'required'"
                   ></SelectSearch>
                 </div>
@@ -181,7 +181,7 @@ export default {
         thumbnailChanged: false,
         thumbnailChangedRequest: false,
       },
-      characterSelected: null,
+      // characterSelected: null,
     };
   },
   methods: {
@@ -214,13 +214,12 @@ export default {
       this.$refs.addEditCharacterForm.validate().then((success) => {
         if (!success) return;
       });
+      this.createCharacter.character_type = this.createCharacter.character_type
       if (this.$route.params.id) {
-
         if (this.createCharacter.image != null) {
           this.$emit("handleEditCharacter", this.createCharacter);
         } else {
           delete this.createCharacter.image;
-
           this.$emit("handleEditCharacter", this.createCharacter);
         }
       } else {
@@ -237,7 +236,7 @@ export default {
           (response) => {
             this.createCharacter.name = response.data.data.name;
             this.createCharacter.country_id = response.data.data.country.id;
-            this.characterSelected = response.data.data.chracter_type;
+            this.createCharacter.character_type = response.data.data.chracter_type.id;
             this.createCharacter.thumbnail_name = response.data.data.image_name;
             this.createCharacter.thumbnail_size = response.data.data.image_size;
             this.createCharacter.thumbnail = response.data.data.image;
@@ -265,16 +264,16 @@ export default {
       }
     },
   },
-  watch: {
-    characterSelected(val) {
-      this.createCharacter.character_type = []
-      if(isNaN(val)){
-        this.createCharacter.character_type.push(val[0].id)
-      }else{
-        this.createCharacter.character_type.push(val)
-      }
-    },
-  },
+  // watch: {
+  //   characterSelected(val) {
+  //     this.createCharacter.character_type = []
+  //     if(isNaN(val)){
+  //       this.createCharacter.character_type.push(val[0].id)
+  //     }else{
+  //       this.createCharacter.character_type.push(val)
+  //     }
+  //   },
+  // },
   mounted() {
     this.getBadgeToEdit();
     this.getAllCountries();

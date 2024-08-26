@@ -11,6 +11,7 @@
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
       :loading="loading"
+      :isRefresh="refresh"
       @refetch="getJeelLibrary"
       :permission_delete="'delete-prize-library'"
       :permission_edit="'edit-prize-library'"
@@ -37,6 +38,7 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
     <!------------------ st delete model --------------->
   </section>
 </template>
@@ -56,6 +58,8 @@ export default {
     return {
       loading: false,
       showModal: false,
+      refresh: false,
+      deleteModal: false,
       groupSearchWord: "",
       totalNumber: 0,
       jeelLibraryList: [],
@@ -103,7 +107,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteJeelLibraryRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getJeelLibrary();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       });
       this.cancel();
     },

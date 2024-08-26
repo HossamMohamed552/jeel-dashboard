@@ -122,17 +122,17 @@
           </b-row>
           <b-row>
             <div class="action-holder">
-              <div>
-                <Button :loading="loading" custom-class="submit-btn" @click="createMission">
-                  {{ $t("GLOBAL_SAVE") }}
-                </Button>
-                <Button class="mx-3" @click="backToFillContent" custom-class="submit-btn back-btn">
-                  {{ $t("GLOBAL_BACK") }}
-                </Button>
-              </div>
               <Button @click="handleCancel" custom-class="cancel-btn margin">
                 {{ $t("GLOBAL_CANCEL") }}
               </Button>
+              <div>
+                <Button @click="backToFillContent" custom-class="submit-btn back-btn">
+                  {{ $t("GLOBAL_BACK") }}
+                </Button>
+                <Button class="mx-3" :loading="loading" custom-class="submit-btn" @click="createMission">
+                  {{ $t("GLOBAL_SAVE") }}
+                </Button>
+              </div>
             </div>
           </b-row>
         </div>
@@ -218,7 +218,7 @@ export default {
       this.handleNavigation(0);
     },
     backToFillContent() {
-      this.handleNavigation(1);
+      this.handleNavigation(2);
     },
     backToMissionContentStep() {
       this.handleNavigation(1);
@@ -301,7 +301,6 @@ export default {
         formData.append(`badge_rewards[${index}][library_id]`, content.badgeRewardId);
       });
       this.loading = true;
-      this.showModal = true;
       axios.post(`/missions/${this.$route.params.id}`, formData, {
         headers: {
           Authorization: `Bearer ${VueCookies.get("token")}`,
@@ -310,10 +309,11 @@ export default {
         },
       }).then((res) => {
         this.loading = false;
+        this.showModal = true;
         setTimeout(() => {
+          this.$router.push("/dashboard/missions");
           this.showModal = false;
         }, 1500);
-        this.$router.push("/dashboard/missions");
       }).catch(() => {
         this.loading = false
       })

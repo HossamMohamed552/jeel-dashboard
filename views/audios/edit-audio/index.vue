@@ -46,14 +46,17 @@ export default {
       formData.append('name', $event.name);
       formData.append('task_degree', $event.task_degree);
       formData.append('type', $event.type);
-      if ($event.type == "text") formData.append("task", $event.task);
+      if ($event.typeName === "text") formData.append("task", $event.task);
+      if ($event.typeName === "images")
+        // formData.append("task_image", $event.task_image);
       if ($event.taskAudioChangedRequest) formData.append('task_audio', $event.task_audio);
       if ($event.taskImageChangedRequest) formData.append('task_image', $event.task_image);
       formData.append("_method", 'PUT');
       formData.append("learning_path_id", $event.learning_path_id);
-      formData.append("blooms", $event.blooms);
       formData.append("lesson_id", $event.lesson_id);
-
+      for (let bloom = 0; bloom < $event.blooms.length; bloom++) {
+        formData.append(`blooms[${bloom}]`, $event.blooms[bloom]);
+      }
       for (let learning_style = 0; learning_style < $event.learning_styles.length; learning_style++) {
         formData.append(`learning_styles[${learning_style}]`, $event.learning_styles[learning_style]);
       }

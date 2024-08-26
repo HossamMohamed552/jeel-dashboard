@@ -78,6 +78,7 @@
       @deleteItem="deleteItem($event)"
       @refetch="getSubscriptions"
       :loading="loading"
+      :isRefresh="refresh"
       :permission_delete="'delete-subscription'"
       :permission_edit="'edit-subscription'"
       :permission_view="'show-subscription'"
@@ -102,6 +103,7 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 
@@ -134,7 +136,7 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.schoolName"),
         },
         {
-          key: "study_year.name",
+          key: "studyYear.name",
           label: this.$i18n.t("subscription.studyYear"),
         },
         {
@@ -153,6 +155,8 @@ export default {
     return {
       loading: false,
       showModal: false,
+      refresh: false,
+      deleteModal: false,
       subscriptionsList: [],
       totalNumber: 0,
       itemId: 0,
@@ -198,7 +202,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteSubscriptionsRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getSubscriptions();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       });
       this.cancel();
     },

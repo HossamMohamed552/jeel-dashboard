@@ -59,7 +59,9 @@ export default {
       if ($event.typeName == "images")
         formData.append("task_image", $event.task_image);
       formData.append("learning_path_id", $event.learning_path_id);
-      formData.append("blooms", $event.blooms);
+      for (let bloom = 0; bloom < $event.blooms.length; bloom++) {
+        formData.append(`blooms[${bloom}]`, $event.blooms[bloom]);
+      }
       formData.append("lesson_id", $event.lesson_id);
 
       for (let learning_style = 0; learning_style < $event.learning_styles.length; learning_style++) {

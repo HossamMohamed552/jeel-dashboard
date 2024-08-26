@@ -311,10 +311,10 @@ import Button from "@/components/Shared/Button/index.vue";
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
 import {
-  getAllLevelsForSchoolAdmin,
-  getClassSchoolAdmin,
-  getSchoolAdminStudyYear,
-  getStudentsInClassSchoolAdmin,
+  getAllLevelsForSchoolAdmin, getAllStudentsForSuperVisor, getClasses,
+  getClassSchoolAdmin, getLevelsForSuperVisor,
+  getSchoolAdminStudyYear, getSTermsForSuperVisor,
+  getStudentsInClassSchoolAdmin, getStudyYearsForSuperVisor,
   getTerms,
 } from "@/services/dropdownService";
 import {
@@ -323,6 +323,7 @@ import {
   getSupervisorStudentsPerformanceRequest,
 } from "@/api/supervisor-reports";
 import BarChart from "@/components/CustomBarChart/BarChart.vue";
+import {getAllStudentsForSuperVisorRequest} from "@/api/user";
 
 export default {
   name: "index",
@@ -646,26 +647,26 @@ export default {
         this.studentReportSearch[1].disabled = false;
         this.studentReportSearch[2].disabled = false;
         this.studentReportSearch[3].disabled = false;
-        getAllLevelsForSchoolAdmin(this.studentReportSearch, "level_id", {
+        getLevelsForSuperVisor(this.studentReportSearch, "level_id", {
           study_year_id: this.studentReportSearch[0].value,
         });
-        getTerms(this.studentReportSearch, "term_id", {
+        getSTermsForSuperVisor(this.studentReportSearch, "term_id", {
           study_year_id: this.studentReportSearch[0].value,
         });
-        getClassSchoolAdmin(this.studentReportSearch, "class_id", {
+        getClasses(this.studentReportSearch, "class_id", {
           study_year_id: this.studentReportSearch[0].value,
           level_id: this.studentReportSearch[1].value,
         });
       }
       if (key === "level_id" && value !== "") {
-        getClassSchoolAdmin(this.studentReportSearch, "class_id", {
+        getClasses(this.studentReportSearch, "class_id", {
           study_year_id: this.studentReportSearch[0].value,
           level_id: this.studentReportSearch[1].value,
         });
       }
       if (key === "class_id" && value !== "") {
         this.studentReportSearch[4].disabled = false;
-        getStudentsInClassSchoolAdmin(
+        getAllStudentsForSuperVisor(
           this.studentReportSearch,
           "user_id",
           this.studentReportSearch[3].value
@@ -726,7 +727,7 @@ export default {
     },
   },
   mounted() {
-    getSchoolAdminStudyYear(this.studentReportSearch, "study_year_id");
+    getStudyYearsForSuperVisor(this.studentReportSearch, 'study_year_id')
     this.getStudentReport();
   },
 };

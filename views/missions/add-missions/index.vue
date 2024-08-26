@@ -13,7 +13,7 @@
             :current-step="currentStep"
           />
           <AddEditMissionDataForm
-            v-if="currentStep === 0"
+            v-show="currentStep === 0"
             :levels="levels"
             :learning-paths="learningPaths"
             :terms="terms"
@@ -31,7 +31,7 @@
             @handleCancel="handleCancel"
             @goToMissionContentStep="goToMissionContentStep"/>
           <AddEditCompleteTaskContent
-            v-if="currentStep === 2"
+            v-show="currentStep === 2"
             @goToFinalStep="goToFinalStep"
             @handleBack="backToMissionContentStep"
             @handleCancel="handleCancel"
@@ -117,18 +117,19 @@
               </b-row>
               <b-row>
                 <div class="action-holder">
-                  <div>
-                    <Button :loading="loading" custom-class="submit-btn" @click="createMission">
-                      {{ $t("GLOBAL_SAVE") }}
-                    </Button>
-                    <Button class="mx-3" @click="backToMissionContentStep"
-                            custom-class="submit-btn back-btn">
-                      {{ $t("GLOBAL_BACK") }}
-                    </Button>
-                  </div>
                   <Button @click="handleCancel" custom-class="cancel-btn margin">
                     {{ $t("GLOBAL_CANCEL") }}
                   </Button>
+                  <div>
+                    <Button  @click="backToMissionContentStep"
+                            custom-class="submit-btn back-btn">
+                      {{ $t("GLOBAL_BACK") }}
+                    </Button>
+                    <Button class="mx-3" :loading="loading" custom-class="submit-btn" @click="createMission">
+                      {{ $t("GLOBAL_SAVE") }}
+                    </Button>
+                  </div>
+
                 </div>
               </b-row>
             </div>
@@ -198,7 +199,7 @@ export default {
       this.handleNavigation(1);
     },
     backToMissionContentStep() {
-      this.handleNavigation(1);
+      this.handleNavigation(2);
     },
     goToMissionContentStep(data) {
       Object.assign(this.collectData, {paths: [...data]});

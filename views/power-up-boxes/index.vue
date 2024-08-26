@@ -100,6 +100,7 @@
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
       :loading="loading"
+      :isRefresh="refresh"
       @refetch="getPowerUpBoxes"
       :permission_delete="'delete-power-up-boxes'"
       :permission_edit="'edit-power-up-boxes'"
@@ -126,6 +127,7 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
     <!------------------ st delete model --------------->
   </section>
 </template>
@@ -148,6 +150,8 @@ export default {
     return {
       loading: false,
       showModal: false,
+      refresh: false,
+      deleteModal: false,
       groupSearchWord: "",
       totalNumber: 0,
       powerUpBoxesList: [],
@@ -192,14 +196,14 @@ export default {
           // this.powerUpBoxesList = response.data.data;
           this.powerUpBoxesList = response.data.data.map(
             (item) => {
-              let powerUpBoxType = "";
-              if (item.jeel_coins > 0 && item.jeel_xp > 0) {
-                powerUpBoxType = "نقاط وعملات جيل";
-              } else if (item.jeel_xp > 0) {
-                powerUpBoxType = "نقاط";
-              } else if (item.jeel_coins > 0) {
-                powerUpBoxType = "عملات جيل";
-              }
+              // let powerUpBoxType = "";
+              // if (item.jeel_coins > 0 && item.jeel_xp > 0) {
+              //   powerUpBoxType = "نقاط وعملات جيل";
+              // } else if (item.jeel_xp > 0) {
+              //   powerUpBoxType = "نقاط";
+              // } else if (item.jeel_coins > 0) {
+              //   powerUpBoxType = "عملات جيل";
+              // }
 
               return {
                 id: item.id,
@@ -207,7 +211,7 @@ export default {
                 level: item.level,
                 country: item.country,
                 term: item.term,
-                type: powerUpBoxType,
+                // type: powerUpBoxType,
                 appear_after_missions: item.appear_after_missions + " مهام ",
               };
 
@@ -240,7 +244,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deletePowerUpBoxRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getPowerUpBoxes();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       });
       this.cancel();
     },
@@ -290,17 +299,17 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.power_up_box_name"),
         },
         {
-          key: "level",
+          key: "level.name",
           label: this.$i18n.t("TABLE_FIELDS.power_up_box_level"),
         },
         {
-          key: "country",
+          key: "country.name",
           label: this.$i18n.t("TABLE_FIELDS.power_up_box_country"),
         },
-        {
-          key: "type",
-          label: this.$i18n.t("TABLE_FIELDS.power_up_box_type"),
-        },
+        // {
+        //   key: "type",
+        //   label: this.$i18n.t("TABLE_FIELDS.power_up_box_type"),
+        // },
         {
           key: "appear_after_missions",
           label: this.$i18n.t("TABLE_FIELDS.power_up_box_appear_after_missions"),

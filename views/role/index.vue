@@ -11,6 +11,7 @@
       @permissionItem="permissionItem($event)"
       @deleteItem="deleteItem($event)"
       :loading="loading"
+      :isRefresh="refresh"
       @refetch="getRoles"
       :permission_delete="'delete-roles'"
       :permission_edit="'edit-roles'"
@@ -36,6 +37,7 @@
       :is-warning="true"
       @cancelWithConfirm="cancelWithConfirm($event)"
     />
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
   </section>
 </template>
 <script>
@@ -53,6 +55,8 @@ export default {
     return {
       loading: false,
       showModal: false,
+      refresh: false,
+      deleteModal: false,
       roleSearchWord: "",
       totalNumber: 0,
       rolesList: [],
@@ -94,7 +98,12 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteRoleRequest(this.itemId)).then(() => {
+        this.deleteModal = true;
         this.getRoles();
+        this.refresh = true
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1500)
       });
       this.cancel();
     },
