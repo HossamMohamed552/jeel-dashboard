@@ -79,13 +79,21 @@ export default {
     },
     handleInputValueName(key, value, field) {
       if (field.multiple) {
-        const selectedOptionNames = value.map((singleValue) => {
-          const selectedOption = field.options.find(
-            (option) => option[field.listen] === singleValue
-          );
-          return selectedOption ? selectedOption.name : "";
-        });
-        field.name = selectedOptionNames;
+        if(key === 'learningpaths'){
+          const selectedOptionNames = value?.map((singleValue) => {
+            const selectedOption = field.options.find((option) => option.name === singleValue.name);
+            return selectedOption
+          });
+          field.name = selectedOptionNames;
+        } else {
+          const selectedOptionNames = value?.map((singleValue) => {
+            const selectedOption = field.options.find(
+              (option) => option[field.listen] === singleValue
+            );
+            return selectedOption ? selectedOption.name : "";
+          });
+          field.name = selectedOptionNames;
+        }
       } else {
         const selectedOption = field.options.find((option) => option[field.listen] === value);
         const optionName = selectedOption ? selectedOption.name : "";

@@ -113,7 +113,7 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.countryName"),
         },
         {
-          key: "chracter_type[0].name",
+          key: "chracter_type.name",
           label: this.$i18n.t("TABLE_FIELDS.character_type"),
         },
         {

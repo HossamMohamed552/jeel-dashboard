@@ -26,7 +26,7 @@
             <ShowItem
               class="divider-show"
               :title="$t('CHARACTER.type')"
-              :subtitle="characters.chracter_type[0].key"
+              :subtitle="characters.chracter_type.name"
             />
           </b-col>
         </b-row>

@@ -142,7 +142,7 @@
                       :get-option-label="(option) => option.name"
                       :reduce="(option) => option.id"
                       :rules="'required'"
-                      :disabled="!createPaperWork.learning_path_id || $route.params.id !== null"
+                      :disabled="!createPaperWork.learning_path_id || $route.params.id !== undefined"
                     />
                   </ValidationProvider>
                 </div>

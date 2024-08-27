@@ -508,6 +508,7 @@ export default {
 
         this.handlePrizesInEdit(seasonalMission.prizes);
         this.handleNotificationInEdit(seasonalMission.notifications);
+
       });
     }
   },

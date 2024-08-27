@@ -141,8 +141,7 @@ export default {
   },
   watch: {
     "dropzoneOptions.previewTemplate"(newVal) {
-      console.log('newVal', newVal)
-    }
+    },
   },
   methods: {
     sendFile(file, xhr, formData) {
@@ -168,14 +167,15 @@ export default {
     showModal() {
       const thumbnail = document.getElementById("dz-image");
       thumbnail.addEventListener("click", () => {
-        console.log("fire");
       });
     },
   },
   mounted() {
+    console.log('mounted    this.dropzoneOptions.acceptedFiles', this.dropzoneOptions.acceptedFiles)
   },
   created() {
     this.dropzoneOptions.acceptedFiles = this.acceptFiles;
+    console.log('this.dropzoneOptions.acceptedFiles', this.dropzoneOptions.acceptedFiles)
     this.dropzoneOptions.url = `${process.env.VUE_APP_ADMIN_URL}/attachment`;
     if (this.typeOfAttachment === "video") {
       this.dropzoneOptions.maxFilesize = 1024;

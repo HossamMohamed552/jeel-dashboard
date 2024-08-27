@@ -54,9 +54,11 @@
                   v-if="!$route.params.id || attachment.logoChangedRequest"
                   :rules="'required'"
                   :label="$t('content.logo')"
+                  :name="'logoFile'"
+                  :dropIdRef="'logoFile'"
                   :type-of-attachment="'image'"
                   :accept-files="'image/jpeg,image/png,image/jpg,image/gif'"
-                  @setFileId="setThumbnailId"
+                  @setFileId="setThumbnailId($event)"
                 />
                 <PreviewMedia
                   v-if="$route.params.id && attachment.logoChanged === false && !attachment.logoChangedRequest"
@@ -104,14 +106,14 @@
               </b-col>
 
               <!------------------- start file audio --------------------------------->
-              <b-col lg="8" v-if="createItem.type===145" class="mb-3">
+              <b-col lg="8" v-if="createItem.type === 145" class="mb-3">
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.audioChangedRequest"
                   :type-of-attachment="'audio'"
                   :dropIdRef="'audioFile'"
                   :accept-files="'audio/mpeg,audio/mpga,audio/mp3,audio/wav'"
                   :label="$t('PAPER_WORK.audioFile')"
-                  :name="'audioFile'"
+                  :name="'audioFile1'"
                   :rules="'required'"
                   @setFileId="setAudioId($event)"
                 />
@@ -133,14 +135,16 @@
               </b-col>
               <!------------------- end  file audio --------------------------------->
               <!------------------- start file image --------------------------------->
-              <b-col lg="8" v-if="createItem.type===146" class="mb-3">
+              <b-col lg="8" v-if="createItem.type === 146" class="mb-3">
                 <UploadAttachment
                   v-if="!$route.params.id || attachment.imageChangedRequest"
-                  :rules="'required'"
-                  :label="$t('BADGE.bade_logo')"
                   :type-of-attachment="'image'"
+                  :dropIdRef="'imageFile'"
                   :accept-files="'image/jpeg,image/png,image/jpg,image/gif'"
-                  @setFileId="setImageId"
+                  :label="$t('BADGE.bade_logo')"
+                  :name="'imageBadeFile'"
+                  :rules="'required'"
+                  @setFileId="setImageId($event)"
                 />
                 <PreviewMedia
                   v-if="
@@ -201,10 +205,10 @@
                   v-if="!$route.params.id || attachment.videoWithMuiscChangedRequest"
                   :type-of-attachment="'video'"
                   :label="$t('VIDEO.videoWithMusic')"
-                  :name="'VideFile'"
-                  :dropIdRef="'VideFile'"
+                  :name="'VideoWithout2'"
+                  :dropIdRef="'VideFile2'"
                   :accept-files="'video/mp4,video/avi,video/mov'"
-                  @setFileId="setVideoWithMuiscFileId"
+                  @setFileId="setVideoWithMuiscFileId($event)"
                 />
                 <PreviewMedia
                   v-if="
@@ -232,8 +236,8 @@
                   v-if="!$route.params.id || attachment.fileChangedRequest"
                   :type-of-attachment="'pdf'"
                   :label="$t('content.content_file')"
-                  :name="'File'"
-                  :dropIdRef="'File'"
+                  :name="'pdfFile'"
+                  :dropIdRef="'pdfFile'"
                   :accept-files="'application/pdf'"
                   @setFileId="setFileId"
                 />
@@ -257,10 +261,10 @@
               </b-col>
               <!------------------- end --------------------------------->
 
-              <b-col lg="12" class="mb-3" v-if="createItem.type===150">
+              <b-col lg="12" class="mb-3" v-if="createItem.type === 150">
                 <div class="hold-field">
                   <TextAreaField
-                    v-if="createItem.type===150"
+                    v-if="createItem.type === 150"
                     :label="$t('content.writeNote')"
                     :rules="'required|min:3|max:250'"
                     v-model="createItem.note"

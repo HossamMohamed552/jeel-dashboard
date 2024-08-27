@@ -121,7 +121,7 @@
                     {{ $t("GLOBAL_CANCEL") }}
                   </Button>
                   <div>
-                    <Button  @click="backToMissionContentStep"
+                    <Button  @click="backToExtraContentStep"
                             custom-class="submit-btn back-btn">
                       {{ $t("GLOBAL_BACK") }}
                     </Button>
@@ -195,10 +195,13 @@ export default {
     goToMissionDataForm() {
       this.handleNavigation(0);
     },
-    backToFillContent() {
+    // backToFillContent() {
+    //   this.handleNavigation(1);
+    // },
+    backToMissionContentStep() {
       this.handleNavigation(1);
     },
-    backToMissionContentStep() {
+    backToExtraContentStep(){
       this.handleNavigation(2);
     },
     goToMissionContentStep(data) {

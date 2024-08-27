@@ -180,7 +180,7 @@
                       :get-option-label="(option) => option.name"
                       :reduce="(option) => option.id"
                       :rules="'required'"
-                      :disabled="!formValues.learning_path_id || $route.params.id !== null"
+                      :disabled="!formValues.learning_path_id || $route.params.id !== undefined"
                     />
                   </ValidationProvider>
                 </div>

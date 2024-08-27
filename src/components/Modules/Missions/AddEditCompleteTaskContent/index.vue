@@ -269,8 +269,8 @@ export default {
 
         let goldenBadgesWithBadgeTables = {
           id: 1,
-          name: goldenBadges[0].bagde.name,
-          logo: goldenBadges[0].bagde.logo,
+          name: goldenBadges[0]?.bagde.name,
+          logo: goldenBadges[0]?.bagde.logo,
           badgeContentTypes: this.badgeContentTypes,
           badgeContent: [],
           tableItems: goldenBadgesTable.map((item) => {
@@ -283,8 +283,8 @@ export default {
         }
         let silverBadgesWithBadgeTables = {
           id: 2,
-          name: silverBadges[0].bagde.name,
-          logo: silverBadges[0].bagde.logo,
+          name: silverBadges[0]?.bagde.name,
+          logo: silverBadges[0]?.bagde.logo,
           badgeContentTypes: this.badgeContentTypes,
           badgeContent: [],
           tableItems: silverBadgesTable.map((item) => {
@@ -297,8 +297,8 @@ export default {
         }
         let bronzeBadgesWithBadgeTables = {
           id: 3,
-          name: bronzeBadges[0].bagde.name,
-          logo: bronzeBadges[0].bagde.logo,
+          name: bronzeBadges[0]?.bagde.name,
+          logo: bronzeBadges[0]?.bagde.logo,
           badgeContentTypes: this.badgeContentTypes,
           badgeContent: [],
           tableItems: bronzeBadgesTable.map((item) => {

@@ -61,6 +61,7 @@ import {
   getLibraryContent,
 } from "@/services/dropdownService";
 import _ from "lodash";
+import {log} from "video.js";
 
 export default {
   components: {
@@ -224,9 +225,13 @@ export default {
     if (this.$route.params.id) {
       this.prizeGroup.forEach((prize) => {
         prize["prizeable_type_name"] = prize.type.name;
-        if (prize?.type?.key == "characters") prize["prizeable_id_name"] = prize.character.name;
-        if (prize?.type?.key == "library") prize["prizeable_id_name"] = prize.library.name;
-        if (prize?.type?.key == "jeel_gem") prize["prizeable_id_name"] = prize.jeel_coins;
+        if (prize.type.key === "characters"){
+          prize["prizeable_id_name"] = prize.prizeable_type_name;
+        } else if(prize.type.key === "library"){
+          prize["prizeable_id_name"] = prize.library.file_name;
+        } else if(prize.type.key === "jeel_gem"){
+          prize["prizeable_id_name"] = prize.jeel_coins;
+        }
       });
     }
     this.$watch(() => {
