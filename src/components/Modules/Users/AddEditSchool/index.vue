@@ -150,6 +150,9 @@
         </validation-observer>
       </div>
     </div>
+    <Modal
+      :content-message="$route.params.id !== undefined ? $t('CONTROLS.edit_successfully') :$t('CONTROLS.add_successfully')"
+      :showModal="showModal" :is-success="true"/>
   </div>
 </template>
 <script>
@@ -214,7 +217,7 @@ export default {
       schoolTypes: [],
       itemImage: null,
       showDate: true,
-
+      showModal: false,
       schoolInfoFields: [
         {
           key: "name",
@@ -357,7 +360,6 @@ export default {
           rules: "required|min:3|max:100",
         },
       ],
-
       createSchool: {},
     };
   },
@@ -402,8 +404,7 @@ export default {
           }
         }
       });
-      if (this.$route.params.id)
-        formData.append("_method", "put")
+      if (this.$route.params.id) formData.append("_method", "put")
       const requestConfig = {
         headers: {
           Authorization: `Bearer ${VueCookies.get("token")}`,
@@ -411,20 +412,21 @@ export default {
           "Content-Type": "multipart/form-data",
         },
       };
-
       const endpoint = this.$route.params.id ? `/schools/${this.$route.params.id}` : "/schools";
       const httpMethod = this.$route.params.id ? "POST" : "POST";
-
-      axios
-        .request({
-          url: endpoint,
-          method: httpMethod,
-          data: formData,
-          ...requestConfig,
-        })
-        .then(() => {
+      this.loading = true;
+      axios.request({
+        url: endpoint,
+        method: httpMethod,
+        data: formData, ...requestConfig,
+      }).then(() => {
+        this.loading = false
+        this.showModal = true;
+        setTimeout(() => {
+          this.showModal = false;
           this.$router.push("/dashboard/schools");
-        })
+        }, 1500);
+      })
         .catch((error) => {
           console.error("Error sending school data:", error);
         });
@@ -493,7 +495,7 @@ export default {
     },
 
     async getSchoolDepartmentTypes() {
-      await this.fetchDataAndUpdateOptions(getSchoolDepartmentTypesRequest({list_all:true}), "SCHOOL.SCHOOL_TYPE");
+      await this.fetchDataAndUpdateOptions(getSchoolDepartmentTypesRequest({list_all: true}), "SCHOOL.SCHOOL_TYPE");
     },
 
     async getSchoolDegreeTypes() {

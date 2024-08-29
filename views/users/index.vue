@@ -159,7 +159,7 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.status"),
         },
         {
-          key: "status.name",
+          key: "status",
           label: this.$i18n.t("TABLE_FIELDS.block"),
         },
         {

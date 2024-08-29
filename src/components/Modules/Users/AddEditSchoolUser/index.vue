@@ -13,22 +13,6 @@
                   @image-uploaded="handleImageUploaded"
                   @image-cleared="handleImageCleared"
                 />
-                <div v-if="$route.params.id" class="user-active">
-                  <label for="">{{ $t("USERS.ACTIVE") }}</label>
-                  <div>
-                    <label for="">{{ $t("USERS.ACTIVE") }}</label>
-                    <b-form-checkbox
-                      v-model="user.is_active"
-                      value="active"
-                      unchecked-value="deactivated"
-                      @change="changeStatus()"
-                      class="large-checkbox"
-                      size="lg"
-                      switch
-                    >
-                    </b-form-checkbox>
-                  </div>
-                </div>
               </b-col>
               <b-col lg="8">
                 <b-row>
@@ -39,13 +23,13 @@
                         :label="$t('ROLES.CLASSIFICATION_DEPARTMENT')"
                         :name="$t('ROLES.CLASSIFICATION_DEPARTMENT')"
                         :options="rolesTypeList"
+                        :disabled="$route.params.id !== undefined"
                         :reduce="(option) => option.id"
                         :get-option-label="(option) => option.name"
                         :rules="'required'"
                         :deselectFromDropdown="true"
-                        @input="onSelectRoleCategoriesInput($event)"
+                        @input="getAllDepartments($event)"
                       ></SelectSearch>
-<!--                      multiple-->
                     </div>
                   </b-col>
                   <b-col lg="6">
@@ -58,10 +42,9 @@
                         :reduce="(option) => option.id"
                         :get-option-label="(option) => option.name"
                         :rules="'required'"
+                        :disabled="$route.params.id !== undefined"
                         :deselectFromDropdown="true"
-                        @input="onSelectRole($event)"
                       ></SelectSearch>
-<!--                      multiple-->
                     </div>
                   </b-col>
                   <b-col lg="4">
@@ -95,18 +78,22 @@
                       ></TextField>
                     </div>
                   </b-col>
-                  <b-col lg="8">
+                  <b-col lg="8" v-if="user.roles !== 5">
                     <div class="hold-field">
                       <TextField
-                        v-if="!isStudent"
+                        :disabled="$route.params.id !== undefined"
                         v-model="user.email"
                         :label="$t('USERS.EMAIL')"
                         :name="$t('USERS.EMAIL')"
                         :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.EMAIL')"
                         :rules="'required|email'"
                       ></TextField>
+                    </div>
+                  </b-col>
+                  <b-col lg="8" v-if="user.roles === 5">
+                    <div class="hold-field">
                       <TextField
-                        v-if="isStudent"
+                        :disabled="$route.params.id !== undefined"
                         v-model="user.user_name"
                         :label="$t('USERS.USER_NAME')"
                         :name="$t('USERS.USER_NAME')"
@@ -264,6 +251,10 @@
         </validation-observer>
       </div>
     </div>
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true"/>
+    <Modal :content-message="$t('CONTROLS.edit_successfully')"
+           :showModal="showModalEdit"
+           :is-success="true"/>
   </div>
 </template>
 <script>
@@ -277,8 +268,6 @@ import {TogglePasswordMixins} from "@/mixins/TogglePasswordMixins";
 // Dropdown
 import {getAllNationalitiesRequest} from "@/api/country";
 import {
-  addEditSchoolUserRequest,
-  postChangeStatusSchoolUserRequest,
   getSingleSchoolUserRequest, addSchoolUserRequest, updateSchoolUserRequest,
 } from "@/api/school-info";
 import {
@@ -287,20 +276,17 @@ import {
   getAllRolesTypeRequest,
   getAllRolesByTypeRequest,
 } from "@/api/system";
+import Modal from "@/components/Shared/Modal/index.vue";
 
 export default {
   components: {
+    Modal,
     TextField,
     Button,
     SelectSearch,
     ImageUploader,
   },
   mixins: [TogglePasswordMixins],
-  computed: {
-    getUserAdmin() {
-      return this.$store.getters.user;
-    },
-  },
   props: {
     loading: {
       type: Boolean,
@@ -313,9 +299,11 @@ export default {
       isStudent: false,
       index: 0,
       indexType: 0,
+      showModal: false,
+      showModalEdit: false,
       user: {
         image: null,
-        email:"",
+        email: "",
         first_name: "",
         middle_name: "",
         last_name: "",
@@ -344,12 +332,14 @@ export default {
       filterWith: [],
       isManagementStudent: false,
       isSelectingRoleCategories: false,
+      updateImage: false,
     };
   },
   methods: {
     // Image Upload Method
     handleImageUploaded(imageUuid) {
       this.user.image = imageUuid;
+      this.updateImage = true
     },
     handleImageUrlUpdate(newImageUrl) {
       this.imageUrl = newImageUrl;
@@ -357,31 +347,27 @@ export default {
     handleImageCleared() {
       this.user.image = null;
     },
-    changeStatus() {
-      let userStatus = {
-        user_id: this.$route.params.id,
-      };
-
-      if (this.user.is_active == "deactivated" || this.user.is_active == "unverified")
-        userStatus.is_active = 0;
-      else userStatus.is_active = 1;
-
-      this.ApiService(postChangeStatusSchoolUserRequest(userStatus)).then(() => {
-      });
-    },
-
     onSubmit() {
-      if (this.isStudent) this.user.email = "";
-      if (!this.isStudent) delete this.user.user_name
+      if (this.user.roles === 5) this.user.email = "";
+      if (this.user.roles !== 5) delete this.user.user_name
       this.$refs.addEditUserForm.validate().then((success) => {
         if (!success) return;
         if (this.$route.params.id) {
-          this.ApiService(updateSchoolUserRequest(this.$route.params.id,this.user)).then(() => {
-            this.$router.push("/dashboard/all-school-users");
+          if(!this.updateImage) delete this.user.image
+          this.ApiService(updateSchoolUserRequest(this.$route.params.id, this.user)).then(() => {
+            this.showModalEdit = true
+            setTimeout(()=>{
+              this.showModalEdit = false
+              this.$router.push("/dashboard/all-school-users");
+            },1000)
           });
         } else {
           this.ApiService(addSchoolUserRequest(this.user)).then(() => {
-            this.$router.push("/dashboard/all-school-users");
+            this.showModal = true
+            setTimeout(()=>{
+              this.showModal = false
+              this.$router.push("/dashboard/all-school-users");
+            },1000)
           });
         }
       });
@@ -414,64 +400,11 @@ export default {
         });
       });
     },
-    getAllDepartments: _.debounce(function (value) {
-      if (value != undefined) {
-        if (value === 125) {
-          this.isManagementStudent = true;
-        } else {
-          this.isManagementStudent = false;
-        }
-        this.filterWith = []
-        this.filterWith[`types[0]`] = value;
-        // for (let type = 0; type < value.length; type++) {
-        //   this.filterWith[`types[${type}]`] = value[type];
-        // }
-        this.ApiService(getAllRolesByTypeRequest(this.filterWith)).then((response) => {
-          this.departmentsList = response.data.data;
-        });
-      }
-    }, 300),
-    onSelectRole: _.debounce(function (value) {
-      // if (value != undefined) {
-        // const studentRole = this.departmentsList.find(
-        //   (role) => role.code.toLowerCase() === "student"
-        // );
-        // if (value === 125) this.isStudent = true;
-        // else this.isStudent = false;
-        // if (value.includes(studentRole.id) && this.index == 0) {
-        //   this.user.roles = [studentRole.id];
-        //   this.index = 1;
-        // } else {
-        //   this.index = 0;
-        // }
-      // }
-    }, 300),
-
-    onSelectRoleCategoriesInput: _.debounce(function (value) {
-      if (value != undefined) {
-        this.onSelectRoleCategories(value);
-      }
-    }, 300),
-
-    onSelectRoleCategories: async function (value) {
-      try {
-        // const studentRoleType = this.rolesTypeList.find((type) => type.key.toLowerCase() === "student_management");
-        // if (value.includes(studentRoleType.id)) this.isStudent = true;
-        if (value === 125){
-          this.isStudent = true;
-        } else {
-          this.isStudent = false;
-        }
-        if (value === 125 && this.indexType == 0) {
-          this.user.roles_categories = value;
-          this.indexType = 1;
-          this.getAllDepartments(value);
-        } else {
-          this.getAllDepartments(value);
-          this.indexType = 0;
-        }
-      } catch (e) {
-      }
+    getAllDepartments (value) {
+      this.filterWith[`types[0]`] = value;
+      this.ApiService(getAllRolesByTypeRequest(this.filterWith)).then((response) => {
+        this.departmentsList = response.data.data;
+      });
     },
   },
   mounted() {
@@ -481,15 +414,11 @@ export default {
         this.user.gender = response.data.data.gender.id;
         this.user.nationality_id = response.data.data.user_nationality.id;
         this.user.religion_id = response.data.data.user_religion.id;
-        this.user.roles = response.data.data.roles.map((role) => role.id);
-        this.user.roles_categories = response.data.data.category_roles.map((role) => role.id);
+        this.user.roles = response.data.data.roles[0].id;
+        this.user.roles_categories = response.data.data.category_roles[0].id;
         this.user.is_active = response.data.data.status.key;
         this.imageUrl = response.data.data.image;
-        setTimeout(()=>{
-          this.isStudent = response.data.data.category_roles[0].id === 125
-        },300)
-        console.log('this.isStudent',this.isStudent)
-      });
+      })
     }
     this.getAllCountries();
     this.getAllGenders();

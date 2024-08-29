@@ -69,10 +69,10 @@ export default {
           key: "roles",
           label: this.$i18n.t("USERS.DEPARTMENT"),
         },
-        {
-          key: "status.key",
-          label: this.$i18n.t("TABLE_FIELDS.status"),
-        },
+        // {
+        //   key: "status.key",
+        //   label: this.$i18n.t("TABLE_FIELDS.status"),
+        // },
         {
           key: "level.name",
           label: this.$i18n.t("schoolAdmin.level"),

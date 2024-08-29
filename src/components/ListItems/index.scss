@@ -4,11 +4,23 @@
 .list {
   @include styleViewList;
   margin: 1.5rem 0;
-  .blocked-user {
-    color: #721c24;
+  .blocked-user,.active-user,.deactivated-user,.unverified-user {
+    color: #550804;
     border-radius: 18px;
-    background-color: #f8d7da;
+    background-color: #F16767;
     padding: 2px 40px;
+  }
+  .active-user{
+    background-color: #BDEAA7;
+    color: #005E38;
+  }
+  .deactivated-user{
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  .unverified-user{
+    background-color: #FFD18D;
+    color: #7A4A09;
   }
   .header,
   .search-sort {

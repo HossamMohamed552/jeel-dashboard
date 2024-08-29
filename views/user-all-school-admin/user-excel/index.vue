@@ -133,6 +133,8 @@
         </b-col>
       </b-row>
     </div>
+    <ProgressModal :show="loading" :value="progress" :title="video_name"
+                   @cancel="cancelUpload()"></ProgressModal>
   </section>
 </template>
 <script>
@@ -146,10 +148,11 @@ import axios from "axios";
 import VueCookies from "vue-cookies";
 import Modal from "@/components/Shared/Modal/index.vue";
 import {getAllClassesRequest, getSchoolAdminLevelsRequest} from "@/api/school-info";
+import ProgressModal from "@/components/Shared/ProgressModal/index.vue";
 
 export default {
   name: "index",
-  components: {Modal, TextField, ImageUploader, SelectSearch, Button},
+  components: {ProgressModal, Modal, TextField, ImageUploader, SelectSearch, Button},
   data() {
     return {
       schoolGroupList: [],
@@ -160,6 +163,11 @@ export default {
       levels: [],
       loading: false,
       showModal: false,
+      loadingUploadExcel: false,
+      showModalUploadExcel: false,
+      showProgressModal: false,
+      progress: 0,
+      video_name: '',
       user: {
         file: null,
         role_category: null,
@@ -216,7 +224,14 @@ export default {
           delete  this.user.level_id
           delete  this.user.class_id
         }
+        this.loading = true;
+        let axiosSource = axios.CancelToken.source();
+        this.cancelSource = axiosSource;
         axios.post('/school-admin/excel-user-import', this.user, {
+          cancelToken: axiosSource.token,
+          onUploadProgress: ({loaded, total}) => {
+            this.progress = Math.floor((loaded / total) * 100)
+          },
           headers: {
             Authorization: `Bearer ${VueCookies.get("token")}`,
             locale: 'ar',
@@ -226,8 +241,20 @@ export default {
           this.statusOfUploadExcel = response.data.data
           this.userFailedError = response.data.errors
           this.showModal = true
+          this.showModalUploadExcel = true
+          this.$nextTick(()=>{
+            this.$refs.addExcelForm.reset()
+            this.user.file = null
+          })
+          setTimeout(() => {
+            this.loading = false
+          }, 500)
         })
       });
+    },
+    cancelUpload() {
+      this.loading = false
+      this.cancelSource.cancel();
     },
     handleCancel() {
       this.$router.back()

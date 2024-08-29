@@ -120,7 +120,6 @@
           </div>
           <b-row>
             <b-col lg="12" v-if="activeTap === 1">
-
               <div v-if="detail.task" class="mb-3"
                    :class="detail.type.key === 'text'? 'd-flex justify-content-center align-items-center':''">
                 <span>  {{ $t('teacher.question') }} : </span>

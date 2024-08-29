@@ -61,10 +61,10 @@ export default {
           key: "email",
           label: this.$i18n.t("USERS.name"),
         },
-        {
-          key: "status.key",
-          label: this.$i18n.t("TABLE_FIELDS.status"),
-        },
+        // {
+        //   key: "status.key",
+        //   label: this.$i18n.t("TABLE_FIELDS.status"),
+        // },
         {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),

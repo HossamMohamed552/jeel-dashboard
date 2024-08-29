@@ -9,12 +9,9 @@
         </b-row>
         <b-row class="divider">
           <b-col lg="4" class="mb-5">
-            <ShowItem :title="$t('TABLE_FIELDS.studyYearName')" :subtitle="singleLevel.studyYear.name" />
-          </b-col>
-          <b-col lg="4" class="mb-5">
             <ShowItem
               :title="$t('TABLE_FIELDS.levelSchoolAdmin')"
-              :subtitle="singleLevel.level.name"
+              :subtitle="singleLevel.name"
             />
           </b-col>
           <b-col lg="4" class="mb-5" v-if="singleLevel.classes">

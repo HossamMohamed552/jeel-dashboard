@@ -20,7 +20,22 @@
                   :deselectFromDropdown="true"
                 ></SelectSearch>
               </b-col>
-              <b-col lg="4">
+              <b-col lg="4" v-if="teacherId !== null">
+                <SelectSearch
+                  v-model="adObject.users"
+                  :label="$t('ads.superTeachersTo')"
+                  :name="$t('ads.superTeachersTo')"
+                  :options="teachers"
+                  :reduce="(option) => option.id"
+                  :get-option-label="(option) => option.name"
+                  :rules="'required'"
+                  @input="setSendToFromOutSide"
+                  disabled
+                  :deselectFromDropdown="true"
+                ></SelectSearch>
+                <!--                -->
+              </b-col>
+              <b-col lg="4" v-else>
                 <SelectSearch
                   v-model="adObject.users"
                   :label="$t('ads.superTeachersTo')"
@@ -31,9 +46,9 @@
                   :rules="'required'"
                   multiple
                   :deselectFromDropdown="true"
-                  @input="setSendToFromOutSide"
                   @option:selected="selectAll($event)"
                 ></SelectSearch>
+                <!--                -->
               </b-col>
               <b-col lg="4">
                 <div class="hold-field">
@@ -88,6 +103,7 @@ import {getLevelsForSuperVisorDropDownRequest} from "@/api/level";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import {getAnnouncementByIdRequest} from "@/api/announcement";
 import {getAllTeachersForSuperVisorRequest} from "@/api/user";
+
 export default {
   components: {
     SelectSearch,
@@ -121,7 +137,9 @@ export default {
     setSendToFromOutSide(){
       if (this.teacherId){
         this.adObject.users = this.teacherId
+        // this.adObject.users
       }
+      // this.teacherId
     },
     selectAll($event) {
       if ($event.map(item => item.id).includes(1000000)) {
@@ -169,9 +187,14 @@ export default {
     if (this.adId) {
       this.ApiService(getAnnouncementByIdRequest(this.adId)).then((response) => {
         this.adObject.level_id = response.data.data.level.id;
-        this.adObject.users = response.data.data.teachers.map((item) => {
-          return item.id;
-        });
+        if (typeof  response.data.data.teachers === "object"){
+          this.adObject.users = response.data.data.teachers.map((item) => {
+            return item.id;
+          });
+        } else {
+          this.adObject.users.push(1000000)
+        }
+
         this.adObject.subject = response.data.data.subject;
         this.adObject.description = response.data.data.description;
       });

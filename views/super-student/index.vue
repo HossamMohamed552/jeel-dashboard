@@ -26,6 +26,7 @@
       :v-search-model="studentsSearchWord"
       :loading="loading"
       :disable-it="true"
+      :isRefresh="refresh"
       :show-sort-controls="false"
       @detailItem="detailItem($event)"
       @refetch="getAllStudents"
@@ -59,6 +60,7 @@ export default {
     return {
       loading: false,
       showModal: false,
+      refresh: false,
       studentsSearchWord: "",
       students: [],
       totalNumber: 0,
@@ -171,13 +173,19 @@ export default {
       this.ApiService(getAllStudentsForSuperVisorRequest(values)).then((response)=>{
         this.students = response.data.data
         this.totalNumber = response.data.meta.total
+        this.loading = false
       })
     },
     onSubmit(values) {
+      this.loading = true;
+      this.searchWithPagination = values;
       this.getAllStudents(values)
     },
     handleCancel(){
+      this.studentSearch.map(field => field.value = "")
+      this.searchWithPagination = {}
       this.getAllStudents()
+      this.refresh = true
     },
     detailItem($event) {
       this.$router.push(`/dashboard/super-student/show/${$event}`);

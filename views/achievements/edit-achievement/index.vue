@@ -1,12 +1,13 @@
 <template>
   <div>
-    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal"
+    <Modal :content-message="$t('CONTROLS.edit_successfully')" :showModal="showModal"
            :is-success="true"/>
     <Modal :content-message="$t('CONTROLS.already_exists')" :showModal="showModalFailed"
            :isUsed="true"
            @cancelWithConfirm="showModalFailed=false"/>
     <AddEditAchievement
       :loading="loading"
+      @handleCancel="$router.back()"
       @editAchievement="editAchievement($event)"/>
   </div>
 </template>

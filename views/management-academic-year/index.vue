@@ -12,9 +12,9 @@
       @refetch="getAcademicYear"
       :loading="loading"
       :permission_delete="'delete-school-study-years'"
-      :permission_edit="'edit-school-study-years'"
       :permission_view="'show-school-study-years'"
     >
+<!--      :permission_edit="'edit-school-study-years'" -->
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"

@@ -26,18 +26,21 @@ export default {
   },
   methods: {
     handleAddAcademicYear($event) {
-      this.loading = true;
-      this.showModal = true;
       this.ApiService(postAcademicYearRequest($event))
         .then((response) => {
-          this.loading = false;
+          this.loading = true;
+          this.showModal = true;
           setTimeout(() => {
+            this.loading = false;
             this.showModal = false;
           }, 1500);
         })
         .then(() => {
           this.$router.push("/dashboard/management-academic-year");
-        });
+        }).catch(()=>{
+        this.loading = false;
+        this.showModal = false;
+      })
     },
 
     handleCancel() {

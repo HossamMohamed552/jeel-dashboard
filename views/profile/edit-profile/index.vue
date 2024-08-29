@@ -50,7 +50,7 @@
                         :label="$t('USERS.SECOND_NAME')"
                         :name="$t('USERS.SECOND_NAME')"
                         :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.SECOND_NAME')"
-                        :rules="'required|min:2'"
+
                       ></TextField>
                     </div>
                   </b-col>
@@ -61,7 +61,7 @@
                         :label="$t('USERS.LAST_NAME')"
                         :name="$t('USERS.LAST_NAME')"
                         :placeholder="$t('USERS.ENTER') + ' ' + $t('USERS.LAST_NAME')"
-                        :rules="'required|min:2'"
+
                       ></TextField>
                     </div>
                   </b-col>
@@ -187,6 +187,9 @@
         </validation-observer>
       </div>
     </div>
+    <Modal :content-message="$t('CONTROLS.edit_successfully')"
+           :showModal="showModalEdit"
+           :is-success="true"/>
   </div>
 </template>
 <script>
@@ -203,9 +206,11 @@ import {mapActions} from "vuex";
 
 import {getAllNationaltyRequest} from "@/api/country";
 import {getAllGenderRequest, getAllReligionRequest} from "@/api/system";
+import Modal from "@/components/Shared/Modal/index.vue";
 
 export default {
   components: {
+    Modal,
     TextField,
     Button,
     SelectSearch,
@@ -226,6 +231,7 @@ export default {
     return {
       imageUrl: null,
       isStudent: false,
+      showModalEdit: false,
       userStrored: {},
       user: {
         image: null,
@@ -300,7 +306,6 @@ export default {
         //     formData.append(key, this.user[key]);
         //   }
         // });
-
         axios
           .post(`/user_auth_update`, formData, {
             headers: {
@@ -310,11 +315,13 @@ export default {
             },
           })
           .then((response) => {
+            this.showModalEdit = true
             this.updateUser(response.data.data);
+            setTimeout(()=>{
+              this.showModalEdit = false
+              this.$router.push({name: "view-profile"});
+            },1000)
           })
-          .then(() => {
-            this.$router.push({name: "view-profile"});
-          });
       });
     },
 

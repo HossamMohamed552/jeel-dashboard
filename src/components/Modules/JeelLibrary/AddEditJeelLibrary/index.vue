@@ -57,12 +57,11 @@
 
               <!------------------- start logo uploader --------------------------------->
               <b-col lg="6" class="mb-3">
-                <UploadAttachment
+                <UploadAttachmentImage
                   v-if="!$route.params.id || attachment.logoChangedRequest"
                   :rules="'required'"
                   :label="$t('library.fileLogo')"
                   :type-of-attachment="'image'"
-                  :accept-files="'image/jpeg,image/png,image/jpg,image/gif'"
                   @setFileId="setThumbnailId"
                 />
                 <PreviewMedia
@@ -81,11 +80,10 @@
 
               <!------------------- start file audio --------------------------------->
               <b-col lg="6" v-if="createItem.type===111" class="mb-3">
-                <UploadAttachment
+                <UploadAttachmentAudio
                   v-if="!$route.params.id || attachment.audioChangedRequest"
                   :type-of-attachment="'audio'"
                   :dropIdRef="'audioFile'"
-                  :accept-files="'audio/mpeg,audio/mpga,audio/mp3,audio/wav'"
                   :label="$t('PAPER_WORK.AUDIO')"
                   :name="'audioFile'"
                   :rules="'required'"
@@ -110,12 +108,11 @@
               <!------------------- end  file audio --------------------------------->
               <!------------------- start file image --------------------------------->
               <b-col lg="6" v-if="createItem.type===112" class="mb-3">
-                <UploadAttachment
+                <UploadAttachmentImage
                   v-if="!$route.params.id || attachment.imageChangedRequest"
                   :rules="'required'"
                   :label="$t('library.fileImage')"
                   :type-of-attachment="'image'"
-                  :accept-files="'image/jpeg,image/png,image/jpg,image/gif'"
                   @setFileId="setImageId"
                 />
                 <PreviewMedia
@@ -140,7 +137,7 @@
 
               <!------------------- start video 1  --------------------------------->
               <b-col lg="6" v-if="createItem.type === 113" class="mb-3">
-                <UploadAttachment
+                <UploadAttachmentVideo
                   v-if="!$route.params.id || attachment.videoWithOutMuiscChangedRequest"
                   :type-of-attachment="'video'"
                   :dropIdRef="'VideFile'"
@@ -173,7 +170,7 @@
 
               <!------------------- start video 2 --------------------------------->
               <b-col lg="12" v-if="createItem.type === 113" class="mb-3 mt-4">
-                <UploadAttachment
+                <UploadAttachmentVideo
                   v-if="!$route.params.id || attachment.videoWithMuiscChangedRequest"
                   :type-of-attachment="'video'"
                   :label="$t('VIDEO.videoWithMusic')"
@@ -204,7 +201,7 @@
 
               <!------------------- start pdf --------------------------------->
               <b-col lg="6" v-if="createItem.type === 114" class="mb-3 ">
-                <UploadAttachment
+                <UploadAttachmentFile
                   v-if="!$route.params.id || attachment.fileChangedRequest"
                   :type-of-attachment="'pdf'"
                   :label="$t('content.content_file')"
@@ -251,7 +248,7 @@
                     v-model="createItem.link"
                     :label="$t('content.link')"
                     :name="$t('content.link')"
-                    :placeholder="$t('content.writeNote')"
+                    :placeholder="$t('content.writeLink')"
                     :rules="'required|urlLink'"
                   ></TextField>
                 </div>
@@ -325,6 +322,10 @@ import Button from "@/components/Shared/Button/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
 import PreviewMedia from "@/components/Shared/PreviewMedia/PreviewMedia.vue";
 import UploadAttachment from "@/components/Shared/UploadAttachment/index.vue";
+import UploadAttachmentImage from "@/components/Shared/UploadAttachmentImage/index.vue";
+import UploadAttachmentAudio from "@/components/Shared/UploadAttachmentAudio/index.vue";
+import UploadAttachmentVideo from "@/components/Shared/UploadAttachmentVideo/index.vue";
+import UploadAttachmentFile from "@/components/Shared/UploadAttachmentFile/index.vue";
 import GeneralModal from "@/components/Shared/GeneralModal/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import {getAllLevelsRequest} from "@/api/level";
@@ -337,6 +338,10 @@ export default {
     SelectSearch,
     GeneralModal,
     UploadAttachment,
+    UploadAttachmentImage,
+    UploadAttachmentAudio,
+    UploadAttachmentVideo,
+    UploadAttachmentFile,
     PreviewMedia,
     Modal,
     TextField,

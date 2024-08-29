@@ -67,7 +67,7 @@
         <template :slot="`head(${headerItem.key})`" v-for="headerItem in fieldsList">
           <div :class="headerItem.key !== 'actions' ? 'sort' : ''">
             <span>{{ headerItem.label }}</span>
-            <span class="sortIcon" v-if="hideSortBasedOnHeaderKey(headerItem.key)">
+            <span class="sortIcon" v-if="hideSortBasedOnHeaderKey(headerItem.key) && $route.params.id === undefined">
               <img src="@/assets/images/icons/arrow-up-down.png" @click="sortBy(headerItem.key)"/>
             </span>
           </div>
@@ -88,9 +88,9 @@
         <template #cell(vid)="data">
           {{ data.item.vid }}
         </template>
-        <template #cell(status)="data">
-          <span>{{ data.item.status === 1 ? $t("DEFAULT.active") : $t("DEFAULT.deActive") }}</span>
-        </template>
+        <!--        <template #cell(status)="data">-->
+        <!--          <span>{{ data.item.status === 1 ? $t("DEFAULT.active") : $t("DEFAULT.deActive") }}</span>-->
+        <!--        </template>-->
         <template #cell(music_status)="data">
           <span>{{
               data.item.music_status === 1 ? $t("DEFAULT.acabila") : $t("DEFAULT.bymusic")
@@ -357,13 +357,14 @@
           >
           </b-form-checkbox>
         </template>
-        <template #cell(status.name)="data">
-          <span class="blocked-user"
-                v-if="checkBlockUser(data) === 'show'">{{ $t('CONTROLS.blocked') }}</span>
-        </template>
         <template #cell(status)="data">
-          <span>{{ data.item.status.name }}</span>
+          <!--          v-if="checkBlockUser(data) === 'show'"-->
+          <!--          <span class="blocked-user" >{{ $t('CONTROLS.blocked') }}</span>-->
+          <span :class="checkStatusColor(data.item.status.key)">{{ data.item.status.name }}</span>
         </template>
+        <!--        <template #cell(status)="data">-->
+        <!--          <span>{{ data.item.status.name }}</span>-->
+        <!--        </template>-->
         <template #cell(actions)="data">
           <b-dropdown
             size="lg"
@@ -527,7 +528,7 @@ export default {
       dateRange: [],
       switchSort: "DESC",
       en: "en",
-      hideKeys:['actions',
+      hideKeys: ['actions',
         'question',
         'avatar',
         'image',
@@ -538,6 +539,7 @@ export default {
         'logo',
         'audio_ar',
         'audio_en',
+        'teachers',
       ],
       formValues: {
         per_page: 10,
@@ -757,7 +759,7 @@ export default {
     },
   },
   methods: {
-    hideSortBasedOnHeaderKey(key){
+    hideSortBasedOnHeaderKey(key) {
       return !this.hideKeys.includes(key)
     },
     goToMissionContent(pathId, missionId) {
@@ -773,6 +775,7 @@ export default {
     },
     searchBy: debounce(function (name) {
       this.formValues.name = name;
+      this.formValues.order_by = ""
       this.formValues.page = 1
       this.$emit("refetch", this.formValues);
     }, 500),
@@ -960,6 +963,17 @@ export default {
         return "hide";
       }
     },
+    checkStatusColor(data) {
+      if (data === 'blocked') {
+        return 'blocked-user'
+      } else if (data === 'active') {
+        return 'active-user'
+      } else if (data === 'deactivated' || data === 'inactive') {
+        return 'deactivated-user'
+      } else if (data === 'unverified') {
+        return 'unverified-user'
+      }
+    },
     checkAdd() {
       if (
         !this.user.permissions.includes("manage-learningpath") &&
@@ -1016,7 +1030,6 @@ export default {
       $event.target.src = require("@/assets/images/icons/user-avatar.png");
     },
     goToAnnouncements(itemId) {
-      console.log("itemId", itemId);
       this.$store.commit("SET_TEACHER_ID", itemId);
       this.$router.push("/dashboard/advertisements/add");
     },
@@ -1041,6 +1054,14 @@ export default {
         this.formValues.order_by = 'getTypeEnumFromSystemCode.name'
       } else if (this.formValues.order_by === 'questionDifficulty') {
         this.formValues.order_by = 'questionDifficulty.name'
+      } else if ((this.formValues.order_by === 'status.key' || this.formValues.order_by === 'status') && this.$route.name !== 'school-group' &&  this.$route.name !== 'schools') {
+        this.formValues.order_by = 'userStatus.name'
+      } else if (this.formValues.order_by === 'roles') {
+        this.formValues.order_by = 'roles.name'
+      } else if (this.formValues.order_by === 'status' && this.$route.name === 'school-group') {
+        this.formValues.order_by = 'groupStatus.name'
+      } else if (this.formValues.order_by === 'status' && this.$route.name === 'schools') {
+        this.formValues.order_by = 'schoolStatus.name'
       }
       this.formValues.order = this.switchSort;
       this.$emit("refetch", this.formValues);

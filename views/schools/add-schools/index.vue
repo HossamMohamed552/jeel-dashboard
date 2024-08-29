@@ -1,6 +1,6 @@
 <template>
   <div class="add-schools">
-    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true" />
+
     <AddEditSchool
       :loading="loading"
       @handleAddSchool="handleAddSchool($event)"
@@ -11,10 +11,11 @@
 <script>
 import AddEditSchool from "@/components/Modules/Users/AddEditSchool/index.vue";
 import Modal from "@/components/Shared/Modal/index.vue";
-import { postSchoolsRequest } from "@/api/school";
+import {postSchoolsRequest} from "@/api/school";
+
 export default {
   name: "index",
-  components: { Modal, AddEditSchool },
+  components: {Modal, AddEditSchool},
   data() {
     return {
       loading: false,
@@ -23,18 +24,14 @@ export default {
   },
   methods: {
     handleAddSchool($event) {
-      this.loading = true;
-      this.showModal = true;
-      this.ApiService(postSchoolsRequest($event))
-        .then((response) => {
+      this.ApiService(postSchoolsRequest($event)).then((response) => {
           this.loading = false;
+          this.showModal = true;
           setTimeout(() => {
             this.showModal = false;
+            this.$router.push("/dashboard/schools");
           }, 1500);
-        })
-        .then(() => {
-          this.$router.push("/dashboard/schools");
-        });
+        }).catch(() => this.loading = false)
     },
     handleCancel() {
       this.$router.push("/dashboard/schools");

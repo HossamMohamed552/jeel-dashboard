@@ -24,7 +24,11 @@ export default {
   methods: {
     handleAddAdCategory($event) {
       this.loading = true;
-      if ($event.users.includes(1000000)){
+      console.log('$event',$event.users)
+      if (typeof $event.users === "number"){
+        $event.users = [$event.users]
+      }
+      if ($event.users[0] === 1000000){
         delete $event.users
       }
       this.ApiService(postAddAnnouncementRequest($event))
@@ -33,10 +37,8 @@ export default {
           this.showModal = true;
           setTimeout(() => {
             this.showModal = false;
+            this.$router.push("/dashboard/advertisements");
           }, 1500);
-        })
-        .then(() => {
-          this.$router.push("/dashboard/advertisements");
         }).catch(()=>this.loading = false)
     },
     handleCancel() {

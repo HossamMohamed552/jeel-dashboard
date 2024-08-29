@@ -4,7 +4,7 @@
       {{ label }}
     </label>
     <vue2Dropzone
-      :options="dropzoneOptions"
+      :options="dropzoneOptionsImage"
       :useCustomSlot="true"
       @vdropzone-sending="sendFile"
       @vdropzone-success="fileSent"
@@ -31,7 +31,7 @@
             ('jpeg','png','jpg','gif')</p>
           <p class="d-inline-block m-0" v-if="typeOfAttachment === 'file'">('pdf')</p>
           <div class="subtitle">
-            <p>{{ $t('CONTROLS.file_size') }} {{ dropzoneOptions.maxFilesize }}
+            <p>{{ $t('CONTROLS.file_size') }} {{ dropzoneOptionsImage.maxFilesize }}
               {{ $t('CONTROLS.Megabyte') }}</p>
           </div>
         </div>
@@ -48,7 +48,7 @@ import VueCookies from "vue-cookies";
 import vue2Dropzone from "vue2-dropzone";
 
 export default {
-  name: "index",
+  name: "dropzoneImage",
   components: {vue2Dropzone},
   computed: {
     isRequired() {
@@ -92,8 +92,8 @@ export default {
   },
   data() {
     return {
-      dropzoneOptions: {
-        acceptedFiles: "",
+      dropzoneOptionsImage: {
+        acceptedFiles: "image/jpeg,image/png,image/jpg,image/gif",
         url: "",
         timeout: null,
         // chunking: true,
@@ -139,10 +139,6 @@ export default {
       fileInfo: null,
     };
   },
-  watch: {
-    "dropzoneOptions.previewTemplate"(newVal) {
-    },
-  },
   methods: {
     sendFile(file, xhr, formData) {
       formData.append("type", `${this.typeOfAttachment}`);
@@ -171,11 +167,11 @@ export default {
     },
   },
   created() {
-    this.dropzoneOptions.acceptedFiles = this.acceptFiles;
+    // this.dropzoneOptions.acceptedFiles = this.acceptFiles;
     // console.log('this.dropzoneOptions.acceptedFiles', this.dropzoneOptions.acceptedFiles)
-    this.dropzoneOptions.url = `${process.env.VUE_APP_ADMIN_URL}/attachment`;
+    this.dropzoneOptionsImage.url = `${process.env.VUE_APP_ADMIN_URL}/attachment`;
     if (this.typeOfAttachment === "video") {
-      this.dropzoneOptions.maxFilesize = 1024;
+      this.dropzoneOptionsImage.maxFilesize = 1024;
     }
   },
 };

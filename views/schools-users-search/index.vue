@@ -45,6 +45,7 @@
         :permission_edit="'hide-it'"
         :cancel_block="'cancel-block'"
         :showSortControls="false"
+        :isRefresh="refresh"
       >
         <template #buttons>
           <Button
@@ -130,6 +131,7 @@ export default {
       collapsed: false,
       loading: false,
       showModal: false,
+      refresh: false,
       usersList: [],
       searchWithPagination: {},
       userSearch: [
@@ -245,6 +247,7 @@ export default {
       this.userSearch.map(field => field.value = "")
       this.searchWithPagination = {}
       this.getAllUsers()
+      this.refresh = true
     },
     toggleCollapsed() {
       this.collapsed = !this.collapsed;

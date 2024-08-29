@@ -3,9 +3,10 @@
     <div class="title">
       {{ title }}
     </div>
-    <div class="subtitle" v-if="subtitle">
+    <div class="subtitle" v-if="subtitle && !isQuestion">
       {{ subtitle }}
     </div>
+    <div class="subtitle" v-html="subtitle" v-if="isQuestion"></div>
     <slot class="subtitle" v-if="listItems">
       <span
         class="item listItem"
@@ -36,6 +37,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    isQuestion:{
+      type: Boolean,
+      default: false,
+    }
   },
 };
 </script>

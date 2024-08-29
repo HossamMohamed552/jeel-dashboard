@@ -10,12 +10,12 @@
         <b-row class="divider">
           <b-col lg="3" class="mb-5">
             <ShowItem :title="$t('TABLE_FIELDS.studyYearName')"
-                      :subtitle="singleClass.studyYear.name"/>
+                      :subtitle="singleClass && singleClass?.studyYear?.name"/>
           </b-col>
           <b-col lg="3" class="mb-5">
             <ShowItem
               :title="$t('TABLE_FIELDS.levelSchoolAdmin')"
-              :subtitle="singleClass.level.name"
+              :subtitle="singleClass && singleClass?.level?.name"
             />
           </b-col>
           <b-col lg="3" class="mb-5">
@@ -38,6 +38,7 @@
       :table-items="singleClass.student"
       :loading="loading"
       :disableIt="true"
+      :not-hide-pagination="false"
       :permission_view="'show-supervisor-students'"
       @detailItem="detailItem($event)"
     >

@@ -7,6 +7,7 @@
            @cancelWithConfirm="showModalFailed=false"/>
     <AddEditAchievement
       :loading="loading"
+      @handleCancel="$router.back()"
       @addAchievement="addAchievement($event)"/>
   </div>
 </template>

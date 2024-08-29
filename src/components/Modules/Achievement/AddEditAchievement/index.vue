@@ -27,7 +27,6 @@
                   :accept-files="'audio/*'"
                   :label="$t('achievements.titleAudio')"
                   :name="$t('achievements.titleAudio')"
-                  :rules="'required'"
                   @setFileId="setTitleAudioFileId($event)"
                 />
                 <PreviewMedia
@@ -57,10 +56,12 @@
                   :type-of-attachment="'audio'"
                   :dropIdRef="'audioFile2'"
                   :accept-files="'audio/*'"
+                  :show-remove-button="true"
                   :label="$t('achievements.descriptionAudio')"
                   :name="$t('achievements.descriptionAudio')"
-                  :rules="'required'"
+                  @removeFile="removeFile('description_audio_name','descriptionAudioChanged','descriptionAudioChangedRequest')"
                   @setFileId="setDescriptionAudioFileId($event)"
+                  @showModal="showModal(achievement.description_audio_name,$event)"
                 />
                 <PreviewMedia
                   v-if="$route.params.id && achievement.descriptionAudioChanged === false && !achievement.descriptionAudioChangedRequest"
@@ -74,6 +75,7 @@
               </b-col>
               <b-col lg="6" class="mb-3">
                 <SelectSearch
+                  :disabled="$route.params.id !== undefined"
                   v-model="achievement.interactionType"
                   :label="$t('achievements.interactionType')"
                   :name="$t('achievements.interactionType')"
@@ -85,7 +87,7 @@
               </b-col>
               <b-col lg="6" class="mb-3">
                 <TextField
-                  v-if="achievement.interactionType.key === 'daily_entry'"
+                  v-if="achievement && achievement.interactionType?.key === 'daily_entry'"
                   v-model="achievement.interaction_number"
                   :label="$t('achievements.numberOfDailyEntry')"
                   :name="$t('achievements.numberOfDailyEntry')"
@@ -93,7 +95,7 @@
                   :rules="'required|numeric'"
                 ></TextField>
                 <TextField
-                  v-else-if="achievement.interactionType.key === 'mission'"
+                  v-else-if="achievement && achievement.interactionType?.key === 'mission'"
                   v-model="achievement.interaction_number"
                   :label="$t('achievements.numberOfMission')"
                   :name="$t('achievements.numberOfMission')"
@@ -101,7 +103,7 @@
                   :rules="'required|numeric'"
                 ></TextField>
                 <TextField
-                  v-else-if="achievement.interactionType.key === 'seasonal_mission'"
+                  v-else-if="achievement && achievement.interactionType?.key === 'seasonal_mission'"
                   v-model="achievement.interaction_number"
                   :label="$t('achievements.numberOfSeasonalMission')"
                   :name="$t('achievements.numberOfSeasonalMission')"
@@ -109,7 +111,7 @@
                   :rules="'required|numeric'"
                 ></TextField>
                 <TextField
-                  v-else-if="achievement.interactionType.key === 'competitions'"
+                  v-else-if="achievement && achievement.interactionType?.key === 'competitions'"
                   v-model="achievement.interaction_number"
                   :label="$t('achievements.numberOfCompetitions')"
                   :name="$t('achievements.numberOfCompetitions')"
@@ -117,7 +119,7 @@
                   :rules="'required|numeric'"
                 ></TextField>
                 <TextField
-                  v-else-if="achievement.interactionType.key === 'leaderboard'"
+                  v-else-if="achievement && achievement.interactionType?.key === 'leaderboard'"
                   v-model="achievement.interaction_number"
                   :label="$t('achievements.numberOfLeaderboard')"
                   :name="$t('achievements.numberOfLeaderboard')"
@@ -162,10 +164,9 @@
                 </ValidationProvider>
               </b-col>
               <b-col lg="6" class="my-3">
-                <CheckboxField v-if="achievement.interactionType.key === 'daily_entry'" value="isRepeat" :name="$t('achievements.isRepeat')"
+                <CheckboxField v-if="achievement && achievement?.interactionType?.key === 'daily_entry'" value="isRepeat" :name="$t('achievements.isRepeat')"
                                v-model="achievement.isRepeat"></CheckboxField>
                 <TextField
-                  class="my-3"
                   v-if="achievement.isRepeat"
                   v-model="achievement.repetitions_number"
                   :label="$t('achievements.repetitions_number')"
@@ -283,7 +284,7 @@ export default {
         start_date: "",
         end_date: "",
         interactionType: "",
-        interaction_number: "",
+        interaction_number: 1,
         repetitions_number: 1,
         jeel_gems: "",
         isRepeat: false,
@@ -396,9 +397,9 @@ export default {
           let data = response.data.data
           this.achievement.name = data.name
           this.achievement.description = data.description
-          this.achievement.interactionType = data.interaction
+          this.achievement.interactionType = data.interactionType
           this.achievement.interaction_number = data.interaction_number
-          this.achievement.isRepeat = !!data.repetitions_number
+          this.achievement.isRepeat = !!data.repetitions_number && data.interactionType.key === 'daily_entry'
           this.achievement.repetitions_number = data.repetitions_number
           this.achievement.start_date = data.start_date
           this.achievement.end_date = data.end_date

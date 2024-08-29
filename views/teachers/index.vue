@@ -171,6 +171,7 @@ export default {
       this.getAllTeachers(values)
     },
     handleCancel(){
+      this.teacherSearch.map(field => field.value = "")
       this.getAllTeachers()
     },
     detailItem($event) {

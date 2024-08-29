@@ -48,6 +48,8 @@
         :number-of-item="totalNumber"
         :loading="loading"
         :disable-it="true"
+        :is-refresh="refresh"
+        @refetch="getLeaderBoard"
         :show-sort-controls="false"
       >
       </ListItems>
@@ -78,6 +80,7 @@ export default {
   data() {
     return {
       collapsed: false,
+      refresh: false,
       leaderBoardSearch: [
         {
           key: "name",
@@ -251,6 +254,7 @@ export default {
           return {position: index + 4, ...item}
         })
         this.totalNumber = response.data.meta.total
+        this.refresh = true
       })
     }
   },

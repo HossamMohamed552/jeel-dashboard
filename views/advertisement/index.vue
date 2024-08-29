@@ -11,10 +11,11 @@
       @editItem="editItem($event)"
       @deleteItem="deleteItem($event)"
       @refetch="getAnnouncement"
+      :is-refresh="refresh"
       :permission_delete="'delete-announcements'"
-      :permission_edit="'edit-announcements'"
       :permission_view="'show-announcements'"
     >
+<!--      :permission_edit="'edit-announcements'"-->
       <template #buttons>
         <Button
           :custom-class="'btn-add rounded-btn big-padding'"
@@ -26,6 +27,7 @@
         </Button>
       </template>
     </ListItems>
+    <Modal :content-message="$t('CONTROLS.delete_successfully')" :showModal="deleteModal" :is-success="true" />
     <Modal
       :content-message="$t('supervisor.deleteAnnouncement')"
       :content-message-question="$t('supervisor.confirmDeleteAnnouncement')"
@@ -50,6 +52,8 @@ export default {
     return {
       loading: false,
       showModal: false,
+      deleteModal: false,
+      refresh: false,
       announcementSearchWord: "",
       announcement: [],
       totalNumber: 0,
@@ -86,6 +90,7 @@ export default {
         .then((response) => {
           this.announcement = response.data.data;
           this.totalNumber = response.data.meta.total;
+          this.refresh = true
         })
         .finally(() => {
           this.loading = false;
@@ -106,7 +111,11 @@ export default {
     },
     cancelWithConfirm() {
       this.ApiService(deleteAnnouncementRequest(this.itemId)).then(() => {
+        this.deleteModal= true
         this.getAnnouncement();
+        setTimeout(()=>{
+          this.deleteModal = false
+        },1000)
       });
       this.cancel();
     },

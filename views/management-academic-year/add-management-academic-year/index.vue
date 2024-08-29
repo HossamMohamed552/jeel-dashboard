@@ -1,6 +1,7 @@
 <template>
   <div class="add-role">
-    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true" />
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal"
+           :is-success="true"/>
     <AddEditAcademicYear
       :loading="loading"
       @handleAddAcademicYear="handleAddAcademicYear($event)"
@@ -10,7 +11,7 @@
 </template>
 <script>
 import AddEditAcademicYear from "@/components/Modules/Users/AddEditAcademicYear/index.vue";
-import { postAcademicYearRequest } from "@/api/academicYear";
+import {postAcademicYearRequest} from "@/api/academicYear";
 import Modal from "@/components/Shared/Modal/index.vue";
 
 export default {
@@ -27,18 +28,18 @@ export default {
   methods: {
     handleAddAcademicYear($event) {
       this.loading = true;
-      this.showModal = true;
-      this.ApiService(postAcademicYearRequest($event))
-        .then((response) => {
+      this.ApiService(postAcademicYearRequest($event)).then((response) => {
+        this.loading = false;
+        this.showModal = true;
+        console.log("response", response);
+        setTimeout(() => {
+          this.showModal = false
           this.loading = false;
-          console.log("response", response);
-          setTimeout(() => {
-            this.showModal = false;
-          }, 1500);
-        })
-        .then(() => {
           this.$router.push("/dashboard/management-academic-year");
-        });
+        }, 1500)
+      }).catch(()=>{
+        this.loading = false;
+      })
     },
     handleCancel() {
       this.$router.push("/dashboard/management-academic-year");

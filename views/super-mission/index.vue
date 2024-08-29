@@ -11,9 +11,9 @@
           class="w-100"
           :schema="missionSearch"
           @onSubmit="onSubmit"
+          :showCancelButton="false"
           :loading="loading"
           :submitButton="$t('BUTTONS.SEARCH')"
-          :cancelButton="$t('BUTTONS.RECOVERY')"
           :invalid="invalid"
           @handleInput="handleInput"
         ></GenericForm>
@@ -191,6 +191,7 @@ export default {
       notSend: false,
       invalid: true,
       minMissions: null,
+      searchWithPagination:{},
       missionSearch: [
         {
           key: "study_year_id",
@@ -280,6 +281,8 @@ export default {
       }
     },
     onSubmit(values) {
+      this.loading = true;
+      this.searchWithPagination = values;
       this.getMissions(values)
     },
     getMissions(values) {
@@ -296,6 +299,7 @@ export default {
           return {...item, type: 'mission'}
         })
       }).then((response) => {
+        this.loading = false
         this.getSuperPowerUpBox(values)
       })
     },

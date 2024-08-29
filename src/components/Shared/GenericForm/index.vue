@@ -138,7 +138,7 @@
       <slot></slot>
       <b-row v-if="submitedForm && !IsAudio">
         <div class="hold-btns-form">
-          <Button @click="handleCancel" custom-class="cancel-btn margin">
+          <Button @click="handleCancel" custom-class="cancel-btn margin"  v-if="showCancelButton">
             {{ cancelButton }}
           </Button>
           <Button :disabled="invalid" type="submit" :loading="loading" custom-class="submit-btn">
@@ -181,6 +181,10 @@ export default {
     };
   },
   props: {
+    showCancelButton:{
+      type: Boolean,
+      default: true,
+    },
     IsAudio: {
       type: Boolean,
       default: false,

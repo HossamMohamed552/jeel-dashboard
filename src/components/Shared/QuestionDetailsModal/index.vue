@@ -23,7 +23,7 @@
                 <b-col lg="5">
                   <ShowItem :title="$t('QUESTIONS.QUESTION')" />
                   <div class="d-flex align-items-center mb-4 mt-3">
-                    <ShowItem :subtitle="question.question" v-if="question.question_pattern_slug === 'text'"/>
+                    <ShowItem v-if="question.question_pattern_slug === 'text'" :isQuestion = true :subtitle="previewQuestion(question.question)"/>
                     <img class="question_img mb-3" v-else-if="question.question_pattern_slug === 'image'" :src="question.question">
                     <audio controls v-else-if="question.question_pattern_slug === 'audio'" class="mb-3">
                       <source :src="question.question" />
@@ -236,6 +236,9 @@ export default {
       this.audio.play();
       this.isPlaying = true;
     },
+    previewQuestion(question){
+      return question.replace(/%s/g,"<span style='display: inline-block; width: 100px; height: 50px; background: #eee; border-radius: 1rem;border: 1px solid; margin: 0 .5rem'></span>");
+    }
   },
   destroyed() {
     this.audio.pause();

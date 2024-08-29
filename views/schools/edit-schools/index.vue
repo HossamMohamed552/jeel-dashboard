@@ -27,17 +27,16 @@ export default {
   methods:{
     handleEditSchool($event) {
       this.loading = true
-      this.showModal = true
       this.ApiService(putSchoolsRequest(this.$route.params.id,$event)).then((response) => {
         if (response.data.code === 200){
+          this.showModal = true
           this.loading = false
           setTimeout(() => {
             this.showModal = false
+            this.$router.push("/dashboard/schools");
           }, 1500)
         }
-      }).then(() => {
-        this.$router.push("/dashboard/schools");
-      })
+      }).catch(() => this.loading = false)
     },
     handleCancel() {
       this.$router.push("/dashboard/schools");

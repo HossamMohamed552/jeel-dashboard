@@ -66,13 +66,13 @@
                   <div @click="activeTap = 1" :class="activeTap === 1 ? 'active' : ''" class="tap">
                     {{ $t('supervisor.video') }}
                   </div>
-                  <div @click="activeTap = 2" :class="activeTap === 2 ? 'active' : ''" class="tap">
+                  <div @click="activeTap = 2;stopCurrentVideo()" :class="activeTap === 2 ? 'active' : ''" class="tap">
                     {{ $t('supervisor.quizzes') }}
                   </div>
-                  <div @click="activeTap = 3" :class="activeTap === 3 ? 'active' : ''" class="tap">
+                  <div @click="activeTap = 3;stopCurrentVideo()" :class="activeTap === 3 ? 'active' : ''" class="tap">
                     {{ $t('supervisor.paperWork') }}
                   </div>
-                  <div @click="activeTap = 4" :class="activeTap === 4 ? 'active' : ''" class="tap">
+                  <div @click="activeTap = 4;stopCurrentVideo()" :class="activeTap === 4 ? 'active' : ''" class="tap">
                     {{ $t('supervisor.tasks') }}
                   </div>
                 </div>
@@ -82,7 +82,7 @@
                       <!-- video slider -->
                       <div class="col-12 px-0 videos" :key="learningPath.id"
                            v-show="activeTap === 1">
-                        <div v-if="Array.from(contentLearningPath.videos).length>0">
+                        <div v-if="contentLearningPath.videos && Array.from(contentLearningPath.videos).length>0">
                           <div ref="swiper" class="swiper">
                             <div class="swiper-wrapper">
                               <div class="swiper-slide" v-for="video in contentLearningPath.videos"
@@ -91,9 +91,10 @@
                                   <vimeo-player
                                     v-if="video.vimeo_video_with_music_url"
                                     class="vimeo-player"
-                                    ref="videoPlayer"
+                                    :ref="`videoPlayer-${video.id}`"
                                     :video-url="video.vimeo_video_with_music_url"
                                     :options="{'responsive':true}"
+                                    @play="currentVideo=`videoPlayer-${video.id}`"
                                   ></vimeo-player>
                                   <!--                                <video-player :videoId="video.id" :options="{-->
                                   <!--                            controls:true,-->
@@ -127,35 +128,36 @@
                               <div class="content-quizzes">
                                 <div class="content-quizzes-header" @click="getQuiz(quiz)">
                                   <p>{{ quiz.name }}</p>
-                                  <button class="show-hide"><img
-                                    :src="quiz.is_selected === true? require('@/assets/images/icons/minus.png') : require('@/assets/images/icons/plus.png')">
+                                  <button class="show-hide"><img :src="quiz.is_selected === true? require('@/assets/images/icons/minus.png') : require('@/assets/images/icons/plus.png')">
                                   </button>
                                 </div>
                                 <div v-if="quiz.is_selected">
-                                  <b-row class="divider" v-for="question in quiz.questions"
-                                         :key="'question'+ question.id">
-                                    <b-col lg="6" class="mt-4"
-                                           v-if="question.question_pattern === 'text'">
-                                      <ShowItem :title="$t('QUESTIONS.QUESTION')"
-                                                :subtitle="question.question"/>
+                                  <b-row class="divider" v-for="question in quiz.questions" :key="'question'+ question.id">
+                                    <b-col lg="6" class="mt-4" v-if="question.question_pattern === 'text'">
+                                      <ShowItem :title="$t('QUESTIONS.QUESTION')" :isQuestion = true :subtitle="previewQuestion(question.question)"/>
                                     </b-col>
-                                    <b-col lg="6" class="mt-4"
-                                           v-else-if="question.question_pattern === 'image'">
+                                    <b-col lg="6" class="mt-4" v-else-if="question.question_pattern === 'image'">
                                       <ShowItem :title="$t('QUESTIONS.QUESTION')"/>
                                       <div class="d-flex justify-content-start align-items-center">
                                         <img class="question_img" :src="question.question.question">
                                       </div>
                                     </b-col>
-                                    <b-col lg="6" class="mt-4"
-                                           v-else-if="question.question_pattern === 'audio'">
+                                    <b-col lg="6" class="mt-4" v-else-if="question.question_pattern === 'audio'">
                                       <ShowItem :title="$t('QUESTIONS.QUESTION')"/>
                                       <audio controls>
                                         <source :src="question.question.question"/>
                                       </audio>
                                     </b-col>
                                     <b-col lg="3" class="mt-4">
-                                      <ShowItem :title="$t('QUESTIONS.QUESTION_TYPE')"
-                                                :subtitle="question.question_type.name"/>
+                                      <ShowItem :title="$t('QUESTIONS.QUESTION_TYPE')" :subtitle="question.question_type.name"/>
+                                    </b-col>
+                                    <b-col lg="3" class="mt-4">
+                                      <b-icon
+                                        class="cursor-pointer"
+                                        icon="info-circle"
+                                        variant="info"
+                                        @click="handleShowQuestionDetails(question.id)"
+                                      />
                                     </b-col>
                                   </b-row>
                                 </div>
@@ -169,7 +171,8 @@
                       </div>
                       <!--/-->
                       <!--paper-work-->
-                      <div class="col-12 px-0 paper-work" :key="`paper-work + ${learningPath.id}`" v-show="activeTap === 3">
+                      <div class="col-12 px-0 paper-work" :key="`paper-work + ${learningPath.id}`"
+                           v-show="activeTap === 3">
                         <ListItems
                           v-if="Array.from(contentLearningPath.papersWork).length>0"
                           class="m-0 py-0"
@@ -211,6 +214,10 @@
           </b-col>
         </b-row>
       </div>
+      <QuestionDetailsModal
+        :question-id="selectedQuestion"
+        @closeModal="handleCloseQuestionDetailsModal"
+      />
     </div>
   </section>
 </template>
@@ -222,15 +229,18 @@ import "swiper/swiper-bundle.css"
 import ListItems from "@/components/ListItems/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
 import {vueVimeoPlayer} from 'vue-vimeo-player'
+import QuestionDetailsModal from "@/components/Shared/QuestionDetailsModal/index.vue";
 
 export default {
   name: "index",
-  components: {Button, ListItems, ShowItem, VimeoPlayer: vueVimeoPlayer},
+  components: {QuestionDetailsModal, Button, ListItems, ShowItem, VimeoPlayer: vueVimeoPlayer},
   data() {
     return {
       missionDetail: {},
       learningPaths: [],
+      currentVideo: null,
       firstLearningPathId: null,
+      selectedQuestion: null,
       contentLearningPath: {},
       activeTap: 1,
     }
@@ -282,6 +292,22 @@ export default {
       })
       let findItem = this.contentLearningPath.quizzes.findIndex((item) => item.id === quiz.id)
       this.contentLearningPath.quizzes[findItem].is_selected = true;
+    },
+    stopCurrentVideo(){
+      if (this.$refs[this.currentVideo]){
+        this.$refs[this.currentVideo][0].pause()
+      }
+    },
+    handleShowQuestionDetails(questionId) {
+      this.selectedQuestion = questionId;
+      this.$bvModal.show("question-details-modal");
+    },
+    handleCloseQuestionDetailsModal() {
+      this.$bvModal.hide("question-details-modal");
+      this.selectedQuestion = null;
+    },
+    previewQuestion(question){
+      return question.replace(/%s/g,"<span style='display: inline-block; width: 100px; height: 50px; background: #eee; border-radius: 1rem;border: 1px solid; margin: 0 .5rem'></span>");
     }
   },
   mounted() {
@@ -294,6 +320,11 @@ export default {
       navigation: {
         nextEl: '.next-slide',
         prevEl: '.back-slide',
+      },
+      on: {
+        slideChange: () => {
+          this.stopCurrentVideo()
+        }
       },
       slidesPerView: 1,
       spaceBetween: 20,

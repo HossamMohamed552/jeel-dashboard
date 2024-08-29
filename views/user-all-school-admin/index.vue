@@ -15,6 +15,7 @@
                 <GenericForm
                   :schema="userSearch"
                   @onSubmit="onSubmit"
+                  @handleCancel="handleCancel"
                   :loading="loading"
                   :submitButton="$t('BUTTONS.SEARCH')"
                   :cancelButton="$t('BUTTONS.RECOVERY')"
@@ -35,6 +36,7 @@
         :v-search-model="userSearchWord"
         :loading="loading"
         :is-user-page="true"
+        :isRefresh="refresh"
         :permission_view="'show-school-users'"
         :permission_delete="'show-school-users'"
         :permission_edit="'show-school-users'"
@@ -123,7 +125,7 @@ export default {
           label: this.$i18n.t("USERS.DEPARTMENT"),
         },
         {
-          key: "status.name",
+          key: "status",
           label: this.$i18n.t("TABLE_FIELDS.block"),
         },
         {
@@ -141,23 +143,25 @@ export default {
   data() {
     return {
       collapsed: false,
+      refresh: false,
       itemId: "",
       usersSchoolList: [],
       showModal: false,
       totalNumber: 0,
       loading: false,
       userSearchWord: "",
+      searchWithPagination:{},
       userSearch: [
-        {
-          key: "email",
-          label: "اسم المستخدم",
-          labelEn: "user name",
-          col: "3",
-          listen: "id",
-          value: "",
-          type: "text",
-          rules: "",
-        },
+        // {
+        //   key: "email",
+        //   label: "اسم المستخدم",
+        //   labelEn: "user name",
+        //   col: "3",
+        //   listen: "id",
+        //   value: "",
+        //   type: "text",
+        //   rules: "",
+        // },
         {
           key: "role_id",
           col: "3",
@@ -216,11 +220,20 @@ export default {
       this.$router.push('/dashboard/add-school-user-excel')
     },
     onSubmit(values) {
+      this.loading = true;
+      this.searchWithPagination = values;
       this.getAllSchoolUsers(values);
     },
-    getAllSchoolUsers(event) {
+    handleCancel(){
+      this.userSearch.map(field => field.value = "")
+      this.searchWithPagination = {}
+      this.getAllSchoolUsers()
+      this.refresh = true
+    },
+    getAllSchoolUsers($event) {
       this.loading = true;
-      this.ApiService(getAllSchoolUsersRequest(event))
+      const params = {...$event, ...this.searchWithPagination};
+      this.ApiService(getAllSchoolUsersRequest(params))
         .then((response) => {
           this.usersSchoolList = response.data.data;
           this.totalNumber = response.data.meta.total;

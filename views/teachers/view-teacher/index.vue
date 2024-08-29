@@ -12,7 +12,7 @@
             <b-row>
               <b-col lg="12" class="img-container">
                 <img class="w-100"
-                     :src="teacherObject.avatar ? teacherObject.avatar :'@/assets/images/icons/user-avatar.png'"
+                     :src="teacherObject.image ? teacherObject.image :'@/assets/images/icons/user-avatar.png'"
                      @error="altImage($event)"/>
               </b-col>
             </b-row>
@@ -74,6 +74,7 @@
                 :fieldsList="fieldsList"
                 :table-items="teacherObject.classes_history"
                 :loading="loading"
+                :not-hide-pagination="false"
               >
               </ListItems>
             </div>

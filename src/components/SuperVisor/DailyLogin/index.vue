@@ -6,6 +6,7 @@
         v-model="dateRange"
         type="date"
         range
+        lang="en"
         :placeholder="$t('supervisor.SelectTheTimePeriod')"
         valueType="format"
         :disabled-date="disabledBeforeTodayAndAfterAWeek"

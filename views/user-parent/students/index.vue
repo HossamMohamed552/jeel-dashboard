@@ -92,6 +92,7 @@
               :permission_delete="'delete-enrollment-students-parents-users'"
               @deleteItem="deleteItem($event)"
               :showSortControls="false"
+              :not-hide-pagination="false"
               :disableIt="true"
               class="m-0 p-0"
             >
@@ -100,6 +101,8 @@
         </b-row>
       </div>
     </div>
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showAddModal"
+           :is-success="true"/>
     <Modal
       :content-message="'حذف العنصر'"
       :content-message-question="'هل أنت متأكد من حذف العنصر؟'"
@@ -170,16 +173,17 @@ export default {
           key: "class.name",
           label: this.$i18n.t("schoolAdmin.class"),
         },
-        {
-          key: "status.key",
-          label: this.$i18n.t("TABLE_FIELDS.status"),
-        },
+        // {
+        //   key: "status.key",
+        //   label: this.$i18n.t("TABLE_FIELDS.status"),
+        // },
         {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
         },
       ],
       showModal: false,
+      showAddModal: false,
     }
   },
   watch: {
@@ -217,9 +221,13 @@ export default {
         if (!success) return;
       });
       this.ApiService(postStudentForParentRequest(this.enrollment)).then((response) => {
+        this.showAddModal = true
         this.$nextTick(() => {
           this.student_id = []
           this.$refs.addEditSchoolClassForm.reset()
+          setTimeout(()=>{
+            this.showAddModal = false
+          },1000)
         })
         this.getStudentsForParent()
       })
