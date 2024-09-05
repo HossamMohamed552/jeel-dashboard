@@ -39,21 +39,26 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
-          key: "name",
+          key: "seasonalMission.name",
           label: this.$i18n.t("seasonalMissionsParent.name"),
         },
         {
-          key: "start_date",
+          key: "seasonalMission.start_date",
           label: this.$i18n.t("seasonalMissionsParent.start_date"),
         },
         {
-          key: "end_date",
+          key: "seasonalMission.end_date",
           label: this.$i18n.t("seasonalMissionsParent.end_date"),
         },
         {
           key: "seasonal_quiz_percentage",
           label: this.$i18n.t("seasonalMissionsParent.seasonal_quiz_percentage"),
         },
+        {
+          key: "finish_solving",
+          label: this.$i18n.t("seasonalMissionsParent.finish_solving"),
+        },
+
       ]
     },
   },

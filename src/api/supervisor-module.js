@@ -5,6 +5,28 @@ export const getLeaderBoardSuperRequest = (params) => ({
     params,
   },
 });
+export const getTeacherLeaderBoardSuperRequest = (params) => ({
+  method: "get",
+  url: `teacher/leaderboard`,
+  config: {
+    params,
+  },
+});
+export const getLeaderBoardSuperTopThreeRequest = (params) => ({
+  method: "get",
+  url: `supervisor/top-three/leaderboard`,
+  config: {
+    params,
+  },
+});
+export const getTeacherLeaderBoardSuperTopThreeRequest = (params) => ({
+  method: "get",
+  url: `teacher/top-three/leaderboard`,
+  config: {
+    params,
+  },
+});
+
 export const getStudyYearForSupervisorRequest = (params) => ({
   method: "get",
   url: `supervisor/study-years`,
@@ -45,9 +67,23 @@ export const getSupervisorMissionsStatisticsRequest = (params) => ({
     params,
   },
 });
+export const getTeacherMissionsStatisticsRequest = (params) => ({
+  method: "get",
+  url: `teacher/missions/statistics`,
+  config: {
+    params,
+  },
+});
 export const getSupervisorCompetitionsStatisticsRequest = (params) => ({
   method: "get",
   url: `supervisor/competitions/statistics`,
+  config: {
+    params,
+  },
+});
+export const getTeacherCompetitionsStatisticsRequest = (params) => ({
+  method: "get",
+  url: `teacher/competitions/statistics`,
   config: {
     params,
   },

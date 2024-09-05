@@ -308,7 +308,7 @@ export default {
           key: "prizeable_type",
           col: "4",
           listen: "id",
-          type: "select",
+          type: "hidden",
           optionValue: "name",
           label: "نوع المحتوى",
           labelEn: "Content type",
@@ -323,7 +323,7 @@ export default {
           key: "prizeable_id",
           col: "4",
           listen: "id",
-          type: "select",
+          type: "hidden",
           optionValue: "name",
           label: "المحتوى",
           labelEn: "Content",
@@ -339,7 +339,7 @@ export default {
           labelEn: "jeel coins",
           col: "4",
           value: "",
-          type: "number",
+          type: "hidden",
           rules: "required|numeric",
           disabled: true,
         },
@@ -426,7 +426,6 @@ export default {
     },
 
     nextToStepThree(data) {
-      console.log(data);
       this.questionsIds = data;
       this.handleAssignObject(data);
       this.nextStep();
@@ -532,12 +531,9 @@ export default {
         );
         this.competitionInfoForm[7].value = competition?.competition_time;
       }
-
       this.addQuestions(competition?.questions);
       this.handlePrizesInEdit(competition?.prizes);
       this.handleNotificationInEdit(competition?.notifications);
-
-      console.log();
     });
   },
   beforeMount() {

@@ -10,6 +10,7 @@
         class="w-100"
         :schema="teacherSearch"
         @onSubmit="onSubmit"
+        @handleInput="handleInput"
         @handleCancel="handleCancel"
         :loading="loading"
         :submitButton="$t('BUTTONS.SEARCH')"
@@ -45,6 +46,7 @@ import {mapGetters} from "vuex";
 import {getAllTeachersForSuperVisorRequest, getAllTeachersRequest} from "@/api/user";
 import GenericForm from "@/components/Shared/GenericForm/index.vue";
 import {
+  getAllRolesByType,
   getClasses,
   getLevelsForSuperVisor,
   getSTermsForSuperVisor,
@@ -92,18 +94,18 @@ export default {
           deselectFromDropdown: true,
           value: "",
         },
-        {
-          key: "term_id",
-          col: "4",
-          type: "select",
-          optionValue: "name",
-          listen: "id",
-          label: "الترم الدراسى",
-          labelEn: "terms",
-          options: [],
-          deselectFromDropdown: true,
-          value: "",
-        },
+        // {
+        //   key: "term_id",
+        //   col: "4",
+        //   type: "select",
+        //   optionValue: "name",
+        //   listen: "id",
+        //   label: "الترم الدراسى",
+        //   labelEn: "terms",
+        //   options: [],
+        //   deselectFromDropdown: true,
+        //   value: "",
+        // },
         {
           key: "class_id",
           col: "4",
@@ -115,6 +117,7 @@ export default {
           options: [],
           deselectFromDropdown: true,
           value: "",
+          disabled: true
         },
       ],
       totalNumber: 0,
@@ -123,7 +126,7 @@ export default {
   },
   computed: {
     ...mapGetters(['user']),
-    fieldsList(){
+    fieldsList() {
       return [
         {
           key: "vid",
@@ -161,16 +164,22 @@ export default {
     },
   },
   methods: {
-    getAllTeachers(values){
-      this.ApiService(getAllTeachersForSuperVisorRequest(values)).then((response)=>{
+    getAllTeachers(values) {
+      this.ApiService(getAllTeachersForSuperVisorRequest(values)).then((response) => {
         this.teachers = response.data.data
         this.totalNumber = response.data.meta.total
       })
     },
+    handleInput: _.debounce(function (key, value) {
+      if (key === "level_id" && value !== "") {
+        getClasses(this.teacherSearch, 'class_id', {level_id: value})
+        this.teacherSearch[3].disabled = false
+      }
+    }, 300),
     onSubmit(values) {
       this.getAllTeachers(values)
     },
-    handleCancel(){
+    handleCancel() {
       this.teacherSearch.map(field => field.value = "")
       this.getAllTeachers()
     },
@@ -183,7 +192,6 @@ export default {
     getLevelsForSuperVisor(this.teacherSearch, 'level_id')
     getStudyYearsForSuperVisor(this.teacherSearch, 'study_year_id')
     getSTermsForSuperVisor(this.teacherSearch, 'term_id')
-    getClasses(this.teacherSearch, 'class_id')
   },
 };
 </script>

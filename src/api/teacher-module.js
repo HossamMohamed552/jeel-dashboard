@@ -68,11 +68,11 @@ export const putClassGroupRequest = (classId, data) => ({
     data,
   },
 });
-export const getStudentForClassRequest = (id,data) => ({
+export const getStudentForClassRequest = (id,params) => ({
   method: "get",
   url: `classes/${id}/students`,
   config: {
-    data,
+    params,
   },
 });
 export const postAddStudentForGroupRequest = (data) => ({
@@ -81,6 +81,10 @@ export const postAddStudentForGroupRequest = (data) => ({
   config: {
     data,
   },
+});
+export const deleteStudentFromGroupRequest = (groupId,userID) => ({
+  method: "delete",
+  url: `teacher/groups/${groupId}/students/${userID}`,
 });
 
 export const getAnnouncementForTeacherRequest = (params) => ({

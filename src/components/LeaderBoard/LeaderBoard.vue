@@ -12,7 +12,7 @@
               <div class="leader-item-rank"><span>#{{ index+1 }}</span></div>
             </div>
             <p class="leader-item-name">{{ student.name }}</p>
-            <p class="leader-item-class">{{ student.class.level.name }}</p>
+            <p class="leader-item-class">{{ student.class_leaderboard.level.name }}</p>
             <p class="leader-item-point"><span>{{ student.missions_points }}</span><span>نقطة</span></p>
           </div>
         </div>
@@ -21,22 +21,29 @@
       <div class="swiper-pagination"></div>
     </div>
     <!-- If we need navigation buttons -->
-    <div class="back-slide">
-      <img src="@/assets/images/icons/back.svg">
-    </div>
-    <div class="next-slide">
-      <img src="@/assets/images/icons/next.svg">
-    </div>
+<!--    <div class="back-slide">-->
+<!--      <img src="@/assets/images/icons/back.svg">-->
+<!--    </div>-->
+<!--    <div class="next-slide">-->
+<!--      <img src="@/assets/images/icons/next.svg">-->
+<!--    </div>-->
   </div>
 </template>
 
 <script>
 import Swiper from "swiper/swiper-bundle";
 import "swiper/swiper-bundle.css"
-import {getLeaderBoardSuperRequest} from "@/api/supervisor-module";
+import {
+  getLeaderBoardSuperRequest,
+  getLeaderBoardSuperTopThreeRequest, getTeacherLeaderBoardSuperTopThreeRequest
+} from "@/api/supervisor-module";
+import {mapGetters} from "vuex";
 
 export default {
   name: "LeaderBoard",
+  computed:{
+    ...mapGetters(['user'])
+  },
   data(){
     return{
       students:[]
@@ -44,9 +51,16 @@ export default {
   },
   methods:{
     getLeaderBoard(params) {
-      this.ApiService(getLeaderBoardSuperRequest(params)).then((response) => {
-        this.students = response.data.data
-      })
+      if(this.user.roles[0]?.type.key === "supervisors_management"){
+        this.ApiService(getLeaderBoardSuperTopThreeRequest(params)).then((response) => {
+          this.students = response.data.data
+        })
+      } else {
+        this.ApiService(getTeacherLeaderBoardSuperTopThreeRequest(params)).then((response) => {
+          this.students = response.data.data
+        })
+      }
+
     }
   },
   updated() {

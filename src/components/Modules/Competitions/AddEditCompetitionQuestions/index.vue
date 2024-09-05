@@ -144,7 +144,7 @@
                       :src="data.item.question.question"
                       alt="Image"
                     />
-                    <div v-else>{{ data.item.question.question }}</div>
+<!--                    <div v-else>{{ data.item.question.question }}</div>-->
                   </div>
                   <div v-else>{{ data.item.question }}</div>
                 </template>
@@ -398,7 +398,6 @@ export default {
           id: questionID,
           question: response.data.data,
         };
-        console.log(payload);
         // this.changeQuestionByID(payload);
         this.changeQuestionByID(payload);
         this.tableLoading = true;

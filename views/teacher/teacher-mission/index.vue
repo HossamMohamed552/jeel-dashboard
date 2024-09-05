@@ -13,7 +13,7 @@
           @onSubmit="onSubmit"
           :loading="loading"
           :submitButton="$t('BUTTONS.SEARCH')"
-          :cancelButton="$t('BUTTONS.RECOVERY')"
+          :showCancelButton="false"
           :invalid="invalid"
           @handleInput="handleInput"
         ></GenericForm>

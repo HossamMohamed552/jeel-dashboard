@@ -14,6 +14,8 @@
   "USERS": {
     "adminUsers": "مستخدمي إدارة المنظومة",
     "ADD_NEW": "إضافة مستخدم إدارة منظومة",
+    "ADD_NEW_SCHOOL": "إضافة مستخدم",
+    "EDIT_USER_SCHOOL": "تعديل مستخدم",
     "addUser": "إضافة مستخدم جديد",
     "ADD_SCHOOL_USER": "إضافة مستخدم للمدرسة",
     "ACTIVE": "الحالة",
@@ -182,7 +184,8 @@
     "academyTerm": "الترم الدراسى",
     "academyStart_date": "تاريخ البداية",
     "academyEnd_date": "تاريخ النهاية",
-    "classes":"الفصل الدراسي"
+    "classes":"الفصل الدراسي",
+    "contents_correction": "حالة التصحيح"
   },
   "CONTROLS": {
     "detailBtn": "تفاصيل",
@@ -943,7 +946,10 @@
     "type": "النوع",
     "question": "السؤال",
     "degreeOfTask": "درجة التسجيل الصوتي",
-    "degreeOfPaperWork": "درجة ورقة العمل"
+    "degreeOfPaperWork": "درجة ورقة العمل",
+    "needCorrection": "تحتاج التصحيح",
+    "delete_student": "حذف الطالب",
+    "delete_studentFromGroup": "هل أنت متأكد من حذف الطالب من المجموعة؟"
   },
   "classGroup": {
     "ADD": "إضافة مجموعة جديدة",
@@ -1060,7 +1066,8 @@
     "name": "اسم الموسم",
     "start_date": "تاريخ البداية",
     "end_date": "تاريخ النهاية",
-    "seasonal_quiz_percentage": "درجة الطالب"
+    "seasonal_quiz_percentage": "درجة الطالب",
+    "finish_solving": "تاريخ اتمام الموسم"
   },
   "SOCIAL_MEDIA": {
     "FACEBOOK": "فيس بوك",
@@ -1285,6 +1292,7 @@
   },
   "management": {
     "management": "نوع الإدارة",
+    "edit": "تعديل نوع الإدارة",
     "add": "إضافة نوع إدارة ",
     "delete": "حذف نوع الإدارة",
     "name": "اسم نوع الإدارة",

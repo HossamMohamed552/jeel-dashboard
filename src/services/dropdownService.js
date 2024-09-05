@@ -298,8 +298,8 @@ export async function getGoalsForCompetiton(array, key, ids) {
   await fetchDataAndUpdateOptions(array, getGoalsForCompetitonRequest(ids), key);
 }
 
-export async function getClasses(array, key) {
-  await fetchDataAndUpdateOptions(array, getClassForSuperRequest(), key);
+export async function getClasses(array, key, params) {
+  await fetchDataAndUpdateOptions(array, getClassForSuperRequest(params), key);
 }
 
 export async function getClassesForTeacher(array, key) {

@@ -2,16 +2,15 @@
   <div class="add-mission">
     <!-- {{ collectData }} -->
     <!-- <pre>{{ user.school.id }}</pre> -->
-    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true" />
     <Stepper class="mt-5 mb-3" :steps="steps" :current-step="currentStep" />
     <AddEditTeacherCompetitionInfo
-      v-if="currentStep === 0 && this.user.permissions.includes('add-teacher-competitions')"
+      v-if="currentStep === 0 && user.permissions.includes('add-teacher-competitions')"
       :stepForm="competitionInfoForm"
       @nextStep="nextStep"
       @handleCancel="handleCancel"
     />
     <AddEditCompetitionInfo
-      v-if="currentStep === 0 && this.user.permissions.includes('add-competition')"
+      v-if="currentStep === 0 && user.permissions.includes('add-competition')"
       :stepForm="competitionInfoForm"
       @nextStep="nextStep"
       @handleCancel="handleCancel"
@@ -88,7 +87,6 @@ export default {
   data() {
     return {
       loading: false,
-      showModal: false,
       currentStep: 0,
       collectData: {},
       steps: [
@@ -242,7 +240,10 @@ export default {
           type: "datetime",
           rules: "required",
           placeholder: "إلى",
+          preventDateBefore: null,
+          preventTimeBefore: new Date(),
           format: "YYYY-MM-DD HH:mm",
+          disabled: true
         },
         {
           key: "competition_time",
@@ -294,7 +295,7 @@ export default {
           key: "prizeable_type",
           col: "4",
           listen: "id",
-          type: "select",
+          type: "hidden",
           optionValue: "name",
           label: "نوع المحتوى",
           labelEn: "Content type",
@@ -309,7 +310,7 @@ export default {
           key: "prizeable_id",
           col: "4",
           listen: "id",
-          type: "select",
+          type: "hidden",
           optionValue: "name",
           label: "المحتوى",
           labelEn: "Content",
@@ -325,7 +326,7 @@ export default {
           labelEn: "jeel coins",
           col: "4",
           value: "",
-          type: "number",
+          type: "hidden",
           rules: "required|numeric",
           disabled: true,
         },
@@ -369,7 +370,7 @@ export default {
           listen: "id",
           value: "",
           type: "audio",
-          rules: "required",
+          // rules: "required",
         },
       ],
       questionsIds: [],
@@ -397,7 +398,6 @@ export default {
     },
 
     nextToStepThree(data) {
-      console.log(data);
       this.questionsIds = data;
       this.handleAssignObject(data);
       this.nextStep();

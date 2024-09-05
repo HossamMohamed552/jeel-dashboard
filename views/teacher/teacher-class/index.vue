@@ -46,9 +46,10 @@ export default {
       return [
         {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
         {key: "studyYear.name", label: this.$i18n.t('TABLE_FIELDS.studyYearName')},
-        {key: "level", label: this.$i18n.t('TABLE_FIELDS.levelSchoolAdmin')},
+        {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.levelSchoolAdmin')},
         {key: "name", label: this.$i18n.t('TABLE_FIELDS.className')},
         {key: "student_count", label: this.$i18n.t('TABLE_FIELDS.students_count')},
+        {key: "groups", label: this.$i18n.t('teacher.classGroups')},
         {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
       ]
     },

@@ -22,28 +22,31 @@
               </Button>
             </b-col>
           </template>
-          <ListItems
-            class="seasonal-mission-custom-list-item"
-            :tableItems="prizeGroup"
-            :headerName="'قائمة الجوائز'"
-            :fieldsList="fieldsList"
-            :showSortControls="false"
-          >
-          </ListItems>
-          <div class="buttons-container">
-            <slot></slot>
-            <div class="steps">
-              <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
-                {{ $t('GLOBAL_BACK') }}
-              </Button>
-
-              <Button custom-class="submit-btn" :disabled="!isNextStep" @click="nextStep">
-                {{ $t('GLOBAL_NEXT') }}
-              </Button>
-            </div>
-          </div>
         </GenericForm>
       </validation-observer>
+      <ListItems
+        class="seasonal-mission-custom-list-item"
+        :tableItems="prizeGroup"
+        :headerName="'قائمة الجوائز'"
+        :fieldsList="fieldsList"
+        :showSortControls="false"
+        :not-hide-pagination="false"
+        :permission_delete="['delete-competition', 'delete-teacher-competitions']"
+        @deleteItem="deleteItem($event)"
+      >
+      </ListItems>
+      <div class="buttons-container">
+        <slot></slot>
+        <div class="steps">
+          <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
+            {{ $t('GLOBAL_BACK') }}
+          </Button>
+
+          <Button custom-class="submit-btn" :disabled="!isNextStep && prizeGroup.length === 0" @click="nextStep">
+            {{ $t('GLOBAL_NEXT') }}
+          </Button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -92,12 +95,15 @@ export default {
         { key: "max_percentage", label: "إلى نسبة" },
         { key: "type_id_name", label: "نوع الجائزة" },
         { key: "prizeable_id_name", label: "الجائزة" },
+        { key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions') },
       ],
     };
   },
   methods: {
     ...mapActions(["addPrize"]),
-
+    deleteItem($event){
+      this.$store.commit('DELETE_PRIZE_FROM_LIST',$event)
+    },
     nextStep() {
       this.$emit("nextStep");
     },
@@ -119,7 +125,7 @@ export default {
       } else {
         const selectedOption = field.options.find((option) => option[field.listen] === value);
         let optionName;
-        if (this.prizeType == "المكتبة")
+        if (this.prizeType === "library")
           optionName = selectedOption ? selectedOption.file_name : "";
         else optionName = selectedOption ? selectedOption.name : "";
         field.name = optionName;
@@ -127,59 +133,71 @@ export default {
 
       if (key === "type_id") {
         let selected = this.stepForm[2].options.find((option) => option.id === value);
-        this.prizeType = selected.name;
-        this.stepForm[3].disabled = false;
-        if (selected.name == "المكتبة" || selected.name == "شخصيات") {
-          this.stepForm[3].type = "select";
-          this.stepForm[4].type = "select";
-          this.stepForm[3].value = "";
-          this.stepForm[5].type = "hidden";
-          this.stepForm[5].value = "";
-
-          if (selected.name == "المكتبة") {
-            this.stepForm[4].optionValue = "file_name";
-            getLibraryType(this.stepForm, "prizeable_type");
-          } else if (selected.name == "شخصيات") {
-            this.stepForm[4].optionValue = "name";
-            getCharacterType(this.stepForm, "prizeable_type");
+        console.log('selected',selected)
+        if (selected){
+          this.prizeType = selected.key;
+          this.stepForm[3].disabled = false;
+          if (selected.key === "library" || selected.key === "characters") {
+            this.stepForm[3].type = "select";
+            this.stepForm[4].type = "select";
+            this.stepForm[3].value = "";
+            this.stepForm[5].type = "hidden";
+            this.stepForm[5].value = "";
+            if (selected.key === "library") {
+              this.stepForm[4].optionValue = "file_name";
+              getLibraryType(this.stepForm, "prizeable_type");
+            } else if (selected.key === "characters") {
+              this.stepForm[4].optionValue = "name";
+              getCharacterType(this.stepForm, "prizeable_type");
+            }
+          } else {
+            this.stepForm[3].type = "hidden";
+            this.stepForm[4].type = "hidden";
+            this.stepForm[5].type = "number";
+            this.stepForm[5].disabled = false;
           }
-        } else {
-          this.stepForm[3].type = "hidden";
-          this.stepForm[4].type = "hidden";
-          this.stepForm[5].type = "number";
-          this.stepForm[5].disabled = false;
         }
       }
 
       if (key === "prizeable_type") {
         this.stepForm[4].disabled = false;
-        if (this.prizeType == "المكتبة") {
+        if (this.prizeType === "library") {
           field.models = "App\\Models\\Library";
           getCompetitionLibraryContent(this.stepForm, "prizeable_id", value);
-        } else if (this.prizeType == "شخصيات") {
+        } else if (this.prizeType === "characters") {
           field.models = "App\\Models\\PrizeCharacter";
           getCompetitionCharacterContent(this.stepForm, "prizeable_id", value);
         }
       }
     }, 300),
     resetInput() {
+      this.stepForm[3].type = "hidden";
+      this.stepForm[4].type = "hidden";
+      this.stepForm[5].type = "hidden";
       this.stepForm[3].disabled = true;
       this.stepForm[4].disabled = true;
       this.stepForm[5].disabled = true;
+      this.$nextTick(()=>{
+        this.$refs.stepThreeForm.reset()
+      })
     },
     handleAdd() {
       this.stepForm.forEach((field) => {
         try {
-          if (field.type == "select") {
+          if (field.type === "select") {
             if (field.multiple) {
-              if (field.key == "prizeable_type") this.$set(this.entry, field.key, field.models);
-              else this.$set(this.entry, field.key, field.value);
+              if (field.key === "prizeable_type") {
+                this.$set(this.entry, field.key, field.models);
+              }
+              else {
+                this.$set(this.entry, field.key, field.value);
+              }
               this.$set(this.entry, `${field.key}_name`, field.name.join(", "));
             } else {
               this.$set(this.entry, `${field.key}_name`, field.name);
               this.$set(this.entry, field.key, field.value);
             }
-          } else if (field.type == "number" && field.key == "jeel_coins") {
+          } else if (field.type === "number" && field.key === "jeel_coins") {
             this.$set(this.entry, `prizeable_id_name`, field.value);
             this.$set(this.entry, field.key, field.value);
           } else this.$set(this.entry, field.key, field.value);
@@ -220,7 +238,6 @@ export default {
     this.prizeGroup = this.getPrizesList;
     if (this.$route.params.id) {
       this.isNextStep = true;
-
       this.prizeGroup.forEach((prize) => {
         prize["type_id_name"] = prize.type.name;
         if (prize?.type?.key == "characters") prize["prizeable_id_name"] = prize.character.name;

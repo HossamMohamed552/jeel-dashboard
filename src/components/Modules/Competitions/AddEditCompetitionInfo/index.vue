@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import { debounce } from "lodash";
+import {debounce} from "lodash";
 import GenericForm from "@/components/Shared/GenericForm";
 import {
   getLevelsForSuperVisor,
@@ -82,9 +82,11 @@ export default {
         });
         field.name = selectedOptionNames;
       } else {
-        const selectedOption = field.options.find((option) => option[field.listen] === value);
-        const optionName = selectedOption ? selectedOption.name : "";
-        field.name = optionName;
+        if (field.options) {
+          const selectedOption = field.options.find((option) => option[field.listen] === value);
+          const optionName = selectedOption ? selectedOption.name : "";
+          field.name = optionName;
+        }
       }
 
       if (key === "level_id") {
@@ -92,6 +94,9 @@ export default {
       }
       if (key === "missions") {
         this.getOutcomesAndGoalsValue(value);
+      }
+      if (key === "start_date") {
+        this.disableEndDate(value)
       }
     }, 300),
 
@@ -109,10 +114,13 @@ export default {
       this.stepForm[3].disabled = false;
       getOutcomesForCompetiton(this.stepForm, "outcome_id", value);
       this.stepForm[4].disabled = false;
-
       this.isGettingOutcomesAndGoalsValue = false;
     },
-
+    disableEndDate(value) {
+      this.stepForm[6].disabled = false
+      this.stepForm[6].preventDateBefore = new Date(new Date(value) - 24 * 60 * 60 * 1000)
+      this.stepForm[6].preventTimeBefore = new Date(new Date(value).getTime() + 60 * 60 * 1000)
+    },
     nextStep() {
       this.$emit("nextStep");
     },

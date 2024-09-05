@@ -1,11 +1,15 @@
 <template>
   <div class="question">
     <div class="question__head">
-      <AudioPlayer :audioSrc="question?.head_question_audio" />
+      <AudioPlayer :audioSrc="question?.question_audio" />
       <p>
         <span>السؤال</span>
       </p>
-      <h5 class="question__title">{{ question?.head_question }}</h5>
+      <img :src="question.question" alt="question" v-if="question.question_pattern_slug === 'image'">
+      <audio controls v-else-if="question.question_pattern_slug === 'audio'">
+        <source :src="question.question">
+      </audio>
+      <h5 class="question__title" v-else>{{ question?.question }}</h5>
     </div>
     <div class="question__answers">
       <span>خيارات الاجابات</span>

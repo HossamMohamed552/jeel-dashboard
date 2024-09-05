@@ -2,17 +2,11 @@
   <div class="container-fluid custom-container">
     <div class="add-edit-form">
       <validation-observer v-slot="{ invalid }" ref="stepTwoForm">
-        <GenericForm
-          :schema="stepForm"
-          @handleInput="handleInput"
-          :loading="loading"
-          :submitedForm="false"
-          :invalid="invalid"
-        >
+        <GenericForm :schema="stepForm" @handleInput="handleInput" :loading="loading" :submitedForm="false" :invalid="invalid">
           <template v-slot:customSubmit>
             <b-col class="adding" lg="12">
               <Button
-                :disabled="invalid"
+                :disabled="invalid || !voiceUploaded"
                 type="submit"
                 :loading="loading"
                 @click="handleAdd"
@@ -22,28 +16,31 @@
               </Button>
             </b-col>
           </template>
-          <ListItems
-            class="seasonal-mission-custom-list-item"
-            :tableItems="notifactionGroup"
-            :headerName="'قائمة الإشعار'"
-            :fieldsList="fieldsList"
-            :showSortControls="false"
-          >
-          </ListItems>
-          <div class="buttons-container">
-            <slot></slot>
-            <div class="steps">
-              <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
-                {{ $t('GLOBAL_BACK') }}
-              </Button>
-
-              <Button custom-class="submit-btn" :disabled="!isNextStep" @click="nextStep">
-                {{ $t('GLOBAL_NEXT') }}
-              </Button>
-            </div>
-          </div>
         </GenericForm>
       </validation-observer>
+      <ListItems
+        class="seasonal-mission-custom-list-item"
+        :tableItems="notifactionGroup"
+        :headerName="$t('seasonalMission.notification')"
+        :fieldsList="fieldsList"
+        :showSortControls="false"
+        :not-hide-pagination="false"
+        :permission_delete="['delete-competition', 'delete-teacher-competitions']"
+        @deleteItem="deleteItem($event)"
+      >
+      </ListItems>
+      <div class="buttons-container">
+        <slot></slot>
+        <div class="steps">
+          <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
+            {{ $t('GLOBAL_BACK') }}
+          </Button>
+
+          <Button custom-class="submit-btn" :disabled="!isNextStep && notifactionGroup.length === 0" @click="nextStep">
+            {{ $t('GLOBAL_NEXT') }}
+          </Button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -51,7 +48,7 @@
 <script>
 import GenericForm from "@/components/Shared/GenericForm";
 import ListItems from "@/components/ListItems/index.vue";
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import moment from "moment";
 
 export default {
@@ -79,16 +76,20 @@ export default {
       notifactionGroup: [],
       notifactionIndex: 0,
       fieldsList: [
-        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
-        { key: "name", label: "عنوان الإشعار" },
-        { key: "start_date", label: "تاريخ ووقت الإشعار" },
-        { key: "original_url", label: "صوت الإشعار" },
-        { key: "description", label: "نص الإشعار" },
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "name", label: this.$i18n.t('seasonalMission.NoticeTitle')},
+        {key: "start_date", label: this.$i18n.t('seasonalMission.DateTimeNotification')},
+        {key: "original_url", label: this.$i18n.t('seasonalMission.NotificationSound')},
+        {key: "description", label: this.$i18n.t('seasonalMission.NotificationText')},
+        {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
       ],
     };
   },
   methods: {
     ...mapActions(["addNotification"]),
+    deleteItem($event) {
+      this.$store.commit('DELETE_NOTIFICATION_FROM_LIST', $event)
+    },
     nextStep() {
       this.$emit("nextStep");
     },
@@ -103,7 +104,7 @@ export default {
         this.entry["uuid"] = value.uuid;
         this.entry["audio"] = value.uuid;
         this.entry["original_url"] = value.url;
-        this.imageUplpaded = true;
+        this.voiceUploaded = true;
       } else {
         this.entry[key] = value;
       }
@@ -135,6 +136,10 @@ export default {
       this.entry.id = this.notifactionIndex;
       this.addNotification(this.entry);
       this.entry = {};
+      this.$nextTick(() => {
+        this.$refs.stepTwoForm.reset()
+        this.voiceUploaded = false;
+      })
       this.removeFile();
       this.isNextStep = true;
     },

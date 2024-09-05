@@ -1,50 +1,56 @@
 <template>
-  <validation-observer v-slot="{ invalid }" ref="stepThreeForm">
-    <GenericForm
-      :schema="stepForm"
-      @handleInput="handleInput"
-      :loading="loading"
-      :submitedForm="false"
-      :invalid="invalid"
-    >
-      <template v-slot:customSubmit>
-        <b-col class="add-prize" lg="12">
-          <Button
-            :disabled="invalid"
-            type="submit"
-            :loading="loading"
-            @click="handleAdd"
-            custom-class="submit-btn"
-          >
-            {{ $t('ADD_ANSWER') }}
-          </Button>
-        </b-col>
-      </template>
-      <ListItems
-        class="seasonal-mission-custom-list-item"
-        :tableItems="prizeGroup"
-        :headerName="$t('seasonalMission.prize')"
-        :fieldsList="fieldsList"
-        :showSortControls="false"
+  <div>
+    <validation-observer v-slot="{ invalid }" ref="stepThreeForm">
+      <GenericForm
+        :schema="stepForm"
+        @handleInput="handleInput"
+        :loading="loading"
+        :submitedForm="false"
+        :invalid="invalid"
       >
-      </ListItems>
-      <div class="buttons-container">
-        <slot></slot>
-        <div class="steps">
-          <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
-            {{ $t('GLOBAL_BACK') }}
-          </Button>
-          <Button
-            custom-class="submit-btn"
-            :disabled="!isNextStep && prizeGroup.length === 0"
-            @click="nextStep"
-          >
-            {{ $t('GLOBAL_NEXT') }}
-          </Button>
-        </div>
+        <template v-slot:customSubmit>
+          <b-col class="add-prize" lg="12">
+            <Button
+              :disabled="invalid"
+              type="submit"
+              :loading="loading"
+              @click="handleAdd"
+              custom-class="submit-btn"
+            >
+              {{ $t('ADD_ANSWER') }}
+            </Button>
+          </b-col>
+        </template>
+
+      </GenericForm>
+    </validation-observer>
+    <ListItems
+      class="seasonal-mission-custom-list-item"
+      :tableItems="prizeGroup"
+      :headerName="$t('seasonalMission.prize')"
+      :fieldsList="fieldsList"
+      :permission_delete="'add-seasonal-missions'"
+      :showSortControls="false"
+      :not-hide-pagination="false"
+      @deleteItem="deleteItem($event)"
+    >
+    </ListItems>
+    <div class="buttons-container">
+      <slot></slot>
+      <div class="steps">
+        <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
+          {{ $t('GLOBAL_BACK') }}
+        </Button>
+        <Button
+          custom-class="submit-btn"
+          :disabled="!isNextStep && prizeGroup.length === 0"
+          @click="nextStep"
+        >
+          {{ $t('GLOBAL_NEXT') }}
+        </Button>
       </div>
-    </GenericForm>
-  </validation-observer>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -92,7 +98,9 @@ export default {
   },
   methods: {
     ...mapActions(["addPrize"]),
-
+    deleteItem($event){
+      this.$store.commit('DELETE_PRIZE_FROM_LIST',$event)
+    },
     nextStep() {
       this.$emit("nextStep");
     },
@@ -122,9 +130,9 @@ export default {
 
       if (key === "type_id") {
         let selected = this.stepForm[2].options.find((option) => option.id === value);
-        this.prizeType = selected.name;
+        this.prizeType = selected ? selected?.name : '';
         this.stepForm[3].disabled = false;
-        if (selected.name == "المكتبة" || selected.name == "شخصيات") {
+        if (selected.name === "المكتبة" || selected.name === "شخصيات") {
           this.stepForm[3].type = "select";
           this.stepForm[4].type = "select";
           this.stepForm[3].value = "";
@@ -215,6 +223,7 @@ export default {
         { key: "max_percentage", label: this.$i18n.t('seasonalMission.maxPercentage') },
         { key: "type_id_name", label: this.$i18n.t('seasonalMission.prizeType') },
         { key: "prizeable_id_name", label: this.$i18n.t('seasonalMission.singlePrize') },
+        {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
       ]
     },
     ...mapGetters(["getPrizesList"]),
@@ -235,7 +244,7 @@ export default {
       });
     }
     this.$watch(() => {
-        return this.$refs.stepThreeForm.refs["نسبة من"].value;
+        // return this.$refs.stepThreeForm.refs["نسبة من"].value;
         },
       (val) => {this.validateForm(val);}
     );

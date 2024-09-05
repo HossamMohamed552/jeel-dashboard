@@ -47,7 +47,7 @@ export default {
           label: this.$i18n.t("competitionsParent.finish_solving"),
         },
         {
-          key: "competition_type.name",
+          key: "competitionType.name",
           label: this.$i18n.t("competitionsParent.competition_type"),
         },
         {

@@ -34,7 +34,7 @@
               <div class="leader-item-rank"><span>#{{ index + 1 }}</span></div>
             </div>
             <p class="leader-item-name">{{ item.name }}</p>
-            <p class="leader-item-class">{{ item.class.level.name }}</p>
+            <p class="leader-item-class">{{ item.class_leaderboard.level.name }}</p>
             <p class="leader-item-point"><span>{{ item.missions_points }}</span><span>نقطة</span>
             </p>
           </div>
@@ -49,6 +49,7 @@
         :loading="loading"
         :disable-it="true"
         :show-sort-controls="false"
+        @refetch="getLeaderBoard"
       >
       </ListItems>
     </div>
@@ -64,6 +65,10 @@ import {
   getLevelByStudyYearForTeacher, getMissionForTeacherBasedStudyYearLevelTerm,
   getStudyYearForTeacher, getTermsForTeacherBasedStudyYear, getTypeForTeacher
 } from "@/services/dropdownService";
+import {
+  getLeaderBoardSuperTopThreeRequest,
+  getTeacherLeaderBoardSuperRequest, getTeacherLeaderBoardSuperTopThreeRequest
+} from "@/api/supervisor-module";
 
 
 export default {
@@ -94,7 +99,7 @@ export default {
           options: [],
           deselectFromDropdown: true,
           value: "",
-          rules: 'required'
+          // rules: 'required'
         },
         {
           key: "level_id",
@@ -108,7 +113,7 @@ export default {
           deselectFromDropdown: true,
           disabled: true,
           value: "",
-          rules: 'required'
+          // rules: 'required'
         },
         {
           key: "term_id",
@@ -122,7 +127,7 @@ export default {
           deselectFromDropdown: true,
           value: "",
           disabled: true,
-          rules: 'required'
+          // rules: 'required'
         },
         {
           key: "class_id",
@@ -136,7 +141,7 @@ export default {
           deselectFromDropdown: true,
           value: "",
           disabled: true,
-          rules: 'required'
+          // rules: 'required'
         },
         {
           key: "type_id",
@@ -149,7 +154,7 @@ export default {
           options: [],
           deselectFromDropdown: true,
           value: "",
-          rules: 'required'
+          // rules: 'required'
         },
         {
           key: "mission_id",
@@ -163,7 +168,7 @@ export default {
           deselectFromDropdown: true,
           disabled: true,
           value: "",
-          rules: 'required'
+          // rules: 'required'
         },
       ],
       loading: false,
@@ -176,8 +181,8 @@ export default {
     fieldsList(){
       return [
         {
-          key: "position",
-          label: this.$i18n.t("TABLE_FIELDS.position"),
+          key: "vid",
+          label: this.$i18n.t("TABLE_FIELDS.id"),
         },
         {
           key: "image",
@@ -192,11 +197,11 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.middle_name"),
         },
         {
-          key: "class.level.name",
+          key: "class_leaderboard.level.name",
           label: this.$i18n.t("schoolAdmin.level"),
         },
         {
-          key: "class.name",
+          key: "class_leaderboard.name",
           label: this.$i18n.t("schoolAdmin.class"),
         },
         {
@@ -223,6 +228,7 @@ export default {
       }
     },
     onSubmit(values) {
+      this.getLeaderBoardSuperTopThree(values)
       this.getLeaderBoard(values)
     },
     handleCancel(){
@@ -233,23 +239,29 @@ export default {
         this.$refs.schoolsUsersSearch.reset()
       })
       this.getLeaderBoard()
+      this.getLeaderBoardSuperTopThree()
     },
     toggleCollapsed() {
       this.collapsed = !this.collapsed;
     },
     getLeaderBoard(params) {
-      this.ApiService(getLeaderBoardRequest(params)).then((response) => {
-        this.topStudents = response.data.data.slice(0, 3)
-        this.students = response.data.data.slice(3)
-        this.students = this.students.map((item, index) => {
-          return {position: index + 4, ...item}
-        })
+      this.loading = true;
+      this.ApiService(getTeacherLeaderBoardSuperRequest(params)).then((response) => {
+        this.students = response.data.data
         this.totalNumber = response.data.meta.total
+        this.loading = false;
+        this.refresh = true
       })
-    }
+    },
+    getLeaderBoardSuperTopThree(params) {
+      this.ApiService(getTeacherLeaderBoardSuperTopThreeRequest(params)).then((response) => {
+        this.topStudents = response.data.data.slice(0, 3)
+      })
+    },
   },
   mounted() {
     this.getLeaderBoard()
+    this.getLeaderBoardSuperTopThree()
     getStudyYearForTeacher(this.leaderBoardSearch, 'study_year_id')
     getTypeForTeacher(this.leaderBoardSearch, 'type_id')
   }

@@ -29,6 +29,9 @@
         </Button>
       </template>
     </ListItems>
+    <Modal :content-message="messageFromBack"
+           :showModal="showModalFailed" :alarm="true"
+           @cancelWithConfirm="showModalFailed=false"/>
     <Modal
       :content-message="$t('supervisor.deleteCompetitions')"
       :content-message-question="$t('supervisor.confirmDelete')"
@@ -53,6 +56,8 @@ export default {
     return {
       loading: false,
       showModal: false,
+      showModalFailed: false,
+      messageFromBack: "",
       competitionSearchWord: "",
       competition: [],
       totalNumber: 0,
@@ -69,7 +74,7 @@ export default {
         },
         {key: "name", label: this.$i18n.t("COMPETITIONS.NAME")},
         {key: "level.name", label: this.$i18n.t("COMPETITIONS.LEVEL")},
-        {key: "competition_duration", label: this.$i18n.t("COMPETITIONS.DURATION")},
+        {key: "competition_time", label: this.$i18n.t("COMPETITIONS.DURATION")},
         {
           key: "actions",
           label: this.$i18n.t("TABLE_FIELDS.actions"),
@@ -109,7 +114,11 @@ export default {
     cancelWithConfirm() {
       this.ApiService(deleteCompetitionRequest(this.itemId)).then(() => {
         this.getCompetition();
-      });
+      }).catch((error)=>{
+        console.log('error')
+        this.showModalFailed = true;
+        this.messageFromBack = error.response.data.messages[0]
+      })
       this.cancel();
     },
   },

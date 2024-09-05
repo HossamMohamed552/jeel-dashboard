@@ -1,4 +1,5 @@
 <template>
+<div>
   <validation-observer v-slot="{ invalid }" ref="stepFourForm">
     <GenericForm
       :schema="stepForm"
@@ -20,28 +21,32 @@
           </Button>
         </b-col>
       </template>
-      <ListItems
-        class="seasonal-mission-custom-list-item"
-        :tableItems="notifactionGroup"
-        :headerName="$t('seasonalMission.notification')"
-        :fieldsList="fieldsList"
-        :showSortControls="false"
-      >
-      </ListItems>
-      <div class="buttons-container">
-        <slot></slot>
-        <div class="steps">
-          <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
-            {{ $t('GLOBAL_BACK') }}
-          </Button>
-          <Button custom-class="submit-btn"
-                  :disabled="!isNextStep && notifactionGroup.length  === 0" @click="nextStep">
-            {{ $t('GLOBAL_NEXT') }}
-          </Button>
-        </div>
-      </div>
     </GenericForm>
   </validation-observer>
+  <ListItems
+    class="seasonal-mission-custom-list-item"
+    :tableItems="notifactionGroup"
+    :headerName="$t('seasonalMission.notification')"
+    :fieldsList="fieldsList"
+    :permission_delete="'add-seasonal-missions'"
+    :showSortControls="false"
+    :not-hide-pagination="false"
+    @deleteItem="deleteItem($event)"
+  >
+  </ListItems>
+  <div class="buttons-container">
+    <slot></slot>
+    <div class="steps">
+      <Button custom-class="cancel-btn margin" v-if="currentStep > 0" @click="prevStep">
+        {{ $t('GLOBAL_BACK') }}
+      </Button>
+      <Button custom-class="submit-btn"
+              :disabled="!isNextStep && notifactionGroup.length === 0" @click="nextStep">
+        {{ $t('GLOBAL_NEXT') }}
+      </Button>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -71,7 +76,7 @@ export default {
       voiceUploaded: false,
       loading: false,
       entry: {},
-      watchedField: ["name", "start_date", "description", "audio"],
+      watchedField: ["name", "start_date", "description"],
       notifactionGroup: [],
       notifactionIndex: 0,
     };
@@ -87,15 +92,14 @@ export default {
     handleCancel() {
       this.$emit("onSubmit", this.stepForm);
     },
+    deleteItem($event) {
+      this.$store.commit('DELETE_NOTIFICATION_FROM_LIST', $event)
+    },
     handleInput(key, value) {
-      console.log('key',key)
-      console.log('key',value)
-      if (key === "audio") {
+      if (typeof value == "object") {
         this.entry["uuid"] = value.uuid;
         this.entry["audio"] = value.uuid;
-        this.entry["value"] = value.uuid;
         this.entry["original_url"] = value.url;
-        this.entry[key] = value.uuid;
         this.voiceUploaded = true;
       } else {
         this.entry[key] = value;
@@ -103,17 +107,13 @@ export default {
     },
     removeFile() {
       let removeButton = document.getElementById("removeFile");
-      console.log('removeButton', removeButton)
       removeButton.click();
-      this.entry["uuid"] = null;
-      this.entry["audio"] = null;
-      this.entry["value"] = null;
-      this.entry["original_url"] = null;
     },
     handleAdd() {
-      this.voiceUploaded = false;
       this.stepForm.forEach((field) => {
         if (this.watchedField.includes(field.key)) {
+          console.log('field.key',field.key)
+          console.log('field',field)
           try {
             if (field.type === "date") this.$set(this.entry, field.key, moment(field.value, "DD-MM-YYYY").format("YYYY-MM-DD"));
             else this.$set(this.entry, field.key, field.value);
@@ -132,10 +132,12 @@ export default {
       this.addNotification(this.entry);
       this.entry = {};
       this.$nextTick(() => {
-        this.voiceUploaded = false;
         this.$refs.stepFourForm.reset()
-      });
-      this.removeFile();
+        this.voiceUploaded = false;
+      })
+      setTimeout(()=>{
+        this.removeFile()
+      },1000)
       this.isNextStep = true;
     },
   },
@@ -147,6 +149,7 @@ export default {
         {key: "start_date", label: this.$i18n.t('seasonalMission.DateTimeNotification')},
         {key: "original_url", label: this.$i18n.t('seasonalMission.NotificationSound')},
         {key: "description", label: this.$i18n.t('seasonalMission.NotificationText')},
+        {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
       ]
     },
     ...mapGetters(["getNotificationsList"]),

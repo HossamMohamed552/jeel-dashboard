@@ -54,6 +54,7 @@
             :headerName="$t('seasonalMission.prize')"
             :fieldsList="prizeFieldsList"
             :showSortControls="false"
+            :not-hide-pagination="false"
           >
           </ListItems>
         </b-col>
@@ -72,6 +73,9 @@
           </div>
         </b-col>
       </b-row>
+      <Modal
+        :content-message="$route.params.id? $t('CONTROLS.edit_successfully') :$t('CONTROLS.add_successfully')"
+        :showModal="showModal" :is-success="true"/>
     </div>
   </section>
 </template>
@@ -87,9 +91,11 @@ import {
   putUpdateSeasonalMissionRequest,
 } from "@/api/seasonal-mission.js";
 import moment from "moment";
+import Modal from "@/components/Shared/Modal/index.vue";
 
 export default {
   components: {
+    Modal,
     ShowItem,
     PreviewMedia,
     ListItems,
@@ -123,50 +129,62 @@ export default {
         },
       },
       loading: false,
+      showModal: false,
     };
   },
   methods: {
     handleTypes(options) {
-      return options
-        .map((option) => {
-          return option.name;
-        })
-        .join(", ");
+      return options.map((option) => {
+        return option.name;
+      }).join(", ");
     },
     async submitForm() {
       await this.updateFields();
-      if (this.$route.params.id) this.handleEditSeasonalMission();
+      if (this.$route.params.id) this.handleAddSeasonalMission();
       else this.handleAddSeasonalMission();
     },
     handleAddSeasonalMission() {
-      this.ApiService(postCreateSeasonalMissionRequest(this.submittedForm)).then(() => {
-        this.$router.push("/dashboard/seasonal-mission");
-      });
+      if (this.$route.params.id) {
+        this.handleDataToUpdate()
+        this.submittedForm["_method"] = "PUT";
+        this.ApiService(
+          putUpdateSeasonalMissionRequest(this.submittedForm, this.$route.params.id)
+        ).then(() => {
+          this.showModal = true
+          setTimeout(() => {
+            this.showModal = false
+            this.$router.push("/dashboard/seasonal-mission");
+          }, 1000)
+        });
+      } else {
+        this.ApiService(postCreateSeasonalMissionRequest(this.submittedForm)).then(() => {
+        }).then(() => {
+          this.showModal = true
+          setTimeout(() => {
+            this.showModal = false
+            this.$router.push("/dashboard/seasonal-mission");
+          }, 1000)
+        })
+      }
     },
-    async handleEditSeasonalMission() {
-      await this.handleDataToUpdate();
-      this.submittedForm["_method"] = "PUT";
-      this.ApiService(
-        putUpdateSeasonalMissionRequest(this.submittedForm, this.$route.params.id)
-      ).then(() => {
-        this.$router.push("/dashboard/seasonal-mission");
-      });
-    },
+    // async handleEditSeasonalMission() {
+    //   await this.handleDataToUpdate();
+    //   this.submittedForm["_method"] = "PUT";
+    //   this.ApiService(
+    //     putUpdateSeasonalMissionRequest(this.submittedForm, this.$route.params.id)
+    //   ).then(() => {
+    //     this.$router.push("/dashboard/seasonal-mission");
+    //   });
+    // },
     prevStep() {
       this.$emit("prevStep");
     },
     async updateFields() {
       this.stepForm.forEach((field) => {
         try {
-          if (field.type === "date")
-            this.$set(
-              this.submittedForm,
-              field.key,
-              moment(field.value, "DD-MM-YYYY").format("YYYY-MM-DD")
-            );
+          if (field.type === "date") this.$set(this.submittedForm, field.key, moment(field.value, "DD-MM-YYYY").format("YYYY-MM-DD"));
           else if (field.key == "image" && field.is_change == undefined) return "";
-          else if (field.key != "learningpaths")
-            this.$set(this.submittedForm, field.key, field.value);
+          else if (field.key != "learningpaths") this.$set(this.submittedForm, field.key, field.value);
         } catch (error) {
           console.error(`Error updating field ${field.key}:`, error);
         }

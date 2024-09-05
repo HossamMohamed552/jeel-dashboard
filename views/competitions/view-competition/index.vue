@@ -158,7 +158,7 @@ export default {
   },
   mounted() {
     this.ApiService(getCompetitionByIdRequest(this.$route.params.id)).then((response) => {
-      this.competition = response.data.data;
+      this.competition = response.data.data
     });
   },
   computed: {
@@ -167,8 +167,8 @@ export default {
         {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
         {key: "main_percentage", label: this.$i18n.t('TABLE_FIELDS.percentage_of')},
         {key: "max_percentage", label: this.$i18n.t('TABLE_FIELDS.percentage_to')},
-        {key: "prizeable_type_name", label:this.$i18n.t('seasonalMission.prizeType') },
-        {key: "prizeable_id_name", label: this.$i18n.t('seasonalMission.singlePrize')},
+        {key: "type.name", label: this.$i18n.t('seasonalMission.prizeType')},
+        {key: "type", label: this.$i18n.t('seasonalMission.singlePrize')},
       ]
     },
     NotifacationFieldsList() {
@@ -180,7 +180,7 @@ export default {
         {key: "description", label: this.$i18n.t('seasonalMission.NotificationText')},
       ]
     },
-    questionsFieldsList(){
+    questionsFieldsList() {
       return [
         {
           key: "vid",

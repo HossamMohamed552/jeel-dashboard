@@ -65,6 +65,7 @@
               :name="$i18n.locale === 'ar' ? field.label : field.labelEn"
               :rules="field.rules"
               :type="field.type"
+              :disabled="field.disabled"
               @input="handleInput(field.key, field.value, field)"
             >
             </DateTimePicker>
@@ -101,11 +102,11 @@
                 :label="$i18n.locale === 'ar' ? field.label : field.labelEn"
                 :dropImage="true"
                 :name="field.type"
-                :rules="'required'"
                 :dropIdRef="'audioFile'"
                 :accept-files="`${field.type}/*`"
                 @setFile="handleInput(field.key, $event)"
               />
+<!--              :rules="'required'"-->
               <PreviewMedia
                 v-if="field.value != ''"
                 :header="$i18n.locale === 'ar' ? field.label : field.labelEn"

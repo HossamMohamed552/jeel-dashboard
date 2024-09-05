@@ -9,7 +9,7 @@
             :title="field?.label"
             :subtitle="Array.isArray(field?.name) ? field?.name.join(', ') : field?.name"
           />
-          <ShowItem v-else class="divider-show" :title="field?.label" :subtitle="field?.value" />
+          <ShowItem v-else class="divider-show" :title="field?.label" :subtitle="field?.value"/>
         </b-col>
         <b-col :lg="12">
           <div class="list seasonal-mission-custom-list-item">
@@ -33,7 +33,7 @@
               <template v-slot:cell(question)="data">
                 <div v-if="typeof data.item.question === 'object'">
                   <audio v-if="isAudio(data.item.question.question)" controls>
-                    <source :src="data.item.question.question" type="audio/mp3" />
+                    <source :src="data.item.question.question" type="audio/mp3"/>
                     Your browser does not support the audio tag.
                   </audio>
                   <img
@@ -68,7 +68,6 @@
           >
           </ListItems>
         </b-col>
-
         <b-col :lg="12">
           <ListItems
             class="seasonal-mission-custom-list-item"
@@ -90,24 +89,28 @@
                 {{ $t('GLOBAL_BACK') }}
               </Button>
 
-              <Button custom-class="submit-btn" @click="submitForm"> {{$t('done')}} </Button>
+              <Button custom-class="submit-btn" @click="submitForm"> {{ $t('done') }}</Button>
             </div>
           </div>
         </b-col>
       </b-row>
     </div>
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal"
+           :is-success="true"/>
   </div>
 </template>
 
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import ListItems from "@/components/ListItems/index.vue";
-import { postAddCompetitionRequest, putEditCompetitionRequest } from "@/api/competition";
-import { mapGetters } from "vuex";
+import {postAddCompetitionRequest, putEditCompetitionRequest} from "@/api/competition";
+import {mapGetters} from "vuex";
 import moment from "moment";
+import Modal from "@/components/Shared/Modal/index.vue";
 
 export default {
   components: {
+    Modal,
     ShowItem,
     ListItems,
   },
@@ -127,15 +130,16 @@ export default {
   },
   data() {
     return {
+      showModal: false,
       prizesList: [],
       questions: [],
       notificationsList: [],
       prizeFieldsList: [
-        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
-        { key: "main_percentage", label: "من نسبة" },
-        { key: "max_percentage", label: "إلى نسبة" },
-        { key: "type_id_name", label: "نوع الجائزة" },
-        { key: "prizeable_id_name", label: "الجائزة" },
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "main_percentage", label: "من نسبة"},
+        {key: "max_percentage", label: "إلى نسبة"},
+        {key: "type_id_name", label: "نوع الجائزة"},
+        {key: "prizeable_id_name", label: "الجائزة"},
       ],
       questionsFieldsList: [
         {
@@ -160,11 +164,11 @@ export default {
         },
       ],
       NotifacationFieldsList: [
-        { key: "vid", label: this.$i18n.t('TABLE_FIELDS.id') },
-        { key: "name", label: "عنوان اللإشعار" },
-        { key: "start_date", label: "تاريخ ووقت الإشعار" },
-        { key: "original_url", label: "صوت الإشعار" },
-        { key: "description", label: "نص الإشعار" },
+        {key: "vid", label: this.$i18n.t('TABLE_FIELDS.id')},
+        {key: "name", label: "عنوان اللإشعار"},
+        {key: "start_date", label: "تاريخ ووقت الإشعار"},
+        {key: "original_url", label: "صوت الإشعار"},
+        {key: "description", label: "نص الإشعار"},
       ],
       submittedForm: {},
       loading: false,
@@ -192,7 +196,11 @@ export default {
     },
     handleAddCompetition() {
       this.ApiService(postAddCompetitionRequest(this.submittedForm)).then(() => {
-        this.$router.push("/dashboard/competitions");
+        this.showModal = true
+        setTimeout(() => {
+          this.showModal = false
+          this.$router.push("/dashboard/competitions");
+        }, 1500)
       });
     },
     handleEditCompetition() {
@@ -229,7 +237,8 @@ export default {
       } else this.submittedForm["questions"] = this.questions_ids;
     },
   },
-  async mounted() {},
+  async mounted() {
+  },
   computed: {
     ...mapGetters(["user", "getPrizesList", "getNotificationsList", "getQuestionsList"]),
 

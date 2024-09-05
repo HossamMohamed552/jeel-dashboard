@@ -12,7 +12,7 @@
       @detailItem="detailItem"
     >
       <template #tabs>
-        <div class="tabs">
+        <div class="tabs mb-5">
           <div @click="selectRecord(1)" :class="activeTap === 1 ? 'active' : ''" class="tap">
             {{$t('PARENT.tasks')}}
           </div>
@@ -91,7 +91,6 @@ export default {
   components: {Button, GeneralModal, ListItems,AudioFakePlayer},
   data() {
     return {
-
       tasks: [],
       paperWorks: [],
       taskSearchWord: "",

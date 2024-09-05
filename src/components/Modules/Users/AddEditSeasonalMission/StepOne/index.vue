@@ -33,12 +33,12 @@ import GenericForm from "@/components/Shared/GenericForm";
 
 import {
   getALLCountries,
-  getAllReligion,
   getAllGender,
-  getAllSeasonalMissionGroups,
   getAllLearningPaths,
-  getLessonsDepenseLearningPath,
   getAllLevels,
+  getAllReligion,
+  getAllSeasonalMissionGroups,
+  getLessonsDepenseLearningPath,
 } from "@/services/dropdownService";
 import _ from "lodash";
 
@@ -80,11 +80,9 @@ export default {
     handleInputValueName(key, value, field) {
       if (field.multiple) {
         if(key === 'learningpaths'){
-          const selectedOptionNames = value?.map((singleValue) => {
-            const selectedOption = field.options.find((option) => option.name === singleValue.name);
-            return selectedOption
+          field.name = value?.map((singleValue) => {
+            return singleValue.name
           });
-          field.name = selectedOptionNames;
         } else {
           const selectedOptionNames = value?.map((singleValue) => {
             const selectedOption = field.options.find(

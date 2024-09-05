@@ -67,7 +67,12 @@
         <template :slot="`head(${headerItem.key})`" v-for="headerItem in fieldsList">
           <div :class="headerItem.key !== 'actions' ? 'sort' : ''">
             <span>{{ headerItem.label }}</span>
-            <span class="sortIcon" v-if="hideSortBasedOnHeaderKey(headerItem.key) && $route.params.id === undefined">
+            <span class="sortIcon" v-if="hideSortBasedOnHeaderKey(headerItem.key)
+            && $route.params.id === undefined
+            && $route.name !== 'add-competitions'
+            && $route.name !== 'edit-competitions'
+            && $route.name !== 'add-seasonal-mission'
+            && $route.name !== 'edit-seasonal-mission'">
               <img src="@/assets/images/icons/arrow-up-down.png" @click="sortBy(headerItem.key)"/>
             </span>
           </div>
@@ -184,6 +189,11 @@
         </template>
         <template #cell(question_type)="data">
           <span>{{ data.item.question_type.name | cutString }}</span>
+        </template>
+        <template #cell(type)="data">
+          <span v-if="data.item.type.key === 'jeel_gem'">{{ data.item.jeel_coins }}</span>
+          <span v-if="data.item.type.key === 'characters'">{{ data.item.character.name }}</span>
+          <span v-if="data.item.type.key === 'library'">{{ data.item.library.file_name }}</span>
         </template>
         <template
           #cell(questionDifficulty)="data"
@@ -309,6 +319,10 @@
         </template>
         <template #cell(name)="data">
           {{ data.item.name | cutString }}
+        </template>
+        <template #cell(contents_correction)="data">
+          <img src="@/assets/images/icons/has-content.png" v-if="data.item.contents_correction">
+          <span v-if="data.item.contents_correction" class="mx-3">{{$t('teacher.needCorrection')}}</span>
         </template>
         <template #cell(time)="data"> {{ $t("DEFAULT.entryTime") }} {{ data.item.time }}</template>
         <template #cell(edit)="data">
@@ -540,6 +554,11 @@ export default {
         'audio_ar',
         'audio_en',
         'teachers',
+        'showMissions',
+        'class_leaderboard.level.name',
+        'class_leaderboard.name',
+        'editActions',
+        'competitionType.name',
       ],
       formValues: {
         per_page: 10,
@@ -885,7 +904,7 @@ export default {
       if ((data.item.is_default === 1 || data.item.school_owner === true) && permissions.some((permission) => this.user.permissions.includes(permission))) {
         return "hide";
       } else if (data.item.is_default === 0 || data.item.school_owner === false || permissions.some((permission) => this.user.permissions.includes(permission))) {
-        if (!data.item.can_update && this.$route.name === 'subscription') {
+        if (!data.item.can_update && (this.$route.name === 'subscription' || this.$route.name === 'competitions' || this.$route.name === 'view-teacher-competitions' || this.$route.name === 'seasonal-mission')) {
           return "hide";
         } else {
           return "show";
@@ -928,7 +947,7 @@ export default {
     checkEdit(item) {
       const permissions = Array.isArray(this.permission_edit) ? this.permission_edit : [this.permission_edit];
       if (!this.user.permissions.includes("manage-learningpath") && !(this.activePage === "schoolAdmin") && permissions.some((permission) => this.user.permissions.includes(permission))) {
-        if (!item.can_update && this.$route.name === 'subscription') {
+        if (!item.can_update && (this.$route.name === 'subscription' || this.$route.name === 'seasonal-mission')) {
           return "hide";
         } else {
           return "show";
@@ -938,7 +957,11 @@ export default {
       } else if (["questions", "practices", "missions"].includes(this.activePage)) {
         return "hide";
       } else if (permissions.some((permission) => this.user.permissions.includes(permission))) {
-        return "show";
+        if (!item.can_update && (this.$route.name === 'subscription' || this.$route.name === 'competitions' || this.$route.name === 'view-teacher-competitions' || this.$route.name === 'seasonal-mission') ) {
+          return "hide";
+        } else {
+          return "show";
+        }
       } else {
         return "hide";
       }
@@ -1063,6 +1086,7 @@ export default {
       } else if (this.formValues.order_by === 'status' && this.$route.name === 'schools') {
         this.formValues.order_by = 'schoolStatus.name'
       }
+
       this.formValues.order = this.switchSort;
       this.$emit("refetch", this.formValues);
       if (this.formValues.order === "DESC") {
@@ -1103,6 +1127,7 @@ export default {
         }
       }
     });
+
   },
 };
 </script>

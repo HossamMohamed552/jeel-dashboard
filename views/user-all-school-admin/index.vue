@@ -15,6 +15,7 @@
                 <GenericForm
                   :schema="userSearch"
                   @onSubmit="onSubmit"
+                  @handleInput="handleInput"
                   @handleCancel="handleCancel"
                   :loading="loading"
                   :submitButton="$t('BUTTONS.SEARCH')"
@@ -93,7 +94,11 @@ import { getAllSchoolUsersRequest, deleteSchoolUserRequest } from "@/api/school-
 import { postChangeStatusRequest, postCancelBlockRequest, deleteUserRequest } from "@/api/user";
 
 import { mapGetters } from "vuex";
-import { getAllUserStatus, getAllRolesByType } from "@/services/dropdownService";
+import {
+  getAllUserStatus,
+  getAllRolesByType,
+  getAllSchoolsBySchoolGroupWithoutFullDetail, getAllRolesType
+} from "@/services/dropdownService";
 export default {
   name: "index",
   components: { Button, ListItems, GenericForm, Modal },
@@ -152,16 +157,19 @@ export default {
       userSearchWord: "",
       searchWithPagination:{},
       userSearch: [
-        // {
-        //   key: "email",
-        //   label: "اسم المستخدم",
-        //   labelEn: "user name",
-        //   col: "3",
-        //   listen: "id",
-        //   value: "",
-        //   type: "text",
-        //   rules: "",
-        // },
+        {
+          key: "category_id",
+          col: "3",
+          listen: "id",
+          type: "select",
+          optionValue: "name",
+          label: "تصنيف الدور الوظيفي",
+          labelEn: "Job role classification",
+          options: [],
+          deselectFromDropdown: true,
+          value: "",
+          rules: "",
+        },
         {
           key: "role_id",
           col: "3",
@@ -224,6 +232,11 @@ export default {
       this.searchWithPagination = values;
       this.getAllSchoolUsers(values);
     },
+    handleInput: _.debounce(function (key, value) {
+      if (key === "category_id" && value !== ""){
+        getAllRolesByType(this.userSearch, "role_id", value);
+      }
+    }, 300),
     handleCancel(){
       this.userSearch.map(field => field.value = "")
       this.searchWithPagination = {}
@@ -291,7 +304,7 @@ export default {
   },
   mounted() {
     this.getAllSchoolUsers();
-    getAllRolesByType(this.userSearch, "role_id");
+    getAllRolesType(this.userSearch, "category_id");
     getAllUserStatus(this.userSearch, "status");
     window.localStorage.setItem("page", "userSchoolAdmin");
   },

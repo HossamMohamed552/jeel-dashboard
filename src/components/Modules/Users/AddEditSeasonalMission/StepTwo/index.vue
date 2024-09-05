@@ -95,35 +95,35 @@ export default {
     getStepTwoForm(index) {
       const duplicatedForm = JSON.parse(JSON.stringify(this.stepForm));
       duplicatedForm.forEach((formElement) => {
-        if (this.$route.params.id) {
-          let i;
-          if (formElement.key === "video_id" && this.videoGenerateIndex <= 9) {
-            this.videoGenerateIndex = this.videoGenerateIndex + 1;
-
-            if (index == 1) i = 0;
-            else if (index == 2) i = 1;
-            else if (index == 3) i = 2;
-            let videoesPayload = {
-              videos: this.learningPath.value[i].videos,
-              index: i,
-            };
-            this.addVideoesInArray(videoesPayload);
-            formElement.value = this.learningPath.value[i].videos;
-          } else if (formElement.key === "exams_id") {
-            this.examGenerateIndex = this.examGenerateIndex + 1;
-
-            if (index == 1) i = 0;
-            else if (index == 2) i = 1;
-            else if (index == 3) i = 2;
-
-            let exercisesPayload = {
-              exercisess: this.learningPath.value[i].quizzes,
-              index: i,
-            };
-            this.addExercisesInArray(exercisesPayload);
-            formElement.value = this.learningPath.value[i].quizzes;
-          }
-        }
+        // if (this.$route.params.id) {
+        //   let i;
+        //   if (formElement.key === "video_id" && this.videoGenerateIndex <= 9) {
+        //     this.videoGenerateIndex = this.videoGenerateIndex + 1;
+        //
+        //     if (index == 1) i = 0;
+        //     else if (index == 2) i = 1;
+        //     else if (index == 3) i = 2;
+        //     let videoesPayload = {
+        //       videos: this.learningPath.value[i].videos,
+        //       index: i,
+        //     };
+        //     this.addVideoesInArray(videoesPayload);
+        //     formElement.value = this.learningPath.value[i].videos;
+        //   } else if (formElement.key === "exams_id") {
+        //     this.examGenerateIndex = this.examGenerateIndex + 1;
+        //
+        //     if (index == 1) i = 0;
+        //     else if (index == 2) i = 1;
+        //     else if (index == 3) i = 2;
+        //
+        //     let exercisesPayload = {
+        //       exercisess: this.learningPath.value[i].quizzes,
+        //       index: i,
+        //     };
+        //     this.addExercisesInArray(exercisesPayload);
+        //     formElement.value = this.learningPath.value[i].quizzes;
+        //   }
+        // }
 
         if (formElement.key === "title") {
           formElement.label = this.learningPath?.value[index - 1].name;
@@ -195,7 +195,7 @@ export default {
       this.$emit("prevStep");
     },
     handleCancel() {
-      this.$emit("onSubmit", this.stepForm);
+      this.$router.back()
     },
   },
   computed: {

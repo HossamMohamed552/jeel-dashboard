@@ -10,6 +10,7 @@
         class="w-100"
         :schema="studentSearch"
         @onSubmit="onSubmit"
+        @handleInput="handleInput"
         @handleCancel="handleCancel"
         :loading="loading"
         :submitButton="$t('BUTTONS.SEARCH')"
@@ -97,18 +98,18 @@ export default {
           deselectFromDropdown: true,
           value: "",
         },
-        {
-          key: "term_id",
-          col: "4",
-          type: "select",
-          optionValue: "name",
-          listen: "id",
-          label: "الترم الدراسي",
-          labelEn: "terms",
-          options: [],
-          deselectFromDropdown: true,
-          value: "",
-        },
+        // {
+        //   key: "term_id",
+        //   col: "4",
+        //   type: "select",
+        //   optionValue: "name",
+        //   listen: "id",
+        //   label: "الترم الدراسي",
+        //   labelEn: "terms",
+        //   options: [],
+        //   deselectFromDropdown: true,
+        //   value: "",
+        // },
         {
           key: "class_id",
           col: "4",
@@ -120,6 +121,7 @@ export default {
           options: [],
           deselectFromDropdown: true,
           value: "",
+          disabled: true
         },
       ],
       itemId: 0,
@@ -127,7 +129,7 @@ export default {
   },
   computed: {
     ...mapGetters(['user']),
-    fieldsList(){
+    fieldsList() {
       return [
         {
           key: "vid",
@@ -150,7 +152,7 @@ export default {
           label: this.$i18n.t("TABLE_FIELDS.last_name"),
         },
         {
-          key: "email",
+          key: "user_name",
           label: this.$i18n.t("USERS.name"),
         },
         {
@@ -169,19 +171,25 @@ export default {
     }
   },
   methods: {
-    getAllStudents(values){
-      this.ApiService(getAllStudentsForSuperVisorRequest(values)).then((response)=>{
+    getAllStudents(values) {
+      this.ApiService(getAllStudentsForSuperVisorRequest(values)).then((response) => {
         this.students = response.data.data
         this.totalNumber = response.data.meta.total
         this.loading = false
       })
     },
+    handleInput: _.debounce(function (key, value) {
+      if (key === "level_id" && value !== "") {
+        getClasses(this.studentSearch, 'class_id', {level_id: value})
+        this.studentSearch[3].disabled = false
+      }
+    }, 300),
     onSubmit(values) {
       this.loading = true;
       this.searchWithPagination = values;
       this.getAllStudents(values)
     },
-    handleCancel(){
+    handleCancel() {
       this.studentSearch.map(field => field.value = "")
       this.searchWithPagination = {}
       this.getAllStudents()
@@ -196,7 +204,7 @@ export default {
     getLevelsForSuperVisor(this.studentSearch, 'level_id')
     getStudyYearsForSuperVisor(this.studentSearch, 'study_year_id')
     getSTermsForSuperVisor(this.studentSearch, 'term_id')
-    getClasses(this.studentSearch, 'class_id')
+    // getClasses(this.studentSearch, 'class_id')
   },
 };
 </script>

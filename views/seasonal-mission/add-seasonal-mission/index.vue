@@ -1,6 +1,5 @@
 <template>
   <div class="seasonal-mission">
-    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true" />
     <AddEditSeasonalMission
       :loading="loading"
       @handleCancel="handleCancel"

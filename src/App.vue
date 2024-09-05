@@ -35,7 +35,7 @@ export default {
 <style lang="scss">
 @import "@/assets/style/scss/__variables";
 
-*:not(.fa-solid) {
+*:not(.fa-solid,.fa-asterisk,.fa-check,.fa-play,.fa-question-circle,.fa-edit,.fa-user) {
   font-family: "DiodrumArabic", sans-serif !important;
 }
 

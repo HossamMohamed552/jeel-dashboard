@@ -216,6 +216,7 @@ export default {
         {key: "sesonalMissionGroup.name", label: this.$i18n.t('seasonalMission.groupName')},
         {key: "level.name", label: this.$i18n.t('TABLE_FIELDS.level')},
         {key: "start_date", label: this.$i18n.t('TABLE_FIELDS.start_date')},
+        {key: "end_date", label: this.$i18n.t('TABLE_FIELDS.end_date')},
         {key: "actions", label: this.$i18n.t('TABLE_FIELDS.actions')},
       ]
     },

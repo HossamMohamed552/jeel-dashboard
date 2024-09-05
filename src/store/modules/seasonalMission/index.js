@@ -17,6 +17,10 @@ export default {
     SET_NOTIFICATIONS_LIST(state, notifications) {
       state.notificationsList.push(notifications);
     },
+    DELETE_NOTIFICATION_FROM_LIST(state, prizeId) {
+      let indexNotificationDeleted = state.notificationsList.findIndex((item) => item.id === prizeId)
+      state.notificationsList.splice(indexNotificationDeleted, 1)
+    },
     SET_NOTIFICATIONS(state, notifications) {
       state.notificationsList = notifications;
     },
@@ -28,6 +32,10 @@ export default {
     },
     SET_PRIZE_IN_EDIT_MISSION(state, prize) {
       state.prizesList = prize;
+    },
+    DELETE_PRIZE_FROM_LIST(state, prizeId) {
+      let indexPrizeDeleted = state.prizesList.findIndex((item) => item.id === prizeId)
+      state.prizesList.splice(indexPrizeDeleted, 1)
     },
     SET_LEARNING_PATH(state, paths) {
       state.learningpaths = paths;
@@ -46,38 +54,38 @@ export default {
     },
   },
   actions: {
-    addNotification({ commit }, newNotification) {
+    addNotification({commit}, newNotification) {
       commit("SET_NOTIFICATIONS_LIST", newNotification);
     },
-    addNotificationById({ commit }, newNotification) {
+    addNotificationById({commit}, newNotification) {
       commit("SET_NOTIFICATIONS", newNotification);
     },
-    addLearningPath({ commit }, paths) {
+    addLearningPath({commit}, paths) {
       commit("SET_LEARNING_PATH", paths);
     },
 
-    addPrize({ commit }, newPrize) {
+    addPrize({commit}, newPrize) {
       commit("SET_PRIZES_LIST", newPrize);
     },
-    addPrizeById({ commit }, newPrize) {
+    addPrizeById({commit}, newPrize) {
       commit("SET_PRIZES", newPrize);
     },
 
-    handlePrizeInEditMission({ commit }, prize) {
+    handlePrizeInEditMission({commit}, prize) {
       commit("SET_PRIZE_IN_EDIT_MISSION", prize);
     },
 
-    addVideo({ commit }, newVideo) {
+    addVideo({commit}, newVideo) {
       commit("SET_VIDEOS_LIST", newVideo);
     },
-    addVideoesInArray({ commit }, list) {
+    addVideoesInArray({commit}, list) {
       commit("SET_VIDEOS_ARRAY", list);
     },
-    addExercisesInArray({ commit }, list) {
+    addExercisesInArray({commit}, list) {
       commit("SET_EXERCISES_ARRAY", list);
     },
 
-    addExercises({ commit }, newExercises) {
+    addExercises({commit}, newExercises) {
       commit("SET_EXERCISES_LIST", newExercises);
     },
   },

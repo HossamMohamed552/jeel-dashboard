@@ -48,10 +48,10 @@
         </b-row>
       </b-tab>
       <b-tab title="مراجعة السؤال">
-        <mcq v-if="question?.question_type?.slug == 'mcq'" :question="question" />
-        <ordering v-else-if="question?.question_type?.slug == 'ordering'" :question="question" />
-        <trueFalse v-else-if="question?.question_type?.slug == 'true_false'" :question="question" />
-        <match v-else-if="question?.question_type?.slug == 'match'" :question="question" />
+        <mcq v-if="question?.question_type?.slug === 'mcq'" :question="question" />
+        <ordering v-else-if="question?.question_type?.slug === 'drag_and_drop' || question?.question_type?.slug ===  'ordering'" :question="question" />
+        <trueFalse v-else-if="question?.question_type?.slug === 'true_false'" :question="question" />
+        <match v-else-if="question?.question_type?.slug === 'match'" :question="question" />
       </b-tab>
     </b-tabs>
   </b-modal>

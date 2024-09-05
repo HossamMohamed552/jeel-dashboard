@@ -20,8 +20,12 @@ import {
   ArcElement,
   CategoryScale
 } from 'chart.js'
-import {getSupervisorMissionsStatisticsRequest} from "@/api/supervisor-module";
+import {
+  getSupervisorMissionsStatisticsRequest,
+  getTeacherMissionsStatisticsRequest
+} from "@/api/supervisor-module";
 import ApiService from "@/api/ApiService";
+import {mapGetters} from "vuex";
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale)
 export default defineComponent({
@@ -33,6 +37,7 @@ export default defineComponent({
     }
   },
   computed: {
+    ...mapGetters(['user']),
     chartData() {
       return {
         // labels: ['تمت 25', 'جارية 8', 'معلقة 3'],
@@ -103,12 +108,22 @@ export default defineComponent({
   },
   methods: {
     getMissionStatistics() {
-      ApiService(getSupervisorMissionsStatisticsRequest()).then((response) => {
-        let MissionsStatistics = response.data.data
-        this.chartData.datasets[0].data = [MissionsStatistics.mission_pending, MissionsStatistics.mission_open, MissionsStatistics.mission_compeleted]
-        this.chartData.labels = [`معلقة ${MissionsStatistics.mission_pending}`, `جارية ${MissionsStatistics.mission_open}`, `تمت ${MissionsStatistics.mission_compeleted}`]
-        this.chartIsLoaded = true
-      })
+      if(this.user.roles[0]?.type.key === "supervisors_management"){
+        ApiService(getSupervisorMissionsStatisticsRequest()).then((response) => {
+          let MissionsStatistics = response.data.data
+          this.chartData.datasets[0].data = [MissionsStatistics.mission_pending, MissionsStatistics.mission_open, MissionsStatistics.mission_compeleted]
+          this.chartData.labels = [`معلقة ${MissionsStatistics.mission_pending}`, `جارية ${MissionsStatistics.mission_open}`, `تمت ${MissionsStatistics.mission_compeleted}`]
+          this.chartIsLoaded = true
+        })
+      } else {
+        ApiService(getTeacherMissionsStatisticsRequest()).then((response) => {
+          let MissionsStatistics = response.data.data
+          this.chartData.datasets[0].data = [MissionsStatistics.mission_pending, MissionsStatistics.mission_open, MissionsStatistics.mission_compeleted]
+          this.chartData.labels = [`معلقة ${MissionsStatistics.mission_pending}`, `جارية ${MissionsStatistics.mission_open}`, `تمت ${MissionsStatistics.mission_compeleted}`]
+          this.chartIsLoaded = true
+        })
+      }
+
     }
   },
   mounted() {

@@ -1,7 +1,7 @@
 <template>
   <b-row class="divider">
     <b-col>
-      <ShowItem :title="$t('schoolAdmin.school')" :subtitle="scholasticData.school.name"/>
+      <ShowItem :title="$t('schoolAdmin.school')" :subtitle="scholasticData?.school?.name"/>
     </b-col>
     <b-col>
       <ShowItem :title="$t('schoolAdmin.studyYear')" :subtitle="scholasticData.studyYear.name"/>

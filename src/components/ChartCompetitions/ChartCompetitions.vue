@@ -23,8 +23,9 @@ import {
 import ApiService from "@/api/ApiService";
 import {
   getSupervisorCompetitionsStatisticsRequest,
-  getSupervisorMissionsStatisticsRequest
+  getSupervisorMissionsStatisticsRequest, getTeacherCompetitionsStatisticsRequest
 } from "@/api/supervisor-module";
+import {mapGetters} from "vuex";
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale)
 export default defineComponent({
@@ -36,6 +37,7 @@ export default defineComponent({
     }
   },
   computed: {
+    ...mapGetters(['user']),
     chartData() {
       // labels: ['جارية 8', 'تمت 25' ],
       return {
@@ -105,12 +107,22 @@ export default defineComponent({
   },
   methods: {
     getCompetitionsStatistics() {
-      ApiService(getSupervisorCompetitionsStatisticsRequest()).then((response) => {
-        let CompetitionsStatistics = response.data.data
-        this.chartData.datasets[0].data = [CompetitionsStatistics.competition_pending, CompetitionsStatistics.competition_open, CompetitionsStatistics.competition_compeleted]
-        this.chartData.labels = [`معلقة ${CompetitionsStatistics.competition_pending}`, `جارية ${CompetitionsStatistics.competition_open}`, `تمت ${CompetitionsStatistics.competition_compeleted}`]
-        this.chartIsLoaded = true
-      })
+      if(this.user.roles[0]?.type.key === "supervisors_management"){
+        ApiService(getSupervisorCompetitionsStatisticsRequest()).then((response) => {
+          let CompetitionsStatistics = response.data.data
+          this.chartData.datasets[0].data = [CompetitionsStatistics.competition_pending, CompetitionsStatistics.competition_open, CompetitionsStatistics.competition_compeleted]
+          this.chartData.labels = [`معلقة ${CompetitionsStatistics.competition_pending}`, `جارية ${CompetitionsStatistics.competition_open}`, `تمت ${CompetitionsStatistics.competition_compeleted}`]
+          this.chartIsLoaded = true
+        })
+      } else {
+        ApiService(getTeacherCompetitionsStatisticsRequest()).then((response) => {
+          let CompetitionsStatistics = response.data.data
+          this.chartData.datasets[0].data = [CompetitionsStatistics.competition_pending, CompetitionsStatistics.competition_open, CompetitionsStatistics.competition_compeleted]
+          this.chartData.labels = [`معلقة ${CompetitionsStatistics.competition_pending}`, `جارية ${CompetitionsStatistics.competition_open}`, `تمت ${CompetitionsStatistics.competition_compeleted}`]
+          this.chartIsLoaded = true
+        })
+      }
+
     }
   },
   mounted() {

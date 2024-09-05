@@ -29,6 +29,7 @@
       :show-sort-controls="false"
       @detailItem="detailItem($event)"
       @refetch="getAllStudents"
+      :isRefresh="refresh"
     >
     </ListItems>
   </section>
@@ -52,6 +53,7 @@ export default {
     return {
       loading: false,
       showModal: false,
+      refresh: false,
       studentsSearchWord: "",
       students: [],
       totalNumber: 0,
@@ -148,21 +150,34 @@ export default {
           key: "showMissions",
           label: this.$i18n.t("TABLE_FIELDS.showMissions"),
         },
+        {
+          key: "contents_correction",
+          label: this.$i18n.t("TABLE_FIELDS.contents_correction"),
+        }
       ]
     },
   },
   methods: {
-    getAllStudents(values){
-      this.ApiService(getAllMissionsCorrectionForTeacherRequest(values)).then((response)=>{
+    getAllStudents($event){
+      this.loading = true;
+      const params = {...$event, ...this.searchWithPagination};
+      this.ApiService(getAllMissionsCorrectionForTeacherRequest(params)).then((response)=>{
         this.students = response.data.data
         this.totalNumber = response.data.meta.total
-      })
+      }).finally(() => {
+        this.loading = false;
+      });
     },
     onSubmit(values) {
+      this.loading = true;
+      this.searchWithPagination = values;
       this.getAllStudents(values)
     },
     handleCancel(){
+      this.studentSearch.map(field => field.value = "")
+      this.searchWithPagination = {}
       this.getAllStudents()
+      this.refresh = true
     },
     detailItem($event) {
       this.$router.push(`/dashboard/teacher/missions-student/show/${$event}`);

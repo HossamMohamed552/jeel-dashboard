@@ -32,6 +32,7 @@
                         :reduce="(option) => option.id"
                         :get-option-label="(option) => option.name"
                         :rules="'required'"
+                        multiple
                       ></SelectSearch>
                     </div>
                   </b-col>
@@ -61,19 +62,31 @@
               :disable-it="true"
               :show-sort-controls="false"
               @detailItem="detailItem($event)"
+              @deleteItem="deleteItem($event)"
               @refetch="getStudentsInGroup"
               :permission_view="'show-teacher-students'"
+              :permission_delete="'delete-teacher-student-groups'"
             >
             </ListItems>
           </b-col>
         </b-row>
       </div>
     </div>
+    <Modal :content-message="$t('CONTROLS.add_successfully')" :showModal="showModal" :is-success="true" />
+    <Modal
+      :content-message="$t('teacher.delete_student')"
+      :content-message-question="$t('teacher.delete_studentFromGroup')"
+      :showModal="showModalDelete"
+      @cancel="cancel($event)"
+      :is-warning="true"
+      @cancelWithConfirm="cancelWithConfirmDelete($event)"
+    />
   </section>
 </template>
 <script>
 import ShowItem from "@/components/Shared/ShowItem/index.vue";
 import {
+  deleteStudentFromGroupRequest,
   getAllStudentsForTeacherRequest, getAllStudentsInGroupForTeacherRequest,
   getClassGroupIdByIdRequest, getStudentForClassRequest,
   postAddStudentForGroupRequest
@@ -81,10 +94,13 @@ import {
 import ListItems from "@/components/ListItems/index.vue";
 import SelectSearch from "@/components/Shared/SelectSearch/index.vue";
 import Button from "@/components/Shared/Button/index.vue";
+import Modal from "@/components/Shared/Modal/index.vue";
+import {deleteBloomRequest} from "@/api/bloom";
 
 export default {
   name: "index",
   components: {
+    Modal,
     Button, SelectSearch,
     ListItems,
     ShowItem,
@@ -93,8 +109,9 @@ export default {
     return {
       loading: false,
       showModal: false,
+      showModalDelete: false,
       studentsSearchWord: "",
-      student_id: null,
+      student_id: [],
       students: [],
       studentsInGroup: [],
       totalNumber: 0,
@@ -143,8 +160,12 @@ export default {
     detailItem($event) {
       this.$router.push(`/dashboard/teacher-student/show/${$event}`);
     },
+    deleteItem($event){
+      this.itemId = $event;
+      this.showModalDelete = true;
+    },
     getAllStudents() {
-      this.ApiService(getStudentForClassRequest(this.groupDetail.class.id)).then((response) => {
+      this.ApiService(getStudentForClassRequest(this.groupDetail.class.id,{out_group: this.$route.params.id})).then((response) => {
         this.students = response.data.data
       })
     },
@@ -154,20 +175,42 @@ export default {
         this.totalNumber = response.data.meta.total
       })
     },
+    cancel($event) {
+      this.showModalDelete = $event;
+    },
+    cancelWithConfirmDelete() {
+      this.ApiService(deleteStudentFromGroupRequest(this.$route.params.id,this.itemId)).then(() => {
+        this.showModalDelete = true;
+        this.getAllStudents();
+        this.getStudentsInGroup();
+        setTimeout(()=>{
+          this.showModalDelete = false
+        },1500)
+      }).finally(() => {
+        this.cancel();
+      })
+    },
     onSubmit() {
       this.$refs.addStudentOnGroupForm.validate().then((success) => {
         if (!success) return;
       });
       let data = {
         group_id: this.$route.params.id,
-        user_id: this.student_id
+        users: this.student_id
       }
       this.ApiService(postAddStudentForGroupRequest(data)).then((response) => {
         this.student_id = null
         this.$nextTick(() => {
           this.$refs.addStudentOnGroupForm.reset()
         })
-      }).then(()=>this.getStudentsInGroup())
+      }).then(()=>{
+        this.showModal = true;
+        setTimeout(() => {
+          this.showModal = false;
+        }, 1500);
+        this.getStudentsInGroup();
+        this.getAllStudents()
+      })
 
     },
   },

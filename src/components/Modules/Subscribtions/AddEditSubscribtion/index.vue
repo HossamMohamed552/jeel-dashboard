@@ -341,7 +341,7 @@ export default {
             this.formValues.school_id = responseObj.school.id;
             this.formValues.start_subscription = responseObj.start_subscription;
             this.formValues.end_subscription = responseObj.end_subscription;
-            this.formValues.study_year_id = responseObj.study_year.id;
+            this.formValues.study_year_id = responseObj.studyYear.id;
             this.formValues.terms = responseObj.terms.map((item)=> item.id);
           })
           .then(() => {

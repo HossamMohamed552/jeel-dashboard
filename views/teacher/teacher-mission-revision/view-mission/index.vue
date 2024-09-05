@@ -124,6 +124,10 @@ export default {
           key: "missionContent",
           label: this.$i18n.t("TABLE_FIELDS.missionContent"),
         },
+        {
+          key: "contents_correction",
+          label: this.$i18n.t("TABLE_FIELDS.contents_correction"),
+        }
       ]
     },
   },

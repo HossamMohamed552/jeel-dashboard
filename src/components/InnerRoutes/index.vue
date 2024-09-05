@@ -302,7 +302,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  cursor: pointer;
+  //cursor: pointer;
 
   span {
     &:last-of-type {

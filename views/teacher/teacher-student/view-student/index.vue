@@ -75,18 +75,18 @@
               <div @click="activeTap = 2" :class="activeTap === 2 ? 'active' : ''" class="tap">
                 {{$t('supervisor.DailyEntry')}}
               </div>
-              <div @click="activeTap = 3" :class="activeTap === 3 ? 'active' : ''" class="tap">
-                {{$t('supervisor.missions')}}
-              </div>
-              <div @click="activeTap = 4" :class="activeTap === 4 ? 'active' : ''" class="tap">
-                {{$t('supervisor.Achievements')}}
-              </div>
-              <div @click="activeTap = 5" :class="activeTap === 5 ? 'active' : ''" class="tap">
-                {{$t('supervisor.Competitions')}}
-              </div>
-              <div @click="activeTap = 6" :class="activeTap === 6 ? 'active' : ''" class="tap">
-                {{$t('supervisor.Seasons')}}
-              </div>
+<!--              <div @click="activeTap = 3" :class="activeTap === 3 ? 'active' : ''" class="tap">-->
+<!--                {{$t('supervisor.missions')}}-->
+<!--              </div>-->
+<!--              <div @click="activeTap = 4" :class="activeTap === 4 ? 'active' : ''" class="tap">-->
+<!--                {{$t('supervisor.Achievements')}}-->
+<!--              </div>-->
+<!--              <div @click="activeTap = 5" :class="activeTap === 5 ? 'active' : ''" class="tap">-->
+<!--                {{$t('supervisor.Competitions')}}-->
+<!--              </div>-->
+<!--              <div @click="activeTap = 6" :class="activeTap === 6 ? 'active' : ''" class="tap">-->
+<!--                {{$t('supervisor.Seasons')}}-->
+<!--              </div>-->
             </div>
           </b-col>
           <b-col lg="12">

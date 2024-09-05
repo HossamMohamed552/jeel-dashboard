@@ -69,6 +69,7 @@ import StepFive from "@/components/Modules/Users/AddEditSeasonalMission/StepFive
 import { getSeasonalMissionByIdRequest } from "@/api/seasonal-mission";
 import moment from "moment";
 import { mapActions } from "vuex";
+import Modal from "@/components/Shared/Modal/index.vue";
 
 export default {
   props: {
@@ -78,6 +79,7 @@ export default {
     },
   },
   components: {
+    Modal,
     Stepper,
     Button,
     StepOne,
@@ -407,7 +409,6 @@ export default {
           listen: "id",
           value: "",
           type: "audio",
-          rules: "required",
         },
       ],
     };
@@ -499,13 +500,14 @@ export default {
         mergedAllSteps[3].value = moment(seasonalMission.start_date).format("DD-MM-YYYY");
         mergedAllSteps[4].value = moment(seasonalMission.end_date).format("DD-MM-YYYY");
         mergedAllSteps[5].value = seasonalMission.level;
+        mergedAllSteps[6].disabled = true;
         mergedAllSteps[5].name = seasonalMission.level.name;
         // Image
         mergedAllSteps[10].url = seasonalMission.image;
         mergedAllSteps[10].value = seasonalMission.image_uuid;
         mergedAllSteps[10].task_audio_name = seasonalMission.image_name;
         mergedAllSteps[10].task_audio_size = seasonalMission.image_size;
-
+        // this.handleEditLearningpaths(seasonalMission.learningpaths)
         this.handlePrizesInEdit(seasonalMission.prizes);
         this.handleNotificationInEdit(seasonalMission.notifications);
 

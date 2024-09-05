@@ -85,7 +85,7 @@ export default {
           type: "select",
           optionValue: "name",
           listen: "id",
-          label: "السف الدراسي",
+          label: "الصف الدراسي",
           labelEn: "level",
           options: [],
           deselectFromDropdown: true,
@@ -159,17 +159,25 @@ export default {
     },
   },
   methods: {
-    getAllStudents(values) {
-      this.ApiService(getAllStudentsForTeacherRequest(values)).then((response) => {
+    getAllStudents($event) {
+      this.loading = true;
+      const params = {...$event, ...this.searchWithPagination};
+      this.ApiService(getAllStudentsForTeacherRequest(params)).then((response) => {
         this.students = response.data.data
         this.totalNumber = response.data.meta.total
+        this.loading = false;
       })
     },
     onSubmit(values) {
+      this.loading = true;
+      this.searchWithPagination = values;
       this.getAllStudents(values)
     },
     handleCancel() {
+      this.studentSearch.map(field => field.value = "")
+      this.searchWithPagination = {}
       this.getAllStudents()
+      this.refresh = true
     },
     detailItem($event) {
       this.$router.push(`/dashboard/teacher-student/show/${$event}`);
